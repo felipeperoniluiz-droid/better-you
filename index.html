@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0c0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Better You">
+<title>Better You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--surface:#111418;--surface2:#181c22;--surface3:#1e2229;--border:#252b34;--gold:#f0b429;--orange:#e8834a;--green:#34d399;--red:#f87171;--blue:#60a5fa;--water:#38bdf8;--text:#f0f2f5;--text2:#8b95a3;--text3:#5a6270;--radius:16px;--radius-sm:10px;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:#0a0c0f!important;color:#f0f2f5;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.5;overscroll-behavior:none;}
+body{display:flex;justify-content:center;}
+#app{width:100%;max-width:430px;min-height:100svh;display:flex;flex-direction:column;background:#0a0c0f;}
+.header{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;background:#0a0c0f;position:sticky;top:0;z-index:100;border-bottom:1px solid #252b34;}
+.header-actions{display:flex;gap:8px;}
+.icon-btn{width:36px;height:36px;background:#181c22;border:1px solid #252b34;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:.2s;}
+.icon-btn:active{transform:scale(.92);}
+.nav{display:flex;background:#111418;border-top:1px solid #252b34;position:sticky;bottom:0;z-index:100;}
+.nav-item{flex:1;padding:10px 2px 12px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:.2s;border-top:2px solid transparent;color:#5a6270;}
+.nav-item.active{color:#f0b429;border-top-color:#f0b429;}
+.nav-item-icon{font-size:18px;}
+.nav-item-label{font-size:9px;font-weight:500;}
+.lang-selector{display:flex;gap:3px;align-items:center;}
+.lang-btn{padding:3px 7px;border:1px solid #3a4150;border-radius:5px;background:transparent;color:#8b95a3;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;}
+.lang-btn.active{background:#f0b429;color:#000;border-color:#f0b429;}
+.content{flex:1;overflow-y:auto;padding:16px;padding-bottom:4px;}
+.tab{display:none;animation:fadeIn .2s ease;}
+.tab.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.card{background:#111418;border:1px solid #252b34;border-radius:var(--radius);padding:16px;margin-bottom:14px;}
+.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#8b95a3;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;}
+.section-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#f0f2f5;margin-bottom:4px;}
+.section-sub{font-size:13px;color:#8b95a3;margin-bottom:16px;}
+.goal-toggle{display:flex;background:#181c22;border-radius:12px;padding:3px;margin-bottom:14px;gap:3px;}
+.goal-btn{flex:1;padding:9px;border-radius:9px;border:none;background:transparent;color:#8b95a3;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;}
+.goal-btn.active{background:#f0b429;color:#000;font-weight:700;}
+.calorie-ring-wrap{display:flex;flex-direction:column;align-items:center;padding:4px 0;}
+.calorie-num{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#f0f2f5;}
+.calorie-label{font-size:12px;color:#8b95a3;}
+.calorie-remaining{font-size:13px;color:#8b95a3;margin-top:4px;text-align:center;}
+.macro-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:4px;}
+.macro-label{font-size:11px;color:#8b95a3;margin-bottom:4px;font-weight:500;}
+.macro-val{font-size:14px;font-weight:700;margin-bottom:5px;}
+.macro-bar-bg{height:5px;background:#1e2229;border-radius:99px;overflow:hidden;}
+.macro-bar-fill{height:100%;border-radius:99px;transition:width .5s ease;}
+.divider{height:1px;background:#252b34;margin:12px 0;}
+.meal-section{margin-bottom:14px;}
+.meal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.meal-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;}
+.meal-kcal{font-size:12px;color:#8b95a3;}
+.meal-item{display:flex;align-items:center;background:#181c22;border-radius:var(--radius-sm);padding:9px 11px;margin-bottom:5px;gap:9px;}
+.meal-item-icon{font-size:18px;flex-shrink:0;}
+.meal-item-info{flex:1;}
+.meal-item-name{font-size:13px;font-weight:500;}
+.meal-item-detail{font-size:11px;color:#8b95a3;}
+.meal-item-kcal{font-size:13px;font-weight:700;color:#f0b429;flex-shrink:0;}
+.meal-item-del{width:26px;height:26px;background:rgba(248,113,113,.12);border:none;border-radius:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:#f87171;flex-shrink:0;}
+.add-food-btn{width:100%;padding:12px;background:rgba(240,180,41,.08);border:1px dashed rgba(240,180,41,.3);border-radius:var(--radius-sm);color:#f0b429;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:#111418;border-radius:22px 22px 0 0;padding:20px 18px 30px;width:100%;max-width:430px;transform:translateY(30px);transition:transform .25s cubic-bezier(.34,1.56,.64,1);}
+.modal-overlay.open .modal{transform:none;}
+.modal-handle{width:36px;height:4px;background:#252b34;border-radius:99px;margin:0 auto 18px;cursor:pointer;}
+.modal-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:14px;}
+.input-group{margin-bottom:12px;}
+.input-label{font-size:12px;color:#8b95a3;margin-bottom:5px;font-weight:500;}
+.input{width:100%;padding:11px 13px;background:#181c22;border:1px solid #252b34;border-radius:var(--radius-sm);color:#f0f2f5;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+.input:focus{border-color:#f0b429;}
+.input::placeholder{color:#5a6270;}
+select.input{appearance:none;-webkit-appearance:none;cursor:pointer;}
+.search-wrap{position:relative;margin-bottom:12px;}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:#5a6270;font-size:15px;pointer-events:none;}
+.search-input{padding-left:36px!important;}
+.search-results{background:#181c22;border:1px solid #252b34;border-radius:var(--radius-sm);margin-top:3px;max-height:190px;overflow-y:auto;}
+.search-item{padding:9px 13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #252b34;transition:.15s;}
+.search-item:last-child{border-bottom:none;}
+.search-item:active{background:#1e2229;}
+.search-item-name{font-size:13px;}
+.search-item-info{font-size:11px;color:#8b95a3;}
+.btn{padding:12px 18px;border-radius:var(--radius-sm);border:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:7px;}
+.btn:active{transform:scale(.96);}
+.btn-primary{background:linear-gradient(135deg,#f0b429,#e8834a);color:#000;width:100%;}
+.btn-secondary{background:#181c22;border:1px solid #252b34;color:#f0f2f5;width:100%;}
+.btn-ghost{background:transparent;border:1px solid #252b34;color:#8b95a3;}
+.btn-sm{padding:8px 13px;font-size:12px;border-radius:8px;}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
+.chip{padding:6px 11px;background:#181c22;border:1px solid #252b34;border-radius:99px;font-size:12px;cursor:pointer;transition:.2s;}
+.chip.active{background:rgba(240,180,41,.15);border-color:#f0b429;color:#f0b429;}
+.cups-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:16px;}
+.cup{background:#181c22;border:2px solid #252b34;border-radius:13px;padding:12px 5px 9px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.2s;}
+.cup.filled{border-color:#38bdf8;background:rgba(56,189,248,.1);}
+.cup-icon{font-size:22px;line-height:1;}
+.cup-ml{font-size:10px;color:#8b95a3;font-weight:500;}
+.cup.filled .cup-ml{color:#38bdf8;}
+.water-progress{height:9px;background:#181c22;border-radius:99px;overflow:hidden;margin-bottom:7px;}
+.water-fill{height:100%;background:linear-gradient(90deg,#38bdf8,#818cf8);border-radius:99px;transition:width .5s ease;}
+.quick-add{display:flex;gap:7px;}
+.quick-btn{flex:1;padding:10px;background:#181c22;border:1px solid #252b34;border-radius:var(--radius-sm);color:#38bdf8;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;text-align:center;}
+.quick-btn:active{background:rgba(56,189,248,.15);border-color:#38bdf8;}
+.diet-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;}
+.diet-card{background:#181c22;border:2px solid #252b34;border-radius:var(--radius-sm);padding:13px;cursor:pointer;transition:.2s;}
+.diet-card.selected{border-color:#f0b429;background:rgba(240,180,41,.07);}
+.diet-card-icon{font-size:22px;margin-bottom:5px;}
+.diet-card-name{font-size:12px;font-weight:700;font-family:'Syne',sans-serif;}
+.diet-card-desc{font-size:10px;color:#8b95a3;margin-top:2px;}
+.diet-detail{background:#181c22;border-radius:var(--radius);padding:14px;border-left:3px solid #f0b429;}
+.diet-tip{display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;}
+.diet-tip-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+.diet-tip-text{font-size:12px;color:#8b95a3;}
+.weight-big{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:#f0f2f5;line-height:1;}
+.weight-entry{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #252b34;}
+.weight-entry:last-child{border-bottom:none;}
+.weight-entry-date{font-size:12px;color:#8b95a3;}
+.weight-entry-val{font-size:14px;font-weight:700;}
+canvas{width:100%!important;border-radius:10px;}
+.calc-result{background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.2);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
+.calc-result-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
+.calc-result-row:last-child{margin-bottom:0;}
+.calc-result-label{font-size:12px;color:#8b95a3;}
+.calc-result-val{font-size:14px;font-weight:700;}
+.photo-drop{border:2px dashed #252b34;border-radius:var(--radius);padding:28px 18px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:.2s;margin-bottom:14px;text-align:center;}
+.photo-preview{width:100%;border-radius:var(--radius);object-fit:cover;max-height:240px;margin-bottom:12px;display:none;}
+.ai-result{background:#181c22;border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.ai-food-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #252b34;}
+.ai-food-item:last-child{border-bottom:none;}
+.ai-food-name{font-size:13px;}
+.ai-food-kcal{font-size:12px;color:#f0b429;font-weight:700;}
+.ai-food-macros{font-size:10px;color:#8b95a3;}
+.ai-total{display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(240,180,41,.1);border-radius:var(--radius-sm);margin-top:9px;}
+.ai-total-val{font-size:16px;font-weight:800;color:#f0b429;}
+.loading-dots{display:flex;gap:6px;align-items:center;justify-content:center;padding:18px;}
+.dot{width:8px;height:8px;background:#f0b429;border-radius:50%;animation:bounce .8s ease infinite;}
+.dot:nth-child(2){animation-delay:.16s;}
+.dot:nth-child(3){animation-delay:.32s;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.history-day{background:#181c22;border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:7px;display:flex;align-items:center;gap:10px;}
+.history-day-date{font-size:11px;color:#8b95a3;min-width:55px;}
+.history-day-bar-wrap{flex:1;}
+.history-day-bar{height:5px;background:#1e2229;border-radius:99px;overflow:hidden;margin-bottom:3px;}
+.history-day-bar-fill{height:100%;background:linear-gradient(90deg,#f0b429,#e8834a);border-radius:99px;}
+.history-day-kcal{font-size:12px;font-weight:700;color:#f0b429;min-width:55px;text-align:right;}
+.premade-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.premade-card{background:#181c22;border:1px solid #252b34;border-radius:var(--radius-sm);padding:13px;cursor:pointer;transition:.2s;}
+.premade-card:active{transform:scale(.96);border-color:#f0b429;}
+.premade-icon{font-size:24px;margin-bottom:5px;}
+.premade-name{font-size:12px;font-weight:700;font-family:'Syne',sans-serif;margin-bottom:2px;}
+.premade-kcal{font-size:11px;color:#f0b429;}
+.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(16px);background:#111418;border:1px solid #252b34;border-radius:11px;padding:9px 16px;font-size:13px;font-weight:500;color:#f0f2f5;z-index:500;opacity:0;transition:.25s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.5);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.success{border-color:#34d399;color:#34d399;}
+.toast.error{border-color:#f87171;color:#f87171;}
+.empty{text-align:center;padding:24px 16px;color:#5a6270;}
+.empty-icon{font-size:36px;margin-bottom:8px;}
+.empty-text{font-size:13px;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:#252b34;border-radius:99px;}
+</style>
+</head>
+<body>
+<div id="app">
+<div class="header">
+  <img src="data:image/png;base64,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" style="height:42px;width:auto;object-fit:contain;" alt="Better You" id="app-logo">
+  <div class="lang-selector">
+    <button onclick="setLang('pt')" id="lang-pt" class="lang-btn active">PT</button>
+    <button onclick="setLang('en')" id="lang-en" class="lang-btn">EN</button>
+    <button onclick="setLang('es')" id="lang-es" class="lang-btn">ES</button>
+  </div>
+  <div class="header-actions">
+    <div class="icon-btn" onclick="openProfile()">&#128100;</div>
+    <div class="icon-btn" onclick="openSettings()">&#9881;</div>
+  </div>
+</div>
+<div class="content" id="content">
+
+<!-- TAB HOJE -->
+<div class="tab active" id="tab-hoje">
+  <div class="goal-toggle">
+    <button class="goal-btn active" id="goal-mass" onclick="setGoal('mass')">&#128170; Ganhar Massa</button>
+    <button class="goal-btn" id="goal-cut" onclick="setGoal('cut')">&#128293; Emagrecer</button>
+  </div>
+  <div class="card">
+    <div class="calorie-ring-wrap">
+      <div style="position:relative;width:170px;height:170px;">
+        <svg width="170" height="170" style="transform:rotate(-90deg)">
+          <circle cx="85" cy="85" r="74" fill="none" stroke="#1e2229" stroke-width="11"/>
+          <circle cx="85" cy="85" r="74" fill="none" stroke="url(#rg)" stroke-width="11" stroke-linecap="round" stroke-dasharray="465" id="calRingFill" stroke-dashoffset="465" style="transition:stroke-dashoffset .6s ease;"/>
+          <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f0b429"/><stop offset="100%" stop-color="#e8834a"/></linearGradient></defs>
+        </svg>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <div class="calorie-num" id="calConsumed">0</div>
+          <div class="calorie-label">kcal</div>
+        </div>
+      </div>
+      <div class="calorie-remaining" id="calStatus">Meta: <b id="calGoalText" style="color:#f0b429;">3000</b> kcal</div>
+    </div>
+    <div class="divider"></div>
+    <div class="macro-row">
+      <div><div class="macro-label" id="macro-prot-label">&#129385; Proteina</div><div class="macro-val" style="color:#60a5fa" id="macroProtVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#60a5fa;width:0%" id="macroProtBar"></div></div></div>
+      <div><div class="macro-label" id="macro-carb-label">&#127834; Carbo</div><div class="macro-val" style="color:#e8834a" id="macroCarbVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#e8834a;width:0%" id="macroCarbBar"></div></div></div>
+      <div><div class="macro-label" id="macro-fat-label">&#129361; Gordura</div><div class="macro-val" style="color:#34d399" id="macroFatVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#34d399;width:0%" id="macroFatBar"></div></div></div>
+    </div>
+  </div>
+  <div id="mealsContainer"></div>
+  <button class="add-food-btn" onclick="openAddFood()">+ Adicionar Alimento</button>
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">Refeicoes Rapidas</div>
+    <div class="premade-grid" id="premadeGrid"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Agua Hoje</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px;">
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;" id="waterSummaryVal">0</div>
+      <div style="font-size:12px;color:#8b95a3;">ml de <b id="waterSummaryGoal">2500</b> ml</div>
+    </div>
+    <div class="water-progress"><div class="water-fill" id="waterSummaryBar" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- TAB FOTO -->
+<div class="tab" id="tab-foto">
+  <div class="section-title">Foto com IA</div>
+  <div class="section-sub">Tire foto do seu prato e a IA analisa as calorias</div>
+  <div style="display:flex;gap:9px;margin-bottom:12px;">
+    <button class="btn btn-primary" style="flex:1;" onclick="triggerCamera()">Camara</button>
+    <button class="btn btn-secondary" style="flex:1;" onclick="triggerUpload()">Galeria</button>
+  </div>
+  <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhoto(this)">
+  <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this)">
+  <img id="photoPreview" class="photo-preview">
+  <div id="aiLoading" style="display:none;"><div class="card"><div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><div style="text-align:center;color:#8b95a3;font-size:13px;padding-bottom:8px;">IA analisando seu prato...</div></div></div>
+  <div id="aiResultBox" style="display:none;">
+    <div class="ai-result">
+      <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#f0b429;margin-bottom:8px;">Resultado da analise</div>
+      <div id="aiDescription" style="font-size:12px;color:#8b95a3;margin-bottom:9px;"></div>
+      <div id="aiFoodList"></div>
+      <div class="ai-total"><div style="font-size:13px;font-weight:600;">Total estimado</div><div class="ai-total-val" id="aiTotalKcal">0 kcal</div></div>
+    </div>
+    <button class="btn btn-primary" onclick="addAiResult()">Adicionar ao dia</button>
+  </div>
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">Como funciona</div>
+    <div style="font-size:12px;color:#8b95a3;line-height:1.8;">1. Tire uma foto do seu prato<br>2. A IA identifica cada ingrediente<br>3. Estima calorias e macros<br>4. Adicione tudo com um toque</div>
+  </div>
+</div>
+
+<!-- TAB AGUA -->
+<div class="tab" id="tab-agua">
+  <div class="section-title">Hidratacao</div>
+  <div class="section-sub">Mantenha-se hidratado durante o dia</div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+      <div><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#38bdf8;" id="waterCurrent">0</div><div style="font-size:11px;color:#8b95a3;">ml consumidos</div></div>
+      <div style="text-align:right;"><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;" id="waterRemaining">2500</div><div style="font-size:11px;color:#8b95a3;">ml restantes</div></div>
+    </div>
+    <div class="water-progress"><div class="water-fill" id="waterBar" style="width:0%"></div></div>
+    <div style="text-align:center;font-size:12px;color:#8b95a3;margin-top:7px;" id="waterPercent">0% da meta</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Adicionar agua</div>
+    <div class="quick-add" style="margin-bottom:12px;">
+      <button class="quick-btn" onclick="addWater(150)">+150ml</button>
+      <button class="quick-btn" onclick="addWater(250)">+250ml</button>
+      <button class="quick-btn" onclick="addWater(500)">+500ml</button>
+    </div>
+    <div class="cups-grid" id="cupsGrid"></div>
+    <button class="btn btn-ghost btn-sm" style="margin-top:7px;width:100%;" onclick="resetWater()">Zerar agua</button>
+  </div>
+  <div class="card">
+    <div class="card-title">Meta diaria</div>
+    <div class="input-group"><div class="input-label">Peso (kg)</div><input type="number" class="input" id="waterWeightInput" placeholder="Ex: 75" oninput="calcWaterGoal()"></div>
+    <div class="input-group"><div class="input-label">Nivel de atividade</div><select class="input" id="waterActivityInput" onchange="calcWaterGoal()"><option value="1">Sedentario</option><option value="1.2">Levemente ativo</option><option value="1.5" selected>Moderado</option><option value="1.8">Muito ativo</option></select></div>
+    <div id="waterGoalResult" style="font-size:13px;color:#8b95a3;cursor:pointer;"></div>
+  </div>
+</div>
+
+<!-- TAB DIETA -->
+<div class="tab" id="tab-dieta">
+  <div class="section-title">Tipo de Dieta</div>
+  <div class="section-sub">Escolha o estilo alimentar ideal para voce</div>
+  <div class="diet-grid" id="dietGrid"></div>
+  <div id="dietDetail"></div>
+</div>
+
+<!-- TAB PESO -->
+<div class="tab" id="tab-peso">
+  <div class="section-title">Evolucao do Peso</div>
+  <div class="section-sub">Registre e acompanhe sua evolucao</div>
+  <div class="card">
+    <div style="text-align:center;margin-bottom:14px;">
+      <div class="weight-big" id="weightCurrent">--</div>
+      <div style="font-size:16px;color:#8b95a3;">kg</div>
+      <div style="font-size:13px;margin-top:3px;" id="weightChange"></div>
+    </div>
+    <div style="display:flex;gap:9px;align-items:flex-end;">
+      <input type="number" class="input" id="weightInput" placeholder="Ex: 78.5" step="0.1" style="flex:1;">
+      <button class="btn btn-primary btn-sm" onclick="addWeight()" style="flex:0;padding:11px 14px;">+</button>
+    </div>
+  </div>
+  <div class="card"><div class="card-title">Grafico</div><canvas id="weightChart" height="150"></canvas></div>
+  <div class="card"><div class="card-title">Historico</div><div id="weightList"></div></div>
+  <div class="card"><div class="card-title">Ritmo ideal</div><div id="weightTip" style="font-size:13px;color:#8b95a3;line-height:1.7;"></div></div>
+</div>
+
+<!-- TAB CALCULAR -->
+<div class="tab" id="tab-calc">
+  <div class="section-title">Calculadora</div>
+  <div class="section-sub">Calcule sua necessidade calorica diaria</div>
+  <div class="card">
+    <div class="input-group"><div class="input-label">Sexo</div><select class="input" id="calcSex"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
+    <div class="input-group"><div class="input-label">Idade (anos)</div><input type="number" class="input" id="calcAge" placeholder="Ex: 25"></div>
+    <div class="input-group"><div class="input-label">Peso (kg)</div><input type="number" class="input" id="calcWeight" placeholder="Ex: 75" step="0.1"></div>
+    <div class="input-group"><div class="input-label">Altura (cm)</div><input type="number" class="input" id="calcHeight" placeholder="Ex: 175"></div>
+    <div class="input-group"><div class="input-label">Nivel de atividade</div><select class="input" id="calcActivity"><option value="1.2">Sedentario</option><option value="1.375">Levemente ativo (1-3x/sem)</option><option value="1.55" selected>Moderado (3-5x/sem)</option><option value="1.725">Muito ativo (6-7x/sem)</option><option value="1.9">Extremamente ativo</option></select></div>
+    <button class="btn btn-primary" onclick="calcNeeds()">Calcular</button>
+  </div>
+  <div id="calcResult" style="display:none;"></div>
+</div>
+
+<!-- TAB HISTORICO -->
+<div class="tab" id="tab-hist">
+  <div class="section-title">Historico</div>
+  <div class="section-sub">Acompanhe sua evolucao semanal</div>
+  <div class="card"><div class="card-title">Ultimos 7 dias</div><canvas id="histChart" height="130"></canvas></div>
+  <div class="card"><div class="card-title">Registros</div><div id="histList"></div></div>
+</div>
+
+</div><!-- /content -->
+
+<nav class="nav" id="mainNav">
+  <div class="nav-item active" onclick="switchTab('hoje',this)"><div class="nav-item-icon">&#127968;</div><div class="nav-item-label" id="nav-hoje">Hoje</div></div>
+  <div class="nav-item" onclick="switchTab('foto',this)"><div class="nav-item-icon">&#128248;</div><div class="nav-item-label" id="nav-foto">Foto IA</div></div>
+  <div class="nav-item" onclick="switchTab('agua',this)"><div class="nav-item-icon">&#128167;</div><div class="nav-item-label" id="nav-agua">Agua</div></div>
+  <div class="nav-item" onclick="switchTab('dieta',this)"><div class="nav-item-icon">&#129367;</div><div class="nav-item-label" id="nav-dieta">Dieta</div></div>
+  <div class="nav-item" onclick="switchTab('peso',this)"><div class="nav-item-icon">&#128202;</div><div class="nav-item-label" id="nav-peso">Peso</div></div>
+  <div class="nav-item" onclick="switchTab('calc',this)"><div class="nav-item-icon">&#128290;</div><div class="nav-item-label" id="nav-calc">Calcular</div></div>
+  <div class="nav-item" onclick="switchTab('hist',this)"><div class="nav-item-icon">&#128197;</div><div class="nav-item-label" id="nav-hist">Historico</div></div>
+</nav>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modalAddFood">
+  <div class="modal">
+    <div class="modal-handle" onclick="closeModal('modalAddFood')"></div>
+    <div class="modal-title" id="btn-add-food">+ Adicionar Alimento</div>
+    <div class="chips" id="mealTypeChips">
+      <div class="chip active" onclick="selectMealType('cafe',this)">Cafe da manha</div>
+      <div class="chip" onclick="selectMealType('almoco',this)">Almoco</div>
+      <div class="chip" onclick="selectMealType('lanche',this)">Lanche</div>
+      <div class="chip" onclick="selectMealType('jantar',this)">Jantar</div>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">&#128269;</span>
+      <input type="text" class="input search-input" id="foodSearch" placeholder="Buscar alimento..." oninput="searchFoods(this.value)">
+    </div>
+    <div id="searchResults" class="search-results" style="display:none;"></div>
+    <div class="input-group"><div class="input-label">Alimento selecionado</div><input type="text" class="input" id="foodName" placeholder="Busque e selecione acima" readonly></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+      <div class="input-group"><div class="input-label">Quantidade (g)</div><input type="number" class="input" id="foodQty" placeholder="100" oninput="updateFoodPreview()"></div>
+      <div class="input-group"><div class="input-label">Calorias</div><input type="text" class="input" id="foodKcalPreview" placeholder="--" readonly style="color:#f0b429;"></div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:3px;" onclick="addFoodEntry()">Adicionar</button>
+    <button class="btn btn-ghost btn-sm" style="margin-top:7px;width:100%;" onclick="openCustomFood()">+ Cadastrar alimento novo</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalCustomFood">
+  <div class="modal">
+    <div class="modal-handle" onclick="closeModal('modalCustomFood')"></div>
+    <div class="modal-title">Cadastrar Alimento</div>
+    <div class="input-group"><div class="input-label">Nome</div><input type="text" class="input" id="cfName" placeholder="Ex: Tapioca"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+      <div class="input-group"><div class="input-label">Calorias /100g</div><input type="number" class="input" id="cfKcal" placeholder="280"></div>
+      <div class="input-group"><div class="input-label">Proteina /100g</div><input type="number" class="input" id="cfProt" placeholder="0"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+      <div class="input-group"><div class="input-label">Carbo /100g</div><input type="number" class="input" id="cfCarb" placeholder="68"></div>
+      <div class="input-group"><div class="input-label">Gordura /100g</div><input type="number" class="input" id="cfFat" placeholder="0.3"></div>
+    </div>
+    <button class="btn btn-primary" onclick="saveCustomFood()">Salvar Alimento</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalSettings">
+  <div class="modal">
+    <div class="modal-handle" onclick="closeModal('modalSettings')"></div>
+    <div class="modal-title">Configuracoes</div>
+    <div class="input-group"><div class="input-label">Meta calorica diaria (kcal)</div><input type="number" class="input" id="settingsCalGoal" placeholder="Ex: 3200"></div>
+    <div class="input-group"><div class="input-label">Meta de agua (ml)</div><input type="number" class="input" id="settingsWaterGoal" placeholder="Ex: 2500"></div>
+    <div class="input-group"><div class="input-label">Chave API Anthropic</div><input type="password" class="input" id="settingsApiKey" placeholder="Cole sua chave API aqui"></div>
+    <button class="btn btn-primary" onclick="saveSettings()">Salvar</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalProfile">
+  <div class="modal">
+    <div class="modal-handle" onclick="closeModal('modalProfile')"></div>
+    <div class="modal-title">Perfil</div>
+    <div class="input-group"><div class="input-label">Nome</div><input type="text" class="input" id="profName" placeholder="Seu nome"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+      <div class="input-group"><div class="input-label">Peso (kg)</div><input type="number" class="input" id="profWeight" placeholder="75" step="0.1"></div>
+      <div class="input-group"><div class="input-label">Altura (cm)</div><input type="number" class="input" id="profHeight" placeholder="175"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+      <div class="input-group"><div class="input-label">Idade</div><input type="number" class="input" id="profAge" placeholder="25"></div>
+      <div class="input-group"><div class="input-label">Sexo</div><select class="input" id="profSex"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
+    </div>
+    <button class="btn btn-primary" onclick="saveProfile()">Salvar Perfil</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var currentLang='pt';
+var T={
+pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Historico',
+  ganharMassa:'&#128170; Ganhar Massa',emagrecer:'&#128293; Emagrecer',
+  proteina:'&#129385; Proteina',carbo:'&#127834; Carbo',gordura:'&#129361; Gordura',
+  cafeManha:'Cafe da manha',almoco:'Almoco',lanche:'Lanche',jantar:'Jantar',
+  nenhumAlimento:'Nenhum alimento',addFood:'+ Adicionar Alimento',
+  refRapidas:'REFEICOES RAPIDAS',aguaHoje:'AGUA HOJE',
+  faltam:'Faltam',acimaMeta:'acima da meta',metaAtingida:'Meta atingida!',
+  meta:'Meta',buscar:'Buscar alimento...',gramas:'Gramas (g)',adicionar:'Adicionar',
+  aplicarMeta:'Aplicar esta meta',removido:'Removido',
+  pesoRegistrado:'Peso registrado!',pesoInvalido:'Peso invalido',
+  aguaAtualizada:'Meta de agua atualizada!',
+  tmb:'TMB',tdee:'TDEE',resultados:'Resultados',calcBtn:'Calcular',
+  masc:'Masculino',fem:'Feminino',
+  tiposDieta:'Tipo de Dieta',evolPeso:'Evolucao do Peso',calculadora:'Calculadora',
+  calcSub:'Calcule sua necessidade calorica diaria',
+  histTitle:'Historico',profTitle:'Perfil',configTitle:'Configuracoes'},
+en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcular:'Calculate',hist:'History',
+  ganharMassa:'&#128170; Gain Mass',emagrecer:'&#128293; Lose Weight',
+  proteina:'&#129385; Protein',carbo:'&#127834; Carbs',gordura:'&#129361; Fat',
+  cafeManha:'Breakfast',almoco:'Lunch',lanche:'Snack',jantar:'Dinner',
+  nenhumAlimento:'No food logged',addFood:'+ Add Food',
+  refRapidas:'QUICK MEALS',aguaHoje:'WATER TODAY',
+  faltam:'Remaining',acimaMeta:'above goal',metaAtingida:'Goal reached!',
+  meta:'Goal',buscar:'Search food...',gramas:'Grams (g)',adicionar:'Add',
+  aplicarMeta:'Apply this goal',removido:'Removed',
+  pesoRegistrado:'Weight logged!',pesoInvalido:'Invalid weight',
+  aguaAtualizada:'Water goal updated!',
+  tmb:'BMR',tdee:'TDEE',resultados:'Results',calcBtn:'Calculate',
+  masc:'Male',fem:'Female',
+  tiposDieta:'Diet Type',evolPeso:'Weight Progress',calculadora:'Calculator',
+  calcSub:'Calculate your daily caloric needs',
+  histTitle:'History',profTitle:'Profile',configTitle:'Settings'},
+es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Historial',
+  ganharMassa:'&#128170; Ganar Masa',emagrecer:'&#128293; Adelgazar',
+  proteina:'&#129385; Proteina',carbo:'&#127834; Carbos',gordura:'&#129361; Grasa',
+  cafeManha:'Desayuno',almoco:'Almuerzo',lanche:'Merienda',jantar:'Cena',
+  nenhumAlimento:'Sin alimentos',addFood:'+ Agregar Alimento',
+  refRapidas:'COMIDAS RAPIDAS',aguaHoje:'AGUA HOY',
+  faltam:'Faltan',acimaMeta:'sobre la meta',metaAtingida:'Meta alcanzada!',
+  meta:'Meta',buscar:'Buscar alimento...',gramas:'Gramos (g)',adicionar:'Agregar',
+  aplicarMeta:'Aplicar esta meta',removido:'Eliminado',
+  pesoRegistrado:'Peso registrado!',pesoInvalido:'Peso invalido',
+  aguaAtualizada:'Meta de agua actualizada!',
+  tmb:'TMB',tdee:'TDEE',resultados:'Resultados',calcBtn:'Calcular',
+  masc:'Masculino',fem:'Femenino',
+  tiposDieta:'Tipo de Dieta',evolPeso:'Progreso de Peso',calculadora:'Calculadora',
+  calcSub:'Calcula tu necesidad calorica diaria',
+  histTitle:'Historial',profTitle:'Perfil',configTitle:'Configuracion'}
+};
+function setLang(lang){
+  currentLang=lang;
+  state.lang=lang;save();
+  var t=T[lang];
+  // Nav labels
+  var nHoje=document.getElementById('nav-hoje');if(nHoje)nHoje.textContent=t.hoje;
+  var nFoto=document.getElementById('nav-foto');if(nFoto)nFoto.textContent=t.fotoIA;
+  var nAgua=document.getElementById('nav-agua');if(nAgua)nAgua.textContent=t.agua;
+  var nDieta=document.getElementById('nav-dieta');if(nDieta)nDieta.textContent=t.dieta;
+  var nPeso=document.getElementById('nav-peso');if(nPeso)nPeso.textContent=t.peso;
+  var nCalc=document.getElementById('nav-calc');if(nCalc)nCalc.textContent=t.calcular;
+  var nHist=document.getElementById('nav-hist');if(nHist)nHist.textContent=t.hist;
+  // Goal buttons
+  var gm=document.getElementById('goal-mass');if(gm)gm.innerHTML=t.ganharMassa;
+  var gc=document.getElementById('goal-cut');if(gc)gc.innerHTML=t.emagrecer;
+  // Macro labels
+  var mp=document.getElementById('macro-prot-label');if(mp)mp.innerHTML=t.proteina;
+  var mc=document.getElementById('macro-carb-label');if(mc)mc.innerHTML=t.carbo;
+  var mf=document.getElementById('macro-fat-label');if(mf)mf.innerHTML=t.gordura;
+  // Add food button
+  var af=document.getElementById('btn-add-food');if(af)af.textContent=t.addFood;
+  // Lang buttons
+  ['pt','en','es'].forEach(function(l){
+    var el=document.getElementById('lang-'+l);
+    if(el)el.className='lang-btn'+(l===lang?' active':'');
+  });
+  // Re-render dynamic sections
+  renderToday();renderMeals();
+}
+var FOOD_DB=[
+  {name:"Arroz branco",icon:"rice",kcal:130,prot:2.7,carb:28.2,fat:0.3},
+  {name:"Frango grelhado",icon:"chicken",kcal:165,prot:31,carb:0,fat:3.6},
+  {name:"Ovo inteiro",icon:"egg",kcal:155,prot:13,carb:1.1,fat:11},
+  {name:"Aveia",icon:"oat",kcal:389,prot:17,carb:66,fat:7},
+  {name:"Banana",icon:"banana",kcal:89,prot:1.1,carb:22.8,fat:0.3},
+  {name:"Batata doce",icon:"sweet",kcal:86,prot:1.6,carb:20.1,fat:0.1},
+  {name:"Azeite de oliva",icon:"oil",kcal:884,prot:0,carb:0,fat:100},
+  {name:"Amendoim",icon:"peanut",kcal:567,prot:25.8,carb:16.1,fat:49.2},
+  {name:"Whey Protein",icon:"whey",kcal:400,prot:80,carb:6,fat:5},
+  {name:"Carne bovina",icon:"beef",kcal:250,prot:26,carb:0,fat:17},
+  {name:"Queijo mussarela",icon:"cheese",kcal:280,prot:22,carb:2.2,fat:20},
+  {name:"Pasta de amendoim",icon:"pb",kcal:588,prot:25,carb:20,fat:50},
+  {name:"Leite integral",icon:"milk",kcal:61,prot:3.2,carb:4.8,fat:3.3},
+  {name:"Macarrao cozido",icon:"pasta",kcal:158,prot:5.8,carb:31,fat:0.9},
+  {name:"Salmao",icon:"fish",kcal:208,prot:20,carb:0,fat:13},
+  {name:"Pao integral",icon:"bread",kcal:247,prot:13,carb:41,fat:4.2},
+  {name:"Feijao cozido",icon:"bean",kcal:77,prot:4.8,carb:14,fat:0.5},
+  {name:"Manteiga",icon:"butter",kcal:717,prot:0.9,carb:0.1,fat:81},
+  {name:"Iogurte grego",icon:"yogurt",kcal:59,prot:10,carb:3.6,fat:0.4},
+  {name:"Abacate",icon:"avocado",kcal:160,prot:2,carb:9,fat:15},
+  {name:"Atum em lata",icon:"tuna",kcal:116,prot:25.5,carb:0,fat:1},
+  {name:"Batata inglesa",icon:"potato",kcal:77,prot:2,carb:17.5,fat:0.1},
+  {name:"Brocolis",icon:"broccoli",kcal:34,prot:2.8,carb:6.6,fat:0.4},
+  {name:"Granola",icon:"granola",kcal:471,prot:10,carb:64,fat:20},
+  {name:"Quinoa cozida",icon:"quinoa",kcal:120,prot:4.4,carb:21.3,fat:1.9}
+];
+var DIET_TYPES=[
+  {id:"normal",icon:"plate",name:"Normal",desc:"Dieta equilibrada",tips:["Variedade de grupos alimentares","Proteina carbo e gordura em equilibrio","3 refeicoes mais 2 lanches","Evite ultraprocessados"]},
+  {id:"lowcarb",icon:"meat",name:"Low Carb",desc:"Reducao de carboidratos",tips:["Carbo menor que 100g por dia","Priorize proteinas e gorduras boas","Legumes e folhas a vontade","Evite acucar e farinhas brancas"]},
+  {id:"keto",icon:"fire",name:"Cetogenica",desc:"Cetose metabolica",tips:["Carbo menor que 30g por dia","Gordura 70 a 80 porcento das calorias","Proteina moderada","Monitorar cetose"]},
+  {id:"carnivore",icon:"bone",name:"Carnivora",desc:"Somente origem animal",tips:["Carne peixe ovos laticinios","Zero vegetais e frutas","Alta proteina e gordura","Requer acompanhamento medico"]},
+  {id:"jejenum",icon:"clock",name:"Jejum Intermitente",desc:"Janela alimentar restrita",tips:["16:8 - 16h de jejum 8h comendo","Cafe preto e agua no jejum","Refeicoes mais densas na janela","Comece gradualmente"]},
+  {id:"mediterranea",icon:"wave",name:"Mediterranea",desc:"Estilo mediterraneo",tips:["Azeite peixes leguminosas","Oleaginosas e frutas diariamente","Graos integrais e vegetais","Estilo de vida saudavel"]}
+];
+var PREMADE=[
+  {icon:"coffee",name:"Cafe Manha",foods:[{name:"Ovo inteiro",g:150},{name:"Pao integral",g:50},{name:"Banana",g:100}]},
+  {icon:"gym",name:"Pre-treino",foods:[{name:"Batata doce",g:150},{name:"Frango grelhado",g:120},{name:"Brocolis",g:80}]},
+  {icon:"muscle",name:"Pos-treino",foods:[{name:"Whey Protein",g:40},{name:"Banana",g:100},{name:"Aveia",g:60}]},
+  {icon:"moon",name:"Jantar Leve",foods:[{name:"Frango grelhado",g:150},{name:"Brocolis",g:100},{name:"Azeite de oliva",g:10}]}
+];
+var state={goal:"mass",calGoal:3000,waterGoal:2500,waterMl:0,lang:"pt",meals:{cafe:[],almoco:[],lanche:[],jantar:[]},weights:[],selectedDiet:"normal",apiKey:"",profile:{},customFoods:[],history:{},lastReset:""};
+var currentMealType="cafe";
+var selectedFoodData=null;
+var aiResultData=null;
+
+function save(){localStorage.setItem("betteryou_v1",JSON.stringify(state));}
+function load(){
+  var d=localStorage.getItem("betteryou_v1");
+  if(d){var s=JSON.parse(d);state=Object.assign({},state,s);}
+  checkDayReset();
+}
+function todayKey(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function checkDayReset(){
+  var today=todayKey();
+  if(state.lastReset!==today){
+    if(state.lastReset){var t=calcTotals();state.history[state.lastReset]={kcal:t.kcal,prot:t.prot,carb:t.carb,fat:t.fat,water:state.waterMl};}
+    state.meals={cafe:[],almoco:[],lanche:[],jantar:[]};
+    state.waterMl=0;state.lastReset=today;save();
+  }
+}
+function calcTotals(){
+  var kcal=0,prot=0,carb=0,fat=0;
+  Object.values(state.meals).forEach(function(arr){arr.forEach(function(i){kcal+=i.kcal||0;prot+=i.prot||0;carb+=i.carb||0;fat+=i.fat||0;});});
+  return {kcal:Math.round(kcal),prot:Math.round(prot),carb:Math.round(carb),fat:Math.round(fat)};
+}
+function getMacroGoals(){var k=state.calGoal;return {prot:Math.round(k*0.3/4),carb:Math.round(k*0.45/4),fat:Math.round(k*0.25/9)};}
+
+function renderToday(){
+  var t=calcTotals(),g=getMacroGoals();
+  var pct=Math.min(t.kcal/state.calGoal,1);
+  var circ=2*Math.PI*74;
+  document.getElementById("calRingFill").style.strokeDashoffset=circ*(1-pct);
+  document.getElementById("calConsumed").textContent=t.kcal;
+  var cg=document.getElementById("calGoalText");if(cg)cg.textContent=state.calGoal;
+  var rem=state.calGoal-t.kcal;
+  var el=document.getElementById("calStatus");
+  if(rem>0)el.innerHTML=T[currentLang].faltam+" <b style='color:#f0b429'>"+rem+"</b> kcal";
+  else if(rem<0)el.innerHTML="<b style='color:#f87171'>"+Math.abs(rem)+"</b> kcal "+T[currentLang].acimaMeta;
+  else el.innerHTML="<b style='color:#34d399'>"+T[currentLang].metaAtingida+"</b>";
+  document.getElementById("macroProtVal").textContent=t.prot+"g";
+  document.getElementById("macroCarbVal").textContent=t.carb+"g";
+  document.getElementById("macroFatVal").textContent=t.fat+"g";
+  document.getElementById("macroProtBar").style.width=Math.min(100,t.prot/g.prot*100)+"%";
+  document.getElementById("macroCarbBar").style.width=Math.min(100,t.carb/g.carb*100)+"%";
+  document.getElementById("macroFatBar").style.width=Math.min(100,t.fat/g.fat*100)+"%";
+  renderMeals();
+  var wp=Math.min(100,state.waterMl/state.waterGoal*100);
+  document.getElementById("waterSummaryVal").textContent=state.waterMl;
+  document.getElementById("waterSummaryGoal").textContent=state.waterGoal;
+  document.getElementById("waterSummaryBar").style.width=wp+"%";
+  renderPremade();
+}
+
+function renderMeals(){
+  var t=T[currentLang];var labels={cafe:t.cafeManha,almoco:t.almoco,lanche:t.lanche,jantar:t.jantar};
+  var html="";
+  for(var key in labels){
+    var items=state.meals[key]||[];
+    var mKcal=items.reduce(function(a,b){return a+(b.kcal||0);},0);
+    html+="<div class='meal-section'><div class='meal-header'><div class='meal-name'>"+labels[key]+"</div><div class='meal-kcal'>"+Math.round(mKcal)+" kcal</div></div>";
+    if(!items.length)html+="<div style='font-size:12px;color:#5a6270;padding:5px 0;'>"+T[currentLang].nenhumAlimento+"</div>";
+    else items.forEach(function(item,i){
+      html+="<div class='meal-item'><div class='meal-item-icon'>&#127860;</div><div class='meal-item-info'><div class='meal-item-name'>"+item.name+"</div><div class='meal-item-detail'>"+item.grams+"g - P:"+Math.round(item.prot)+"g C:"+Math.round(item.carb)+"g G:"+Math.round(item.fat)+"g</div></div><div class='meal-item-kcal'>"+Math.round(item.kcal)+"</div><button class='meal-item-del' onclick='removeFood(\""+key+"\","+i+")'>x</button></div>";
+    });
+    html+="</div>";
+  }
+  document.getElementById("mealsContainer").innerHTML=html;
+}
+
+function removeFood(meal,idx){state.meals[meal].splice(idx,1);save();renderToday();showToast(T[currentLang].removido,"");}
+
+function renderPremade(){
+  var html=PREMADE.map(function(m,i){
+    var tk=m.foods.reduce(function(acc,f){var fd=findFood(f.name);return acc+(fd?fd.kcal*f.g/100:0);},0);
+    return "<div class='premade-card' onclick='addPremeal("+i+")'><div class='premade-icon'>&#127860;</div><div class='premade-name'>"+m.name+"</div><div class='premade-kcal'>~"+Math.round(tk)+" kcal</div></div>";
+  }).join("");
+  document.getElementById("premadeGrid").innerHTML=html;
+}
+
+function addPremeal(idx){
+  var m=PREMADE[idx];
+  var mk=getMealByTime();
+  m.foods.forEach(function(f){
+    var fd=findFood(f.name);if(!fd)return;
+    var r=f.g/100;
+    state.meals[mk].push({name:f.name,grams:f.g,kcal:fd.kcal*r,prot:fd.prot*r,carb:fd.carb*r,fat:fd.fat*r});
+  });
+  save();renderToday();showToast(m.name+" adicionado!","success");
+}
+
+function getMealByTime(){var h=new Date().getHours();if(h<10)return"cafe";if(h<13)return"almoco";if(h<18)return"lanche";return"jantar";}
+function findFood(name){var all=FOOD_DB.concat(state.customFoods||[]);return all.find(function(f){return f.name.toLowerCase()===name.toLowerCase();});}
+
+function setGoal(g){
+  state.goal=g;
+  document.getElementById("goal-mass").className="goal-btn"+(g==="mass"?" active":"");
+  document.getElementById("goal-cut").className="goal-btn"+(g==="cut"?" active":"");
+  save();renderToday();renderWeightTip();
+}
+
+function openAddFood(){
+  selectedFoodData=null;
+  document.getElementById("foodName").value="";
+  document.getElementById("foodQty").value="";
+  document.getElementById("foodKcalPreview").value="";
+  document.getElementById("foodSearch").value="";
+  document.getElementById("searchResults").style.display="none";
+  openModal("modalAddFood");
+}
+function selectMealType(type,el){
+  currentMealType=type;
+  document.querySelectorAll("#mealTypeChips .chip").forEach(function(c){c.classList.remove("active");});
+  el.classList.add("active");
+}
+function searchFoods(q){
+  var all=FOOD_DB.concat(state.customFoods||[]);
+  var res=q.length<1?[]:all.filter(function(f){return f.name.toLowerCase().indexOf(q.toLowerCase())>=0;}).slice(0,8);
+  var box=document.getElementById("searchResults");
+  if(!res.length){box.style.display="none";return;}
+  box.style.display="block";
+  box.innerHTML=res.map(function(f){
+    return "<div class='search-item' onclick='selectFood(\""+f.name.replace(/"/g,"'")+"\")'><div><div class='search-item-name'>"+f.name+"</div><div class='search-item-info'>P:"+f.prot+"g C:"+f.carb+"g G:"+f.fat+"g /100g</div></div><div class='search-item-info'>"+f.kcal+" kcal</div></div>";
+  }).join("");
+}
+function selectFood(name){
+  var all=FOOD_DB.concat(state.customFoods||[]);
+  selectedFoodData=all.find(function(f){return f.name===name;});
+  document.getElementById("foodName").value=name;
+  document.getElementById("foodSearch").value=name;
+  document.getElementById("searchResults").style.display="none";
+  document.getElementById("foodQty").value="100";
+  updateFoodPreview();
+}
+function updateFoodPreview(){
+  if(!selectedFoodData)return;
+  var g=parseFloat(document.getElementById("foodQty").value)||0;
+  document.getElementById("foodKcalPreview").value=Math.round(selectedFoodData.kcal*g/100)+" kcal";
+}
+function addFoodEntry(){
+  if(!selectedFoodData){showToast("Selecione um alimento","error");return;}
+  var grams=parseFloat(document.getElementById("foodQty").value)||0;
+  if(grams<=0){showToast("Informe a quantidade","error");return;}
+  var r=grams/100;
+  state.meals[currentMealType].push({name:selectedFoodData.name,grams:grams,kcal:selectedFoodData.kcal*r,prot:selectedFoodData.prot*r,carb:selectedFoodData.carb*r,fat:selectedFoodData.fat*r});
+  save();closeModal("modalAddFood");renderToday();
+  showToast(selectedFoodData.name+" adicionado!","success");
+}
+function openCustomFood(){closeModal("modalAddFood");["cfName","cfKcal","cfProt","cfCarb","cfFat"].forEach(function(id){document.getElementById(id).value="";}); openModal("modalCustomFood");}
+function saveCustomFood(){
+  var name=document.getElementById("cfName").value.trim();
+  var kcal=parseFloat(document.getElementById("cfKcal").value)||0;
+  if(!name||!kcal){showToast("Preencha nome e calorias","error");return;}
+  if(!state.customFoods)state.customFoods=[];
+  state.customFoods.push({name:name,icon:"custom",kcal:kcal,prot:parseFloat(document.getElementById("cfProt").value)||0,carb:parseFloat(document.getElementById("cfCarb").value)||0,fat:parseFloat(document.getElementById("cfFat").value)||0});
+  save();closeModal("modalCustomFood");showToast("Alimento cadastrado!","success");openAddFood();
+}
+
+function renderWater(){
+  var pct=Math.min(100,state.waterMl/state.waterGoal*100);
+  document.getElementById("waterCurrent").textContent=state.waterMl;
+  document.getElementById("waterRemaining").textContent=Math.max(0,state.waterGoal-state.waterMl);
+  document.getElementById("waterBar").style.width=pct+"%";
+  document.getElementById("waterPercent").textContent=Math.round(pct)+"% da meta";
+  var filled=state.waterMl;
+  var html="";
+  for(var i=0;i<8;i++){var f=filled>=250;if(f)filled-=250;html+="<div class='cup"+(f?" filled":"")+"' onclick='addWater(250)'><div class='cup-icon'>&#129380;</div><div class='cup-ml'>250ml</div></div>";}
+  document.getElementById("cupsGrid").innerHTML=html;
+}
+function addWater(ml){state.waterMl=Math.min(state.waterGoal*2,state.waterMl+ml);save();renderWater();renderToday();showToast("+"+ml+"ml","");}
+function resetWater(){state.waterMl=0;save();renderWater();renderToday();}
+function calcWaterGoal(){
+  var w=parseFloat(document.getElementById("waterWeightInput").value)||0;
+  var a=parseFloat(document.getElementById("waterActivityInput").value)||1.5;
+  if(w>0){
+    var meta=Math.round(w*35*a);
+    var el=document.getElementById("waterGoalResult");
+    el.innerHTML="<b style='color:#38bdf8'>Meta: "+meta+" ml/dia</b> - Toque para aplicar";
+    el.onclick=function(){state.waterGoal=meta;save();renderWater();showToast(T[currentLang].aguaAtualizada,"success");};
+  }
+}
+
+function renderDiet(){
+  var html=DIET_TYPES.map(function(d){return "<div class='diet-card"+(state.selectedDiet===d.id?" selected":"")+"' onclick='selectDiet(\""+d.id+"\")'><div class='diet-card-icon'>&#127860;</div><div class='diet-card-name'>"+d.name+"</div><div class='diet-card-desc'>"+d.desc+"</div></div>";}).join("");
+  document.getElementById("dietGrid").innerHTML=html;
+  var d=DIET_TYPES.find(function(x){return x.id===state.selectedDiet;});
+  if(d)document.getElementById("dietDetail").innerHTML="<div class='diet-detail'><div style='font-family:Syne,sans-serif;font-size:15px;font-weight:800;margin-bottom:9px;'>"+d.name+"</div>"+d.tips.map(function(t){return "<div class='diet-tip'><div class='diet-tip-icon'>&#10003;</div><div class='diet-tip-text'>"+t+"</div></div>";}).join("")+"</div>";
+}
+function selectDiet(id){state.selectedDiet=id;save();renderDiet();}
+
+function addWeight(){
+  var v=parseFloat(document.getElementById("weightInput").value);
+  if(!v||v<20||v>300){showToast(T[currentLang].pesoInvalido,"error");return;}
+  state.weights.unshift({date:todayKey(),val:v});
+  if(state.weights.length>90)state.weights.pop();
+  save();renderWeight();document.getElementById("weightInput").value="";
+  showToast(T[currentLang].pesoRegistrado,"success");
+}
+function renderWeight(){
+  var list=state.weights;
+  if(list.length){
+    document.getElementById("weightCurrent").textContent=list[0].val.toFixed(1);
+    if(list.length>1){var diff=(list[0].val-list[1].val).toFixed(1);document.getElementById("weightChange").innerHTML="<span style='color:"+(diff>0?"#e8834a":"#34d399")+"'>"+(diff>0?"+":"")+diff+" kg</span>";}
+  }
+  var html=list.slice(0,10).map(function(e){return "<div class='weight-entry'><div class='weight-entry-date'>"+e.date.slice(5)+"</div><div class='weight-entry-val'>"+e.val.toFixed(1)+" kg</div></div>";}).join("");
+  document.getElementById("weightList").innerHTML=html||"<div class='empty'><div class='empty-icon'>&#9878;</div><div class='empty-text'>Nenhum registro ainda</div></div>";
+  drawWeightChart();renderWeightTip();
+}
+function renderWeightTip(){
+  document.getElementById("weightTip").innerHTML=state.goal==="mass"?"Para ganho de massa o ideal e ganhar <b>0,5 a 1 kg por mes</b>. Mantenha um supravit de 200-400 kcal acima do TDEE.":"Para emagrecer de forma saudavel perca <b>0,5 a 1 kg por semana</b>. Deficit de 500 kcal por dia e sustentavel.";
+}
+function drawWeightChart(){
+  var canvas=document.getElementById("weightChart");if(!canvas)return;
+  var ctx=canvas.getContext("2d");
+  var data=state.weights.slice(0,14).reverse();
+  canvas.width=(canvas.offsetWidth||350)*2;canvas.height=300;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(data.length<2){ctx.fillStyle="#5a6270";ctx.font="24px DM Sans";ctx.textAlign="center";ctx.fillText("Registre ao menos 2 pesos",canvas.width/2,canvas.height/2);return;}
+  var vals=data.map(function(d){return d.val;});
+  var mn=Math.min.apply(null,vals)-1,mx=Math.max.apply(null,vals)+1;
+  var w=canvas.width,h=canvas.height,p=45;
+  var xf=function(i){return p+(i/(data.length-1))*(w-p*2);};
+  var yf=function(v){return h-p-(v-mn)/(mx-mn)*(h-p*2);};
+  var grad=ctx.createLinearGradient(0,0,0,h);grad.addColorStop(0,"rgba(240,180,41,0.3)");grad.addColorStop(1,"rgba(240,180,41,0)");
+  ctx.beginPath();ctx.moveTo(xf(0),yf(vals[0]));
+  data.forEach(function(_,i){if(i>0)ctx.lineTo(xf(i),yf(vals[i]));});
+  ctx.lineTo(xf(data.length-1),h-p);ctx.lineTo(xf(0),h-p);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+  ctx.beginPath();ctx.moveTo(xf(0),yf(vals[0]));
+  data.forEach(function(_,i){if(i>0)ctx.lineTo(xf(i),yf(vals[i]));});
+  ctx.strokeStyle="#f0b429";ctx.lineWidth=3;ctx.lineJoin="round";ctx.stroke();
+  data.forEach(function(_,i){ctx.beginPath();ctx.arc(xf(i),yf(vals[i]),5,0,Math.PI*2);ctx.fillStyle="#f0b429";ctx.fill();ctx.strokeStyle="#0a0c0f";ctx.lineWidth=2;ctx.stroke();});
+  ctx.fillStyle="#8b95a3";ctx.font="20px DM Sans";ctx.textAlign="center";
+  data.forEach(function(d,i){if(i%(Math.ceil(data.length/5))===0||i===data.length-1)ctx.fillText(d.date.slice(5),xf(i),h-8);});
+}
+
+function calcNeeds(){
+  var sex=document.getElementById("calcSex").value;
+  var age=parseFloat(document.getElementById("calcAge").value)||0;
+  var w=parseFloat(document.getElementById("calcWeight").value)||0;
+  var h=parseFloat(document.getElementById("calcHeight").value)||0;
+  var act=parseFloat(document.getElementById("calcActivity").value)||1.55;
+  if(!age||!w||!h){showToast("Preencha todos os campos","error");return;}
+  var tmb=sex==="m"?(10*w+6.25*h-5*age+5):(10*w+6.25*h-5*age-161);
+  var tdee=Math.round(tmb*act);
+  var goal=state.goal==="mass"?tdee+350:tdee-500;
+  var prot=Math.round(w*2.2),fat=Math.round(w*1.1);
+  var carb=Math.round((goal-(prot*4)-(fat*9))/4);
+  var el=document.getElementById("calcResult");el.style.display="block";
+  el.innerHTML="<div class='calc-result'><div style='font-family:Syne,sans-serif;font-size:13px;font-weight:700;color:#f0b429;margin-bottom:10px;'>Resultados</div><div class='calc-result-row'><span class='calc-result-label'>TMB</span><span class='calc-result-val'>"+Math.round(tmb)+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>TDEE</span><span class='calc-result-val'>"+tdee+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>Meta</span><span class='calc-result-val' style='color:#f0b429'>"+goal+" kcal</span></div><div style='margin-top:10px;padding-top:10px;border-top:1px solid #252b34;'><div class='calc-result-row'><span class='calc-result-label'>Proteina</span><span class='calc-result-val' style='color:#60a5fa'>"+prot+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>Gordura</span><span class='calc-result-val' style='color:#34d399'>"+fat+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>Carboidrato</span><span class='calc-result-val' style='color:#e8834a'>"+carb+"g</span></div></div></div><button class='btn btn-primary' onclick='applyCalcGoal("+goal+")'>Aplicar esta meta</button>";
+}
+function applyCalcGoal(kcal){state.calGoal=kcal;save();renderToday();showToast("Meta: "+kcal+" kcal aplicada!","success");switchTab("hoje",document.querySelector(".nav-item"));}
+
+function triggerCamera(){document.getElementById("cameraInput").click();}
+function triggerUpload(){document.getElementById("photoInput").click();}
+function handlePhoto(input){
+  var file=input.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var preview=document.getElementById("photoPreview");preview.src=e.target.result;preview.style.display="block";
+    document.getElementById("aiResultBox").style.display="none";
+    analyzePhoto(e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+function analyzePhoto(dataUrl){
+  if(!state.apiKey){showToast("Configure a chave API","error");return;}
+  document.getElementById("aiLoading").style.display="block";
+  document.getElementById("aiResultBox").style.display="none";
+  var base64=dataUrl.split(",")[1];
+  var mtype=dataUrl.split(";")[0].split(":")[1]||"image/jpeg";
+  fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-calls":"true"},
+    body:JSON.stringify({model:"claude-opus-4-6",max_tokens:1024,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:"Analise esta foto de alimento. Responda SOMENTE com JSON: {\"descricao\":\"desc\",\"alimentos\":[{\"nome\":\"nome\",\"gramas\":100,\"kcal\":200,\"prot\":10,\"carb\":20,\"fat\":8}],\"total_kcal\":400}"}]}]})
+  }).then(function(r){return r.json();}).then(function(data){
+    document.getElementById("aiLoading").style.display="none";
+    if(data.error){showToast("Erro: "+data.error.message,"error");return;}
+    var text=data.content[0].text;
+    var m=text.match(/\{[\s\S]*\}/);
+    if(!m){showToast("Nao foi possivel analisar","error");return;}
+    aiResultData=JSON.parse(m[0]);renderAiResult(aiResultData);
+  }).catch(function(e){document.getElementById("aiLoading").style.display="none";showToast("Erro: "+e.message,"error");});
+}
+function renderAiResult(d){
+  document.getElementById("aiDescription").textContent=d.descricao||"";
+  document.getElementById("aiFoodList").innerHTML=(d.alimentos||[]).map(function(f){return "<div class='ai-food-item'><div><div class='ai-food-name'>"+f.nome+"</div><div class='ai-food-macros'>~"+f.gramas+"g - P:"+f.prot+"g C:"+f.carb+"g G:"+f.fat+"g</div></div><div class='ai-food-kcal'>"+f.kcal+" kcal</div></div>";}).join("");
+  document.getElementById("aiTotalKcal").textContent=(d.total_kcal||0)+" kcal";
+  document.getElementById("aiResultBox").style.display="block";
+}
+function addAiResult(){
+  if(!aiResultData)return;
+  var mk=getMealByTime();
+  (aiResultData.alimentos||[]).forEach(function(f){state.meals[mk].push({name:f.nome,grams:f.gramas,kcal:f.kcal,prot:f.prot,carb:f.carb,fat:f.fat});});
+  save();renderToday();showToast("Adicionado ao registro!","success");switchTab("hoje",null);
+}
+
+function renderHistory(){
+  var keys=Object.keys(state.history||{}).sort().reverse().slice(0,14);
+  if(!keys.length){document.getElementById("histList").innerHTML="<div class='empty'><div class='empty-icon'>&#128197;</div><div class='empty-text'>Nenhum historico ainda</div></div>";return;}
+  document.getElementById("histList").innerHTML=keys.map(function(k){
+    var d=state.history[k];var pct=Math.min(100,(d.kcal/state.calGoal)*100);
+    return "<div class='history-day'><div class='history-day-date'>"+k.slice(5)+"</div><div class='history-day-bar-wrap'><div class='history-day-bar'><div class='history-day-bar-fill' style='width:"+pct+"%'></div></div><div style='font-size:10px;color:#5a6270;'>P:"+d.prot+"g C:"+d.carb+"g G:"+d.fat+"g</div></div><div class='history-day-kcal'>"+d.kcal+" kcal</div></div>";
+  }).join("");
+  drawHistChart(keys.slice(0,7).reverse());
+}
+function drawHistChart(keys){
+  var canvas=document.getElementById("histChart");if(!canvas)return;
+  canvas.width=(canvas.offsetWidth||350)*2;canvas.height=260;
+  var ctx=canvas.getContext("2d");ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(!keys.length)return;
+  var data=keys.map(function(k){return state.history[k]?state.history[k].kcal:0;});
+  var mx=Math.max(state.calGoal,Math.max.apply(null,data))*1.1;
+  var w=canvas.width,h=canvas.height,p=38;
+  var bw=(w-p*2)/data.length*0.6,gap=(w-p*2)/data.length;
+  data.forEach(function(v,i){
+    var x=p+i*gap+(gap-bw)/2,bh=(v/mx)*(h-p*2),by=h-p-bh;
+    var gr=ctx.createLinearGradient(0,by,0,h-p);gr.addColorStop(0,"#f0b429");gr.addColorStop(1,"rgba(232,131,74,0.4)");
+    ctx.fillStyle=gr;ctx.beginPath();ctx.rect(x,by,bw,bh);ctx.fill();
+    ctx.fillStyle="#8b95a3";ctx.font="18px DM Sans";ctx.textAlign="center";ctx.fillText(keys[i].slice(5),x+bw/2,h-6);
+  });
+}
+
+function openSettings(){
+  document.getElementById("settingsCalGoal").value=state.calGoal||3000;
+  document.getElementById("settingsWaterGoal").value=state.waterGoal||2500;
+  document.getElementById("settingsApiKey").value=state.apiKey||"";
+  openModal("modalSettings");
+}
+function saveSettings(){
+  state.calGoal=parseInt(document.getElementById("settingsCalGoal").value)||3000;
+  var k=document.getElementById("settingsApiKey").value.trim();
+  if(k) state.apiKey=k;
+  state.waterGoal=parseInt(document.getElementById("settingsWaterGoal").value)||2500;
+  save();closeModal("modalSettings");renderToday();renderWater();
+  showToast("Configuracoes salvas!","success");
+}
+function openProfile(){
+  var p=state.profile||{};
+  document.getElementById("profName").value=p.name||"";document.getElementById("profWeight").value=p.weight||"";
+  document.getElementById("profHeight").value=p.height||"";document.getElementById("profAge").value=p.age||"";
+  document.getElementById("profSex").value=p.sex||"m";
+  openModal("modalProfile");
+}
+function saveProfile(){
+  state.profile={name:document.getElementById("profName").value.trim(),weight:parseFloat(document.getElementById("profWeight").value)||0,height:parseFloat(document.getElementById("profHeight").value)||0,age:parseInt(document.getElementById("profAge").value)||0,sex:document.getElementById("profSex").value};
+  save();closeModal("modalProfile");showToast("Perfil salvo!","success");
+}
+
+function openModal(id){document.getElementById(id).classList.add("open");}
+function closeModal(id){document.getElementById(id).classList.remove("open");}
+document.querySelectorAll(".modal-overlay").forEach(function(el){el.addEventListener("click",function(e){if(e.target===el)closeModal(el.id);});});
+
+function switchTab(name,navEl){
+  document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active");});
+  document.getElementById("tab-"+name).classList.add("active");
+  document.querySelectorAll(".nav-item").forEach(function(n){n.classList.remove("active");});
+  if(navEl)navEl.classList.add("active");
+  document.getElementById("content").scrollTop=0;
+  if(name==="agua")renderWater();
+  if(name==="dieta")renderDiet();
+  if(name==="peso")renderWeight();
+  if(name==="hist")renderHistory();
+}
+
+var toastTimer;
+function showToast(msg,type){
+  var t=document.getElementById("toast");
+  t.textContent=msg;t.className="toast"+(type?" "+type:"");
+  clearTimeout(toastTimer);
+  setTimeout(function(){t.classList.add("show");},10);
+  toastTimer=setTimeout(function(){t.classList.remove("show");},2600);
+}
+
+function init(){
+  load();
+  if(state.lang){currentLang=state.lang;setLang(state.lang);}else{renderToday();}
+  document.getElementById("goal-mass").className="goal-btn"+(state.goal==="mass"?" active":"");
+  document.getElementById("goal-cut").className="goal-btn"+(state.goal==="cut"?" active":"");
+}
+init();
+</script>
+</body>
+</html>
