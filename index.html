@@ -391,7 +391,7 @@ canvas{width:100%!important;border-radius:10px;}
     <div class="modal-title">Configuracoes</div>
     <div class="input-group"><div class="input-label">Meta calorica diaria (kcal)</div><input type="number" class="input" id="settingsCalGoal" placeholder="Ex: 3200"></div>
     <div class="input-group"><div class="input-label">Meta de agua (ml)</div><input type="number" class="input" id="settingsWaterGoal" placeholder="Ex: 2500"></div>
-    <div class="input-group"><div class="input-label">Chave API Anthropic</div><input type="password" class="input" id="settingsApiKey" placeholder="Cole sua chave API aqui"></div>
+    <div class="input-group"><div class="input-label">Chave API Anthropic</div><input type="password" class="input" id="settingsApiKey" placeholder="sk-ant-api03-..."><div style="font-size:11px;color:#888;margin-top:4px;">Necessaria para identificar alimentos por foto. Obtenha em: console.anthropic.com</div></div>
     <button class="btn btn-primary" onclick="saveSettings()">Salvar</button>
   </div>
 </div>
@@ -801,7 +801,7 @@ function handlePhoto(input){
   reader.readAsDataURL(file);
 }
 function analyzePhoto(dataUrl){
-  if(!state.apiKey){showToast("Configure a chave API","error");return;}
+  if(!state.apiKey){showToast("Configure sua chave API em Configuracoes ⚙️","error");openSettings();return;}
   document.getElementById("aiLoading").style.display="block";
   document.getElementById("aiResultBox").style.display="none";
   var base64=dataUrl.split(",")[1];
