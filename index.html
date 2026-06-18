@@ -803,29 +803,35 @@ function triggerCamera(){document.getElementById("cameraInput").click();}
 function triggerUpload(){document.getElementById("photoInput").click();}
 function handlePhoto(input){
   var file=input.files[0];if(!file)return;
-  var reader=new FileReader();
-  reader.onerror=function(){showToast("Erro ao ler a foto. Tente novamente.","error");};
-  reader.onload=function(e){
-    var img=new Image();
-    img.onerror=function(){showToast("Erro ao carregar imagem.","error");};
-    img.onload=function(){
-      // Comprime para max 1024px e qualidade 0.8 — resolve o "Load Failed" do Safari
+  input.value="";
+  // Usa createObjectURL — muito mais estavel no Safari iOS que FileReader com fotos grandes
+  var objectUrl=URL.createObjectURL(file);
+  var img=new Image();
+  img.onerror=function(){
+    URL.revokeObjectURL(objectUrl);
+    showToast("Erro ao carregar foto. Tente novamente.","error");
+  };
+  img.onload=function(){
+    try{
       var MAX=1024;
-      var w=img.width,h=img.height;
+      var w=img.naturalWidth||img.width,h=img.naturalHeight||img.height;
       if(w>MAX||h>MAX){if(w>h){h=Math.round(h*MAX/w);w=MAX;}else{w=Math.round(w*MAX/h);h=MAX;}}
       var canvas=document.createElement("canvas");
       canvas.width=w;canvas.height=h;
       var ctx=canvas.getContext("2d");
       ctx.drawImage(img,0,0,w,h);
-      var compressed=canvas.toDataURL("image/jpeg",0.82);
+      URL.revokeObjectURL(objectUrl);
+      var compressed=canvas.toDataURL("image/jpeg",0.8);
       var preview=document.getElementById("photoPreview");
       preview.src=compressed;preview.style.display="block";
       document.getElementById("aiResultBox").style.display="none";
       analyzePhoto(compressed);
-    };
-    img.src=e.target.result;
+    }catch(err){
+      URL.revokeObjectURL(objectUrl);
+      showToast("Erro ao processar foto: "+err.message,"error");
+    }
   };
-  reader.readAsDataURL(file);
+  img.src=objectUrl;
 }
 function checkApiKeyBanner(){
   var banner=document.getElementById("apiKeyBanner");
