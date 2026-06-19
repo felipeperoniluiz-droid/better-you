@@ -982,6 +982,64 @@ function init(){
   document.getElementById("goal-cut").className="goal-btn"+(state.goal==="cut"?" active":"");
 }
 init();
+
+// ── NOTIFICAÇÕES INTELIGENTES ──────────────────────────────
+var _swReg = null;
+
+function initNotifications() {
+  if (!('serviceWorker' in navigator) || !('Notification' in window)) return;
+  navigator.serviceWorker.register('/better-you/sw.js').then(function(reg) {
+    _swReg = reg;
+    // Pede permissão se ainda não foi dada
+    if (Notification.permission === 'default') {
+      setTimeout(function() {
+        Notification.requestPermission().then(function(perm) {
+          if (perm === 'granted') {
+            agendarLembretes();
+            showToast('Notificações ativadas! 🔔', 'success');
+          }
+        });
+      }, 3000);
+    } else if (Notification.permission === 'granted') {
+      agendarLembretes();
+    }
+  }).catch(function(e) { console.log('SW erro:', e); });
+}
+
+function agendarLembretes() {
+  if (!_swReg || !_swReg.active) {
+    setTimeout(agendarLembretes, 1000);
+    return;
+  }
+  var agora = new Date();
+  var hora = agora.getHours();
+  // Horários dos lembretes: 8h, 10h, 12h, 14h, 16h, 18h, 20h
+  var horarios = [8, 10, 12, 14, 16, 18, 20];
+  horarios.forEach(function(h) {
+    if (h <= hora) return; // Só agenda horários futuros
+    var alvo = new Date();
+    alvo.setHours(h, 0, 0, 0);
+    var delay = alvo.getTime() - agora.getTime();
+    var t = calcTotals();
+    var aguaFalta = Math.max(0, state.waterGoal - state.waterMl);
+    var calFalta  = Math.max(0, state.calGoal - t.kcal);
+    var msgs = [];
+    if (aguaFalta > 150) msgs.push('💧 Faltam ' + aguaFalta + ' ml de água');
+    if (calFalta > 100 && state.goal === 'mass') msgs.push('🍽️ Faltam ' + calFalta + ' kcal para ganhar massa');
+    if (calFalta > 100 && state.goal === 'cut')  msgs.push('🔥 Faltam ' + calFalta + ' kcal — mantenha o déficit!');
+    if (msgs.length === 0) msgs.push('✅ Você está arrasando hoje!');
+    _swReg.active.postMessage({
+      type: 'SCHEDULE',
+      delay: delay,
+      tag: 'lembrete-' + h,
+      title: 'Better You 💪',
+      body: msgs.join('\n')
+    });
+  });
+}
+
+// Chama ao abrir o app
+setTimeout(initNotifications, 1500);
 </script>
 </body>
 </html>
