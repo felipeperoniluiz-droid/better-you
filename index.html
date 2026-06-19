@@ -851,9 +851,9 @@ function analyzePhoto(dataUrl){
   var base64=dataUrl.split(",")[1];
   var mtype=dataUrl.split(";")[0].split(":")[1]||"image/jpeg";
   var prompt="Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto com precisao.\n\nIdentifique TODOS os alimentos e bebidas visiveis. Para cada item, estime a quantidade em gramas (ou ml para bebidas) com base no tamanho visual do prato/recipiente.\n\nResponda SOMENTE com JSON valido, sem texto adicional:\n{\"descricao\":\"descricao detalhada do que ve na foto\",\"alimentos\":[{\"nome\":\"nome do alimento\",\"gramas\":150,\"kcal\":200,\"prot\":10,\"carb\":20,\"fat\":8}],\"liquidos\":[{\"nome\":\"nome da bebida\",\"ml\":300,\"kcal\":50}],\"total_kcal\":400,\"total_ml\":300}\n\nSe nao houver liquidos, use liquidos:[]. Se nao houver alimentos solidos, use alimentos:[]. Seja preciso nas calorias usando valores nutricionais reais.";
-  fetch("https://api.anthropic.com/v1/messages",{
+  fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
     method:"POST",
-    headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-calls":"true"},
+    headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
     body:JSON.stringify({model:"claude-opus-4-6",max_tokens:1500,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:prompt}]}]})
   }).then(function(r){return r.json();}).then(function(data){
     document.getElementById("aiLoading").style.display="none";
