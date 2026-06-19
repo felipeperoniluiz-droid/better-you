@@ -159,6 +159,21 @@ canvas{width:100%!important;border-radius:10px;}
 .empty-text{font-size:13px;}
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-thumb{background:#252b34;border-radius:99px;}
+/* ── SPLASH ── */
+#splash{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .7s ease;}
+@keyframes splashPop{from{transform:scale(.65);opacity:0;}to{transform:scale(1);opacity:1;}}
+.splash-img{animation:splashPop .55s cubic-bezier(.34,1.56,.64,1) forwards;}
+@keyframes splashFade{from{opacity:0;}to{opacity:.75;}}
+.splash-sub{animation:splashFade .7s .4s both;}
+/* ── PERFIL FOTO ── */
+.prof-avatar-wrap{display:flex;justify-content:center;margin-bottom:4px;}
+.prof-avatar{width:82px;height:82px;border-radius:50%;border:2.5px solid #f0b429;cursor:pointer;background:#181c22;display:flex;align-items:center;justify-content:center;font-size:34px;overflow:hidden;transition:.2s;}
+.prof-avatar:active{transform:scale(.94);}
+.prof-avatar-label{text-align:center;font-size:11px;color:#8b95a3;margin-top:5px;cursor:pointer;}
+/* ── TDEE BOX ── */
+.tdee-box{background:#181c22;border:1px solid #252b34;border-radius:12px;padding:10px 14px;margin:8px 0 2px;}
+.tdee-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:13px;}
+.tdee-val{font-weight:700;font-size:13px;}
 </style>
 </head>
 <body>
@@ -171,7 +186,7 @@ canvas{width:100%!important;border-radius:10px;}
     <button onclick="setLang('es')" id="lang-es" class="lang-btn">ES</button>
   </div>
   <div class="header-actions">
-    <div class="icon-btn" onclick="openProfile()">&#128100;</div>
+    <div class="icon-btn" id="headerProfileBtn" onclick="openProfile()">&#128100;</div>
     <div class="icon-btn" onclick="openSettings()">&#9881;</div>
   </div>
 </div>
@@ -411,16 +426,42 @@ canvas{width:100%!important;border-radius:10px;}
   <div class="modal">
     <div class="modal-handle" onclick="closeModal('modalProfile')"></div>
     <div class="modal-title">Perfil</div>
+    <!-- Avatar -->
+    <div class="prof-avatar-wrap">
+      <div>
+        <div class="prof-avatar" id="profAvatarDisplay" onclick="document.getElementById('profPhotoInput').click()">&#128100;</div>
+        <div class="prof-avatar-label">Toque para alterar foto</div>
+        <input type="file" id="profPhotoInput" accept="image/*" style="display:none" onchange="handleProfilePhoto(this)">
+      </div>
+    </div>
+    <!-- Dados pessoais -->
     <div class="input-group"><div class="input-label">Nome</div><input type="text" class="input" id="profName" placeholder="Seu nome"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-      <div class="input-group"><div class="input-label">Peso (kg)</div><input type="number" class="input" id="profWeight" placeholder="75" step="0.1"></div>
-      <div class="input-group"><div class="input-label">Altura (cm)</div><input type="number" class="input" id="profHeight" placeholder="175"></div>
+      <div class="input-group"><div class="input-label">Peso (kg)</div><input type="number" class="input" id="profWeight" placeholder="75" step="0.1" oninput="updateTDEEPreview()"></div>
+      <div class="input-group"><div class="input-label">Altura (cm)</div><input type="number" class="input" id="profHeight" placeholder="175" oninput="updateTDEEPreview()"></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-      <div class="input-group"><div class="input-label">Idade</div><input type="number" class="input" id="profAge" placeholder="25"></div>
-      <div class="input-group"><div class="input-label">Sexo</div><select class="input" id="profSex"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
+      <div class="input-group"><div class="input-label">Idade</div><input type="number" class="input" id="profAge" placeholder="25" oninput="updateTDEEPreview()"></div>
+      <div class="input-group"><div class="input-label">Sexo</div><select class="input" id="profSex" onchange="updateTDEEPreview()"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
     </div>
-    <button class="btn btn-primary" onclick="saveProfile()">Salvar Perfil</button>
+    <!-- Nível de atividade -->
+    <div class="input-group"><div class="input-label">Nível de Atividade</div>
+      <select class="input" id="profActivity" onchange="updateTDEEPreview()">
+        <option value="1.2">Sedentário (sem exercício)</option>
+        <option value="1.375">Leve (1-3x por semana)</option>
+        <option value="1.55">Moderado (3-5x por semana)</option>
+        <option value="1.725">Ativo (6-7x por semana)</option>
+        <option value="1.9">Muito Ativo (2x ao dia)</option>
+      </select>
+    </div>
+    <!-- Prévia TDEE -->
+    <div class="tdee-box" id="tdeeBox" style="display:none">
+      <div class="tdee-row"><span style="color:#8b95a3;">Metabolismo Basal (TMB)</span><span class="tdee-val" id="tmbVal" style="color:#f0b429;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;">Gasto Total (TDEE)</span><span class="tdee-val" id="tdeeVal" style="color:#f0b429;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;">Meta de Calorias</span><span class="tdee-val" id="goalKcalVal" style="color:#34d399;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;">Meta de Água</span><span class="tdee-val" id="goalWaterVal" style="color:#38bdf8;">-</span></div>
+    </div>
+    <button class="btn btn-primary" onclick="saveProfile()">Salvar e Aplicar Metas</button>
   </div>
 </div>
 
@@ -937,16 +978,100 @@ function saveSettings(){
   save();closeModal("modalSettings");renderToday();renderWater();
   showToast("Configuracoes salvas!","success");
 }
+// ── CÁLCULO TDEE (Mifflin-St Jeor) ──────────────────────────
+function calcTDEE(weight,height,age,sex,activity){
+  if(!weight||!height||!age)return null;
+  var bmr=sex==='f'?(10*weight+6.25*height-5*age-161):(10*weight+6.25*height-5*age+5);
+  return{bmr:Math.round(bmr),tdee:Math.round(bmr*(activity||1.55))};
+}
+
+function updateTDEEPreview(){
+  var w=parseFloat(document.getElementById('profWeight').value)||0;
+  var h=parseFloat(document.getElementById('profHeight').value)||0;
+  var a=parseInt(document.getElementById('profAge').value)||0;
+  var sex=document.getElementById('profSex').value;
+  var act=parseFloat(document.getElementById('profActivity').value)||1.55;
+  var box=document.getElementById('tdeeBox');
+  if(!w||!h||!a){box.style.display='none';return;}
+  box.style.display='block';
+  var r=calcTDEE(w,h,a,sex,act);
+  var goalKcal=state.goal==='mass'?r.tdee+300:(state.goal==='cut'?r.tdee-500:r.tdee);
+  var goalWater=Math.round(w*35);
+  document.getElementById('tmbVal').textContent=r.bmr+' kcal';
+  document.getElementById('tdeeVal').textContent=r.tdee+' kcal';
+  document.getElementById('goalKcalVal').textContent=goalKcal+' kcal';
+  document.getElementById('goalWaterVal').textContent=goalWater+' ml';
+}
+
+// ── FOTO DE PERFIL ────────────────────────────────────────────
+function handleProfilePhoto(input){
+  var file=input.files[0];if(!file)return;
+  var url=URL.createObjectURL(file);
+  var img=new Image();
+  img.onload=function(){
+    var canvas=document.createElement('canvas');
+    var size=200;canvas.width=size;canvas.height=size;
+    var ctx=canvas.getContext('2d');
+    var min=Math.min(img.width,img.height);
+    var sx=(img.width-min)/2,sy=(img.height-min)/2;
+    ctx.drawImage(img,sx,sy,min,min,0,0,size,size);
+    URL.revokeObjectURL(url);
+    var data=canvas.toDataURL('image/jpeg',0.75);
+    if(!state.profile)state.profile={};
+    state.profile.photo=data;
+    renderProfileAvatar(data);
+  };
+  img.src=url;
+}
+
+function renderProfileAvatar(data){
+  var d=document.getElementById('profAvatarDisplay');
+  if(d){d.innerHTML=data?'<img src="'+data+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">':'&#128100;';}
+  var hb=document.getElementById('headerProfileBtn');
+  if(hb){
+    if(data)hb.innerHTML='<img src="'+data+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:2px solid #f0b429;">';
+    else hb.innerHTML='&#128100;';
+  }
+}
+
+// ── PERFIL ────────────────────────────────────────────────────
 function openProfile(){
   var p=state.profile||{};
-  document.getElementById("profName").value=p.name||"";document.getElementById("profWeight").value=p.weight||"";
-  document.getElementById("profHeight").value=p.height||"";document.getElementById("profAge").value=p.age||"";
+  document.getElementById("profName").value=p.name||"";
+  document.getElementById("profWeight").value=p.weight||"";
+  document.getElementById("profHeight").value=p.height||"";
+  document.getElementById("profAge").value=p.age||"";
   document.getElementById("profSex").value=p.sex||"m";
+  document.getElementById("profActivity").value=p.activity||"1.55";
+  renderProfileAvatar(p.photo||null);
+  updateTDEEPreview();
   openModal("modalProfile");
 }
+
 function saveProfile(){
-  state.profile={name:document.getElementById("profName").value.trim(),weight:parseFloat(document.getElementById("profWeight").value)||0,height:parseFloat(document.getElementById("profHeight").value)||0,age:parseInt(document.getElementById("profAge").value)||0,sex:document.getElementById("profSex").value};
-  save();closeModal("modalProfile");showToast("Perfil salvo!","success");
+  var w=parseFloat(document.getElementById("profWeight").value)||0;
+  var h=parseFloat(document.getElementById("profHeight").value)||0;
+  var a=parseInt(document.getElementById("profAge").value)||0;
+  var sex=document.getElementById("profSex").value;
+  var act=parseFloat(document.getElementById("profActivity").value)||1.55;
+  var photo=(state.profile&&state.profile.photo)||null;
+  state.profile={
+    name:document.getElementById("profName").value.trim(),
+    weight:w,height:h,age:a,sex:sex,activity:act,photo:photo
+  };
+  // Auto-calcular e aplicar metas
+  if(w&&h&&a){
+    var r=calcTDEE(w,h,a,sex,act);
+    var goalKcal=state.goal==='mass'?r.tdee+300:(state.goal==='cut'?r.tdee-500:r.tdee);
+    state.calGoal=goalKcal;
+    state.waterGoal=Math.round(w*35);
+  }
+  save();
+  renderProfileAvatar(photo);
+  renderToday();
+  closeModal("modalProfile");
+  var nome=state.profile.name?', '+state.profile.name+'!':'!';
+  showToast("Perfil salvo"+nome,"success");
 }
 
 function openModal(id){document.getElementById(id).classList.add("open");}
@@ -980,8 +1105,27 @@ function init(){
   if(state.lang){currentLang=state.lang;setLang(state.lang);}else{renderToday();}
   document.getElementById("goal-mass").className="goal-btn"+(state.goal==="mass"?" active":"");
   document.getElementById("goal-cut").className="goal-btn"+(state.goal==="cut"?" active":"");
+  // Restaurar avatar no header se perfil tem foto
+  if(state.profile&&state.profile.photo){
+    setTimeout(function(){renderProfileAvatar(state.profile.photo);},50);
+  }
 }
 init();
+
+// ── SPLASH SCREEN ─────────────────────────────────────────────
+(function(){
+  var logoSrc=document.getElementById('app-logo').src;
+  var splash=document.createElement('div');
+  splash.id='splash';
+  splash.innerHTML=
+    '<img src="'+logoSrc+'" class="splash-img" style="height:84px;width:auto;object-fit:contain;">'+
+    '<div class="splash-sub" style="color:#f0b429;font-family:\'Syne\',sans-serif;font-size:11px;font-weight:700;letter-spacing:3.5px;margin-top:18px;">BETTER YOU</div>';
+  document.body.appendChild(splash);
+  setTimeout(function(){
+    splash.style.opacity='0';
+    setTimeout(function(){splash.remove();},750);
+  },2300);
+})();
 
 // ── NOTIFICAÇÕES INTELIGENTES ──────────────────────────────
 var _swReg = null;
