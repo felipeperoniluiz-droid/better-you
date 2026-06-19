@@ -193,6 +193,14 @@ canvas{width:100%!important;border-radius:10px;}
 
 <!-- TAB HOJE -->
 <div class="tab active" id="tab-hoje">
+  <!-- Saudação com foto do perfil -->
+  <div id="homeGreeting" style="display:none;align-items:center;gap:13px;padding:14px 0 4px;">
+    <div id="homeAvatar" onclick="openProfile()" style="width:52px;height:52px;border-radius:50%;border:2.5px solid #f0b429;background:#181c22;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;flex-shrink:0;cursor:pointer;">&#128100;</div>
+    <div style="flex:1;min-width:0;">
+      <div id="homeGreetName" style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+      <div id="homeGreetGoal" style="font-size:12px;color:#8b95a3;margin-top:2px;"></div>
+    </div>
+  </div>
   <div class="goal-toggle">
     <button class="goal-btn active" id="goal-mass" onclick="setGoal('mass')">&#128170; Ganhar Massa</button>
     <button class="goal-btn" id="goal-cut" onclick="setGoal('cut')">&#128293; Emagrecer</button>
@@ -295,10 +303,14 @@ canvas{width:100%!important;border-radius:10px;}
     <button class="btn btn-ghost btn-sm" style="margin-top:7px;width:100%;" onclick="resetWater()">Zerar agua</button>
   </div>
   <div class="card">
-    <div class="card-title">Meta diaria</div>
-    <div class="input-group"><div class="input-label">Peso (kg)</div><input type="number" class="input" id="waterWeightInput" placeholder="Ex: 75" oninput="calcWaterGoal()"></div>
-    <div class="input-group"><div class="input-label">Nivel de atividade</div><select class="input" id="waterActivityInput" onchange="calcWaterGoal()"><option value="1">Sedentario</option><option value="1.2">Levemente ativo</option><option value="1.5" selected>Moderado</option><option value="1.8">Muito ativo</option></select></div>
-    <div id="waterGoalResult" style="font-size:13px;color:#8b95a3;cursor:pointer;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Meta diária</div>
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#38bdf8;" id="waterGoalDisplay"><span id="waterGoalVal">2500</span> ml</div>
+        <div style="font-size:11px;color:#8b95a3;margin-top:2px;" id="waterGoalBasis">Calculado pelo seu perfil</div>
+      </div>
+      <button class="icon-btn" onclick="openProfile()" style="flex-shrink:0;">&#128100;</button>
+    </div>
   </div>
 </div>
 
@@ -619,7 +631,29 @@ function calcTotals(){
 }
 function getMacroGoals(){var k=state.calGoal;return {prot:Math.round(k*0.3/4),carb:Math.round(k*0.45/4),fat:Math.round(k*0.25/9)};}
 
+function renderHomeGreeting(){
+  var p=state.profile||{};
+  var el=document.getElementById('homeGreeting');
+  if(!el)return;
+  if(p.name||p.photo){
+    el.style.display='flex';
+    var nameEl=document.getElementById('homeGreetName');
+    var goalEl=document.getElementById('homeGreetGoal');
+    var avEl=document.getElementById('homeAvatar');
+    if(nameEl)nameEl.textContent=p.name?'Olá, '+p.name+'! 👋':'Bem-vindo!';
+    if(goalEl){
+      var gLabel=state.goal==='mass'?'🏋️ Ganhar Massa':state.goal==='cut'?'🔥 Emagrecer':'⚖️ Manter Peso';
+      goalEl.textContent=gLabel+' · Meta: '+state.calGoal+' kcal';
+    }
+    if(avEl){
+      if(p.photo)avEl.innerHTML='<img src="'+p.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+      else avEl.innerHTML='&#128100;';
+    }
+  }else{el.style.display='none';}
+}
+
 function renderToday(){
+  renderHomeGreeting();
   var t=calcTotals(),g=getMacroGoals();
   var pct=Math.min(t.kcal/state.calGoal,1);
   var circ=2*Math.PI*74;
@@ -760,19 +794,18 @@ function renderWater(){
   var html="";
   for(var i=0;i<8;i++){var f=filled>=250;if(f)filled-=250;html+="<div class='cup"+(f?" filled":"")+"' onclick='addWater(250)'><div class='cup-icon'>&#129380;</div><div class='cup-ml'>250ml</div></div>";}
   document.getElementById("cupsGrid").innerHTML=html;
+  // Atualiza card de meta com dados do perfil
+  var gv=document.getElementById("waterGoalVal");
+  var gb=document.getElementById("waterGoalBasis");
+  if(gv) gv.textContent=state.waterGoal;
+  if(gb){
+    var p=state.profile||{};
+    gb.textContent=p.weight?p.weight+"kg × 35ml = "+state.waterGoal+"ml/dia":"Configure seu perfil para cálculo automático";
+  }
 }
 function addWater(ml){state.waterMl=Math.min(state.waterGoal*2,state.waterMl+ml);save();renderWater();renderToday();showToast("+"+ml+"ml","");}
 function resetWater(){state.waterMl=0;save();renderWater();renderToday();}
-function calcWaterGoal(){
-  var w=parseFloat(document.getElementById("waterWeightInput").value)||0;
-  var a=parseFloat(document.getElementById("waterActivityInput").value)||1.5;
-  if(w>0){
-    var meta=Math.round(w*35*a);
-    var el=document.getElementById("waterGoalResult");
-    el.innerHTML="<b style='color:#38bdf8'>Meta: "+meta+" ml/dia</b> - Toque para aplicar";
-    el.onclick=function(){state.waterGoal=meta;save();renderWater();showToast(T[currentLang].aguaAtualizada,"success");};
-  }
-}
+function calcWaterGoal(){} // Migrado para o Perfil
 
 function renderDiet(){
   var html=DIET_TYPES.map(function(d){return "<div class='diet-card"+(state.selectedDiet===d.id?" selected":"")+"' onclick='selectDiet(\""+d.id+"\")'><div class='diet-card-icon'>&#127860;</div><div class='diet-card-name'>"+d.name+"</div><div class='diet-card-desc'>"+d.desc+"</div></div>";}).join("");
@@ -979,6 +1012,8 @@ function calcTDEE(weight,height,age,sex,activity){
 function updateTDEEPreview(){
   var w=parseFloat(document.getElementById('profWeight').value)||0;
   var h=parseFloat(document.getElementById('profHeight').value)||0;
+  // Auto-detectar altura em metros (ex: 1.86 → 186)
+  if(h>0&&h<3){h=Math.round(h*100);document.getElementById('profHeight').value=h;}
   var a=parseInt(document.getElementById('profAge').value)||0;
   var sex=document.getElementById('profSex').value;
   var act=parseFloat(document.getElementById('profActivity').value)||1.55;
@@ -1010,8 +1045,12 @@ function handleProfilePhoto(input){
     var data=canvas.toDataURL('image/jpeg',0.75);
     if(!state.profile)state.profile={};
     state.profile.photo=data;
+    save(); // salva foto imediatamente
     renderProfileAvatar(data);
+    renderHomeGreeting(); // atualiza saudação na tela Hoje
+    showToast("Foto salva! ✓","success");
   };
+  img.onerror=function(){URL.revokeObjectURL(url);showToast("Erro ao carregar foto","error");};
   img.src=url;
 }
 
@@ -1057,6 +1096,7 @@ function openProfile(){
 function saveProfile(){
   var w=parseFloat(document.getElementById("profWeight").value)||0;
   var h=parseFloat(document.getElementById("profHeight").value)||0;
+  if(h>0&&h<3)h=Math.round(h*100); // metros → cm
   var a=parseInt(document.getElementById("profAge").value)||0;
   var sex=document.getElementById("profSex").value;
   var act=parseFloat(document.getElementById("profActivity").value)||1.55;
