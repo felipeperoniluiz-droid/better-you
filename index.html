@@ -138,12 +138,18 @@ canvas{width:100%!important;border-radius:10px;}
 .dot:nth-child(2){animation-delay:.16s;}
 .dot:nth-child(3){animation-delay:.32s;}
 @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-.history-day{background:#181c22;border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:7px;display:flex;align-items:center;gap:10px;}
-.history-day-date{font-size:11px;color:#8b95a3;min-width:55px;}
-.history-day-bar-wrap{flex:1;}
-.history-day-bar{height:5px;background:#1e2229;border-radius:99px;overflow:hidden;margin-bottom:3px;}
-.history-day-bar-fill{height:100%;background:linear-gradient(90deg,#f0b429,#e8834a);border-radius:99px;}
-.history-day-kcal{font-size:12px;font-weight:700;color:#f0b429;min-width:55px;text-align:right;}
+.history-day{background:#181c22;border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.15s;}
+.history-day:active{opacity:.85;}
+.history-day-date{font-size:13px;font-weight:700;color:#f0f2f5;}
+.history-day-bar-wrap{margin:7px 0 2px;}
+.history-day-bar{height:4px;background:#1e2229;border-radius:99px;overflow:hidden;margin-bottom:4px;}
+.history-day-bar-fill{height:100%;border-radius:99px;transition:width .4s ease;}
+.history-day-kcal{font-size:14px;font-weight:800;color:#f0b429;}
+.hist-meal-block{padding:5px 0;}
+.hist-meal-title{font-size:11px;font-weight:700;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.hist-food-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1e2229;font-size:13px;}
+.hist-food-row:last-child{border-bottom:none;}
+.hist-expand{display:none;margin-top:10px;padding-top:10px;border-top:1px solid #252b34;}
 .premade-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
 .premade-card{background:#181c22;border:1px solid #252b34;border-radius:var(--radius-sm);padding:13px;cursor:pointer;transition:.2s;}
 .premade-card:active{transform:scale(.96);border-color:#f0b429;}
@@ -360,9 +366,9 @@ canvas{width:100%!important;border-radius:10px;}
 <!-- TAB HISTORICO -->
 <div class="tab" id="tab-hist">
   <div class="section-title">Historico</div>
-  <div class="section-sub">Acompanhe sua evolucao semanal</div>
-  <div class="card"><div class="card-title">Ultimos 7 dias</div><canvas id="histChart" height="130"></canvas></div>
-  <div class="card"><div class="card-title">Registros</div><div id="histList"></div></div>
+  <div class="section-sub">Toque em cada dia para ver as refeicoes</div>
+  <div class="card"><div class="card-title">Calorias — ultimos 7 dias</div><canvas id="histChart" height="130"></canvas></div>
+  <div class="card"><div class="card-title">Registros diarios</div><div id="histList"></div></div>
 </div>
 
 </div><!-- /content -->
@@ -619,7 +625,7 @@ function todayKey(){var d=new Date();return d.getFullYear()+"-"+String(d.getMont
 function checkDayReset(){
   var today=todayKey();
   if(state.lastReset!==today){
-    if(state.lastReset){var t=calcTotals();state.history[state.lastReset]={kcal:t.kcal,prot:t.prot,carb:t.carb,fat:t.fat,water:state.waterMl};}
+    if(state.lastReset){var t=calcTotals();state.history[state.lastReset]={kcal:t.kcal,prot:t.prot,carb:t.carb,fat:t.fat,water:state.waterMl,meals:JSON.parse(JSON.stringify(state.meals))};}
     state.meals={cafe:[],almoco:[],lanche:[],jantar:[]};
     state.waterMl=0;state.lastReset=today;save();
   }
@@ -973,13 +979,72 @@ function addAiResult(){
   save();renderToday();showToast("Adicionado ao registro!","success");switchTab("hoje",null);
 }
 
+function formatHistDate(k){
+  var p=k.split('-');
+  var d=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
+  var dias=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  var hoje=new Date();hoje.setHours(0,0,0,0);
+  var ontem=new Date(hoje);ontem.setDate(ontem.getDate()-1);
+  d.setHours(0,0,0,0);
+  if(d.getTime()===hoje.getTime())return 'Hoje — '+p[2]+'/'+p[1];
+  if(d.getTime()===ontem.getTime())return 'Ontem — '+p[2]+'/'+p[1];
+  return dias[d.getDay()]+', '+p[2]+'/'+p[1]+'/'+p[0];
+}
+function toggleHistDay(id){
+  var el=document.getElementById(id);
+  if(!el)return;
+  var open=el.style.display!=='none';
+  el.style.display=open?'none':'block';
+  var arrow=document.getElementById('arr-'+id);
+  if(arrow)arrow.textContent=open?'▸':'▾';
+}
 function renderHistory(){
-  var keys=Object.keys(state.history||{}).sort().reverse().slice(0,14);
-  if(!keys.length){document.getElementById("histList").innerHTML="<div class='empty'><div class='empty-icon'>&#128197;</div><div class='empty-text'>Nenhum historico ainda</div></div>";return;}
+  var mealNames={cafe:'☕ Café da manhã',almoco:'🍽️ Almoço',lanche:'🥗 Lanche',jantar:'🌙 Jantar'};
+  var keys=Object.keys(state.history||{}).sort().reverse().slice(0,30);
+  if(!keys.length){
+    document.getElementById("histList").innerHTML="<div class='empty'><div class='empty-icon'>&#128197;</div><div class='empty-text'>Nenhum historico ainda.<br><span style='font-size:12px;'>Registros aparecem a partir do dia seguinte.</span></div></div>";
+    return;
+  }
   document.getElementById("histList").innerHTML=keys.map(function(k){
-    var d=state.history[k];var pct=Math.min(100,(d.kcal/state.calGoal)*100);
-    return "<div class='history-day'><div class='history-day-date'>"+k.slice(5)+"</div><div class='history-day-bar-wrap'><div class='history-day-bar'><div class='history-day-bar-fill' style='width:"+pct+"%'></div></div><div style='font-size:10px;color:#5a6270;'>P:"+d.prot+"g C:"+d.carb+"g G:"+d.fat+"g</div></div><div class='history-day-kcal'>"+d.kcal+" kcal</div></div>";
-  }).join("");
+    var d=state.history[k];
+    var pct=Math.min(100,Math.round((d.kcal/state.calGoal)*100));
+    var barColor=pct>=90?'#34d399':pct>=60?'#f0b429':'#f87171';
+    var dateStr=formatHistDate(k);
+    var uid='hd-'+k.replace(/-/g,'');
+    // Montar refeições
+    var mealsHtml='';
+    var hasMeals=false;
+    if(d.meals){
+      ['cafe','almoco','lanche','jantar'].forEach(function(m){
+        var items=d.meals[m];
+        if(!items||!items.length)return;
+        hasMeals=true;
+        var mTotal=items.reduce(function(s,i){return s+(i.kcal||0);},0);
+        mealsHtml+='<div class="hist-meal-block"><div class="hist-meal-title">'+(mealNames[m]||m)
+          +'<span style="color:#f0b429;font-weight:700;font-size:12px;float:right;">'+Math.round(mTotal)+' kcal</span></div>';
+        mealsHtml+=items.map(function(f){
+          return '<div class="hist-food-row"><span style="color:#e2e8f0;">'+f.name
+            +(f.grams?' <span style="color:#5a6270;">'+Math.round(f.grams)+'g</span>':'')
+            +'</span><span style="color:#f0b429;font-weight:600;">'+Math.round(f.kcal||0)+' kcal</span></div>';
+        }).join('');
+        mealsHtml+='</div>';
+      });
+    }
+    if(!hasMeals)mealsHtml='<div style="font-size:12px;color:#5a6270;padding:4px 0;">Refeições não registradas neste dia</div>';
+    return '<div class="history-day" onclick="toggleHistDay(\''+uid+'\')">'
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start;">'
+        +'<div><div class="history-day-date">'+dateStr+'</div>'
+        +'<div style="font-size:11px;color:#8b95a3;margin-top:3px;">💪 '+d.prot+'g prot &nbsp;🔥 '+d.carb+'g carb &nbsp;🥑 '+d.fat+'g fat &nbsp;💧'+(d.water||0)+'ml</div></div>'
+        +'<div style="text-align:right;">'
+          +'<div class="history-day-kcal">'+d.kcal+' kcal</div>'
+          +'<div style="font-size:11px;color:'+barColor+';">'+pct+'% da meta</div>'
+        +'</div>'
+      +'</div>'
+      +'<div class="history-day-bar-wrap"><div class="history-day-bar"><div class="history-day-bar-fill" style="width:'+pct+'%;background:'+barColor+';"></div></div></div>'
+      +'<div style="font-size:11px;color:#5a6270;text-align:right;margin-top:2px;">Toque para ver refeições <span id="arr-'+uid+'">▸</span></div>'
+      +'<div class="hist-expand" id="'+uid+'">'+mealsHtml+'</div>'
+      +'</div>';
+  }).join('');
   drawHistChart(keys.slice(0,7).reverse());
 }
 function drawHistChart(keys){
