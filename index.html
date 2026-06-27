@@ -180,6 +180,22 @@ canvas{width:100%!important;border-radius:10px;}
 .tdee-box{background:#181c22;border:1px solid #252b34;border-radius:12px;padding:10px 14px;margin:8px 0 2px;}
 .tdee-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:13px;}
 .tdee-val{font-weight:700;font-size:13px;}
+/* ── SCORE ── */
+.score-ring-wrap{display:flex;align-items:center;gap:16px;padding:4px 0;}
+.score-num{font-family:'Syne',sans-serif;font-size:42px;font-weight:800;line-height:1;}
+.score-checks{flex:1;display:flex;flex-direction:column;gap:6px;}
+.score-check{display:flex;align-items:center;gap:7px;font-size:12px;}
+.score-check-icon{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
+/* ── CALENDAR ── */
+.cal-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;transition:.15s;}
+/* ── CHAT ── */
+.chat-bubble-user{background:#f0b429;color:#000;border-radius:14px 14px 4px 14px;padding:10px 13px;font-size:13px;line-height:1.6;max-width:85%;align-self:flex-end;}
+.chat-bubble-ai{background:#181c22;color:#f0f2f5;border-radius:14px 14px 14px 4px;padding:10px 13px;font-size:13px;line-height:1.6;max-width:85%;align-self:flex-start;}
+.chat-input-row{display:flex;gap:8px;margin-top:10px;}
+/* ── SUB TABS (Peso/Medidas) ── */
+.subtab-row{display:flex;background:#181c22;border-radius:10px;padding:3px;margin-bottom:14px;gap:3px;}
+.subtab-btn{flex:1;padding:8px;border-radius:7px;border:none;background:transparent;color:#8b95a3;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;}
+.subtab-btn.active{background:#1e2229;color:#f0f2f5;font-weight:700;}
 </style>
 </head>
 <body>
@@ -247,6 +263,24 @@ canvas{width:100%!important;border-radius:10px;}
     </div>
     <div class="water-progress"><div class="water-fill" id="waterSummaryBar" style="width:0%"></div></div>
   </div>
+  <!-- Score Diário -->
+  <div class="card" id="scoreDayCard">
+    <div class="card-title">Score do Dia</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:90px;height:90px;flex-shrink:0;">
+        <svg width="90" height="90" style="transform:rotate(-90deg)">
+          <circle cx="45" cy="45" r="38" fill="none" stroke="#1e2229" stroke-width="8"/>
+          <circle cx="45" cy="45" r="38" fill="none" stroke="url(#scoreGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="239" id="scoreRingFill" stroke-dashoffset="239" style="transition:stroke-dashoffset .6s ease;"/>
+          <defs><linearGradient id="scoreGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient></defs>
+        </svg>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <div class="score-num" id="scoreNum">0</div>
+          <div style="font-size:10px;color:#8b95a3;">/ 100</div>
+        </div>
+      </div>
+      <div class="score-checks" id="scoreChecks"></div>
+    </div>
+  </div>
 </div>
 
 <!-- TAB FOTO -->
@@ -283,6 +317,26 @@ canvas{width:100%!important;border-radius:10px;}
   <div class="card" style="margin-top:14px;">
     <div class="card-title">Como funciona</div>
     <div style="font-size:12px;color:#8b95a3;line-height:1.8;">1. Tire uma foto do seu prato<br>2. A IA identifica cada ingrediente<br>3. Estima calorias e macros<br>4. Adicione tudo com um toque</div>
+  </div>
+  <!-- IA Nutricionista -->
+  <div class="card" style="margin-top:6px;">
+    <div class="card-title">&#129680; Nutricionista IA</div>
+    <div style="font-size:12px;color:#8b95a3;margin-bottom:10px;">Pergunte sobre seu dia, receba dicas personalizadas baseadas no seu perfil e consumo atual.</div>
+    <!-- Botões de ação rápida -->
+    <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;">
+      <button onclick="askNutritionist('Analise meu dia de hoje. Como estou em relação às minhas metas de calorias, proteína e água?')" style="padding:7px 11px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:8px;color:#f0b429;font-size:12px;cursor:pointer;font-family:DM Sans,sans-serif;">&#128202; Analisar meu dia</button>
+      <button onclick="askNutritionist('O que eu poderia comer agora para bater minhas metas do dia sem ultrapassar as calorias?')" style="padding:7px 11px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:#34d399;font-size:12px;cursor:pointer;font-family:DM Sans,sans-serif;">&#127869; O que comer agora?</button>
+      <button onclick="askNutritionist('Estou dentro da minha meta de proteína? Me dê uma dica prática e objetiva.')" style="padding:7px 11px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);border-radius:8px;color:#60a5fa;font-size:12px;cursor:pointer;font-family:DM Sans,sans-serif;">&#128170; Meta de proteína</button>
+    </div>
+    <!-- Mensagens do chat -->
+    <div id="chatMessages" style="display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto;margin-bottom:10px;"></div>
+    <!-- Loading -->
+    <div id="chatLoading" style="display:none;padding:10px 0;"><div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+    <!-- Input -->
+    <div class="chat-input-row">
+      <input type="text" class="input" id="chatInput" placeholder="Pergunte algo ao nutricionista..." style="flex:1;" onkeydown="if(event.key==='Enter')sendChat()">
+      <button onclick="sendChat()" style="padding:11px 14px;background:linear-gradient(135deg,#f0b429,#e8834a);border:none;border-radius:10px;cursor:pointer;font-size:16px;">&#10148;</button>
+    </div>
   </div>
 </div>
 
@@ -330,22 +384,46 @@ canvas{width:100%!important;border-radius:10px;}
 
 <!-- TAB PESO -->
 <div class="tab" id="tab-peso">
-  <div class="section-title">Evolucao do Peso</div>
-  <div class="section-sub">Registre e acompanhe sua evolucao</div>
-  <div class="card">
-    <div style="text-align:center;margin-bottom:14px;">
-      <div class="weight-big" id="weightCurrent">--</div>
-      <div style="font-size:16px;color:#8b95a3;">kg</div>
-      <div style="font-size:13px;margin-top:3px;" id="weightChange"></div>
-    </div>
-    <div style="display:flex;gap:9px;align-items:flex-end;">
-      <input type="number" class="input" id="weightInput" placeholder="Ex: 78.5" step="0.1" style="flex:1;">
-      <button class="btn btn-primary btn-sm" onclick="addWeight()" style="flex:0;padding:11px 14px;">+</button>
-    </div>
+  <div class="section-title">Corpo & Evolucao</div>
+  <div class="section-sub">Registre peso e medidas corporais</div>
+  <!-- Sub-tabs -->
+  <div class="subtab-row">
+    <button class="subtab-btn active" id="subtab-peso" onclick="switchSubtab('peso')">&#9878; Peso</button>
+    <button class="subtab-btn" id="subtab-medidas" onclick="switchSubtab('medidas')">&#128207; Medidas</button>
   </div>
-  <div class="card"><div class="card-title">Grafico</div><canvas id="weightChart" height="150"></canvas></div>
-  <div class="card"><div class="card-title">Historico</div><div id="weightList"></div></div>
-  <div class="card"><div class="card-title">Ritmo ideal</div><div id="weightTip" style="font-size:13px;color:#8b95a3;line-height:1.7;"></div></div>
+  <!-- Seção Peso -->
+  <div id="section-peso">
+    <div class="card">
+      <div style="text-align:center;margin-bottom:14px;">
+        <div class="weight-big" id="weightCurrent">--</div>
+        <div style="font-size:16px;color:#8b95a3;">kg</div>
+        <div style="font-size:13px;margin-top:3px;" id="weightChange"></div>
+      </div>
+      <div style="display:flex;gap:9px;align-items:flex-end;">
+        <input type="number" class="input" id="weightInput" placeholder="Ex: 78.5" step="0.1" style="flex:1;">
+        <button class="btn btn-primary btn-sm" onclick="addWeight()" style="flex:0;padding:11px 14px;">+</button>
+      </div>
+    </div>
+    <div class="card"><div class="card-title">Grafico</div><canvas id="weightChart" height="150"></canvas></div>
+    <div class="card"><div class="card-title">Historico</div><div id="weightList"></div></div>
+    <div class="card"><div class="card-title">Ritmo ideal</div><div id="weightTip" style="font-size:13px;color:#8b95a3;line-height:1.7;"></div></div>
+  </div>
+  <!-- Seção Medidas -->
+  <div id="section-medidas" style="display:none;">
+    <div class="card">
+      <div class="card-title">Registrar Medidas</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+        <div class="input-group"><div class="input-label">Cintura (cm)</div><input type="number" class="input" id="mCintura" placeholder="Ex: 82" step="0.1"></div>
+        <div class="input-group"><div class="input-label">Quadril (cm)</div><input type="number" class="input" id="mQuadril" placeholder="Ex: 98" step="0.1"></div>
+        <div class="input-group"><div class="input-label">Peito (cm)</div><input type="number" class="input" id="mPeito" placeholder="Ex: 100" step="0.1"></div>
+        <div class="input-group"><div class="input-label">Braco (cm)</div><input type="number" class="input" id="mBraco" placeholder="Ex: 36" step="0.1"></div>
+        <div class="input-group"><div class="input-label">Coxa (cm)</div><input type="number" class="input" id="mCoxa" placeholder="Ex: 58" step="0.1"></div>
+        <div class="input-group"><div class="input-label">Panturrilha (cm)</div><input type="number" class="input" id="mPanturrilha" placeholder="Ex: 38" step="0.1"></div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:4px;" onclick="addMeasure()">Salvar Medidas</button>
+    </div>
+    <div class="card"><div class="card-title">Historico de Medidas</div><div id="measureList"></div></div>
+  </div>
 </div>
 
 <!-- TAB CALCULAR -->
@@ -368,6 +446,23 @@ canvas{width:100%!important;border-radius:10px;}
   <div class="section-title">Historico</div>
   <div class="section-sub">Toque em cada dia para ver as refeicoes</div>
   <div class="card"><div class="card-title">Calorias — ultimos 7 dias</div><canvas id="histChart" height="130"></canvas></div>
+  <!-- Calendário colorido -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div class="card-title" style="margin-bottom:0;">Calendário</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button onclick="changeCalMonth(-1)" style="background:#181c22;border:1px solid #252b34;border-radius:7px;color:#f0f2f5;width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">‹</button>
+        <div id="calMonthLabel" style="font-size:13px;font-weight:700;min-width:80px;text-align:center;"></div>
+        <button onclick="changeCalMonth(1)" style="background:#181c22;border:1px solid #252b34;border-radius:7px;color:#f0f2f5;width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">›</button>
+      </div>
+    </div>
+    <div id="calendarGrid"></div>
+    <div style="display:flex;gap:12px;margin-top:10px;justify-content:center;">
+      <span style="font-size:10px;color:#34d399;">● Excelente (80+)</span>
+      <span style="font-size:10px;color:#fbbf24;">● Bom (50–79)</span>
+      <span style="font-size:10px;color:#f87171;">● Ruim (&lt;50)</span>
+    </div>
+  </div>
   <div class="card"><div class="card-title">Registros diarios</div><div id="histList"></div></div>
 </div>
 
@@ -475,6 +570,11 @@ canvas{width:100%!important;border-radius:10px;}
       <div class="tdee-row"><span style="color:#8b95a3;">Gasto Total (TDEE)</span><span class="tdee-val" id="tdeeVal" style="color:#f0b429;">-</span></div>
       <div class="tdee-row"><span style="color:#8b95a3;">Meta de Calorias</span><span class="tdee-val" id="goalKcalVal" style="color:#34d399;">-</span></div>
       <div class="tdee-row"><span style="color:#8b95a3;">Meta de Água</span><span class="tdee-val" id="goalWaterVal" style="color:#38bdf8;">-</span></div>
+      <div style="border-top:1px solid #2a2f3a;margin:8px 0 4px;"></div>
+      <div style="font-size:10px;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Macros estimados</div>
+      <div class="tdee-row"><span style="color:#8b95a3;">Proteina</span><span class="tdee-val" id="prevProtVal" style="color:#f87171;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;">Carboidratos</span><span class="tdee-val" id="prevCarbVal" style="color:#fbbf24;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;">Gordura</span><span class="tdee-val" id="prevFatVal" style="color:#a78bfa;">-</span></div>
     </div>
     <!-- Chave API -->
     <div class="input-group">
@@ -610,10 +710,12 @@ var PREMADE=[
   {icon:"muscle",name:"Pos-treino",foods:[{name:"Whey Protein",g:40},{name:"Banana",g:100},{name:"Aveia",g:60}]},
   {icon:"moon",name:"Jantar Leve",foods:[{name:"Frango grelhado",g:150},{name:"Brocolis",g:100},{name:"Azeite de oliva",g:10}]}
 ];
-var state={goal:"mass",calGoal:3000,waterGoal:2500,waterMl:0,lang:"pt",meals:{cafe:[],almoco:[],lanche:[],jantar:[]},weights:[],selectedDiet:"normal",apiKey:"",profile:{},customFoods:[],history:{},lastReset:""};
+var state={goal:"mass",calGoal:3000,waterGoal:2500,waterMl:0,lang:"pt",meals:{cafe:[],almoco:[],lanche:[],jantar:[]},weights:[],selectedDiet:"normal",apiKey:"",profile:{},customFoods:[],history:{},lastReset:"",measures:[]};
 var currentMealType="cafe";
 var selectedFoodData=null;
 var aiResultData=null;
+var calendarCursor={year:new Date().getFullYear(),month:new Date().getMonth()};
+var chatMessages=[];
 
 function save(){localStorage.setItem("betteryou_v1",JSON.stringify(state));}
 function load(){
@@ -635,7 +737,23 @@ function calcTotals(){
   Object.values(state.meals).forEach(function(arr){arr.forEach(function(i){kcal+=i.kcal||0;prot+=i.prot||0;carb+=i.carb||0;fat+=i.fat||0;});});
   return {kcal:Math.round(kcal),prot:Math.round(prot),carb:Math.round(carb),fat:Math.round(fat)};
 }
-function getMacroGoals(){var k=state.calGoal;return {prot:Math.round(k*0.3/4),carb:Math.round(k*0.45/4),fat:Math.round(k*0.25/9)};}
+function getMacroGoals(){
+  var k=state.calGoal;
+  var w=(state.profile&&state.profile.weight)||0;
+  var g=state.goal||'mass';
+  // Proteína baseada em peso corporal × fator por objetivo
+  // Emagrecer: 2.2g/kg (maior — preserva músculo no déficit)
+  // Ganhar Massa: 2.0g/kg (alto para síntese muscular)
+  // Manter: 1.8g/kg
+  var protG=w?(g==='cut'?Math.round(w*2.2):g==='mass'?Math.round(w*2.0):Math.round(w*1.8)):Math.round(k*0.30/4);
+  var protKcal=protG*4;
+  // Gordura: 25% das calorias totais
+  var fat=Math.round(k*0.25/9);
+  var fatKcal=fat*9;
+  // Carboidratos: calorias restantes
+  var carb=Math.max(0,Math.round((k-protKcal-fatKcal)/4));
+  return{prot:protG,carb:carb,fat:fat};
+}
 
 function renderHomeGreeting(){
   var p=state.profile||{};
@@ -683,6 +801,7 @@ function renderToday(){
   document.getElementById("waterSummaryGoal").textContent=state.waterGoal;
   document.getElementById("waterSummaryBar").style.width=wp+"%";
   renderPremade();
+  renderDayScore();
 }
 
 function renderMeals(){
@@ -728,6 +847,15 @@ function findFood(name){var all=FOOD_DB.concat(state.customFoods||[]);return all
 function setGoal(g){
   state.goal=g;
   if(state.profile)state.profile.goal=g;
+  // Recalcular calorias a partir do perfil ao trocar objetivo
+  var p=state.profile||{};
+  if(p.weight&&p.height&&p.age){
+    var r=calcTDEE(p.weight,p.height,p.age,p.sex||'m',p.activity||1.55);
+    if(r){
+      state.calGoal=g==='mass'?r.tdee+300:(g==='cut'?r.tdee-500:r.tdee);
+      state.waterGoal=Math.round(p.weight*35);
+    }
+  }
   document.getElementById("goal-mass").className="goal-btn"+(g==="mass"?" active":"");
   document.getElementById("goal-cut").className="goal-btn"+(g==="cut"?" active":"");
   save();renderToday();renderWeightTip();
@@ -1086,12 +1214,23 @@ function updateTDEEPreview(){
   if(!w||!h||!a){box.style.display='none';return;}
   box.style.display='block';
   var r=calcTDEE(w,h,a,sex,act);
-  var goalKcal=state.goal==='mass'?r.tdee+300:(state.goal==='cut'?r.tdee-500:r.tdee);
+  var g=state.goal||'mass';
+  var goalKcal=g==='mass'?r.tdee+300:(g==='cut'?r.tdee-500:r.tdee);
   var goalWater=Math.round(w*35);
   document.getElementById('tmbVal').textContent=r.bmr+' kcal';
   document.getElementById('tdeeVal').textContent=r.tdee+' kcal';
   document.getElementById('goalKcalVal').textContent=goalKcal+' kcal';
   document.getElementById('goalWaterVal').textContent=goalWater+' ml';
+  // Macros estimados por objetivo
+  var protG=g==='cut'?Math.round(w*2.2):g==='mass'?Math.round(w*2.0):Math.round(w*1.8);
+  var protKcal=protG*4;
+  var fat=Math.round(goalKcal*0.25/9);
+  var fatKcal=fat*9;
+  var carb=Math.max(0,Math.round((goalKcal-protKcal-fatKcal)/4));
+  var gLabel=g==='cut'?'(2.2g/kg — preservar músculo)':g==='mass'?'(2.0g/kg — síntese)':'(1.8g/kg)';
+  document.getElementById('prevProtVal').textContent=protG+'g '+gLabel;
+  document.getElementById('prevCarbVal').textContent=carb+'g';
+  document.getElementById('prevFatVal').textContent=fat+'g';
 }
 
 // ── FOTO DE PERFIL ────────────────────────────────────────────
@@ -1204,8 +1343,8 @@ function switchTab(name,navEl){
   document.getElementById("content").scrollTop=0;
   if(name==="agua")renderWater();
   if(name==="dieta")renderDiet();
-  if(name==="peso")renderWeight();
-  if(name==="hist")renderHistory();
+  if(name==="peso"){renderWeight();renderMeasures();}
+  if(name==="hist"){renderHistory();renderCalendar();}
   if(name==="foto")checkApiKeyBanner();
 }
 
@@ -1302,6 +1441,216 @@ function agendarLembretes() {
 
 // Chama ao abrir o app
 setTimeout(initNotifications, 1500);
+
+// ── SCORE DIÁRIO ─────────────────────────────────────────────
+function calcDayScore(histData){
+  var totals,waterMl,calGoal,protGoal,fatGoal;
+  if(!histData){
+    // Dia atual
+    totals=calcTotals();
+    waterMl=state.waterMl;
+    calGoal=state.calGoal;
+    var mg=getMacroGoals();
+    protGoal=mg.prot;fatGoal=mg.fat;
+  }else{
+    totals={kcal:histData.kcal||0,prot:histData.prot||0,carb:histData.carb||0,fat:histData.fat||0};
+    waterMl=histData.water||0;
+    calGoal=histData.calGoal||state.calGoal;
+    var p=state.profile||{};
+    protGoal=p.weight?Math.round(p.weight*2):Math.round(calGoal*0.30/4);
+    fatGoal=Math.round(calGoal*0.25/9);
+  }
+  var score=0;
+  var checks=[];
+  // Calorias 80–115% = 30 pts
+  var calPct=calGoal>0?totals.kcal/calGoal:0;
+  var calOk=calPct>=0.8&&calPct<=1.15;
+  score+=calOk?30:(calPct>=0.6?15:0);
+  checks.push({label:'Calorias',ok:calOk,val:Math.round(totals.kcal)+'/'+calGoal+' kcal'});
+  // Água >= 80% = 20 pts
+  var waterPct=state.waterGoal>0?waterMl/state.waterGoal:0;
+  var waterOk=waterPct>=0.8;
+  score+=waterOk?20:(waterPct>=0.5?10:0);
+  checks.push({label:'Água',ok:waterOk,val:waterMl+'/'+(state.waterGoal)+' ml'});
+  // Proteína >= 80% = 25 pts
+  var protOk=protGoal>0&&totals.prot>=protGoal*0.8;
+  score+=protOk?25:(protGoal>0&&totals.prot>=protGoal*0.5?12:0);
+  checks.push({label:'Proteína',ok:protOk,val:Math.round(totals.prot)+'g/'+protGoal+'g'});
+  // Gordura <= 120% = 15 pts
+  var fatOk=fatGoal>0&&totals.fat<=fatGoal*1.2;
+  score+=fatOk?15:0;
+  checks.push({label:'Gordura',ok:fatOk,val:Math.round(totals.fat)+'g/'+fatGoal+'g'});
+  // Ao menos uma refeição = 10 pts
+  var mealOk=totals.kcal>0;
+  score+=mealOk?10:0;
+  checks.push({label:'Refeições',ok:mealOk,val:mealOk?'Registradas':'Nenhuma'});
+  return{score:Math.min(100,score),checks:checks};
+}
+
+function renderDayScore(){
+  var result=calcDayScore(null);
+  var s=result.score;
+  var scoreEl=document.getElementById('scoreNum');
+  var ringEl=document.getElementById('scoreRingFill');
+  var checksEl=document.getElementById('scoreChecks');
+  if(!scoreEl)return;
+  scoreEl.textContent=s;
+  var scoreColor=s>=80?'#34d399':s>=50?'#fbbf24':'#f87171';
+  scoreEl.style.color=scoreColor;
+  var circ=2*Math.PI*38;
+  if(ringEl)ringEl.style.strokeDashoffset=circ*(1-s/100);
+  if(checksEl){
+    checksEl.innerHTML=result.checks.map(function(c){
+      return '<div class="score-check">'
+        +'<div class="score-check-icon" style="background:'+(c.ok?'rgba(52,211,153,.2)':'rgba(248,113,113,.2)')+';color:'+(c.ok?'#34d399':'#f87171')+';">'+(c.ok?'✓':'✗')+'</div>'
+        +'<div><div style="font-weight:600;color:#f0f2f5;">'+c.label+'</div><div style="font-size:10px;color:#8b95a3;">'+c.val+'</div></div>'
+        +'</div>';
+    }).join('');
+  }
+}
+
+// ── CALENDÁRIO COLORIDO ───────────────────────────────────────
+function changeCalMonth(dir){
+  calendarCursor.month+=dir;
+  if(calendarCursor.month>11){calendarCursor.month=0;calendarCursor.year++;}
+  if(calendarCursor.month<0){calendarCursor.month=11;calendarCursor.year--;}
+  renderCalendar();
+}
+
+function renderCalendar(){
+  var el=document.getElementById('calendarGrid');
+  var lbl=document.getElementById('calMonthLabel');
+  if(!el)return;
+  var y=calendarCursor.year,m=calendarCursor.month;
+  var monthNames=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  if(lbl)lbl.textContent=monthNames[m]+' '+y;
+  var firstDay=new Date(y,m,1).getDay();
+  var daysInMonth=new Date(y,m+1,0).getDate();
+  var dayNames=['D','S','T','Q','Q','S','S'];
+  var html='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px;">';
+  dayNames.forEach(function(n){html+='<div style="text-align:center;font-size:10px;color:#8b95a3;padding:2px 0;">'+n+'</div>';});
+  html+='</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;">';
+  for(var i=0;i<firstDay;i++)html+='<div></div>';
+  var todayStr=todayKey();
+  for(var day=1;day<=daysInMonth;day++){
+    var key=y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    var d=state.history[key];
+    var bg='#1e2229',tc='#3a4150',border='transparent';
+    if(d){
+      var sc=calcDayScore(d).score;
+      if(sc>=80){bg='rgba(52,211,153,.2)';tc='#34d399';}
+      else if(sc>=50){bg='rgba(251,191,36,.2)';tc='#fbbf24';}
+      else{bg='rgba(248,113,113,.2)';tc='#f87171';}
+    }
+    var isToday=key===todayStr;
+    if(isToday){border='#f0b429';tc='#f0b429';}
+    html+='<div class="cal-cell" style="background:'+bg+';color:'+tc+';border:1.5px solid '+border+';font-weight:'+(isToday?800:500)+';">'+day+'</div>';
+  }
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+// ── MEDIDAS CORPORAIS ─────────────────────────────────────────
+function switchSubtab(tab){
+  document.getElementById('section-peso').style.display=tab==='peso'?'':'none';
+  document.getElementById('section-medidas').style.display=tab==='medidas'?'':'none';
+  document.getElementById('subtab-peso').className='subtab-btn'+(tab==='peso'?' active':'');
+  document.getElementById('subtab-medidas').className='subtab-btn'+(tab==='medidas'?' active':'');
+}
+
+function addMeasure(){
+  var fields=['cintura','quadril','peito','braco','coxa','panturrilha'];
+  var m={date:todayKey()};
+  var hasAny=false;
+  fields.forEach(function(f){
+    var v=parseFloat(document.getElementById('m'+f.charAt(0).toUpperCase()+f.slice(1)).value)||null;
+    m[f]=v;
+    if(v)hasAny=true;
+  });
+  if(!hasAny){showToast('Preencha ao menos uma medida','error');return;}
+  if(!state.measures)state.measures=[];
+  state.measures.unshift(m);
+  if(state.measures.length>60)state.measures.pop();
+  save();renderMeasures();
+  fields.forEach(function(f){document.getElementById('m'+f.charAt(0).toUpperCase()+f.slice(1)).value='';});
+  showToast('Medidas salvas! ✓','success');
+}
+
+function renderMeasures(){
+  var el=document.getElementById('measureList');if(!el)return;
+  var list=state.measures||[];
+  if(!list.length){el.innerHTML='<div class="empty"><div class="empty-icon">📏</div><div class="empty-text">Nenhuma medida registrada</div></div>';return;}
+  var labels={cintura:'Cintura',quadril:'Quadril',peito:'Peito',braco:'Braço',coxa:'Coxa',panturrilha:'Panturrilha'};
+  el.innerHTML=list.slice(0,10).map(function(m){
+    var items=Object.keys(labels).filter(function(k){return m[k];}).map(function(k){
+      return '<span style="font-size:12px;color:#8b95a3;">'+labels[k]+': <b style="color:#f0f2f5;">'+m[k]+'cm</b></span>';
+    }).join(' &nbsp;·&nbsp; ');
+    return '<div style="padding:10px 0;border-bottom:1px solid #252b34;">'
+      +'<div style="font-size:12px;color:#8b95a3;margin-bottom:5px;">'+m.date.slice(5)+'</div>'
+      +'<div style="line-height:1.8;">'+items+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+// ── IA NUTRICIONISTA ──────────────────────────────────────────
+function sendChat(){
+  var input=document.getElementById('chatInput');
+  var msg=(input&&input.value)||'';
+  if(!msg.trim())return;
+  askNutritionist(msg.trim());
+}
+
+async function askNutritionist(prompt){
+  if(!state.apiKey){
+    showToast('Configure sua API key no Perfil','error');
+    setTimeout(function(){openProfile();},500);
+    return;
+  }
+  var t=calcTotals(),mg=getMacroGoals(),p=state.profile||{};
+  var context='Perfil do usuário: '+(p.name||'Usuário')+', '+(p.weight||'?')+'kg'
+    +', objetivo: '+(state.goal==='mass'?'Ganhar Massa':state.goal==='cut'?'Emagrecer':'Manter')
+    +'\nMeta diária: '+state.calGoal+' kcal | Proteína: '+mg.prot+'g | Carbs: '+mg.carb+'g | Gordura: '+mg.fat+'g'
+    +'\nConsumo até agora: '+t.kcal+' kcal | Proteína: '+t.prot+'g | Carbs: '+t.carb+'g | Gordura: '+t.fat+'g'
+    +'\nÁgua: '+state.waterMl+' ml de '+state.waterGoal+' ml';
+  chatMessages.push({role:'user',text:prompt});
+  var chatInputEl=document.getElementById('chatInput');
+  if(chatInputEl)chatInputEl.value='';
+  renderNutriChat();
+  var loadEl=document.getElementById('chatLoading');
+  if(loadEl)loadEl.style.display='flex';
+  try{
+    var res=await fetch('https://anthropic-proxy.felipeperoniluiz.workers.dev',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':state.apiKey},
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:350,
+        system:'Você é um nutricionista especializado em fitness e emagrecimento. Responda em português, de forma direta, prática e motivadora. Use dados do perfil para personalizar. Máximo 3 parágrafos curtos.',
+        messages:[{role:'user',content:'Dados do usuário:\n'+context+'\n\nPergunta: '+prompt}]
+      })
+    });
+    var data=await res.json();
+    var reply=data.content&&data.content[0]?data.content[0].text:'Não consegui processar. Tente novamente.';
+    chatMessages.push({role:'ai',text:reply});
+  }catch(e){
+    chatMessages.push({role:'ai',text:'Erro de conexão. Verifique sua chave API no Perfil.'});
+  }
+  if(loadEl)loadEl.style.display='none';
+  renderNutriChat();
+}
+
+function renderNutriChat(){
+  var el=document.getElementById('chatMessages');if(!el)return;
+  if(!chatMessages.length){el.innerHTML='';return;}
+  el.innerHTML=chatMessages.map(function(m){
+    var isUser=m.role==='user';
+    return '<div style="display:flex;justify-content:'+(isUser?'flex-end':'flex-start')+';margin-bottom:2px;">'
+      +'<div class="'+(isUser?'chat-bubble-user':'chat-bubble-ai')+'">'
+      +m.text.replace(/\n/g,'<br>')
+      +'</div></div>';
+  }).join('');
+  el.scrollTop=el.scrollHeight;
+}
 </script>
 </body>
 </html>
