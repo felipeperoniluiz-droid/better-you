@@ -206,6 +206,7 @@ canvas{width:100%!important;border-radius:10px;}
     <button onclick="setLang('pt')" id="lang-pt" class="lang-btn active">PT</button>
     <button onclick="setLang('en')" id="lang-en" class="lang-btn">EN</button>
     <button onclick="setLang('es')" id="lang-es" class="lang-btn">ES</button>
+    <button onclick="setLang('it')" id="lang-it" class="lang-btn">IT</button>
   </div>
   <div class="header-actions">
     <div class="icon-btn" id="headerProfileBtn" onclick="openProfile()">&#128100;</div>
@@ -644,7 +645,23 @@ es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'
   masc:'Masculino',fem:'Femenino',
   tiposDieta:'Tipo de Dieta',evolPeso:'Progreso de Peso',calculadora:'Calculadora',
   calcSub:'Calcula tu necesidad calorica diaria',
-  histTitle:'Historial',profTitle:'Perfil',configTitle:'Configuracion'}
+  histTitle:'Historial',profTitle:'Perfil',configTitle:'Configuracion'},
+it:{hoje:'Oggi',fotoIA:'Foto IA',agua:'Acqua',dieta:'Dieta',peso:'Peso',calcular:'Calcola',hist:'Storico',
+  ganharMassa:'&#128170; Aumenta Massa',emagrecer:'&#128293; Dimagrire',
+  proteina:'&#129385; Proteina',carbo:'&#127834; Carboidrati',gordura:'&#129361; Grassi',
+  cafeManha:'Colazione',almoco:'Pranzo',lanche:'Spuntino',jantar:'Cena',
+  nenhumAlimento:'Nessun alimento',addFood:'+ Aggiungi Alimento',
+  refRapidas:'PASTI VELOCI',aguaHoje:'ACQUA OGGI',
+  faltam:'Mancano',acimaMeta:'sopra l\'obiettivo',metaAtingida:'Obiettivo raggiunto!',
+  meta:'Obiettivo',buscar:'Cerca alimento...',gramas:'Grammi (g)',adicionar:'Aggiungi',
+  aplicarMeta:'Applica questo obiettivo',removido:'Rimosso',
+  pesoRegistrado:'Peso registrato!',pesoInvalido:'Peso non valido',
+  aguaAtualizada:'Obiettivo idrico aggiornato!',
+  tmb:'MB',tdee:'TDEE',resultados:'Risultati',calcBtn:'Calcola',
+  masc:'Maschile',fem:'Femminile',
+  tiposDieta:'Tipo di Dieta',evolPeso:'Evoluzione del Peso',calculadora:'Calcolatore',
+  calcSub:'Calcola il tuo fabbisogno calorico giornaliero',
+  histTitle:'Storico',profTitle:'Profilo',configTitle:'Impostazioni'}
 };
 function setLang(lang){
   currentLang=lang;
@@ -668,7 +685,7 @@ function setLang(lang){
   // Add food button
   var af=document.getElementById('btn-add-food');if(af)af.textContent=t.addFood;
   // Lang buttons
-  ['pt','en','es'].forEach(function(l){
+  ['pt','en','es','it'].forEach(function(l){
     var el=document.getElementById('lang-'+l);
     if(el)el.className='lang-btn'+(l===lang?' active':'');
   });
