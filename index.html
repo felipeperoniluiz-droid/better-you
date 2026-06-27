@@ -1820,14 +1820,14 @@ init();
   vid.muted=true;
   vid.autoplay=true;
   vid.playsInline=true;
+  vid.setAttribute('muted','');
+  vid.setAttribute('autoplay','');
   vid.setAttribute('playsinline','');
   vid.setAttribute('webkit-playsinline','');
-  var src=document.createElement('source');
-  src.src=VIDEO_URL;
-  src.type='video/mp4';
-  vid.appendChild(src);
+  vid.src=VIDEO_URL;
   splash.appendChild(vid);
   document.body.appendChild(splash);
+  vid.load();
 
   var fallbackTimer=setTimeout(function(){dismiss();},7000);
 
@@ -1845,6 +1845,7 @@ init();
   if(p!==undefined){
     p.catch(function(){
       vid.muted=true;
+      vid.load();
       vid.play().catch(function(){
         clearTimeout(fallbackTimer);
         showLogoFallback();
