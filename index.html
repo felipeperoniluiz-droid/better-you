@@ -222,7 +222,7 @@ canvas{width:100%!important;border-radius:10px;}
 <body>
 
 <!-- ── AUTH SCREEN ─────────────────────────────────────────────── -->
-<div id="authScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9997;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;overflow-y:auto;">
+<div id="authScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;overflow-y:auto;">
   <div style="text-align:center;margin-bottom:32px;">
     <div style="font-size:52px;margin-bottom:8px;">💪</div>
     <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#f0b429;">Better You</div>
@@ -1799,7 +1799,11 @@ init();
 
   function dismiss(){
     splash.style.opacity='0';
-    setTimeout(function(){if(splash.parentNode)splash.remove();},650);
+    setTimeout(function(){
+      if(splash.parentNode)splash.remove();
+      window._splashDone=true;
+      if(window._onSplashDone)window._onSplashDone();
+    },650);
   }
 
   function showLogoFallback(){
@@ -2163,12 +2167,22 @@ var _fbSaveTimer = null;
   _fbAuth.onAuthStateChanged(function(user){
     _fbUser = user;
     if(user){
+      // Usuário logado: esconde auth imediatamente (splash ainda pode estar visível por cima)
       document.getElementById('authScreen').style.display='none';
       var info=document.getElementById('authUserInfo');
       if(info) info.textContent='📧 '+user.email;
       loadFromFirestore(user.uid);
     } else {
-      document.getElementById('authScreen').style.display='flex';
+      // Não logado: só mostra tela de login DEPOIS que o splash terminar
+      function showAuth(){
+        var s=document.getElementById('authScreen');
+        s.style.display='flex';
+      }
+      if(window._splashDone){
+        showAuth();
+      } else {
+        window._onSplashDone=showAuth;
+      }
     }
   });
 })();
