@@ -1752,19 +1752,63 @@ function init(){
 }
 init();
 
-// ── SPLASH SCREEN ─────────────────────────────────────────────
+// ── SPLASH SCREEN (VIDEO) ──────────────────────────────────────
 (function(){
-  var logoSrc=document.getElementById('app-logo').src;
+  var VIDEO_URL='https://felipeperoniluiz-droid.github.io/better-you/abertura.mp4';
   var splash=document.createElement('div');
   splash.id='splash';
-  splash.innerHTML=
-    '<img src="'+logoSrc+'" class="splash-img" style="height:84px;width:auto;object-fit:contain;">'+
-    '<div class="splash-sub" style="color:#f0b429;font-family:\'Syne\',sans-serif;font-size:11px;font-weight:700;letter-spacing:3.5px;margin-top:18px;">BETTER YOU</div>';
-  document.body.appendChild(splash);
-  setTimeout(function(){
+  splash.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9999;overflow:hidden;transition:opacity .6s ease;';
+
+  function dismiss(){
     splash.style.opacity='0';
-    setTimeout(function(){splash.remove();},750);
-  },2300);
+    setTimeout(function(){if(splash.parentNode)splash.remove();},650);
+  }
+
+  function showLogoFallback(){
+    var logoSrc=document.getElementById('app-logo').src;
+    splash.innerHTML='<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;">'
+      +'<img src="'+logoSrc+'" class="splash-img" style="height:84px;width:auto;object-fit:contain;">'
+      +'<div class="splash-sub" style="color:#f0b429;font-family:\'Syne\',sans-serif;font-size:11px;font-weight:700;letter-spacing:3.5px;margin-top:18px;">BETTER YOU</div>'
+      +'</div>';
+    setTimeout(dismiss,2300);
+  }
+
+  var vid=document.createElement('video');
+  vid.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;';
+  vid.muted=true;
+  vid.autoplay=true;
+  vid.playsInline=true;
+  vid.setAttribute('playsinline','');
+  vid.setAttribute('webkit-playsinline','');
+  var src=document.createElement('source');
+  src.src=VIDEO_URL;
+  src.type='video/mp4';
+  vid.appendChild(src);
+  splash.appendChild(vid);
+  document.body.appendChild(splash);
+
+  var fallbackTimer=setTimeout(function(){dismiss();},7000);
+
+  vid.addEventListener('ended',function(){
+    clearTimeout(fallbackTimer);
+    dismiss();
+  });
+
+  vid.addEventListener('error',function(){
+    clearTimeout(fallbackTimer);
+    showLogoFallback();
+  });
+
+  var p=vid.play();
+  if(p!==undefined){
+    p.catch(function(){
+      vid.muted=true;
+      vid.play().catch(function(){
+        clearTimeout(fallbackTimer);
+        showLogoFallback();
+      });
+    });
+  }
 })();
 
 // ── NOTIFICAÇÕES INTELIGENTES ──────────────────────────────
