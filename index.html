@@ -601,7 +601,8 @@ canvas{width:100%!important;border-radius:10px;}
 var currentLang='pt';
 var T={
 pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Historico',
-  ganharMassa:'&#128170; Ganhar Massa',emagrecer:'&#128293; Emagrecer',
+  ganharMassa:'&#128170; Ganhar Massa',emagrecer:'&#128293; Emagrecer',manter:'&#9878; Manter Peso',
+  ola:'Olá,',bemVindo:'Bem-vindo!',
   proteina:'&#129385; Proteina',carbo:'&#127834; Carbo',gordura:'&#129361; Gordura',
   cafeManha:'Cafe da manha',almoco:'Almoco',lanche:'Lanche',jantar:'Jantar',
   nenhumAlimento:'Nenhum alimento',addFood:'+ Adicionar Alimento',
@@ -617,7 +618,8 @@ pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:
   calcSub:'Calcule sua necessidade calorica diaria',
   histTitle:'Historico',profTitle:'Perfil',configTitle:'Configuracoes'},
 en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcular:'Calculate',hist:'History',
-  ganharMassa:'&#128170; Gain Mass',emagrecer:'&#128293; Lose Weight',
+  ganharMassa:'&#128170; Gain Mass',emagrecer:'&#128293; Lose Weight',manter:'&#9878; Maintain',
+  ola:'Hello,',bemVindo:'Welcome!',
   proteina:'&#129385; Protein',carbo:'&#127834; Carbs',gordura:'&#129361; Fat',
   cafeManha:'Breakfast',almoco:'Lunch',lanche:'Snack',jantar:'Dinner',
   nenhumAlimento:'No food logged',addFood:'+ Add Food',
@@ -633,7 +635,8 @@ en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcu
   calcSub:'Calculate your daily caloric needs',
   histTitle:'History',profTitle:'Profile',configTitle:'Settings'},
 es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Historial',
-  ganharMassa:'&#128170; Ganar Masa',emagrecer:'&#128293; Adelgazar',
+  ganharMassa:'&#128170; Ganar Masa',emagrecer:'&#128293; Adelgazar',manter:'&#9878; Mantener',
+  ola:'¡Hola,',bemVindo:'¡Bienvenido!',
   proteina:'&#129385; Proteina',carbo:'&#127834; Carbos',gordura:'&#129361; Grasa',
   cafeManha:'Desayuno',almoco:'Almuerzo',lanche:'Merienda',jantar:'Cena',
   nenhumAlimento:'Sin alimentos',addFood:'+ Agregar Alimento',
@@ -649,7 +652,8 @@ es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'
   calcSub:'Calcula tu necesidad calorica diaria',
   histTitle:'Historial',profTitle:'Perfil',configTitle:'Configuracion'},
 it:{hoje:'Oggi',fotoIA:'Foto IA',agua:'Acqua',dieta:'Dieta',peso:'Peso',calcular:'Calcola',hist:'Storico',
-  ganharMassa:'&#128170; Aumenta Massa',emagrecer:'&#128293; Dimagrire',
+  ganharMassa:'&#128170; Aumenta Massa',emagrecer:'&#128293; Dimagrire',manter:'&#9878; Mantieni',
+  ola:'Ciao,',bemVindo:'Benvenuto!',
   proteina:'&#129385; Proteina',carbo:'&#127834; Carboidrati',gordura:'&#129361; Grassi',
   cafeManha:'Colazione',almoco:'Pranzo',lanche:'Spuntino',jantar:'Cena',
   nenhumAlimento:'Nessun alimento',addFood:'+ Aggiungi Alimento',
@@ -665,7 +669,8 @@ it:{hoje:'Oggi',fotoIA:'Foto IA',agua:'Acqua',dieta:'Dieta',peso:'Peso',calcular
   calcSub:'Calcola il tuo fabbisogno calorico giornaliero',
   histTitle:'Storico',profTitle:'Profilo',configTitle:'Impostazioni'},
 fr:{hoje:'Aujourd\'hui',fotoIA:'Photo IA',agua:'Eau',dieta:'Régime',peso:'Poids',calcular:'Calculer',hist:'Historique',
-  ganharMassa:'&#128170; Prendre du Muscle',emagrecer:'&#128293; Maigrir',
+  ganharMassa:'&#128170; Prendre du Muscle',emagrecer:'&#128293; Maigrir',manter:'&#9878; Maintenir',
+  ola:'Bonjour,',bemVindo:'Bienvenue!',
   proteina:'&#129385; Protéines',carbo:'&#127834; Glucides',gordura:'&#129361; Lipides',
   cafeManha:'Petit-déjeuner',almoco:'Déjeuner',lanche:'Collation',jantar:'Dîner',
   nenhumAlimento:'Aucun aliment',addFood:'+ Ajouter Aliment',
@@ -681,7 +686,8 @@ fr:{hoje:'Aujourd\'hui',fotoIA:'Photo IA',agua:'Eau',dieta:'Régime',peso:'Poids
   calcSub:'Calculez vos besoins caloriques journaliers',
   histTitle:'Historique',profTitle:'Profil',configTitle:'Paramètres'},
 de:{hoje:'Heute',fotoIA:'Foto KI',agua:'Wasser',dieta:'Diät',peso:'Gewicht',calcular:'Berechnen',hist:'Verlauf',
-  ganharMassa:'&#128170; Muskeln aufbauen',emagrecer:'&#128293; Abnehmen',
+  ganharMassa:'&#128170; Muskeln aufbauen',emagrecer:'&#128293; Abnehmen',manter:'&#9878; Gewicht halten',
+  ola:'Hallo,',bemVindo:'Willkommen!',
   proteina:'&#129385; Protein',carbo:'&#127834; Kohlenhydrate',gordura:'&#129361; Fett',
   cafeManha:'Frühstück',almoco:'Mittagessen',lanche:'Snack',jantar:'Abendessen',
   nenhumAlimento:'Kein Lebensmittel',addFood:'+ Lebensmittel hinzufügen',
@@ -821,10 +827,11 @@ function renderHomeGreeting(){
     var nameEl=document.getElementById('homeGreetName');
     var goalEl=document.getElementById('homeGreetGoal');
     var avEl=document.getElementById('homeAvatar');
-    if(nameEl)nameEl.textContent=p.name?'Olá, '+p.name+'! 👋':'Bem-vindo!';
+    var t=T[currentLang]||T['pt'];
+    if(nameEl)nameEl.textContent=p.name?t.ola+' '+p.name+'! 👋':t.bemVindo;
     if(goalEl){
-      var gLabel=state.goal==='mass'?'🏋️ Ganhar Massa':state.goal==='cut'?'🔥 Emagrecer':'⚖️ Manter Peso';
-      goalEl.textContent=gLabel+' · Meta: '+state.calGoal+' kcal';
+      var gLabel=state.goal==='mass'?t.ganharMassa.replace(/&#\d+;/g,'').trim():state.goal==='cut'?t.emagrecer.replace(/&#\d+;/g,'').trim():(t.manter||'').replace(/&#\d+;/g,'').trim();
+      goalEl.textContent=(state.goal==='mass'?'🏋️ ':state.goal==='cut'?'🔥 ':'⚖️ ')+gLabel+' · '+t.meta+': '+state.calGoal+' kcal';
     }
     if(avEl){
       if(p.photo)avEl.innerHTML='<img src="'+p.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
