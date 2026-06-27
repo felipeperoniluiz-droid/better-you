@@ -25,8 +25,8 @@ body{display:flex;justify-content:center;}
 .nav-item.active{color:#f0b429;border-top-color:#f0b429;}
 .nav-item-icon{font-size:18px;}
 .nav-item-label{font-size:9px;font-weight:500;}
-.lang-selector{display:flex;gap:3px;align-items:center;}
-.lang-btn{padding:3px 7px;border:1px solid #3a4150;border-radius:5px;background:transparent;color:#8b95a3;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;}
+.lang-selector{display:flex;gap:2px;align-items:center;flex-wrap:wrap;max-width:160px;}
+.lang-btn{padding:2px 5px;border:1px solid #3a4150;border-radius:5px;background:transparent;color:#8b95a3;font-size:9px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;}
 .lang-btn.active{background:#f0b429;color:#000;border-color:#f0b429;}
 .content{flex:1;overflow-y:auto;padding:16px;padding-bottom:4px;}
 .tab{display:none;animation:fadeIn .2s ease;}
@@ -207,6 +207,8 @@ canvas{width:100%!important;border-radius:10px;}
     <button onclick="setLang('en')" id="lang-en" class="lang-btn">EN</button>
     <button onclick="setLang('es')" id="lang-es" class="lang-btn">ES</button>
     <button onclick="setLang('it')" id="lang-it" class="lang-btn">IT</button>
+    <button onclick="setLang('fr')" id="lang-fr" class="lang-btn">FR</button>
+    <button onclick="setLang('de')" id="lang-de" class="lang-btn">DE</button>
   </div>
   <div class="header-actions">
     <div class="icon-btn" id="headerProfileBtn" onclick="openProfile()">&#128100;</div>
@@ -661,7 +663,39 @@ it:{hoje:'Oggi',fotoIA:'Foto IA',agua:'Acqua',dieta:'Dieta',peso:'Peso',calcular
   masc:'Maschile',fem:'Femminile',
   tiposDieta:'Tipo di Dieta',evolPeso:'Evoluzione del Peso',calculadora:'Calcolatore',
   calcSub:'Calcola il tuo fabbisogno calorico giornaliero',
-  histTitle:'Storico',profTitle:'Profilo',configTitle:'Impostazioni'}
+  histTitle:'Storico',profTitle:'Profilo',configTitle:'Impostazioni'},
+fr:{hoje:'Aujourd\'hui',fotoIA:'Photo IA',agua:'Eau',dieta:'Régime',peso:'Poids',calcular:'Calculer',hist:'Historique',
+  ganharMassa:'&#128170; Prendre du Muscle',emagrecer:'&#128293; Maigrir',
+  proteina:'&#129385; Protéines',carbo:'&#127834; Glucides',gordura:'&#129361; Lipides',
+  cafeManha:'Petit-déjeuner',almoco:'Déjeuner',lanche:'Collation',jantar:'Dîner',
+  nenhumAlimento:'Aucun aliment',addFood:'+ Ajouter Aliment',
+  refRapidas:'REPAS RAPIDES',aguaHoje:'EAU AUJOURD\'HUI',
+  faltam:'Il manque',acimaMeta:'au-dessus de l\'objectif',metaAtingida:'Objectif atteint!',
+  meta:'Objectif',buscar:'Rechercher aliment...',gramas:'Grammes (g)',adicionar:'Ajouter',
+  aplicarMeta:'Appliquer cet objectif',removido:'Supprimé',
+  pesoRegistrado:'Poids enregistré!',pesoInvalido:'Poids invalide',
+  aguaAtualizada:'Objectif hydrique mis à jour!',
+  tmb:'MB',tdee:'TDEE',resultados:'Résultats',calcBtn:'Calculer',
+  masc:'Masculin',fem:'Féminin',
+  tiposDieta:'Type de Régime',evolPeso:'Évolution du Poids',calculadora:'Calculateur',
+  calcSub:'Calculez vos besoins caloriques journaliers',
+  histTitle:'Historique',profTitle:'Profil',configTitle:'Paramètres'},
+de:{hoje:'Heute',fotoIA:'Foto KI',agua:'Wasser',dieta:'Diät',peso:'Gewicht',calcular:'Berechnen',hist:'Verlauf',
+  ganharMassa:'&#128170; Muskeln aufbauen',emagrecer:'&#128293; Abnehmen',
+  proteina:'&#129385; Protein',carbo:'&#127834; Kohlenhydrate',gordura:'&#129361; Fett',
+  cafeManha:'Frühstück',almoco:'Mittagessen',lanche:'Snack',jantar:'Abendessen',
+  nenhumAlimento:'Kein Lebensmittel',addFood:'+ Lebensmittel hinzufügen',
+  refRapidas:'SCHNELLE MAHLZEITEN',aguaHoje:'WASSER HEUTE',
+  faltam:'Fehlen noch',acimaMeta:'über dem Ziel',metaAtingida:'Ziel erreicht!',
+  meta:'Ziel',buscar:'Lebensmittel suchen...',gramas:'Gramm (g)',adicionar:'Hinzufügen',
+  aplicarMeta:'Dieses Ziel anwenden',removido:'Entfernt',
+  pesoRegistrado:'Gewicht gespeichert!',pesoInvalido:'Ungültiges Gewicht',
+  aguaAtualizada:'Trinkmengenziel aktualisiert!',
+  tmb:'GU',tdee:'TDEE',resultados:'Ergebnisse',calcBtn:'Berechnen',
+  masc:'Männlich',fem:'Weiblich',
+  tiposDieta:'Diättyp',evolPeso:'Gewichtsverlauf',calculadora:'Rechner',
+  calcSub:'Berechnen Sie Ihren täglichen Kalorienbedarf',
+  histTitle:'Verlauf',profTitle:'Profil',configTitle:'Einstellungen'}
 };
 function setLang(lang){
   currentLang=lang;
@@ -685,7 +719,7 @@ function setLang(lang){
   // Add food button
   var af=document.getElementById('btn-add-food');if(af)af.textContent=t.addFood;
   // Lang buttons
-  ['pt','en','es','it'].forEach(function(l){
+  ['pt','en','es','it','fr','de'].forEach(function(l){
     var el=document.getElementById('lang-'+l);
     if(el)el.className='lang-btn'+(l===lang?' active':'');
   });
