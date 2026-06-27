@@ -2142,16 +2142,13 @@ function renderNutriChat(){
 }
 </script>
 
-<!-- ── FIREBASE SDK ──────────────────────────────────────────────── -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<!-- ── FIREBASE SDK (carregado de forma assíncrona para não bloquear o vídeo) ── -->
 <script>
 // ── FIREBASE INIT ─────────────────────────────────────────────────
 var _fbApp, _fbAuth, _fbDb, _fbUser = null;
 var _fbSaveTimer = null;
 
-(function initFirebase(){
+function initFirebase(){
   var cfg = {
     apiKey:"AIzaSyA4XSmp9nLZksLExw1jH_hbuiRGgeqrzqY",
     authDomain:"better-you-edefc.firebaseapp.com",
@@ -2298,6 +2295,26 @@ function saveToFirestore(){
     }).catch(function(e){console.log('Firestore save error:',e);});
   },1500);
 }
+} // fim initFirebase
+
+// Carrega os SDKs do Firebase em sequência de forma ASSÍNCRONA
+// (não bloqueia o vídeo de abertura)
+(function loadFirebaseSDK(){
+  var sdks=[
+    'https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js',
+    'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js',
+    'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js'
+  ];
+  function loadNext(i){
+    if(i>=sdks.length){initFirebase();return;}
+    var s=document.createElement('script');
+    s.src=sdks[i];
+    s.onload=function(){loadNext(i+1);};
+    s.onerror=function(){console.log('Firebase SDK load error:',sdks[i]);loadNext(i+1);};
+    document.head.appendChild(s);
+  }
+  loadNext(0);
+})();
 </script>
 </body>
 </html>
