@@ -2298,23 +2298,37 @@ function saveToFirestore(){
 }
 } // fim initFirebase
 
-// Carrega os SDKs do Firebase em sequência de forma ASSÍNCRONA
-// (não bloqueia o vídeo de abertura)
-(function loadFirebaseSDK(){
-  var sdks=[
-    'https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js',
-    'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js',
-    'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js'
-  ];
-  function loadNext(i){
-    if(i>=sdks.length){initFirebase();return;}
-    var s=document.createElement('script');
-    s.src=sdks[i];
-    s.onload=function(){loadNext(i+1);};
-    s.onerror=function(){console.log('Firebase SDK load error:',sdks[i]);loadNext(i+1);};
-    document.head.appendChild(s);
+// Carrega os SDKs do Firebase SOMENTE APÓS o splash terminar.
+// Assim o vídeo de abertura tem prioridade total na rede do iOS.
+(function(){
+  function doLoadFirebase(){
+    var sdks=[
+      'https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js',
+      'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js',
+      'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js'
+    ];
+    function loadNext(i){
+      if(i>=sdks.length){initFirebase();return;}
+      var s=document.createElement('script');
+      s.src=sdks[i];
+      s.onload=function(){loadNext(i+1);};
+      s.onerror=function(){console.log('Firebase SDK load error:',sdks[i]);loadNext(i+1);};
+      document.head.appendChild(s);
+    }
+    loadNext(0);
   }
-  loadNext(0);
+
+  if(window._splashDone){
+    // Splash já terminou (improvável, mas defensivo)
+    doLoadFirebase();
+  } else {
+    // Encadeia com qualquer callback _onSplashDone já existente
+    var prevCallback = window._onSplashDone;
+    window._onSplashDone = function(){
+      if(prevCallback) prevCallback();
+      doLoadFirebase();
+    };
+  }
 })();
 </script>
 </body>
