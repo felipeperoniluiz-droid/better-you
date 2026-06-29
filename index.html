@@ -1806,17 +1806,22 @@ init();
     },650);
   }
 
-  function showLogoFallback(){
-    var logoSrc=document.getElementById('app-logo').src;
-    splash.innerHTML='<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;">'
-      +'<img src="'+logoSrc+'" class="splash-img" style="height:84px;width:auto;object-fit:contain;">'
-      +'<div class="splash-sub" style="color:#f0b429;font-family:\'Syne\',sans-serif;font-size:11px;font-weight:700;letter-spacing:3.5px;margin-top:18px;">BETTER YOU</div>'
-      +'</div>';
-    setTimeout(dismiss,2300);
-  }
+  // Logo sempre visível como base — nunca fica tela preta
+  var logoEl=document.getElementById('app-logo');
+  var logoSrc=logoEl?logoEl.src:'';
+  var logoDiv=document.createElement('div');
+  logoDiv.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;z-index:1;';
+  logoDiv.innerHTML='<img src="'+logoSrc+'" style="height:84px;width:auto;object-fit:contain;">'
+    +'<div style="color:#f0b429;font-family:\'Syne\',sans-serif;font-size:11px;font-weight:700;letter-spacing:3.5px;margin-top:18px;">BETTER YOU</div>';
+  splash.appendChild(logoDiv);
+  document.body.appendChild(splash);
 
+  // Logo fica por 2.8s como padrão
+  var logoTimer=setTimeout(dismiss,2800);
+
+  // Vídeo tenta tocar por cima da logo (z-index maior, começa invisível)
   var vid=document.createElement('video');
-  vid.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;background:#0a0c0f;';
+  vid.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;background:#0a0c0f;z-index:2;opacity:0;transition:opacity .2s;';
   vid.muted=true;
   vid.playsInline=true;
   vid.setAttribute('muted','');
@@ -1825,29 +1830,25 @@ init();
   vid.preload='auto';
   vid.src=VIDEO_URL;
   splash.appendChild(vid);
-  document.body.appendChild(splash);
 
-  var fallbackTimer=setTimeout(function(){showLogoFallback();},10000);
-  var _played=false;
+  vid.addEventListener('playing',function(){
+    // Vídeo tocando com sucesso — mostra ele e cancela timer da logo
+    clearTimeout(logoTimer);
+    vid.style.opacity='1';
+    logoDiv.style.display='none';
+  });
+  vid.addEventListener('ended',function(){dismiss();});
 
-  function tryPlay(){
-    if(_played)return;
-    _played=true;
+  // Tenta play quando tiver dados suficientes
+  vid.addEventListener('canplay',function(){
     var p=vid.play();
-    if(p!==undefined){
-      p.catch(function(){
-        clearTimeout(fallbackTimer);
-        showLogoFallback();
-      });
-    }
-  }
+    if(p!==undefined){p.catch(function(){});}
+  },{once:true});
 
-  vid.addEventListener('canplay',tryPlay);
-  vid.addEventListener('ended',function(){clearTimeout(fallbackTimer);dismiss();});
-  vid.addEventListener('error',function(){clearTimeout(fallbackTimer);showLogoFallback();});
-
-  // Tenta também após um pequeno delay (caso canplay já tenha disparado antes do listener)
-  setTimeout(tryPlay,500);
+  // Tentativa imediata (cache)
+  setTimeout(function(){
+    if(vid.readyState>=3){var p=vid.play();if(p!==undefined){p.catch(function(){});}}
+  },100);
 })();
 
 // ── NOTIFICAÇÕES INTELIGENTES ──────────────────────────────
