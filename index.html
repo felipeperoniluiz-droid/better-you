@@ -221,18 +221,34 @@ canvas{width:100%!important;border-radius:10px;}
 </head>
 <body>
 
-<!-- ── SPLASH SCREEN ──────────────────────────────────────────── -->
-<div id="splash" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9999;overflow:hidden;transition:opacity .6s ease;">
-  <!-- Vídeo começa escondido para evitar o botão de play nativo do iOS -->
-  <video id="splash-vid"
-    muted playsinline webkit-playsinline
-    style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:none;">
-    <source src="https://felipeperoniluiz-droid.github.io/better-you/abertura.mp4" type="video/mp4">
-  </video>
-  <!-- Logo visível por padrão enquanto o vídeo carrega -->
-  <div id="splash-logo" style="display:flex;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);flex-direction:column;align-items:center;text-align:center;">
-    <div style="font-size:64px;">💪</div>
-    <div style="color:#f0b429;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:3.5px;margin-top:16px;">BETTER YOU</div>
+<!-- ── SPLASH SCREEN (CSS Animation) ─────────────────────────── -->
+<div id="splash" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9999;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+  <style>
+    @keyframes sp-logo-in{0%{opacity:0;transform:scale(.6)}60%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+    @keyframes sp-text-in{0%{opacity:0;letter-spacing:10px}100%{opacity:1;letter-spacing:4px}}
+    @keyframes sp-glow{0%,100%{opacity:.4}50%{opacity:1}}
+    @keyframes sp-ring{0%{transform:scale(.5);opacity:.8}100%{transform:scale(2.2);opacity:0}}
+    @keyframes sp-fade-out{0%{opacity:1}100%{opacity:0}}
+    #splash-logo-img{animation:sp-logo-in .8s cubic-bezier(.34,1.56,.64,1) .2s both}
+    #splash-tagline{animation:sp-text-in .7s ease .9s both}
+    #splash-sub{animation:sp-text-in .6s ease 1.2s both}
+    .sp-ring{position:absolute;border-radius:50%;border:1px solid rgba(240,180,41,.35);animation:sp-ring 2s ease-out infinite}
+    .sp-ring:nth-child(2){animation-delay:.6s}
+    .sp-ring:nth-child(3){animation-delay:1.2s}
+    #splash-glow{animation:sp-glow 2s ease-in-out .5s infinite}
+    #splash.sp-exit{animation:sp-fade-out .6s ease forwards}
+  </style>
+  <!-- Anéis pulsantes -->
+  <div class="sp-ring" style="width:160px;height:160px;"></div>
+  <div class="sp-ring" style="width:160px;height:160px;"></div>
+  <div class="sp-ring" style="width:160px;height:160px;"></div>
+  <!-- Brilho central -->
+  <div id="splash-glow" style="position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(240,180,41,.18) 0%,transparent 70%);"></div>
+  <!-- Conteúdo central -->
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1;">
+    <img id="splash-logo-img" src="" style="height:96px;width:auto;object-fit:contain;filter:drop-shadow(0 0 18px rgba(240,180,41,.5));">
+    <div id="splash-tagline" style="color:#f0b429;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;letter-spacing:4px;margin-top:20px;">BETTER YOU</div>
+    <div id="splash-sub" style="color:rgba(240,180,41,.55);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:2px;margin-top:6px;">FUEL YOUR GROWTH</div>
   </div>
 </div>
 
@@ -1805,55 +1821,27 @@ function init(){
 }
 init();
 
-// ── SPLASH SCREEN ─────────────────────────────────────────────────
+// ── SPLASH SCREEN (CSS Animation) ─────────────────────────────────
 (function(){
   var splash=document.getElementById('splash');
-  var vid=document.getElementById('splash-vid');
-  var logoEl=document.getElementById('splash-logo');
-  if(!splash||!vid)return;
+  if(!splash)return;
+
+  // Copia a logo do app para o splash
+  var appLogo=document.getElementById('app-logo');
+  var splashLogoImg=document.getElementById('splash-logo-img');
+  if(appLogo&&splashLogoImg)splashLogoImg.src=appLogo.src;
 
   function dismiss(){
-    splash.style.opacity='0';
+    splash.classList.add('sp-exit');
     setTimeout(function(){
       if(splash.parentNode)splash.remove();
       window._splashDone=true;
       if(window._onSplashDone)window._onSplashDone();
-    },650);
+    },600);
   }
 
-  // Quando vídeo realmente começa a tocar → mostra ele, esconde logo
-  vid.addEventListener('playing',function(){
-    vid.style.display='block';
-    logoEl.style.display='none';
-  });
-
-  // Vídeo terminou → fecha splash
-  vid.addEventListener('ended',dismiss);
-
-  // Logo fica visível por 3s, depois fecha (se vídeo não tocou)
-  var logoTimer=setTimeout(dismiss,3000);
-
-  // Cancela o timer da logo quando vídeo tocar
-  vid.addEventListener('playing',function(){clearTimeout(logoTimer);},{ once:true });
-
-  // Função que tenta tocar o vídeo (garante user gesture)
-  var tried=false;
-  function tryPlay(){
-    if(tried)return;
-    tried=true;
-    vid.play().then(function(){
-      // Sucesso - o evento 'playing' cuida do resto
-    }).catch(function(){
-      // Falhou - logo já está visível, logoTimer fecha o splash
-    });
-  }
-
-  // 1) Tenta autoplay imediato
-  setTimeout(tryPlay,50);
-
-  // 2) No primeiro toque (abre o app) → tenta tocar
-  document.addEventListener('touchstart',function(){tryPlay();},{once:true,passive:true,capture:true});
-  document.addEventListener('click',function(){tryPlay();},{once:true,capture:true});
+  // Fecha após 3.2s (tempo suficiente para ver a animação toda)
+  setTimeout(dismiss,3200);
 })();
 
 // ── NOTIFICAÇÕES INTELIGENTES ──────────────────────────────
