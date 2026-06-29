@@ -221,6 +221,20 @@ canvas{width:100%!important;border-radius:10px;}
 </head>
 <body>
 
+<!-- ── SPLASH SCREEN (HTML nativo — mais confiável no iOS) ──────── -->
+<div id="splash" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9999;overflow:hidden;transition:opacity .6s ease;">
+  <video id="splash-vid"
+    autoplay muted playsinline
+    webkit-playsinline
+    style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
+    <source src="https://felipeperoniluiz-droid.github.io/better-you/abertura.mp4" type="video/mp4">
+  </video>
+  <div id="splash-logo" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);flex-direction:column;align-items:center;text-align:center;">
+    <div style="font-size:64px;">💪</div>
+    <div style="color:#f0b429;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:3.5px;margin-top:16px;">BETTER YOU</div>
+  </div>
+</div>
+
 <!-- ── AUTH SCREEN ─────────────────────────────────────────────── -->
 <div id="authScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;overflow-y:auto;">
   <div style="text-align:center;margin-bottom:32px;">
@@ -1790,12 +1804,12 @@ function init(){
 }
 init();
 
-// ── SPLASH SCREEN (VIDEO) ──────────────────────────────────────
+// ── SPLASH SCREEN (gerenciamento via JS, vídeo já no HTML) ────────
 (function(){
-  var VIDEO_URL='https://felipeperoniluiz-droid.github.io/better-you/abertura.mp4';
-  var splash=document.createElement('div');
-  splash.id='splash';
-  splash.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9999;overflow:hidden;transition:opacity .6s ease;';
+  var splash=document.getElementById('splash');
+  var vid=document.getElementById('splash-vid');
+  var logoFallback=document.getElementById('splash-logo');
+  if(!splash||!vid)return;
 
   function dismiss(){
     splash.style.opacity='0';
@@ -1806,49 +1820,26 @@ init();
     },650);
   }
 
-  // Logo sempre visível como base — nunca fica tela preta
-  var logoEl=document.getElementById('app-logo');
-  var logoSrc=logoEl?logoEl.src:'';
-  var logoDiv=document.createElement('div');
-  logoDiv.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;z-index:1;';
-  logoDiv.innerHTML='<img src="'+logoSrc+'" style="height:84px;width:auto;object-fit:contain;">'
-    +'<div style="color:#f0b429;font-family:\'Syne\',sans-serif;font-size:11px;font-weight:700;letter-spacing:3.5px;margin-top:18px;">BETTER YOU</div>';
-  splash.appendChild(logoDiv);
-  document.body.appendChild(splash);
+  function showLogo(){
+    logoFallback.style.display='flex';
+    setTimeout(dismiss,2500);
+  }
 
-  // Logo fica por 2.8s como padrão
-  var logoTimer=setTimeout(dismiss,2800);
+  // Vídeo terminou normalmente
+  vid.addEventListener('ended',dismiss);
 
-  // Vídeo tenta tocar por cima da logo (z-index maior, começa invisível)
-  var vid=document.createElement('video');
-  vid.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;background:#0a0c0f;z-index:2;opacity:0;transition:opacity .2s;';
-  vid.muted=true;
-  vid.playsInline=true;
-  vid.setAttribute('muted','');
-  vid.setAttribute('playsinline','');
-  vid.setAttribute('webkit-playsinline','');
-  vid.preload='auto';
-  vid.src=VIDEO_URL;
-  splash.appendChild(vid);
+  // Erro ao carregar vídeo → mostra logo
+  vid.addEventListener('error',showLogo);
 
-  vid.addEventListener('playing',function(){
-    // Vídeo tocando com sucesso — mostra ele e cancela timer da logo
-    clearTimeout(logoTimer);
-    vid.style.opacity='1';
-    logoDiv.style.display='none';
-  });
-  vid.addEventListener('ended',function(){dismiss();});
+  // Se após 4s o vídeo ainda não tocou, mostra logo
+  var watchdog=setTimeout(function(){
+    if(vid.paused)showLogo();
+  },4000);
 
-  // Tenta play quando tiver dados suficientes
-  vid.addEventListener('canplay',function(){
-    var p=vid.play();
-    if(p!==undefined){p.catch(function(){});}
-  },{once:true});
+  vid.addEventListener('playing',function(){clearTimeout(watchdog);});
 
-  // Tentativa imediata (cache)
-  setTimeout(function(){
-    if(vid.readyState>=3){var p=vid.play();if(p!==undefined){p.catch(function(){});}}
-  },100);
+  // Segurança: no máximo 12s de splash
+  setTimeout(function(){if(splash.parentNode)dismiss();},12000);
 })();
 
 // ── NOTIFICAÇÕES INTELIGENTES ──────────────────────────────
