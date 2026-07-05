@@ -436,26 +436,6 @@ canvas{width:100%!important;border-radius:10px;}
     <div class="card-title">Como funciona</div>
     <div style="font-size:12px;color:#8b95a3;line-height:1.8;">1. Tire uma foto do seu prato<br>2. A IA identifica cada ingrediente<br>3. Estima calorias e macros<br>4. Adicione tudo com um toque</div>
   </div>
-  <!-- IA Nutricionista -->
-  <div class="card" style="margin-top:6px;">
-    <div class="card-title">&#129680; Nutricionista IA<span class="pro-badge">PRO</span></div>
-    <div style="font-size:12px;color:#8b95a3;margin-bottom:10px;">Pergunte sobre seu dia e receba dicas personalizadas com base no seu objetivo e consumo atual.</div>
-    <!-- Botões de ação rápida -->
-    <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;">
-      <button onclick="askNutritionist('Analise meu dia de hoje. Como estou em relação às minhas metas de calorias, proteína e água?')" style="padding:7px 11px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:8px;color:#f0b429;font-size:12px;cursor:pointer;font-family:DM Sans,sans-serif;">&#128202; Analisar meu dia</button>
-      <button onclick="askNutritionist('O que eu poderia comer agora para bater minhas metas do dia sem ultrapassar as calorias?')" style="padding:7px 11px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:#34d399;font-size:12px;cursor:pointer;font-family:DM Sans,sans-serif;">&#127869; O que comer agora?</button>
-      <button onclick="askNutritionist('Estou dentro da minha meta de proteína? Me dê uma dica prática e objetiva.')" style="padding:7px 11px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);border-radius:8px;color:#60a5fa;font-size:12px;cursor:pointer;font-family:DM Sans,sans-serif;">&#128170; Meta de proteína</button>
-    </div>
-    <!-- Mensagens do chat -->
-    <div id="chatMessages" style="display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto;margin-bottom:10px;"></div>
-    <!-- Loading -->
-    <div id="chatLoading" style="display:none;padding:10px 0;"><div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
-    <!-- Input -->
-    <div class="chat-input-row">
-      <input type="text" class="input" id="chatInput" placeholder="Pergunte algo ao nutricionista..." style="flex:1;" onkeydown="if(event.key==='Enter')sendChat()">
-      <button onclick="sendChat()" style="padding:11px 14px;background:linear-gradient(135deg,#f0b429,#e8834a);border:none;border-radius:10px;cursor:pointer;font-size:16px;">&#10148;</button>
-    </div>
-  </div>
   </div><!-- /section-fotoIA -->
 
   <!-- ────── SECTION: FOTOS DE PROGRESSO ────── -->
@@ -569,12 +549,60 @@ canvas{width:100%!important;border-radius:10px;}
   </div>
 </div>
 
-<!-- TAB DIETA -->
+<!-- TAB NUTRICIONISTA IA -->
 <div class="tab" id="tab-dieta">
-  <div class="section-title">Tipo de Dieta</div>
-  <div class="section-sub">Escolha o estilo alimentar ideal para voce</div>
-  <div class="diet-grid" id="dietGrid"></div>
-  <div id="dietDetail"></div>
+
+  <!-- Hero Card -->
+  <div style="background:linear-gradient(135deg,#181c22,#1a1f2e);border:1px solid rgba(129,140,248,.3);border-radius:18px;padding:18px;margin-bottom:14px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-30px;right:-30px;width:150px;height:150px;background:radial-gradient(circle,rgba(129,140,248,.12),transparent);border-radius:50%;pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-20px;left:-15px;width:110px;height:110px;background:radial-gradient(circle,rgba(96,165,250,.08),transparent);border-radius:50%;pointer-events:none;"></div>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;position:relative;">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,#818cf8,#60a5fa);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;box-shadow:0 6px 20px rgba(129,140,248,.35);">&#129308;</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+          <div style="font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:#f0f2f5;">Nutricionista IA</div>
+          <span class="pro-badge">PRO</span>
+        </div>
+        <div style="font-size:12px;color:#818cf8;font-weight:600;" id="nutriGoalLabel">Especialista no seu objetivo</div>
+      </div>
+    </div>
+    <!-- Daily context -->
+    <div style="background:rgba(0,0,0,.3);border-radius:12px;padding:10px 14px;">
+      <div style="font-size:10px;color:#5a6270;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;font-weight:600;">Contexto de hoje</div>
+      <div id="nutriContextStats" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;"></div>
+    </div>
+  </div>
+
+  <!-- Quick actions 2×2 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+    <button onclick="askNutritionist('Analise meu dia de hoje. Como estou em relação às minhas metas de calorias, proteína e água?')" style="padding:14px 10px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:13px;color:#f0b429;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#128202; Analisar<br>meu dia</button>
+    <button onclick="askNutritionist('O que eu poderia comer agora para bater minhas metas do dia sem ultrapassar as calorias?')" style="padding:14px 10px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:13px;color:#34d399;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#127869; O que<br>comer agora?</button>
+    <button onclick="askNutritionist('Estou dentro da minha meta de proteína? Me dê uma dica prática sobre as melhores fontes de proteína para o meu objetivo.')" style="padding:14px 10px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);border-radius:13px;color:#60a5fa;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#128170; Meta de<br>proteína</button>
+    <button onclick="askNutritionist('Me dê uma dica motivacional personalizada para hoje, baseada no meu objetivo e no que já consumi hoje.')" style="padding:14px 10px;background:rgba(232,131,74,.1);border:1px solid rgba(232,131,74,.3);border-radius:13px;color:#e8834a;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#9889; Motivação<br>do dia</button>
+  </div>
+
+  <!-- Chat area -->
+  <div class="card" style="padding:14px;margin-bottom:14px;">
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px;">
+      <div style="width:8px;height:8px;background:#34d399;border-radius:50%;box-shadow:0 0 6px rgba(52,211,153,.6);flex-shrink:0;"></div>
+      <span style="font-size:12px;color:#8b95a3;font-weight:500;">Online agora — responde em segundos</span>
+    </div>
+    <div id="chatMessages" style="display:flex;flex-direction:column;gap:8px;min-height:170px;max-height:400px;overflow-y:auto;margin-bottom:10px;"></div>
+    <div id="chatLoading" style="display:none;padding:10px 0;"><div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+    <div class="chat-input-row">
+      <input type="text" class="input" id="chatInput" placeholder="Pergunte à sua nutricionista..." style="flex:1;" onkeydown="if(event.key==='Enter')sendChat()">
+      <button onclick="sendChat()" style="padding:11px 15px;background:linear-gradient(135deg,#818cf8,#60a5fa);border:none;border-radius:10px;cursor:pointer;font-size:16px;color:#fff;">&#10148;</button>
+    </div>
+  </div>
+
+  <!-- Plano alimentar (diet type selector — moved here) -->
+  <div class="card">
+    <div class="card-title" style="margin-bottom:6px;">Plano Alimentar</div>
+    <div style="font-size:12px;color:#8b95a3;margin-bottom:12px;">Selecione seu estilo de dieta atual</div>
+    <div class="diet-grid" id="dietGrid"></div>
+    <div id="dietDetail"></div>
+  </div>
+
 </div>
 
 <!-- TAB PESO -->
@@ -683,7 +711,7 @@ canvas{width:100%!important;border-radius:10px;}
   <div class="nav-item active" onclick="switchTab('hoje',this)"><div class="nav-item-icon">&#127968;</div><div class="nav-item-label" id="nav-hoje">Hoje</div></div>
   <div class="nav-item" onclick="switchTab('foto',this)"><div class="nav-item-icon">&#128248;</div><div class="nav-item-label" id="nav-foto">Foto IA</div></div>
   <div class="nav-item" onclick="switchTab('agua',this)"><div class="nav-item-icon">&#128167;</div><div class="nav-item-label" id="nav-agua">Agua</div></div>
-  <div class="nav-item" onclick="switchTab('dieta',this)"><div class="nav-item-icon">&#129367;</div><div class="nav-item-label" id="nav-dieta">Dieta</div></div>
+  <div class="nav-item" onclick="switchTab('dieta',this)"><div class="nav-item-icon">&#129308;</div><div class="nav-item-label">Nutri <span style="font-size:7px;background:linear-gradient(135deg,#818cf8,#60a5fa);color:#fff;border-radius:4px;padding:1px 3px;font-weight:800;vertical-align:middle;">IA</span></div></div>
   <div class="nav-item" onclick="switchTab('peso',this)"><div class="nav-item-icon">&#128202;</div><div class="nav-item-label" id="nav-peso">Peso</div></div>
   <div class="nav-item" onclick="switchTab('calc',this)"><div class="nav-item-icon">&#128290;</div><div class="nav-item-label" id="nav-calc">Calcular</div></div>
   <div class="nav-item" onclick="switchTab('hist',this)"><div class="nav-item-icon">&#128197;</div><div class="nav-item-label" id="nav-hist">Historico</div></div>
@@ -1621,7 +1649,7 @@ function switchTab(name,navEl){
   if(navEl)navEl.classList.add("active");
   document.getElementById("content").scrollTop=0;
   if(name==="agua")renderWater();
-  if(name==="dieta")renderDiet();
+  if(name==="dieta"){renderDiet();renderNutriContext();}
   if(name==="peso"){renderWeight();renderMeasures();}
   if(name==="hist"){renderHistory();renderCalendar();}
   if(name==="foto"){checkApiKeyBanner();renderProgressPhotos();}
@@ -2335,6 +2363,43 @@ function renderNutriChat(){
       +'</div></div>';
   }).join('');
   el.scrollTop=el.scrollHeight;
+}
+
+function renderNutriContext(){
+  var goal=state.goal||'mass';
+  var goalLabels={cut:'🔥 Especialista em Emagrecimento',mass:'💪 Especialista em Ganho de Massa',maint:'⚖️ Especialista em Manutenção'};
+  var lbl=document.getElementById('nutriGoalLabel');
+  if(lbl)lbl.textContent=goalLabels[goal]||'Especialista no seu objetivo';
+
+  var t=calcTotals();
+  var mg=getMacroGoals();
+  var calGoal=state.calGoal||2000;
+  var waterGoal=state.waterGoal||2500;
+  var waterMl=state.waterMl||0;
+
+  var calPct=calGoal>0?Math.round(t.kcal/calGoal*100):0;
+  var protPct=mg.prot>0?Math.round(t.prot/mg.prot*100):0;
+  var waterPct=waterGoal>0?Math.round(waterMl/waterGoal*100):0;
+
+  function pctColor(p,goal){
+    if(goal==='cut')return p>105?'#f87171':p>=80?'#34d399':'#f0b429';
+    if(goal==='mass')return p>=95?'#34d399':p>=70?'#f0b429':'#f87171';
+    return p>=90&&p<=110?'#34d399':p>=70?'#f0b429':'#f87171';
+  }
+
+  var stats=document.getElementById('nutriContextStats');
+  if(!stats)return;
+  stats.innerHTML=[
+    {label:'Calorias',val:t.kcal+' kcal',pct:calPct,color:pctColor(calPct,goal),goal:calGoal+' kcal'},
+    {label:'Proteína',val:Math.round(t.prot)+'g',pct:protPct,color:pctColor(protPct,'mass'),goal:mg.prot+'g'},
+    {label:'Água',val:waterMl+'ml',pct:waterPct,color:pctColor(waterPct,'mass'),goal:waterGoal+'ml'}
+  ].map(function(s){
+    return '<div style="text-align:center;">'
+      +'<div style="font-size:10px;color:#5a6270;margin-bottom:3px;font-weight:500;">'+s.label+'</div>'
+      +'<div style="font-size:16px;font-weight:800;color:'+s.color+';font-family:\'Syne\',sans-serif;">'+Math.min(s.pct,999)+'%</div>'
+      +'<div style="font-size:9px;color:#3a4150;margin-top:2px;">'+s.val+'</div>'
+      +'</div>';
+  }).join('');
 }
 </script>
 
