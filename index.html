@@ -217,6 +217,23 @@ canvas{width:100%!important;border-radius:10px;}
 .compare-tag{position:absolute;top:10px;padding:3px 8px;background:rgba(0,0,0,.65);color:#fff;font-size:10px;font-weight:700;border-radius:99px;z-index:5;}
 .compare-tag-before{left:10px;}
 .compare-tag-after{right:10px;}
+/* ── PREMIUM / PRO BADGES ── */
+.pro-badge{display:inline-flex;align-items:center;padding:2px 6px;background:linear-gradient(135deg,#f0b429,#e8834a);color:#000;font-size:8px;font-weight:800;border-radius:99px;letter-spacing:.3px;vertical-align:middle;margin-left:5px;line-height:1.5;}
+.upgrade-banner{background:linear-gradient(135deg,rgba(240,180,41,.1),rgba(232,131,74,.06));border:1.5px solid rgba(240,180,41,.35);border-radius:14px;padding:14px;margin-bottom:14px;}
+/* ── RELATÓRIOS AVANÇADOS ── */
+.report-hero{background:linear-gradient(135deg,#181c22,#1e2229);border:1px solid #252b34;border-radius:16px;padding:18px;margin-bottom:12px;text-align:center;}
+.report-hero-num{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;line-height:1.1;}
+.report-hero-sub{font-size:13px;margin-top:8px;font-weight:500;}
+.report-week-wrap{display:flex;gap:5px;margin:0 0 12px;}
+.report-day-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.report-day-label{font-size:9px;color:#5a6270;text-transform:uppercase;font-weight:600;}
+.report-day-dot{width:100%;aspect-ratio:1;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+.report-stat-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #1e2229;}
+.report-stat-row:last-child{border-bottom:none;}
+.report-stat-label{font-size:12px;color:#8b95a3;}
+.report-stat-val{font-size:13px;font-weight:700;color:#f0f2f5;}
+.report-projection{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2);border-radius:12px;padding:14px;margin-bottom:12px;}
+.report-tip{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.2);border-radius:12px;padding:14px;margin-bottom:12px;}
 </style>
 </head>
 <body>
@@ -379,6 +396,15 @@ canvas{width:100%!important;border-radius:10px;}
 
   <!-- ────── SECTION: FOTO IA ────── -->
   <div id="section-fotoIA">
+  <!-- Banner PRO -->
+  <div class="upgrade-banner" style="margin-bottom:12px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+      <span style="font-size:15px;">📸</span>
+      <span style="font-size:13px;font-weight:700;color:#f0b429;">Foto IA</span>
+      <span class="pro-badge">PRO</span>
+    </div>
+    <div style="font-size:12px;color:#8b95a3;line-height:1.6;">Identifica calorias e macros automaticamente por foto. <b style="color:#f0f2f5;">Feature do plano €5,99/mês.</b><br><span style="color:#34d399;font-size:11px;">✅ Disponível gratuitamente durante o período beta</span></div>
+  </div>
   <div id="apiKeyBanner" style="display:none;background:linear-gradient(135deg,#1e293b,#0f172a);border:1.5px solid #f0b429;border-radius:14px;padding:16px;margin-bottom:14px;">
     <div style="font-size:14px;font-weight:700;color:#f0b429;margin-bottom:6px;">⚠️ Chave API necessaria</div>
     <div style="font-size:12px;color:#8b95a3;margin-bottom:12px;line-height:1.7;">Para identificar alimentos por foto, configure sua chave API no seu <b style="color:#e2e8f0;">Perfil</b>.<br><br><b style="color:#e2e8f0;">Como obter:</b><br>1. Acesse <b style="color:#38bdf8;">console.anthropic.com</b><br>2. Crie conta (pode usar Google)<br>3. Clique em <b>API Keys → Create Key</b><br>4. Copie a chave e adicione no seu Perfil</div>
@@ -412,8 +438,8 @@ canvas{width:100%!important;border-radius:10px;}
   </div>
   <!-- IA Nutricionista -->
   <div class="card" style="margin-top:6px;">
-    <div class="card-title">&#129680; Nutricionista IA</div>
-    <div style="font-size:12px;color:#8b95a3;margin-bottom:10px;">Pergunte sobre seu dia, receba dicas personalizadas baseadas no seu perfil e consumo atual.</div>
+    <div class="card-title">&#129680; Nutricionista IA<span class="pro-badge">PRO</span></div>
+    <div style="font-size:12px;color:#8b95a3;margin-bottom:10px;">Pergunte sobre seu dia e receba dicas personalizadas com base no seu objetivo e consumo atual.</div>
     <!-- Botões de ação rápida -->
     <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;">
       <button onclick="askNutritionist('Analise meu dia de hoje. Como estou em relação às minhas metas de calorias, proteína e água?')" style="padding:7px 11px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:8px;color:#f0b429;font-size:12px;cursor:pointer;font-family:DM Sans,sans-serif;">&#128202; Analisar meu dia</button>
@@ -641,6 +667,16 @@ canvas{width:100%!important;border-radius:10px;}
   <div class="card"><div class="card-title">Registros diarios</div><div id="histList"></div></div>
 </div>
 
+<!-- TAB RELATORIOS -->
+<div class="tab" id="tab-relatorios">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+    <div class="section-title" style="margin-bottom:0;">Relatórios</div>
+    <span class="pro-badge">PRO</span>
+  </div>
+  <div class="section-sub" id="reportSubtitle">Perspectiva personalizada do seu objetivo</div>
+  <div id="reportContent"></div>
+</div>
+
 </div><!-- /content -->
 
 <nav class="nav" id="mainNav">
@@ -651,6 +687,7 @@ canvas{width:100%!important;border-radius:10px;}
   <div class="nav-item" onclick="switchTab('peso',this)"><div class="nav-item-icon">&#128202;</div><div class="nav-item-label" id="nav-peso">Peso</div></div>
   <div class="nav-item" onclick="switchTab('calc',this)"><div class="nav-item-icon">&#128290;</div><div class="nav-item-label" id="nav-calc">Calcular</div></div>
   <div class="nav-item" onclick="switchTab('hist',this)"><div class="nav-item-icon">&#128197;</div><div class="nav-item-label" id="nav-hist">Historico</div></div>
+  <div class="nav-item" onclick="switchTab('relatorios',this)"><div class="nav-item-icon">&#128202;</div><div class="nav-item-label">Relat. <span style="font-size:7px;background:linear-gradient(135deg,#f0b429,#e8834a);color:#000;border-radius:4px;padding:1px 3px;font-weight:800;vertical-align:middle;">PRO</span></div></div>
 </nav>
 </div>
 
@@ -1297,7 +1334,12 @@ function analyzePhoto(dataUrl){
   document.getElementById("aiResultBox").style.display="none";
   var base64=dataUrl.split(",")[1];
   var mtype=dataUrl.split(";")[0].split(":")[1]||"image/jpeg";
-  var prompt="Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto com precisao.\n\nIdentifique TODOS os alimentos e bebidas visiveis. Para cada item, estime a quantidade em gramas (ou ml para bebidas) com base no tamanho visual do prato/recipiente.\n\nResponda SOMENTE com JSON valido, sem texto adicional:\n{\"descricao\":\"descricao detalhada do que ve na foto\",\"alimentos\":[{\"nome\":\"nome do alimento\",\"gramas\":150,\"kcal\":200,\"prot\":10,\"carb\":20,\"fat\":8}],\"liquidos\":[{\"nome\":\"nome da bebida\",\"ml\":300,\"kcal\":50}],\"total_kcal\":400,\"total_ml\":300}\n\nSe nao houver liquidos, use liquidos:[]. Se nao houver alimentos solidos, use alimentos:[]. Seja preciso nas calorias usando valores nutricionais reais.";
+  var goalCtxPhoto=state.goal==='cut'
+    ?'\n\nContexto: usuário em emagrecimento (déficit calórico). Destaque calorias totais, proteína para preservar músculo e alimentos que podem estar sabotando o déficit.'
+    :state.goal==='mass'
+    ?'\n\nContexto: usuário em ganho de massa muscular. Destaque proteínas, carboidratos e calorias totais. Mencione se é boa refeição pré ou pós-treino.'
+    :'\n\nContexto: usuário em manutenção. Análise equilibrada de todos os macros e qualidade nutricional.';
+  var prompt="Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto com precisao."+goalCtxPhoto+"\n\nIdentifique TODOS os alimentos e bebidas visiveis. Para cada item, estime a quantidade em gramas (ou ml para bebidas) com base no tamanho visual do prato/recipiente.\n\nResponda SOMENTE com JSON valido, sem texto adicional:\n{\"descricao\":\"descricao detalhada do que ve na foto\",\"alimentos\":[{\"nome\":\"nome do alimento\",\"gramas\":150,\"kcal\":200,\"prot\":10,\"carb\":20,\"fat\":8}],\"liquidos\":[{\"nome\":\"nome da bebida\",\"ml\":300,\"kcal\":50}],\"total_kcal\":400,\"total_ml\":300}\n\nSe nao houver liquidos, use liquidos:[]. Se nao houver alimentos solidos, use alimentos:[]. Seja preciso nas calorias usando valores nutricionais reais.";
   fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
     method:"POST",
     headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
@@ -1583,6 +1625,7 @@ function switchTab(name,navEl){
   if(name==="peso"){renderWeight();renderMeasures();}
   if(name==="hist"){renderHistory();renderCalendar();}
   if(name==="foto"){checkApiKeyBanner();renderProgressPhotos();}
+  if(name==="relatorios")renderReports();
 }
 
 // ── FOTOS DE PROGRESSO ──────────────────────────────────────────
@@ -2072,6 +2115,168 @@ function renderMeasures(){
   }).join('');
 }
 
+// ── RELATÓRIOS AVANÇADOS ──────────────────────────────────────
+function renderReports(){
+  var el=document.getElementById('reportContent');
+  if(!el)return;
+
+  var goal=state.goal||'mass';
+  var subEl=document.getElementById('reportSubtitle');
+  if(subEl){
+    subEl.textContent=goal==='cut'?'🔥 Sua jornada de emagrecimento':goal==='mass'?'💪 Sua jornada de ganho de massa':'⚖️ Seu plano de manutenção';
+  }
+
+  // Últimos 7 dias (incluindo hoje)
+  var dayNames=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  var days=[];
+  for(var i=6;i>=0;i--){
+    var d=new Date();d.setDate(d.getDate()-i);
+    var key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    var data=state.history[key]||null;
+    if(i===0){var t=calcTotals();data={kcal:t.kcal,prot:t.prot,carb:t.carb,fat:t.fat,water:state.waterMl};}
+    days.push({key:key,label:dayNames[d.getDay()],data:data});
+  }
+
+  var validDays=days.filter(function(d){return d.data&&d.data.kcal>0;});
+  if(!validDays.length){
+    el.innerHTML='<div class="card"><div class="empty"><div class="empty-icon">📊</div><div class="empty-text" style="line-height:1.7;">Registre sua alimentação por alguns dias para ver seu relatório personalizado.</div></div></div>';
+    return;
+  }
+
+  var calGoal=state.calGoal;
+  var mg=getMacroGoals();
+  var avgKcal=Math.round(validDays.reduce(function(s,d){return s+d.data.kcal;},0)/validDays.length);
+  var avgProt=Math.round(validDays.reduce(function(s,d){return s+(d.data.prot||0);},0)/validDays.length);
+  var avgWater=Math.round(validDays.reduce(function(s,d){return s+(d.data.water||0);},0)/validDays.length);
+  var calBalance=avgKcal-calGoal;
+
+  // ── Faixa de 7 dias colorida ──
+  var dotHtml='<div class="report-week-wrap">';
+  days.forEach(function(day){
+    var bg='#1e2229',tc='#3a4150',icon='–';
+    if(day.data&&day.data.kcal>0){
+      var pct=day.data.kcal/calGoal;
+      if(goal==='cut'){
+        if(pct>=0.70&&pct<=1.05){bg='rgba(52,211,153,.25)';tc='#34d399';icon='✓';}
+        else if(pct>1.05&&pct<=1.20){bg='rgba(251,191,36,.2)';tc='#fbbf24';icon='~';}
+        else if(pct>1.20){bg='rgba(248,113,113,.2)';tc='#f87171';icon='!';}
+        else{bg='rgba(96,165,250,.15)';tc='#60a5fa';icon='↓';}
+      }else if(goal==='mass'){
+        if(pct>=0.95&&pct<=1.20){bg='rgba(52,211,153,.25)';tc='#34d399';icon='✓';}
+        else if(pct>=0.80&&pct<0.95){bg='rgba(251,191,36,.2)';tc='#fbbf24';icon='~';}
+        else if(pct<0.80){bg='rgba(248,113,113,.2)';tc='#f87171';icon='↓';}
+        else{bg='rgba(96,165,250,.15)';tc='#60a5fa';icon='↑';}
+      }else{
+        if(pct>=0.90&&pct<=1.10){bg='rgba(52,211,153,.25)';tc='#34d399';icon='✓';}
+        else if(pct>=0.80&&pct<=1.20){bg='rgba(251,191,36,.2)';tc='#fbbf24';icon='~';}
+        else{bg='rgba(248,113,113,.2)';tc='#f87171';icon='!';}
+      }
+    }
+    dotHtml+='<div class="report-day-col"><div class="report-day-label">'+day.label+'</div>'
+      +'<div class="report-day-dot" style="background:'+bg+';color:'+tc+';">'+icon+'</div></div>';
+  });
+  dotHtml+='</div>';
+
+  var html='';
+
+  if(goal==='cut'){
+    var deficit=calGoal-avgKcal;
+    var deficitDays=validDays.filter(function(d){return d.data.kcal<=calGoal*1.05;}).length;
+    var protDays=validDays.filter(function(d){return (d.data.prot||0)>=mg.prot*0.8;}).length;
+    var waterDays=validDays.filter(function(d){return (d.data.water||0)>=state.waterGoal*0.8;}).length;
+    var kgPer4w=deficit>50?Math.round(Math.min(deficit*7/7700*4,3)*10)/10:0;
+    var heroColor=deficit>200?'#f87171':deficit>50?'#34d399':'#fbbf24';
+    var heroMsg=deficit>400?'Déficit forte! Monitore músculo 💪':deficit>100?'Déficit no ponto certo! 🔥':deficit>0?'Déficit leve — pode intensificar':'Acima da meta ⚠️';
+    html+='<div class="report-hero">'
+      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">🔥 DÉFICIT MÉDIO — 7 DIAS</div>'
+      +'<div class="report-hero-num" style="color:'+heroColor+';">'+(deficit>0?'-':'+')+(Math.abs(Math.round(deficit)))+' kcal/dia</div>'
+      +'<div class="report-hero-sub" style="color:#f0f2f5;">'+heroMsg+'</div>'
+      +'</div>';
+    html+=dotHtml;
+    html+='<div class="card"><div class="card-title">Metas da semana</div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🔥 Dentro do déficit</span><span class="report-stat-val">'+deficitDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">💪 Proteína ≥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">💧 Hidratação ≥80% da meta</span><span class="report-stat-val">'+waterDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">📊 Calorias médias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
+      +'</div>';
+    if(kgPer4w>0){
+      html+='<div class="report-projection">'
+        +'<div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#34d399;margin-bottom:10px;">📉 Projeção de Resultados</div>'
+        +'<div class="report-stat-row"><span class="report-stat-label">Perda estimada em 4 semanas</span><span class="report-stat-val" style="color:#34d399;">−'+kgPer4w+' kg</span></div>'
+        +'<div class="report-stat-row"><span class="report-stat-label">Perda estimada em 8 semanas</span><span class="report-stat-val" style="color:#34d399;">−'+Math.round(kgPer4w*2*10)/10+' kg</span></div>'
+        +'<div style="font-size:10px;color:#5a6270;margin-top:8px;line-height:1.5;">* Estimativa baseada no déficit médio da semana. Resultados individuais variam.</div>'
+        +'</div>';
+    }
+    var tip='';
+    if(avgProt<mg.prot*0.8)tip='💡 Proteína abaixo do ideal. Adicione frango, ovo ou whey — proteína preserva músculo durante o déficit.';
+    else if(deficit>600)tip='⚠️ Déficit muito alto. Reduzir para 400–500 kcal/dia é mais sustentável e preserva mais músculo a longo prazo.';
+    else if(deficit<50)tip='💡 Déficit muito pequeno. Reduza 200–300 kcal da alimentação ou adicione 30 minutos de caminhada por dia.';
+    else if(waterDays<4)tip='💧 Água abaixo da meta. Hidratação ajuda a controlar o apetite e melhora o metabolismo durante o emagrecimento.';
+    else tip='✅ Você está no caminho certo! O segredo do emagrecimento é a regularidade ao longo das semanas — continue assim.';
+    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">'+tip+'</div></div>';
+
+  }else if(goal==='mass'){
+    var surplus=avgKcal-calGoal;
+    var surplusDays=validDays.filter(function(d){return d.data.kcal>=calGoal*0.95;}).length;
+    var protDays=validDays.filter(function(d){return (d.data.prot||0)>=mg.prot*0.8;}).length;
+    var waterDays=validDays.filter(function(d){return (d.data.water||0)>=state.waterGoal*0.8;}).length;
+    var kgPer4w=surplus>0?Math.round(Math.min(surplus*7/3500*0.5*4,2)*10)/10:0;
+    var heroColor=surplus>=200&&surplus<=600?'#34d399':surplus>0?'#fbbf24':'#f87171';
+    var heroMsg=surplus>=200&&surplus<=600?'Superávit ideal! 💪':surplus>600?'Superávit alto — monitore':surplus>0?'Superávit leve — pode aumentar':'Abaixo da meta calórica ⚠️';
+    html+='<div class="report-hero">'
+      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">💪 SUPERÁVIT MÉDIO — 7 DIAS</div>'
+      +'<div class="report-hero-num" style="color:'+heroColor+';">'+(surplus>=0?'+':'')+Math.round(surplus)+' kcal/dia</div>'
+      +'<div class="report-hero-sub" style="color:#f0f2f5;">'+heroMsg+'</div>'
+      +'</div>';
+    html+=dotHtml;
+    html+='<div class="card"><div class="card-title">Metas da semana</div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🍽️ Meta calórica atingida</span><span class="report-stat-val">'+surplusDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">💪 Proteína ≥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">💧 Hidratação ≥80% da meta</span><span class="report-stat-val">'+waterDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">📊 Calorias médias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
+      +'</div>';
+    if(surplus>50&&kgPer4w>0){
+      html+='<div class="report-projection">'
+        +'<div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#34d399;margin-bottom:10px;">📈 Projeção de Crescimento</div>'
+        +'<div class="report-stat-row"><span class="report-stat-label">Ganho estimado em 4 semanas</span><span class="report-stat-val" style="color:#34d399;">+'+kgPer4w+' kg</span></div>'
+        +'<div class="report-stat-row"><span class="report-stat-label">Ganho estimado em 12 semanas</span><span class="report-stat-val" style="color:#34d399;">+'+Math.round(kgPer4w*3*10)/10+' kg</span></div>'
+        +'<div style="font-size:10px;color:#5a6270;margin-top:8px;line-height:1.5;">* Estimativa — resultados dependem de treino, sono e genética individual.</div>'
+        +'</div>';
+    }
+    var tip='';
+    if(avgProt<mg.prot*0.8)tip='💡 Proteína é o fator mais crítico para ganho de massa. Mire em '+mg.prot+'g/dia com whey, frango, ovo e iogurte grego.';
+    else if(surplus<100)tip='🍽️ Superávit abaixo do necessário. Adicione 300–400 kcal/dia — tente pasta de amendoim, aveia, arroz ou leite integral.';
+    else if(surplus>700)tip='⚠️ Superávit muito alto. Mantenha 200–500 kcal/dia para maximizar ganho muscular e minimizar acúmulo de gordura.';
+    else if(waterDays<4)tip='💧 Água é fundamental para síntese proteica e recuperação. Tente beber pelo menos '+state.waterGoal+'ml todos os dias.';
+    else tip='✅ Excelente consistência! O ganho de massa é lento mas recompensador — continue sendo regular no treino e na alimentação.';
+    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">'+tip+'</div></div>';
+
+  }else{
+    var balance=avgKcal-calGoal;
+    var balanceDays=validDays.filter(function(d){return Math.abs(d.data.kcal-calGoal)/calGoal<=0.10;}).length;
+    var protDays=validDays.filter(function(d){return (d.data.prot||0)>=mg.prot*0.8;}).length;
+    var heroColor=Math.abs(balance)<150?'#34d399':Math.abs(balance)<350?'#fbbf24':'#f87171';
+    var heroMsg=Math.abs(balance)<150?'Balanço perfeito! ⚖️':Math.abs(balance)<350?'Balanço bom 👍':balance>0?'Superávit elevado ⚠️':'Déficit elevado ⚠️';
+    html+='<div class="report-hero">'
+      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">⚖️ BALANÇO MÉDIO — 7 DIAS</div>'
+      +'<div class="report-hero-num" style="color:'+heroColor+';">'+(balance>=0?'+':'')+Math.round(balance)+' kcal/dia</div>'
+      +'<div class="report-hero-sub" style="color:#f0f2f5;">'+heroMsg+'</div>'
+      +'</div>';
+    html+=dotHtml;
+    html+='<div class="card"><div class="card-title">Metas da semana</div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">⚖️ Dentro do equilíbrio (±10%)</span><span class="report-stat-val">'+balanceDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">💪 Proteína ≥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">📊 Calorias médias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
+      +'</div>';
+    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">✅ Manutenção é equilíbrio. Foque na qualidade dos alimentos, regularidade nos treinos e mantenha a hidratação em dia.</div></div>';
+  }
+
+  el.innerHTML=html;
+}
+
 // ── IA NUTRICIONISTA ──────────────────────────────────────────
 function sendChat(){
   var input=document.getElementById('chatInput');
@@ -2105,7 +2310,7 @@ async function askNutritionist(prompt){
       body:JSON.stringify({
         model:'claude-haiku-4-5-20251001',
         max_tokens:350,
-        system:'Você é um nutricionista especializado em fitness e emagrecimento. Responda em português, de forma direta, prática e motivadora. Use dados do perfil para personalizar. Máximo 3 parágrafos curtos.',
+        system:'Você é um nutricionista especializado em fitness. O objetivo atual do usuário é: '+(state.goal==='cut'?'EMAGRECER (déficit calórico — preserve músculo, controle calorias)':state.goal==='mass'?'GANHAR MASSA MUSCULAR (superávit calórico — priorize proteína e carboidratos)':'MANUTENÇÃO DE PESO (equilíbrio calórico, qualidade nutricional)')+'. Responda em português, de forma direta, prática e motivadora. Personalize cada conselho com o objetivo. Máximo 3 parágrafos curtos.',
         messages:[{role:'user',content:'Dados do usuário:\n'+context+'\n\nPergunta: '+prompt}]
       })
     });
