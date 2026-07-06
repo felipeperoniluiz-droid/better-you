@@ -707,6 +707,36 @@ canvas{width:100%!important;border-radius:10px;}
 
 </div><!-- /content -->
 
+<!-- ── UPGRADE MODAL ──────────────────────────────────────────── -->
+<div class="modal-overlay" id="upgradeModal">
+  <div class="modal" style="padding:24px 20px 32px;">
+    <div class="modal-handle" onclick="closeModal('upgradeModal')"></div>
+    <!-- Hero -->
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="width:64px;height:64px;background:linear-gradient(135deg,#f0b429,#e8834a);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 14px;box-shadow:0 8px 24px rgba(240,180,41,.3);">⚡</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#f0f2f5;margin-bottom:6px;">Better You PRO</div>
+      <div style="font-size:13px;color:#8b95a3;">Desbloqueie todo o potencial do app</div>
+    </div>
+    <!-- Features list -->
+    <div style="background:#181c22;border-radius:14px;padding:16px;margin-bottom:18px;">
+      <div style="font-size:11px;color:#5a6270;text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:12px;">Incluído no PRO</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📸</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;">Foto IA</div><div style="font-size:11px;color:#8b95a3;">Analisa calorias e macros por foto</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">🤖</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;">Nutricionista IA</div><div style="font-size:11px;color:#8b95a3;">Chat personalizado 24h por dia</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📊</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;">Relatórios Avançados</div><div style="font-size:11px;color:#8b95a3;">Projeções e análise semanal detalhada</div></div></div>
+      </div>
+    </div>
+    <!-- Pricing -->
+    <div style="text-align:center;margin-bottom:18px;">
+      <div style="font-size:11px;color:#34d399;font-weight:600;margin-bottom:4px;">✅ 7 DIAS GRÁTIS • CANCELE QUANDO QUISER</div>
+      <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f0b429;">€5,99<span style="font-size:14px;color:#8b95a3;font-weight:400;">/mês</span></div>
+    </div>
+    <!-- CTA -->
+    <button onclick="subscribePro()" id="subscribeBtn" class="btn btn-primary" style="font-size:15px;padding:15px;">⚡ Começar 7 dias grátis</button>
+    <button onclick="closeModal('upgradeModal')" class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:13px;">Continuar com versão gratuita</button>
+  </div>
+</div>
+
 <nav class="nav" id="mainNav">
   <div class="nav-item active" onclick="switchTab('hoje',this)"><div class="nav-item-icon">&#127968;</div><div class="nav-item-label" id="nav-hoje">Hoje</div></div>
   <div class="nav-item" onclick="switchTab('foto',this)"><div class="nav-item-icon">&#128248;</div><div class="nav-item-label" id="nav-foto">Foto IA</div></div>
@@ -1014,6 +1044,8 @@ var selectedFoodData=null;
 var aiResultData=null;
 var calendarCursor={year:new Date().getFullYear(),month:new Date().getMonth()};
 var chatMessages=[];
+var isPro=false;
+var PROXY_URL='https://anthropic-proxy.felipeperoniluiz.workers.dev';
 
 function save(){
   localStorage.setItem("betteryou_v1",JSON.stringify(state));
@@ -1643,6 +1675,11 @@ function closeModal(id){document.getElementById(id).classList.remove("open");}
 document.querySelectorAll(".modal-overlay").forEach(function(el){el.addEventListener("click",function(e){if(e.target===el)closeModal(el.id);});});
 
 function switchTab(name,navEl){
+  var proTabs=['foto','dieta','relatorios'];
+  if(proTabs.indexOf(name)>=0&&!isPro){
+    openModal('upgradeModal');
+    return;
+  }
   document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active");});
   document.getElementById("tab-"+name).classList.add("active");
   document.querySelectorAll(".nav-item").forEach(function(n){n.classList.remove("active");});
@@ -2365,6 +2402,78 @@ function renderNutriChat(){
   el.scrollTop=el.scrollHeight;
 }
 
+// ── PRO / STRIPE ─────────────────────────────────────────────────
+
+function setProStatus(val){
+  isPro=!!val;
+  // Atualizar nav badges
+  document.querySelectorAll('.nav-item').forEach(function(ni){
+    ni.style.opacity='1';
+  });
+  if(isPro){
+    showToast('🎉 Better You PRO ativo!','success');
+  }
+}
+
+async function subscribePro(){
+  var btn=document.getElementById('subscribeBtn');
+  if(btn){btn.disabled=true;btn.textContent='Aguardando...';}
+  try{
+    var uid=_fbUser?_fbUser.uid:'guest';
+    var email=_fbUser?_fbUser.email:'';
+    var res=await fetch(PROXY_URL+'/create-checkout',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({userId:uid,userEmail:email})
+    });
+    var data=await res.json();
+    if(data.url){
+      window.location.href=data.url;
+    }else{
+      showToast('Erro ao iniciar pagamento. Tente novamente.','error');
+    }
+  }catch(e){
+    showToast('Erro de conexão. Verifique sua internet.','error');
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='⚡ Começar 7 dias grátis';}
+  }
+}
+
+async function verifyStripeSession(sessionId){
+  try{
+    var res=await fetch(PROXY_URL+'/verify-session?session_id='+sessionId);
+    var data=await res.json();
+    if(data.isPro){
+      setProStatus(true);
+      // Salvar no Firestore se logado
+      if(_fbUser&&_fbDb){
+        _fbDb.collection('users').doc(_fbUser.uid).set({
+          isPro:true,
+          stripeCustomerId:data.customerId||'',
+          subscriptionId:data.subscriptionId||'',
+          proActivatedAt:new Date().toISOString()
+        },{merge:true});
+      }
+      closeModal('upgradeModal');
+    }
+  }catch(e){console.warn('Stripe verify error:',e);}
+}
+
+function checkUrlProStatus(){
+  var params=new URLSearchParams(window.location.search);
+  var sessionId=params.get('session_id');
+  var cancel=params.get('pro');
+  if(sessionId){
+    verifyStripeSession(sessionId);
+    // Limpar URL sem reload
+    window.history.replaceState({},'',window.location.pathname);
+  }
+  if(cancel==='cancel'){
+    showToast('Assinatura cancelada. Você pode assinar quando quiser!','');
+    window.history.replaceState({},'',window.location.pathname);
+  }
+}
+
 function renderNutriContext(){
   var goal=state.goal||'mass';
   var goalLabels={cut:'🔥 Especialista em Emagrecimento',mass:'💪 Especialista em Ganho de Massa',maint:'⚖️ Especialista em Manutenção'};
@@ -2430,6 +2539,12 @@ function initFirebase(){
       var info=document.getElementById('authUserInfo');
       if(info) info.textContent='📧 '+user.email;
       loadFromFirestore(user.uid);
+      // Checar isPro no Firestore
+      _fbDb.collection('users').doc(user.uid).get().then(function(doc){
+        if(doc.exists&&doc.data().isPro){setProStatus(true);}
+      }).catch(function(){});
+      // Checar retorno do Stripe na URL
+      checkUrlProStatus();
     } else {
       // Não logado: só mostra tela de login DEPOIS que o splash terminar
       function showAuth(){
