@@ -2640,17 +2640,8 @@ function loadFromFirestore(uid){
     .then(function(doc){
       if(doc.exists&&doc.data().data){
         var cloudState=JSON.parse(doc.data().data);
-        state=Object.assign({},state,cloudState);
-        localStorage.setItem('betteryou_v1',JSON.stringify(state));
-        checkDayReset();
-        // Re-render everything
-        if(state.lang){currentLang=state.lang;setLang(state.lang);}else{renderToday();}
-        document.getElementById("goal-mass").className="goal-btn"+(state.goal==="mass"?" active":"");
-        document.getElementById("goal-cut").className="goal-btn"+(state.goal==="cut"?" active":"");
-        if(state.profile&&state.profile.photo){setTimeout(function(){renderProfileAvatar(state.profile.photo);},50);}
-        if(typeof showToast==='function') showToast('✅ Dados carregados!');
+        var lR=localStorage.getItem('betteryou_v1');var lS=lR?JSON.parse(lR):{};var td=new Date().toISOString().slice(0,10);var mg=Object.assign({},state,cloudState);function cM(s){if(!s||!s.meals)return 0;return ['cafe','almoco','lanche','jantar'].reduce(function(n,k){return n+(Array.isArray(s.meals[k])?s.meals[k].length:0);},0);}if(lS.today===td&&cM(lS)>cM(cloudState)){mg.meals=lS.meals;mg.today=td;if(lS.waterMl!==undefined)mg.waterMl=lS.waterMl;if(lS.log)mg.log=lS.log;}state=mg;localStorage.setItem('betteryou_v1',JSON.stringify(state));checkDayReset();if(state.lang){currentLang=state.lang;setLang(state.lang);}else{renderToday();}document.getElementById("goal-mass").className="goal-btn"+(state.goal==="mass"?" active":"");document.getElementById("goal-cut").className="goal-btn"+(state.goal==="cut"?" active":"");if(state.profile&&state.profile.photo){setTimeout(function(){renderProfileAvatar(state.profile.photo);},50);}saveToFirestore();
       } else {
-        // Novo usuário — salva dados locais na nuvem
         saveToFirestore();
       }
     })
