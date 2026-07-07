@@ -715,25 +715,25 @@ canvas{width:100%!important;border-radius:10px;}
     <div style="text-align:center;margin-bottom:20px;">
       <div style="width:64px;height:64px;background:linear-gradient(135deg,#f0b429,#e8834a);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 14px;box-shadow:0 8px 24px rgba(240,180,41,.3);">⚡</div>
       <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#f0f2f5;margin-bottom:6px;">Better You PRO</div>
-      <div style="font-size:13px;color:#8b95a3;">Desbloqueie todo o potencial do app</div>
+      <div style="font-size:13px;color:#8b95a3;" data-i18n="proSubtitle">Desbloqueie todo o potencial do app</div>
     </div>
     <!-- Features list -->
     <div style="background:#181c22;border-radius:14px;padding:16px;margin-bottom:18px;">
-      <div style="font-size:11px;color:#5a6270;text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:12px;">Incluído no PRO</div>
+      <div style="font-size:11px;color:#5a6270;text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:12px;" data-i18n="proIncluido">Incluído no PRO</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📸</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;">Foto IA</div><div style="font-size:11px;color:#8b95a3;">Analisa calorias e macros por foto</div></div></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">🤖</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;">Nutricionista IA</div><div style="font-size:11px;color:#8b95a3;">Chat personalizado 24h por dia</div></div></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📊</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;">Relatórios Avançados</div><div style="font-size:11px;color:#8b95a3;">Projeções e análise semanal detalhada</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📸</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatFotoIA">Foto IA</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatFotoIASub">Analisa calorias e macros por foto</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">🤖</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatNutri">Nutricionista IA</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatNutriSub">Chat personalizado 24h por dia</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📊</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatRel">Relatórios Avançados</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatRelSub">Projeções e análise semanal detalhada</div></div></div>
       </div>
     </div>
     <!-- Pricing -->
     <div style="text-align:center;margin-bottom:18px;">
-      <div style="font-size:11px;color:#34d399;font-weight:600;margin-bottom:4px;">✅ 2 DIAS GRÁTIS • CANCELE QUANDO QUISER</div>
-      <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f0b429;">€5,99<span style="font-size:14px;color:#8b95a3;font-weight:400;">/mês</span></div>
+      <div style="font-size:11px;color:#34d399;font-weight:600;margin-bottom:4px;" data-i18n="proTrialBadge">✅ 2 DIAS GRÁTIS • CANCELE QUANDO QUISER</div>
+      <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f0b429;">€5,99<span style="font-size:14px;color:#8b95a3;font-weight:400;" data-i18n="proMes">/mês</span></div>
     </div>
     <!-- CTA -->
-    <button onclick="subscribePro()" id="subscribeBtn" class="btn btn-primary" style="font-size:15px;padding:15px;">⚡ Começar 2 dias grátis</button>
-    <button onclick="closeModal('upgradeModal')" class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:13px;">Continuar com versão gratuita</button>
+    <button onclick="subscribePro()" id="subscribeBtn" class="btn btn-primary" style="font-size:15px;padding:15px;" data-i18n="proCtaBtn">⚡ Começar 2 dias grátis</button>
+    <button onclick="closeModal('upgradeModal')" class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:13px;" data-i18n="proCtaFree">Continuar com versão gratuita</button>
   </div>
 </div>
 
@@ -911,7 +911,13 @@ pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:
   chaveAPILabel:'Chave API Anthropic (Foto IA)',salvarAplicar:'Salvar e Aplicar',sairConta:'🚪 Sair da conta',
   preenchaTodos:'Preencha todos os campos',sexo:'Sexo',idadeAnos:'Idade (anos)',pesoKg:'Peso (kg)',alturaCm:'Altura (cm)',
   nivelAtividadeCalc:'Nivel de atividade',
-  actSed:'Sedentario',actLight:'Levemente ativo (1-3x/sem)',actMod:'Moderado (3-5x/sem)',actActive:'Muito ativo (6-7x/sem)',actVery:'Extremamente ativo'},
+  actSed:'Sedentario',actLight:'Levemente ativo (1-3x/sem)',actMod:'Moderado (3-5x/sem)',actActive:'Muito ativo (6-7x/sem)',actVery:'Extremamente ativo',
+  proSubtitle:'Desbloqueie todo o potencial do app',proIncluido:'INCLUÍDO NO PRO',
+  proFeatFotoIA:'Foto IA',proFeatFotoIASub:'Analisa calorias e macros por foto',
+  proFeatNutri:'Nutricionista IA',proFeatNutriSub:'Chat personalizado 24h por dia',
+  proFeatRel:'Relatórios Avançados',proFeatRelSub:'Projeções e análise semanal detalhada',
+  proTrialBadge:'✅ 2 DIAS GRÁTIS • CANCELE QUANDO QUISER',proMes:'/mês',
+  proCtaBtn:'⚡ Começar 2 dias grátis',proCtaFree:'Continuar com versão gratuita'},
 en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcular:'Calculate',hist:'History',
   ganharMassa:'&#128170; Gain Mass',emagrecer:'&#128293; Lose Weight',manter:'&#9878; Maintain',
   ola:'Hello,',bemVindo:'Welcome!',
@@ -958,7 +964,13 @@ en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcu
   chaveAPILabel:'Anthropic API Key (AI Photo)',salvarAplicar:'Save & Apply',sairConta:'🚪 Sign out',
   preenchaTodos:'Fill in all fields',sexo:'Gender',idadeAnos:'Age (years)',pesoKg:'Weight (kg)',alturaCm:'Height (cm)',
   nivelAtividadeCalc:'Activity level',
-  actSed:'Sedentary',actLight:'Lightly active (1-3x/wk)',actMod:'Moderately active (3-5x/wk)',actActive:'Very active (6-7x/wk)',actVery:'Extremely active'},
+  actSed:'Sedentary',actLight:'Lightly active (1-3x/wk)',actMod:'Moderately active (3-5x/wk)',actActive:'Very active (6-7x/wk)',actVery:'Extremely active',
+  proSubtitle:'Unlock the app\'s full potential',proIncluido:'INCLUDED IN PRO',
+  proFeatFotoIA:'AI Photo',proFeatFotoIASub:'Analyzes calories and macros by photo',
+  proFeatNutri:'AI Nutritionist',proFeatNutriSub:'Personalized chat 24/7',
+  proFeatRel:'Advanced Reports',proFeatRelSub:'Projections and detailed weekly analysis',
+  proTrialBadge:'✅ 2 FREE DAYS • CANCEL ANYTIME',proMes:'/month',
+  proCtaBtn:'⚡ Start 2 free days',proCtaFree:'Continue with free version'},
 es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Historial',
   ganharMassa:'&#128170; Ganar Masa',emagrecer:'&#128293; Adelgazar',manter:'&#9878; Mantener',
   ola:'¡Hola,',bemVindo:'¡Bienvenido!',
@@ -1005,7 +1017,13 @@ es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'
   chaveAPILabel:'Clave API Anthropic (Foto IA)',salvarAplicar:'Guardar y Aplicar',sairConta:'🚪 Cerrar sesión',
   preenchaTodos:'Rellena todos los campos',sexo:'Sexo',idadeAnos:'Edad (años)',pesoKg:'Peso (kg)',alturaCm:'Altura (cm)',
   nivelAtividadeCalc:'Nivel de actividad',
-  actSed:'Sedentario',actLight:'Levemente activo (1-3x/sem)',actMod:'Moderado (3-5x/sem)',actActive:'Muy activo (6-7x/sem)',actVery:'Extremadamente activo'},
+  actSed:'Sedentario',actLight:'Levemente activo (1-3x/sem)',actMod:'Moderado (3-5x/sem)',actActive:'Muy activo (6-7x/sem)',actVery:'Extremadamente activo',
+  proSubtitle:'Desbloquea todo el potencial de la app',proIncluido:'INCLUIDO EN PRO',
+  proFeatFotoIA:'Foto IA',proFeatFotoIASub:'Analiza calorías y macros por foto',
+  proFeatNutri:'Nutricionista IA',proFeatNutriSub:'Chat personalizado 24/7',
+  proFeatRel:'Informes Avanzados',proFeatRelSub:'Proyecciones y análisis semanal detallado',
+  proTrialBadge:'✅ 2 DÍAS GRATIS • CANCELA CUANDO QUIERAS',proMes:'/mes',
+  proCtaBtn:'⚡ Empezar 2 días gratis',proCtaFree:'Continuar con versión gratuita'},
 it:{hoje:'Oggi',fotoIA:'Foto IA',agua:'Acqua',dieta:'Dieta',peso:'Peso',calcular:'Calcola',hist:'Storico',
   ganharMassa:'&#128170; Aumenta Massa',emagrecer:'&#128293; Dimagrire',manter:'&#9878; Mantieni',
   ola:'Ciao,',bemVindo:'Benvenuto!',
@@ -1052,7 +1070,13 @@ it:{hoje:'Oggi',fotoIA:'Foto IA',agua:'Acqua',dieta:'Dieta',peso:'Peso',calcular
   chaveAPILabel:'Chiave API Anthropic (Foto IA)',salvarAplicar:'Salva e Applica',sairConta:'🚪 Disconnetti',
   preenchaTodos:'Compila tutti i campi',sexo:'Sesso',idadeAnos:'Età (anni)',pesoKg:'Peso (kg)',alturaCm:'Altezza (cm)',
   nivelAtividadeCalc:'Livello di attività',
-  actSed:'Sedentario',actLight:'Leggermente attivo (1-3x/sett)',actMod:'Moderatamente attivo (3-5x/sett)',actActive:'Molto attivo (6-7x/sett)',actVery:'Estremamente attivo'},
+  actSed:'Sedentario',actLight:'Leggermente attivo (1-3x/sett)',actMod:'Moderatamente attivo (3-5x/sett)',actActive:'Molto attivo (6-7x/sett)',actVery:'Estremamente attivo',
+  proSubtitle:'Sblocca tutto il potenziale dell\'app',proIncluido:'INCLUSO IN PRO',
+  proFeatFotoIA:'Foto IA',proFeatFotoIASub:'Analizza calorie e macro dalla foto',
+  proFeatNutri:'Nutrizionista IA',proFeatNutriSub:'Chat personalizzata 24/7',
+  proFeatRel:'Report Avanzati',proFeatRelSub:'Proiezioni e analisi settimanale dettagliata',
+  proTrialBadge:'✅ 2 GIORNI GRATIS • ANNULLA QUANDO VUOI',proMes:'/mese',
+  proCtaBtn:'⚡ Inizia 2 giorni gratis',proCtaFree:'Continua con la versione gratuita'},
 fr:{hoje:'Aujourd\'hui',fotoIA:'Photo IA',agua:'Eau',dieta:'Régime',peso:'Poids',calcular:'Calculer',hist:'Historique',
   ganharMassa:'&#128170; Prendre du Muscle',emagrecer:'&#128293; Maigrir',manter:'&#9878; Maintenir',
   ola:'Bonjour,',bemVindo:'Bienvenue!',
@@ -1099,7 +1123,13 @@ fr:{hoje:'Aujourd\'hui',fotoIA:'Photo IA',agua:'Eau',dieta:'Régime',peso:'Poids
   chaveAPILabel:'Clé API Anthropic (Photo IA)',salvarAplicar:'Sauvegarder & Appliquer',sairConta:'🚪 Se déconnecter',
   preenchaTodos:'Remplissez tous les champs',sexo:'Sexe',idadeAnos:'Âge (ans)',pesoKg:'Poids (kg)',alturaCm:'Taille (cm)',
   nivelAtividadeCalc:"Niveau d'activité",
-  actSed:'Sédentaire',actLight:'Légèrement actif (1-3x/sem)',actMod:'Modérément actif (3-5x/sem)',actActive:'Très actif (6-7x/sem)',actVery:'Extrêmement actif'},
+  actSed:'Sédentaire',actLight:'Légèrement actif (1-3x/sem)',actMod:'Modérément actif (3-5x/sem)',actActive:'Très actif (6-7x/sem)',actVery:'Extrêmement actif',
+  proSubtitle:'Débloquez tout le potentiel de l\'app',proIncluido:'INCLUS DANS PRO',
+  proFeatFotoIA:'Photo IA',proFeatFotoIASub:'Analyse les calories et macros par photo',
+  proFeatNutri:'Nutritionniste IA',proFeatNutriSub:'Chat personnalisé 24h/24',
+  proFeatRel:'Rapports Avancés',proFeatRelSub:'Projections et analyse hebdomadaire détaillée',
+  proTrialBadge:'✅ 2 JOURS GRATUITS • ANNULEZ QUAND VOUS VOULEZ',proMes:'/mois',
+  proCtaBtn:'⚡ Commencer 2 jours gratuits',proCtaFree:'Continuer avec la version gratuite'},
 de:{hoje:'Heute',fotoIA:'Foto KI',agua:'Wasser',dieta:'Diät',peso:'Gewicht',calcular:'Berechnen',hist:'Verlauf',
   ganharMassa:'&#128170; Muskeln aufbauen',emagrecer:'&#128293; Abnehmen',manter:'&#9878; Gewicht halten',
   ola:'Hallo,',bemVindo:'Willkommen!',
@@ -1146,7 +1176,13 @@ de:{hoje:'Heute',fotoIA:'Foto KI',agua:'Wasser',dieta:'Diät',peso:'Gewicht',cal
   chaveAPILabel:'Anthropic API-Schlüssel (KI-Foto)',salvarAplicar:'Speichern & Anwenden',sairConta:'🚪 Abmelden',
   preenchaTodos:'Alle Felder ausfüllen',sexo:'Geschlecht',idadeAnos:'Alter (Jahre)',pesoKg:'Gewicht (kg)',alturaCm:'Größe (cm)',
   nivelAtividadeCalc:'Aktivitätslevel',
-  actSed:'Sitzend',actLight:'Leicht aktiv (1-3x/Woche)',actMod:'Mäßig aktiv (3-5x/Woche)',actActive:'Sehr aktiv (6-7x/Woche)',actVery:'Extrem aktiv'}
+  actSed:'Sitzend',actLight:'Leicht aktiv (1-3x/Woche)',actMod:'Mäßig aktiv (3-5x/Woche)',actActive:'Sehr aktiv (6-7x/Woche)',actVery:'Extrem aktiv',
+  proSubtitle:'Entsperre das volle Potenzial der App',proIncluido:'IN PRO ENTHALTEN',
+  proFeatFotoIA:'Foto KI',proFeatFotoIASub:'Analysiert Kalorien und Makros per Foto',
+  proFeatNutri:'KI-Ernährungsberater',proFeatNutriSub:'Personalisierter Chat 24/7',
+  proFeatRel:'Erweiterte Berichte',proFeatRelSub:'Projektionen und detaillierte Wochenanalyse',
+  proTrialBadge:'✅ 2 TAGE GRATIS • JEDERZEIT KÜNDIGEN',proMes:'/Monat',
+  proCtaBtn:'⚡ 2 Tage gratis starten',proCtaFree:'Mit kostenloser Version fortfahren'}
 };
 function setLang(lang){
   currentLang=lang;
@@ -2631,7 +2667,7 @@ function setProStatus(val){
 
 async function subscribePro(){
   var btn=document.getElementById('subscribeBtn');
-  if(btn){btn.disabled=true;btn.textContent='Aguardando...';}
+  if(btn){btn.disabled=true;btn.textContent='⏳...';}
   try{
     var uid=_fbUser?_fbUser.uid:'guest';
     var email=_fbUser?_fbUser.email:'';
@@ -2649,7 +2685,7 @@ async function subscribePro(){
   }catch(e){
     showToast('Erro de conexão. Verifique sua internet.','error');
   }finally{
-    if(btn){btn.disabled=false;btn.textContent='⚡ Começar 7 dias grátis';}
+    if(btn){btn.disabled=false;btn.textContent=(T[currentLang]&&T[currentLang].proCtaBtn)||'⚡ Começar 2 dias grátis';}
   }
 }
 
