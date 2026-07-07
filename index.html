@@ -355,11 +355,11 @@ canvas{width:100%!important;border-radius:10px;}
   <div id="mealsContainer"></div>
   <button class="add-food-btn" onclick="openAddFood()">+ Adicionar Alimento</button>
   <div class="card" style="margin-top:14px;">
-    <div class="card-title">Refeicoes Rapidas</div>
+    <div class="card-title" data-i18n="refRapidas">Refeicoes Rapidas</div>
     <div class="premade-grid" id="premadeGrid"></div>
   </div>
   <div class="card">
-    <div class="card-title">Agua Hoje</div>
+    <div class="card-title" data-i18n="aguaHoje">Agua Hoje</div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px;">
       <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;" id="waterSummaryVal">0</div>
       <div style="font-size:12px;color:#8b95a3;">ml de <b id="waterSummaryGoal">2500</b> ml</div>
@@ -368,7 +368,7 @@ canvas{width:100%!important;border-radius:10px;}
   </div>
   <!-- Score Diário -->
   <div class="card" id="scoreDayCard">
-    <div class="card-title">Score do Dia</div>
+    <div class="card-title" data-i18n="scoreDia">Score do Dia</div>
     <div class="score-ring-wrap">
       <div style="position:relative;width:90px;height:90px;flex-shrink:0;">
         <svg width="90" height="90" style="transform:rotate(-90deg)">
@@ -411,8 +411,8 @@ canvas{width:100%!important;border-radius:10px;}
     <button class="btn btn-primary" style="width:100%;" onclick="openProfile()">&#128100; Abrir Perfil e configurar</button>
   </div>
   <div style="display:flex;gap:9px;margin-bottom:12px;">
-    <button class="btn btn-primary" style="flex:1;" onclick="triggerCamera()">Camara</button>
-    <button class="btn btn-secondary" style="flex:1;" onclick="triggerUpload()">Galeria</button>
+    <button class="btn btn-primary" style="flex:1;" onclick="triggerCamera()" data-i18n="camera">Camara</button>
+    <button class="btn btn-secondary" style="flex:1;" onclick="triggerUpload()" data-i18n="galeria">Galeria</button>
   </div>
   <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhoto(this)">
   <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this)">
@@ -433,15 +433,15 @@ canvas{width:100%!important;border-radius:10px;}
     <button class="btn btn-primary" onclick="addAiResult()">Adicionar ao dia</button>
   </div>
   <div class="card" style="margin-top:14px;">
-    <div class="card-title">Como funciona</div>
-    <div style="font-size:12px;color:#8b95a3;line-height:1.8;">1. Tire uma foto do seu prato<br>2. A IA identifica cada ingrediente<br>3. Estima calorias e macros<br>4. Adicione tudo com um toque</div>
+    <div class="card-title" data-i18n="comoFunciona">Como funciona</div>
+    <div style="font-size:12px;color:#8b95a3;line-height:1.8;" data-i18n="comoFuncionaTexto">1. Tire uma foto do seu prato<br>2. A IA identifica cada ingrediente<br>3. Estima calorias e macros<br>4. Adicione tudo com um toque</div>
   </div>
   </div><!-- /section-fotoIA -->
 
   <!-- ────── SECTION: FOTOS DE PROGRESSO ────── -->
   <div id="section-progresso" style="display:none;">
-    <div class="section-title">📸 Fotos de Progresso</div>
-    <div class="section-sub">Registre e compare sua evolução corporal</div>
+    <div class="section-title" data-i18n="fotosProgresso">📸 Fotos de Progresso</div>
+    <div class="section-sub" data-i18n="fotosProgressoSub">Registre e compare sua evolução corporal</div>
 
     <!-- Upload buttons -->
     <div style="display:flex;gap:9px;margin-bottom:12px;">
@@ -463,8 +463,8 @@ canvas{width:100%!important;border-radius:10px;}
         <input type="text" id="progressPhotoLabel" class="input" placeholder="Ex: Semana 1, Início, Mês 3...">
       </div>
       <div style="display:flex;gap:9px;margin-top:12px;">
-        <button class="btn btn-secondary" style="flex:1;" onclick="cancelProgressPhoto()">Cancelar</button>
-        <button class="btn btn-primary" style="flex:1;" onclick="saveProgressPhoto()">💾 Salvar foto</button>
+        <button class="btn btn-secondary" style="flex:1;" onclick="cancelProgressPhoto()" data-i18n="cancelar">Cancelar</button>
+        <button class="btn btn-primary" style="flex:1;" onclick="saveProgressPhoto()" data-i18n="salvarFoto">💾 Salvar foto</button>
       </div>
     </div>
 
@@ -483,8 +483,8 @@ canvas{width:100%!important;border-radius:10px;}
     <!-- Empty state -->
     <div id="progressEmpty" style="text-align:center;padding:32px 16px;display:none;">
       <div style="font-size:48px;margin-bottom:10px;">📷</div>
-      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#f0f2f5;margin-bottom:6px;">Nenhuma foto ainda</div>
-      <div style="font-size:13px;color:#8b95a3;">Tire sua primeira foto e acompanhe sua evolução ao longo do tempo!</div>
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#f0f2f5;margin-bottom:6px;" data-i18n="nenhumaFoto">Nenhuma foto ainda</div>
+      <div style="font-size:13px;color:#8b95a3;" data-i18n="primeiraFoto">Tire sua primeira foto e acompanhe sua evolução ao longo do tempo!</div>
     </div>
   </div><!-- /section-progresso -->
 
@@ -517,30 +517,30 @@ canvas{width:100%!important;border-radius:10px;}
 
 <!-- TAB AGUA -->
 <div class="tab" id="tab-agua">
-  <div class="section-title">Hidratacao</div>
-  <div class="section-sub">Mantenha-se hidratado durante o dia</div>
+  <div class="section-title" data-i18n="hidratacao">Hidratacao</div>
+  <div class="section-sub" data-i18n="hidratacaoSub">Mantenha-se hidratado durante o dia</div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
-      <div><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#38bdf8;" id="waterCurrent">0</div><div style="font-size:11px;color:#8b95a3;">ml consumidos</div></div>
-      <div style="text-align:right;"><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;" id="waterRemaining">2500</div><div style="font-size:11px;color:#8b95a3;">ml restantes</div></div>
+      <div><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#38bdf8;" id="waterCurrent">0</div><div style="font-size:11px;color:#8b95a3;" data-i18n="mlConsumidos">ml consumidos</div></div>
+      <div style="text-align:right;"><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;" id="waterRemaining">2500</div><div style="font-size:11px;color:#8b95a3;" data-i18n="mlRestantes">ml restantes</div></div>
     </div>
     <div class="water-progress"><div class="water-fill" id="waterBar" style="width:0%"></div></div>
     <div style="text-align:center;font-size:12px;color:#8b95a3;margin-top:7px;" id="waterPercent">0% da meta</div>
   </div>
   <div class="card">
-    <div class="card-title">Adicionar agua</div>
+    <div class="card-title" data-i18n="addAguaTitle">Adicionar agua</div>
     <div class="quick-add" style="margin-bottom:12px;">
       <button class="quick-btn" onclick="addWater(150)">+150ml</button>
       <button class="quick-btn" onclick="addWater(250)">+250ml</button>
       <button class="quick-btn" onclick="addWater(500)">+500ml</button>
     </div>
     <div class="cups-grid" id="cupsGrid"></div>
-    <button class="btn btn-ghost btn-sm" style="margin-top:7px;width:100%;" onclick="resetWater()">Zerar agua</button>
+    <button class="btn btn-ghost btn-sm" style="margin-top:7px;width:100%;" onclick="resetWater()" data-i18n="zerarAgua">Zerar agua</button>
   </div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;">
       <div>
-        <div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Meta diária</div>
+        <div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;" data-i18n="metaDiaria">Meta diária</div>
         <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#38bdf8;" id="waterGoalDisplay"><span id="waterGoalVal">2500</span> ml</div>
         <div style="font-size:11px;color:#8b95a3;margin-top:2px;" id="waterGoalBasis">Calculado pelo seu perfil</div>
       </div>
@@ -585,7 +585,7 @@ canvas{width:100%!important;border-radius:10px;}
   <div class="card" style="padding:14px;margin-bottom:14px;">
     <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px;">
       <div style="width:8px;height:8px;background:#34d399;border-radius:50%;box-shadow:0 0 6px rgba(52,211,153,.6);flex-shrink:0;"></div>
-      <span style="font-size:12px;color:#8b95a3;font-weight:500;">Online agora — responde em segundos</span>
+      <span style="font-size:12px;color:#8b95a3;font-weight:500;" data-i18n="onlineAgora">Online agora — responde em segundos</span>
     </div>
     <div id="chatMessages" style="display:flex;flex-direction:column;gap:8px;min-height:170px;max-height:400px;overflow-y:auto;margin-bottom:10px;"></div>
     <div id="chatLoading" style="display:none;padding:10px 0;"><div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
@@ -597,8 +597,8 @@ canvas{width:100%!important;border-radius:10px;}
 
   <!-- Plano alimentar (diet type selector — moved here) -->
   <div class="card">
-    <div class="card-title" style="margin-bottom:6px;">Plano Alimentar</div>
-    <div style="font-size:12px;color:#8b95a3;margin-bottom:12px;">Selecione seu estilo de dieta atual</div>
+    <div class="card-title" style="margin-bottom:6px;" data-i18n="planoAlimentar">Plano Alimentar</div>
+    <div style="font-size:12px;color:#8b95a3;margin-bottom:12px;" data-i18n="planoAlimentarSub">Selecione seu estilo de dieta atual</div>
     <div class="diet-grid" id="dietGrid"></div>
     <div id="dietDetail"></div>
   </div>
@@ -607,8 +607,8 @@ canvas{width:100%!important;border-radius:10px;}
 
 <!-- TAB PESO -->
 <div class="tab" id="tab-peso">
-  <div class="section-title">Corpo & Evolucao</div>
-  <div class="section-sub">Registre peso e medidas corporais</div>
+  <div class="section-title" data-i18n="corpoEvolucao">Corpo & Evolucao</div>
+  <div class="section-sub" data-i18n="corpoEvolucaoSub">Registre peso e medidas corporais</div>
   <!-- Sub-tabs -->
   <div class="subtab-row">
     <button class="subtab-btn active" id="subtab-peso" onclick="switchSubtab('peso')">&#9878; Peso</button>
@@ -627,14 +627,14 @@ canvas{width:100%!important;border-radius:10px;}
         <button class="btn btn-primary btn-sm" onclick="addWeight()" style="flex:0;padding:11px 14px;">+</button>
       </div>
     </div>
-    <div class="card"><div class="card-title">Grafico</div><canvas id="weightChart" height="150"></canvas></div>
-    <div class="card"><div class="card-title">Historico</div><div id="weightList"></div></div>
-    <div class="card"><div class="card-title">Ritmo ideal</div><div id="weightTip" style="font-size:13px;color:#8b95a3;line-height:1.7;"></div></div>
+    <div class="card"><div class="card-title" data-i18n="grafico">Grafico</div><canvas id="weightChart" height="150"></canvas></div>
+    <div class="card"><div class="card-title" data-i18n="histTitle">Historico</div><div id="weightList"></div></div>
+    <div class="card"><div class="card-title" data-i18n="ritmoIdeal">Ritmo ideal</div><div id="weightTip" style="font-size:13px;color:#8b95a3;line-height:1.7;"></div></div>
   </div>
   <!-- Seção Medidas -->
   <div id="section-medidas" style="display:none;">
     <div class="card">
-      <div class="card-title">Registrar Medidas</div>
+      <div class="card-title" data-i18n="registrarMedidas">Registrar Medidas</div>
       <div style="display:flex;flex-direction:column;gap:0;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
           <div class="input-group" style="margin-bottom:0;"><div class="input-label">📏 Cintura (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCintura',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCintura" placeholder="82" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCintura',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
@@ -649,36 +649,36 @@ canvas{width:100%!important;border-radius:10px;}
           <div class="input-group" style="margin-bottom:0;"><div class="input-label">🦵 Panturrilha (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPanturrilha',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mPanturrilha" placeholder="38" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPanturrilha',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
         </div>
       </div>
-      <button class="btn btn-primary" style="margin-top:14px;height:48px;font-size:15px;" onclick="addMeasure()">💾 Salvar Medidas</button>
+      <button class="btn btn-primary" style="margin-top:14px;height:48px;font-size:15px;" onclick="addMeasure()" data-i18n="salvarMedidas">💾 Salvar Medidas</button>
     </div>
-    <div class="card"><div class="card-title">Historico de Medidas</div><div id="measureList"></div></div>
+    <div class="card"><div class="card-title" data-i18n="historicoMedidas">Historico de Medidas</div><div id="measureList"></div></div>
   </div>
 </div>
 
 <!-- TAB CALCULAR -->
 <div class="tab" id="tab-calc">
-  <div class="section-title">Calculadora</div>
-  <div class="section-sub">Calcule sua necessidade calorica diaria</div>
+  <div class="section-title" data-i18n="calculadora">Calculadora</div>
+  <div class="section-sub" data-i18n="calcSub">Calcule sua necessidade calorica diaria</div>
   <div class="card">
-    <div class="input-group"><div class="input-label">Sexo</div><select class="input" id="calcSex"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
-    <div class="input-group"><div class="input-label">Idade (anos)</div><input type="number" class="input" id="calcAge" placeholder="Ex: 25"></div>
-    <div class="input-group"><div class="input-label">Peso (kg)</div><input type="number" class="input" id="calcWeight" placeholder="Ex: 75" step="0.1"></div>
-    <div class="input-group"><div class="input-label">Altura (cm)</div><input type="number" class="input" id="calcHeight" placeholder="Ex: 175"></div>
-    <div class="input-group"><div class="input-label">Nivel de atividade</div><select class="input" id="calcActivity"><option value="1.2">Sedentario</option><option value="1.375">Levemente ativo (1-3x/sem)</option><option value="1.55" selected>Moderado (3-5x/sem)</option><option value="1.725">Muito ativo (6-7x/sem)</option><option value="1.9">Extremamente ativo</option></select></div>
-    <button class="btn btn-primary" onclick="calcNeeds()">Calcular</button>
+    <div class="input-group"><div class="input-label" data-i18n="sexo">Sexo</div><select class="input" id="calcSex"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
+    <div class="input-group"><div class="input-label" data-i18n="idadeAnos">Idade (anos)</div><input type="number" class="input" id="calcAge" placeholder="Ex: 25"></div>
+    <div class="input-group"><div class="input-label" data-i18n="pesoKg">Peso (kg)</div><input type="number" class="input" id="calcWeight" placeholder="Ex: 75" step="0.1"></div>
+    <div class="input-group"><div class="input-label" data-i18n="alturaCm">Altura (cm)</div><input type="number" class="input" id="calcHeight" placeholder="Ex: 175"></div>
+    <div class="input-group"><div class="input-label" data-i18n="nivelAtividadeCalc">Nivel de atividade</div><select class="input" id="calcActivity"><option value="1.2">Sedentario</option><option value="1.375">Levemente ativo (1-3x/sem)</option><option value="1.55" selected>Moderado (3-5x/sem)</option><option value="1.725">Muito ativo (6-7x/sem)</option><option value="1.9">Extremamente ativo</option></select></div>
+    <button class="btn btn-primary" onclick="calcNeeds()" data-i18n="calcBtn">Calcular</button>
   </div>
   <div id="calcResult" style="display:none;"></div>
 </div>
 
 <!-- TAB HISTORICO -->
 <div class="tab" id="tab-hist">
-  <div class="section-title">Historico</div>
-  <div class="section-sub">Toque em cada dia para ver as refeicoes</div>
-  <div class="card"><div class="card-title">Calorias — ultimos 7 dias</div><canvas id="histChart" height="130"></canvas></div>
+  <div class="section-title" data-i18n="histTitle">Historico</div>
+  <div class="section-sub" data-i18n="histSub">Toque em cada dia para ver as refeicoes</div>
+  <div class="card"><div class="card-title" data-i18n="cal7Dias">Calorias — ultimos 7 dias</div><canvas id="histChart" height="130"></canvas></div>
   <!-- Calendário colorido -->
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <div class="card-title" style="margin-bottom:0;">Calendário</div>
+      <div class="card-title" style="margin-bottom:0;" data-i18n="calendario">Calendário</div>
       <div style="display:flex;align-items:center;gap:8px;">
         <button onclick="changeCalMonth(-1)" style="background:#181c22;border:1px solid #252b34;border-radius:7px;color:#f0f2f5;width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">‹</button>
         <div id="calMonthLabel" style="font-size:13px;font-weight:700;min-width:80px;text-align:center;"></div>
@@ -687,12 +687,12 @@ canvas{width:100%!important;border-radius:10px;}
     </div>
     <div id="calendarGrid"></div>
     <div style="display:flex;gap:12px;margin-top:10px;justify-content:center;">
-      <span style="font-size:10px;color:#34d399;">● Excelente (80+)</span>
-      <span style="font-size:10px;color:#fbbf24;">● Bom (50–79)</span>
-      <span style="font-size:10px;color:#f87171;">● Ruim (&lt;50)</span>
+      <span style="font-size:10px;color:#34d399;" data-i18n="excellenteLegend">● Excelente (80+)</span>
+      <span style="font-size:10px;color:#fbbf24;" data-i18n="bomLegend">● Bom (50–79)</span>
+      <span style="font-size:10px;color:#f87171;" data-i18n="ruimLegend">● Ruim (&lt;50)</span>
     </div>
   </div>
-  <div class="card"><div class="card-title">Registros diarios</div><div id="histList"></div></div>
+  <div class="card"><div class="card-title" data-i18n="registrosDiarios">Registros diarios</div><div id="histList"></div></div>
 </div>
 
 <!-- TAB RELATORIOS -->
@@ -728,11 +728,11 @@ canvas{width:100%!important;border-radius:10px;}
     </div>
     <!-- Pricing -->
     <div style="text-align:center;margin-bottom:18px;">
-      <div style="font-size:11px;color:#34d399;font-weight:600;margin-bottom:4px;">✅ 7 DIAS GRÁTIS • CANCELE QUANDO QUISER</div>
+      <div style="font-size:11px;color:#34d399;font-weight:600;margin-bottom:4px;">✅ 2 DIAS GRÁTIS • CANCELE QUANDO QUISER</div>
       <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f0b429;">€5,99<span style="font-size:14px;color:#8b95a3;font-weight:400;">/mês</span></div>
     </div>
     <!-- CTA -->
-    <button onclick="subscribePro()" id="subscribeBtn" class="btn btn-primary" style="font-size:15px;padding:15px;">⚡ Começar 7 dias grátis</button>
+    <button onclick="subscribePro()" id="subscribeBtn" class="btn btn-primary" style="font-size:15px;padding:15px;">⚡ Começar 2 dias grátis</button>
     <button onclick="closeModal('upgradeModal')" class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:13px;">Continuar com versão gratuita</button>
   </div>
 </div>
@@ -755,40 +755,40 @@ canvas{width:100%!important;border-radius:10px;}
     <div class="modal-handle" onclick="closeModal('modalAddFood')"></div>
     <div class="modal-title" id="btn-add-food">+ Adicionar Alimento</div>
     <div class="chips" id="mealTypeChips">
-      <div class="chip active" onclick="selectMealType('cafe',this)">Cafe da manha</div>
-      <div class="chip" onclick="selectMealType('almoco',this)">Almoco</div>
-      <div class="chip" onclick="selectMealType('lanche',this)">Lanche</div>
-      <div class="chip" onclick="selectMealType('jantar',this)">Jantar</div>
+      <div class="chip active" onclick="selectMealType('cafe',this)" data-i18n="cafeManha">Cafe da manha</div>
+      <div class="chip" onclick="selectMealType('almoco',this)" data-i18n="almoco">Almoco</div>
+      <div class="chip" onclick="selectMealType('lanche',this)" data-i18n="lanche">Lanche</div>
+      <div class="chip" onclick="selectMealType('jantar',this)" data-i18n="jantar">Jantar</div>
     </div>
     <div class="search-wrap">
       <span class="search-icon">&#128269;</span>
       <input type="text" class="input search-input" id="foodSearch" placeholder="Buscar alimento..." oninput="searchFoods(this.value)">
     </div>
     <div id="searchResults" class="search-results" style="display:none;"></div>
-    <div class="input-group"><div class="input-label">Alimento selecionado</div><input type="text" class="input" id="foodName" placeholder="Busque e selecione acima" readonly></div>
+    <div class="input-group"><div class="input-label" data-i18n="alimSelecionado">Alimento selecionado</div><input type="text" class="input" id="foodName" placeholder="Busque e selecione acima" readonly></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-      <div class="input-group"><div class="input-label">Quantidade (g)</div><input type="number" class="input" id="foodQty" placeholder="100" oninput="updateFoodPreview()"></div>
-      <div class="input-group"><div class="input-label">Calorias</div><input type="text" class="input" id="foodKcalPreview" placeholder="--" readonly style="color:#f0b429;"></div>
+      <div class="input-group"><div class="input-label" data-i18n="quantidadeG">Quantidade (g)</div><input type="number" class="input" id="foodQty" placeholder="100" oninput="updateFoodPreview()"></div>
+      <div class="input-group"><div class="input-label" data-i18n="caloriasLabel">Calorias</div><input type="text" class="input" id="foodKcalPreview" placeholder="--" readonly style="color:#f0b429;"></div>
     </div>
-    <button class="btn btn-primary" style="margin-top:3px;" onclick="addFoodEntry()">Adicionar</button>
-    <button class="btn btn-ghost btn-sm" style="margin-top:7px;width:100%;" onclick="openCustomFood()">+ Cadastrar alimento novo</button>
+    <button class="btn btn-primary" style="margin-top:3px;" onclick="addFoodEntry()" data-i18n="adicionar">Adicionar</button>
+    <button class="btn btn-ghost btn-sm" style="margin-top:7px;width:100%;" onclick="openCustomFood()" data-i18n="cadastrarNovo">+ Cadastrar alimento novo</button>
   </div>
 </div>
 
 <div class="modal-overlay" id="modalCustomFood">
   <div class="modal">
     <div class="modal-handle" onclick="closeModal('modalCustomFood')"></div>
-    <div class="modal-title">Cadastrar Alimento</div>
-    <div class="input-group"><div class="input-label">Nome</div><input type="text" class="input" id="cfName" placeholder="Ex: Tapioca"></div>
+    <div class="modal-title" data-i18n="cadastrarAlimento">Cadastrar Alimento</div>
+    <div class="input-group"><div class="input-label" data-i18n="nomeLabel">Nome</div><input type="text" class="input" id="cfName" placeholder="Ex: Tapioca"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-      <div class="input-group"><div class="input-label">Calorias /100g</div><input type="number" class="input" id="cfKcal" placeholder="280"></div>
-      <div class="input-group"><div class="input-label">Proteina /100g</div><input type="number" class="input" id="cfProt" placeholder="0"></div>
+      <div class="input-group"><div class="input-label" data-i18n="cal100g">Calorias /100g</div><input type="number" class="input" id="cfKcal" placeholder="280"></div>
+      <div class="input-group"><div class="input-label" data-i18n="prot100g">Proteina /100g</div><input type="number" class="input" id="cfProt" placeholder="0"></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-      <div class="input-group"><div class="input-label">Carbo /100g</div><input type="number" class="input" id="cfCarb" placeholder="68"></div>
-      <div class="input-group"><div class="input-label">Gordura /100g</div><input type="number" class="input" id="cfFat" placeholder="0.3"></div>
+      <div class="input-group"><div class="input-label" data-i18n="carb100g">Carbo /100g</div><input type="number" class="input" id="cfCarb" placeholder="68"></div>
+      <div class="input-group"><div class="input-label" data-i18n="gord100g">Gordura /100g</div><input type="number" class="input" id="cfFat" placeholder="0.3"></div>
     </div>
-    <button class="btn btn-primary" onclick="saveCustomFood()">Salvar Alimento</button>
+    <button class="btn btn-primary" onclick="saveCustomFood()" data-i18n="salvarAlimento">Salvar Alimento</button>
   </div>
 </div>
 
@@ -796,27 +796,27 @@ canvas{width:100%!important;border-radius:10px;}
 <div class="modal-overlay" id="modalProfile">
   <div class="modal">
     <div class="modal-handle" onclick="closeModal('modalProfile')"></div>
-    <div class="modal-title">Perfil</div>
+    <div class="modal-title" data-i18n="profTitle">Perfil</div>
     <!-- Avatar -->
     <div class="prof-avatar-wrap">
       <div>
         <div class="prof-avatar" id="profAvatarDisplay" onclick="document.getElementById('profPhotoInput').click()">&#128100;</div>
-        <div class="prof-avatar-label">Toque para alterar foto</div>
+        <div class="prof-avatar-label" data-i18n="toqueAlterarFoto">Toque para alterar foto</div>
         <input type="file" id="profPhotoInput" accept="image/*" style="display:none" onchange="handleProfilePhoto(this)">
       </div>
     </div>
     <!-- Dados pessoais -->
-    <div class="input-group"><div class="input-label">Nome</div><input type="text" class="input" id="profName" placeholder="Seu nome"></div>
+    <div class="input-group"><div class="input-label" data-i18n="nomeLabel">Nome</div><input type="text" class="input" id="profName" placeholder="Seu nome"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-      <div class="input-group"><div class="input-label">Peso (kg)</div><input type="number" class="input" id="profWeight" placeholder="75" step="0.1" oninput="updateTDEEPreview()"></div>
-      <div class="input-group"><div class="input-label">Altura (cm)</div><input type="number" class="input" id="profHeight" placeholder="175" oninput="updateTDEEPreview()"></div>
+      <div class="input-group"><div class="input-label" data-i18n="pesoKg">Peso (kg)</div><input type="number" class="input" id="profWeight" placeholder="75" step="0.1" oninput="updateTDEEPreview()"></div>
+      <div class="input-group"><div class="input-label" data-i18n="alturaCm">Altura (cm)</div><input type="number" class="input" id="profHeight" placeholder="175" oninput="updateTDEEPreview()"></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-      <div class="input-group"><div class="input-label">Idade</div><input type="number" class="input" id="profAge" placeholder="25" oninput="updateTDEEPreview()"></div>
-      <div class="input-group"><div class="input-label">Sexo</div><select class="input" id="profSex" onchange="updateTDEEPreview()"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
+      <div class="input-group"><div class="input-label" data-i18n="idadeAnos">Idade</div><input type="number" class="input" id="profAge" placeholder="25" oninput="updateTDEEPreview()"></div>
+      <div class="input-group"><div class="input-label" data-i18n="sexo">Sexo</div><select class="input" id="profSex" onchange="updateTDEEPreview()"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
     </div>
     <!-- Nível de atividade -->
-    <div class="input-group"><div class="input-label">Nível de Atividade</div>
+    <div class="input-group"><div class="input-label" data-i18n="nivelAtividade">Nível de Atividade</div>
       <select class="input" id="profActivity" onchange="updateTDEEPreview()">
         <option value="1.2">Sedentário (sem exercício)</option>
         <option value="1.375">Leve (1-3x por semana)</option>
@@ -827,35 +827,35 @@ canvas{width:100%!important;border-radius:10px;}
     </div>
     <!-- Objetivo -->
     <div class="input-group">
-      <div class="input-label">Objetivo</div>
+      <div class="input-label" data-i18n="objetivo">Objetivo</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:4px;">
-        <button class="goal-btn" id="profGoalMass" onclick="setProfGoal('mass')">&#128170; Massa</button>
+        <button class="goal-btn" id="profGoalMass" onclick="setProfGoal('mass')" data-i18n="massaGoal">&#128170; Massa</button>
         <button class="goal-btn" id="profGoalCut" onclick="setProfGoal('cut')">&#128293; Emagrecer</button>
         <button class="goal-btn" id="profGoalMaint" onclick="setProfGoal('maint')">&#9878; Manter</button>
       </div>
     </div>
     <!-- Prévia TDEE -->
     <div class="tdee-box" id="tdeeBox" style="display:none">
-      <div class="tdee-row"><span style="color:#8b95a3;">Metabolismo Basal (TMB)</span><span class="tdee-val" id="tmbVal" style="color:#f0b429;">-</span></div>
-      <div class="tdee-row"><span style="color:#8b95a3;">Gasto Total (TDEE)</span><span class="tdee-val" id="tdeeVal" style="color:#f0b429;">-</span></div>
-      <div class="tdee-row"><span style="color:#8b95a3;">Meta de Calorias</span><span class="tdee-val" id="goalKcalVal" style="color:#34d399;">-</span></div>
-      <div class="tdee-row"><span style="color:#8b95a3;">Meta de Água</span><span class="tdee-val" id="goalWaterVal" style="color:#38bdf8;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="tmbLabel">Metabolismo Basal (TMB)</span><span class="tdee-val" id="tmbVal" style="color:#f0b429;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="tdeeLabel">Gasto Total (TDEE)</span><span class="tdee-val" id="tdeeVal" style="color:#f0b429;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="metaCalorias">Meta de Calorias</span><span class="tdee-val" id="goalKcalVal" style="color:#34d399;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="metaAguaLabel">Meta de Água</span><span class="tdee-val" id="goalWaterVal" style="color:#38bdf8;">-</span></div>
       <div style="border-top:1px solid #2a2f3a;margin:8px 0 4px;"></div>
-      <div style="font-size:10px;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Macros estimados</div>
-      <div class="tdee-row"><span style="color:#8b95a3;">Proteina</span><span class="tdee-val" id="prevProtVal" style="color:#f87171;">-</span></div>
-      <div class="tdee-row"><span style="color:#8b95a3;">Carboidratos</span><span class="tdee-val" id="prevCarbVal" style="color:#fbbf24;">-</span></div>
-      <div class="tdee-row"><span style="color:#8b95a3;">Gordura</span><span class="tdee-val" id="prevFatVal" style="color:#a78bfa;">-</span></div>
+      <div style="font-size:10px;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;" data-i18n="macrosEst">Macros estimados</div>
+      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="proteinaPura">Proteina</span><span class="tdee-val" id="prevProtVal" style="color:#f87171;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="carboidratos">Carboidratos</span><span class="tdee-val" id="prevCarbVal" style="color:#fbbf24;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="gorduraPura">Gordura</span><span class="tdee-val" id="prevFatVal" style="color:#a78bfa;">-</span></div>
     </div>
     <!-- Chave API -->
     <div class="input-group">
-      <div class="input-label">Chave API Anthropic (Foto IA)</div>
+      <div class="input-label" data-i18n="chaveAPILabel">Chave API Anthropic (Foto IA)</div>
       <input type="password" class="input" id="profApiKey" placeholder="sk-ant-api03-...">
       <div style="font-size:11px;color:#8b95a3;margin-top:4px;line-height:1.6;">Necessária para identificar alimentos por foto.<br>Obtenha gratuitamente em: <b style="color:#38bdf8;">console.anthropic.com</b></div>
     </div>
-    <button class="btn btn-primary" onclick="saveProfile()" style="margin-top:4px;">Salvar e Aplicar</button>
+    <button class="btn btn-primary" onclick="saveProfile()" style="margin-top:4px;" data-i18n="salvarAplicar">Salvar e Aplicar</button>
     <div style="margin-top:14px;padding-top:14px;border-top:1px solid #252b34;">
       <div id="authUserInfo" style="font-size:11px;color:#8b95a3;text-align:center;margin-bottom:8px;"></div>
-      <button class="btn btn-ghost" onclick="doSignOut()" style="width:100%;color:#f87171;border-color:rgba(248,113,113,.3);">🚪 Sair da conta</button>
+      <button class="btn btn-ghost" onclick="doSignOut()" style="width:100%;color:#f87171;border-color:rgba(248,113,113,.3);" data-i18n="sairConta">🚪 Sair da conta</button>
     </div>
   </div>
 </div>
@@ -881,7 +881,37 @@ pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:
   masc:'Masculino',fem:'Feminino',
   tiposDieta:'Tipo de Dieta',evolPeso:'Evolucao do Peso',calculadora:'Calculadora',
   calcSub:'Calcule sua necessidade calorica diaria',
-  histTitle:'Historico',profTitle:'Perfil',configTitle:'Configuracoes'},
+  histTitle:'Historico',profTitle:'Perfil',configTitle:'Configuracoes',
+  hidratacao:'Hidratacao',hidratacaoSub:'Mantenha-se hidratado durante o dia',
+  mlConsumidos:'ml consumidos',mlRestantes:'ml restantes',daMetaLabel:'% da meta',
+  addAguaTitle:'Adicionar agua',zerarAgua:'Zerar agua',metaDiaria:'Meta diária',calcPerfil:'Calculado pelo seu perfil',
+  scoreDia:'Score do Dia',
+  camera:'Câmera',galeria:'Galeria',cancelar:'Cancelar',salvarFoto:'💾 Salvar foto',
+  nenhumaFoto:'Nenhuma foto ainda',primeiraFoto:'Tire sua primeira foto e acompanhe sua evolução ao longo do tempo!',
+  comoFunciona:'Como funciona',
+  comoFuncionaTexto:'1. Tire uma foto do seu prato<br>2. A IA identifica cada ingrediente<br>3. Estima calorias e macros<br>4. Adicione tudo com um toque',
+  fotosProgresso:'📸 Fotos de Progresso',fotosProgressoSub:'Registre e compare sua evolução corporal',
+  corpoEvolucao:'Corpo & Evolucao',corpoEvolucaoSub:'Registre peso e medidas corporais',
+  grafico:'Grafico',ritmoIdeal:'Ritmo ideal',registrarMedidas:'Registrar Medidas',
+  salvarMedidas:'💾 Salvar Medidas',historicoMedidas:'Historico de Medidas',
+  nenhumRegistro:'Nenhum registro ainda',registreAoMenos2Pesos:'Registre ao menos 2 pesos',
+  tipMassa:'Para ganho de massa o ideal e ganhar <b>0,5 a 1 kg por mes</b>. Mantenha um supravit de 200-400 kcal acima do TDEE.',
+  tipCorte:'Para emagrecer de forma saudavel perca <b>0,5 a 1 kg por semana</b>. Deficit de 500 kcal por dia e sustentavel.',
+  histSub:'Toque em cada dia para ver as refeicoes',cal7Dias:'Calorias — ultimos 7 dias',
+  calendario:'Calendário',registrosDiarios:'Registros diarios',
+  excellenteLegend:'● Excelente (80+)',bomLegend:'● Bom (50–79)',ruimLegend:'● Ruim (<50)',
+  planoAlimentar:'Plano Alimentar',planoAlimentarSub:'Selecione seu estilo de dieta atual',
+  onlineAgora:'Online agora — responde em segundos',
+  alimSelecionado:'Alimento selecionado',quantidadeG:'Quantidade (g)',caloriasLabel:'Calorias',
+  cadastrarNovo:'+ Cadastrar alimento novo',cadastrarAlimento:'Cadastrar Alimento',nomeLabel:'Nome',
+  cal100g:'Calorias /100g',prot100g:'Proteina /100g',carb100g:'Carbo /100g',gord100g:'Gordura /100g',salvarAlimento:'Salvar Alimento',
+  toqueAlterarFoto:'Toque para alterar foto',nivelAtividade:'Nível de Atividade',objetivo:'Objetivo',massaGoal:'💪 Massa',
+  tmbLabel:'Metabolismo Basal (TMB)',tdeeLabel:'Gasto Total (TDEE)',metaCalorias:'Meta de Calorias',metaAguaLabel:'Meta de Água',
+  macrosEst:'Macros estimados',proteinaPura:'Proteina',carboidratos:'Carboidratos',gorduraPura:'Gordura',
+  chaveAPILabel:'Chave API Anthropic (Foto IA)',salvarAplicar:'Salvar e Aplicar',sairConta:'🚪 Sair da conta',
+  preenchaTodos:'Preencha todos os campos',sexo:'Sexo',idadeAnos:'Idade (anos)',pesoKg:'Peso (kg)',alturaCm:'Altura (cm)',
+  nivelAtividadeCalc:'Nivel de atividade',
+  actSed:'Sedentario',actLight:'Levemente ativo (1-3x/sem)',actMod:'Moderado (3-5x/sem)',actActive:'Muito ativo (6-7x/sem)',actVery:'Extremamente ativo'},
 en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcular:'Calculate',hist:'History',
   ganharMassa:'&#128170; Gain Mass',emagrecer:'&#128293; Lose Weight',manter:'&#9878; Maintain',
   ola:'Hello,',bemVindo:'Welcome!',
@@ -898,7 +928,37 @@ en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcu
   masc:'Male',fem:'Female',
   tiposDieta:'Diet Type',evolPeso:'Weight Progress',calculadora:'Calculator',
   calcSub:'Calculate your daily caloric needs',
-  histTitle:'History',profTitle:'Profile',configTitle:'Settings'},
+  histTitle:'History',profTitle:'Profile',configTitle:'Settings',
+  hidratacao:'Hydration',hidratacaoSub:'Stay hydrated throughout the day',
+  mlConsumidos:'ml consumed',mlRestantes:'ml remaining',daMetaLabel:'% of goal',
+  addAguaTitle:'Add water',zerarAgua:'Reset water',metaDiaria:'Daily goal',calcPerfil:'Calculated from your profile',
+  scoreDia:'Daily Score',
+  camera:'Camera',galeria:'Gallery',cancelar:'Cancel',salvarFoto:'💾 Save photo',
+  nenhumaFoto:'No photos yet',primeiraFoto:'Take your first photo and track your progress over time!',
+  comoFunciona:'How it works',
+  comoFuncionaTexto:'1. Take a photo of your meal<br>2. AI identifies each ingredient<br>3. Estimates calories and macros<br>4. Add everything with one tap',
+  fotosProgresso:'📸 Progress Photos',fotosProgressoSub:'Record and compare your body evolution',
+  corpoEvolucao:'Body & Evolution',corpoEvolucaoSub:'Record weight and body measurements',
+  grafico:'Chart',ritmoIdeal:'Ideal pace',registrarMedidas:'Record Measurements',
+  salvarMedidas:'💾 Save Measurements',historicoMedidas:'Measurement History',
+  nenhumRegistro:'No records yet',registreAoMenos2Pesos:'Record at least 2 weights',
+  tipMassa:'For muscle gain the ideal is to gain <b>0.5 to 1 kg per month</b>. Maintain a surplus of 200-400 kcal above TDEE.',
+  tipCorte:'To lose weight healthily, lose <b>0.5 to 1 kg per week</b>. A deficit of 500 kcal per day is sustainable.',
+  histSub:'Tap each day to see meals',cal7Dias:'Calories — last 7 days',
+  calendario:'Calendar',registrosDiarios:'Daily records',
+  excellenteLegend:'● Excellent (80+)',bomLegend:'● Good (50–79)',ruimLegend:'● Poor (<50)',
+  planoAlimentar:'Meal Plan',planoAlimentarSub:'Select your current diet style',
+  onlineAgora:'Online now — answers in seconds',
+  alimSelecionado:'Selected food',quantidadeG:'Amount (g)',caloriasLabel:'Calories',
+  cadastrarNovo:'+ Add new food',cadastrarAlimento:'Add Food',nomeLabel:'Name',
+  cal100g:'Calories /100g',prot100g:'Protein /100g',carb100g:'Carbs /100g',gord100g:'Fat /100g',salvarAlimento:'Save Food',
+  toqueAlterarFoto:'Tap to change photo',nivelAtividade:'Activity Level',objetivo:'Goal',massaGoal:'💪 Build Muscle',
+  tmbLabel:'Basal Metabolic Rate (BMR)',tdeeLabel:'Total Daily Expenditure (TDEE)',metaCalorias:'Calorie Goal',metaAguaLabel:'Water Goal',
+  macrosEst:'Estimated Macros',proteinaPura:'Protein',carboidratos:'Carbohydrates',gorduraPura:'Fat',
+  chaveAPILabel:'Anthropic API Key (AI Photo)',salvarAplicar:'Save & Apply',sairConta:'🚪 Sign out',
+  preenchaTodos:'Fill in all fields',sexo:'Gender',idadeAnos:'Age (years)',pesoKg:'Weight (kg)',alturaCm:'Height (cm)',
+  nivelAtividadeCalc:'Activity level',
+  actSed:'Sedentary',actLight:'Lightly active (1-3x/wk)',actMod:'Moderately active (3-5x/wk)',actActive:'Very active (6-7x/wk)',actVery:'Extremely active'},
 es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Historial',
   ganharMassa:'&#128170; Ganar Masa',emagrecer:'&#128293; Adelgazar',manter:'&#9878; Mantener',
   ola:'¡Hola,',bemVindo:'¡Bienvenido!',
@@ -915,7 +975,37 @@ es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'
   masc:'Masculino',fem:'Femenino',
   tiposDieta:'Tipo de Dieta',evolPeso:'Progreso de Peso',calculadora:'Calculadora',
   calcSub:'Calcula tu necesidad calorica diaria',
-  histTitle:'Historial',profTitle:'Perfil',configTitle:'Configuracion'},
+  histTitle:'Historial',profTitle:'Perfil',configTitle:'Configuracion',
+  hidratacao:'Hidratación',hidratacaoSub:'Mantente hidratado durante el día',
+  mlConsumidos:'ml consumidos',mlRestantes:'ml restantes',daMetaLabel:'% de la meta',
+  addAguaTitle:'Agregar agua',zerarAgua:'Reiniciar agua',metaDiaria:'Meta diaria',calcPerfil:'Calculado desde tu perfil',
+  scoreDia:'Puntaje del Día',
+  camera:'Cámara',galeria:'Galería',cancelar:'Cancelar',salvarFoto:'💾 Guardar foto',
+  nenhumaFoto:'Sin fotos todavía',primeiraFoto:'¡Toma tu primera foto y sigue tu progreso a lo largo del tiempo!',
+  comoFunciona:'Cómo funciona',
+  comoFuncionaTexto:'1. Toma una foto de tu plato<br>2. La IA identifica cada ingrediente<br>3. Estima calorías y macros<br>4. Añade todo con un toque',
+  fotosProgresso:'📸 Fotos de Progreso',fotosProgressoSub:'Registra y compara tu evolución corporal',
+  corpoEvolucao:'Cuerpo & Evolución',corpoEvolucaoSub:'Registra peso y medidas corporales',
+  grafico:'Gráfico',ritmoIdeal:'Ritmo ideal',registrarMedidas:'Registrar Medidas',
+  salvarMedidas:'💾 Guardar Medidas',historicoMedidas:'Historial de Medidas',
+  nenhumRegistro:'Sin registros todavía',registreAoMenos2Pesos:'Registra al menos 2 pesos',
+  tipMassa:'Para ganar masa lo ideal es ganar <b>0,5 a 1 kg por mes</b>. Mantén un superávit de 200-400 kcal sobre el TDEE.',
+  tipCorte:'Para adelgazar de forma saludable pierde <b>0,5 a 1 kg por semana</b>. Un déficit de 500 kcal al día es sostenible.',
+  histSub:'Toca cada día para ver las comidas',cal7Dias:'Calorías — últimos 7 días',
+  calendario:'Calendario',registrosDiarios:'Registros diarios',
+  excellenteLegend:'● Excelente (80+)',bomLegend:'● Bueno (50–79)',ruimLegend:'● Malo (<50)',
+  planoAlimentar:'Plan Alimentario',planoAlimentarSub:'Selecciona tu estilo de dieta actual',
+  onlineAgora:'En línea ahora — responde en segundos',
+  alimSelecionado:'Alimento seleccionado',quantidadeG:'Cantidad (g)',caloriasLabel:'Calorías',
+  cadastrarNovo:'+ Agregar nuevo alimento',cadastrarAlimento:'Agregar Alimento',nomeLabel:'Nombre',
+  cal100g:'Calorías /100g',prot100g:'Proteína /100g',carb100g:'Carbos /100g',gord100g:'Grasa /100g',salvarAlimento:'Guardar Alimento',
+  toqueAlterarFoto:'Toca para cambiar foto',nivelAtividade:'Nivel de Actividad',objetivo:'Objetivo',massaGoal:'💪 Masa',
+  tmbLabel:'Metabolismo Basal (TMB)',tdeeLabel:'Gasto Total (TDEE)',metaCalorias:'Meta de Calorías',metaAguaLabel:'Meta de Agua',
+  macrosEst:'Macros estimados',proteinaPura:'Proteína',carboidratos:'Carbohidratos',gorduraPura:'Grasa',
+  chaveAPILabel:'Clave API Anthropic (Foto IA)',salvarAplicar:'Guardar y Aplicar',sairConta:'🚪 Cerrar sesión',
+  preenchaTodos:'Rellena todos los campos',sexo:'Sexo',idadeAnos:'Edad (años)',pesoKg:'Peso (kg)',alturaCm:'Altura (cm)',
+  nivelAtividadeCalc:'Nivel de actividad',
+  actSed:'Sedentario',actLight:'Levemente activo (1-3x/sem)',actMod:'Moderado (3-5x/sem)',actActive:'Muy activo (6-7x/sem)',actVery:'Extremadamente activo'},
 it:{hoje:'Oggi',fotoIA:'Foto IA',agua:'Acqua',dieta:'Dieta',peso:'Peso',calcular:'Calcola',hist:'Storico',
   ganharMassa:'&#128170; Aumenta Massa',emagrecer:'&#128293; Dimagrire',manter:'&#9878; Mantieni',
   ola:'Ciao,',bemVindo:'Benvenuto!',
@@ -932,7 +1022,37 @@ it:{hoje:'Oggi',fotoIA:'Foto IA',agua:'Acqua',dieta:'Dieta',peso:'Peso',calcular
   masc:'Maschile',fem:'Femminile',
   tiposDieta:'Tipo di Dieta',evolPeso:'Evoluzione del Peso',calculadora:'Calcolatore',
   calcSub:'Calcola il tuo fabbisogno calorico giornaliero',
-  histTitle:'Storico',profTitle:'Profilo',configTitle:'Impostazioni'},
+  histTitle:'Storico',profTitle:'Profilo',configTitle:'Impostazioni',
+  hidratacao:'Idratazione',hidratacaoSub:'Mantieniti idratato durante il giorno',
+  mlConsumidos:'ml consumati',mlRestantes:'ml rimanenti',daMetaLabel:"% dell'obiettivo",
+  addAguaTitle:'Aggiungi acqua',zerarAgua:'Azzera acqua',metaDiaria:'Obiettivo giornaliero',calcPerfil:'Calcolato dal tuo profilo',
+  scoreDia:'Punteggio del Giorno',
+  camera:'Fotocamera',galeria:'Galleria',cancelar:'Annulla',salvarFoto:'💾 Salva foto',
+  nenhumaFoto:'Nessuna foto ancora',primeiraFoto:'Scatta la tua prima foto e segui i tuoi progressi nel tempo!',
+  comoFunciona:'Come funziona',
+  comoFuncionaTexto:"1. Scatta una foto al tuo piatto<br>2. L'IA identifica ogni ingrediente<br>3. Stima calorie e macro<br>4. Aggiungi tutto con un tocco",
+  fotosProgresso:'📸 Foto Progressi',fotosProgressoSub:'Registra e confronta la tua evoluzione corporea',
+  corpoEvolucao:'Corpo & Evoluzione',corpoEvolucaoSub:'Registra peso e misure corporee',
+  grafico:'Grafico',ritmoIdeal:'Ritmo ideale',registrarMedidas:'Registra Misure',
+  salvarMedidas:'💾 Salva Misure',historicoMedidas:'Storico Misure',
+  nenhumRegistro:'Nessun record ancora',registreAoMenos2Pesos:'Registra almeno 2 pesi',
+  tipMassa:"Per la massa muscolare l'ideale è guadagnare <b>0,5-1 kg al mese</b>. Mantieni un surplus di 200-400 kcal sopra il TDEE.",
+  tipCorte:'Per dimagrire in modo sano perdi <b>0,5-1 kg a settimana</b>. Un deficit di 500 kcal al giorno è sostenibile.',
+  histSub:'Tocca ogni giorno per vedere i pasti',cal7Dias:'Calorie — ultimi 7 giorni',
+  calendario:'Calendario',registrosDiarios:'Registrazioni giornaliere',
+  excellenteLegend:'● Eccellente (80+)',bomLegend:'● Buono (50–79)',ruimLegend:'● Scarso (<50)',
+  planoAlimentar:'Piano Alimentare',planoAlimentarSub:'Seleziona il tuo stile di dieta attuale',
+  onlineAgora:'Online ora — risponde in secondi',
+  alimSelecionado:'Alimento selezionato',quantidadeG:'Quantità (g)',caloriasLabel:'Calorie',
+  cadastrarNovo:'+ Aggiungi nuovo alimento',cadastrarAlimento:'Aggiungi Alimento',nomeLabel:'Nome',
+  cal100g:'Calorie /100g',prot100g:'Proteina /100g',carb100g:'Carboidrati /100g',gord100g:'Grassi /100g',salvarAlimento:'Salva Alimento',
+  toqueAlterarFoto:'Tocca per cambiare foto',nivelAtividade:"Livello di Attività",objetivo:'Obiettivo',massaGoal:'💪 Massa',
+  tmbLabel:'Metabolismo Basale (MB)',tdeeLabel:'Spesa Totale (TDEE)',metaCalorias:'Obiettivo Calorico',metaAguaLabel:'Obiettivo Acqua',
+  macrosEst:'Macro stimati',proteinaPura:'Proteina',carboidratos:'Carboidrati',gorduraPura:'Grassi',
+  chaveAPILabel:'Chiave API Anthropic (Foto IA)',salvarAplicar:'Salva e Applica',sairConta:'🚪 Disconnetti',
+  preenchaTodos:'Compila tutti i campi',sexo:'Sesso',idadeAnos:'Età (anni)',pesoKg:'Peso (kg)',alturaCm:'Altezza (cm)',
+  nivelAtividadeCalc:'Livello di attività',
+  actSed:'Sedentario',actLight:'Leggermente attivo (1-3x/sett)',actMod:'Moderatamente attivo (3-5x/sett)',actActive:'Molto attivo (6-7x/sett)',actVery:'Estremamente attivo'},
 fr:{hoje:'Aujourd\'hui',fotoIA:'Photo IA',agua:'Eau',dieta:'Régime',peso:'Poids',calcular:'Calculer',hist:'Historique',
   ganharMassa:'&#128170; Prendre du Muscle',emagrecer:'&#128293; Maigrir',manter:'&#9878; Maintenir',
   ola:'Bonjour,',bemVindo:'Bienvenue!',
@@ -949,7 +1069,37 @@ fr:{hoje:'Aujourd\'hui',fotoIA:'Photo IA',agua:'Eau',dieta:'Régime',peso:'Poids
   masc:'Masculin',fem:'Féminin',
   tiposDieta:'Type de Régime',evolPeso:'Évolution du Poids',calculadora:'Calculateur',
   calcSub:'Calculez vos besoins caloriques journaliers',
-  histTitle:'Historique',profTitle:'Profil',configTitle:'Paramètres'},
+  histTitle:'Historique',profTitle:'Profil',configTitle:'Paramètres',
+  hidratacao:'Hydratation',hidratacaoSub:'Restez hydraté tout au long de la journée',
+  mlConsumidos:'ml consommés',mlRestantes:'ml restants',daMetaLabel:"% de l'objectif",
+  addAguaTitle:"Ajouter de l'eau",zerarAgua:"Réinitialiser l'eau",metaDiaria:'Objectif quotidien',calcPerfil:'Calculé depuis votre profil',
+  scoreDia:'Score du Jour',
+  camera:'Caméra',galeria:'Galerie',cancelar:'Annuler',salvarFoto:'💾 Sauvegarder photo',
+  nenhumaFoto:'Aucune photo encore',primeiraFoto:'Prenez votre première photo et suivez votre évolution!',
+  comoFunciona:'Comment ça marche',
+  comoFuncionaTexto:"1. Prenez une photo de votre repas<br>2. L'IA identifie chaque ingrédient<br>3. Estime les calories et macros<br>4. Ajoutez tout en un clic",
+  fotosProgresso:'📸 Photos de Progrès',fotosProgressoSub:'Enregistrez et comparez votre évolution corporelle',
+  corpoEvolucao:'Corps & Évolution',corpoEvolucaoSub:'Enregistrez poids et mensurations',
+  grafico:'Graphique',ritmoIdeal:'Rythme idéal',registrarMedidas:'Enregistrer Mensurations',
+  salvarMedidas:'💾 Sauvegarder Mensurations',historicoMedidas:'Historique des Mensurations',
+  nenhumRegistro:'Aucun enregistrement encore',registreAoMenos2Pesos:'Enregistrez au moins 2 poids',
+  tipMassa:"Pour la prise de masse l'idéal est de prendre <b>0,5 à 1 kg par mois</b>. Maintenez un surplus de 200-400 kcal au-dessus du TDEE.",
+  tipCorte:'Pour maigrir sainement, perdez <b>0,5 à 1 kg par semaine</b>. Un déficit de 500 kcal par jour est durable.',
+  histSub:'Appuyez sur chaque jour pour voir les repas',cal7Dias:'Calories — 7 derniers jours',
+  calendario:'Calendrier',registrosDiarios:'Enregistrements quotidiens',
+  excellenteLegend:'● Excellent (80+)',bomLegend:'● Bien (50–79)',ruimLegend:'● Mauvais (<50)',
+  planoAlimentar:'Plan Alimentaire',planoAlimentarSub:'Sélectionnez votre style de régime actuel',
+  onlineAgora:'En ligne maintenant — répond en secondes',
+  alimSelecionado:'Aliment sélectionné',quantidadeG:'Quantité (g)',caloriasLabel:'Calories',
+  cadastrarNovo:'+ Ajouter nouvel aliment',cadastrarAlimento:'Ajouter Aliment',nomeLabel:'Nom',
+  cal100g:'Calories /100g',prot100g:'Protéines /100g',carb100g:'Glucides /100g',gord100g:'Lipides /100g',salvarAlimento:'Sauvegarder Aliment',
+  toqueAlterarFoto:'Appuyez pour changer photo',nivelAtividade:"Niveau d'Activité",objetivo:'Objectif',massaGoal:'💪 Muscles',
+  tmbLabel:'Métabolisme de Base (MB)',tdeeLabel:'Dépense Totale (TDEE)',metaCalorias:'Objectif Calorique',metaAguaLabel:"Objectif Eau",
+  macrosEst:'Macros estimés',proteinaPura:'Protéines',carboidratos:'Glucides',gorduraPura:'Lipides',
+  chaveAPILabel:'Clé API Anthropic (Photo IA)',salvarAplicar:'Sauvegarder & Appliquer',sairConta:'🚪 Se déconnecter',
+  preenchaTodos:'Remplissez tous les champs',sexo:'Sexe',idadeAnos:'Âge (ans)',pesoKg:'Poids (kg)',alturaCm:'Taille (cm)',
+  nivelAtividadeCalc:"Niveau d'activité",
+  actSed:'Sédentaire',actLight:'Légèrement actif (1-3x/sem)',actMod:'Modérément actif (3-5x/sem)',actActive:'Très actif (6-7x/sem)',actVery:'Extrêmement actif'},
 de:{hoje:'Heute',fotoIA:'Foto KI',agua:'Wasser',dieta:'Diät',peso:'Gewicht',calcular:'Berechnen',hist:'Verlauf',
   ganharMassa:'&#128170; Muskeln aufbauen',emagrecer:'&#128293; Abnehmen',manter:'&#9878; Gewicht halten',
   ola:'Hallo,',bemVindo:'Willkommen!',
@@ -966,7 +1116,37 @@ de:{hoje:'Heute',fotoIA:'Foto KI',agua:'Wasser',dieta:'Diät',peso:'Gewicht',cal
   masc:'Männlich',fem:'Weiblich',
   tiposDieta:'Diättyp',evolPeso:'Gewichtsverlauf',calculadora:'Rechner',
   calcSub:'Berechnen Sie Ihren täglichen Kalorienbedarf',
-  histTitle:'Verlauf',profTitle:'Profil',configTitle:'Einstellungen'}
+  histTitle:'Verlauf',profTitle:'Profil',configTitle:'Einstellungen',
+  hidratacao:'Wasserhaushalt',hidratacaoSub:'Bleib den ganzen Tag über hydratisiert',
+  mlConsumidos:'ml getrunken',mlRestantes:'ml übrig',daMetaLabel:'% des Ziels',
+  addAguaTitle:'Wasser hinzufügen',zerarAgua:'Wasser zurücksetzen',metaDiaria:'Tagesziel',calcPerfil:'Berechnet aus Ihrem Profil',
+  scoreDia:'Tagespunkte',
+  camera:'Kamera',galeria:'Galerie',cancelar:'Abbrechen',salvarFoto:'💾 Foto speichern',
+  nenhumaFoto:'Noch keine Fotos',primeiraFoto:'Machen Sie Ihr erstes Foto und verfolgen Sie Ihren Fortschritt!',
+  comoFunciona:'Wie es funktioniert',
+  comoFuncionaTexto:'1. Mach ein Foto von deinem Essen<br>2. KI erkennt jede Zutat<br>3. Schätzt Kalorien und Makros<br>4. Alles mit einem Tippen hinzufügen',
+  fotosProgresso:'📸 Fortschrittsfotos',fotosProgressoSub:'Aufzeichnen und vergleichen Sie Ihre körperliche Entwicklung',
+  corpoEvolucao:'Körper & Entwicklung',corpoEvolucaoSub:'Gewicht und Körpermaße aufzeichnen',
+  grafico:'Diagramm',ritmoIdeal:'Ideales Tempo',registrarMedidas:'Maße aufzeichnen',
+  salvarMedidas:'💾 Maße speichern',historicoMedidas:'Maßverlauf',
+  nenhumRegistro:'Noch keine Einträge',registreAoMenos2Pesos:'Mindestens 2 Gewichte eintragen',
+  tipMassa:'Für den Muskelaufbau ist es ideal, <b>0,5 bis 1 kg pro Monat</b> zuzunehmen. Halten Sie einen Überschuss von 200-400 kcal über dem TDEE.',
+  tipCorte:'Um gesund abzunehmen, verliere <b>0,5 bis 1 kg pro Woche</b>. Ein Defizit von 500 kcal pro Tag ist nachhaltig.',
+  histSub:'Tippe auf jeden Tag, um die Mahlzeiten zu sehen',cal7Dias:'Kalorien — letzte 7 Tage',
+  calendario:'Kalender',registrosDiarios:'Tägliche Einträge',
+  excellenteLegend:'● Ausgezeichnet (80+)',bomLegend:'● Gut (50–79)',ruimLegend:'● Schlecht (<50)',
+  planoAlimentar:'Ernährungsplan',planoAlimentarSub:'Wählen Sie Ihren aktuellen Ernährungsstil',
+  onlineAgora:'Jetzt online — antwortet in Sekunden',
+  alimSelecionado:'Ausgewähltes Lebensmittel',quantidadeG:'Menge (g)',caloriasLabel:'Kalorien',
+  cadastrarNovo:'+ Neues Lebensmittel hinzufügen',cadastrarAlimento:'Lebensmittel hinzufügen',nomeLabel:'Name',
+  cal100g:'Kalorien /100g',prot100g:'Protein /100g',carb100g:'Kohlenhydrate /100g',gord100g:'Fett /100g',salvarAlimento:'Lebensmittel speichern',
+  toqueAlterarFoto:'Tippen zum Ändern des Fotos',nivelAtividade:'Aktivitätslevel',objetivo:'Ziel',massaGoal:'💪 Muskeln aufbauen',
+  tmbLabel:'Grundumsatz (GU)',tdeeLabel:'Gesamtverbrauch (TDEE)',metaCalorias:'Kalorienziel',metaAguaLabel:'Wasserziel',
+  macrosEst:'Geschätzte Makros',proteinaPura:'Protein',carboidratos:'Kohlenhydrate',gorduraPura:'Fett',
+  chaveAPILabel:'Anthropic API-Schlüssel (KI-Foto)',salvarAplicar:'Speichern & Anwenden',sairConta:'🚪 Abmelden',
+  preenchaTodos:'Alle Felder ausfüllen',sexo:'Geschlecht',idadeAnos:'Alter (Jahre)',pesoKg:'Gewicht (kg)',alturaCm:'Größe (cm)',
+  nivelAtividadeCalc:'Aktivitätslevel',
+  actSed:'Sitzend',actLight:'Leicht aktiv (1-3x/Woche)',actMod:'Mäßig aktiv (3-5x/Woche)',actActive:'Sehr aktiv (6-7x/Woche)',actVery:'Extrem aktiv'}
 };
 function setLang(lang){
   currentLang=lang;
@@ -994,8 +1174,39 @@ function setLang(lang){
     var el=document.getElementById('lang-'+l);
     if(el)el.className='lang-btn'+(l===lang?' active':'');
   });
-  // Re-render dynamic sections
+  // Scan all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(t[k]!==undefined)el.innerHTML=t[k];
+  });
+  // Update select options — activity level
+  var actLevels=[
+    {v:'1.2',label:t.actSed||'Sedentario'},
+    {v:'1.375',label:t.actLight||'Levemente ativo'},
+    {v:'1.55',label:t.actMod||'Moderado'},
+    {v:'1.725',label:t.actActive||'Muito ativo'},
+    {v:'1.9',label:t.actVery||'Extremamente ativo'}
+  ];
+  ['calcActivity','profActivity'].forEach(function(id){
+    var sel=document.getElementById(id);
+    if(sel){var cur=sel.value;sel.innerHTML=actLevels.map(function(a){return '<option value="'+a.v+'"'+(cur===a.v?' selected':'')+'>'+a.label+'</option>';}).join('');sel.value=cur;}
+  });
+  // Update sex select options
+  var sexOpts='<option value="m">'+t.masc+'</option><option value="f">'+t.fem+'</option>';
+  ['calcSex','profSex'].forEach(function(id){
+    var sel=document.getElementById(id);
+    if(sel){var cur=sel.value;sel.innerHTML=sexOpts;sel.value=cur;}
+  });
+  // Update profActivity options (same as calcActivity)
+  // Re-render all dynamic sections so translated strings show correctly
   renderToday();renderMeals();
+  if(typeof renderWater==='function')renderWater();
+  if(typeof renderWeight==='function')renderWeight();
+  if(typeof renderWeightTip==='function')renderWeightTip();
+  if(typeof renderHistory==='function')renderHistory();
+  if(typeof renderCalendar==='function')renderCalendar();
+  if(typeof renderDiet==='function')renderDiet();
+  if(typeof renderNutriContext==='function')renderNutriContext();
 }
 var FOOD_DB=[
   {name:"Arroz branco",icon:"rice",kcal:130,prot:2.7,carb:28.2,fat:0.3},
@@ -1257,7 +1468,7 @@ function renderWater(){
   document.getElementById("waterCurrent").textContent=state.waterMl;
   document.getElementById("waterRemaining").textContent=Math.max(0,state.waterGoal-state.waterMl);
   document.getElementById("waterBar").style.width=pct+"%";
-  document.getElementById("waterPercent").textContent=Math.round(pct)+"% da meta";
+  document.getElementById("waterPercent").textContent=Math.round(pct)+(T[currentLang].daMetaLabel||'% da meta');
   var filled=state.waterMl;
   var html="";
   for(var i=0;i<8;i++){var f=filled>=250;if(f)filled-=250;html+="<div class='cup"+(f?" filled":"")+"' onclick='addWater(250)'><div class='cup-icon'>&#129380;</div><div class='cup-ml'>250ml</div></div>";}
@@ -1268,7 +1479,8 @@ function renderWater(){
   if(gv) gv.textContent=state.waterGoal;
   if(gb){
     var p=state.profile||{};
-    gb.textContent=p.weight?p.weight+"kg × 35ml = "+state.waterGoal+"ml/dia":"Configure seu perfil para cálculo automático";
+    var configMsg=currentLang==='en'?'Configure your profile for auto-calculation':currentLang==='es'?'Configura tu perfil para cálculo automático':currentLang==='it'?'Configura il tuo profilo per il calcolo automatico':currentLang==='fr'?'Configurez votre profil pour le calcul automatique':currentLang==='de'?'Profil konfigurieren für automatische Berechnung':'Configure seu perfil para cálculo automático';
+    gb.textContent=p.weight?p.weight+"kg × 35ml = "+state.waterGoal+"ml/dia":configMsg;
   }
 }
 function addWater(ml){state.waterMl=Math.min(state.waterGoal*2,state.waterMl+ml);save();renderWater();renderToday();showToast("+"+ml+"ml","");}
@@ -1298,11 +1510,12 @@ function renderWeight(){
     if(list.length>1){var diff=(list[0].val-list[1].val).toFixed(1);document.getElementById("weightChange").innerHTML="<span style='color:"+(diff>0?"#e8834a":"#34d399")+"'>"+(diff>0?"+":"")+diff+" kg</span>";}
   }
   var html=list.slice(0,10).map(function(e){return "<div class='weight-entry'><div class='weight-entry-date'>"+e.date.slice(5)+"</div><div class='weight-entry-val'>"+e.val.toFixed(1)+" kg</div></div>";}).join("");
-  document.getElementById("weightList").innerHTML=html||"<div class='empty'><div class='empty-icon'>&#9878;</div><div class='empty-text'>Nenhum registro ainda</div></div>";
+  document.getElementById("weightList").innerHTML=html||"<div class='empty'><div class='empty-icon'>&#9878;</div><div class='empty-text'>"+(T[currentLang].nenhumRegistro||'Nenhum registro ainda')+"</div></div>";
   drawWeightChart();renderWeightTip();
 }
 function renderWeightTip(){
-  document.getElementById("weightTip").innerHTML=state.goal==="mass"?"Para ganho de massa o ideal e ganhar <b>0,5 a 1 kg por mes</b>. Mantenha um supravit de 200-400 kcal acima do TDEE.":"Para emagrecer de forma saudavel perca <b>0,5 a 1 kg por semana</b>. Deficit de 500 kcal por dia e sustentavel.";
+  var t=T[currentLang];
+  document.getElementById("weightTip").innerHTML=state.goal==="mass"?(t.tipMassa||"Para ganho de massa o ideal e ganhar <b>0,5 a 1 kg por mes</b>. Mantenha um supravit de 200-400 kcal acima do TDEE."):(t.tipCorte||"Para emagrecer de forma saudavel perca <b>0,5 a 1 kg por semana</b>. Deficit de 500 kcal por dia e sustentavel.");
 }
 function drawWeightChart(){
   var canvas=document.getElementById("weightChart");if(!canvas)return;
@@ -1310,7 +1523,7 @@ function drawWeightChart(){
   var data=state.weights.slice(0,14).reverse();
   canvas.width=(canvas.offsetWidth||350)*2;canvas.height=300;
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  if(data.length<2){ctx.fillStyle="#5a6270";ctx.font="24px DM Sans";ctx.textAlign="center";ctx.fillText("Registre ao menos 2 pesos",canvas.width/2,canvas.height/2);return;}
+  if(data.length<2){ctx.fillStyle="#5a6270";ctx.font="24px DM Sans";ctx.textAlign="center";ctx.fillText(T[currentLang].registreAoMenos2Pesos||"Registre ao menos 2 pesos",canvas.width/2,canvas.height/2);return;}
   var vals=data.map(function(d){return d.val;});
   var mn=Math.min.apply(null,vals)-1,mx=Math.max.apply(null,vals)+1;
   var w=canvas.width,h=canvas.height,p=45;
@@ -1334,14 +1547,15 @@ function calcNeeds(){
   var w=parseFloat(document.getElementById("calcWeight").value)||0;
   var h=parseFloat(document.getElementById("calcHeight").value)||0;
   var act=parseFloat(document.getElementById("calcActivity").value)||1.55;
-  if(!age||!w||!h){showToast("Preencha todos os campos","error");return;}
+  var tt=T[currentLang];
+  if(!age||!w||!h){showToast(tt.preenchaTodos||"Preencha todos os campos","error");return;}
   var tmb=sex==="m"?(10*w+6.25*h-5*age+5):(10*w+6.25*h-5*age-161);
   var tdee=Math.round(tmb*act);
   var goal=state.goal==="mass"?tdee+350:tdee-500;
   var prot=Math.round(w*2.2),fat=Math.round(w*1.1);
   var carb=Math.round((goal-(prot*4)-(fat*9))/4);
   var el=document.getElementById("calcResult");el.style.display="block";
-  el.innerHTML="<div class='calc-result'><div style='font-family:Syne,sans-serif;font-size:13px;font-weight:700;color:#f0b429;margin-bottom:10px;'>Resultados</div><div class='calc-result-row'><span class='calc-result-label'>TMB</span><span class='calc-result-val'>"+Math.round(tmb)+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>TDEE</span><span class='calc-result-val'>"+tdee+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>Meta</span><span class='calc-result-val' style='color:#f0b429'>"+goal+" kcal</span></div><div style='margin-top:10px;padding-top:10px;border-top:1px solid #252b34;'><div class='calc-result-row'><span class='calc-result-label'>Proteina</span><span class='calc-result-val' style='color:#60a5fa'>"+prot+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>Gordura</span><span class='calc-result-val' style='color:#34d399'>"+fat+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>Carboidrato</span><span class='calc-result-val' style='color:#e8834a'>"+carb+"g</span></div></div></div><button class='btn btn-primary' onclick='applyCalcGoal("+goal+")'>Aplicar esta meta</button>";
+  el.innerHTML="<div class='calc-result'><div style='font-family:Syne,sans-serif;font-size:13px;font-weight:700;color:#f0b429;margin-bottom:10px;'>"+(tt.resultados||'Resultados')+"</div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.tmb||'TMB')+"</span><span class='calc-result-val'>"+Math.round(tmb)+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.tdee||'TDEE')+"</span><span class='calc-result-val'>"+tdee+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.meta||'Meta')+"</span><span class='calc-result-val' style='color:#f0b429'>"+goal+" kcal</span></div><div style='margin-top:10px;padding-top:10px;border-top:1px solid #252b34;'><div class='calc-result-row'><span class='calc-result-label'>"+(tt.proteinaPura||'Proteina')+"</span><span class='calc-result-val' style='color:#60a5fa'>"+prot+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.gorduraPura||'Gordura')+"</span><span class='calc-result-val' style='color:#34d399'>"+fat+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.carboidratos||'Carboidrato')+"</span><span class='calc-result-val' style='color:#e8834a'>"+carb+"g</span></div></div></div><button class='btn btn-primary' onclick='applyCalcGoal("+goal+")'>"+(tt.aplicarMeta||'Aplicar esta meta')+"</button>";
 }
 function applyCalcGoal(kcal){state.calGoal=kcal;save();renderToday();showToast("Meta: "+kcal+" kcal aplicada!","success");switchTab("hoje",document.querySelector(".nav-item"));}
 
@@ -2640,8 +2854,47 @@ function loadFromFirestore(uid){
     .then(function(doc){
       if(doc.exists&&doc.data().data){
         var cloudState=JSON.parse(doc.data().data);
-        var lR=localStorage.getItem('betteryou_v1');var lS=lR?JSON.parse(lR):{};var td=new Date().toISOString().slice(0,10);var mg=Object.assign({},state,cloudState);function cM(s){if(!s||!s.meals)return 0;return ['cafe','almoco','lanche','jantar'].reduce(function(n,k){return n+(Array.isArray(s.meals[k])?s.meals[k].length:0);},0);}if(lS.today===td&&cM(lS)>cM(cloudState)){mg.meals=lS.meals;mg.today=td;if(lS.waterMl!==undefined)mg.waterMl=lS.waterMl;if(lS.log)mg.log=lS.log;}state=mg;localStorage.setItem('betteryou_v1',JSON.stringify(state));checkDayReset();if(state.lang){currentLang=state.lang;setLang(state.lang);}else{renderToday();}document.getElementById("goal-mass").className="goal-btn"+(state.goal==="mass"?" active":"");document.getElementById("goal-cut").className="goal-btn"+(state.goal==="cut"?" active":"");if(state.profile&&state.profile.photo){setTimeout(function(){renderProfileAvatar(state.profile.photo);},50);}saveToFirestore();
+        var localRaw=localStorage.getItem('betteryou_v1');
+        var localState=localRaw?JSON.parse(localRaw):{};
+        var today=new Date().toISOString().slice(0,10);
+
+        // ── MERGE INTELIGENTE ──────────────────────────────────────
+        // Cloud vence para configurações e perfil.
+        // Local vence para refeições/água DE HOJE se tiver mais entradas.
+        var merged=Object.assign({},state,cloudState);
+
+        function countMeals(s){
+          if(!s||!s.meals)return 0;
+          return ['cafe','almoco','lanche','jantar'].reduce(function(n,k){
+            return n+(Array.isArray(s.meals[k])?s.meals[k].length:0);
+          },0);
+        }
+        var localCount=countMeals(localState);
+        var cloudCount=countMeals(cloudState);
+
+        if(localState.today===today && localCount>cloudCount){
+          // Dados locais de hoje são mais completos — protege
+          merged.meals=localState.meals;
+          merged.today=today;
+          if(localState.waterMl!==undefined) merged.waterMl=localState.waterMl;
+          if(localState.log) merged.log=localState.log;
+          if(typeof showToast==='function') showToast('✅ Dados locais preservados!');
+        } else {
+          if(typeof showToast==='function') showToast('✅ Dados carregados da nuvem!');
+        }
+        // ──────────────────────────────────────────────────────────
+
+        state=merged;
+        localStorage.setItem('betteryou_v1',JSON.stringify(state));
+        checkDayReset();
+        if(state.lang){currentLang=state.lang;setLang(state.lang);}else{renderToday();}
+        document.getElementById("goal-mass").className="goal-btn"+(state.goal==="mass"?" active":"");
+        document.getElementById("goal-cut").className="goal-btn"+(state.goal==="cut"?" active":"");
+        if(state.profile&&state.profile.photo){setTimeout(function(){renderProfileAvatar(state.profile.photo);},50);}
+        // Sincroniza o vencedor de volta ao Firestore
+        saveToFirestore();
       } else {
+        // Novo usuário — salva dados locais na nuvem
         saveToFirestore();
       }
     })
