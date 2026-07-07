@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Better You — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0c0f; --surface:#111418; --surface2:#181c22; --surface3:#1e2229;
+  --border:#252b34; --gold:#f0b429; --orange:#e8834a; --green:#34d399;
+  --red:#f87171; --blue:#60a5fa; --water:#38bdf8;
+  --text:#f0f2f5; --text2:#8b95a3; --text3:#5a6270;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
+
+/* ── LOGIN ── */
+#loginScreen {
+  display:flex;align-items:center;justify-content:center;min-height:100vh;
+  background:radial-gradient(ellipse at 50% 0%,rgba(240,180,41,.08) 0%,transparent 60%);
+}
+.login-box {
+  background:var(--surface);border:1px solid var(--border);border-radius:24px;
+  padding:40px 36px;width:100%;max-width:400px;text-align:center;
+  box-shadow:0 24px 64px rgba(0,0,0,.5);
+}
+.login-logo {
+  width:56px;height:56px;background:linear-gradient(135deg,var(--gold),var(--orange));
+  border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:28px;margin:0 auto 20px;box-shadow:0 8px 24px rgba(240,180,41,.3);
+}
+.login-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:4px;}
+.login-sub{color:var(--text2);font-size:13px;margin-bottom:28px;}
+.login-input {
+  width:100%;background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:12px;padding:14px 16px;color:var(--text);font-size:15px;
+  font-family:'DM Sans',sans-serif;outline:none;transition:.2s;margin-bottom:14px;
+}
+.login-input:focus{border-color:var(--gold);}
+.login-btn {
+  width:100%;background:linear-gradient(135deg,var(--gold),var(--orange));
+  color:#000;border:none;border-radius:12px;padding:14px;font-size:15px;
+  font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;transition:.2s;
+}
+.login-btn:hover{opacity:.9;transform:translateY(-1px);}
+.login-err{color:var(--red);font-size:13px;margin-top:10px;min-height:20px;}
+
+/* ── DASHBOARD ── */
+#dashboard{display:none;}
+.topbar {
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:16px 28px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.topbar-left{display:flex;align-items:center;gap:12px;}
+.topbar-logo{
+  width:36px;height:36px;background:linear-gradient(135deg,var(--gold),var(--orange));
+  border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.topbar-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;}
+.topbar-badge{
+  background:rgba(240,180,41,.15);color:var(--gold);border:1px solid rgba(240,180,41,.3);
+  border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;
+}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.refresh-btn {
+  background:var(--surface2);border:1px solid var(--border);color:var(--text2);
+  border-radius:10px;padding:8px 14px;font-size:13px;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:.2s;display:flex;align-items:center;gap:6px;
+}
+.refresh-btn:hover{border-color:var(--gold);color:var(--gold);}
+.logout-btn {
+  background:transparent;border:1px solid var(--border);color:var(--text3);
+  border-radius:10px;padding:8px 14px;font-size:13px;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:.2s;
+}
+.logout-btn:hover{border-color:var(--red);color:var(--red);}
+.last-update{color:var(--text3);font-size:12px;}
+
+.content{max-width:1100px;margin:0 auto;padding:28px 20px;}
+
+/* ── KPI CARDS ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:28px;}
+.kpi-card {
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:20px;transition:.2s;position:relative;overflow:hidden;
+}
+.kpi-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+}
+.kpi-card.green{--accent:var(--green);}
+.kpi-card.gold{--accent:var(--gold);}
+.kpi-card.blue{--accent:var(--blue);}
+.kpi-card.red{--accent:var(--red);}
+.kpi-card.orange{--accent:var(--orange);}
+.kpi-card.water{--accent:var(--water);}
+.kpi-icon{font-size:22px;margin-bottom:12px;}
+.kpi-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:6px;}
+.kpi-value{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--text);}
+.kpi-value.green{color:var(--green);}
+.kpi-value.gold{color:var(--gold);}
+.kpi-value.red{color:var(--red);}
+.kpi-value.blue{color:var(--blue);}
+.kpi-sub{font-size:12px;color:var(--text3);margin-top:4px;}
+
+/* ── SECTION ── */
+.section-title {
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+  color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px;
+}
+
+/* ── ACTIVITY TABLE ── */
+.table-wrap {
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  overflow:hidden;margin-bottom:28px;
+}
+.table-header {
+  padding:16px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.table-header-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
+.table-count{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:3px 10px;font-size:12px;color:var(--text2);
+}
+table{width:100%;border-collapse:collapse;}
+th{
+  text-align:left;padding:12px 20px;font-size:11px;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.6px;font-weight:600;
+  border-bottom:1px solid var(--border);background:var(--surface2);
+}
+td{padding:14px 20px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.02);}
+
+.status-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;
+}
+.pill-active  {background:rgba(52,211,153,.15);color:var(--green);}
+.pill-trialing{background:rgba(240,180,41,.15);color:var(--gold);}
+.pill-canceled{background:rgba(248,113,113,.15);color:var(--red);}
+.pill-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+
+.email-cell{color:var(--text);font-weight:500;}
+.email-cell .name{font-size:11px;color:var(--text3);margin-top:2px;}
+.amount-cell{color:var(--green);font-weight:600;font-family:'Syne',sans-serif;}
+.date-cell{color:var(--text2);font-size:12px;}
+
+/* ── EMPTY / LOADING ── */
+.loading-wrap{padding:40px;text-align:center;color:var(--text3);}
+.spinner{
+  width:32px;height:32px;border:3px solid var(--border);
+  border-top-color:var(--gold);border-radius:50%;
+  animation:spin .8s linear infinite;margin:0 auto 12px;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+  .topbar{padding:12px 16px;}
+  .content{padding:16px 12px;}
+  table{display:block;overflow-x:auto;}
+  .kpi-value{font-size:22px;}
+  .topbar-title{font-size:14px;}
+  th,td{padding:10px 12px;white-space:nowrap;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══════════════════════════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">⚡</div>
+    <div class="login-title">Better You Admin</div>
+    <div class="login-sub">Painel de controle exclusivo</div>
+    <input class="login-input" type="password" id="tokenInput"
+           placeholder="Senha de admin..." autocomplete="off">
+    <button class="login-btn" onclick="doLogin()">Entrar no painel →</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══════════════════════════════════════════════ -->
+<div id="dashboard">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">⚡</div>
+      <div class="topbar-title">Better You Admin</div>
+      <div class="topbar-badge">LIVE</div>
+    </div>
+    <div class="topbar-right">
+      <div class="last-update" id="lastUpdate">—</div>
+      <button class="refresh-btn" onclick="loadStats()">↻ Atualizar</button>
+      <button class="logout-btn" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid" id="kpiGrid">
+      <div class="loading-wrap" style="grid-column:1/-1">
+        <div class="spinner"></div>
+        <div>Carregando dados...</div>
+      </div>
+    </div>
+
+    <!-- Recent activity -->
+    <div class="section-title">Assinaturas Recentes</div>
+    <div class="table-wrap">
+      <div class="table-header">
+        <div class="table-header-title">Histórico de usuários</div>
+        <div class="table-count" id="tableCount">—</div>
+      </div>
+      <div id="tableBody">
+        <div class="loading-wrap">
+          <div class="spinner"></div>
+          <div>Carregando...</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const WORKER_URL = 'https://anthropic-proxy.felipeperoniluiz.workers.dev';
+let adminToken = '';
+
+// ── LOGIN ──────────────────────────────────────────────────────
+document.getElementById('tokenInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+async function doLogin() {
+  const t = document.getElementById('tokenInput').value.trim();
+  const err = document.getElementById('loginErr');
+  if (!t) { err.textContent = 'Digite a senha.'; return; }
+
+  err.textContent = 'Verificando...';
+  adminToken = t;
+
+  try {
+    const r = await fetch(`${WORKER_URL}/admin/stats`, {
+      headers: { 'Authorization': `Bearer ${t}` }
+    });
+    if (r.status === 401) {
+      err.textContent = '❌ Senha incorreta.';
+      adminToken = '';
+      return;
+    }
+    const data = await r.json();
+    if (data.error) { err.textContent = '❌ ' + data.error; return; }
+
+    // Sucesso
+    localStorage.setItem('by_admin_token', t);
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    renderDashboard(data);
+  } catch(e) {
+    err.textContent = '❌ Erro de conexão: ' + e.message;
+    adminToken = '';
+  }
+}
+
+function doLogout() {
+  localStorage.removeItem('by_admin_token');
+  adminToken = '';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('tokenInput').value = '';
+  document.getElementById('loginErr').textContent = '';
+}
+
+// ── LOAD STATS ─────────────────────────────────────────────────
+async function loadStats() {
+  document.getElementById('kpiGrid').innerHTML = `
+    <div class="loading-wrap" style="grid-column:1/-1">
+      <div class="spinner"></div><div>Atualizando...</div>
+    </div>`;
+  document.getElementById('tableBody').innerHTML = `
+    <div class="loading-wrap"><div class="spinner"></div><div>Carregando...</div></div>`;
+
+  try {
+    const r = await fetch(`${WORKER_URL}/admin/stats`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const data = await r.json();
+    if (data.error) throw new Error(data.error);
+    renderDashboard(data);
+  } catch(e) {
+    document.getElementById('kpiGrid').innerHTML =
+      `<div class="loading-wrap" style="grid-column:1/-1;color:var(--red)">❌ ${e.message}</div>`;
+  }
+}
+
+// ── RENDER ─────────────────────────────────────────────────────
+function renderDashboard(data) {
+  // Last update
+  const now = new Date(data.updatedAt || Date.now());
+  document.getElementById('lastUpdate').textContent =
+    'Atualizado: ' + now.toLocaleTimeString('pt-BR');
+
+  // KPI Cards
+  const mrrFmt = '€' + data.mrr.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+  const arrFmt = '€' + data.arr.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+  document.getElementById('kpiGrid').innerHTML = `
+    <div class="kpi-card green">
+      <div class="kpi-icon">✅</div>
+      <div class="kpi-label">PRO Ativos</div>
+      <div class="kpi-value green">${data.active}</div>
+      <div class="kpi-sub">assinaturas pagas</div>
+    </div>
+    <div class="kpi-card gold">
+      <div class="kpi-icon">⏳</div>
+      <div class="kpi-label">Em Trial</div>
+      <div class="kpi-value gold">${data.trialing}</div>
+      <div class="kpi-sub">2 dias grátis</div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-icon">👥</div>
+      <div class="kpi-label">Total PRO</div>
+      <div class="kpi-value blue">${data.totalPro}</div>
+      <div class="kpi-sub">ativos + trial</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-icon">❌</div>
+      <div class="kpi-label">Cancelados</div>
+      <div class="kpi-value red">${data.canceled}</div>
+      <div class="kpi-sub">churned</div>
+    </div>
+    <div class="kpi-card gold">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-label">MRR</div>
+      <div class="kpi-value gold">${mrrFmt}</div>
+      <div class="kpi-sub">receita mensal</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-icon">📈</div>
+      <div class="kpi-label">ARR</div>
+      <div class="kpi-value" style="color:var(--orange)">${arrFmt}</div>
+      <div class="kpi-sub">projeção anual</div>
+    </div>
+    ${data.totalCustomers ? `
+    <div class="kpi-card water">
+      <div class="kpi-icon">🌐</div>
+      <div class="kpi-label">Clientes Stripe</div>
+      <div class="kpi-value" style="color:var(--water)">${data.totalCustomers}</div>
+      <div class="kpi-sub">total no Stripe</div>
+    </div>` : ''}
+  `;
+
+  // Table
+  document.getElementById('tableCount').textContent = (data.recent || []).length + ' registros';
+
+  if (!data.recent || data.recent.length === 0) {
+    document.getElementById('tableBody').innerHTML =
+      '<div class="loading-wrap">Nenhuma assinatura ainda.</div>';
+    return;
+  }
+
+  const rows = (data.recent || []).map(sub => {
+    const statusClass = sub.status === 'active' ? 'pill-active'
+                      : sub.status === 'trialing' ? 'pill-trialing' : 'pill-canceled';
+    const statusLabel = sub.status === 'active' ? 'Ativo'
+                      : sub.status === 'trialing' ? 'Trial' : 'Cancelado';
+    const date = new Date(sub.created).toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'});
+    const time = new Date(sub.created).toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+    const trialEnd = sub.trialEnd ? new Date(sub.trialEnd).toLocaleDateString('pt-BR') : '—';
+    const email = sub.email || sub.id.slice(-8);
+    const amount = sub.amount > 0 ? `€${sub.amount.toFixed(2)}` : '—';
+
+    return `<tr>
+      <td>
+        <div class="email-cell">${email}</div>
+        ${sub.name ? `<div class="email-cell"><span class="name">${sub.name}</span></div>` : ''}
+      </td>
+      <td><span class="status-pill ${statusClass}"><span class="pill-dot"></span>${statusLabel}</span></td>
+      <td class="amount-cell">${amount}</td>
+      <td class="date-cell">${date} ${time}</td>
+      <td class="date-cell">${sub.status === 'trialing' ? '🕐 ' + trialEnd : sub.canceledAt ? '🔴 ' + new Date(sub.canceledAt).toLocaleDateString('pt-BR') : '—'}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('tableBody').innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Email / Usuário</th>
+          <th>Status</th>
+          <th>Valor</th>
+          <th>Criado em</th>
+          <th>Trial/Cancelado</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+// ── AUTO-LOGIN se token salvo ─────────────────────────────────
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('by_admin_token');
+  if (saved) {
+    document.getElementById('tokenInput').value = saved;
+    doLogin();
+  }
+});
+
+// ── AUTO-REFRESH a cada 5 minutos ────────────────────────────
+setInterval(() => {
+  if (adminToken) loadStats();
+}, 5 * 60 * 1000);
+</script>
+</body>
+</html>
