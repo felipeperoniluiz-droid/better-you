@@ -2654,13 +2654,13 @@ function renderNutriChat(){
 
 // ── PRO / STRIPE ─────────────────────────────────────────────────
 
-function setProStatus(val){
+function setProStatus(val, silent){
   isPro=!!val;
   // Atualizar nav badges
   document.querySelectorAll('.nav-item').forEach(function(ni){
     ni.style.opacity='1';
   });
-  if(isPro){
+  if(isPro&&!silent){
     showToast('🎉 Better You PRO ativo!','success');
   }
 }
@@ -2695,6 +2695,10 @@ async function verifyStripeSession(sessionId){
     var data=await res.json();
     if(data.isPro){
       setProStatus(true);
+      // Salvar subscriptionId no localStorage para verificação futura
+      if(data.subscriptionId){
+        localStorage.setItem('betteryou_subscriptionId', data.subscriptionId);
+      }
       // Salvar no Firestore se logado
       if(_fbUser&&_fbDb){
         _fbDb.collection('users').doc(_fbUser.uid).set({
@@ -2707,6 +2711,26 @@ async function verifyStripeSession(sessionId){
       closeModal('upgradeModal');
     }
   }catch(e){console.warn('Stripe verify error:',e);}
+}
+
+// Verifica no Stripe se a assinatura salva localmente ainda está ativa
+async function verifyLocalSubscription(){
+  var subId=localStorage.getItem('betteryou_subscriptionId');
+  if(!subId) return;
+  try{
+    var res=await fetch(PROXY_URL+'/verify-subscription?subscription_id='+subId);
+    var data=await res.json();
+    if(data.isPro){
+      setProStatus(true, true); // silencioso — usuário já era PRO
+    }else{
+      // Assinatura cancelada ou não encontrada no Stripe
+      localStorage.removeItem('betteryou_subscriptionId');
+      isPro=false;
+    }
+  }catch(e){
+    // Em caso de erro de rede, mantém o status atual (não penaliza o usuário)
+    console.warn('Subscription verify error:',e);
+  }
 }
 
 function checkUrlProStatus(){
@@ -2789,10 +2813,19 @@ function initFirebase(){
       var info=document.getElementById('authUserInfo');
       if(info) info.textContent='📧 '+user.email;
       loadFromFirestore(user.uid);
-      // Checar isPro no Firestore
+      // Checar isPro no Firestore e sincronizar subscriptionId com localStorage
       _fbDb.collection('users').doc(user.uid).get().then(function(doc){
-        if(doc.exists&&doc.data().isPro){setProStatus(true);}
+        if(doc.exists&&doc.data().isPro){
+          var docData=doc.data();
+          // Salvar subscriptionId no localStorage se veio do Firestore
+          if(docData.subscriptionId&&!localStorage.getItem('betteryou_subscriptionId')){
+            localStorage.setItem('betteryou_subscriptionId', docData.subscriptionId);
+          }
+          // Não definir isPro aqui — deixar verifyLocalSubscription decidir com base no Stripe
+        }
       }).catch(function(){});
+      // Verificar assinatura Stripe (anti-fraude: confirma que a assinatura ainda está ativa)
+      verifyLocalSubscription();
       // Checar retorno do Stripe na URL
       checkUrlProStatus();
     } else {
