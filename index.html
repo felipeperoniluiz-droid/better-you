@@ -2654,6 +2654,15 @@ function renderNutriChat(){
 
 // ── PRO / STRIPE ─────────────────────────────────────────────────
 
+
+// ── CONTA DO CRIADOR: PRO PERMANENTE ────────────────────────────────────
+var CREATOR_EMAIL = 'felipeperoniluiz@gmail.com';
+function isCreatorAccount(){
+  return _fbUser && _fbUser.email &&
+         _fbUser.email.toLowerCase() === CREATOR_EMAIL.toLowerCase();
+}
+// ─────────────────────────────────────────────────────────────────────────
+
 function setProStatus(val, silent){
   isPro=!!val;
   // Atualizar nav badges
@@ -2714,7 +2723,11 @@ async function verifyStripeSession(sessionId){
 }
 
 // Verifica no Stripe se a assinatura salva localmente ainda está ativa
-async function verifyLocalSubscription(){
+async function if(isCreatorAccount()){
+        setProStatus(true, true);
+      } else {
+        verifyLocalSubscription();
+      }{
   var subId=localStorage.getItem('betteryou_subscriptionId');
   if(!subId) return;
   try{
