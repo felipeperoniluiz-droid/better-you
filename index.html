@@ -2834,7 +2834,11 @@ function initFirebase(){
         }
       }).catch(function(){});
       // Verificar assinatura Stripe (anti-fraude: confirma que a assinatura ainda está ativa)
-      verifyLocalSubscription();
+      if(isCreatorAccount()){
+        setProStatus(true, true);
+      } else {
+        verifyLocalSubscription();
+      }
       // Checar retorno do Stripe na URL
       checkUrlProStatus();
     } else {
