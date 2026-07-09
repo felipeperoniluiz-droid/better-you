@@ -2723,11 +2723,7 @@ async function verifyStripeSession(sessionId){
 }
 
 // Verifica no Stripe se a assinatura salva localmente ainda está ativa
-async function if(isCreatorAccount()){
-        setProStatus(true, true);
-      } else {
-        verifyLocalSubscription();
-      }{
+async function verifyLocalSubscription(){
   var subId=localStorage.getItem('betteryou_subscriptionId');
   if(!subId) return;
   try{
