@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Better You — AI Nutrition & Fitness App</title>
+<meta name="description" content="Better You is your personal AI nutritionist and fitness tracker. Track calories, macros, weight and get personalized guidance — all in one app.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #080c16;
+    --bg2:      #0f1523;
+    --bg3:      #151d2e;
+    --card:     #111827;
+    --border:   rgba(255,255,255,0.07);
+    --gold:     #f0b429;
+    --gold2:    #ffd166;
+    --text:     #e5e7eb;
+    --muted:    #6b7280;
+    --radius:   16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── UTILS ─────────────────────────────────────────────────── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .hidden { display: none !important; }
+
+  /* ── NAV ────────────────────────────────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(8,12,22,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: var(--gold); text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--text); }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+
+  .lang-toggle {
+    display: flex; gap: 4px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px;
+  }
+  .lang-btn {
+    background: none; border: none;
+    color: var(--muted); font-size: 12px; font-weight: 600;
+    padding: 4px 10px; border-radius: 6px; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all .2s;
+  }
+  .lang-btn.active {
+    background: var(--gold); color: #000;
+  }
+
+  .nav-cta {
+    background: var(--gold); color: #000;
+    font-weight: 700; font-size: 14px;
+    padding: 10px 20px; border-radius: 10px;
+    text-decoration: none; white-space: nowrap;
+    transition: opacity .2s;
+  }
+  .nav-cta:hover { opacity: .85; }
+
+  /* ── HERO VIDEO ─────────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 120px 24px 80px;
+  }
+
+  .hero-video-wrap {
+    position: absolute; inset: 0; z-index: 0;
+  }
+  .hero-video-wrap video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.35;
+  }
+  .hero-video-wrap::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(8,12,22,0.55) 0%,
+      rgba(8,12,22,0.2) 50%,
+      rgba(8,12,22,0.9) 100%
+    );
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(240,180,41,0.12);
+    border: 1px solid rgba(240,180,41,0.35);
+    color: var(--gold); font-size: 13px; font-weight: 600;
+    padding: 6px 18px; border-radius: 100px;
+    margin-bottom: 28px;
+    backdrop-filter: blur(8px);
+  }
+  .hero-badge::before { content: '✦'; font-size: 10px; }
+
+  .hero-tagline {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(13px, 1.6vw, 17px);
+    font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 7vw, 88px);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+  }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+
+  .hero-provoke {
+    font-size: clamp(18px, 2.5vw, 26px);
+    color: rgba(255,255,255,0.85);
+    max-width: 620px; margin: 0 auto 16px;
+    font-weight: 300; line-height: 1.5;
+    font-style: italic;
+  }
+  .hero-provoke strong { color: #fff; font-weight: 700; font-style: normal; }
+
+  .hero-sub {
+    font-size: clamp(14px, 1.6vw, 17px);
+    color: rgba(255,255,255,0.5); max-width: 500px; margin: 0 auto 44px;
+    font-weight: 400;
+  }
+
+  .hero-btns {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    justify-content: center; margin-bottom: 72px;
+  }
+  .btn-primary {
+    background: var(--gold); color: #000;
+    font-weight: 700; font-size: 16px;
+    padding: 16px 32px; border-radius: 12px;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: transform .2s, opacity .2s;
+    box-shadow: 0 8px 32px rgba(240,180,41,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); opacity: .9; }
+  .btn-secondary {
+    background: rgba(255,255,255,0.08); color: var(--text);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    font-weight: 600; font-size: 16px;
+    padding: 16px 32px; border-radius: 12px;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: border-color .2s, background .2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); background: rgba(240,180,41,0.08); }
+
+  /* ── 4 PILLARS ──────────────────────────────────────────────── */
+  .pillars {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    justify-content: center;
+  }
+  .pillar {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    border-radius: 100px;
+    padding: 10px 22px;
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600; color: #fff;
+    transition: border-color .2s, background .2s;
+  }
+  .pillar:hover { border-color: var(--gold); background: rgba(240,180,41,0.1); }
+  .pillar-icon { font-size: 18px; }
+
+  /* App preview mockup */
+  .hero-mockup {
+    position: relative; max-width: 380px; margin: 0 auto;
+  }
+  .phone-frame {
+    background: linear-gradient(145deg, #1a2030, #0f1523);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 40px;
+    padding: 20px 16px;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+    position: relative;
+  }
+  .phone-notch {
+    width: 90px; height: 28px;
+    background: #080c16; border-radius: 0 0 18px 18px;
+    margin: -20px auto 16px; position: relative;
+  }
+  .phone-screen {
+    background: var(--bg);
+    border-radius: 24px;
+    overflow: hidden;
+    padding: 16px;
+  }
+  .mock-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+  }
+  .mock-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; }
+  .mock-score {
+    background: var(--gold); color: #000;
+    font-weight: 800; font-size: 13px;
+    padding: 4px 12px; border-radius: 20px;
+  }
+  .mock-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .mock-card {
+    background: var(--bg3); border-radius: 12px; padding: 12px;
+    border: 1px solid var(--border);
+  }
+  .mock-card-label { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
+  .mock-card-val { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; color: var(--gold); }
+  .mock-card-unit { font-size: 10px; color: var(--muted); }
+  .mock-bar-wrap { margin-bottom: 12px; }
+  .mock-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .mock-bar { height: 6px; background: var(--bg3); border-radius: 10px; overflow: hidden; }
+  .mock-bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+  .mock-ai {
+    background: linear-gradient(135deg, rgba(240,180,41,0.1), rgba(240,180,41,0.05));
+    border: 1px solid rgba(240,180,41,0.2);
+    border-radius: 12px; padding: 12px;
+    font-size: 11px; color: #9ca3af; line-height: 1.5;
+  }
+  .mock-ai strong { color: var(--gold); display: block; margin-bottom: 4px; font-size: 10px; }
+  .mock-nav {
+    display: flex; justify-content: space-around;
+    margin-top: 16px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .mock-nav-item { font-size: 18px; opacity: .4; }
+  .mock-nav-item.active { opacity: 1; }
+
+  /* Floating badges */
+  .hero-float {
+    position: absolute;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    white-space: nowrap;
+  }
+  .float-left { left: -60px; top: 30%; }
+  .float-right { right: -60px; top: 55%; }
+
+  /* ── STATS ──────────────────────────────────────────────────── */
+  .stats {
+    padding: 60px 24px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .stats-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 40px; text-align: center;
+  }
+  .stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px; font-weight: 800;
+    color: var(--gold); line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label { color: var(--muted); font-size: 14px; }
+
+  /* ── FEATURES ───────────────────────────────────────────────── */
+  .features { padding: 100px 24px; }
+  .section-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800; line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .section-sub { color: var(--muted); font-size: 18px; max-width: 520px; }
+
+  .features-header { margin-bottom: 60px; }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: border-color .3s, transform .3s;
+  }
+  .feature-card:hover {
+    border-color: rgba(240,180,41,0.3);
+    transform: translateY(-4px);
+  }
+  .feature-icon {
+    font-size: 32px; margin-bottom: 16px; display: block;
+  }
+  .feature-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .feature-desc { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  /* ── HOW IT WORKS ───────────────────────────────────────────── */
+  .how { padding: 100px 24px; background: var(--bg2); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px; margin-top: 60px;
+  }
+  .step { text-align: center; }
+  .step-num {
+    width: 56px; height: 56px;
+    background: rgba(240,180,41,0.1);
+    border: 2px solid rgba(240,180,41,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
+    color: var(--gold);
+    margin: 0 auto 20px;
+  }
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .step-desc { color: var(--muted); font-size: 14px; }
+
+  /* ── PRICING ────────────────────────────────────────────────── */
+  .pricing { padding: 100px 24px; text-align: center; }
+  .pricing-card {
+    max-width: 420px; margin: 60px auto 0;
+    background: var(--card);
+    border: 2px solid var(--gold);
+    border-radius: 24px;
+    padding: 40px 36px;
+    position: relative;
+    box-shadow: 0 0 60px rgba(240,180,41,0.1);
+  }
+  .pricing-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--gold); color: #000;
+    font-size: 12px; font-weight: 700;
+    padding: 4px 20px; border-radius: 100px;
+    white-space: nowrap;
+  }
+  .pricing-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .pricing-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 56px; font-weight: 800;
+    color: var(--gold); line-height: 1;
+    margin: 20px 0 4px;
+  }
+  .pricing-price sup { font-size: 24px; vertical-align: super; }
+  .pricing-period { color: var(--muted); font-size: 14px; margin-bottom: 8px; }
+  .pricing-trial {
+    background: rgba(240,180,41,0.1);
+    color: var(--gold); font-size: 13px; font-weight: 600;
+    padding: 6px 16px; border-radius: 8px;
+    display: inline-block; margin-bottom: 32px;
+  }
+  .pricing-features { list-style: none; text-align: left; margin-bottom: 32px; }
+  .pricing-features li {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+  }
+  .pricing-features li:last-child { border-bottom: none; }
+  .pricing-features li::before {
+    content: '✓';
+    background: rgba(240,180,41,0.1);
+    color: var(--gold);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .btn-pricing {
+    display: block; width: 100%;
+    background: var(--gold); color: #000;
+    font-weight: 700; font-size: 16px;
+    padding: 16px; border-radius: 12px;
+    text-decoration: none; text-align: center;
+    transition: opacity .2s, transform .2s;
+  }
+  .btn-pricing:hover { opacity: .9; transform: translateY(-2px); }
+  .pricing-note { color: var(--muted); font-size: 12px; margin-top: 16px; }
+
+  /* ── TESTIMONIALS ───────────────────────────────────────────── */
+  .testimonials { padding: 100px 24px; background: var(--bg2); }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px; margin-top: 60px;
+  }
+  .testi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .testi-stars { color: var(--gold); font-size: 14px; margin-bottom: 16px; }
+  .testi-text { color: #d1d5db; font-size: 15px; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), #e07b00);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px; color: #000;
+    flex-shrink: 0;
+  }
+  .testi-name { font-weight: 600; font-size: 14px; }
+  .testi-role { color: var(--muted); font-size: 12px; }
+
+  /* ── CTA BANNER ─────────────────────────────────────────────── */
+  .cta-banner {
+    padding: 100px 24px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-banner::before {
+    content: '';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(240,180,41,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-banner h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800; line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+  }
+  .cta-banner p { color: var(--muted); font-size: 18px; margin-bottom: 40px; }
+
+  /* ── FOOTER ─────────────────────────────────────────────────── */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 800;
+    color: var(--gold); text-decoration: none;
+  }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+  .footer-links a {
+    color: var(--muted); font-size: 14px; text-decoration: none;
+    transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy { color: var(--muted); font-size: 13px; }
+
+  /* ── RESPONSIVE ─────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .float-left, .float-right { display: none; }
+    .hero { padding: 72px 24px 60px; }
+    .nav-cta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo-img"><img src="data:image/png;base64,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" alt="Better You" style="height:44px;width:auto;display:block;"></a>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('pt')">PT</button>
+        <button class="lang-btn" onclick="setLang('es')">ES</button>
+      </div>
+      <a href="https://felipeperoniluiz-droid.github.io/better-you/" target="_blank" class="nav-cta" data-t="navCta">Try Free</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────────────── -->
+<section class="hero">
+
+  <!-- Background video — coloque hero-video.mp4 na mesma pasta -->
+  <div class="hero-video-wrap">
+    <video autoplay muted loop playsinline>
+      <source src="./hero-video.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge" data-t="heroBadge">Your AI-Powered Fitness Companion</div>
+    <div class="hero-tagline" data-t="heroTagline">Nutrition · Hydration · Training · Body</div>
+    <h1 data-t="heroTitle">Reach Your Goals<br>with <em>AI Guidance</em></h1>
+    <p class="hero-provoke" data-t="heroProvoke">"There's <strong>nothing quite like</strong> watching yourself evolve — day after day, step after step."</p>
+    <p class="hero-sub" data-t="heroSub">Track calories, macros and workouts. Get real-time advice from your personal AI nutritionist.</p>
+    <div class="hero-btns">
+      <a href="https://felipeperoniluiz-droid.github.io/better-you/" target="_blank" class="btn-primary" data-t="heroBtn1">⚡ Start Free Trial</a>
+      <a href="#features" class="btn-secondary" data-t="heroBtn2">See features →</a>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="pillar-icon">💪</span><span data-t="pillar1">Perfect Body</span></div>
+      <div class="pillar"><span class="pillar-icon">🏃</span><span data-t="pillar2">Sport & Training</span></div>
+      <div class="pillar"><span class="pillar-icon">💧</span><span data-t="pillar3">Hydration</span></div>
+      <div class="pillar"><span class="pillar-icon">🥗</span><span data-t="pillar4">Nutrition</span></div>
+    </div>
+  </div>
+
+  <!-- Phone Mockup -->
+  <div class="hero-mockup" style="margin-top:60px;position:relative;z-index:1;">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="mock-header">
+          <div class="mock-title">Today</div>
+          <div class="mock-score">Score 87</div>
+        </div>
+        <div class="mock-cards">
+          <div class="mock-card">
+            <div class="mock-card-label">Calories</div>
+            <div class="mock-card-val">1,840</div>
+            <div class="mock-card-unit">/ 2,200 kcal</div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-card-label">Protein</div>
+            <div class="mock-card-val">142g</div>
+            <div class="mock-card-unit">/ 165g goal</div>
+          </div>
+        </div>
+        <div class="mock-bar-wrap">
+          <div class="mock-bar-label"><span>Water</span><span>1.8L / 2.5L</span></div>
+          <div class="mock-bar"><div class="mock-bar-fill" style="width:72%"></div></div>
+        </div>
+        <div class="mock-bar-wrap">
+          <div class="mock-bar-label"><span>Carbs</span><span>180g / 220g</span></div>
+          <div class="mock-bar"><div class="mock-bar-fill" style="width:82%"></div></div>
+        </div>
+        <div class="mock-ai">
+          <strong>🤖 AI Nutritionist</strong>
+          Great progress today! Your protein intake is on track. Consider adding a protein snack before bed to hit your goal.
+        </div>
+        <div class="mock-nav">
+          <div class="mock-nav-item active">🏠</div>
+          <div class="mock-nav-item">📊</div>
+          <div class="mock-nav-item">🤖</div>
+          <div class="mock-nav-item">📸</div>
+          <div class="mock-nav-item">👤</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-float float-left">🔥 <span>-3.2kg this month</span></div>
+    <div class="hero-float float-right">⚡ <span>87/100 today</span></div>
+  </div>
+</section>
+
+<!-- ── STATS ─────────────────────────────────────────────────────── -->
+<section class="stats">
+  <div class="stats-grid">
+    <div>
+      <div class="stat-val">2 days</div>
+      <div class="stat-label" data-t="stat1">Free trial, no card needed</div>
+    </div>
+    <div>
+      <div class="stat-val">€5.99</div>
+      <div class="stat-label" data-t="stat2">Per month after trial</div>
+    </div>
+    <div>
+      <div class="stat-val">3</div>
+      <div class="stat-label" data-t="stat3">Languages supported</div>
+    </div>
+    <div>
+      <div class="stat-val">100%</div>
+      <div class="stat-label" data-t="stat4">Install on any device</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ──────────────────────────────────────────────────── -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="features-header">
+      <div class="section-label" data-t="featLabel">Features</div>
+      <h2 class="section-title" data-t="featTitle">Everything you need<br>in one place</h2>
+      <p class="section-sub" data-t="featSub">No more juggling multiple apps. Better You combines nutrition tracking, AI coaching and body monitoring in a single seamless experience.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🤖</span>
+        <div class="feature-name" data-t="f1Name">AI Nutritionist</div>
+        <p class="feature-desc" data-t="f1Desc">Chat with your personal AI coach anytime. Get meal suggestions, macro tips and motivation tailored to your specific goal.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🍽️</span>
+        <div class="feature-name" data-t="f2Name">Smart Food Diary</div>
+        <p class="feature-desc" data-t="f2Desc">Log meals and track calories, protein, carbs and fats in seconds. Adapted to your goal — weight loss, muscle gain or maintenance.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <div class="feature-name" data-t="f3Name">Daily Score</div>
+        <p class="feature-desc" data-t="f3Desc">Get a daily 0–100 health score that summarises your nutrition, hydration and consistency. Beat your personal best every day.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📊</span>
+        <div class="feature-name" data-t="f4Name">Advanced Reports</div>
+        <p class="feature-desc" data-t="f4Desc">Visual charts for weight, body measurements and nutrition trends. See your transformation over weeks and months.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📸</span>
+        <div class="feature-name" data-t="f5Name">Progress Photos</div>
+        <p class="feature-desc" data-t="f5Desc">Take progress photos and compare them side by side with a before/after slider. The most motivating feature in the app.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎯</span>
+        <div class="feature-name" data-t="f6Name">Goal-Based Coaching</div>
+        <p class="feature-desc" data-t="f6Desc">Whether you want to lose weight, build muscle or stay lean — the app adapts all recommendations, macros and advice to your goal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ──────────────────────────────────────────────── -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-label" data-t="howLabel">How it works</div>
+    <h2 class="section-title" data-t="howTitle">Up and running in minutes</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title" data-t="s1Title">Create your profile</div>
+        <p class="step-desc" data-t="s1Desc">Set your goal, body stats and daily targets. The app calculates your ideal calorie and macro intake automatically.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title" data-t="s2Title">Log your day</div>
+        <p class="step-desc" data-t="s2Desc">Track meals, water and weight in seconds. The AI analyses your day and gives you real-time tips to stay on track.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title" data-t="s3Title">Watch yourself improve</div>
+        <p class="step-desc" data-t="s3Desc">Check your charts, compare progress photos and let the daily score keep you motivated. Consistency is everything.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ───────────────────────────────────────────────────── -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-label" data-t="pricingLabel">Pricing</div>
+    <h2 class="section-title" data-t="pricingTitle">Simple, honest pricing</h2>
+    <p class="section-sub" style="margin:0 auto" data-t="pricingSub">Try everything free for 2 days. No credit card tricks. Cancel anytime.</p>
+    <div class="pricing-card">
+      <div class="pricing-badge" data-t="pricingBadge">⚡ Most Popular</div>
+      <div class="pricing-name">Better You PRO</div>
+      <div class="pricing-price"><sup>€</sup>5.99</div>
+      <div class="pricing-period" data-t="pricingPeriod">per month · cancel anytime</div>
+      <div class="pricing-trial" data-t="pricingTrial">✓ 2-day free trial included</div>
+      <ul class="pricing-features">
+        <li data-t="pf1">AI Nutritionist — unlimited chats</li>
+        <li data-t="pf2">Smart food diary with macro tracking</li>
+        <li data-t="pf3">Progress photos & before/after slider</li>
+        <li data-t="pf4">Advanced reports & body measurements</li>
+        <li data-t="pf5">Daily health score (0–100)</li>
+        <li data-t="pf6">EN / PT / ES language support</li>
+      </ul>
+      <a href="https://felipeperoniluiz-droid.github.io/better-you/" target="_blank" class="btn-pricing" data-t="pricingBtn">Start Free Trial →</a>
+      <p class="pricing-note" data-t="pricingNote">No commitment. Cancel in one click at any time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ──────────────────────────────────────────────── -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-label" data-t="testiLabel">Testimonials</div>
+    <h2 class="section-title" data-t="testiTitle">People love Better You</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text" data-t="t1Text">"The AI nutritionist is like having a personal coach in my pocket. I've lost 4kg in 6 weeks and I finally understand what I'm eating."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sarah M.</div>
+            <div class="testi-role" data-t="t1Role">Gym member, Dublin</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text" data-t="t2Text">"Simple, clean and actually works. I track my macros every day now and the daily score keeps me motivated to hit my targets."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">R</div>
+          <div>
+            <div class="testi-name">Rodrigo F.</div>
+            <div class="testi-role" data-t="t2Role">Personal trainer, Dublin</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text" data-t="t3Text">"I tried many apps but Better You is the only one that speaks Portuguese and still works perfectly in English. Perfect for us living abroad."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Ana C.</div>
+            <div class="testi-role" data-t="t3Role">Nurse, Dublin</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ────────────────────────────────────────────────── -->
+<section class="cta-banner">
+  <div class="container">
+    <h2 data-t="ctaTitle">Ready to become a<br><em style="color:var(--gold);font-style:normal">Better You?</em></h2>
+    <p data-t="ctaSub">Join today and start your 2-day free trial. No credit card required to get started.</p>
+    <a href="https://felipeperoniluiz-droid.github.io/better-you/" target="_blank" class="btn-primary" style="font-size:18px;padding:18px 40px" data-t="ctaBtn">⚡ Start Free — 2 Days on Us</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="footer-logo">BetterYou</a>
+    <div class="footer-links">
+      <a href="#features" data-t="footFeatures">Features</a>
+      <a href="#pricing" data-t="footPricing">Pricing</a>
+      <a href="https://felipeperoniluiz-droid.github.io/better-you/" target="_blank" data-t="footApp">Open App</a>
+    </div>
+    <p class="footer-copy" data-t="footCopy">© 2025 Better You. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// ── TRANSLATIONS ─────────────────────────────────────────────────
+const T = {
+  en: {
+    navCta: 'Try Free',
+    heroBadge: 'Your AI-Powered Fitness Companion',
+    heroTagline: 'Nutrition · Hydration · Training · Body',
+    heroTitle: 'Reach Your Goals<br>with <em>AI Guidance</em>',
+    heroProvoke: '"There\'s <strong>nothing quite like</strong> watching yourself evolve — day after day, step after step."',
+    heroSub: 'Track calories, macros and workouts. Get real-time advice from your personal AI nutritionist.',
+    heroBtn1: '⚡ Start Free Trial',
+    heroBtn2: 'See features →',
+    pillar1: 'Perfect Body',
+    pillar2: 'Sport & Training',
+    pillar3: 'Hydration',
+    pillar4: 'Nutrition',
+    stat1: 'Free trial, no card needed',
+    stat2: 'Per month after trial',
+    stat3: 'Languages supported',
+    stat4: 'Install on any device',
+    featLabel: 'Features',
+    featTitle: 'Everything you need<br>in one place',
+    featSub: 'No more juggling multiple apps. Better You combines nutrition tracking, AI coaching and body monitoring in a single seamless experience.',
+    f1Name: 'AI Nutritionist',
+    f1Desc: 'Chat with your personal AI coach anytime. Get meal suggestions, macro tips and motivation tailored to your specific goal.',
+    f2Name: 'Smart Food Diary',
+    f2Desc: 'Log meals and track calories, protein, carbs and fats in seconds. Adapted to your goal — weight loss, muscle gain or maintenance.',
+    f3Name: 'Daily Score',
+    f3Desc: 'Get a daily 0–100 health score that summarises your nutrition, hydration and consistency. Beat your personal best every day.',
+    f4Name: 'Advanced Reports',
+    f4Desc: 'Visual charts for weight, body measurements and nutrition trends. See your transformation over weeks and months.',
+    f5Name: 'Progress Photos',
+    f5Desc: 'Take progress photos and compare them side by side with a before/after slider. The most motivating feature in the app.',
+    f6Name: 'Goal-Based Coaching',
+    f6Desc: 'Whether you want to lose weight, build muscle or stay lean — the app adapts all recommendations, macros and advice to your goal.',
+    howLabel: 'How it works',
+    howTitle: 'Up and running in minutes',
+    s1Title: 'Create your profile',
+    s1Desc: 'Set your goal, body stats and daily targets. The app calculates your ideal calorie and macro intake automatically.',
+    s2Title: 'Log your day',
+    s2Desc: 'Track meals, water and weight in seconds. The AI analyses your day and gives you real-time tips to stay on track.',
+    s3Title: 'Watch yourself improve',
+    s3Desc: 'Check your charts, compare progress photos and let the daily score keep you motivated. Consistency is everything.',
+    pricingLabel: 'Pricing',
+    pricingTitle: 'Simple, honest pricing',
+    pricingSub: 'Try everything free for 2 days. No credit card tricks. Cancel anytime.',
+    pricingBadge: '⚡ Most Popular',
+    pricingPeriod: 'per month · cancel anytime',
+    pricingTrial: '✓ 2-day free trial included',
+    pf1: 'AI Nutritionist — unlimited chats',
+    pf2: 'Smart food diary with macro tracking',
+    pf3: 'Progress photos & before/after slider',
+    pf4: 'Advanced reports & body measurements',
+    pf5: 'Daily health score (0–100)',
+    pf6: 'EN / PT / ES language support',
+    pricingBtn: 'Start Free Trial →',
+    pricingNote: 'No commitment. Cancel in one click at any time.',
+    testiLabel: 'Testimonials',
+    testiTitle: 'People love Better You',
+    t1Text: '"The AI nutritionist is like having a personal coach in my pocket. I\'ve lost 4kg in 6 weeks and I finally understand what I\'m eating."',
+    t1Role: 'Gym member, Dublin',
+    t2Text: '"Simple, clean and actually works. I track my macros every day now and the daily score keeps me motivated to hit my targets."',
+    t2Role: 'Personal trainer, Dublin',
+    t3Text: '"I tried many apps but Better You is the only one that speaks Portuguese and still works perfectly in English. Perfect for us living abroad."',
+    t3Role: 'Nurse, Dublin',
+    ctaTitle: 'Ready to become a<br><em style="color:var(--gold);font-style:normal">Better You?</em>',
+    ctaSub: 'Join today and start your 2-day free trial. No credit card required to get started.',
+    ctaBtn: '⚡ Start Free — 2 Days on Us',
+    footFeatures: 'Features',
+    footPricing: 'Pricing',
+    footApp: 'Open App',
+    footCopy: '© 2025 Better You. All rights reserved.',
+  },
+  pt: {
+    navCta: 'Testar Grátis',
+    heroBadge: 'Seu Companheiro Fitness com IA',
+    heroTagline: 'Nutrição · Hidratação · Treino · Corpo',
+    heroTitle: 'Alcance Seus Objetivos<br>com <em>Guia de IA</em>',
+    heroProvoke: '"É <strong>incrível acompanhar a sua evolução</strong> — dia após dia, passo após passo."',
+    heroSub: 'Rastreie calorias, macros e treinos. Receba conselhos em tempo real do seu nutricionista IA pessoal.',
+    heroBtn1: '⚡ Começar Grátis',
+    heroBtn2: 'Ver funcionalidades →',
+    pillar1: 'Corpo Perfeito',
+    pillar2: 'Esporte & Treino',
+    pillar3: 'Hidratação',
+    pillar4: 'Alimentação',
+    stat1: 'Teste grátis, sem cartão',
+    stat2: 'Por mês após o trial',
+    stat3: 'Idiomas suportados',
+    stat4: 'Instale em qualquer dispositivo',
+    featLabel: 'Funcionalidades',
+    featTitle: 'Tudo o que precisa<br>num só lugar',
+    featSub: 'Chega de usar vários apps. O Better You combina tracking nutricional, coaching com IA e monitoramento corporal numa experiência única.',
+    f1Name: 'Nutricionista IA',
+    f1Desc: 'Converse com o seu coach IA a qualquer hora. Receba sugestões de refeições, dicas de macros e motivação adaptadas ao seu objetivo.',
+    f2Name: 'Diário Alimentar Inteligente',
+    f2Desc: 'Registe refeições e acompanhe calorias, proteínas, hidratos e gorduras em segundos. Adaptado ao seu objetivo.',
+    f3Name: 'Score Diário',
+    f3Desc: 'Receba uma pontuação diária de 0 a 100 que resume a sua nutrição, hidratação e consistência. Supere o seu recorde todos os dias.',
+    f4Name: 'Relatórios Avançados',
+    f4Desc: 'Gráficos visuais de peso, medidas corporais e tendências nutricionais. Veja a sua transformação ao longo das semanas.',
+    f5Name: 'Fotos de Progresso',
+    f5Desc: 'Tire fotos de progresso e compare-as lado a lado com um slider antes/depois. A funcionalidade mais motivadora do app.',
+    f6Name: 'Coaching por Objetivo',
+    f6Desc: 'Seja para emagrecer, ganhar massa ou manter o peso — o app adapta todas as recomendações, macros e conselhos ao seu objetivo.',
+    howLabel: 'Como funciona',
+    howTitle: 'Pronto em minutos',
+    s1Title: 'Crie o seu perfil',
+    s1Desc: 'Defina o seu objetivo, dados corporais e metas diárias. O app calcula automaticamente o seu consumo ideal de calorias e macros.',
+    s2Title: 'Registe o seu dia',
+    s2Desc: 'Registe refeições, água e peso em segundos. A IA analisa o seu dia e dá-lhe dicas em tempo real para se manter no caminho certo.',
+    s3Title: 'Veja a sua evolução',
+    s3Desc: 'Consulte os seus gráficos, compare fotos de progresso e deixe o score diário mantê-lo motivado. A consistência é tudo.',
+    pricingLabel: 'Preços',
+    pricingTitle: 'Preço simples e transparente',
+    pricingSub: 'Experimente tudo grátis por 2 dias. Sem truques com cartão. Cancele quando quiser.',
+    pricingBadge: '⚡ Mais Popular',
+    pricingPeriod: 'por mês · cancele quando quiser',
+    pricingTrial: '✓ 2 dias de trial incluídos',
+    pf1: 'Nutricionista IA — chats ilimitados',
+    pf2: 'Diário alimentar com tracking de macros',
+    pf3: 'Fotos de progresso & slider antes/depois',
+    pf4: 'Relatórios avançados & medidas corporais',
+    pf5: 'Score de saúde diário (0–100)',
+    pf6: 'Suporte a EN / PT / ES',
+    pricingBtn: 'Começar Trial Grátis →',
+    pricingNote: 'Sem compromisso. Cancele com um clique a qualquer momento.',
+    testiLabel: 'Depoimentos',
+    testiTitle: 'As pessoas adoram o Better You',
+    t1Text: '"O nutricionista IA é como ter um coach pessoal no bolso. Perdi 4kg em 6 semanas e finalmente percebo o que estou a comer."',
+    t1Role: 'Membro de academia, Dublin',
+    t2Text: '"Simples, limpo e que realmente funciona. Agora registo os meus macros todos os dias e o score diário mantém-me motivado."',
+    t2Role: 'Personal trainer, Dublin',
+    t3Text: '"Experimentei muitos apps mas o Better You é o único que fala português e ainda funciona perfeitamente em inglês. Perfeito para quem vive no estrangeiro."',
+    t3Role: 'Enfermeira, Dublin',
+    ctaTitle: 'Pronto para ser um<br><em style="color:var(--gold);font-style:normal">Better You?</em>',
+    ctaSub: 'Junte-se hoje e comece o seu trial gratuito de 2 dias. Não precisa de cartão de crédito.',
+    ctaBtn: '⚡ Começar Grátis — 2 Dias por Nossa Conta',
+    footFeatures: 'Funcionalidades',
+    footPricing: 'Preços',
+    footApp: 'Abrir App',
+    footCopy: '© 2025 Better You. Todos os direitos reservados.',
+  },
+  es: {
+    navCta: 'Probar Gratis',
+    heroBadge: 'Tu Compañero Fitness con IA',
+    heroTagline: 'Nutrición · Hidratación · Entrenamiento · Cuerpo',
+    heroTitle: 'Alcanza Tus Metas<br>con <em>Guía de IA</em>',
+    heroProvoke: '"No hay nada como <strong>ver tu propia evolución</strong> — día a día, paso a paso."',
+    heroSub: 'Rastrea calorías, macros y entrenamientos. Recibe consejos en tiempo real de tu nutricionista IA personal.',
+    heroBtn1: '⚡ Empezar Gratis',
+    heroBtn2: 'Ver funciones →',
+    pillar1: 'Cuerpo Perfecto',
+    pillar2: 'Deporte & Entrenamiento',
+    pillar3: 'Hidratación',
+    pillar4: 'Alimentación',
+    stat1: 'Prueba gratis, sin tarjeta',
+    stat2: 'Por mes tras el trial',
+    stat3: 'Idiomas disponibles',
+    stat4: 'Instala en cualquier dispositivo',
+    featLabel: 'Funciones',
+    featTitle: 'Todo lo que necesitas<br>en un solo lugar',
+    featSub: 'Olvídate de usar varias apps. Better You combina seguimiento nutricional, coaching con IA y monitoreo corporal en una sola experiencia.',
+    f1Name: 'Nutricionista IA',
+    f1Desc: 'Chatea con tu coach IA en cualquier momento. Recibe sugerencias de comidas, consejos de macros y motivación adaptados a tu objetivo.',
+    f2Name: 'Diario de Comidas Inteligente',
+    f2Desc: 'Registra comidas y rastrea calorías, proteínas, carbohidratos y grasas en segundos. Adaptado a tu objetivo.',
+    f3Name: 'Puntuación Diaria',
+    f3Desc: 'Obtén una puntuación diaria de 0 a 100 que resume tu nutrición, hidratación y consistencia. Supera tu marca personal cada día.',
+    f4Name: 'Informes Avanzados',
+    f4Desc: 'Gráficos visuales de peso, medidas corporales y tendencias nutricionales. Ve tu transformación a lo largo de semanas y meses.',
+    f5Name: 'Fotos de Progreso',
+    f5Desc: 'Toma fotos de progreso y compáralas con un slider antes/después. La función más motivadora de la app.',
+    f6Name: 'Coaching por Objetivo',
+    f6Desc: 'Ya sea que quieras bajar de peso, ganar músculo o mantenerte — la app adapta todas las recomendaciones, macros y consejos a tu objetivo.',
+    howLabel: 'Cómo funciona',
+    howTitle: 'Listo en minutos',
+    s1Title: 'Crea tu perfil',
+    s1Desc: 'Define tu objetivo, datos corporales y metas diarias. La app calcula automáticamente tu ingesta ideal de calorías y macros.',
+    s2Title: 'Registra tu día',
+    s2Desc: 'Registra comidas, agua y peso en segundos. La IA analiza tu día y te da consejos en tiempo real para mantenerte en el camino.',
+    s3Title: 'Mira tu progreso',
+    s3Desc: 'Revisa tus gráficos, compara fotos de progreso y deja que la puntuación diaria te mantenga motivado. La constancia lo es todo.',
+    pricingLabel: 'Precios',
+    pricingTitle: 'Precio simple y transparente',
+    pricingSub: 'Prueba todo gratis por 2 días. Sin trucos con tarjeta. Cancela cuando quieras.',
+    pricingBadge: '⚡ El más popular',
+    pricingPeriod: 'por mes · cancela cuando quieras',
+    pricingTrial: '✓ 2 días de prueba incluidos',
+    pf1: 'Nutricionista IA — chats ilimitados',
+    pf2: 'Diario de comidas con seguimiento de macros',
+    pf3: 'Fotos de progreso & slider antes/después',
+    pf4: 'Informes avanzados & medidas corporales',
+    pf5: 'Puntuación de salud diaria (0–100)',
+    pf6: 'Soporte EN / PT / ES',
+    pricingBtn: 'Empezar Prueba Gratis →',
+    pricingNote: 'Sin compromiso. Cancela con un clic en cualquier momento.',
+    testiLabel: 'Testimonios',
+    testiTitle: 'La gente ama Better You',
+    t1Text: '"El nutricionista IA es como tener un coach personal en el bolsillo. He perdido 4kg en 6 semanas y por fin entiendo lo que como."',
+    t1Role: 'Miembro de gimnasio, Dublín',
+    t2Text: '"Simple, limpio y que realmente funciona. Ahora registro mis macros cada día y la puntuación diaria me mantiene motivado."',
+    t2Role: 'Entrenador personal, Dublín',
+    t3Text: '"Probé muchas apps pero Better You es la única que habla español y aún funciona perfectamente en inglés. Perfecto para los que vivimos en el extranjero."',
+    t3Role: 'Enfermera, Dublín',
+    ctaTitle: '¿Listo para ser un<br><em style="color:var(--gold);font-style:normal">Better You?</em>',
+    ctaSub: 'Únete hoy y comienza tu prueba gratuita de 2 días. No necesitas tarjeta de crédito.',
+    ctaBtn: '⚡ Empezar Gratis — 2 Días por Nuestra Cuenta',
+    footFeatures: 'Funciones',
+    footPricing: 'Precios',
+    footApp: 'Abrir App',
+    footCopy: '© 2025 Better You. Todos los derechos reservados.',
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === lang.toUpperCase());
+  });
+  const t = T[lang];
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+}
+</script>
+</body>
+</html>
