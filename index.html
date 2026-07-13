@@ -567,10 +567,10 @@ canvas{width:100%!important;border-radius:10px;}
 
   <!-- Quick actions 2×2 -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
-    <button onclick="askNutritionist('Analise meu dia de hoje. Como estou em relação às minhas metas de calorias, proteína e água?')" style="padding:14px 10px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:13px;color:#f0b429;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#128202; Analisar<br>meu dia</button>
-    <button onclick="askNutritionist('O que eu poderia comer agora para bater minhas metas do dia sem ultrapassar as calorias?')" style="padding:14px 10px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:13px;color:#34d399;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#127869; O que<br>comer agora?</button>
-    <button onclick="askNutritionist('Estou dentro da minha meta de proteína? Me dê uma dica prática sobre as melhores fontes de proteína para o meu objetivo.')" style="padding:14px 10px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);border-radius:13px;color:#60a5fa;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#128170; Meta de<br>proteína</button>
-    <button onclick="askNutritionist('Me dê uma dica motivacional personalizada para hoje, baseada no meu objetivo e no que já consumi hoje.')" style="padding:14px 10px;background:rgba(232,131,74,.1);border:1px solid rgba(232,131,74,.3);border-radius:13px;color:#e8834a;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#9889; Motivação<br>do dia</button>
+    <button id="nutri-btn-1" onclick="askNutritionist(getNutriPrompt('analyzeDay'))" style="padding:14px 10px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:13px;color:#f0b429;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#128202; <span id="nutri-lbl-1">Analisar<br>meu dia</span></button>
+    <button id="nutri-btn-2" onclick="askNutritionist(getNutriPrompt('whatToEat'))" style="padding:14px 10px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:13px;color:#34d399;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#127869; <span id="nutri-lbl-2">O que<br>comer agora?</span></button>
+    <button id="nutri-btn-3" onclick="askNutritionist(getNutriPrompt('proteinGoal'))" style="padding:14px 10px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);border-radius:13px;color:#60a5fa;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#128170; <span id="nutri-lbl-3">Meta de<br>proteína</span></button>
+    <button id="nutri-btn-4" onclick="askNutritionist(getNutriPrompt('motivation'))" style="padding:14px 10px;background:rgba(232,131,74,.1);border:1px solid rgba(232,131,74,.3);border-radius:13px;color:#e8834a;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#9889; <span id="nutri-lbl-4">Motivação<br>do dia</span></button>
   </div>
 
   <!-- Chat area -->
@@ -1246,6 +1246,7 @@ function setLang(lang){
   if(typeof renderHistory==='function')renderHistory();
   if(typeof renderCalendar==='function')renderCalendar();
   if(typeof renderDiet==='function')renderDiet();
+  if(typeof updateNutriButtons==='function')updateNutriButtons();
   if(typeof renderNutriContext==='function')renderNutriContext();
 }
 var FOOD_DB=[
@@ -2611,11 +2612,14 @@ async function askNutritionist(prompt){
     return;
   }
   var t=calcTotals(),mg=getMacroGoals(),p=state.profile||{};
-  var context='Perfil do usuário: '+(p.name||'Usuário')+', '+(p.weight||'?')+'kg'
-    +', objetivo: '+(state.goal==='mass'?'Ganhar Massa':state.goal==='cut'?'Emagrecer':'Manter')
-    +'\nMeta diária: '+state.calGoal+' kcal | Proteína: '+mg.prot+'g | Carbs: '+mg.carb+'g | Gordura: '+mg.fat+'g'
-    +'\nConsumo até agora: '+t.kcal+' kcal | Proteína: '+t.prot+'g | Carbs: '+t.carb+'g | Gordura: '+t.fat+'g'
-    +'\nÁgua: '+state.waterMl+' ml de '+state.waterGoal+' ml';
+  var ctxL={pt:{profile:'Perfil',goal:'objetivo',mass:'Ganhar Massa',cut:'Emagrecer',maint:'Manter',daily:'Meta diária',prot:'Proteína',carbs:'Carbs',fat:'Gordura',consumed:'Consumo hoje',water:'Água',of:'de',data:'Dados do usuário',q:'Pergunta'},en:{profile:'Profile',goal:'goal',mass:'Gain Muscle',cut:'Lose Weight',maint:'Maintain',daily:'Daily target',prot:'Protein',carbs:'Carbs',fat:'Fat',consumed:'Consumed today',water:'Water',of:'of',data:'User data',q:'Question'},es:{profile:'Perfil',goal:'objetivo',mass:'Ganar Masa',cut:'Adelgazar',maint:'Mantener',daily:'Meta diaria',prot:'Proteína',carbs:'Carbos',fat:'Grasa',consumed:'Consumido hoy',water:'Agua',of:'de',data:'Datos del usuario',q:'Pregunta'},it:{profile:'Profilo',goal:'obiettivo',mass:'Massa Muscolare',cut:'Dimagrire',maint:'Mantenere',daily:'Obiettivo giornaliero',prot:'Proteine',carbs:'Carboidrati',fat:'Grassi',consumed:'Consumato oggi',water:'Acqua',of:'di',data:'Dati utente',q:'Domanda'},fr:{profile:'Profil',goal:'objectif',mass:'Prise de masse',cut:'Perte de poids',maint:'Maintien',daily:'Objectif quotidien',prot:'Protéines',carbs:'Glucides',fat:'Graisses',consumed:"Consommé aujourd'hui",water:'Eau',of:'sur',data:'Données utilisateur',q:'Question'},de:{profile:'Profil',goal:'Ziel',mass:'Muskelaufbau',cut:'Abnehmen',maint:'Gewicht halten',daily:'Tagesziel',prot:'Protein',carbs:'Kohlenhydrate',fat:'Fett',consumed:'Heute konsumiert',water:'Wasser',of:'von',data:'Benutzerdaten',q:'Frage'}};
+  var cl=ctxL[currentLang]||ctxL.en;
+  var goalLabel=state.goal==='mass'?cl.mass:(state.goal==='cut'?cl.cut:cl.maint);
+  var context=cl.profile+': '+(p.name||'User')+', '+(p.weight||'?')+'kg'
+    +', '+cl.goal+': '+goalLabel
+    +'\n'+cl.daily+': '+state.calGoal+' kcal | '+cl.prot+': '+mg.prot+'g | '+cl.carbs+': '+mg.carb+'g | '+cl.fat+': '+mg.fat+'g'
+    +'\n'+cl.consumed+': '+t.kcal+' kcal | '+cl.prot+': '+t.prot+'g | '+cl.carbs+': '+t.carb+'g | '+cl.fat+': '+t.fat+'g'
+    +'\n'+cl.water+': '+state.waterMl+' ml '+cl.of+' '+state.waterGoal+' ml';
   chatMessages.push({role:'user',text:prompt});
   var chatInputEl=document.getElementById('chatInput');
   if(chatInputEl)chatInputEl.value='';
@@ -2641,21 +2645,45 @@ async function askNutritionist(prompt){
           };
           var gm=goalMap[currentLang]||goalMap['en'];
           var goalDesc=state.goal==='cut'?gm.cut:(state.goal==='mass'?gm.mass:gm.maint);
-          return 'You are an expert fitness nutritionist. The user\'s current goal is: '+goalDesc+'. '+langInstr+', directly, practically and motivationally. Personalize each advice to the goal. Maximum 3 short paragraphs.';
+          var langName={pt:'Portuguese',en:'English',es:'Spanish',it:'Italian',fr:'French',de:'German'}[currentLang]||'English';
+          return 'You are an expert fitness nutritionist. The user\'s current goal is: '+goalDesc+'. CRITICAL: Your ENTIRE response — every word, every heading, every greeting — MUST be written exclusively in '+langName+'. Do NOT mix any other language. '+langInstr+'. Be direct, practical and motivational. Maximum 3 short paragraphs.';
         })(),
-        messages:[{role:'user',content:'Dados do usuário:\n'+context+'\n\nPergunta: '+prompt}]
+        messages:[{role:'user',content:cl.data+':\n'+context+'\n\n'+cl.q+': '+prompt}]
       })
     });
     var data=await res.json();
-    var reply=data.content&&data.content[0]?data.content[0].text:'Não consegui processar. Tente novamente.';
+    var errMsg={pt:'Não consegui processar. Tente novamente.',en:'Could not process. Please try again.',es:'No se pudo procesar. Inténtalo de nuevo.',it:'Impossibile elaborare. Riprova.',fr:'Impossible de traiter. Réessayez.',de:'Konnte nicht verarbeitet werden. Bitte erneut versuchen.'};
+    var connErr={pt:'Erro de conexão. Verifique sua chave API no Perfil.',en:'Connection error. Check your API key in Profile.',es:'Error de conexión. Verifica tu clave API en Perfil.',it:'Errore di connessione. Controlla la tua chiave API nel Profilo.',fr:'Erreur de connexion. Vérifiez votre clé API dans Profil.',de:'Verbindungsfehler. Überprüfe deinen API-Schlüssel im Profil.'};
+    var reply=data.content&&data.content[0]?data.content[0].text:(errMsg[currentLang]||errMsg.en);
     chatMessages.push({role:'ai',text:reply});
   }catch(e){
-    chatMessages.push({role:'ai',text:'Erro de conexão. Verifique sua chave API no Perfil.'});
+    chatMessages.push({role:'ai',text:(connErr[currentLang]||connErr.en)});
   }
   if(loadEl)loadEl.style.display='none';
   renderNutriChat();
 }
 
+function getNutriPrompt(key){
+  var p={
+    analyzeDay:{pt:'Analise meu dia de hoje. Como estou em relação às minhas metas de calorias, proteína e água?',en:'Analyze my day so far. How am I doing on my calorie, protein, and water goals?',es:'Analiza mi día de hoy. ¿Cómo voy en relación a mis metas de calorías, proteína y agua?',it:'Analizza la mia giornata. Come sto rispetto ai miei obiettivi di calorie, proteine e acqua?',fr:'Analyse ma journée. Comment je me débrouille par rapport à mes objectifs calories, protéines et eau?',de:'Analysiere meinen heutigen Tag. Wie liege ich bei meinen Kalorien-, Protein- und Wasserzielen?'},
+    whatToEat:{pt:'O que eu poderia comer agora para bater minhas metas do dia sem ultrapassar as calorias?',en:'What should I eat now to hit my daily goals without exceeding my calorie limit?',es:'¿Qué podría comer ahora para alcanzar mis metas del día sin superar las calorías?',it:'Cosa potrei mangiare adesso per raggiungere i miei obiettivi giornalieri senza superare le calorie?',fr:'Que pourrais-je manger maintenant pour atteindre mes objectifs sans dépasser mon quota calorique?',de:'Was sollte ich jetzt essen, um meine Tagesziele zu erreichen ohne die Kalorien zu überschreiten?'},
+    proteinGoal:{pt:'Estou dentro da minha meta de proteína? Me dê uma dica prática sobre as melhores fontes de proteína para o meu objetivo.',en:'Am I on track with my protein goal? Give me a practical tip on the best protein sources for my goal.',es:'¿Estoy dentro de mi meta de proteína? Dame un consejo práctico sobre las mejores fuentes de proteína para mi objetivo.',it:'Sono in linea con il mio obiettivo proteico? Dammi un consiglio pratico sulle migliori fonti di proteine per il mio obiettivo.',fr:'Suis-je dans ma cible de protéines? Donne-moi un conseil pratique sur les meilleures sources de protéines pour mon objectif.',de:'Erreiche ich mein Proteinziel? Gib mir einen praktischen Tipp zu den besten Proteinquellen für mein Ziel.'},
+    motivation:{pt:'Me dê uma dica motivacional personalizada para hoje, baseada no meu objetivo e no que já consumi hoje.',en:"Give me a personalized motivational tip for today, based on my goal and what I've already consumed.",es:'Dame un consejo motivacional personalizado para hoy, basado en mi objetivo y lo que ya he consumido.',it:"Dammi un consiglio motivazionale personalizzato per oggi, basato sul mio obiettivo e su cosa ho già consumato.",fr:"Donne-moi un conseil motivationnel personnalisé pour aujourd'hui, basé sur mon objectif et ce que j'ai déjà consommé.",de:'Gib mir heute einen personalisierten Motivationstipp, basierend auf meinem Ziel und was ich bereits konsumiert habe.'}
+  };
+  var o=p[key];return o?(o[currentLang]||o.en):'';
+}
+function updateNutriButtons(){
+  var labels={
+    1:{pt:'Analisar<br>meu dia',en:'Analyze<br>my day',es:'Analizar<br>mi día',it:'Analizza<br>giornata',fr:'Analyser<br>ma journée',de:'Tag<br>analysieren'},
+    2:{pt:'O que<br>comer agora?',en:'What to<br>eat now?',es:'¿Qué<br>comer ahora?',it:'Cosa<br>mangiare?',fr:'Que<br>manger?',de:'Was<br>essen?'},
+    3:{pt:'Meta de<br>proteína',en:'Protein<br>goal',es:'Meta de<br>proteína',it:'Obiettivo<br>proteine',fr:'Objectif<br>protéines',de:'Protein-<br>ziel'},
+    4:{pt:'Motivação<br>do dia',en:'Daily<br>motivation',es:'Motivación<br>del día',it:'Motivazione<br>del giorno',fr:'Motivation<br>du jour',de:'Tages-<br>motivation'}
+  };
+  [1,2,3,4].forEach(function(i){
+    var el=document.getElementById('nutri-lbl-'+i);
+    if(el){var l=labels[i];el.innerHTML=(l[currentLang]||l.en);}
+  });
+}
 function renderNutriChat(){
   var el=document.getElementById('chatMessages');if(!el)return;
   if(!chatMessages.length){el.innerHTML='';return;}
@@ -2775,9 +2803,10 @@ function checkUrlProStatus(){
 
 function renderNutriContext(){
   var goal=state.goal||'mass';
-  var goalLabels={cut:'🔥 Especialista em Emagrecimento',mass:'💪 Especialista em Ganho de Massa',maint:'⚖️ Especialista em Manutenção'};
+  var goalLabels={cut:{pt:'🔥 Especialista em Emagrecimento',en:'🔥 Fat Loss Specialist',es:'🔥 Especialista en Pérdida de Peso',it:'🔥 Specialista in Dimagrimento',fr:'🔥 Spécialiste en Perte de Poids',de:'🔥 Abnehmexperte'},mass:{pt:'💪 Especialista em Ganho de Massa',en:'💪 Muscle Gain Specialist',es:'💪 Especialista en Ganancia de Masa',it:'💪 Specialista in Massa Muscolare',fr:'💪 Spécialiste en Prise de Masse',de:'💪 Muskelaufbauexperte'},maint:{pt:'⚖️ Especialista em Manutenção',en:'⚖️ Weight Maintenance Specialist',es:'⚖️ Especialista en Mantenimiento',it:'⚖️ Specialista in Mantenimento',fr:'⚖️ Spécialiste en Maintien du Poids',de:'⚖️ Gewichtserhaltungsexperte'}};
+  var gl=goalLabels[goal]||goalLabels.maint;
   var lbl=document.getElementById('nutriGoalLabel');
-  if(lbl)lbl.textContent=goalLabels[goal]||'Especialista no seu objetivo';
+  if(lbl)lbl.textContent=(gl[currentLang]||gl.en);
 
   var t=calcTotals();
   var mg=getMacroGoals();
@@ -2797,10 +2826,12 @@ function renderNutriContext(){
 
   var stats=document.getElementById('nutriContextStats');
   if(!stats)return;
+  var slMap={pt:{cal:'Calorias',prot:'Proteína',water:'Água'},en:{cal:'Calories',prot:'Protein',water:'Water'},es:{cal:'Calorías',prot:'Proteína',water:'Agua'},it:{cal:'Calorie',prot:'Proteine',water:'Acqua'},fr:{cal:'Calories',prot:'Protéines',water:'Eau'},de:{cal:'Kalorien',prot:'Protein',water:'Wasser'}};
+  var sl=slMap[currentLang]||slMap.en;
   stats.innerHTML=[
-    {label:'Calorias',val:t.kcal+' kcal',pct:calPct,color:pctColor(calPct,goal),goal:calGoal+' kcal'},
-    {label:'Proteína',val:Math.round(t.prot)+'g',pct:protPct,color:pctColor(protPct,'mass'),goal:mg.prot+'g'},
-    {label:'Água',val:waterMl+'ml',pct:waterPct,color:pctColor(waterPct,'mass'),goal:waterGoal+'ml'}
+    {label:sl.cal,val:t.kcal+' kcal',pct:calPct,color:pctColor(calPct,goal),goal:calGoal+' kcal'},
+    {label:sl.prot,val:Math.round(t.prot)+'g',pct:protPct,color:pctColor(protPct,'mass'),goal:mg.prot+'g'},
+    {label:sl.water,val:waterMl+'ml',pct:waterPct,color:pctColor(waterPct,'mass'),goal:waterGoal+'ml'}
   ].map(function(s){
     return '<div style="text-align:center;">'
       +'<div style="font-size:10px;color:#5a6270;margin-bottom:3px;font-weight:500;">'+s.label+'</div>'
