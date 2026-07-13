@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -219,6 +219,25 @@ canvas{width:100%!important;border-radius:10px;}
 .compare-tag-after{right:10px;}
 /* ── PREMIUM / PRO BADGES ── */
 .pro-badge{display:inline-flex;align-items:center;padding:2px 6px;background:linear-gradient(135deg,#f0b429,#e8834a);color:#000;font-size:8px;font-weight:800;border-radius:99px;letter-spacing:.3px;vertical-align:middle;margin-left:5px;line-height:1.5;}
+/* ── TEMA DOURADO PRO ── */
+body.pro-mode{--bg:#090b06;--surface:#13120a;--surface2:#1a160a;--surface3:#211d0e;--border:#2d2710;}
+body.pro-mode,body.pro-mode html{background:#090b06!important;}
+body.pro-mode #app{background:#090b06!important;}
+body.pro-mode .header{background:#0d0c07!important;border-bottom-color:#2d2710!important;position:relative!important;overflow:visible!important;}
+body.pro-mode .header::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:linear-gradient(90deg,#92400e,#d97706,#f0b429,#fbbf24,#f0b429,#d97706,#92400e);z-index:10;}
+body.pro-mode .nav{background:#0d0c07!important;border-top:2.5px solid #d97706!important;}
+body.pro-mode .card{background:#13120a!important;border-color:#2d2710!important;}
+body.pro-mode .modal{background:#13120a!important;}
+body.pro-mode .modal-overlay{background:rgba(4,4,2,.78)!important;}
+body.pro-mode .meal-item,body.pro-mode .history-day,body.pro-mode .premade-card,body.pro-mode .cup,body.pro-mode .diet-card,body.pro-mode .goal-toggle,body.pro-mode .subtab-row,body.pro-mode .search-results,body.pro-mode .ai-result,body.pro-mode .tdee-box,body.pro-mode .calc-result{background:#1a160a!important;border-color:#2d2710!important;}
+body.pro-mode .input{background:#1a160a!important;border-color:#2d2710!important;}
+body.pro-mode .icon-btn{background:#1a160a!important;border-color:#2d2710!important;}
+body.pro-mode .divider{background:#2d2710!important;}
+body.pro-mode .subtab-btn.active{background:#211d0e!important;}
+body.pro-mode .diet-card.selected{border-color:#f0b429!important;background:rgba(240,180,41,.08)!important;}
+body.pro-mode .water-fill{background:linear-gradient(90deg,#d97706,#f0b429)!important;}
+body.pro-mode .macro-bar-fill{opacity:.9;}
+body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9px;font-weight:800;color:#d97706;letter-spacing:.4px;}
 .upgrade-banner{background:linear-gradient(135deg,rgba(240,180,41,.1),rgba(232,131,74,.06));border:1.5px solid rgba(240,180,41,.35);border-radius:14px;padding:14px;margin-bottom:14px;}
 /* ── RELATÓRIOS AVANÇADOS ── */
 .report-hero{background:linear-gradient(135deg,#181c22,#1e2229);border:1px solid #252b34;border-radius:16px;padding:18px;margin-bottom:12px;text-align:center;}
@@ -2714,6 +2733,7 @@ function isCreatorAccount(){
 
 function setProStatus(val, silent){
   isPro=!!val;
+  document.body.classList.toggle('pro-mode', isPro);
   // Atualizar nav badges
   document.querySelectorAll('.nav-item').forEach(function(ni){
     ni.style.opacity='1';
