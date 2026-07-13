@@ -1200,9 +1200,13 @@ function setLang(lang){
   var nPeso=document.getElementById('nav-peso');if(nPeso)nPeso.textContent=t.peso;
   var nCalc=document.getElementById('nav-calc');if(nCalc)nCalc.textContent=t.calcular;
   var nHist=document.getElementById('nav-hist');if(nHist)nHist.textContent=t.hist;
-  // Goal buttons
+  // Goal buttons (main screen)
   var gm=document.getElementById('goal-mass');if(gm)gm.innerHTML=t.ganharMassa;
   var gc=document.getElementById('goal-cut');if(gc)gc.innerHTML=t.emagrecer;
+  // Goal buttons (profile modal)
+  var pgm=document.getElementById('profGoalMass');if(pgm)pgm.innerHTML=t.ganharMassa;
+  var pgc=document.getElementById('profGoalCut');if(pgc)pgc.innerHTML=t.emagrecer;
+  var pgn=document.getElementById('profGoalMaint');if(pgn)pgn.innerHTML=t.manter;
   // Macro labels
   var mp=document.getElementById('macro-prot-label');if(mp)mp.innerHTML=t.proteina;
   var mc=document.getElementById('macro-carb-label');if(mc)mc.innerHTML=t.carbo;
@@ -1821,7 +1825,9 @@ function updateTDEEPreview(){
   var fat=Math.round(goalKcal*0.25/9);
   var fatKcal=fat*9;
   var carb=Math.max(0,Math.round((goalKcal-protKcal-fatKcal)/4));
-  var gLabel=g==='cut'?'(2.2g/kg — preservar músculo)':g==='mass'?'(2.0g/kg — síntese)':'(1.8g/kg)';
+  var gLabelMap={pt:{cut:'(2.2g/kg — preservar músculo)',mass:'(2.0g/kg — síntese)',maint:'(1.8g/kg)'},en:{cut:'(2.2g/kg — preserve muscle)',mass:'(2.0g/kg — synthesis)',maint:'(1.8g/kg)'},es:{cut:'(2.2g/kg — preservar músculo)',mass:'(2.0g/kg — síntesis)',maint:'(1.8g/kg)'},it:{cut:'(2.2g/kg — preservare il muscolo)',mass:'(2.0g/kg — sintesi)',maint:'(1.8g/kg)'},fr:{cut:'(2.2g/kg — préserver le muscle)',mass:'(2.0g/kg — synthèse)',maint:'(1.8g/kg)'},de:{cut:'(2.2g/kg — Muskeln erhalten)',mass:'(2.0g/kg — Synthese)',maint:'(1.8g/kg)'}};
+  var gLM=gLabelMap[currentLang]||gLabelMap.en;
+  var gLabel=g==='cut'?gLM.cut:g==='mass'?gLM.mass:gLM.maint;
   document.getElementById('prevProtVal').textContent=protG+'g '+gLabel;
   document.getElementById('prevCarbVal').textContent=carb+'g';
   document.getElementById('prevFatVal').textContent=fat+'g';
@@ -2869,20 +2875,21 @@ function initFirebase(){
       var info=document.getElementById('authUserInfo');
       if(info) info.textContent='📧 '+user.email;
       loadFromFirestore(user.uid);
-      // ── Conta do criador: PRO permanente ────────────────────────
+      // Checar isPro no Firestore e sincronizar subscriptionId com localStorage
+      _fbDb.collection('users').doc(user.uid).get().then(function(doc){
+        if(doc.exists&&doc.data().isPro){
+          var docData=doc.data();
+          // Salvar subscriptionId no localStorage se veio do Firestore
+          if(docData.subscriptionId&&!localStorage.getItem('betteryou_subscriptionId')){
+            localStorage.setItem('betteryou_subscriptionId', docData.subscriptionId);
+          }
+          // Não definir isPro aqui — deixar verifyLocalSubscription decidir com base no Stripe
+        }
+      }).catch(function(){});
+      // Verificar assinatura Stripe (anti-fraude: confirma que a assinatura ainda está ativa)
       if(isCreatorAccount()){
         setProStatus(true, true);
       } else {
-        // Checar isPro no Firestore e sincronizar subscriptionId com localStorage
-        _fbDb.collection('users').doc(user.uid).get().then(function(doc){
-          if(doc.exists&&doc.data().isPro){
-            var docData=doc.data();
-            if(docData.subscriptionId&&!localStorage.getItem('betteryou_subscriptionId')){
-              localStorage.setItem('betteryou_subscriptionId', docData.subscriptionId);
-            }
-          }
-        }).catch(function(){});
-        // Verificar assinatura Stripe (anti-fraude)
         verifyLocalSubscription();
       }
       // Checar retorno do Stripe na URL
