@@ -1420,7 +1420,7 @@ function renderToday(){
 function renderMeals(){
   var t=T[currentLang];var labels={cafe:t.cafeManha,almoco:t.almoco,lanche:t.lanche,jantar:t.jantar};
   var html="";
-  var allMK=Object.keys(labels);var ord=state.mealOrder||[];var mealKeys=ord.filter(function(k){return !!labels[k];}).concat(allMK.filter(function(k){return ord.indexOf(k)===-1;}));
+  var allMK=Object.keys(labels);if(!state.mealOrder||!state.mealOrder.length){state.mealOrder=allMK.filter(function(k){return (state.meals[k]||[]).length>0;}).sort(function(a,b){var ia=state.meals[a]||[];var ib=state.meals[b]||[];var ta=ia[ia.length-1]&&ia[ia.length-1].time||"00:00";var tb=ib[ib.length-1]&&ib[ib.length-1].time||"00:00";return tb.localeCompare(ta);});}var ord=state.mealOrder||[];var _withFood=ord.filter(function(k){return !!labels[k]&&(state.meals[k]||[]).length>0;});allMK.forEach(function(k){if(_withFood.indexOf(k)===-1&&(state.meals[k]||[]).length>0)_withFood.push(k);});var _noFood=allMK.filter(function(k){return!((state.meals[k]||[]).length>0);});var mealKeys=_withFood.concat(_noFood);
   mealKeys.forEach(function(key){
     var items=state.meals[key]||[];
     var mKcal=items.reduce(function(a,b){return a+(b.kcal||0);},0);
