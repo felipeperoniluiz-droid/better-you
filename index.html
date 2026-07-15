@@ -2041,22 +2041,25 @@ function cancelProgressPhoto(){
   window._pendingProgressPhoto = null;
 }
 
+function compressProgressPhoto(dataUrl,cb){if(!dataUrl||dataUrl.length<100){cb(null);return;}function tryDraw(imgEl,srcW,srcH){try{var MAX=1200;var scale=1;if(srcW>MAX||srcH>MAX)scale=MAX/Math.max(srcW,srcH);var nW=Math.round(srcW*scale),nH=Math.round(srcH*scale);var c=document.createElement("canvas");c.width=nW;c.height=nH;var ctx=c.getContext("2d");if(!ctx){cb(null);return;}ctx.drawImage(imgEl,0,0,nW,nH);var r=c.toDataURL("image/jpeg",0.92);cb(r&&r.length>5000?r:null);}catch(e){cb(null);}}try{fetch(dataUrl).then(function(res){return res.blob();}).then(function(blob){var ou=URL.createObjectURL(blob);var img=new Image();img.onerror=function(){URL.revokeObjectURL(ou);cb(null);};img.onload=function(){var w=img.width,hh=img.height;URL.revokeObjectURL(ou);if(w&&hh)tryDraw(img,w,hh);else cb(null);};img.src=ou;}).catch(function(){cb(null);});}catch(e){cb(null);}}
 function saveProgressPhoto(){
-  var dataUrl = window._pendingProgressPhoto;
-  if(!dataUrl){showToast('Nenhuma foto pendente','error'); return;}
-  var dateVal = document.getElementById('progressPhotoDate').value;
-  var label = document.getElementById('progressPhotoLabel').value.trim();
-  if(!dateVal){showToast('Informe a data da foto','error'); return;}
-  if(!state.progressPhotos) state.progressPhotos = [];
-  // Insere na posição correta (mais recente primeiro)
-  state.progressPhotos.unshift({date: dateVal, label: label, dataUrl: dataUrl});
-  // Limita a 30 fotos
-  if(state.progressPhotos.length > 30) state.progressPhotos.pop();
-  save();
-  document.getElementById('progressPreviewBox').style.display='none';
-  window._pendingProgressPhoto = null;
-  renderProgressPhotos();
-  showToast('Foto salva! 📸','success');
+  var dataUrl=window._pendingProgressPhoto;
+  if(!dataUrl){showToast('Nenhuma foto pendente','error');return;}
+  var dateVal=document.getElementById('progressPhotoDate').value;
+  var label=document.getElementById('progressPhotoLabel').value;
+  showToast('Salvando foto...','info');
+  compressProgressPhoto(dataUrl,function(compressed){
+    var finalUrl=compressed||dataUrl;
+    if(!state.progressPhotos)state.progressPhotos=[];
+    state.progressPhotos.unshift({date:dateVal,label:label,dataUrl:finalUrl});
+    // Limita a 30 fotos
+    if(state.progressPhotos.length>30)state.progressPhotos.pop();
+    save();
+    document.getElementById('progressPreviewBox').style.display='none';
+    window._pendingProgressPhoto=null;
+    renderProgressPhotos();
+    showToast('Foto salva! 📸','success');
+  });
 }
 
 function deleteProgressPhoto(idx){
