@@ -2596,13 +2596,7 @@ html+='<div class="card"><div class="card-title">Metas da semana</div>'
       +'<div class="report-hero-sub" style="color:#f0f2f5;">'+heroMsg+'</div>'
       +'</div>';
     html+=dotHtml;
-    html+='<div class="report-projection">'
-        +'<div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#34d399;margin-bottom:10px;">📈 Projeção de Crescimento</div>'
-        +'<div class="report-stat-row"><span class="report-stat-label">Ganho estimado em 4 semanas</span><span class="report-stat-val" style="color:#34d399;">+'+kgPer4w+' kg</span></div>'
-        +'<div class="report-stat-row"><span class="report-stat-label">Ganho estimado em 12 semanas</span><span class="report-stat-val" style="color:#34d399;">+'+Math.round(kgPer4w*3*10)/10+' kg</span></div>'
-        +'<div style="font-size:10px;color:#5a6270;margin-top:8px;line-height:1.5;">* Estimativa — resultados dependem de treino, sono e genética individual.</div>'
-        +'</div>';
-    }html+='<div class="card"><div class="card-title">Metas da semana</div>'
+    html+='<div class="card"><div class="card-title">Metas da semana</div>'
       +'<div class="report-stat-row"><span class="report-stat-label">🍽️ Meta calórica atingida</span><span class="report-stat-val">'+surplusDays+'/'+validDays.length+' dias</span></div>'
       +'<div class="report-stat-row"><span class="report-stat-label">💪 Proteína ≥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
       +'<div class="report-stat-row"><span class="report-stat-label">💧 Hidratação ≥80% da meta</span><span class="report-stat-val">'+waterDays+'/'+validDays.length+' dias</span></div>'
@@ -2610,7 +2604,13 @@ html+='<div class="card"><div class="card-title">Metas da semana</div>'
       +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
       +'</div>';
     if(surplus>50&&kgPer4w>0){
-      
+      html+='<div class="report-projection">'
+        +'<div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#34d399;margin-bottom:10px;">📈 Projeção de Crescimento</div>'
+        +'<div class="report-stat-row"><span class="report-stat-label">Ganho estimado em 4 semanas</span><span class="report-stat-val" style="color:#34d399;">+'+kgPer4w+' kg</span></div>'
+        +'<div class="report-stat-row"><span class="report-stat-label">Ganho estimado em 12 semanas</span><span class="report-stat-val" style="color:#34d399;">+'+Math.round(kgPer4w*3*10)/10+' kg</span></div>'
+        +'<div style="font-size:10px;color:#5a6270;margin-top:8px;line-height:1.5;">* Estimativa — resultados dependem de treino, sono e genética individual.</div>'
+        +'</div>';
+    }
     var tip='';
     if(avgProt<mg.prot*0.8)tip='💡 Proteína é o fator mais crítico para ganho de massa. Mire em '+mg.prot+'g/dia com whey, frango, ovo e iogurte grego.';
     else if(surplus<100)tip='🍽️ Superávit abaixo do necessário. Adicione 300–400 kcal/dia — tente pasta de amendoim, aveia, arroz ou leite integral.';
