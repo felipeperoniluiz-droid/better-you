@@ -165,38 +165,38 @@ canvas{width:100%!important;border-radius:10px;}
 .empty-text{font-size:13px;}
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-thumb{background:#252b34;border-radius:99px;}
-/* ââ SPLASH ââ */
+/* ── SPLASH ── */
 #splash{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .7s ease;}
 @keyframes splashPop{from{transform:scale(.65);opacity:0;}to{transform:scale(1);opacity:1;}}
 .splash-img{animation:splashPop .55s cubic-bezier(.34,1.56,.64,1) forwards;}
 @keyframes splashFade{from{opacity:0;}to{opacity:.75;}}
 .splash-sub{animation:splashFade .7s .4s both;}
-/* ââ PERFIL FOTO ââ */
+/* ── PERFIL FOTO ── */
 .prof-avatar-wrap{display:flex;justify-content:center;margin-bottom:4px;}
 .prof-avatar{width:82px;height:82px;border-radius:50%;border:2.5px solid #f0b429;cursor:pointer;background:#181c22;display:flex;align-items:center;justify-content:center;font-size:34px;overflow:hidden;transition:.2s;}
 .prof-avatar:active{transform:scale(.94);}
 .prof-avatar-label{text-align:center;font-size:11px;color:#8b95a3;margin-top:5px;cursor:pointer;}
-/* ââ TDEE BOX ââ */
+/* ── TDEE BOX ── */
 .tdee-box{background:#181c22;border:1px solid #252b34;border-radius:12px;padding:10px 14px;margin:8px 0 2px;}
 .tdee-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:13px;}
 .tdee-val{font-weight:700;font-size:13px;}
-/* ââ SCORE ââ */
+/* ── SCORE ── */
 .score-ring-wrap{display:flex;align-items:center;gap:16px;padding:4px 0;}
 .score-num{font-family:'Syne',sans-serif;font-size:42px;font-weight:800;line-height:1;}
 .score-checks{flex:1;display:flex;flex-direction:column;gap:6px;}
 .score-check{display:flex;align-items:center;gap:7px;font-size:12px;}
 .score-check-icon{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
-/* ââ CALENDAR ââ */
+/* ── CALENDAR ── */
 .cal-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;transition:.15s;}
-/* ââ CHAT ââ */
+/* ── CHAT ── */
 .chat-bubble-user{background:#f0b429;color:#000;border-radius:14px 14px 4px 14px;padding:10px 13px;font-size:13px;line-height:1.6;max-width:85%;align-self:flex-end;}
 .chat-bubble-ai{background:#181c22;color:#f0f2f5;border-radius:14px 14px 14px 4px;padding:10px 13px;font-size:13px;line-height:1.6;max-width:85%;align-self:flex-start;}
 .chat-input-row{display:flex;gap:8px;margin-top:10px;}
-/* ââ SUB TABS (Peso/Medidas) ââ */
+/* ── SUB TABS (Peso/Medidas) ── */
 .subtab-row{display:flex;background:#181c22;border-radius:10px;padding:3px;margin-bottom:14px;gap:3px;}
 .subtab-btn{flex:1;padding:8px;border-radius:7px;border:none;background:transparent;color:#8b95a3;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;}
 .subtab-btn.active{background:#1e2229;color:#f0f2f5;font-weight:700;}
-/* ââ FOTOS DE PROGRESSO ââ */
+/* ── FOTOS DE PROGRESSO ── */
 .prog-photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px;}
 .prog-photo-item{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;border:2px solid #252b34;transition:.2s;}
 .prog-photo-item.selected{border-color:#f0b429;box-shadow:0 0 0 3px rgba(240,180,41,.25);}
@@ -208,7 +208,7 @@ canvas{width:100%!important;border-radius:10px;}
 .prog-photo-sel-badge{position:absolute;top:5px;left:5px;width:22px;height:22px;background:rgba(240,180,41,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#000;z-index:5;display:none;}
 .prog-photo-item.selected .prog-photo-sel-badge{display:flex;}
 .compare-bar{background:#181c22;border:1px solid #252b34;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
-/* ââ COMPARE SLIDER MODAL ââ */
+/* ── COMPARE SLIDER MODAL ── */
 .compare-wrap{position:relative;width:100%;overflow:hidden;border-radius:14px;touch-action:none;-webkit-user-select:none;user-select:none;background:#000;aspect-ratio:3/4;}
 .compare-img-base{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;}
 .compare-img-top{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 50% 0 0);}
@@ -217,9 +217,9 @@ canvas{width:100%!important;border-radius:10px;}
 .compare-tag{position:absolute;top:10px;padding:3px 8px;background:rgba(0,0,0,.65);color:#fff;font-size:10px;font-weight:700;border-radius:99px;z-index:5;}
 .compare-tag-before{left:10px;}
 .compare-tag-after{right:10px;}
-/* ââ PREMIUM / PRO BADGES ââ */
+/* ── PREMIUM / PRO BADGES ── */
 .pro-badge{display:inline-flex;align-items:center;padding:2px 6px;background:linear-gradient(135deg,#f0b429,#e8834a);color:#000;font-size:8px;font-weight:800;border-radius:99px;letter-spacing:.3px;vertical-align:middle;margin-left:5px;line-height:1.5;}#pro-logo-badge{display:none;padding:3px 9px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a0900;font-family:'Syne',sans-serif;font-size:9px;font-weight:900;border-radius:99px;letter-spacing:1.2px;align-items:center;line-height:1.5;box-shadow:0 2px 10px rgba(240,180,41,.5);}body.pro-mode #pro-logo-badge{display:inline-flex;animation:proBadgePulse 2.5s ease-in-out infinite;}@keyframes proBadgePulse{0%,100%{box-shadow:0 2px 8px rgba(240,180,41,.45);}50%{box-shadow:0 2px 20px rgba(240,180,41,.85),0 0 6px rgba(240,180,41,.3);}}body.pro-mode .header{justify-content:flex-start!important;gap:8px!important;}body.pro-mode .header .header-actions{margin-left:auto;}
-/* ââ TEMA DOURADO PRO ââ */
+/* ── TEMA DOURADO PRO ── */
 body.pro-mode{--bg:#090b06;--surface:#13120a;--surface2:#1a160a;--surface3:#211d0e;--border:#2d2710;}
 body.pro-mode,body.pro-mode html{background:#090b06!important;}
 body.pro-mode #app{background:#090b06!important;}
@@ -239,7 +239,7 @@ body.pro-mode .water-fill{background:linear-gradient(90deg,#d97706,#f0b429)!impo
 body.pro-mode .macro-bar-fill{opacity:.9;}
 body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9px;font-weight:800;color:#d97706;letter-spacing:.4px;}
 .upgrade-banner{background:linear-gradient(135deg,rgba(240,180,41,.1),rgba(232,131,74,.06));border:1.5px solid rgba(240,180,41,.35);border-radius:14px;padding:14px;margin-bottom:14px;}
-/* ââ RELATÃRIOS AVANÃADOS ââ */
+/* ── RELATÓRIOS AVANÇADOS ── */
 .report-hero{background:linear-gradient(135deg,#181c22,#1e2229);border:1px solid #252b34;border-radius:16px;padding:18px;margin-bottom:12px;text-align:center;}
 .report-hero-num{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;line-height:1.1;}
 .report-hero-sub{font-size:13px;margin-top:8px;font-weight:500;}
@@ -257,7 +257,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 </head>
 <body>
 
-<!-- ââ SPLASH SCREEN (CSS Animation) âââââââââââââââââââââââââââ -->
+<!-- ── SPLASH SCREEN (CSS Animation) ─────────────────────────── -->
 <div id="splash" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9999;overflow:hidden;display:flex;align-items:center;justify-content:center;">
   <style>
     @keyframes sp-logo-in{0%{opacity:0;transform:scale(.6)}60%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
@@ -274,13 +274,13 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     #splash-glow{animation:sp-glow 2s ease-in-out .5s infinite}
     #splash.sp-exit{animation:sp-fade-out .6s ease forwards}
   </style>
-  <!-- AnÃ©is pulsantes -->
+  <!-- Anéis pulsantes -->
   <div class="sp-ring" style="width:160px;height:160px;"></div>
   <div class="sp-ring" style="width:160px;height:160px;"></div>
   <div class="sp-ring" style="width:160px;height:160px;"></div>
   <!-- Brilho central -->
   <div id="splash-glow" style="position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(240,180,41,.18) 0%,transparent 70%);"></div>
-  <!-- ConteÃºdo central -->
+  <!-- Conteúdo central -->
   <div style="display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1;">
     <img id="splash-logo-img" src="" style="height:96px;width:auto;object-fit:contain;filter:drop-shadow(0 0 18px rgba(240,180,41,.5));">
     <div id="splash-tagline" style="color:#f0b429;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;letter-spacing:4px;margin-top:20px;">BETTER YOU</div>
@@ -288,10 +288,10 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
   </div>
 </div>
 
-<!-- ââ AUTH SCREEN âââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ── AUTH SCREEN ─────────────────────────────────────────────── -->
 <div id="authScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;overflow-y:auto;">
   <div style="text-align:center;margin-bottom:32px;">
-    <div style="font-size:52px;margin-bottom:8px;">ðª</div>
+    <div style="font-size:52px;margin-bottom:8px;">💪</div>
     <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#f0b429;">Better You</div>
     <div style="font-size:13px;color:#8b95a3;margin-top:4px;">Seus dados salvos na nuvem</div>
   </div>
@@ -306,11 +306,11 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     </div>
     <div style="margin-bottom:12px;">
       <div style="font-size:12px;color:#8b95a3;margin-bottom:5px;font-weight:500;">Senha</div>
-      <input type="password" id="authPassword" class="input" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢" style="width:100%;" onkeydown="if(event.key==='Enter')doAuth()">
+      <input type="password" id="authPassword" class="input" placeholder="••••••••" style="width:100%;" onkeydown="if(event.key==='Enter')doAuth()">
     </div>
     <div id="authConfirmWrap" style="margin-bottom:12px;display:none;">
       <div style="font-size:12px;color:#8b95a3;margin-bottom:5px;font-weight:500;">Confirmar Senha</div>
-      <input type="password" id="authPassword2" class="input" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢" style="width:100%;">
+      <input type="password" id="authPassword2" class="input" placeholder="••••••••" style="width:100%;">
     </div>
     <div id="authError" style="font-size:12px;margin-bottom:10px;text-align:center;display:none;padding:8px;border-radius:8px;background:rgba(248,113,113,.1);color:#f87171;"></div>
     <button id="authBtn" class="btn btn-primary" onclick="doAuth()" style="width:100%;margin-bottom:10px;">Entrar</button>
@@ -329,7 +329,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 
 <!-- TAB HOJE -->
 <div class="tab active" id="tab-hoje">
-  <!-- SaudaÃ§Ã£o com foto do perfil -->
+  <!-- Saudação com foto do perfil -->
   <div id="homeGreeting" style="display:none;align-items:center;gap:13px;padding:14px 0 4px;">
     <div id="homeAvatar" onclick="openProfile()" style="width:52px;height:52px;border-radius:50%;border:2.5px solid #f0b429;background:#181c22;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;flex-shrink:0;cursor:pointer;">&#128100;</div>
     <div style="flex:1;min-width:0;">
@@ -377,7 +377,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     </div>
     <div class="water-progress"><div class="water-fill" id="waterSummaryBar" style="width:0%"></div></div>
   </div>
-  <!-- Score DiÃ¡rio -->
+  <!-- Score Diário -->
   <div class="card" id="scoreDayCard">
     <div class="card-title" data-i18n="scoreDia">Score do Dia</div>
     <div class="score-ring-wrap">
@@ -401,24 +401,24 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 <div class="tab" id="tab-foto">
   <!-- Sub-tabs Foto IA | Progresso -->
   <div class="subtab-row">
-    <button class="subtab-btn active" id="subtab-fotoIA" onclick="switchFotoSubtab('fotoIA')">ð¸ Foto IA</button>
-    <button class="subtab-btn" id="subtab-progresso" onclick="switchFotoSubtab('progresso')">ðï¸ Progresso</button>
+    <button class="subtab-btn active" id="subtab-fotoIA" onclick="switchFotoSubtab('fotoIA')">📸 Foto IA</button>
+    <button class="subtab-btn" id="subtab-progresso" onclick="switchFotoSubtab('progresso')">🏋️ Progresso</button>
   </div>
 
-  <!-- ââââââ SECTION: FOTO IA ââââââ -->
+  <!-- ────── SECTION: FOTO IA ────── -->
   <div id="section-fotoIA">
   <!-- Banner PRO -->
   <div class="upgrade-banner" style="margin-bottom:12px;">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
-      <span style="font-size:15px;">ð¸</span>
+      <span style="font-size:15px;">📸</span>
       <span style="font-size:13px;font-weight:700;color:#f0b429;">Foto IA</span>
       <span class="pro-badge">PRO</span>
     </div>
-    <div style="font-size:12px;color:#8b95a3;line-height:1.6;">Identifica calorias e macros automaticamente por foto. <b style="color:#f0f2f5;">Feature do plano â¬5,99/mÃªs.</b><br><span style="color:#34d399;font-size:11px;">â DisponÃ­vel gratuitamente durante o perÃ­odo beta</span></div>
+    <div style="font-size:12px;color:#8b95a3;line-height:1.6;">Identifica calorias e macros automaticamente por foto. <b style="color:#f0f2f5;">Feature do plano €5,99/mês.</b><br><span style="color:#34d399;font-size:11px;">✅ Disponível gratuitamente durante o período beta</span></div>
   </div>
   <div id="apiKeyBanner" style="display:none;background:linear-gradient(135deg,#1e293b,#0f172a);border:1.5px solid #f0b429;border-radius:14px;padding:16px;margin-bottom:14px;">
-    <div style="font-size:14px;font-weight:700;color:#f0b429;margin-bottom:6px;">â ï¸ Chave API necessaria</div>
-    <div style="font-size:12px;color:#8b95a3;margin-bottom:12px;line-height:1.7;">Para identificar alimentos por foto, configure sua chave API no seu <b style="color:#e2e8f0;">Perfil</b>.<br><br><b style="color:#e2e8f0;">Como obter:</b><br>1. Acesse <b style="color:#38bdf8;">console.anthropic.com</b><br>2. Crie conta (pode usar Google)<br>3. Clique em <b>API Keys â Create Key</b><br>4. Copie a chave e adicione no seu Perfil</div>
+    <div style="font-size:14px;font-weight:700;color:#f0b429;margin-bottom:6px;">⚠️ Chave API necessaria</div>
+    <div style="font-size:12px;color:#8b95a3;margin-bottom:12px;line-height:1.7;">Para identificar alimentos por foto, configure sua chave API no seu <b style="color:#e2e8f0;">Perfil</b>.<br><br><b style="color:#e2e8f0;">Como obter:</b><br>1. Acesse <b style="color:#38bdf8;">console.anthropic.com</b><br>2. Crie conta (pode usar Google)<br>3. Clique em <b>API Keys → Create Key</b><br>4. Copie a chave e adicione no seu Perfil</div>
     <button class="btn btn-primary" style="width:100%;" onclick="openProfile()">&#128100; Abrir Perfil e configurar</button>
   </div>
   <div style="display:flex;gap:9px;margin-bottom:12px;">
@@ -435,7 +435,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
       <div id="aiDescription" style="font-size:12px;color:#8b95a3;margin-bottom:9px;"></div>
       <div id="aiFoodList"></div>
       <div id="aiLiquidSection" style="display:none;margin-top:10px;">
-        <div style="font-size:12px;font-weight:700;color:#38bdf8;margin-bottom:6px;">ð§ Liquidos detectados</div>
+        <div style="font-size:12px;font-weight:700;color:#38bdf8;margin-bottom:6px;">💧 Liquidos detectados</div>
         <div id="aiLiquidList"></div>
         <div style="font-size:11px;color:#8b95a3;margin-top:4px;">Sera adicionado automaticamente ao controle de agua</div>
       </div>
@@ -449,15 +449,15 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
   </div>
   </div><!-- /section-fotoIA -->
 
-  <!-- ââââââ SECTION: FOTOS DE PROGRESSO ââââââ -->
+  <!-- ────── SECTION: FOTOS DE PROGRESSO ────── -->
   <div id="section-progresso" style="display:none;">
-    <div class="section-title" data-i18n="fotosProgresso">ð¸ Fotos de Progresso</div>
-    <div class="section-sub" data-i18n="fotosProgressoSub">Registre e compare sua evoluÃ§Ã£o corporal</div>
+    <div class="section-title" data-i18n="fotosProgresso">📸 Fotos de Progresso</div>
+    <div class="section-sub" data-i18n="fotosProgressoSub">Registre e compare sua evolução corporal</div>
 
     <!-- Upload buttons -->
     <div style="display:flex;gap:9px;margin-bottom:12px;">
-      <button class="btn btn-primary" style="flex:1;height:48px;" onclick="triggerProgressCamera()">ð· CÃ¢mera</button>
-      <button class="btn btn-secondary" style="flex:1;height:48px;" onclick="triggerProgressUpload()">ð¼ Galeria</button>
+      <button class="btn btn-primary" style="flex:1;height:48px;" onclick="triggerProgressCamera()">📷 Câmera</button>
+      <button class="btn btn-secondary" style="flex:1;height:48px;" onclick="triggerProgressUpload()">🖼 Galeria</button>
     </div>
     <input type="file" id="progressPhotoUpload" accept="image/*" style="display:none" onchange="handleProgressPhoto(this)">
     <input type="file" id="progressCameraCapture" accept="image/*" capture="environment" style="display:none" onchange="handleProgressPhoto(this)">
@@ -466,25 +466,25 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div id="progressPreviewBox" style="display:none;margin-bottom:14px;">
       <img id="progressPreviewImg" style="width:100%;border-radius:14px;max-height:320px;object-fit:cover;margin-bottom:12px;">
       <div class="input-group">
-        <div class="input-label">ð Data da foto</div>
+        <div class="input-label">📅 Data da foto</div>
         <input type="date" id="progressPhotoDate" class="input">
       </div>
       <div class="input-group" style="margin-bottom:0;">
-        <div class="input-label">ð·ï¸ Legenda (opcional)</div>
-        <input type="text" id="progressPhotoLabel" class="input" placeholder="Ex: Semana 1, InÃ­cio, MÃªs 3...">
+        <div class="input-label">🏷️ Legenda (opcional)</div>
+        <input type="text" id="progressPhotoLabel" class="input" placeholder="Ex: Semana 1, Início, Mês 3...">
       </div>
       <div style="display:flex;gap:9px;margin-top:12px;">
         <button class="btn btn-secondary" style="flex:1;" onclick="cancelProgressPhoto()" data-i18n="cancelar">Cancelar</button>
-        <button class="btn btn-primary" style="flex:1;" onclick="saveProgressPhoto()" data-i18n="salvarFoto">ð¾ Salvar foto</button>
+        <button class="btn btn-primary" style="flex:1;" onclick="saveProgressPhoto()" data-i18n="salvarFoto">💾 Salvar foto</button>
       </div>
     </div>
 
-    <!-- Compare bar (visÃ­vel quando 2 fotos selecionadas) -->
+    <!-- Compare bar (visível quando 2 fotos selecionadas) -->
     <div id="compareBar" class="compare-bar" style="display:none;">
       <div style="font-size:13px;font-weight:600;color:#f0f2f5;"><span id="compareBarCount">0</span> fotos selecionadas</div>
       <div style="display:flex;gap:8px;">
-        <button onclick="clearProgressSelection()" style="padding:7px 12px;background:#1e2229;border:1px solid #252b34;border-radius:8px;color:#8b95a3;font-size:12px;cursor:pointer;font-family:DM Sans,sans-serif;">â Limpar</button>
-        <button id="compareBtn" onclick="openCompareModal()" style="padding:7px 14px;background:linear-gradient(135deg,#f0b429,#e8834a);border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;cursor:pointer;font-family:DM Sans,sans-serif;" disabled>ð Comparar</button>
+        <button onclick="clearProgressSelection()" style="padding:7px 12px;background:#1e2229;border:1px solid #252b34;border-radius:8px;color:#8b95a3;font-size:12px;cursor:pointer;font-family:DM Sans,sans-serif;">✕ Limpar</button>
+        <button id="compareBtn" onclick="openCompareModal()" style="padding:7px 14px;background:linear-gradient(135deg,#f0b429,#e8834a);border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;cursor:pointer;font-family:DM Sans,sans-serif;" disabled>🔄 Comparar</button>
       </div>
     </div>
 
@@ -493,9 +493,9 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 
     <!-- Empty state -->
     <div id="progressEmpty" style="text-align:center;padding:32px 16px;display:none;">
-      <div style="font-size:48px;margin-bottom:10px;">ð·</div>
+      <div style="font-size:48px;margin-bottom:10px;">📷</div>
       <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#f0f2f5;margin-bottom:6px;" data-i18n="nenhumaFoto">Nenhuma foto ainda</div>
-      <div style="font-size:13px;color:#8b95a3;" data-i18n="primeiraFoto">Tire sua primeira foto e acompanhe sua evoluÃ§Ã£o ao longo do tempo!</div>
+      <div style="font-size:13px;color:#8b95a3;" data-i18n="primeiraFoto">Tire sua primeira foto e acompanhe sua evolução ao longo do tempo!</div>
     </div>
   </div><!-- /section-progresso -->
 
@@ -505,17 +505,17 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 <div class="modal-overlay" id="modalCompare">
   <div class="modal" style="padding-bottom:24px;">
     <div class="modal-handle" onclick="closeModal('modalCompare')"></div>
-    <div class="modal-title">ð ComparaÃ§Ã£o de EvoluÃ§Ã£o</div>
+    <div class="modal-title">🔄 Comparação de Evolução</div>
     <div style="display:flex;justify-content:space-between;font-size:11px;color:#8b95a3;margin-bottom:8px;">
       <span id="compareBeforeDate" style="color:#60a5fa;font-weight:700;">Antes</span>
-      <span style="color:#5a6270;">âµ arraste o slider â¶</span>
+      <span style="color:#5a6270;">⟵ arraste o slider ⟶</span>
       <span id="compareAfterDate" style="color:#34d399;font-weight:700;">Depois</span>
     </div>
     <div class="compare-wrap" id="compareContainer">
       <img id="compareBeforeImg" class="compare-img-base" src="" alt="Antes">
       <img id="compareAfterImg" class="compare-img-top" src="" alt="Depois">
       <div class="compare-divider" id="compareDivider">
-        <div class="compare-handle">â</div>
+        <div class="compare-handle">⇔</div>
       </div>
       <div class="compare-tag compare-tag-before">ANTES</div>
       <div class="compare-tag compare-tag-after">DEPOIS</div>
@@ -551,7 +551,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;">
       <div>
-        <div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;" data-i18n="metaDiaria">Meta diÃ¡ria</div>
+        <div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;" data-i18n="metaDiaria">Meta diária</div>
         <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#38bdf8;" id="waterGoalDisplay"><span id="waterGoalVal">2500</span> ml</div>
         <div style="font-size:11px;color:#8b95a3;margin-top:2px;" id="waterGoalBasis">Calculado pelo seu perfil</div>
       </div>
@@ -588,29 +588,29 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     </div>
   </div>
 
-  <!-- Quick actions 2Ã2 -->
+  <!-- Quick actions 2×2 -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
     <button id="nutri-btn-1" onclick="askNutritionist(getNutriPrompt('analyzeDay'))" style="padding:14px 10px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:13px;color:#f0b429;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#128202; <span id="nutri-lbl-1">Analisar<br>meu dia</span></button>
     <button id="nutri-btn-2" onclick="askNutritionist(getNutriPrompt('whatToEat'))" style="padding:14px 10px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:13px;color:#34d399;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#127869; <span id="nutri-lbl-2">O que<br>comer agora?</span></button>
-    <button id="nutri-btn-3" onclick="askNutritionist(getNutriPrompt('proteinGoal'))" style="padding:14px 10px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);border-radius:13px;color:#60a5fa;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#128170; <span id="nutri-lbl-3">Meta de<br>proteÃ­na</span></button>
-    <button id="nutri-btn-4" onclick="askNutritionist(getNutriPrompt('motivation'))" style="padding:14px 10px;background:rgba(232,131,74,.1);border:1px solid rgba(232,131,74,.3);border-radius:13px;color:#e8834a;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#9889; <span id="nutri-lbl-4">MotivaÃ§Ã£o<br>do dia</span></button>
+    <button id="nutri-btn-3" onclick="askNutritionist(getNutriPrompt('proteinGoal'))" style="padding:14px 10px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);border-radius:13px;color:#60a5fa;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#128170; <span id="nutri-lbl-3">Meta de<br>proteína</span></button>
+    <button id="nutri-btn-4" onclick="askNutritionist(getNutriPrompt('motivation'))" style="padding:14px 10px;background:rgba(232,131,74,.1);border:1px solid rgba(232,131,74,.3);border-radius:13px;color:#e8834a;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1.4;text-align:center;">&#9889; <span id="nutri-lbl-4">Motivação<br>do dia</span></button>
   </div>
 
   <!-- Chat area -->
   <div class="card" style="padding:14px;margin-bottom:14px;">
     <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px;">
       <div style="width:8px;height:8px;background:#34d399;border-radius:50%;box-shadow:0 0 6px rgba(52,211,153,.6);flex-shrink:0;"></div>
-      <span style="font-size:12px;color:#8b95a3;font-weight:500;" data-i18n="onlineAgora">Online agora â responde em segundos</span>
+      <span style="font-size:12px;color:#8b95a3;font-weight:500;" data-i18n="onlineAgora">Online agora — responde em segundos</span>
     </div>
     <div id="chatMessages" style="display:flex;flex-direction:column;gap:8px;min-height:170px;max-height:400px;overflow-y:auto;margin-bottom:10px;"></div>
     <div id="chatLoading" style="display:none;padding:10px 0;"><div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
     <div class="chat-input-row">
-      <input type="text" class="input" id="chatInput" placeholder="Pergunte Ã  sua nutricionista..." style="flex:1;" onkeydown="if(event.key==='Enter')sendChat()">
+      <input type="text" class="input" id="chatInput" placeholder="Pergunte à sua nutricionista..." style="flex:1;" onkeydown="if(event.key==='Enter')sendChat()">
       <button onclick="sendChat()" style="padding:11px 15px;background:linear-gradient(135deg,#818cf8,#60a5fa);border:none;border-radius:10px;cursor:pointer;font-size:16px;color:#fff;">&#10148;</button>
     </div>
   </div>
 
-  <!-- Plano alimentar (diet type selector â moved here) -->
+  <!-- Plano alimentar (diet type selector — moved here) -->
   <div class="card">
     <div class="card-title" style="margin-bottom:6px;" data-i18n="planoAlimentar">Plano Alimentar</div>
     <div style="font-size:12px;color:#8b95a3;margin-bottom:12px;" data-i18n="planoAlimentarSub">Selecione seu estilo de dieta atual</div>
@@ -629,7 +629,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <button class="subtab-btn active" id="subtab-peso" onclick="switchSubtab('peso')">&#9878; Peso</button>
     <button class="subtab-btn" id="subtab-medidas" onclick="switchSubtab('medidas')">&#128207; Medidas</button>
   </div>
-  <!-- SeÃ§Ã£o Peso -->
+  <!-- Seção Peso -->
   <div id="section-peso">
     <div class="card">
       <div style="text-align:center;margin-bottom:14px;">
@@ -646,25 +646,25 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div class="card"><div class="card-title" data-i18n="histTitle">Historico</div><div id="weightList"></div></div>
     <div class="card"><div class="card-title" data-i18n="ritmoIdeal">Ritmo ideal</div><div id="weightTip" style="font-size:13px;color:#8b95a3;line-height:1.7;"></div></div>
   </div>
-  <!-- SeÃ§Ã£o Medidas -->
+  <!-- Seção Medidas -->
   <div id="section-medidas" style="display:none;">
     <div class="card">
       <div class="card-title" data-i18n="registrarMedidas">Registrar Medidas</div>
       <div style="display:flex;flex-direction:column;gap:0;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">ð Cintura (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCintura',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">â</button><input type="text" inputmode="decimal" class="input" id="mCintura" placeholder="82" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCintura',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">ð Quadril (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mQuadril',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">â</button><input type="text" inputmode="decimal" class="input" id="mQuadril" placeholder="98" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mQuadril',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">📏 Cintura (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCintura',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCintura" placeholder="82" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCintura',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">📏 Quadril (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mQuadril',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mQuadril" placeholder="98" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mQuadril',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">ðª Peito (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPeito',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">â</button><input type="text" inputmode="decimal" class="input" id="mPeito" placeholder="100" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPeito',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">ðª BraÃ§o (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mBraco',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">â</button><input type="text" inputmode="decimal" class="input" id="mBraco" placeholder="36" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mBraco',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">💪 Peito (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPeito',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mPeito" placeholder="100" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPeito',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">💪 Braço (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mBraco',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mBraco" placeholder="36" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mBraco',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">ð¦µ Coxa (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCoxa',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">â</button><input type="text" inputmode="decimal" class="input" id="mCoxa" placeholder="58" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCoxa',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">ð¦µ Panturrilha (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPanturrilha',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">â</button><input type="text" inputmode="decimal" class="input" id="mPanturrilha" placeholder="38" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPanturrilha',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">🦵 Coxa (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCoxa',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCoxa" placeholder="58" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCoxa',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">🦵 Panturrilha (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPanturrilha',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mPanturrilha" placeholder="38" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPanturrilha',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
         </div>
       </div>
-      <button class="btn btn-primary" style="margin-top:14px;height:48px;font-size:15px;" onclick="addMeasure()" data-i18n="salvarMedidas">ð¾ Salvar Medidas</button>
+      <button class="btn btn-primary" style="margin-top:14px;height:48px;font-size:15px;" onclick="addMeasure()" data-i18n="salvarMedidas">💾 Salvar Medidas</button>
     </div>
     <div class="card"><div class="card-title" data-i18n="historicoMedidas">Historico de Medidas</div><div id="measureList"></div></div>
   </div>
@@ -689,22 +689,22 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 <div class="tab" id="tab-hist">
   <div class="section-title" data-i18n="histTitle">Historico</div>
   <div class="section-sub" data-i18n="histSub">Toque em cada dia para ver as refeicoes</div>
-  <div class="card"><div class="card-title" data-i18n="cal7Dias">Calorias â ultimos 7 dias</div><canvas id="histChart" height="130"></canvas></div>
-  <!-- CalendÃ¡rio colorido -->
+  <div class="card"><div class="card-title" data-i18n="cal7Dias">Calorias — ultimos 7 dias</div><canvas id="histChart" height="130"></canvas></div>
+  <!-- Calendário colorido -->
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <div class="card-title" style="margin-bottom:0;" data-i18n="calendario">CalendÃ¡rio</div>
+      <div class="card-title" style="margin-bottom:0;" data-i18n="calendario">Calendário</div>
       <div style="display:flex;align-items:center;gap:8px;">
-        <button onclick="changeCalMonth(-1)" style="background:#181c22;border:1px solid #252b34;border-radius:7px;color:#f0f2f5;width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">â¹</button>
+        <button onclick="changeCalMonth(-1)" style="background:#181c22;border:1px solid #252b34;border-radius:7px;color:#f0f2f5;width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">‹</button>
         <div id="calMonthLabel" style="font-size:13px;font-weight:700;min-width:80px;text-align:center;"></div>
-        <button onclick="changeCalMonth(1)" style="background:#181c22;border:1px solid #252b34;border-radius:7px;color:#f0f2f5;width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">âº</button>
+        <button onclick="changeCalMonth(1)" style="background:#181c22;border:1px solid #252b34;border-radius:7px;color:#f0f2f5;width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">›</button>
       </div>
     </div>
     <div id="calendarGrid"></div>
     <div style="display:flex;gap:12px;margin-top:10px;justify-content:center;">
-      <span style="font-size:10px;color:#34d399;" data-i18n="excellenteLegend">â Excelente (80+)</span>
-      <span style="font-size:10px;color:#fbbf24;" data-i18n="bomLegend">â Bom (50â79)</span>
-      <span style="font-size:10px;color:#f87171;" data-i18n="ruimLegend">â Ruim (&lt;50)</span>
+      <span style="font-size:10px;color:#34d399;" data-i18n="excellenteLegend">● Excelente (80+)</span>
+      <span style="font-size:10px;color:#fbbf24;" data-i18n="bomLegend">● Bom (50–79)</span>
+      <span style="font-size:10px;color:#f87171;" data-i18n="ruimLegend">● Ruim (&lt;50)</span>
     </div>
   </div>
   <div class="card"><div class="card-title" data-i18n="registrosDiarios">Registros diarios</div><div id="histList"></div></div>
@@ -713,7 +713,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 <!-- TAB RELATORIOS -->
 <div class="tab" id="tab-relatorios">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
-    <div class="section-title" style="margin-bottom:0;">RelatÃ³rios</div>
+    <div class="section-title" style="margin-bottom:0;">Relatórios</div>
     <span class="pro-badge">PRO</span>
   </div>
   <div class="section-sub" id="reportSubtitle">Perspectiva personalizada do seu objetivo</div>
@@ -722,33 +722,33 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 
 </div><!-- /content -->
 
-<!-- ââ UPGRADE MODAL ââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ── UPGRADE MODAL ──────────────────────────────────────────── -->
 <div class="modal-overlay" id="upgradeModal">
   <div class="modal" style="padding:24px 20px 32px;">
     <div class="modal-handle" onclick="closeModal('upgradeModal')"></div>
     <!-- Hero -->
     <div style="text-align:center;margin-bottom:20px;">
-      <div style="width:64px;height:64px;background:linear-gradient(135deg,#f0b429,#e8834a);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 14px;box-shadow:0 8px 24px rgba(240,180,41,.3);">â¡</div>
+      <div style="width:64px;height:64px;background:linear-gradient(135deg,#f0b429,#e8834a);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 14px;box-shadow:0 8px 24px rgba(240,180,41,.3);">⚡</div>
       <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#f0f2f5;margin-bottom:6px;">Better You PRO</div>
       <div style="font-size:13px;color:#8b95a3;" data-i18n="proSubtitle">Desbloqueie todo o potencial do app</div>
     </div>
     <!-- Features list -->
     <div style="background:#181c22;border-radius:14px;padding:16px;margin-bottom:18px;">
-      <div style="font-size:11px;color:#5a6270;text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:12px;" data-i18n="proIncluido">IncluÃ­do no PRO</div>
+      <div style="font-size:11px;color:#5a6270;text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:12px;" data-i18n="proIncluido">Incluído no PRO</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">ð¸</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatFotoIA">Foto IA</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatFotoIASub">Analisa calorias e macros por foto</div></div></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">ð¤</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatNutri">Nutricionista IA</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatNutriSub">Chat personalizado 24h por dia</div></div></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">ð</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatRel">RelatÃ³rios AvanÃ§ados</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatRelSub">ProjeÃ§Ãµes e anÃ¡lise semanal detalhada</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📸</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatFotoIA">Foto IA</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatFotoIASub">Analisa calorias e macros por foto</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">🤖</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatNutri">Nutricionista IA</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatNutriSub">Chat personalizado 24h por dia</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📊</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatRel">Relatórios Avançados</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatRelSub">Projeções e análise semanal detalhada</div></div></div>
       </div>
     </div>
     <!-- Pricing -->
     <div style="text-align:center;margin-bottom:18px;">
-      <div style="font-size:11px;color:#34d399;font-weight:600;margin-bottom:4px;" data-i18n="proTrialBadge">â 2 DIAS GRÃTIS â¢ CANCELE QUANDO QUISER</div>
-      <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f0b429;">â¬5,99<span style="font-size:14px;color:#8b95a3;font-weight:400;" data-i18n="proMes">/mÃªs</span></div>
+      <div style="font-size:11px;color:#34d399;font-weight:600;margin-bottom:4px;" data-i18n="proTrialBadge">✅ 2 DIAS GRÁTIS • CANCELE QUANDO QUISER</div>
+      <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f0b429;">€5,99<span style="font-size:14px;color:#8b95a3;font-weight:400;" data-i18n="proMes">/mês</span></div>
     </div>
     <!-- CTA -->
-    <button onclick="subscribePro()" id="subscribeBtn" class="btn btn-primary" style="font-size:15px;padding:15px;" data-i18n="proCtaBtn">â¡ ComeÃ§ar 2 dias grÃ¡tis</button>
-    <button onclick="closeModal('upgradeModal')" class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:13px;" data-i18n="proCtaFree">Continuar com versÃ£o gratuita</button>
+    <button onclick="subscribePro()" id="subscribeBtn" class="btn btn-primary" style="font-size:15px;padding:15px;" data-i18n="proCtaBtn">⚡ Começar 2 dias grátis</button>
+    <button onclick="closeModal('upgradeModal')" class="btn btn-ghost" style="width:100%;margin-top:10px;font-size:13px;" data-i18n="proCtaFree">Continuar com versão gratuita</button>
   </div>
 </div>
 
@@ -830,10 +830,10 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
       <div class="input-group"><div class="input-label" data-i18n="idadeAnos">Idade</div><input type="number" class="input" id="profAge" placeholder="25" oninput="updateTDEEPreview()"></div>
       <div class="input-group"><div class="input-label" data-i18n="sexo">Sexo</div><select class="input" id="profSex" onchange="updateTDEEPreview()"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
     </div>
-    <!-- NÃ­vel de atividade -->
-    <div class="input-group"><div class="input-label" data-i18n="nivelAtividade">NÃ­vel de Atividade</div>
+    <!-- Nível de atividade -->
+    <div class="input-group"><div class="input-label" data-i18n="nivelAtividade">Nível de Atividade</div>
       <select class="input" id="profActivity" onchange="updateTDEEPreview()">
-        <option value="1.2">SedentÃ¡rio (sem exercÃ­cio)</option>
+        <option value="1.2">Sedentário (sem exercício)</option>
         <option value="1.375">Leve (1-3x por semana)</option>
         <option value="1.55">Moderado (3-5x por semana)</option>
         <option value="1.725">Ativo (6-7x por semana)</option>
@@ -849,12 +849,12 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
         <button class="goal-btn" id="profGoalMaint" onclick="setProfGoal('maint')">&#9878; Manter</button>
       </div>
     </div>
-    <!-- PrÃ©via TDEE -->
+    <!-- Prévia TDEE -->
     <div class="tdee-box" id="tdeeBox" style="display:none">
       <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="tmbLabel">Metabolismo Basal (TMB)</span><span class="tdee-val" id="tmbVal" style="color:#f0b429;">-</span></div>
       <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="tdeeLabel">Gasto Total (TDEE)</span><span class="tdee-val" id="tdeeVal" style="color:#f0b429;">-</span></div>
       <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="metaCalorias">Meta de Calorias</span><span class="tdee-val" id="goalKcalVal" style="color:#34d399;">-</span></div>
-      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="metaAguaLabel">Meta de Ãgua</span><span class="tdee-val" id="goalWaterVal" style="color:#38bdf8;">-</span></div>
+      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="metaAguaLabel">Meta de Água</span><span class="tdee-val" id="goalWaterVal" style="color:#38bdf8;">-</span></div>
       <div style="border-top:1px solid #2a2f3a;margin:8px 0 4px;"></div>
       <div style="font-size:10px;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;" data-i18n="macrosEst">Macros estimados</div>
       <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="proteinaPura">Proteina</span><span class="tdee-val" id="prevProtVal" style="color:#f87171;">-</span></div>
@@ -865,11 +865,11 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div class="input-group">
       <div class="input-label" data-i18n="chaveAPILabel">Chave API Anthropic (Foto IA)</div>
       <input type="password" class="input" id="profApiKey" placeholder="sk-ant-api03-...">
-      <div style="font-size:11px;color:#8b95a3;margin-top:4px;line-height:1.6;">NecessÃ¡ria para identificar alimentos por foto.<br>Obtenha gratuitamente em: <b style="color:#38bdf8;">console.anthropic.com</b></div>
+      <div style="font-size:11px;color:#8b95a3;margin-top:4px;line-height:1.6;">Necessária para identificar alimentos por foto.<br>Obtenha gratuitamente em: <b style="color:#38bdf8;">console.anthropic.com</b></div>
     </div>
     <!-- Idioma -->
     <div class="input-group" style="margin-top:4px;">
-      <div class="input-label">ð <span data-i18n="idiomaLabel">Idioma / Language</span></div>
+      <div class="input-label">🌐 <span data-i18n="idiomaLabel">Idioma / Language</span></div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">
         <button onclick="setLang('pt')" id="lang-pt" class="lang-btn">PT</button>
         <button onclick="setLang('en')" id="lang-en" class="lang-btn">EN</button>
@@ -882,7 +882,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <button class="btn btn-primary" onclick="saveProfile()" style="margin-top:12px;" data-i18n="salvarAplicar">Salvar e Aplicar</button>
     <div style="margin-top:14px;padding-top:14px;border-top:1px solid #252b34;">
       <div id="authUserInfo" style="font-size:11px;color:#8b95a3;text-align:center;margin-bottom:8px;"></div>
-      <button class="btn btn-ghost" onclick="doSignOut()" style="width:100%;color:#f87171;border-color:rgba(248,113,113,.3);" data-i18n="sairConta">ðª Sair da conta</button>
+      <button class="btn btn-ghost" onclick="doSignOut()" style="width:100%;color:#f87171;border-color:rgba(248,113,113,.3);" data-i18n="sairConta">🚪 Sair da conta</button>
     </div>
   </div>
 </div>
@@ -894,7 +894,7 @@ var currentLang='pt';
 var T={
 pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Historico',
   ganharMassa:'&#128170; Ganhar Massa',emagrecer:'&#128293; Emagrecer',manter:'&#9878; Manter Peso',
-  ola:'OlÃ¡,',bemVindo:'Bem-vindo!',
+  ola:'Olá,',bemVindo:'Bem-vindo!',
   proteina:'&#129385; Proteina',carbo:'&#127834; Carbo',gordura:'&#129361; Gordura',
   cafeManha:'Cafe da manha',almoco:'Almoco',lanche:'Lanche',jantar:'Jantar',
   nenhumAlimento:'Nenhum alimento',addFood:'+ Adicionar Alimento',
@@ -911,40 +911,40 @@ pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:
   histTitle:'Historico',profTitle:'Perfil',configTitle:'Configuracoes',
   hidratacao:'Hidratacao',hidratacaoSub:'Mantenha-se hidratado durante o dia',
   mlConsumidos:'ml consumidos',mlRestantes:'ml restantes',daMetaLabel:'% da meta',
-  addAguaTitle:'Adicionar agua',zerarAgua:'Zerar agua',metaDiaria:'Meta diÃ¡ria',calcPerfil:'Calculado pelo seu perfil',
+  addAguaTitle:'Adicionar agua',zerarAgua:'Zerar agua',metaDiaria:'Meta diária',calcPerfil:'Calculado pelo seu perfil',
   scoreDia:'Score do Dia',
-  camera:'CÃ¢mera',galeria:'Galeria',cancelar:'Cancelar',salvarFoto:'ð¾ Salvar foto',
-  nenhumaFoto:'Nenhuma foto ainda',primeiraFoto:'Tire sua primeira foto e acompanhe sua evoluÃ§Ã£o ao longo do tempo!',
+  camera:'Câmera',galeria:'Galeria',cancelar:'Cancelar',salvarFoto:'💾 Salvar foto',
+  nenhumaFoto:'Nenhuma foto ainda',primeiraFoto:'Tire sua primeira foto e acompanhe sua evolução ao longo do tempo!',
   comoFunciona:'Como funciona',
   comoFuncionaTexto:'1. Tire uma foto do seu prato<br>2. A IA identifica cada ingrediente<br>3. Estima calorias e macros<br>4. Adicione tudo com um toque',
-  fotosProgresso:'ð¸ Fotos de Progresso',fotosProgressoSub:'Registre e compare sua evoluÃ§Ã£o corporal',
+  fotosProgresso:'📸 Fotos de Progresso',fotosProgressoSub:'Registre e compare sua evolução corporal',
   corpoEvolucao:'Corpo & Evolucao',corpoEvolucaoSub:'Registre peso e medidas corporais',
   grafico:'Grafico',ritmoIdeal:'Ritmo ideal',registrarMedidas:'Registrar Medidas',
-  salvarMedidas:'ð¾ Salvar Medidas',historicoMedidas:'Historico de Medidas',
+  salvarMedidas:'💾 Salvar Medidas',historicoMedidas:'Historico de Medidas',
   nenhumRegistro:'Nenhum registro ainda',registreAoMenos2Pesos:'Registre ao menos 2 pesos',
   tipMassa:'Para ganho de massa o ideal e ganhar <b>0,5 a 1 kg por mes</b>. Mantenha um supravit de 200-400 kcal acima do TDEE.',
   tipCorte:'Para emagrecer de forma saudavel perca <b>0,5 a 1 kg por semana</b>. Deficit de 500 kcal por dia e sustentavel.',
-  histSub:'Toque em cada dia para ver as refeicoes',cal7Dias:'Calorias â ultimos 7 dias',
-  calendario:'CalendÃ¡rio',registrosDiarios:'Registros diarios',
-  excellenteLegend:'â Excelente (80+)',bomLegend:'â Bom (50â79)',ruimLegend:'â Ruim (<50)',
+  histSub:'Toque em cada dia para ver as refeicoes',cal7Dias:'Calorias — ultimos 7 dias',
+  calendario:'Calendário',registrosDiarios:'Registros diarios',
+  excellenteLegend:'● Excelente (80+)',bomLegend:'● Bom (50–79)',ruimLegend:'● Ruim (<50)',
   planoAlimentar:'Plano Alimentar',planoAlimentarSub:'Selecione seu estilo de dieta atual',
-  onlineAgora:'Online agora â responde em segundos',
+  onlineAgora:'Online agora — responde em segundos',
   alimSelecionado:'Alimento selecionado',quantidadeG:'Quantidade (g)',caloriasLabel:'Calorias',
   cadastrarNovo:'+ Cadastrar alimento novo',cadastrarAlimento:'Cadastrar Alimento',nomeLabel:'Nome',
   cal100g:'Calorias /100g',prot100g:'Proteina /100g',carb100g:'Carbo /100g',gord100g:'Gordura /100g',salvarAlimento:'Salvar Alimento',
-  toqueAlterarFoto:'Toque para alterar foto',nivelAtividade:'NÃ­vel de Atividade',objetivo:'Objetivo',massaGoal:'ðª Massa',
-  tmbLabel:'Metabolismo Basal (TMB)',tdeeLabel:'Gasto Total (TDEE)',metaCalorias:'Meta de Calorias',metaAguaLabel:'Meta de Ãgua',
+  toqueAlterarFoto:'Toque para alterar foto',nivelAtividade:'Nível de Atividade',objetivo:'Objetivo',massaGoal:'💪 Massa',
+  tmbLabel:'Metabolismo Basal (TMB)',tdeeLabel:'Gasto Total (TDEE)',metaCalorias:'Meta de Calorias',metaAguaLabel:'Meta de Água',
   macrosEst:'Macros estimados',proteinaPura:'Proteina',carboidratos:'Carboidratos',gorduraPura:'Gordura',
-  chaveAPILabel:'Chave API Anthropic (Foto IA)',salvarAplicar:'Salvar e Aplicar',sairConta:'ðª Sair da conta',
+  chaveAPILabel:'Chave API Anthropic (Foto IA)',salvarAplicar:'Salvar e Aplicar',sairConta:'🚪 Sair da conta',
   preenchaTodos:'Preencha todos os campos',sexo:'Sexo',idadeAnos:'Idade (anos)',pesoKg:'Peso (kg)',alturaCm:'Altura (cm)',
   nivelAtividadeCalc:'Nivel de atividade',
   actSed:'Sedentario',actLight:'Levemente ativo (1-3x/sem)',actMod:'Moderado (3-5x/sem)',actActive:'Muito ativo (6-7x/sem)',actVery:'Extremamente ativo',
-  proSubtitle:'Desbloqueie todo o potencial do app',proIncluido:'INCLUÃDO NO PRO',
+  proSubtitle:'Desbloqueie todo o potencial do app',proIncluido:'INCLUÍDO NO PRO',
   proFeatFotoIA:'Foto IA',proFeatFotoIASub:'Analisa calorias e macros por foto',
   proFeatNutri:'Nutricionista IA',proFeatNutriSub:'Chat personalizado 24h por dia',
-  proFeatRel:'RelatÃ³rios AvanÃ§ados',proFeatRelSub:'ProjeÃ§Ãµes e anÃ¡lise semanal detalhada',
-  proTrialBadge:'â 2 DIAS GRÃTIS â¢ CANCELE QUANDO QUISER',proMes:'/mÃªs',
-  proCtaBtn:'â¡ ComeÃ§ar 2 dias grÃ¡tis',proCtaFree:'Continuar com versÃ£o gratuita'},
+  proFeatRel:'Relatórios Avançados',proFeatRelSub:'Projeções e análise semanal detalhada',
+  proTrialBadge:'✅ 2 DIAS GRÁTIS • CANCELE QUANDO QUISER',proMes:'/mês',
+  proCtaBtn:'⚡ Começar 2 dias grátis',proCtaFree:'Continuar com versão gratuita'},
 en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcular:'Calculate',hist:'History',
   ganharMassa:'&#128170; Gain Mass',emagrecer:'&#128293; Lose Weight',manter:'&#9878; Maintain',
   ola:'Hello,',bemVindo:'Welcome!',
@@ -966,29 +966,29 @@ en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcu
   mlConsumidos:'ml consumed',mlRestantes:'ml remaining',daMetaLabel:'% of goal',
   addAguaTitle:'Add water',zerarAgua:'Reset water',metaDiaria:'Daily goal',calcPerfil:'Calculated from your profile',
   scoreDia:'Daily Score',
-  camera:'Camera',galeria:'Gallery',cancelar:'Cancel',salvarFoto:'ð¾ Save photo',
+  camera:'Camera',galeria:'Gallery',cancelar:'Cancel',salvarFoto:'💾 Save photo',
   nenhumaFoto:'No photos yet',primeiraFoto:'Take your first photo and track your progress over time!',
   comoFunciona:'How it works',
   comoFuncionaTexto:'1. Take a photo of your meal<br>2. AI identifies each ingredient<br>3. Estimates calories and macros<br>4. Add everything with one tap',
-  fotosProgresso:'ð¸ Progress Photos',fotosProgressoSub:'Record and compare your body evolution',
+  fotosProgresso:'📸 Progress Photos',fotosProgressoSub:'Record and compare your body evolution',
   corpoEvolucao:'Body & Evolution',corpoEvolucaoSub:'Record weight and body measurements',
   grafico:'Chart',ritmoIdeal:'Ideal pace',registrarMedidas:'Record Measurements',
-  salvarMedidas:'ð¾ Save Measurements',historicoMedidas:'Measurement History',
+  salvarMedidas:'💾 Save Measurements',historicoMedidas:'Measurement History',
   nenhumRegistro:'No records yet',registreAoMenos2Pesos:'Record at least 2 weights',
   tipMassa:'For muscle gain the ideal is to gain <b>0.5 to 1 kg per month</b>. Maintain a surplus of 200-400 kcal above TDEE.',
   tipCorte:'To lose weight healthily, lose <b>0.5 to 1 kg per week</b>. A deficit of 500 kcal per day is sustainable.',
-  histSub:'Tap each day to see meals',cal7Dias:'Calories â last 7 days',
+  histSub:'Tap each day to see meals',cal7Dias:'Calories — last 7 days',
   calendario:'Calendar',registrosDiarios:'Daily records',
-  excellenteLegend:'â Excellent (80+)',bomLegend:'â Good (50â79)',ruimLegend:'â Poor (<50)',
+  excellenteLegend:'● Excellent (80+)',bomLegend:'● Good (50–79)',ruimLegend:'● Poor (<50)',
   planoAlimentar:'Meal Plan',planoAlimentarSub:'Select your current diet style',
-  onlineAgora:'Online now â answers in seconds',
+  onlineAgora:'Online now — answers in seconds',
   alimSelecionado:'Selected food',quantidadeG:'Amount (g)',caloriasLabel:'Calories',
   cadastrarNovo:'+ Add new food',cadastrarAlimento:'Add Food',nomeLabel:'Name',
   cal100g:'Calories /100g',prot100g:'Protein /100g',carb100g:'Carbs /100g',gord100g:'Fat /100g',salvarAlimento:'Save Food',
-  toqueAlterarFoto:'Tap to change photo',nivelAtividade:'Activity Level',objetivo:'Goal',massaGoal:'ðª Build Muscle',
+  toqueAlterarFoto:'Tap to change photo',nivelAtividade:'Activity Level',objetivo:'Goal',massaGoal:'💪 Build Muscle',
   tmbLabel:'Basal Metabolic Rate (BMR)',tdeeLabel:'Total Daily Expenditure (TDEE)',metaCalorias:'Calorie Goal',metaAguaLabel:'Water Goal',
   macrosEst:'Estimated Macros',proteinaPura:'Protein',carboidratos:'Carbohydrates',gorduraPura:'Fat',
-  chaveAPILabel:'Anthropic API Key (AI Photo)',salvarAplicar:'Save & Apply',sairConta:'ðª Sign out',
+  chaveAPILabel:'Anthropic API Key (AI Photo)',salvarAplicar:'Save & Apply',sairConta:'🚪 Sign out',
   preenchaTodos:'Fill in all fields',sexo:'Gender',idadeAnos:'Age (years)',pesoKg:'Weight (kg)',alturaCm:'Height (cm)',
   nivelAtividadeCalc:'Activity level',
   actSed:'Sedentary',actLight:'Lightly active (1-3x/wk)',actMod:'Moderately active (3-5x/wk)',actActive:'Very active (6-7x/wk)',actVery:'Extremely active',
@@ -996,11 +996,11 @@ en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcu
   proFeatFotoIA:'AI Photo',proFeatFotoIASub:'Analyzes calories and macros by photo',
   proFeatNutri:'AI Nutritionist',proFeatNutriSub:'Personalized chat 24/7',
   proFeatRel:'Advanced Reports',proFeatRelSub:'Projections and detailed weekly analysis',
-  proTrialBadge:'â 2 FREE DAYS â¢ CANCEL ANYTIME',proMes:'/month',
-  proCtaBtn:'â¡ Start 2 free days',proCtaFree:'Continue with free version'},
+  proTrialBadge:'✅ 2 FREE DAYS • CANCEL ANYTIME',proMes:'/month',
+  proCtaBtn:'⚡ Start 2 free days',proCtaFree:'Continue with free version'},
 es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Historial',
   ganharMassa:'&#128170; Ganar Masa',emagrecer:'&#128293; Adelgazar',manter:'&#9878; Mantener',
-  ola:'Â¡Hola,',bemVindo:'Â¡Bienvenido!',
+  ola:'¡Hola,',bemVindo:'¡Bienvenido!',
   proteina:'&#129385; Proteina',carbo:'&#127834; Carbos',gordura:'&#129361; Grasa',
   cafeManha:'Desayuno',almoco:'Almuerzo',lanche:'Merienda',jantar:'Cena',
   nenhumAlimento:'Sin alimentos',addFood:'+ Agregar Alimento',
@@ -1015,42 +1015,42 @@ es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'
   tiposDieta:'Tipo de Dieta',evolPeso:'Progreso de Peso',calculadora:'Calculadora',
   calcSub:'Calcula tu necesidad calorica diaria',
   histTitle:'Historial',profTitle:'Perfil',configTitle:'Configuracion',
-  hidratacao:'HidrataciÃ³n',hidratacaoSub:'Mantente hidratado durante el dÃ­a',
+  hidratacao:'Hidratación',hidratacaoSub:'Mantente hidratado durante el día',
   mlConsumidos:'ml consumidos',mlRestantes:'ml restantes',daMetaLabel:'% de la meta',
   addAguaTitle:'Agregar agua',zerarAgua:'Reiniciar agua',metaDiaria:'Meta diaria',calcPerfil:'Calculado desde tu perfil',
-  scoreDia:'Puntaje del DÃ­a',
-  camera:'CÃ¡mara',galeria:'GalerÃ­a',cancelar:'Cancelar',salvarFoto:'ð¾ Guardar foto',
-  nenhumaFoto:'Sin fotos todavÃ­a',primeiraFoto:'Â¡Toma tu primera foto y sigue tu progreso a lo largo del tiempo!',
-  comoFunciona:'CÃ³mo funciona',
-  comoFuncionaTexto:'1. Toma una foto de tu plato<br>2. La IA identifica cada ingrediente<br>3. Estima calorÃ­as y macros<br>4. AÃ±ade todo con un toque',
-  fotosProgresso:'ð¸ Fotos de Progreso',fotosProgressoSub:'Registra y compara tu evoluciÃ³n corporal',
-  corpoEvolucao:'Cuerpo & EvoluciÃ³n',corpoEvolucaoSub:'Registra peso y medidas corporales',
-  grafico:'GrÃ¡fico',ritmoIdeal:'Ritmo ideal',registrarMedidas:'Registrar Medidas',
-  salvarMedidas:'ð¾ Guardar Medidas',historicoMedidas:'Historial de Medidas',
-  nenhumRegistro:'Sin registros todavÃ­a',registreAoMenos2Pesos:'Registra al menos 2 pesos',
-  tipMassa:'Para ganar masa lo ideal es ganar <b>0,5 a 1 kg por mes</b>. MantÃ©n un superÃ¡vit de 200-400 kcal sobre el TDEE.',
-  tipCorte:'Para adelgazar de forma saludable pierde <b>0,5 a 1 kg por semana</b>. Un dÃ©ficit de 500 kcal al dÃ­a es sostenible.',
-  histSub:'Toca cada dÃ­a para ver las comidas',cal7Dias:'CalorÃ­as â Ãºltimos 7 dÃ­as',
+  scoreDia:'Puntaje del Día',
+  camera:'Cámara',galeria:'Galería',cancelar:'Cancelar',salvarFoto:'💾 Guardar foto',
+  nenhumaFoto:'Sin fotos todavía',primeiraFoto:'¡Toma tu primera foto y sigue tu progreso a lo largo del tiempo!',
+  comoFunciona:'Cómo funciona',
+  comoFuncionaTexto:'1. Toma una foto de tu plato<br>2. La IA identifica cada ingrediente<br>3. Estima calorías y macros<br>4. Añade todo con un toque',
+  fotosProgresso:'📸 Fotos de Progreso',fotosProgressoSub:'Registra y compara tu evolución corporal',
+  corpoEvolucao:'Cuerpo & Evolución',corpoEvolucaoSub:'Registra peso y medidas corporales',
+  grafico:'Gráfico',ritmoIdeal:'Ritmo ideal',registrarMedidas:'Registrar Medidas',
+  salvarMedidas:'💾 Guardar Medidas',historicoMedidas:'Historial de Medidas',
+  nenhumRegistro:'Sin registros todavía',registreAoMenos2Pesos:'Registra al menos 2 pesos',
+  tipMassa:'Para ganar masa lo ideal es ganar <b>0,5 a 1 kg por mes</b>. Mantén un superávit de 200-400 kcal sobre el TDEE.',
+  tipCorte:'Para adelgazar de forma saludable pierde <b>0,5 a 1 kg por semana</b>. Un déficit de 500 kcal al día es sostenible.',
+  histSub:'Toca cada día para ver las comidas',cal7Dias:'Calorías — últimos 7 días',
   calendario:'Calendario',registrosDiarios:'Registros diarios',
-  excellenteLegend:'â Excelente (80+)',bomLegend:'â Bueno (50â79)',ruimLegend:'â Malo (<50)',
+  excellenteLegend:'● Excelente (80+)',bomLegend:'● Bueno (50–79)',ruimLegend:'● Malo (<50)',
   planoAlimentar:'Plan Alimentario',planoAlimentarSub:'Selecciona tu estilo de dieta actual',
-  onlineAgora:'En lÃ­nea ahora â responde en segundos',
-  alimSelecionado:'Alimento seleccionado',quantidadeG:'Cantidad (g)',caloriasLabel:'CalorÃ­as',
+  onlineAgora:'En línea ahora — responde en segundos',
+  alimSelecionado:'Alimento seleccionado',quantidadeG:'Cantidad (g)',caloriasLabel:'Calorías',
   cadastrarNovo:'+ Agregar nuevo alimento',cadastrarAlimento:'Agregar Alimento',nomeLabel:'Nombre',
-  cal100g:'CalorÃ­as /100g',prot100g:'ProteÃ­na /100g',carb100g:'Carbos /100g',gord100g:'Grasa /100g',salvarAlimento:'Guardar Alimento',
-  toqueAlterarFoto:'Toca para cambiar foto',nivelAtividade:'Nivel de Actividad',objetivo:'Objetivo',massaGoal:'ðª Masa',
-  tmbLabel:'Metabolismo Basal (TMB)',tdeeLabel:'Gasto Total (TDEE)',metaCalorias:'Meta de CalorÃ­as',metaAguaLabel:'Meta de Agua',
-  macrosEst:'Macros estimados',proteinaPura:'ProteÃ­na',carboidratos:'Carbohidratos',gorduraPura:'Grasa',
-  chaveAPILabel:'Clave API Anthropic (Foto IA)',salvarAplicar:'Guardar y Aplicar',sairConta:'ðª Cerrar sesiÃ³n',
-  preenchaTodos:'Rellena todos los campos',sexo:'Sexo',idadeAnos:'Edad (aÃ±os)',pesoKg:'Peso (kg)',alturaCm:'Altura (cm)',
+  cal100g:'Calorías /100g',prot100g:'Proteína /100g',carb100g:'Carbos /100g',gord100g:'Grasa /100g',salvarAlimento:'Guardar Alimento',
+  toqueAlterarFoto:'Toca para cambiar foto',nivelAtividade:'Nivel de Actividad',objetivo:'Objetivo',massaGoal:'💪 Masa',
+  tmbLabel:'Metabolismo Basal (TMB)',tdeeLabel:'Gasto Total (TDEE)',metaCalorias:'Meta de Calorías',metaAguaLabel:'Meta de Agua',
+  macrosEst:'Macros estimados',proteinaPura:'Proteína',carboidratos:'Carbohidratos',gorduraPura:'Grasa',
+  chaveAPILabel:'Clave API Anthropic (Foto IA)',salvarAplicar:'Guardar y Aplicar',sairConta:'🚪 Cerrar sesión',
+  preenchaTodos:'Rellena todos los campos',sexo:'Sexo',idadeAnos:'Edad (años)',pesoKg:'Peso (kg)',alturaCm:'Altura (cm)',
   nivelAtividadeCalc:'Nivel de actividad',
   actSed:'Sedentario',actLight:'Levemente activo (1-3x/sem)',actMod:'Moderado (3-5x/sem)',actActive:'Muy activo (6-7x/sem)',actVery:'Extremadamente activo',
   proSubtitle:'Desbloquea todo el potencial de la app',proIncluido:'INCLUIDO EN PRO',
-  proFeatFotoIA:'Foto IA',proFeatFotoIASub:'Analiza calorÃ­as y macros por foto',
+  proFeatFotoIA:'Foto IA',proFeatFotoIASub:'Analiza calorías y macros por foto',
   proFeatNutri:'Nutricionista IA',proFeatNutriSub:'Chat personalizado 24/7',
-  proFeatRel:'Informes Avanzados',proFeatRelSub:'Proyecciones y anÃ¡lisis semanal detallado',
-  proTrialBadge:'â 2 DÃAS GRATIS â¢ CANCELA CUANDO QUIERAS',proMes:'/mes',
-  proCtaBtn:'â¡ Empezar 2 dÃ­as gratis',proCtaFree:'Continuar con versiÃ³n gratuita'},
+  proFeatRel:'Informes Avanzados',proFeatRelSub:'Proyecciones y análisis semanal detallado',
+  proTrialBadge:'✅ 2 DÍAS GRATIS • CANCELA CUANDO QUIERAS',proMes:'/mes',
+  proCtaBtn:'⚡ Empezar 2 días gratis',proCtaFree:'Continuar con versión gratuita'},
 it:{hoje:'Oggi',fotoIA:'Foto IA',agua:'Acqua',dieta:'Dieta',peso:'Peso',calcular:'Calcola',hist:'Storico',
   ganharMassa:'&#128170; Aumenta Massa',emagrecer:'&#128293; Dimagrire',manter:'&#9878; Mantieni',
   ola:'Ciao,',bemVindo:'Benvenuto!',
@@ -1072,144 +1072,144 @@ it:{hoje:'Oggi',fotoIA:'Foto IA',agua:'Acqua',dieta:'Dieta',peso:'Peso',calcular
   mlConsumidos:'ml consumati',mlRestantes:'ml rimanenti',daMetaLabel:"% dell'obiettivo",
   addAguaTitle:'Aggiungi acqua',zerarAgua:'Azzera acqua',metaDiaria:'Obiettivo giornaliero',calcPerfil:'Calcolato dal tuo profilo',
   scoreDia:'Punteggio del Giorno',
-  camera:'Fotocamera',galeria:'Galleria',cancelar:'Annulla',salvarFoto:'ð¾ Salva foto',
+  camera:'Fotocamera',galeria:'Galleria',cancelar:'Annulla',salvarFoto:'💾 Salva foto',
   nenhumaFoto:'Nessuna foto ancora',primeiraFoto:'Scatta la tua prima foto e segui i tuoi progressi nel tempo!',
   comoFunciona:'Come funziona',
   comoFuncionaTexto:"1. Scatta una foto al tuo piatto<br>2. L'IA identifica ogni ingrediente<br>3. Stima calorie e macro<br>4. Aggiungi tutto con un tocco",
-  fotosProgresso:'ð¸ Foto Progressi',fotosProgressoSub:'Registra e confronta la tua evoluzione corporea',
+  fotosProgresso:'📸 Foto Progressi',fotosProgressoSub:'Registra e confronta la tua evoluzione corporea',
   corpoEvolucao:'Corpo & Evoluzione',corpoEvolucaoSub:'Registra peso e misure corporee',
   grafico:'Grafico',ritmoIdeal:'Ritmo ideale',registrarMedidas:'Registra Misure',
-  salvarMedidas:'ð¾ Salva Misure',historicoMedidas:'Storico Misure',
+  salvarMedidas:'💾 Salva Misure',historicoMedidas:'Storico Misure',
   nenhumRegistro:'Nessun record ancora',registreAoMenos2Pesos:'Registra almeno 2 pesi',
-  tipMassa:"Per la massa muscolare l'ideale Ã¨ guadagnare <b>0,5-1 kg al mese</b>. Mantieni un surplus di 200-400 kcal sopra il TDEE.",
-  tipCorte:'Per dimagrire in modo sano perdi <b>0,5-1 kg a settimana</b>. Un deficit di 500 kcal al giorno Ã¨ sostenibile.',
-  histSub:'Tocca ogni giorno per vedere i pasti',cal7Dias:'Calorie â ultimi 7 giorni',
+  tipMassa:"Per la massa muscolare l'ideale è guadagnare <b>0,5-1 kg al mese</b>. Mantieni un surplus di 200-400 kcal sopra il TDEE.",
+  tipCorte:'Per dimagrire in modo sano perdi <b>0,5-1 kg a settimana</b>. Un deficit di 500 kcal al giorno è sostenibile.',
+  histSub:'Tocca ogni giorno per vedere i pasti',cal7Dias:'Calorie — ultimi 7 giorni',
   calendario:'Calendario',registrosDiarios:'Registrazioni giornaliere',
-  excellenteLegend:'â Eccellente (80+)',bomLegend:'â Buono (50â79)',ruimLegend:'â Scarso (<50)',
+  excellenteLegend:'● Eccellente (80+)',bomLegend:'● Buono (50–79)',ruimLegend:'● Scarso (<50)',
   planoAlimentar:'Piano Alimentare',planoAlimentarSub:'Seleziona il tuo stile di dieta attuale',
-  onlineAgora:'Online ora â risponde in secondi',
-  alimSelecionado:'Alimento selezionato',quantidadeG:'QuantitÃ  (g)',caloriasLabel:'Calorie',
+  onlineAgora:'Online ora — risponde in secondi',
+  alimSelecionado:'Alimento selezionato',quantidadeG:'Quantità (g)',caloriasLabel:'Calorie',
   cadastrarNovo:'+ Aggiungi nuovo alimento',cadastrarAlimento:'Aggiungi Alimento',nomeLabel:'Nome',
   cal100g:'Calorie /100g',prot100g:'Proteina /100g',carb100g:'Carboidrati /100g',gord100g:'Grassi /100g',salvarAlimento:'Salva Alimento',
-  toqueAlterarFoto:'Tocca per cambiare foto',nivelAtividade:"Livello di AttivitÃ ",objetivo:'Obiettivo',massaGoal:'ðª Massa',
+  toqueAlterarFoto:'Tocca per cambiare foto',nivelAtividade:"Livello di Attività",objetivo:'Obiettivo',massaGoal:'💪 Massa',
   tmbLabel:'Metabolismo Basale (MB)',tdeeLabel:'Spesa Totale (TDEE)',metaCalorias:'Obiettivo Calorico',metaAguaLabel:'Obiettivo Acqua',
   macrosEst:'Macro stimati',proteinaPura:'Proteina',carboidratos:'Carboidrati',gorduraPura:'Grassi',
-  chaveAPILabel:'Chiave API Anthropic (Foto IA)',salvarAplicar:'Salva e Applica',sairConta:'ðª Disconnetti',
-  preenchaTodos:'Compila tutti i campi',sexo:'Sesso',idadeAnos:'EtÃ  (anni)',pesoKg:'Peso (kg)',alturaCm:'Altezza (cm)',
-  nivelAtividadeCalc:'Livello di attivitÃ ',
+  chaveAPILabel:'Chiave API Anthropic (Foto IA)',salvarAplicar:'Salva e Applica',sairConta:'🚪 Disconnetti',
+  preenchaTodos:'Compila tutti i campi',sexo:'Sesso',idadeAnos:'Età (anni)',pesoKg:'Peso (kg)',alturaCm:'Altezza (cm)',
+  nivelAtividadeCalc:'Livello di attività',
   actSed:'Sedentario',actLight:'Leggermente attivo (1-3x/sett)',actMod:'Moderatamente attivo (3-5x/sett)',actActive:'Molto attivo (6-7x/sett)',actVery:'Estremamente attivo',
   proSubtitle:'Sblocca tutto il potenziale dell\'app',proIncluido:'INCLUSO IN PRO',
   proFeatFotoIA:'Foto IA',proFeatFotoIASub:'Analizza calorie e macro dalla foto',
   proFeatNutri:'Nutrizionista IA',proFeatNutriSub:'Chat personalizzata 24/7',
   proFeatRel:'Report Avanzati',proFeatRelSub:'Proiezioni e analisi settimanale dettagliata',
-  proTrialBadge:'â 2 GIORNI GRATIS â¢ ANNULLA QUANDO VUOI',proMes:'/mese',
-  proCtaBtn:'â¡ Inizia 2 giorni gratis',proCtaFree:'Continua con la versione gratuita'},
-fr:{hoje:'Aujourd\'hui',fotoIA:'Photo IA',agua:'Eau',dieta:'RÃ©gime',peso:'Poids',calcular:'Calculer',hist:'Historique',
+  proTrialBadge:'✅ 2 GIORNI GRATIS • ANNULLA QUANDO VUOI',proMes:'/mese',
+  proCtaBtn:'⚡ Inizia 2 giorni gratis',proCtaFree:'Continua con la versione gratuita'},
+fr:{hoje:'Aujourd\'hui',fotoIA:'Photo IA',agua:'Eau',dieta:'Régime',peso:'Poids',calcular:'Calculer',hist:'Historique',
   ganharMassa:'&#128170; Prendre du Muscle',emagrecer:'&#128293; Maigrir',manter:'&#9878; Maintenir',
   ola:'Bonjour,',bemVindo:'Bienvenue!',
-  proteina:'&#129385; ProtÃ©ines',carbo:'&#127834; Glucides',gordura:'&#129361; Lipides',
-  cafeManha:'Petit-dÃ©jeuner',almoco:'DÃ©jeuner',lanche:'Collation',jantar:'DÃ®ner',
+  proteina:'&#129385; Protéines',carbo:'&#127834; Glucides',gordura:'&#129361; Lipides',
+  cafeManha:'Petit-déjeuner',almoco:'Déjeuner',lanche:'Collation',jantar:'Dîner',
   nenhumAlimento:'Aucun aliment',addFood:'+ Ajouter Aliment',
   refRapidas:'REPAS RAPIDES',aguaHoje:'EAU AUJOURD\'HUI',
   faltam:'Il manque',acimaMeta:'au-dessus de l\'objectif',metaAtingida:'Objectif atteint!',
   meta:'Objectif',buscar:'Rechercher aliment...',gramas:'Grammes (g)',adicionar:'Ajouter',
-  aplicarMeta:'Appliquer cet objectif',removido:'SupprimÃ©',
-  pesoRegistrado:'Poids enregistrÃ©!',pesoInvalido:'Poids invalide',
-  aguaAtualizada:'Objectif hydrique mis Ã  jour!',
-  tmb:'MB',tdee:'TDEE',resultados:'RÃ©sultats',calcBtn:'Calculer',
-  masc:'Masculin',fem:'FÃ©minin',
-  tiposDieta:'Type de RÃ©gime',evolPeso:'Ãvolution du Poids',calculadora:'Calculateur',
+  aplicarMeta:'Appliquer cet objectif',removido:'Supprimé',
+  pesoRegistrado:'Poids enregistré!',pesoInvalido:'Poids invalide',
+  aguaAtualizada:'Objectif hydrique mis à jour!',
+  tmb:'MB',tdee:'TDEE',resultados:'Résultats',calcBtn:'Calculer',
+  masc:'Masculin',fem:'Féminin',
+  tiposDieta:'Type de Régime',evolPeso:'Évolution du Poids',calculadora:'Calculateur',
   calcSub:'Calculez vos besoins caloriques journaliers',
-  histTitle:'Historique',profTitle:'Profil',configTitle:'ParamÃ¨tres',
-  hidratacao:'Hydratation',hidratacaoSub:'Restez hydratÃ© tout au long de la journÃ©e',
-  mlConsumidos:'ml consommÃ©s',mlRestantes:'ml restants',daMetaLabel:"% de l'objectif",
-  addAguaTitle:"Ajouter de l'eau",zerarAgua:"RÃ©initialiser l'eau",metaDiaria:'Objectif quotidien',calcPerfil:'CalculÃ© depuis votre profil',
+  histTitle:'Historique',profTitle:'Profil',configTitle:'Paramètres',
+  hidratacao:'Hydratation',hidratacaoSub:'Restez hydraté tout au long de la journée',
+  mlConsumidos:'ml consommés',mlRestantes:'ml restants',daMetaLabel:"% de l'objectif",
+  addAguaTitle:"Ajouter de l'eau",zerarAgua:"Réinitialiser l'eau",metaDiaria:'Objectif quotidien',calcPerfil:'Calculé depuis votre profil',
   scoreDia:'Score du Jour',
-  camera:'CamÃ©ra',galeria:'Galerie',cancelar:'Annuler',salvarFoto:'ð¾ Sauvegarder photo',
-  nenhumaFoto:'Aucune photo encore',primeiraFoto:'Prenez votre premiÃ¨re photo et suivez votre Ã©volution!',
-  comoFunciona:'Comment Ã§a marche',
-  comoFuncionaTexto:"1. Prenez une photo de votre repas<br>2. L'IA identifie chaque ingrÃ©dient<br>3. Estime les calories et macros<br>4. Ajoutez tout en un clic",
-  fotosProgresso:'ð¸ Photos de ProgrÃ¨s',fotosProgressoSub:'Enregistrez et comparez votre Ã©volution corporelle',
-  corpoEvolucao:'Corps & Ãvolution',corpoEvolucaoSub:'Enregistrez poids et mensurations',
-  grafico:'Graphique',ritmoIdeal:'Rythme idÃ©al',registrarMedidas:'Enregistrer Mensurations',
-  salvarMedidas:'ð¾ Sauvegarder Mensurations',historicoMedidas:'Historique des Mensurations',
+  camera:'Caméra',galeria:'Galerie',cancelar:'Annuler',salvarFoto:'💾 Sauvegarder photo',
+  nenhumaFoto:'Aucune photo encore',primeiraFoto:'Prenez votre première photo et suivez votre évolution!',
+  comoFunciona:'Comment ça marche',
+  comoFuncionaTexto:"1. Prenez une photo de votre repas<br>2. L'IA identifie chaque ingrédient<br>3. Estime les calories et macros<br>4. Ajoutez tout en un clic",
+  fotosProgresso:'📸 Photos de Progrès',fotosProgressoSub:'Enregistrez et comparez votre évolution corporelle',
+  corpoEvolucao:'Corps & Évolution',corpoEvolucaoSub:'Enregistrez poids et mensurations',
+  grafico:'Graphique',ritmoIdeal:'Rythme idéal',registrarMedidas:'Enregistrer Mensurations',
+  salvarMedidas:'💾 Sauvegarder Mensurations',historicoMedidas:'Historique des Mensurations',
   nenhumRegistro:'Aucun enregistrement encore',registreAoMenos2Pesos:'Enregistrez au moins 2 poids',
-  tipMassa:"Pour la prise de masse l'idÃ©al est de prendre <b>0,5 Ã  1 kg par mois</b>. Maintenez un surplus de 200-400 kcal au-dessus du TDEE.",
-  tipCorte:'Pour maigrir sainement, perdez <b>0,5 Ã  1 kg par semaine</b>. Un dÃ©ficit de 500 kcal par jour est durable.',
-  histSub:'Appuyez sur chaque jour pour voir les repas',cal7Dias:'Calories â 7 derniers jours',
+  tipMassa:"Pour la prise de masse l'idéal est de prendre <b>0,5 à 1 kg par mois</b>. Maintenez un surplus de 200-400 kcal au-dessus du TDEE.",
+  tipCorte:'Pour maigrir sainement, perdez <b>0,5 à 1 kg par semaine</b>. Un déficit de 500 kcal par jour est durable.',
+  histSub:'Appuyez sur chaque jour pour voir les repas',cal7Dias:'Calories — 7 derniers jours',
   calendario:'Calendrier',registrosDiarios:'Enregistrements quotidiens',
-  excellenteLegend:'â Excellent (80+)',bomLegend:'â Bien (50â79)',ruimLegend:'â Mauvais (<50)',
-  planoAlimentar:'Plan Alimentaire',planoAlimentarSub:'SÃ©lectionnez votre style de rÃ©gime actuel',
-  onlineAgora:'En ligne maintenant â rÃ©pond en secondes',
-  alimSelecionado:'Aliment sÃ©lectionnÃ©',quantidadeG:'QuantitÃ© (g)',caloriasLabel:'Calories',
+  excellenteLegend:'● Excellent (80+)',bomLegend:'● Bien (50–79)',ruimLegend:'● Mauvais (<50)',
+  planoAlimentar:'Plan Alimentaire',planoAlimentarSub:'Sélectionnez votre style de régime actuel',
+  onlineAgora:'En ligne maintenant — répond en secondes',
+  alimSelecionado:'Aliment sélectionné',quantidadeG:'Quantité (g)',caloriasLabel:'Calories',
   cadastrarNovo:'+ Ajouter nouvel aliment',cadastrarAlimento:'Ajouter Aliment',nomeLabel:'Nom',
-  cal100g:'Calories /100g',prot100g:'ProtÃ©ines /100g',carb100g:'Glucides /100g',gord100g:'Lipides /100g',salvarAlimento:'Sauvegarder Aliment',
-  toqueAlterarFoto:'Appuyez pour changer photo',nivelAtividade:"Niveau d'ActivitÃ©",objetivo:'Objectif',massaGoal:'ðª Muscles',
-  tmbLabel:'MÃ©tabolisme de Base (MB)',tdeeLabel:'DÃ©pense Totale (TDEE)',metaCalorias:'Objectif Calorique',metaAguaLabel:"Objectif Eau",
-  macrosEst:'Macros estimÃ©s',proteinaPura:'ProtÃ©ines',carboidratos:'Glucides',gorduraPura:'Lipides',
-  chaveAPILabel:'ClÃ© API Anthropic (Photo IA)',salvarAplicar:'Sauvegarder & Appliquer',sairConta:'ðª Se dÃ©connecter',
-  preenchaTodos:'Remplissez tous les champs',sexo:'Sexe',idadeAnos:'Ãge (ans)',pesoKg:'Poids (kg)',alturaCm:'Taille (cm)',
-  nivelAtividadeCalc:"Niveau d'activitÃ©",
-  actSed:'SÃ©dentaire',actLight:'LÃ©gÃ¨rement actif (1-3x/sem)',actMod:'ModÃ©rÃ©ment actif (3-5x/sem)',actActive:'TrÃ¨s actif (6-7x/sem)',actVery:'ExtrÃªmement actif',
-  proSubtitle:'DÃ©bloquez tout le potentiel de l\'app',proIncluido:'INCLUS DANS PRO',
+  cal100g:'Calories /100g',prot100g:'Protéines /100g',carb100g:'Glucides /100g',gord100g:'Lipides /100g',salvarAlimento:'Sauvegarder Aliment',
+  toqueAlterarFoto:'Appuyez pour changer photo',nivelAtividade:"Niveau d'Activité",objetivo:'Objectif',massaGoal:'💪 Muscles',
+  tmbLabel:'Métabolisme de Base (MB)',tdeeLabel:'Dépense Totale (TDEE)',metaCalorias:'Objectif Calorique',metaAguaLabel:"Objectif Eau",
+  macrosEst:'Macros estimés',proteinaPura:'Protéines',carboidratos:'Glucides',gorduraPura:'Lipides',
+  chaveAPILabel:'Clé API Anthropic (Photo IA)',salvarAplicar:'Sauvegarder & Appliquer',sairConta:'🚪 Se déconnecter',
+  preenchaTodos:'Remplissez tous les champs',sexo:'Sexe',idadeAnos:'Âge (ans)',pesoKg:'Poids (kg)',alturaCm:'Taille (cm)',
+  nivelAtividadeCalc:"Niveau d'activité",
+  actSed:'Sédentaire',actLight:'Légèrement actif (1-3x/sem)',actMod:'Modérément actif (3-5x/sem)',actActive:'Très actif (6-7x/sem)',actVery:'Extrêmement actif',
+  proSubtitle:'Débloquez tout le potentiel de l\'app',proIncluido:'INCLUS DANS PRO',
   proFeatFotoIA:'Photo IA',proFeatFotoIASub:'Analyse les calories et macros par photo',
-  proFeatNutri:'Nutritionniste IA',proFeatNutriSub:'Chat personnalisÃ© 24h/24',
-  proFeatRel:'Rapports AvancÃ©s',proFeatRelSub:'Projections et analyse hebdomadaire dÃ©taillÃ©e',
-  proTrialBadge:'â 2 JOURS GRATUITS â¢ ANNULEZ QUAND VOUS VOULEZ',proMes:'/mois',
-  proCtaBtn:'â¡ Commencer 2 jours gratuits',proCtaFree:'Continuer avec la version gratuite'},
-de:{hoje:'Heute',fotoIA:'Foto KI',agua:'Wasser',dieta:'DiÃ¤t',peso:'Gewicht',calcular:'Berechnen',hist:'Verlauf',
+  proFeatNutri:'Nutritionniste IA',proFeatNutriSub:'Chat personnalisé 24h/24',
+  proFeatRel:'Rapports Avancés',proFeatRelSub:'Projections et analyse hebdomadaire détaillée',
+  proTrialBadge:'✅ 2 JOURS GRATUITS • ANNULEZ QUAND VOUS VOULEZ',proMes:'/mois',
+  proCtaBtn:'⚡ Commencer 2 jours gratuits',proCtaFree:'Continuer avec la version gratuite'},
+de:{hoje:'Heute',fotoIA:'Foto KI',agua:'Wasser',dieta:'Diät',peso:'Gewicht',calcular:'Berechnen',hist:'Verlauf',
   ganharMassa:'&#128170; Muskeln aufbauen',emagrecer:'&#128293; Abnehmen',manter:'&#9878; Gewicht halten',
   ola:'Hallo,',bemVindo:'Willkommen!',
   proteina:'&#129385; Protein',carbo:'&#127834; Kohlenhydrate',gordura:'&#129361; Fett',
-  cafeManha:'FrÃ¼hstÃ¼ck',almoco:'Mittagessen',lanche:'Snack',jantar:'Abendessen',
-  nenhumAlimento:'Kein Lebensmittel',addFood:'+ Lebensmittel hinzufÃ¼gen',
+  cafeManha:'Frühstück',almoco:'Mittagessen',lanche:'Snack',jantar:'Abendessen',
+  nenhumAlimento:'Kein Lebensmittel',addFood:'+ Lebensmittel hinzufügen',
   refRapidas:'SCHNELLE MAHLZEITEN',aguaHoje:'WASSER HEUTE',
-  faltam:'Fehlen noch',acimaMeta:'Ã¼ber dem Ziel',metaAtingida:'Ziel erreicht!',
-  meta:'Ziel',buscar:'Lebensmittel suchen...',gramas:'Gramm (g)',adicionar:'HinzufÃ¼gen',
+  faltam:'Fehlen noch',acimaMeta:'über dem Ziel',metaAtingida:'Ziel erreicht!',
+  meta:'Ziel',buscar:'Lebensmittel suchen...',gramas:'Gramm (g)',adicionar:'Hinzufügen',
   aplicarMeta:'Dieses Ziel anwenden',removido:'Entfernt',
-  pesoRegistrado:'Gewicht gespeichert!',pesoInvalido:'UngÃ¼ltiges Gewicht',
+  pesoRegistrado:'Gewicht gespeichert!',pesoInvalido:'Ungültiges Gewicht',
   aguaAtualizada:'Trinkmengenziel aktualisiert!',
   tmb:'GU',tdee:'TDEE',resultados:'Ergebnisse',calcBtn:'Berechnen',
-  masc:'MÃ¤nnlich',fem:'Weiblich',
-  tiposDieta:'DiÃ¤ttyp',evolPeso:'Gewichtsverlauf',calculadora:'Rechner',
-  calcSub:'Berechnen Sie Ihren tÃ¤glichen Kalorienbedarf',
+  masc:'Männlich',fem:'Weiblich',
+  tiposDieta:'Diättyp',evolPeso:'Gewichtsverlauf',calculadora:'Rechner',
+  calcSub:'Berechnen Sie Ihren täglichen Kalorienbedarf',
   histTitle:'Verlauf',profTitle:'Profil',configTitle:'Einstellungen',
-  hidratacao:'Wasserhaushalt',hidratacaoSub:'Bleib den ganzen Tag Ã¼ber hydratisiert',
-  mlConsumidos:'ml getrunken',mlRestantes:'ml Ã¼brig',daMetaLabel:'% des Ziels',
-  addAguaTitle:'Wasser hinzufÃ¼gen',zerarAgua:'Wasser zurÃ¼cksetzen',metaDiaria:'Tagesziel',calcPerfil:'Berechnet aus Ihrem Profil',
+  hidratacao:'Wasserhaushalt',hidratacaoSub:'Bleib den ganzen Tag über hydratisiert',
+  mlConsumidos:'ml getrunken',mlRestantes:'ml übrig',daMetaLabel:'% des Ziels',
+  addAguaTitle:'Wasser hinzufügen',zerarAgua:'Wasser zurücksetzen',metaDiaria:'Tagesziel',calcPerfil:'Berechnet aus Ihrem Profil',
   scoreDia:'Tagespunkte',
-  camera:'Kamera',galeria:'Galerie',cancelar:'Abbrechen',salvarFoto:'ð¾ Foto speichern',
+  camera:'Kamera',galeria:'Galerie',cancelar:'Abbrechen',salvarFoto:'💾 Foto speichern',
   nenhumaFoto:'Noch keine Fotos',primeiraFoto:'Machen Sie Ihr erstes Foto und verfolgen Sie Ihren Fortschritt!',
   comoFunciona:'Wie es funktioniert',
-  comoFuncionaTexto:'1. Mach ein Foto von deinem Essen<br>2. KI erkennt jede Zutat<br>3. SchÃ¤tzt Kalorien und Makros<br>4. Alles mit einem Tippen hinzufÃ¼gen',
-  fotosProgresso:'ð¸ Fortschrittsfotos',fotosProgressoSub:'Aufzeichnen und vergleichen Sie Ihre kÃ¶rperliche Entwicklung',
-  corpoEvolucao:'KÃ¶rper & Entwicklung',corpoEvolucaoSub:'Gewicht und KÃ¶rpermaÃe aufzeichnen',
-  grafico:'Diagramm',ritmoIdeal:'Ideales Tempo',registrarMedidas:'MaÃe aufzeichnen',
-  salvarMedidas:'ð¾ MaÃe speichern',historicoMedidas:'MaÃverlauf',
-  nenhumRegistro:'Noch keine EintrÃ¤ge',registreAoMenos2Pesos:'Mindestens 2 Gewichte eintragen',
-  tipMassa:'FÃ¼r den Muskelaufbau ist es ideal, <b>0,5 bis 1 kg pro Monat</b> zuzunehmen. Halten Sie einen Ãberschuss von 200-400 kcal Ã¼ber dem TDEE.',
+  comoFuncionaTexto:'1. Mach ein Foto von deinem Essen<br>2. KI erkennt jede Zutat<br>3. Schätzt Kalorien und Makros<br>4. Alles mit einem Tippen hinzufügen',
+  fotosProgresso:'📸 Fortschrittsfotos',fotosProgressoSub:'Aufzeichnen und vergleichen Sie Ihre körperliche Entwicklung',
+  corpoEvolucao:'Körper & Entwicklung',corpoEvolucaoSub:'Gewicht und Körpermaße aufzeichnen',
+  grafico:'Diagramm',ritmoIdeal:'Ideales Tempo',registrarMedidas:'Maße aufzeichnen',
+  salvarMedidas:'💾 Maße speichern',historicoMedidas:'Maßverlauf',
+  nenhumRegistro:'Noch keine Einträge',registreAoMenos2Pesos:'Mindestens 2 Gewichte eintragen',
+  tipMassa:'Für den Muskelaufbau ist es ideal, <b>0,5 bis 1 kg pro Monat</b> zuzunehmen. Halten Sie einen Überschuss von 200-400 kcal über dem TDEE.',
   tipCorte:'Um gesund abzunehmen, verliere <b>0,5 bis 1 kg pro Woche</b>. Ein Defizit von 500 kcal pro Tag ist nachhaltig.',
-  histSub:'Tippe auf jeden Tag, um die Mahlzeiten zu sehen',cal7Dias:'Kalorien â letzte 7 Tage',
-  calendario:'Kalender',registrosDiarios:'TÃ¤gliche EintrÃ¤ge',
-  excellenteLegend:'â Ausgezeichnet (80+)',bomLegend:'â Gut (50â79)',ruimLegend:'â Schlecht (<50)',
-  planoAlimentar:'ErnÃ¤hrungsplan',planoAlimentarSub:'WÃ¤hlen Sie Ihren aktuellen ErnÃ¤hrungsstil',
-  onlineAgora:'Jetzt online â antwortet in Sekunden',
-  alimSelecionado:'AusgewÃ¤hltes Lebensmittel',quantidadeG:'Menge (g)',caloriasLabel:'Kalorien',
-  cadastrarNovo:'+ Neues Lebensmittel hinzufÃ¼gen',cadastrarAlimento:'Lebensmittel hinzufÃ¼gen',nomeLabel:'Name',
+  histSub:'Tippe auf jeden Tag, um die Mahlzeiten zu sehen',cal7Dias:'Kalorien — letzte 7 Tage',
+  calendario:'Kalender',registrosDiarios:'Tägliche Einträge',
+  excellenteLegend:'● Ausgezeichnet (80+)',bomLegend:'● Gut (50–79)',ruimLegend:'● Schlecht (<50)',
+  planoAlimentar:'Ernährungsplan',planoAlimentarSub:'Wählen Sie Ihren aktuellen Ernährungsstil',
+  onlineAgora:'Jetzt online — antwortet in Sekunden',
+  alimSelecionado:'Ausgewähltes Lebensmittel',quantidadeG:'Menge (g)',caloriasLabel:'Kalorien',
+  cadastrarNovo:'+ Neues Lebensmittel hinzufügen',cadastrarAlimento:'Lebensmittel hinzufügen',nomeLabel:'Name',
   cal100g:'Kalorien /100g',prot100g:'Protein /100g',carb100g:'Kohlenhydrate /100g',gord100g:'Fett /100g',salvarAlimento:'Lebensmittel speichern',
-  toqueAlterarFoto:'Tippen zum Ãndern des Fotos',nivelAtividade:'AktivitÃ¤tslevel',objetivo:'Ziel',massaGoal:'ðª Muskeln aufbauen',
+  toqueAlterarFoto:'Tippen zum Ändern des Fotos',nivelAtividade:'Aktivitätslevel',objetivo:'Ziel',massaGoal:'💪 Muskeln aufbauen',
   tmbLabel:'Grundumsatz (GU)',tdeeLabel:'Gesamtverbrauch (TDEE)',metaCalorias:'Kalorienziel',metaAguaLabel:'Wasserziel',
-  macrosEst:'GeschÃ¤tzte Makros',proteinaPura:'Protein',carboidratos:'Kohlenhydrate',gorduraPura:'Fett',
-  chaveAPILabel:'Anthropic API-SchlÃ¼ssel (KI-Foto)',salvarAplicar:'Speichern & Anwenden',sairConta:'ðª Abmelden',
-  preenchaTodos:'Alle Felder ausfÃ¼llen',sexo:'Geschlecht',idadeAnos:'Alter (Jahre)',pesoKg:'Gewicht (kg)',alturaCm:'GrÃ¶Ãe (cm)',
-  nivelAtividadeCalc:'AktivitÃ¤tslevel',
-  actSed:'Sitzend',actLight:'Leicht aktiv (1-3x/Woche)',actMod:'MÃ¤Ãig aktiv (3-5x/Woche)',actActive:'Sehr aktiv (6-7x/Woche)',actVery:'Extrem aktiv',
+  macrosEst:'Geschätzte Makros',proteinaPura:'Protein',carboidratos:'Kohlenhydrate',gorduraPura:'Fett',
+  chaveAPILabel:'Anthropic API-Schlüssel (KI-Foto)',salvarAplicar:'Speichern & Anwenden',sairConta:'🚪 Abmelden',
+  preenchaTodos:'Alle Felder ausfüllen',sexo:'Geschlecht',idadeAnos:'Alter (Jahre)',pesoKg:'Gewicht (kg)',alturaCm:'Größe (cm)',
+  nivelAtividadeCalc:'Aktivitätslevel',
+  actSed:'Sitzend',actLight:'Leicht aktiv (1-3x/Woche)',actMod:'Mäßig aktiv (3-5x/Woche)',actActive:'Sehr aktiv (6-7x/Woche)',actVery:'Extrem aktiv',
   proSubtitle:'Entsperre das volle Potenzial der App',proIncluido:'IN PRO ENTHALTEN',
   proFeatFotoIA:'Foto KI',proFeatFotoIASub:'Analysiert Kalorien und Makros per Foto',
-  proFeatNutri:'KI-ErnÃ¤hrungsberater',proFeatNutriSub:'Personalisierter Chat 24/7',
+  proFeatNutri:'KI-Ernährungsberater',proFeatNutriSub:'Personalisierter Chat 24/7',
   proFeatRel:'Erweiterte Berichte',proFeatRelSub:'Projektionen und detaillierte Wochenanalyse',
-  proTrialBadge:'â 2 TAGE GRATIS â¢ JEDERZEIT KÃNDIGEN',proMes:'/Monat',
-  proCtaBtn:'â¡ 2 Tage gratis starten',proCtaFree:'Mit kostenloser Version fortfahren'}
+  proTrialBadge:'✅ 2 TAGE GRATIS • JEDERZEIT KÜNDIGEN',proMes:'/Monat',
+  proCtaBtn:'⚡ 2 Tage gratis starten',proCtaFree:'Mit kostenloser Version fortfahren'}
 };
 function setLang(lang){
   currentLang=lang;
@@ -1246,7 +1246,7 @@ function setLang(lang){
     var k=el.getAttribute('data-i18n');
     if(t[k]!==undefined)el.innerHTML=t[k];
   });
-  // Update select options â activity level
+  // Update select options — activity level
   var actLevels=[
     {v:'1.2',label:t.actSed||'Sedentario'},
     {v:'1.375',label:t.actLight||'Levemente ativo'},
@@ -1304,12 +1304,12 @@ var FOOD_DB=[
   {name:"Quinoa cozida",icon:"quinoa",kcal:120,prot:4.4,carb:21.3,fat:1.9}
 ];
 var DIET_TYPES=[
-  {id:"normal",icon:"plate",name:{pt:"Normal",en:"Normal",es:"Normal"},desc:{pt:"Dieta equilibrada",en:"Balanced diet",es:"Dieta equilibrada"},tips:{pt:["Variedade de grupos alimentares","Proteina carbo e gordura em equilibrio","3 refeicoes mais 2 lanches","Evite ultraprocessados"],en:["Variety of food groups","Balanced protein carbs and fat","3 meals plus 2 snacks","Avoid ultra-processed foods"],es:["Variedad de grupos alimentarios","Equilibrio entre proteÃ­na carbs y grasa","3 comidas y 2 meriendas","Evita los ultraprocesados"]}},
-  {id:"lowcarb",icon:"meat",name:{pt:"Low Carb",en:"Low Carb",es:"Low Carb"},desc:{pt:"Reducao de carboidratos",en:"Carbohydrate reduction",es:"ReducciÃ³n de carbohidratos"},tips:{pt:["Carbo menor que 100g por dia","Priorize proteinas e gorduras boas","Legumes e folhas a vontade","Evite acucar e farinhas brancas"],en:["Less than 100g carbs per day","Prioritize protein and healthy fats","Vegetables and greens freely","Avoid sugar and white flour"],es:["Menos de 100g de carbos por dÃ­a","Prioriza proteÃ­nas y grasas saludables","Verduras y hojas libremente","Evita azÃºcar y harinas blancas"]}},
-  {id:"keto",icon:"fire",name:{pt:"Cetogenica",en:"Ketogenic",es:"CetogÃ©nica"},desc:{pt:"Cetose metabolica",en:"Metabolic ketosis",es:"Cetosis metabÃ³lica"},tips:{pt:["Carbo menor que 30g por dia","Gordura 70 a 80 porcento das calorias","Proteina moderada","Monitorar cetose"],en:["Less than 30g carbs per day","Fat 70-80 percent of calories","Moderate protein","Monitor ketosis"],es:["Menos de 30g de carbos por dÃ­a","Grasa 70-80 por ciento de calorÃ­as","ProteÃ­na moderada","Monitorear cetosis"]}},
-  {id:"carnivore",icon:"bone",name:{pt:"Carnivora",en:"Carnivore",es:"CarnÃ­vora"},desc:{pt:"Somente origem animal",en:"Animal-origin only",es:"Solo origen animal"},tips:{pt:["Carne peixe ovos laticinios","Zero vegetais e frutas","Alta proteina e gordura","Requer acompanhamento medico"],en:["Meat fish eggs dairy","Zero vegetables and fruits","High protein and fat","Requires medical supervision"],es:["Carne pescado huevos lÃ¡cteos","Cero verduras y frutas","Alta proteÃ­na y grasa","Requiere supervisiÃ³n mÃ©dica"]}},
-  {id:"jejenum",icon:"clock",name:{pt:"Jejum Intermitente",en:"Intermittent Fasting",es:"Ayuno Intermitente"},desc:{pt:"Janela alimentar restrita",en:"Restricted eating window",es:"Ventana alimentaria restringida"},tips:{pt:["16:8 - 16h de jejum 8h comendo","Cafe preto e agua no jejum","Refeicoes mais densas na janela","Comece gradualmente"],en:["16:8 - 16h fasting 8h eating","Black coffee and water during fast","Denser meals in the eating window","Start gradually"],es:["16:8 - 16h de ayuno 8h comiendo","CafÃ© negro y agua en el ayuno","Comidas mÃ¡s densas en la ventana","Comienza gradualmente"]}},
-  {id:"mediterranea",icon:"wave",name:{pt:"Mediterranea",en:"Mediterranean",es:"MediterrÃ¡nea"},desc:{pt:"Estilo mediterraneo",en:"Mediterranean lifestyle",es:"Estilo mediterrÃ¡neo"},tips:{pt:["Azeite peixes leguminosas","Oleaginosas e frutas diariamente","Graos integrais e vegetais","Estilo de vida saudavel"],en:["Olive oil fish legumes","Nuts and fruits daily","Whole grains and vegetables","Healthy lifestyle"],es:["Aceite de oliva pescados legumbres","Frutos secos y frutas diariamente","Granos integrales y verduras","Estilo de vida saludable"]}}
+  {id:"normal",icon:"plate",name:{pt:"Normal",en:"Normal",es:"Normal"},desc:{pt:"Dieta equilibrada",en:"Balanced diet",es:"Dieta equilibrada"},tips:{pt:["Variedade de grupos alimentares","Proteina carbo e gordura em equilibrio","3 refeicoes mais 2 lanches","Evite ultraprocessados"],en:["Variety of food groups","Balanced protein carbs and fat","3 meals plus 2 snacks","Avoid ultra-processed foods"],es:["Variedad de grupos alimentarios","Equilibrio entre proteína carbs y grasa","3 comidas y 2 meriendas","Evita los ultraprocesados"]}},
+  {id:"lowcarb",icon:"meat",name:{pt:"Low Carb",en:"Low Carb",es:"Low Carb"},desc:{pt:"Reducao de carboidratos",en:"Carbohydrate reduction",es:"Reducción de carbohidratos"},tips:{pt:["Carbo menor que 100g por dia","Priorize proteinas e gorduras boas","Legumes e folhas a vontade","Evite acucar e farinhas brancas"],en:["Less than 100g carbs per day","Prioritize protein and healthy fats","Vegetables and greens freely","Avoid sugar and white flour"],es:["Menos de 100g de carbos por día","Prioriza proteínas y grasas saludables","Verduras y hojas libremente","Evita azúcar y harinas blancas"]}},
+  {id:"keto",icon:"fire",name:{pt:"Cetogenica",en:"Ketogenic",es:"Cetogénica"},desc:{pt:"Cetose metabolica",en:"Metabolic ketosis",es:"Cetosis metabólica"},tips:{pt:["Carbo menor que 30g por dia","Gordura 70 a 80 porcento das calorias","Proteina moderada","Monitorar cetose"],en:["Less than 30g carbs per day","Fat 70-80 percent of calories","Moderate protein","Monitor ketosis"],es:["Menos de 30g de carbos por día","Grasa 70-80 por ciento de calorías","Proteína moderada","Monitorear cetosis"]}},
+  {id:"carnivore",icon:"bone",name:{pt:"Carnivora",en:"Carnivore",es:"Carnívora"},desc:{pt:"Somente origem animal",en:"Animal-origin only",es:"Solo origen animal"},tips:{pt:["Carne peixe ovos laticinios","Zero vegetais e frutas","Alta proteina e gordura","Requer acompanhamento medico"],en:["Meat fish eggs dairy","Zero vegetables and fruits","High protein and fat","Requires medical supervision"],es:["Carne pescado huevos lácteos","Cero verduras y frutas","Alta proteína y grasa","Requiere supervisión médica"]}},
+  {id:"jejenum",icon:"clock",name:{pt:"Jejum Intermitente",en:"Intermittent Fasting",es:"Ayuno Intermitente"},desc:{pt:"Janela alimentar restrita",en:"Restricted eating window",es:"Ventana alimentaria restringida"},tips:{pt:["16:8 - 16h de jejum 8h comendo","Cafe preto e agua no jejum","Refeicoes mais densas na janela","Comece gradualmente"],en:["16:8 - 16h fasting 8h eating","Black coffee and water during fast","Denser meals in the eating window","Start gradually"],es:["16:8 - 16h de ayuno 8h comiendo","Café negro y agua en el ayuno","Comidas más densas en la ventana","Comienza gradualmente"]}},
+  {id:"mediterranea",icon:"wave",name:{pt:"Mediterranea",en:"Mediterranean",es:"Mediterránea"},desc:{pt:"Estilo mediterraneo",en:"Mediterranean lifestyle",es:"Estilo mediterráneo"},tips:{pt:["Azeite peixes leguminosas","Oleaginosas e frutas diariamente","Graos integrais e vegetais","Estilo de vida saudavel"],en:["Olive oil fish legumes","Nuts and fruits daily","Whole grains and vegetables","Healthy lifestyle"],es:["Aceite de oliva pescados legumbres","Frutos secos y frutas diariamente","Granos integrales y verduras","Estilo de vida saludable"]}}
 ];
 var PREMADE=[
   {icon:"coffee",name:"Cafe Manha",foods:[{name:"Ovo inteiro",g:150},{name:"Pao integral",g:50},{name:"Banana",g:100}]},
@@ -1353,9 +1353,9 @@ function getMacroGoals(){
   var k=state.calGoal;
   var w=(state.profile&&state.profile.weight)||0;
   var g=state.goal||'mass';
-  // ProteÃ­na baseada em peso corporal Ã fator por objetivo
-  // Emagrecer: 2.2g/kg (maior â preserva mÃºsculo no dÃ©ficit)
-  // Ganhar Massa: 2.0g/kg (alto para sÃ­ntese muscular)
+  // Proteína baseada em peso corporal × fator por objetivo
+  // Emagrecer: 2.2g/kg (maior — preserva músculo no déficit)
+  // Ganhar Massa: 2.0g/kg (alto para síntese muscular)
   // Manter: 1.8g/kg
   var protG=w?(g==='cut'?Math.round(w*2.2):g==='mass'?Math.round(w*2.0):Math.round(w*1.8)):Math.round(k*0.30/4);
   var protKcal=protG*4;
@@ -1377,10 +1377,10 @@ function renderHomeGreeting(){
     var goalEl=document.getElementById('homeGreetGoal');
     var avEl=document.getElementById('homeAvatar');
     var t=T[currentLang]||T['pt'];
-    if(nameEl)nameEl.textContent=p.name?t.ola+' '+p.name+'! ð':t.bemVindo;
+    if(nameEl)nameEl.textContent=p.name?t.ola+' '+p.name+'! 👋':t.bemVindo;
     if(goalEl){
       var gLabel=state.goal==='mass'?t.ganharMassa.replace(/&#\d+;/g,'').trim():state.goal==='cut'?t.emagrecer.replace(/&#\d+;/g,'').trim():(t.manter||'').replace(/&#\d+;/g,'').trim();
-      goalEl.textContent=(state.goal==='mass'?'ðï¸ ':state.goal==='cut'?'ð¥ ':'âï¸ ')+gLabel+' Â· '+t.meta+': '+state.calGoal+' kcal';
+      goalEl.textContent=(state.goal==='mass'?'🏋️ ':state.goal==='cut'?'🔥 ':'⚖️ ')+gLabel+' · '+t.meta+': '+state.calGoal+' kcal';
     }
     if(avEl){
       if(p.photo)avEl.innerHTML='<img src="'+p.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
@@ -1457,7 +1457,7 @@ function addPremeal(idx){
   updateMealOrder(mk);save();renderToday();showToast(m.name+" adicionado!","success");
 }
 
-function openFoodPhoto(mealKey,idx){var items=state.meals[mealKey]||[];var item=items[idx];if(!item||!item.photo||item.photo.length<500)return;var m=document.getElementById("modalFoodPhoto");if(!m){m=document.createElement("div");m.id="modalFoodPhoto";m.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;";m.onclick=function(){m.style.display="none";};var imgEl=document.createElement("img");imgEl.id="modalFoodPhotoImg";imgEl.style.cssText="width:82vw;height:82vw;border-radius:16px;object-fit:cover;box-shadow:0 8px 32px rgba(0,0,0,0.6);";imgEl.onerror=function(){this.style.display="none";var e=document.getElementById("modalFoodPhotoErr");if(e)e.style.display="flex";};var errDiv=document.createElement("div");errDiv.id="modalFoodPhotoErr";errDiv.style.cssText="display:none;width:82vw;height:82vw;border-radius:16px;background:#1a1a1a;align-items:center;justify-content:center;flex-direction:column;color:#888;font-size:14px;";errDiv.innerHTML="<div style='font-size:40px;margin-bottom:12px;'>&#128247;</div><div>Foto indisponÃ­vel</div>";var lbl=document.createElement("div");lbl.style.cssText="color:#888;font-size:12px;margin-top:16px;letter-spacing:1px;";lbl.textContent="â  Toque para fechar";m.appendChild(imgEl);m.appendChild(errDiv);m.appendChild(lbl);document.body.appendChild(m);}var imgEl2=document.getElementById("modalFoodPhotoImg");var errDiv2=document.getElementById("modalFoodPhotoErr");if(imgEl2){imgEl2.style.display="block";}if(errDiv2){errDiv2.style.display="none";}imgEl2.src=item.photo;m.style.display="flex";}function updateMealOrder(mk){if(!state.mealOrder)state.mealOrder=[];var i=state.mealOrder.indexOf(mk);if(i>-1)state.mealOrder.splice(i,1);state.mealOrder.unshift(mk);}function getMealByTime(){var h=new Date().getHours();if(h<10)return"cafe";if(h<13)return"almoco";if(h<18)return"lanche";return"jantar";}function compressPhotoThumb(dataUrl,cb){if(!dataUrl||typeof dataUrl!=="string"||dataUrl.length<100)return;function tryDraw(imgEl,srcW,srcH){try{var MAX=1200,srcEl=imgEl;if(srcW>MAX||srcH>MAX){var sc=MAX/Math.max(srcW,srcH);var c0=document.createElement("canvas");c0.width=Math.round(srcW*sc);c0.height=Math.round(srcH*sc);var ctx0=c0.getContext("2d");if(!ctx0)return;ctx0.drawImage(imgEl,0,0,c0.width,c0.height);srcEl=c0;srcW=c0.width;srcH=c0.height;}var c=document.createElement("canvas");c.width=500;c.height=500;var ctx=c.getContext("2d");if(!ctx)return;var s=Math.min(srcW,srcH);ctx.drawImage(srcEl,(srcW-s)/2,(srcH-s)/2,s,s,0,0,500,500);var r=c.toDataURL("image/jpeg",0.85);if(r&&r.length>5000)cb(r);}catch(e){}}try{fetch(dataUrl).then(function(res){return res.blob();}).then(function(blob){var ou=URL.createObjectURL(blob);var img=new Image();img.onerror=function(){URL.revokeObjectURL(ou);};img.onload=function(){var w=img.width,hh=img.height;URL.revokeObjectURL(ou);if(w&&hh)tryDraw(img,w,hh);};img.src=ou;}).catch(function(){var img2=new Image();img2.onerror=function(){};img2.onload=function(){if(img2.width&&img2.height)tryDraw(img2,img2.width,img2.height);};img2.src=dataUrl;});}catch(e){var img3=new Image();img3.onerror=function(){};img3.onload=function(){if(img3.width&&img3.height)tryDraw(img3,img3.width,img3.height);};img3.src=dataUrl;}}
+function openFoodPhoto(mealKey,idx){var items=state.meals[mealKey]||[];var item=items[idx];if(!item||!item.photo||item.photo.length<500)return;var m=document.getElementById("modalFoodPhoto");if(!m){m=document.createElement("div");m.id="modalFoodPhoto";m.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;";m.onclick=function(){m.style.display="none";};var imgEl=document.createElement("img");imgEl.id="modalFoodPhotoImg";imgEl.style.cssText="width:82vw;height:82vw;border-radius:16px;object-fit:cover;box-shadow:0 8px 32px rgba(0,0,0,0.6);";imgEl.onerror=function(){this.style.display="none";var e=document.getElementById("modalFoodPhotoErr");if(e)e.style.display="flex";};var errDiv=document.createElement("div");errDiv.id="modalFoodPhotoErr";errDiv.style.cssText="display:none;width:82vw;height:82vw;border-radius:16px;background:#1a1a1a;align-items:center;justify-content:center;flex-direction:column;color:#888;font-size:14px;";errDiv.innerHTML="<div style='font-size:40px;margin-bottom:12px;'>&#128247;</div><div>Foto indisponível</div>";var lbl=document.createElement("div");lbl.style.cssText="color:#888;font-size:12px;margin-top:16px;letter-spacing:1px;";lbl.textContent="✕  Toque para fechar";m.appendChild(imgEl);m.appendChild(errDiv);m.appendChild(lbl);document.body.appendChild(m);}var imgEl2=document.getElementById("modalFoodPhotoImg");var errDiv2=document.getElementById("modalFoodPhotoErr");if(imgEl2){imgEl2.style.display="block";}if(errDiv2){errDiv2.style.display="none";}imgEl2.src=item.photo;m.style.display="flex";}function updateMealOrder(mk){if(!state.mealOrder)state.mealOrder=[];var i=state.mealOrder.indexOf(mk);if(i>-1)state.mealOrder.splice(i,1);state.mealOrder.unshift(mk);}function getMealByTime(){var h=new Date().getHours();if(h<10)return"cafe";if(h<13)return"almoco";if(h<18)return"lanche";return"jantar";}function compressPhotoThumb(dataUrl,cb){if(!dataUrl||typeof dataUrl!=="string"||dataUrl.length<100)return;function tryDraw(imgEl,srcW,srcH){try{var MAX=1200,srcEl=imgEl;if(srcW>MAX||srcH>MAX){var sc=MAX/Math.max(srcW,srcH);var c0=document.createElement("canvas");c0.width=Math.round(srcW*sc);c0.height=Math.round(srcH*sc);var ctx0=c0.getContext("2d");if(!ctx0)return;ctx0.drawImage(imgEl,0,0,c0.width,c0.height);srcEl=c0;srcW=c0.width;srcH=c0.height;}var c=document.createElement("canvas");c.width=500;c.height=500;var ctx=c.getContext("2d");if(!ctx)return;var s=Math.min(srcW,srcH);ctx.drawImage(srcEl,(srcW-s)/2,(srcH-s)/2,s,s,0,0,500,500);var r=c.toDataURL("image/jpeg",0.85);if(r&&r.length>5000)cb(r);}catch(e){}}try{fetch(dataUrl).then(function(res){return res.blob();}).then(function(blob){var ou=URL.createObjectURL(blob);var img=new Image();img.onerror=function(){URL.revokeObjectURL(ou);};img.onload=function(){var w=img.width,hh=img.height;URL.revokeObjectURL(ou);if(w&&hh)tryDraw(img,w,hh);};img.src=ou;}).catch(function(){var img2=new Image();img2.onerror=function(){};img2.onload=function(){if(img2.width&&img2.height)tryDraw(img2,img2.width,img2.height);};img2.src=dataUrl;});}catch(e){var img3=new Image();img3.onerror=function(){};img3.onload=function(){if(img3.width&&img3.height)tryDraw(img3,img3.width,img3.height);};img3.src=dataUrl;}}
 function findFood(name){var all=FOOD_DB.concat(state.customFoods||[]);return all.find(function(f){return f.name.toLowerCase()===name.toLowerCase();});}
 
 function setGoal(g){
@@ -1550,8 +1550,8 @@ function renderWater(){
   if(gv) gv.textContent=state.waterGoal;
   if(gb){
     var p=state.profile||{};
-    var configMsg=currentLang==='en'?'Configure your profile for auto-calculation':currentLang==='es'?'Configura tu perfil para cÃ¡lculo automÃ¡tico':currentLang==='it'?'Configura il tuo profilo per il calcolo automatico':currentLang==='fr'?'Configurez votre profil pour le calcul automatique':currentLang==='de'?'Profil konfigurieren fÃ¼r automatische Berechnung':'Configure seu perfil para cÃ¡lculo automÃ¡tico';
-    gb.textContent=p.weight?p.weight+"kg Ã 35ml = "+state.waterGoal+"ml/dia":configMsg;
+    var configMsg=currentLang==='en'?'Configure your profile for auto-calculation':currentLang==='es'?'Configura tu perfil para cálculo automático':currentLang==='it'?'Configura il tuo profilo per il calcolo automatico':currentLang==='fr'?'Configurez votre profil pour le calcul automatique':currentLang==='de'?'Profil konfigurieren für automatische Berechnung':'Configure seu perfil para cálculo automático';
+    gb.textContent=p.weight?p.weight+"kg × 35ml = "+state.waterGoal+"ml/dia":configMsg;
   }
 }
 function addWater(ml){state.waterMl=Math.min(state.waterGoal*2,state.waterMl+ml);save();renderWater();renderToday();showToast("+"+ml+"ml","");}
@@ -1644,7 +1644,7 @@ function triggerUpload(){document.getElementById("photoInput").click();}
 function handlePhoto(input){
   var file=input.files[0];if(!file)return;
   input.value="";
-  // Usa createObjectURL â muito mais estavel no Safari iOS que FileReader com fotos grandes
+  // Usa createObjectURL — muito mais estavel no Safari iOS que FileReader com fotos grandes
   var objectUrl=URL.createObjectURL(file);
   var img=new Image();
   img.onerror=function(){
@@ -1678,9 +1678,9 @@ function checkApiKeyBanner(){
   if(banner) banner.style.display=state.apiKey?"none":"block";
 }
 function saveQuickApiKey(){
-  // Redireciona para o Perfil onde a chave Ã© configurada
+  // Redireciona para o Perfil onde a chave é configurada
   openProfile();
-  showToast("Configure sua chave API no Perfil ð¤","");
+  showToast("Configure sua chave API no Perfil 👤","");
 }
 function analyzePhoto(dataUrl){lastAnalyzedPhotoUrl=null;compressPhotoThumb(dataUrl,function(thumb){lastAnalyzedPhotoUrl=thumb;});
   if(!state.apiKey){checkApiKeyBanner();showToast("Cole sua chave API acima para continuar","error");return;}
@@ -1689,10 +1689,10 @@ function analyzePhoto(dataUrl){lastAnalyzedPhotoUrl=null;compressPhotoThumb(data
   var base64=dataUrl.split(",")[1];
   var mtype=dataUrl.split(";")[0].split(":")[1]||"image/jpeg";
   var goalCtxPhoto=state.goal==='cut'
-    ?'\n\nContexto: usuÃ¡rio em emagrecimento (dÃ©ficit calÃ³rico). Destaque calorias totais, proteÃ­na para preservar mÃºsculo e alimentos que podem estar sabotando o dÃ©ficit.'
+    ?'\n\nContexto: usuário em emagrecimento (déficit calórico). Destaque calorias totais, proteína para preservar músculo e alimentos que podem estar sabotando o déficit.'
     :state.goal==='mass'
-    ?'\n\nContexto: usuÃ¡rio em ganho de massa muscular. Destaque proteÃ­nas, carboidratos e calorias totais. Mencione se Ã© boa refeiÃ§Ã£o prÃ© ou pÃ³s-treino.'
-    :'\n\nContexto: usuÃ¡rio em manutenÃ§Ã£o. AnÃ¡lise equilibrada de todos os macros e qualidade nutricional.';
+    ?'\n\nContexto: usuário em ganho de massa muscular. Destaque proteínas, carboidratos e calorias totais. Mencione se é boa refeição pré ou pós-treino.'
+    :'\n\nContexto: usuário em manutenção. Análise equilibrada de todos os macros e qualidade nutricional.';
   var prompt="Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto com precisao."+goalCtxPhoto+"\n\nIdentifique TODOS os alimentos e bebidas visiveis. Para cada item, estime a quantidade em gramas (ou ml para bebidas) com base no tamanho visual do prato/recipiente.\n\nResponda SOMENTE com JSON valido, sem texto adicional:\n{\"descricao\":\"descricao detalhada do que ve na foto\",\"alimentos\":[{\"nome\":\"nome do alimento\",\"gramas\":150,\"kcal\":200,\"prot\":10,\"carb\":20,\"fat\":8}],\"liquidos\":[{\"nome\":\"nome da bebida\",\"ml\":300,\"kcal\":50}],\"total_kcal\":400,\"total_ml\":300}\n\nSe nao houver liquidos, use liquidos:[]. Se nao houver alimentos solidos, use alimentos:[]. Seja preciso nas calorias usando valores nutricionais reais.";
   fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
     method:"POST",
@@ -1743,12 +1743,12 @@ function addAiResult(){
 function formatHistDate(k){
   var p=k.split('-');
   var d=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
-  var dias=['Dom','Seg','Ter','Qua','Qui','Sex','SÃ¡b'];
+  var dias=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
   var hoje=new Date();hoje.setHours(0,0,0,0);
   var ontem=new Date(hoje);ontem.setDate(ontem.getDate()-1);
   d.setHours(0,0,0,0);
-  if(d.getTime()===hoje.getTime())return 'Hoje â '+p[2]+'/'+p[1];
-  if(d.getTime()===ontem.getTime())return 'Ontem â '+p[2]+'/'+p[1];
+  if(d.getTime()===hoje.getTime())return 'Hoje — '+p[2]+'/'+p[1];
+  if(d.getTime()===ontem.getTime())return 'Ontem — '+p[2]+'/'+p[1];
   return dias[d.getDay()]+', '+p[2]+'/'+p[1]+'/'+p[0];
 }
 function toggleHistDay(id){
@@ -1757,10 +1757,10 @@ function toggleHistDay(id){
   var open=el.style.display!=='none';
   el.style.display=open?'none':'block';
   var arrow=document.getElementById('arr-'+id);
-  if(arrow)arrow.textContent=open?'â¸':'â¾';
+  if(arrow)arrow.textContent=open?'▸':'▾';
 }
 function renderHistory(){
-  var mealNames={cafe:'â CafÃ© da manhÃ£',almoco:'ð½ï¸ AlmoÃ§o',lanche:'ð¥ Lanche',jantar:'ð Jantar'};
+  var mealNames={cafe:'☕ Café da manhã',almoco:'🍽️ Almoço',lanche:'🥗 Lanche',jantar:'🌙 Jantar'};
   var keys=Object.keys(state.history||{}).sort().reverse().slice(0,30);
   if(!keys.length){
     document.getElementById("histList").innerHTML="<div class='empty'><div class='empty-icon'>&#128197;</div><div class='empty-text'>Nenhum historico ainda.<br><span style='font-size:12px;'>Registros aparecem a partir do dia seguinte.</span></div></div>";
@@ -1772,7 +1772,7 @@ function renderHistory(){
     var barColor=pct>=90?'#34d399':pct>=60?'#f0b429':'#f87171';
     var dateStr=formatHistDate(k);
     var uid='hd-'+k.replace(/-/g,'');
-    // Montar refeiÃ§Ãµes
+    // Montar refeições
     var mealsHtml='';
     var hasMeals=false;
     if(d.meals){
@@ -1791,18 +1791,18 @@ function renderHistory(){
         mealsHtml+='</div>';
       });
     }
-    if(!hasMeals)mealsHtml='<div style="font-size:12px;color:#5a6270;padding:4px 0;">RefeiÃ§Ãµes nÃ£o registradas neste dia</div>';
+    if(!hasMeals)mealsHtml='<div style="font-size:12px;color:#5a6270;padding:4px 0;">Refeições não registradas neste dia</div>';
     return '<div class="history-day" onclick="toggleHistDay(\''+uid+'\')">'
       +'<div style="display:flex;justify-content:space-between;align-items:flex-start;">'
         +'<div><div class="history-day-date">'+dateStr+'</div>'
-        +'<div style="font-size:11px;color:#8b95a3;margin-top:3px;">ðª '+d.prot+'g prot &nbsp;ð¥ '+d.carb+'g carb &nbsp;ð¥ '+d.fat+'g fat &nbsp;ð§'+(d.water||0)+'ml</div></div>'
+        +'<div style="font-size:11px;color:#8b95a3;margin-top:3px;">💪 '+d.prot+'g prot &nbsp;🔥 '+d.carb+'g carb &nbsp;🥑 '+d.fat+'g fat &nbsp;💧'+(d.water||0)+'ml</div></div>'
         +'<div style="text-align:right;">'
           +'<div class="history-day-kcal">'+d.kcal+' kcal</div>'
           +'<div style="font-size:11px;color:'+barColor+';">'+pct+'% da meta</div>'
         +'</div>'
       +'</div>'
       +'<div class="history-day-bar-wrap"><div class="history-day-bar"><div class="history-day-bar-fill" style="width:'+pct+'%;background:'+barColor+';"></div></div></div>'
-      +'<div style="font-size:11px;color:#5a6270;text-align:right;margin-top:2px;">Toque para ver refeiÃ§Ãµes <span id="arr-'+uid+'">â¸</span></div>'
+      +'<div style="font-size:11px;color:#5a6270;text-align:right;margin-top:2px;">Toque para ver refeições <span id="arr-'+uid+'">▸</span></div>'
       +'<div class="hist-expand" id="'+uid+'">'+mealsHtml+'</div>'
       +'</div>';
   }).join('');
@@ -1825,10 +1825,10 @@ function drawHistChart(keys){
   });
 }
 
-// ConfiguraÃ§Ãµes migradas para o Perfil
+// Configurações migradas para o Perfil
 function openSettings(){ openProfile(); }
 function saveSettings(){ saveProfile(); }
-// ââ CÃLCULO TDEE (Mifflin-St Jeor) ââââââââââââââââââââââââââ
+// ── CÁLCULO TDEE (Mifflin-St Jeor) ──────────────────────────
 function calcTDEE(weight,height,age,sex,activity){
   if(!weight||!height||!age)return null;
   var bmr=sex==='f'?(10*weight+6.25*height-5*age-161):(10*weight+6.25*height-5*age+5);
@@ -1838,7 +1838,7 @@ function calcTDEE(weight,height,age,sex,activity){
 function updateTDEEPreview(){
   var w=parseFloat(document.getElementById('profWeight').value)||0;
   var h=parseFloat(document.getElementById('profHeight').value)||0;
-  // Auto-detectar altura em metros (ex: 1.86 â 186)
+  // Auto-detectar altura em metros (ex: 1.86 → 186)
   if(h>0&&h<3){h=Math.round(h*100);document.getElementById('profHeight').value=h;}
   var a=parseInt(document.getElementById('profAge').value)||0;
   var sex=document.getElementById('profSex').value;
@@ -1860,7 +1860,7 @@ function updateTDEEPreview(){
   var fat=Math.round(goalKcal*0.25/9);
   var fatKcal=fat*9;
   var carb=Math.max(0,Math.round((goalKcal-protKcal-fatKcal)/4));
-  var gLabelMap={pt:{cut:'(2.2g/kg â preservar mÃºsculo)',mass:'(2.0g/kg â sÃ­ntese)',maint:'(1.8g/kg)'},en:{cut:'(2.2g/kg â preserve muscle)',mass:'(2.0g/kg â synthesis)',maint:'(1.8g/kg)'},es:{cut:'(2.2g/kg â preservar mÃºsculo)',mass:'(2.0g/kg â sÃ­ntesis)',maint:'(1.8g/kg)'},it:{cut:'(2.2g/kg â preservare il muscolo)',mass:'(2.0g/kg â sintesi)',maint:'(1.8g/kg)'},fr:{cut:'(2.2g/kg â prÃ©server le muscle)',mass:'(2.0g/kg â synthÃ¨se)',maint:'(1.8g/kg)'},de:{cut:'(2.2g/kg â Muskeln erhalten)',mass:'(2.0g/kg â Synthese)',maint:'(1.8g/kg)'}};
+  var gLabelMap={pt:{cut:'(2.2g/kg — preservar músculo)',mass:'(2.0g/kg — síntese)',maint:'(1.8g/kg)'},en:{cut:'(2.2g/kg — preserve muscle)',mass:'(2.0g/kg — synthesis)',maint:'(1.8g/kg)'},es:{cut:'(2.2g/kg — preservar músculo)',mass:'(2.0g/kg — síntesis)',maint:'(1.8g/kg)'},it:{cut:'(2.2g/kg — preservare il muscolo)',mass:'(2.0g/kg — sintesi)',maint:'(1.8g/kg)'},fr:{cut:'(2.2g/kg — préserver le muscle)',mass:'(2.0g/kg — synthèse)',maint:'(1.8g/kg)'},de:{cut:'(2.2g/kg — Muskeln erhalten)',mass:'(2.0g/kg — Synthese)',maint:'(1.8g/kg)'}};
   var gLM=gLabelMap[currentLang]||gLabelMap.en;
   var gLabel=g==='cut'?gLM.cut:g==='mass'?gLM.mass:gLM.maint;
   document.getElementById('prevProtVal').textContent=protG+'g '+gLabel;
@@ -1868,7 +1868,7 @@ function updateTDEEPreview(){
   document.getElementById('prevFatVal').textContent=fat+'g';
 }
 
-// ââ FOTO DE PERFIL ââââââââââââââââââââââââââââââââââââââââââââ
+// ── FOTO DE PERFIL ────────────────────────────────────────────
 function handleProfilePhoto(input){
   var file=input.files[0];if(!file)return;
   var url=URL.createObjectURL(file);
@@ -1886,8 +1886,8 @@ function handleProfilePhoto(input){
     state.profile.photo=data;
     save(); // salva foto imediatamente
     renderProfileAvatar(data);
-    renderHomeGreeting(); // atualiza saudaÃ§Ã£o na tela Hoje
-    showToast("Foto salva! â","success");
+    renderHomeGreeting(); // atualiza saudação na tela Hoje
+    showToast("Foto salva! ✓","success");
   };
   img.onerror=function(){URL.revokeObjectURL(url);showToast("Erro ao carregar foto","error");};
   img.src=url;
@@ -1903,19 +1903,19 @@ function renderProfileAvatar(data){
   }
 }
 
-// ââ OBJETIVO NO PERFIL ââââââââââââââââââââââââââââââââââââââââ
+// ── OBJETIVO NO PERFIL ────────────────────────────────────────
 function setProfGoal(g){
   state.goal=g;
   document.getElementById('profGoalMass').className='goal-btn'+(g==='mass'?' active':'');
   document.getElementById('profGoalCut').className='goal-btn'+(g==='cut'?' active':'');
   document.getElementById('profGoalMaint').className='goal-btn'+(g==='maint'?' active':'');
-  // Sincroniza botÃµes da tela principal
+  // Sincroniza botões da tela principal
   document.getElementById('goal-mass').className='goal-btn'+(g==='mass'?' active':'');
   document.getElementById('goal-cut').className='goal-btn'+(g==='cut'?' active':'');
   updateTDEEPreview();
 }
 
-// ââ PERFIL ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── PERFIL ────────────────────────────────────────────────────
 function openProfile(){
   var p=state.profile||{};
   document.getElementById("profName").value=p.name||"";
@@ -1935,7 +1935,7 @@ function openProfile(){
 function saveProfile(){
   var w=parseFloat(document.getElementById("profWeight").value)||0;
   var h=parseFloat(document.getElementById("profHeight").value)||0;
-  if(h>0&&h<3)h=Math.round(h*100); // metros â cm
+  if(h>0&&h<3)h=Math.round(h*100); // metros → cm
   var a=parseInt(document.getElementById("profAge").value)||0;
   var sex=document.getElementById("profSex").value;
   var act=parseFloat(document.getElementById("profActivity").value)||1.55;
@@ -1956,7 +1956,7 @@ function saveProfile(){
   }
   save();
   renderProfileAvatar(photo);
-  // Sincroniza botÃµes objetivo tela principal
+  // Sincroniza botões objetivo tela principal
   document.getElementById('goal-mass').className='goal-btn'+(state.goal==='mass'?' active':'');
   document.getElementById('goal-cut').className='goal-btn'+(state.goal==='cut'?' active':'');
   checkApiKeyBanner();
@@ -1989,7 +1989,7 @@ function switchTab(name,navEl){
   if(name==="relatorios")renderReports();
 }
 
-// ââ FOTOS DE PROGRESSO ââââââââââââââââââââââââââââââââââââââââââ
+// ── FOTOS DE PROGRESSO ──────────────────────────────────────────
 
 var _progressSelection = [];  // indexes of selected photos for compare
 
@@ -2058,14 +2058,14 @@ function saveProgressPhoto(){
     document.getElementById('progressPreviewBox').style.display='none';
     window._pendingProgressPhoto=null;
     renderProgressPhotos();
-    showToast('Foto salva! ð¸','success');
+    showToast('Foto salva! 📸','success');
   });
 }
 
 function deleteProgressPhoto(idx){
   if(!state.progressPhotos) return;
   state.progressPhotos.splice(idx,1);
-  // Limpa seleÃ§Ã£o
+  // Limpa seleção
   _progressSelection = [];
   save();
   renderProgressPhotos();
@@ -2078,7 +2078,7 @@ function toggleProgressSelect(idx){
     _progressSelection.splice(pos,1);
   } else {
     if(_progressSelection.length>=2){
-      showToast('Selecione no mÃ¡ximo 2 fotos para comparar','error'); return;
+      showToast('Selecione no máximo 2 fotos para comparar','error'); return;
     }
     _progressSelection.push(idx);
   }
@@ -2105,7 +2105,7 @@ function renderProgressPhotos(){
   }
   if(emptyEl) emptyEl.style.display='none';
 
-  // Barra de comparaÃ§Ã£o
+  // Barra de comparação
   var selCount = _progressSelection.length;
   if(bar){
     bar.style.display = selCount>0 ? 'flex' : 'none';
@@ -2122,19 +2122,19 @@ function renderProgressPhotos(){
     var dateStr = p.date ? formatProgDate(p.date) : '';
     html += '<div class="prog-photo-item'+(isSel?' selected':'')+'" onclick="toggleProgressSelect('+i+')">';
     html += '<img src="'+p.dataUrl+'" alt="Progresso '+dateStr+'" loading="lazy">';
-    // Badge de seleÃ§Ã£o (mostra 1 ou 2)
+    // Badge de seleção (mostra 1 ou 2)
     html += '<div class="prog-photo-sel-badge">'+(isSel?selNum:'')+'</div>';
     html += '<div class="prog-photo-meta"><div class="prog-photo-date-label">'+dateStr+'</div>';
     if(p.label) html += '<div class="prog-photo-sub-label">'+escHtml(p.label)+'</div>';
     html += '</div>';
-    html += '<button class="prog-photo-del" onclick="event.stopPropagation();deleteProgressPhoto('+i+')" title="Excluir">â</button>';
+    html += '<button class="prog-photo-del" onclick="event.stopPropagation();deleteProgressPhoto('+i+')" title="Excluir">✕</button>';
     html += '</div>';
   });
   html += '</div>';
 
-  // Dica de seleÃ§Ã£o se tiver mais de 1 foto e nada selecionado
+  // Dica de seleção se tiver mais de 1 foto e nada selecionado
   if(photos.length>=2 && selCount===0){
-    html += '<div style="text-align:center;font-size:11px;color:#5a6270;margin-top:10px;">Toque em 2 fotos para comparar a evoluÃ§Ã£o</div>';
+    html += '<div style="text-align:center;font-size:11px;color:#5a6270;margin-top:10px;">Toque em 2 fotos para comparar a evolução</div>';
   }
 
   gallery.innerHTML = html;
@@ -2156,7 +2156,7 @@ function escHtml(str){
 function openCompareModal(){
   if(_progressSelection.length!==2){showToast('Selecione exatamente 2 fotos','error');return;}
   var photos = state.progressPhotos || [];
-  // idx mais alto = mais antigo (lista estÃ¡ mais recente primeiro)
+  // idx mais alto = mais antigo (lista está mais recente primeiro)
   var a = Math.min(_progressSelection[0],_progressSelection[1]);
   var b = Math.max(_progressSelection[0],_progressSelection[1]);
   var before = photos[b]; // mais antigo
@@ -2173,7 +2173,7 @@ function openCompareModal(){
   setTimeout(initCompareSlider, 100);
 }
 
-// ââ Compare slider drag ââââââââââââââââââââââââââââââââââââââââââ
+// ── Compare slider drag ──────────────────────────────────────────
 var _cmpActive = false;
 var _cmpInited = false;
 
@@ -2228,7 +2228,7 @@ function init(){
 }
 init();
 
-// ââ SPLASH SCREEN (CSS Animation) âââââââââââââââââââââââââââââââââ
+// ── SPLASH SCREEN (CSS Animation) ─────────────────────────────────
 (function(){
   var splash=document.getElementById('splash');
   if(!splash)return;
@@ -2247,24 +2247,24 @@ init();
     },600);
   }
 
-  // Fecha apÃ³s 3.2s (tempo suficiente para ver a animaÃ§Ã£o toda)
+  // Fecha após 3.2s (tempo suficiente para ver a animação toda)
   setTimeout(dismiss,3200);
 })();
 
-// ââ NOTIFICAÃÃES INTELIGENTES ââââââââââââââââââââââââââââââ
+// ── NOTIFICAÇÕES INTELIGENTES ──────────────────────────────
 var _swReg = null;
 
 function initNotifications() {
   if (!('serviceWorker' in navigator) || !('Notification' in window)) return;
   navigator.serviceWorker.register('/better-you/sw.js').then(function(reg) {
     _swReg = reg;
-    // Pede permissÃ£o se ainda nÃ£o foi dada
+    // Pede permissão se ainda não foi dada
     if (Notification.permission === 'default') {
       setTimeout(function() {
         Notification.requestPermission().then(function(perm) {
           if (perm === 'granted') {
             agendarLembretes();
-            showToast('NotificaÃ§Ãµes ativadas! ð', 'success');
+            showToast('Notificações ativadas! 🔔', 'success');
           }
         });
       }, 3000);
@@ -2281,10 +2281,10 @@ function agendarLembretes() {
   }
   var agora = new Date();
   var hora = agora.getHours();
-  // HorÃ¡rios dos lembretes: 8h, 10h, 12h, 14h, 16h, 18h, 20h
+  // Horários dos lembretes: 8h, 10h, 12h, 14h, 16h, 18h, 20h
   var horarios = [8, 10, 12, 14, 16, 18, 20];
   horarios.forEach(function(h) {
-    if (h <= hora) return; // SÃ³ agenda horÃ¡rios futuros
+    if (h <= hora) return; // Só agenda horários futuros
     var alvo = new Date();
     alvo.setHours(h, 0, 0, 0);
     var delay = alvo.getTime() - agora.getTime();
@@ -2292,15 +2292,15 @@ function agendarLembretes() {
     var aguaFalta = Math.max(0, state.waterGoal - state.waterMl);
     var calFalta  = Math.max(0, state.calGoal - t.kcal);
     var msgs = [];
-    if (aguaFalta > 150) msgs.push('ð§ Faltam ' + aguaFalta + ' ml de Ã¡gua');
-    if (calFalta > 100 && state.goal === 'mass') msgs.push('ð½ï¸ Faltam ' + calFalta + ' kcal para ganhar massa');
-    if (calFalta > 100 && state.goal === 'cut')  msgs.push('ð¥ Faltam ' + calFalta + ' kcal â mantenha o dÃ©ficit!');
-    if (msgs.length === 0) msgs.push('â VocÃª estÃ¡ arrasando hoje!');
+    if (aguaFalta > 150) msgs.push('💧 Faltam ' + aguaFalta + ' ml de água');
+    if (calFalta > 100 && state.goal === 'mass') msgs.push('🍽️ Faltam ' + calFalta + ' kcal para ganhar massa');
+    if (calFalta > 100 && state.goal === 'cut')  msgs.push('🔥 Faltam ' + calFalta + ' kcal — mantenha o déficit!');
+    if (msgs.length === 0) msgs.push('✅ Você está arrasando hoje!');
     _swReg.active.postMessage({
       type: 'SCHEDULE',
       delay: delay,
       tag: 'lembrete-' + h,
-      title: 'Better You ðª',
+      title: 'Better You 💪',
       body: msgs.join('\n')
     });
   });
@@ -2309,7 +2309,7 @@ function agendarLembretes() {
 // Chama ao abrir o app
 setTimeout(initNotifications, 1500);
 
-// ââ SCORE DIÃRIO âââââââââââââââââââââââââââââââââââââââââââââ
+// ── SCORE DIÁRIO ─────────────────────────────────────────────
 function calcDayScore(histData){
   var totals,waterMl,calGoal,protGoal,fatGoal;
   if(!histData){
@@ -2329,28 +2329,28 @@ function calcDayScore(histData){
   }
   var score=0;
   var checks=[];
-  // Calorias 80â115% = 30 pts
+  // Calorias 80–115% = 30 pts
   var calPct=calGoal>0?totals.kcal/calGoal:0;
   var calOk=calPct>=0.8&&calPct<=1.15;
   score+=calOk?30:(calPct>=0.6?15:0);
   checks.push({label:'Calorias',ok:calOk,val:Math.round(totals.kcal)+'/'+calGoal+' kcal'});
-  // Ãgua >= 80% = 20 pts
+  // Água >= 80% = 20 pts
   var waterPct=state.waterGoal>0?waterMl/state.waterGoal:0;
   var waterOk=waterPct>=0.8;
   score+=waterOk?20:(waterPct>=0.5?10:0);
-  checks.push({label:'Ãgua',ok:waterOk,val:waterMl+'/'+(state.waterGoal)+' ml'});
-  // ProteÃ­na >= 80% = 25 pts
+  checks.push({label:'Água',ok:waterOk,val:waterMl+'/'+(state.waterGoal)+' ml'});
+  // Proteína >= 80% = 25 pts
   var protOk=protGoal>0&&totals.prot>=protGoal*0.8;
   score+=protOk?25:(protGoal>0&&totals.prot>=protGoal*0.5?12:0);
-  checks.push({label:'ProteÃ­na',ok:protOk,val:Math.round(totals.prot)+'g/'+protGoal+'g'});
+  checks.push({label:'Proteína',ok:protOk,val:Math.round(totals.prot)+'g/'+protGoal+'g'});
   // Gordura <= 120% = 15 pts
   var fatOk=fatGoal>0&&totals.fat<=fatGoal*1.2;
   score+=fatOk?15:0;
   checks.push({label:'Gordura',ok:fatOk,val:Math.round(totals.fat)+'g/'+fatGoal+'g'});
-  // Ao menos uma refeiÃ§Ã£o = 10 pts
+  // Ao menos uma refeição = 10 pts
   var mealOk=totals.kcal>0;
   score+=mealOk?10:0;
-  checks.push({label:'RefeiÃ§Ãµes',ok:mealOk,val:mealOk?'Registradas':'Nenhuma'});
+  checks.push({label:'Refeições',ok:mealOk,val:mealOk?'Registradas':'Nenhuma'});
   return{score:Math.min(100,score),checks:checks};
 }
 
@@ -2369,14 +2369,14 @@ function renderDayScore(){
   if(checksEl){
     checksEl.innerHTML=result.checks.map(function(c){
       return '<div class="score-check">'
-        +'<div class="score-check-icon" style="background:'+(c.ok?'rgba(52,211,153,.2)':'rgba(248,113,113,.2)')+';color:'+(c.ok?'#34d399':'#f87171')+';">'+(c.ok?'â':'â')+'</div>'
+        +'<div class="score-check-icon" style="background:'+(c.ok?'rgba(52,211,153,.2)':'rgba(248,113,113,.2)')+';color:'+(c.ok?'#34d399':'#f87171')+';">'+(c.ok?'✓':'✗')+'</div>'
         +'<div><div style="font-weight:600;color:#f0f2f5;">'+c.label+'</div><div style="font-size:10px;color:#8b95a3;">'+c.val+'</div></div>'
         +'</div>';
     }).join('');
   }
 }
 
-// ââ CALENDÃRIO COLORIDO âââââââââââââââââââââââââââââââââââââââ
+// ── CALENDÁRIO COLORIDO ───────────────────────────────────────
 function changeCalMonth(dir){
   calendarCursor.month+=dir;
   if(calendarCursor.month>11){calendarCursor.month=0;calendarCursor.year++;}
@@ -2384,7 +2384,7 @@ function changeCalMonth(dir){
   renderCalendar();
 }
 
-function openDayDetail(dk){var d=state.history[dk];var pts=dk.split('-');var dObj=new Date(+pts[0],+pts[1]-1,+pts[2]);var dn=['Dom','Seg','Ter','Qua','Qui','Sex','S\u00e1b'][dObj.getDay()];var mn=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'][+pts[1]-1];var dateDisp=dn+', '+pts[2]+' '+mn+' '+pts[0];var inner='<div style="padding:16px 4px 0;">';if(!d){inner+='<div style="text-align:center;color:#888;padding:40px 0;font-size:14px;">Sem registros para este dia.</div>';}else{var sc=calcDayScore(d).score;var sColor=sc>=80?'#34d399':sc>=50?'#fbb024':'#f87171';var sLabel=sc>=80?'Excelente':sc>=50?'Bom':'Ruim';inner+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><div style="background:'+sColor+'22;color:'+sColor+';font-size:22px;font-weight:800;padding:6px 16px;border-radius:20px;">'+sc+'</div><div style="color:'+sColor+';font-weight:600;">'+sLabel+'</div></div>';var goal=state.profile&&state.profile.tdee?state.profile.tdee:2000;var pct=Math.min(100,Math.round(((d.kcal||0)/goal)*100));inner+='<div style="background:#1e2229;border-radius:14px;padding:14px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="color:#888;font-size:12px;">CALORIAS</span><span style="color:#f0b429;font-weight:700;font-size:18px;">'+(d.kcal||0)+' kcal</span></div><div style="background:#2a3040;border-radius:6px;height:6px;margin-bottom:10px;"><div style="background:#f0b429;height:6px;border-radius:6px;width:'+pct+'%;"></div></div><div style="display:flex;gap:14px;font-size:13px;"><span>ðª <b style="color:#5b9cf6;">'+(d.prot||0)+'g</b></span><span>ð¥ <b style="color:#f0b429;">'+(d.carb||0)+'g</b></span><span>ð¥ <b style="color:#34d399;">'+(d.fat||0)+'g</b></span></div></div>';inner+='<div style="background:#1e2229;border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">ð§</span><span style="color:#60b4d8;font-weight:600;">'+(d.water||0)+' ml</span></div>';var mLabels={cafe:'â Caf\u00e9 da Manh\u00e3',almoco:'ð½ï¸ Almo\u00e7o',lanche:'ð Lanche',jantar:'ð Jantar',ceia:'ð Ceia',pos_treino:'ðª P\u00f3s-Treino'};var meals=d.meals||{};var hasMeals=false;Object.keys(mLabels).forEach(function(mk){var items=meals[mk]||[];if(!items.length)return;hasMeals=true;inner+='<div style="margin-bottom:12px;"><div style="color:#5a9a72;font-size:11px;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;">'+mLabels[mk]+'</div>';items.forEach(function(item){var thumb=(item.photo&&item.photo.length>500)?'<img src="'+item.photo+'" style="width:38px;height:38px;border-radius:8px;object-fit:cover;flex-shrink:0;"/>':'<div style="width:38px;height:38px;border-radius:8px;background:#2a3040;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">ð½ï¸</div>';inner+='<div style="display:flex;align-items:center;gap:10px;padding:8px;background:#12161c;border-radius:10px;margin-bottom:5px;">'+thumb+'<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:#e8eaf0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.name+'</div><div style="font-size:11px;color:#888;">'+(item.grams||item.ml||0)+'g Â· P:'+(item.prot||0)+'g C:'+(item.carb||0)+'g G:'+(item.fat||0)+'g'+(item.time?' Â· <span style="color:#5a9a72;">'+item.time+'</span>':'')+'</div></div><span style="color:#f0b429;font-weight:700;font-size:13px;">'+(item.kcal||0)+'</span></div>';});inner+='</div>';});if(!hasMeals)inner+='<div style="color:#555;font-size:13px;text-align:center;padding:12px 0;">Sem refeiÃ§Ãµes registradas</div>';}var photos=(state.progressPhotos||[]).filter(function(p){return p.date===dk||p.date.startsWith(dk);});if(photos.length){inner+='<div style="margin-top:14px;"><div style="color:#888;font-size:11px;letter-spacing:1px;margin-bottom:8px;">ð¸ FOTOS DE PROGRESSO</div>';photos.forEach(function(p){inner+='<div style="margin-bottom:10px;"><img src="'+p.dataUrl+'" style="width:100%;border-radius:12px;max-height:320px;object-fit:contain;background:#1e2229;"/>'+(p.label?'<div style="color:#888;font-size:11px;margin-top:4px;text-align:center;">'+p.label+'</div>':'')+'</div>';});inner+='</div>';}inner+='</div>';var m=document.getElementById('dayDetailModal');if(!m){m=document.createElement('div');m.id='dayDetailModal';m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9100;display:flex;flex-direction:column;';var hdr=document.createElement('div');hdr.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:16px;background:#12161c;border-bottom:1px solid #2a3040;flex-shrink:0;';var ttl=document.createElement('div');ttl.id='dayDetailTitle';ttl.style.cssText='font-size:16px;font-weight:700;color:#e8eaf0;';var cb=document.createElement('button');cb.textContent='â';cb.style.cssText='background:none;border:none;color:#888;font-size:22px;cursor:pointer;';cb.onclick=function(){m.style.display='none';};hdr.appendChild(ttl);hdr.appendChild(cb);var bd=document.createElement('div');bd.id='dayDetailContent';bd.style.cssText='flex:1;overflow-y:auto;padding:0 16px 32px;';m.appendChild(hdr);m.appendChild(bd);document.body.appendChild(m);}document.getElementById('dayDetailTitle').textContent=dateDisp;document.getElementById('dayDetailContent').innerHTML=inner;m.style.display='flex';}
+function openDayDetail(dk){var d=state.history[dk];var pts=dk.split('-');var dObj=new Date(+pts[0],+pts[1]-1,+pts[2]);var dn=['Dom','Seg','Ter','Qua','Qui','Sex','S\u00e1b'][dObj.getDay()];var mn=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'][+pts[1]-1];var dateDisp=dn+', '+pts[2]+' '+mn+' '+pts[0];var inner='<div style="padding:16px 4px 0;">';if(!d){inner+='<div style="text-align:center;color:#888;padding:40px 0;font-size:14px;">Sem registros para este dia.</div>';}else{var sc=calcDayScore(d).score;var sColor=sc>=80?'#34d399':sc>=50?'#fbb024':'#f87171';var sLabel=sc>=80?'Excelente':sc>=50?'Bom':'Ruim';inner+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><div style="background:'+sColor+'22;color:'+sColor+';font-size:22px;font-weight:800;padding:6px 16px;border-radius:20px;">'+sc+'</div><div style="color:'+sColor+';font-weight:600;">'+sLabel+'</div></div>';var goal=state.profile&&state.profile.tdee?state.profile.tdee:2000;var pct=Math.min(100,Math.round(((d.kcal||0)/goal)*100));inner+='<div style="background:#1e2229;border-radius:14px;padding:14px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="color:#888;font-size:12px;">CALORIAS</span><span style="color:#f0b429;font-weight:700;font-size:18px;">'+(d.kcal||0)+' kcal</span></div><div style="background:#2a3040;border-radius:6px;height:6px;margin-bottom:10px;"><div style="background:#f0b429;height:6px;border-radius:6px;width:'+pct+'%;"></div></div><div style="display:flex;gap:14px;font-size:13px;"><span>💪 <b style="color:#5b9cf6;">'+(d.prot||0)+'g</b></span><span>🔥 <b style="color:#f0b429;">'+(d.carb||0)+'g</b></span><span>🥑 <b style="color:#34d399;">'+(d.fat||0)+'g</b></span></div></div>';inner+='<div style="background:#1e2229;border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">💧</span><span style="color:#60b4d8;font-weight:600;">'+(d.water||0)+' ml</span></div>';var mLabels={cafe:'☕ Caf\u00e9 da Manh\u00e3',almoco:'🍽️ Almo\u00e7o',lanche:'🍎 Lanche',jantar:'🌙 Jantar',ceia:'🌛 Ceia',pos_treino:'💪 P\u00f3s-Treino'};var meals=d.meals||{};var hasMeals=false;Object.keys(mLabels).forEach(function(mk){var items=meals[mk]||[];if(!items.length)return;hasMeals=true;inner+='<div style="margin-bottom:12px;"><div style="color:#5a9a72;font-size:11px;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;">'+mLabels[mk]+'</div>';items.forEach(function(item){var thumb=(item.photo&&item.photo.length>500)?'<img src="'+item.photo+'" style="width:38px;height:38px;border-radius:8px;object-fit:cover;flex-shrink:0;"/>':'<div style="width:38px;height:38px;border-radius:8px;background:#2a3040;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🍽️</div>';inner+='<div style="display:flex;align-items:center;gap:10px;padding:8px;background:#12161c;border-radius:10px;margin-bottom:5px;">'+thumb+'<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:#e8eaf0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.name+'</div><div style="font-size:11px;color:#888;">'+(item.grams||item.ml||0)+'g · P:'+(item.prot||0)+'g C:'+(item.carb||0)+'g G:'+(item.fat||0)+'g'+(item.time?' · <span style="color:#5a9a72;">'+item.time+'</span>':'')+'</div></div><span style="color:#f0b429;font-weight:700;font-size:13px;">'+(item.kcal||0)+'</span></div>';});inner+='</div>';});if(!hasMeals)inner+='<div style="color:#555;font-size:13px;text-align:center;padding:12px 0;">Sem refeições registradas</div>';}var photos=(state.progressPhotos||[]).filter(function(p){return p.date===dk||p.date.startsWith(dk);});if(photos.length){inner+='<div style="margin-top:14px;"><div style="color:#888;font-size:11px;letter-spacing:1px;margin-bottom:8px;">📸 FOTOS DE PROGRESSO</div>';photos.forEach(function(p){inner+='<div style="margin-bottom:10px;"><img src="'+p.dataUrl+'" style="width:100%;border-radius:12px;max-height:320px;object-fit:contain;background:#1e2229;"/>'+(p.label?'<div style="color:#888;font-size:11px;margin-top:4px;text-align:center;">'+p.label+'</div>':'')+'</div>';});inner+='</div>';}inner+='</div>';var m=document.getElementById('dayDetailModal');if(!m){m=document.createElement('div');m.id='dayDetailModal';m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9100;display:flex;flex-direction:column;';var hdr=document.createElement('div');hdr.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:16px;background:#12161c;border-bottom:1px solid #2a3040;flex-shrink:0;';var ttl=document.createElement('div');ttl.id='dayDetailTitle';ttl.style.cssText='font-size:16px;font-weight:700;color:#e8eaf0;';var cb=document.createElement('button');cb.textContent='✕';cb.style.cssText='background:none;border:none;color:#888;font-size:22px;cursor:pointer;';cb.onclick=function(){m.style.display='none';};hdr.appendChild(ttl);hdr.appendChild(cb);var bd=document.createElement('div');bd.id='dayDetailContent';bd.style.cssText='flex:1;overflow-y:auto;padding:0 16px 32px;';m.appendChild(hdr);m.appendChild(bd);document.body.appendChild(m);}document.getElementById('dayDetailTitle').textContent=dateDisp;document.getElementById('dayDetailContent').innerHTML=inner;m.style.display='flex';}
 
 function renderCalendar(){
   var el=document.getElementById('calendarGrid');
@@ -2419,7 +2419,7 @@ function renderCalendar(){
   el.innerHTML=html;
 }
 
-// ââ MEDIDAS CORPORAIS âââââââââââââââââââââââââââââââââââââââââ
+// ── MEDIDAS CORPORAIS ─────────────────────────────────────────
 function switchSubtab(tab){
   document.getElementById('section-peso').style.display=tab==='peso'?'':'none';
   document.getElementById('section-medidas').style.display=tab==='medidas'?'':'none';
@@ -2462,18 +2462,18 @@ function addMeasure(){
     var el=document.getElementById('m'+f.charAt(0).toUpperCase()+f.slice(1));
     if(el)el.value='';
   });
-  showToast('Medidas salvas! â','success');
+  showToast('Medidas salvas! ✓','success');
 }
 
 function renderMeasures(){
   var el=document.getElementById('measureList');if(!el)return;
   var list=state.measures||[];
-  if(!list.length){el.innerHTML='<div class="empty"><div class="empty-icon">ð</div><div class="empty-text">Nenhuma medida registrada</div></div>';return;}
-  var labels={cintura:'Cintura',quadril:'Quadril',peito:'Peito',braco:'BraÃ§o',coxa:'Coxa',panturrilha:'Panturrilha'};
+  if(!list.length){el.innerHTML='<div class="empty"><div class="empty-icon">📏</div><div class="empty-text">Nenhuma medida registrada</div></div>';return;}
+  var labels={cintura:'Cintura',quadril:'Quadril',peito:'Peito',braco:'Braço',coxa:'Coxa',panturrilha:'Panturrilha'};
   el.innerHTML=list.slice(0,10).map(function(m){
     var items=Object.keys(labels).filter(function(k){return m[k];}).map(function(k){
       return '<span style="font-size:12px;color:#8b95a3;">'+labels[k]+': <b style="color:#f0f2f5;">'+m[k]+'cm</b></span>';
-    }).join(' &nbsp;Â·&nbsp; ');
+    }).join(' &nbsp;·&nbsp; ');
     return '<div style="padding:10px 0;border-bottom:1px solid #252b34;">'
       +'<div style="font-size:12px;color:#8b95a3;margin-bottom:5px;">'+m.date.slice(5)+'</div>'
       +'<div style="line-height:1.8;">'+items+'</div>'
@@ -2481,7 +2481,7 @@ function renderMeasures(){
   }).join('');
 }
 
-// ââ RELATÃRIOS AVANÃADOS ââââââââââââââââââââââââââââââââââââââ
+// ── RELATÓRIOS AVANÇADOS ──────────────────────────────────────
 function renderReports(){
   var el=document.getElementById('reportContent');
   if(!el)return;
@@ -2489,11 +2489,11 @@ function renderReports(){
   var goal=state.goal||'mass';
   var subEl=document.getElementById('reportSubtitle');
   if(subEl){
-    subEl.textContent=goal==='cut'?'ð¥ Sua jornada de emagrecimento':goal==='mass'?'ðª Sua jornada de ganho de massa':'âï¸ Seu plano de manutenÃ§Ã£o';
+    subEl.textContent=goal==='cut'?'🔥 Sua jornada de emagrecimento':goal==='mass'?'💪 Sua jornada de ganho de massa':'⚖️ Seu plano de manutenção';
   }
 
-  // Ãltimos 7 dias (incluindo hoje)
-  var dayNames=['Dom','Seg','Ter','Qua','Qui','Sex','SÃ¡b'];
+  // Últimos 7 dias (incluindo hoje)
+  var dayNames=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
   var days=[];
   for(var i=6;i>=0;i--){
     var d=new Date();d.setDate(d.getDate()-i);
@@ -2505,7 +2505,7 @@ function renderReports(){
 
   var validDays=days.filter(function(d){return d.data&&d.data.kcal>0;});
   if(!validDays.length){
-    el.innerHTML='<div class="card"><div class="empty"><div class="empty-icon">ð</div><div class="empty-text" style="line-height:1.7;">Registre sua alimentaÃ§Ã£o por alguns dias para ver seu relatÃ³rio personalizado.</div></div></div>';
+    el.innerHTML='<div class="card"><div class="empty"><div class="empty-icon">📊</div><div class="empty-text" style="line-height:1.7;">Registre sua alimentação por alguns dias para ver seu relatório personalizado.</div></div></div>';
     return;
   }
 
@@ -2516,24 +2516,24 @@ function renderReports(){
   var avgWater=Math.round(validDays.reduce(function(s,d){return s+(d.data.water||0);},0)/validDays.length);
   var calBalance=avgKcal-calGoal;
 
-  // ââ Faixa de 7 dias colorida ââ
+  // ── Faixa de 7 dias colorida ──
   var dotHtml='<div class="report-week-wrap">';
   days.forEach(function(day){
-    var bg='#1e2229',tc='#3a4150',icon='â';
+    var bg='#1e2229',tc='#3a4150',icon='–';
     if(day.data&&day.data.kcal>0){
       var pct=day.data.kcal/calGoal;
       if(goal==='cut'){
-        if(pct>=0.70&&pct<=1.05){bg='rgba(52,211,153,.25)';tc='#34d399';icon='â';}
+        if(pct>=0.70&&pct<=1.05){bg='rgba(52,211,153,.25)';tc='#34d399';icon='✓';}
         else if(pct>1.05&&pct<=1.20){bg='rgba(251,191,36,.2)';tc='#fbbf24';icon='~';}
         else if(pct>1.20){bg='rgba(248,113,113,.2)';tc='#f87171';icon='!';}
-        else{bg='rgba(96,165,250,.15)';tc='#60a5fa';icon='â';}
+        else{bg='rgba(96,165,250,.15)';tc='#60a5fa';icon='↓';}
       }else if(goal==='mass'){
-        if(pct>=0.95&&pct<=1.20){bg='rgba(52,211,153,.25)';tc='#34d399';icon='â';}
+        if(pct>=0.95&&pct<=1.20){bg='rgba(52,211,153,.25)';tc='#34d399';icon='✓';}
         else if(pct>=0.80&&pct<0.95){bg='rgba(251,191,36,.2)';tc='#fbbf24';icon='~';}
-        else if(pct<0.80){bg='rgba(248,113,113,.2)';tc='#f87171';icon='â';}
-        else{bg='rgba(96,165,250,.15)';tc='#60a5fa';icon='â';}
+        else if(pct<0.80){bg='rgba(248,113,113,.2)';tc='#f87171';icon='↓';}
+        else{bg='rgba(96,165,250,.15)';tc='#60a5fa';icon='↑';}
       }else{
-        if(pct>=0.90&&pct<=1.10){bg='rgba(52,211,153,.25)';tc='#34d399';icon='â';}
+        if(pct>=0.90&&pct<=1.10){bg='rgba(52,211,153,.25)';tc='#34d399';icon='✓';}
         else if(pct>=0.80&&pct<=1.20){bg='rgba(251,191,36,.2)';tc='#fbbf24';icon='~';}
         else{bg='rgba(248,113,113,.2)';tc='#f87171';icon='!';}
       }
@@ -2552,35 +2552,35 @@ function renderReports(){
     var waterDays=validDays.filter(function(d){return (d.data.water||0)>=state.waterGoal*0.8;}).length;
     var kgPer4w=deficit>50?Math.round(Math.min(deficit*7/7700*4,3)*10)/10:0;
     var heroColor=deficit>200?'#f87171':deficit>50?'#34d399':'#fbbf24';
-    var heroMsg=deficit>400?'DÃ©ficit forte! Monitore mÃºsculo ðª':deficit>100?'DÃ©ficit no ponto certo! ð¥':deficit>0?'DÃ©ficit leve â pode intensificar':'Acima da meta â ï¸';
+    var heroMsg=deficit>400?'Déficit forte! Monitore músculo 💪':deficit>100?'Déficit no ponto certo! 🔥':deficit>0?'Déficit leve — pode intensificar':'Acima da meta ⚠️';
     html+='<div class="report-hero">'
-      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">ð¥ DÃFICIT MÃDIO â 7 DIAS</div>'
+      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">🔥 DÉFICIT MÉDIO — 7 DIAS</div>'
       +'<div class="report-hero-num" style="color:'+heroColor+';">'+(deficit>0?'-':'+')+(Math.abs(Math.round(deficit)))+' kcal/dia</div>'
       +'<div class="report-hero-sub" style="color:#f0f2f5;">'+heroMsg+'</div>'
       +'</div>';
     html+=dotHtml;
     if(kgPer4w>0){
       html+='<div class="report-projection">'
-        +'<div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#34d399;margin-bottom:10px;">ð ProjeÃ§Ã£o de Resultados</div>'
-        +'<div class="report-stat-row"><span class="report-stat-label">Perda estimada em 4 semanas</span><span class="report-stat-val" style="color:#34d399;">â'+kgPer4w+' kg</span></div>'
-        +'<div class="report-stat-row"><span class="report-stat-label">Perda estimada em 8 semanas</span><span class="report-stat-val" style="color:#34d399;">â'+Math.round(kgPer4w*2*10)/10+' kg</span></div>'
-        +'<div style="font-size:10px;color:#5a6270;margin-top:8px;line-height:1.5;">* Estimativa baseada no dÃ©ficit mÃ©dio da semana. Resultados individuais variam.</div>'
+        +'<div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#34d399;margin-bottom:10px;">📉 Projeção de Resultados</div>'
+        +'<div class="report-stat-row"><span class="report-stat-label">Perda estimada em 4 semanas</span><span class="report-stat-val" style="color:#34d399;">−'+kgPer4w+' kg</span></div>'
+        +'<div class="report-stat-row"><span class="report-stat-label">Perda estimada em 8 semanas</span><span class="report-stat-val" style="color:#34d399;">−'+Math.round(kgPer4w*2*10)/10+' kg</span></div>'
+        +'<div style="font-size:10px;color:#5a6270;margin-top:8px;line-height:1.5;">* Estimativa baseada no déficit médio da semana. Resultados individuais variam.</div>'
         +'</div>';
     }
 html+='<div class="card"><div class="card-title">Metas da semana</div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ð¥ Dentro do dÃ©ficit</span><span class="report-stat-val">'+deficitDays+'/'+validDays.length+' dias</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ðª ProteÃ­na â¥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ð§ HidrataÃ§Ã£o â¥80% da meta</span><span class="report-stat-val">'+waterDays+'/'+validDays.length+' dias</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ð Calorias mÃ©dias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ð¥© ProteÃ­na mÃ©dia</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🔥 Dentro do déficit</span><span class="report-stat-val">'+deficitDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">💪 Proteína ≥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">💧 Hidratação ≥80% da meta</span><span class="report-stat-val">'+waterDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">📊 Calorias médias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
       +'</div>';
         var tip='';
-    if(avgProt<mg.prot*0.8)tip='ð¡ ProteÃ­na abaixo do ideal. Adicione frango, ovo ou whey â proteÃ­na preserva mÃºsculo durante o dÃ©ficit.';
-    else if(deficit>600)tip='â ï¸ DÃ©ficit muito alto. Reduzir para 400â500 kcal/dia Ã© mais sustentÃ¡vel e preserva mais mÃºsculo a longo prazo.';
-    else if(deficit<50)tip='ð¡ DÃ©ficit muito pequeno. Reduza 200â300 kcal da alimentaÃ§Ã£o ou adicione 30 minutos de caminhada por dia.';
-    else if(waterDays<4)tip='ð§ Ãgua abaixo da meta. HidrataÃ§Ã£o ajuda a controlar o apetite e melhora o metabolismo durante o emagrecimento.';
-    else tip='â VocÃª estÃ¡ no caminho certo! O segredo do emagrecimento Ã© a regularidade ao longo das semanas â continue assim.';
-    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">ð¡ Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">'+tip+'</div></div>';
+    if(avgProt<mg.prot*0.8)tip='💡 Proteína abaixo do ideal. Adicione frango, ovo ou whey — proteína preserva músculo durante o déficit.';
+    else if(deficit>600)tip='⚠️ Déficit muito alto. Reduzir para 400–500 kcal/dia é mais sustentável e preserva mais músculo a longo prazo.';
+    else if(deficit<50)tip='💡 Déficit muito pequeno. Reduza 200–300 kcal da alimentação ou adicione 30 minutos de caminhada por dia.';
+    else if(waterDays<4)tip='💧 Água abaixo da meta. Hidratação ajuda a controlar o apetite e melhora o metabolismo durante o emagrecimento.';
+    else tip='✅ Você está no caminho certo! O segredo do emagrecimento é a regularidade ao longo das semanas — continue assim.';
+    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">'+tip+'</div></div>';
 
   }else if(goal==='mass'){
     var surplus=avgKcal-calGoal;
@@ -2589,61 +2589,61 @@ html+='<div class="card"><div class="card-title">Metas da semana</div>'
     var waterDays=validDays.filter(function(d){return (d.data.water||0)>=state.waterGoal*0.8;}).length;
     var kgPer4w=surplus>0?Math.round(Math.min(surplus*7/3500*0.5*4,2)*10)/10:0;
     var heroColor=surplus>=200&&surplus<=600?'#34d399':surplus>0?'#fbbf24':'#f87171';
-    var heroMsg=surplus>=200&&surplus<=600?'SuperÃ¡vit ideal! ðª':surplus>600?'SuperÃ¡vit alto â monitore':surplus>0?'SuperÃ¡vit leve â pode aumentar':'Abaixo da meta calÃ³rica â ï¸';
+    var heroMsg=surplus>=200&&surplus<=600?'Superávit ideal! 💪':surplus>600?'Superávit alto — monitore':surplus>0?'Superávit leve — pode aumentar':'Abaixo da meta calórica ⚠️';
     html+='<div class="report-hero">'
-      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">ðª SUPERÃVIT MÃDIO â 7 DIAS</div>'
+      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">💪 SUPERÁVIT MÉDIO — 7 DIAS</div>'
       +'<div class="report-hero-num" style="color:'+heroColor+';">'+(surplus>=0?'+':'')+Math.round(surplus)+' kcal/dia</div>'
       +'<div class="report-hero-sub" style="color:#f0f2f5;">'+heroMsg+'</div>'
       +'</div>';
     html+=dotHtml;
     html+='<div class="report-projection">'
-        +'<div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#34d399;margin-bottom:10px;">ð ProjeÃ§Ã£o de Crescimento</div>'
+        +'<div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#34d399;margin-bottom:10px;">📈 Projeção de Crescimento</div>'
         +'<div class="report-stat-row"><span class="report-stat-label">Ganho estimado em 4 semanas</span><span class="report-stat-val" style="color:#34d399;">+'+kgPer4w+' kg</span></div>'
         +'<div class="report-stat-row"><span class="report-stat-label">Ganho estimado em 12 semanas</span><span class="report-stat-val" style="color:#34d399;">+'+Math.round(kgPer4w*3*10)/10+' kg</span></div>'
-        +'<div style="font-size:10px;color:#5a6270;margin-top:8px;line-height:1.5;">* Estimativa â resultados dependem de treino, sono e genÃ©tica individual.</div>'
+        +'<div style="font-size:10px;color:#5a6270;margin-top:8px;line-height:1.5;">* Estimativa — resultados dependem de treino, sono e genética individual.</div>'
         +'</div>';
     }html+='<div class="card"><div class="card-title">Metas da semana</div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ð½ï¸ Meta calÃ³rica atingida</span><span class="report-stat-val">'+surplusDays+'/'+validDays.length+' dias</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ðª ProteÃ­na â¥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ð§ HidrataÃ§Ã£o â¥80% da meta</span><span class="report-stat-val">'+waterDays+'/'+validDays.length+' dias</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ð Calorias mÃ©dias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ð¥© ProteÃ­na mÃ©dia</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🍽️ Meta calórica atingida</span><span class="report-stat-val">'+surplusDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">💪 Proteína ≥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">💧 Hidratação ≥80% da meta</span><span class="report-stat-val">'+waterDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">📊 Calorias médias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
       +'</div>';
     if(surplus>50&&kgPer4w>0){
       
     var tip='';
-    if(avgProt<mg.prot*0.8)tip='ð¡ ProteÃ­na Ã© o fator mais crÃ­tico para ganho de massa. Mire em '+mg.prot+'g/dia com whey, frango, ovo e iogurte grego.';
-    else if(surplus<100)tip='ð½ï¸ SuperÃ¡vit abaixo do necessÃ¡rio. Adicione 300â400 kcal/dia â tente pasta de amendoim, aveia, arroz ou leite integral.';
-    else if(surplus>700)tip='â ï¸ SuperÃ¡vit muito alto. Mantenha 200â500 kcal/dia para maximizar ganho muscular e minimizar acÃºmulo de gordura.';
-    else if(waterDays<4)tip='ð§ Ãgua Ã© fundamental para sÃ­ntese proteica e recuperaÃ§Ã£o. Tente beber pelo menos '+state.waterGoal+'ml todos os dias.';
-    else tip='â Excelente consistÃªncia! O ganho de massa Ã© lento mas recompensador â continue sendo regular no treino e na alimentaÃ§Ã£o.';
-    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">ð¡ Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">'+tip+'</div></div>';
+    if(avgProt<mg.prot*0.8)tip='💡 Proteína é o fator mais crítico para ganho de massa. Mire em '+mg.prot+'g/dia com whey, frango, ovo e iogurte grego.';
+    else if(surplus<100)tip='🍽️ Superávit abaixo do necessário. Adicione 300–400 kcal/dia — tente pasta de amendoim, aveia, arroz ou leite integral.';
+    else if(surplus>700)tip='⚠️ Superávit muito alto. Mantenha 200–500 kcal/dia para maximizar ganho muscular e minimizar acúmulo de gordura.';
+    else if(waterDays<4)tip='💧 Água é fundamental para síntese proteica e recuperação. Tente beber pelo menos '+state.waterGoal+'ml todos os dias.';
+    else tip='✅ Excelente consistência! O ganho de massa é lento mas recompensador — continue sendo regular no treino e na alimentação.';
+    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">'+tip+'</div></div>';
 
   }else{
     var balance=avgKcal-calGoal;
     var balanceDays=validDays.filter(function(d){return Math.abs(d.data.kcal-calGoal)/calGoal<=0.10;}).length;
     var protDays=validDays.filter(function(d){return (d.data.prot||0)>=mg.prot*0.8;}).length;
     var heroColor=Math.abs(balance)<150?'#34d399':Math.abs(balance)<350?'#fbbf24':'#f87171';
-    var heroMsg=Math.abs(balance)<150?'BalanÃ§o perfeito! âï¸':Math.abs(balance)<350?'BalanÃ§o bom ð':balance>0?'SuperÃ¡vit elevado â ï¸':'DÃ©ficit elevado â ï¸';
+    var heroMsg=Math.abs(balance)<150?'Balanço perfeito! ⚖️':Math.abs(balance)<350?'Balanço bom 👍':balance>0?'Superávit elevado ⚠️':'Déficit elevado ⚠️';
     html+='<div class="report-hero">'
-      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">âï¸ BALANÃO MÃDIO â 7 DIAS</div>'
+      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">⚖️ BALANÇO MÉDIO — 7 DIAS</div>'
       +'<div class="report-hero-num" style="color:'+heroColor+';">'+(balance>=0?'+':'')+Math.round(balance)+' kcal/dia</div>'
       +'<div class="report-hero-sub" style="color:#f0f2f5;">'+heroMsg+'</div>'
       +'</div>';
     html+=dotHtml;
     html+='<div class="card"><div class="card-title">Metas da semana</div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">âï¸ Dentro do equilÃ­brio (Â±10%)</span><span class="report-stat-val">'+balanceDays+'/'+validDays.length+' dias</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ðª ProteÃ­na â¥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ð Calorias mÃ©dias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">ð¥© ProteÃ­na mÃ©dia</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">⚖️ Dentro do equilíbrio (±10%)</span><span class="report-stat-val">'+balanceDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">💪 Proteína ≥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">📊 Calorias médias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
       +'</div>';
-    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">ð¡ Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">â ManutenÃ§Ã£o Ã© equilÃ­brio. Foque na qualidade dos alimentos, regularidade nos treinos e mantenha a hidrataÃ§Ã£o em dia.</div></div>';
+    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">✅ Manutenção é equilíbrio. Foque na qualidade dos alimentos, regularidade nos treinos e mantenha a hidratação em dia.</div></div>';
   }
 
   el.innerHTML=html;
 }
 
-// ââ IA NUTRICIONISTA ââââââââââââââââââââââââââââââââââââââââââ
+// ── IA NUTRICIONISTA ──────────────────────────────────────────
 function sendChat(){
   var input=document.getElementById('chatInput');
   var msg=(input&&input.value)||'';
@@ -2658,7 +2658,7 @@ async function askNutritionist(prompt){
     return;
   }
   var t=calcTotals(),mg=getMacroGoals(),p=state.profile||{};
-  var ctxL={pt:{profile:'Perfil',goal:'objetivo',mass:'Ganhar Massa',cut:'Emagrecer',maint:'Manter',daily:'Meta diÃ¡ria',prot:'ProteÃ­na',carbs:'Carbs',fat:'Gordura',consumed:'Consumo hoje',water:'Ãgua',of:'de',data:'Dados do usuÃ¡rio',q:'Pergunta'},en:{profile:'Profile',goal:'goal',mass:'Gain Muscle',cut:'Lose Weight',maint:'Maintain',daily:'Daily target',prot:'Protein',carbs:'Carbs',fat:'Fat',consumed:'Consumed today',water:'Water',of:'of',data:'User data',q:'Question'},es:{profile:'Perfil',goal:'objetivo',mass:'Ganar Masa',cut:'Adelgazar',maint:'Mantener',daily:'Meta diaria',prot:'ProteÃ­na',carbs:'Carbos',fat:'Grasa',consumed:'Consumido hoy',water:'Agua',of:'de',data:'Datos del usuario',q:'Pregunta'},it:{profile:'Profilo',goal:'obiettivo',mass:'Massa Muscolare',cut:'Dimagrire',maint:'Mantenere',daily:'Obiettivo giornaliero',prot:'Proteine',carbs:'Carboidrati',fat:'Grassi',consumed:'Consumato oggi',water:'Acqua',of:'di',data:'Dati utente',q:'Domanda'},fr:{profile:'Profil',goal:'objectif',mass:'Prise de masse',cut:'Perte de poids',maint:'Maintien',daily:'Objectif quotidien',prot:'ProtÃ©ines',carbs:'Glucides',fat:'Graisses',consumed:"ConsommÃ© aujourd'hui",water:'Eau',of:'sur',data:'DonnÃ©es utilisateur',q:'Question'},de:{profile:'Profil',goal:'Ziel',mass:'Muskelaufbau',cut:'Abnehmen',maint:'Gewicht halten',daily:'Tagesziel',prot:'Protein',carbs:'Kohlenhydrate',fat:'Fett',consumed:'Heute konsumiert',water:'Wasser',of:'von',data:'Benutzerdaten',q:'Frage'}};
+  var ctxL={pt:{profile:'Perfil',goal:'objetivo',mass:'Ganhar Massa',cut:'Emagrecer',maint:'Manter',daily:'Meta diária',prot:'Proteína',carbs:'Carbs',fat:'Gordura',consumed:'Consumo hoje',water:'Água',of:'de',data:'Dados do usuário',q:'Pergunta'},en:{profile:'Profile',goal:'goal',mass:'Gain Muscle',cut:'Lose Weight',maint:'Maintain',daily:'Daily target',prot:'Protein',carbs:'Carbs',fat:'Fat',consumed:'Consumed today',water:'Water',of:'of',data:'User data',q:'Question'},es:{profile:'Perfil',goal:'objetivo',mass:'Ganar Masa',cut:'Adelgazar',maint:'Mantener',daily:'Meta diaria',prot:'Proteína',carbs:'Carbos',fat:'Grasa',consumed:'Consumido hoy',water:'Agua',of:'de',data:'Datos del usuario',q:'Pregunta'},it:{profile:'Profilo',goal:'obiettivo',mass:'Massa Muscolare',cut:'Dimagrire',maint:'Mantenere',daily:'Obiettivo giornaliero',prot:'Proteine',carbs:'Carboidrati',fat:'Grassi',consumed:'Consumato oggi',water:'Acqua',of:'di',data:'Dati utente',q:'Domanda'},fr:{profile:'Profil',goal:'objectif',mass:'Prise de masse',cut:'Perte de poids',maint:'Maintien',daily:'Objectif quotidien',prot:'Protéines',carbs:'Glucides',fat:'Graisses',consumed:"Consommé aujourd'hui",water:'Eau',of:'sur',data:'Données utilisateur',q:'Question'},de:{profile:'Profil',goal:'Ziel',mass:'Muskelaufbau',cut:'Abnehmen',maint:'Gewicht halten',daily:'Tagesziel',prot:'Protein',carbs:'Kohlenhydrate',fat:'Fett',consumed:'Heute konsumiert',water:'Wasser',of:'von',data:'Benutzerdaten',q:'Frage'}};
   var cl=ctxL[currentLang]||ctxL.en;
   var goalLabel=state.goal==='mass'?cl.mass:(state.goal==='cut'?cl.cut:cl.maint);
   var context=cl.profile+': '+(p.name||'User')+', '+(p.weight||'?')+'kg'
@@ -2680,26 +2680,26 @@ async function askNutritionist(prompt){
         model:'claude-haiku-4-5-20251001',
         max_tokens:350,
         system:(function(){
-          var langInstr={pt:'Responda em portuguÃªs',en:'Respond in English',es:'Responde en espaÃ±ol',it:'Rispondi in italiano',fr:'RÃ©ponds en franÃ§ais',de:'Antworte auf Deutsch'}[currentLang]||'Respond in English';
+          var langInstr={pt:'Responda em português',en:'Respond in English',es:'Responde en español',it:'Rispondi in italiano',fr:'Réponds en français',de:'Antworte auf Deutsch'}[currentLang]||'Respond in English';
           var goalMap={
-            pt:{cut:'EMAGRECER (dÃ©ficit calÃ³rico â preserve mÃºsculo, controle calorias)',mass:'GANHAR MASSA MUSCULAR (superÃ¡vit calÃ³rico â priorize proteÃ­na e carboidratos)',maint:'MANUTENÃÃO DE PESO (equilÃ­brio calÃ³rico, qualidade nutricional)'},
-            en:{cut:'LOSE WEIGHT (caloric deficit â preserve muscle, control calories)',mass:'GAIN MUSCLE MASS (caloric surplus â prioritize protein and carbohydrates)',maint:'MAINTAIN WEIGHT (caloric balance, nutritional quality)'},
-            es:{cut:'PERDER PESO (dÃ©ficit calÃ³rico â preservar mÃºsculo, controlar calorÃ­as)',mass:'GANAR MASA MUSCULAR (superÃ¡vit calÃ³rico â priorizar proteÃ­nas y carbohidratos)',maint:'MANTENER PESO (equilibrio calÃ³rico, calidad nutricional)'},
-            it:{cut:'PERDERE PESO (deficit calorico â preservare il muscolo)',mass:'GUADAGNARE MASSA MUSCOLARE (surplus calorico â prioritÃ  a proteine)',maint:'MANTENERE IL PESO (equilibrio calorico)'},
-            fr:{cut:'PERDRE DU POIDS (dÃ©ficit calorique â prÃ©server le muscle)',mass:'GAGNER DE LA MASSE (surplus calorique â prioriser les protÃ©ines)',maint:'MAINTENIR LE POIDS (Ã©quilibre calorique)'},
-            de:{cut:'ABNEHMEN (Kaloriendefizit â Muskeln erhalten)',mass:'MUSKELMASSE AUFBAUEN (KalorienÃ¼berschuss â Protein priorisieren)',maint:'GEWICHT HALTEN (Kaloriengleichgewicht)'}
+            pt:{cut:'EMAGRECER (déficit calórico — preserve músculo, controle calorias)',mass:'GANHAR MASSA MUSCULAR (superávit calórico — priorize proteína e carboidratos)',maint:'MANUTENÇÃO DE PESO (equilíbrio calórico, qualidade nutricional)'},
+            en:{cut:'LOSE WEIGHT (caloric deficit — preserve muscle, control calories)',mass:'GAIN MUSCLE MASS (caloric surplus — prioritize protein and carbohydrates)',maint:'MAINTAIN WEIGHT (caloric balance, nutritional quality)'},
+            es:{cut:'PERDER PESO (déficit calórico — preservar músculo, controlar calorías)',mass:'GANAR MASA MUSCULAR (superávit calórico — priorizar proteínas y carbohidratos)',maint:'MANTENER PESO (equilibrio calórico, calidad nutricional)'},
+            it:{cut:'PERDERE PESO (deficit calorico — preservare il muscolo)',mass:'GUADAGNARE MASSA MUSCOLARE (surplus calorico — priorità a proteine)',maint:'MANTENERE IL PESO (equilibrio calorico)'},
+            fr:{cut:'PERDRE DU POIDS (déficit calorique — préserver le muscle)',mass:'GAGNER DE LA MASSE (surplus calorique — prioriser les protéines)',maint:'MAINTENIR LE POIDS (équilibre calorique)'},
+            de:{cut:'ABNEHMEN (Kaloriendefizit — Muskeln erhalten)',mass:'MUSKELMASSE AUFBAUEN (Kalorienüberschuss — Protein priorisieren)',maint:'GEWICHT HALTEN (Kaloriengleichgewicht)'}
           };
           var gm=goalMap[currentLang]||goalMap['en'];
           var goalDesc=state.goal==='cut'?gm.cut:(state.goal==='mass'?gm.mass:gm.maint);
           var langName={pt:'Portuguese',en:'English',es:'Spanish',it:'Italian',fr:'French',de:'German'}[currentLang]||'English';
-          return 'You are an expert fitness nutritionist. The user\'s current goal is: '+goalDesc+'. CRITICAL: Your ENTIRE response â every word, every heading, every greeting â MUST be written exclusively in '+langName+'. Do NOT mix any other language. '+langInstr+'. Be direct, practical and motivational. Maximum 3 short paragraphs.';
+          return 'You are an expert fitness nutritionist. The user\'s current goal is: '+goalDesc+'. CRITICAL: Your ENTIRE response — every word, every heading, every greeting — MUST be written exclusively in '+langName+'. Do NOT mix any other language. '+langInstr+'. Be direct, practical and motivational. Maximum 3 short paragraphs.';
         })(),
         messages:[{role:'user',content:cl.data+':\n'+context+'\n\n'+cl.q+': '+prompt}]
       })
     });
     var data=await res.json();
-    var errMsg={pt:'NÃ£o consegui processar. Tente novamente.',en:'Could not process. Please try again.',es:'No se pudo procesar. IntÃ©ntalo de nuevo.',it:'Impossibile elaborare. Riprova.',fr:'Impossible de traiter. RÃ©essayez.',de:'Konnte nicht verarbeitet werden. Bitte erneut versuchen.'};
-    var connErr={pt:'Erro de conexÃ£o. Verifique sua chave API no Perfil.',en:'Connection error. Check your API key in Profile.',es:'Error de conexiÃ³n. Verifica tu clave API en Perfil.',it:'Errore di connessione. Controlla la tua chiave API nel Profilo.',fr:'Erreur de connexion. VÃ©rifiez votre clÃ© API dans Profil.',de:'Verbindungsfehler. ÃberprÃ¼fe deinen API-SchlÃ¼ssel im Profil.'};
+    var errMsg={pt:'Não consegui processar. Tente novamente.',en:'Could not process. Please try again.',es:'No se pudo procesar. Inténtalo de nuevo.',it:'Impossibile elaborare. Riprova.',fr:'Impossible de traiter. Réessayez.',de:'Konnte nicht verarbeitet werden. Bitte erneut versuchen.'};
+    var connErr={pt:'Erro de conexão. Verifique sua chave API no Perfil.',en:'Connection error. Check your API key in Profile.',es:'Error de conexión. Verifica tu clave API en Perfil.',it:'Errore di connessione. Controlla la tua chiave API nel Profilo.',fr:'Erreur de connexion. Vérifiez votre clé API dans Profil.',de:'Verbindungsfehler. Überprüfe deinen API-Schlüssel im Profil.'};
     var reply=data.content&&data.content[0]?data.content[0].text:(errMsg[currentLang]||errMsg.en);
     chatMessages.push({role:'ai',text:reply});
   }catch(e){
@@ -2711,19 +2711,19 @@ async function askNutritionist(prompt){
 
 function getNutriPrompt(key){
   var p={
-    analyzeDay:{pt:'Analise meu dia de hoje. Como estou em relaÃ§Ã£o Ã s minhas metas de calorias, proteÃ­na e Ã¡gua?',en:'Analyze my day so far. How am I doing on my calorie, protein, and water goals?',es:'Analiza mi dÃ­a de hoy. Â¿CÃ³mo voy en relaciÃ³n a mis metas de calorÃ­as, proteÃ­na y agua?',it:'Analizza la mia giornata. Come sto rispetto ai miei obiettivi di calorie, proteine e acqua?',fr:'Analyse ma journÃ©e. Comment je me dÃ©brouille par rapport Ã  mes objectifs calories, protÃ©ines et eau?',de:'Analysiere meinen heutigen Tag. Wie liege ich bei meinen Kalorien-, Protein- und Wasserzielen?'},
-    whatToEat:{pt:'O que eu poderia comer agora para bater minhas metas do dia sem ultrapassar as calorias?',en:'What should I eat now to hit my daily goals without exceeding my calorie limit?',es:'Â¿QuÃ© podrÃ­a comer ahora para alcanzar mis metas del dÃ­a sin superar las calorÃ­as?',it:'Cosa potrei mangiare adesso per raggiungere i miei obiettivi giornalieri senza superare le calorie?',fr:'Que pourrais-je manger maintenant pour atteindre mes objectifs sans dÃ©passer mon quota calorique?',de:'Was sollte ich jetzt essen, um meine Tagesziele zu erreichen ohne die Kalorien zu Ã¼berschreiten?'},
-    proteinGoal:{pt:'Estou dentro da minha meta de proteÃ­na? Me dÃª uma dica prÃ¡tica sobre as melhores fontes de proteÃ­na para o meu objetivo.',en:'Am I on track with my protein goal? Give me a practical tip on the best protein sources for my goal.',es:'Â¿Estoy dentro de mi meta de proteÃ­na? Dame un consejo prÃ¡ctico sobre las mejores fuentes de proteÃ­na para mi objetivo.',it:'Sono in linea con il mio obiettivo proteico? Dammi un consiglio pratico sulle migliori fonti di proteine per il mio obiettivo.',fr:'Suis-je dans ma cible de protÃ©ines? Donne-moi un conseil pratique sur les meilleures sources de protÃ©ines pour mon objectif.',de:'Erreiche ich mein Proteinziel? Gib mir einen praktischen Tipp zu den besten Proteinquellen fÃ¼r mein Ziel.'},
-    motivation:{pt:'Me dÃª uma dica motivacional personalizada para hoje, baseada no meu objetivo e no que jÃ¡ consumi hoje.',en:"Give me a personalized motivational tip for today, based on my goal and what I've already consumed.",es:'Dame un consejo motivacional personalizado para hoy, basado en mi objetivo y lo que ya he consumido.',it:"Dammi un consiglio motivazionale personalizzato per oggi, basato sul mio obiettivo e su cosa ho giÃ  consumato.",fr:"Donne-moi un conseil motivationnel personnalisÃ© pour aujourd'hui, basÃ© sur mon objectif et ce que j'ai dÃ©jÃ  consommÃ©.",de:'Gib mir heute einen personalisierten Motivationstipp, basierend auf meinem Ziel und was ich bereits konsumiert habe.'}
+    analyzeDay:{pt:'Analise meu dia de hoje. Como estou em relação às minhas metas de calorias, proteína e água?',en:'Analyze my day so far. How am I doing on my calorie, protein, and water goals?',es:'Analiza mi día de hoy. ¿Cómo voy en relación a mis metas de calorías, proteína y agua?',it:'Analizza la mia giornata. Come sto rispetto ai miei obiettivi di calorie, proteine e acqua?',fr:'Analyse ma journée. Comment je me débrouille par rapport à mes objectifs calories, protéines et eau?',de:'Analysiere meinen heutigen Tag. Wie liege ich bei meinen Kalorien-, Protein- und Wasserzielen?'},
+    whatToEat:{pt:'O que eu poderia comer agora para bater minhas metas do dia sem ultrapassar as calorias?',en:'What should I eat now to hit my daily goals without exceeding my calorie limit?',es:'¿Qué podría comer ahora para alcanzar mis metas del día sin superar las calorías?',it:'Cosa potrei mangiare adesso per raggiungere i miei obiettivi giornalieri senza superare le calorie?',fr:'Que pourrais-je manger maintenant pour atteindre mes objectifs sans dépasser mon quota calorique?',de:'Was sollte ich jetzt essen, um meine Tagesziele zu erreichen ohne die Kalorien zu überschreiten?'},
+    proteinGoal:{pt:'Estou dentro da minha meta de proteína? Me dê uma dica prática sobre as melhores fontes de proteína para o meu objetivo.',en:'Am I on track with my protein goal? Give me a practical tip on the best protein sources for my goal.',es:'¿Estoy dentro de mi meta de proteína? Dame un consejo práctico sobre las mejores fuentes de proteína para mi objetivo.',it:'Sono in linea con il mio obiettivo proteico? Dammi un consiglio pratico sulle migliori fonti di proteine per il mio obiettivo.',fr:'Suis-je dans ma cible de protéines? Donne-moi un conseil pratique sur les meilleures sources de protéines pour mon objectif.',de:'Erreiche ich mein Proteinziel? Gib mir einen praktischen Tipp zu den besten Proteinquellen für mein Ziel.'},
+    motivation:{pt:'Me dê uma dica motivacional personalizada para hoje, baseada no meu objetivo e no que já consumi hoje.',en:"Give me a personalized motivational tip for today, based on my goal and what I've already consumed.",es:'Dame un consejo motivacional personalizado para hoy, basado en mi objetivo y lo que ya he consumido.',it:"Dammi un consiglio motivazionale personalizzato per oggi, basato sul mio obiettivo e su cosa ho già consumato.",fr:"Donne-moi un conseil motivationnel personnalisé pour aujourd'hui, basé sur mon objectif et ce que j'ai déjà consommé.",de:'Gib mir heute einen personalisierten Motivationstipp, basierend auf meinem Ziel und was ich bereits konsumiert habe.'}
   };
   var o=p[key];return o?(o[currentLang]||o.en):'';
 }
 function updateNutriButtons(){
   var labels={
-    1:{pt:'Analisar<br>meu dia',en:'Analyze<br>my day',es:'Analizar<br>mi dÃ­a',it:'Analizza<br>giornata',fr:'Analyser<br>ma journÃ©e',de:'Tag<br>analysieren'},
-    2:{pt:'O que<br>comer agora?',en:'What to<br>eat now?',es:'Â¿QuÃ©<br>comer ahora?',it:'Cosa<br>mangiare?',fr:'Que<br>manger?',de:'Was<br>essen?'},
-    3:{pt:'Meta de<br>proteÃ­na',en:'Protein<br>goal',es:'Meta de<br>proteÃ­na',it:'Obiettivo<br>proteine',fr:'Objectif<br>protÃ©ines',de:'Protein-<br>ziel'},
-    4:{pt:'MotivaÃ§Ã£o<br>do dia',en:'Daily<br>motivation',es:'MotivaciÃ³n<br>del dÃ­a',it:'Motivazione<br>del giorno',fr:'Motivation<br>du jour',de:'Tages-<br>motivation'}
+    1:{pt:'Analisar<br>meu dia',en:'Analyze<br>my day',es:'Analizar<br>mi día',it:'Analizza<br>giornata',fr:'Analyser<br>ma journée',de:'Tag<br>analysieren'},
+    2:{pt:'O que<br>comer agora?',en:'What to<br>eat now?',es:'¿Qué<br>comer ahora?',it:'Cosa<br>mangiare?',fr:'Que<br>manger?',de:'Was<br>essen?'},
+    3:{pt:'Meta de<br>proteína',en:'Protein<br>goal',es:'Meta de<br>proteína',it:'Obiettivo<br>proteine',fr:'Objectif<br>protéines',de:'Protein-<br>ziel'},
+    4:{pt:'Motivação<br>do dia',en:'Daily<br>motivation',es:'Motivación<br>del día',it:'Motivazione<br>del giorno',fr:'Motivation<br>du jour',de:'Tages-<br>motivation'}
   };
   [1,2,3,4].forEach(function(i){
     var el=document.getElementById('nutri-lbl-'+i);
@@ -2743,9 +2743,9 @@ function renderNutriChat(){
   el.scrollTop=el.scrollHeight;
 }
 
-// ââ PRO / STRIPE âââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── PRO / STRIPE ─────────────────────────────────────────────────
 
-// Conta do criador â acesso PRO permanente
+// Conta do criador — acesso PRO permanente
 var CREATOR_EMAIL = 'felipeperoniluiz@gmail.com';
 
 function isCreatorAccount(){
@@ -2760,14 +2760,14 @@ function setProStatus(val, silent){
     ni.style.opacity='1';
   });
   if(isPro&&!silent){
-    showToast('ð Better You PRO ativo!','success');
+    showToast('🎉 Better You PRO ativo!','success');
   }
 }
 
 async function subscribePro(){
   if(isCreatorAccount()){setProStatus(true);return;}
   var btn=document.getElementById('subscribeBtn');
-  if(btn){btn.disabled=true;btn.textContent='â³...';}
+  if(btn){btn.disabled=true;btn.textContent='⏳...';}
   try{
     var uid=_fbUser?_fbUser.uid:'guest';
     var email=_fbUser?_fbUser.email:'';
@@ -2783,9 +2783,9 @@ async function subscribePro(){
       showToast('Erro ao iniciar pagamento. Tente novamente.','error');
     }
   }catch(e){
-    showToast('Erro de conexÃ£o. Verifique sua internet.','error');
+    showToast('Erro de conexão. Verifique sua internet.','error');
   }finally{
-    if(btn){btn.disabled=false;btn.textContent=(T[currentLang]&&T[currentLang].proCtaBtn)||'â¡ ComeÃ§ar 2 dias grÃ¡tis';}
+    if(btn){btn.disabled=false;btn.textContent=(T[currentLang]&&T[currentLang].proCtaBtn)||'⚡ Começar 2 dias grátis';}
   }
 }
 
@@ -2795,7 +2795,7 @@ async function verifyStripeSession(sessionId){
     var data=await res.json();
     if(data.isPro){
       setProStatus(true);
-      // Salvar subscriptionId no localStorage para verificaÃ§Ã£o futura
+      // Salvar subscriptionId no localStorage para verificação futura
       if(data.subscriptionId){
         localStorage.setItem('betteryou_subscriptionId', data.subscriptionId);
       }
@@ -2813,7 +2813,7 @@ async function verifyStripeSession(sessionId){
   }catch(e){console.warn('Stripe verify error:',e);}
 }
 
-// Verifica no Stripe se a assinatura salva localmente ainda estÃ¡ ativa
+// Verifica no Stripe se a assinatura salva localmente ainda está ativa
 async function verifyLocalSubscription(){
   var subId=localStorage.getItem('betteryou_subscriptionId');
   if(!subId) return;
@@ -2821,14 +2821,14 @@ async function verifyLocalSubscription(){
     var res=await fetch(PROXY_URL+'/verify-subscription?subscription_id='+subId);
     var data=await res.json();
     if(data.isPro){
-      setProStatus(true, true); // silencioso â usuÃ¡rio jÃ¡ era PRO
+      setProStatus(true, true); // silencioso — usuário já era PRO
     }else{
-      // Assinatura cancelada ou nÃ£o encontrada no Stripe
+      // Assinatura cancelada ou não encontrada no Stripe
       localStorage.removeItem('betteryou_subscriptionId');
       isPro=false;
     }
   }catch(e){
-    // Em caso de erro de rede, mantÃ©m o status atual (nÃ£o penaliza o usuÃ¡rio)
+    // Em caso de erro de rede, mantém o status atual (não penaliza o usuário)
     console.warn('Subscription verify error:',e);
   }
 }
@@ -2843,14 +2843,14 @@ function checkUrlProStatus(){
     window.history.replaceState({},'',window.location.pathname);
   }
   if(cancel==='cancel'){
-    showToast('Assinatura cancelada. VocÃª pode assinar quando quiser!','');
+    showToast('Assinatura cancelada. Você pode assinar quando quiser!','');
     window.history.replaceState({},'',window.location.pathname);
   }
 }
 
 function renderNutriContext(){
   var goal=state.goal||'mass';
-  var goalLabels={cut:{pt:'ð¥ Especialista em Emagrecimento',en:'ð¥ Fat Loss Specialist',es:'ð¥ Especialista en PÃ©rdida de Peso',it:'ð¥ Specialista in Dimagrimento',fr:'ð¥ SpÃ©cialiste en Perte de Poids',de:'ð¥ Abnehmexperte'},mass:{pt:'ðª Especialista em Ganho de Massa',en:'ðª Muscle Gain Specialist',es:'ðª Especialista en Ganancia de Masa',it:'ðª Specialista in Massa Muscolare',fr:'ðª SpÃ©cialiste en Prise de Masse',de:'ðª Muskelaufbauexperte'},maint:{pt:'âï¸ Especialista em ManutenÃ§Ã£o',en:'âï¸ Weight Maintenance Specialist',es:'âï¸ Especialista en Mantenimiento',it:'âï¸ Specialista in Mantenimento',fr:'âï¸ SpÃ©cialiste en Maintien du Poids',de:'âï¸ Gewichtserhaltungsexperte'}};
+  var goalLabels={cut:{pt:'🔥 Especialista em Emagrecimento',en:'🔥 Fat Loss Specialist',es:'🔥 Especialista en Pérdida de Peso',it:'🔥 Specialista in Dimagrimento',fr:'🔥 Spécialiste en Perte de Poids',de:'🔥 Abnehmexperte'},mass:{pt:'💪 Especialista em Ganho de Massa',en:'💪 Muscle Gain Specialist',es:'💪 Especialista en Ganancia de Masa',it:'💪 Specialista in Massa Muscolare',fr:'💪 Spécialiste en Prise de Masse',de:'💪 Muskelaufbauexperte'},maint:{pt:'⚖️ Especialista em Manutenção',en:'⚖️ Weight Maintenance Specialist',es:'⚖️ Especialista en Mantenimiento',it:'⚖️ Specialista in Mantenimento',fr:'⚖️ Spécialiste en Maintien du Poids',de:'⚖️ Gewichtserhaltungsexperte'}};
   var gl=goalLabels[goal]||goalLabels.maint;
   var lbl=document.getElementById('nutriGoalLabel');
   if(lbl)lbl.textContent=(gl[currentLang]||gl.en);
@@ -2873,7 +2873,7 @@ function renderNutriContext(){
 
   var stats=document.getElementById('nutriContextStats');
   if(!stats)return;
-  var slMap={pt:{cal:'Calorias',prot:'ProteÃ­na',water:'Ãgua'},en:{cal:'Calories',prot:'Protein',water:'Water'},es:{cal:'CalorÃ­as',prot:'ProteÃ­na',water:'Agua'},it:{cal:'Calorie',prot:'Proteine',water:'Acqua'},fr:{cal:'Calories',prot:'ProtÃ©ines',water:'Eau'},de:{cal:'Kalorien',prot:'Protein',water:'Wasser'}};
+  var slMap={pt:{cal:'Calorias',prot:'Proteína',water:'Água'},en:{cal:'Calories',prot:'Protein',water:'Water'},es:{cal:'Calorías',prot:'Proteína',water:'Agua'},it:{cal:'Calorie',prot:'Proteine',water:'Acqua'},fr:{cal:'Calories',prot:'Protéines',water:'Eau'},de:{cal:'Kalorien',prot:'Protein',water:'Wasser'}};
   var sl=slMap[currentLang]||slMap.en;
   stats.innerHTML=[
     {label:sl.cal,val:t.kcal+' kcal',pct:calPct,color:pctColor(calPct,goal),goal:calGoal+' kcal'},
@@ -2889,9 +2889,9 @@ function renderNutriContext(){
 }
 </script>
 
-<!-- ââ FIREBASE SDK (carregado de forma assÃ­ncrona para nÃ£o bloquear o vÃ­deo) ââ -->
+<!-- ── FIREBASE SDK (carregado de forma assíncrona para não bloquear o vídeo) ── -->
 <script>
-// ââ FIREBASE INIT âââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── FIREBASE INIT ─────────────────────────────────────────────────
 var _fbApp, _fbAuth, _fbDb, _fbUser = null;
 var _fbSaveTimer = null;
 
@@ -2911,10 +2911,10 @@ function initFirebase(){
   _fbAuth.onAuthStateChanged(function(user){
     _fbUser = user;
     if(user){
-      // UsuÃ¡rio logado: esconde auth imediatamente (splash ainda pode estar visÃ­vel por cima)
+      // Usuário logado: esconde auth imediatamente (splash ainda pode estar visível por cima)
       document.getElementById('authScreen').style.display='none';
       var info=document.getElementById('authUserInfo');
-      if(info) info.textContent='ð§ '+user.email;
+      if(info) info.textContent='📧 '+user.email;
       loadFromFirestore(user.uid);
       // Checar isPro no Firestore e sincronizar subscriptionId com localStorage
       _fbDb.collection('users').doc(user.uid).get().then(function(doc){
@@ -2924,10 +2924,10 @@ function initFirebase(){
           if(docData.subscriptionId&&!localStorage.getItem('betteryou_subscriptionId')){
             localStorage.setItem('betteryou_subscriptionId', docData.subscriptionId);
           }
-          // NÃ£o definir isPro aqui â deixar verifyLocalSubscription decidir com base no Stripe
+          // Não definir isPro aqui — deixar verifyLocalSubscription decidir com base no Stripe
         }
       }).catch(function(){});
-      // Verificar assinatura Stripe (anti-fraude: confirma que a assinatura ainda estÃ¡ ativa)
+      // Verificar assinatura Stripe (anti-fraude: confirma que a assinatura ainda está ativa)
       if(isCreatorAccount()){
         setProStatus(true, true);
       } else {
@@ -2936,7 +2936,7 @@ function initFirebase(){
       // Checar retorno do Stripe na URL
       checkUrlProStatus();
     } else {
-      // NÃ£o logado: sÃ³ mostra tela de login DEPOIS que o splash terminar
+      // Não logado: só mostra tela de login DEPOIS que o splash terminar
       function showAuth(){
         var s=document.getElementById('authScreen');
         s.style.display='flex';
@@ -2950,7 +2950,7 @@ function initFirebase(){
   });
 } // fim initFirebase
 
-// ââ AUTH FUNCTIONS ââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── AUTH FUNCTIONS ────────────────────────────────────────────────
 window._authTab='login';
 
 function switchAuthTab(tab){
@@ -2991,19 +2991,19 @@ function doAuth(){
     _fbAuth.signInWithEmailAndPassword(email,pass)
       .catch(function(e){
         btn.textContent='Entrar';btn.disabled=false;
-        var m={'auth/user-not-found':'E-mail nÃ£o encontrado.','auth/wrong-password':'Senha incorreta.',
-               'auth/invalid-email':'E-mail invÃ¡lido.','auth/invalid-credential':'E-mail ou senha incorretos.',
+        var m={'auth/user-not-found':'E-mail não encontrado.','auth/wrong-password':'Senha incorreta.',
+               'auth/invalid-email':'E-mail inválido.','auth/invalid-credential':'E-mail ou senha incorretos.',
                'auth/too-many-requests':'Muitas tentativas. Tente mais tarde.'};
         showAuthMsg(m[e.code]||'Erro: '+e.message);
       });
   } else {
     var pass2=document.getElementById('authPassword2').value;
-    if(pass!==pass2){btn.textContent='Criar Conta';btn.disabled=false;showAuthMsg('As senhas nÃ£o coincidem.');return;}
+    if(pass!==pass2){btn.textContent='Criar Conta';btn.disabled=false;showAuthMsg('As senhas não coincidem.');return;}
     if(pass.length<6){btn.textContent='Criar Conta';btn.disabled=false;showAuthMsg('Senha deve ter pelo menos 6 caracteres.');return;}
     _fbAuth.createUserWithEmailAndPassword(email,pass)
       .catch(function(e){
         btn.textContent='Criar Conta';btn.disabled=false;
-        var m={'auth/email-already-in-use':'E-mail jÃ¡ cadastrado. FaÃ§a login.','auth/invalid-email':'E-mail invÃ¡lido.','auth/weak-password':'Senha muito fraca.'};
+        var m={'auth/email-already-in-use':'E-mail já cadastrado. Faça login.','auth/invalid-email':'E-mail inválido.','auth/weak-password':'Senha muito fraca.'};
         showAuthMsg(m[e.code]||'Erro: '+e.message);
       });
   }
@@ -3013,18 +3013,18 @@ function doForgotPassword(){
   var email=document.getElementById('authEmail').value.trim();
   if(!email){showAuthMsg('Digite seu e-mail primeiro.');return;}
   _fbAuth.sendPasswordResetEmail(email)
-    .then(function(){showAuthMsg('â E-mail enviado! Verifique sua caixa de entrada.',true);})
+    .then(function(){showAuthMsg('✅ E-mail enviado! Verifique sua caixa de entrada.',true);})
     .catch(function(e){showAuthMsg('Erro: '+e.message);});
 }
 
 function doSignOut(){
   _fbAuth.signOut().then(function(){
     if(typeof closeModal==='function') closeModal('modalProfile');
-    if(typeof showToast==='function') showToast('AtÃ© logo! ð');
+    if(typeof showToast==='function') showToast('Até logo! 👋');
   });
 }
 
-// ââ FIRESTORE SYNC ââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── FIRESTORE SYNC ────────────────────────────────────────────────
 function loadFromFirestore(uid){
   _fbDb.collection('users').doc(uid).get()
     .then(function(doc){
@@ -3034,9 +3034,9 @@ function loadFromFirestore(uid){
         var localState=localRaw?JSON.parse(localRaw):{};
         var today=new Date().toISOString().slice(0,10);
 
-        // ââ MERGE INTELIGENTE ââââââââââââââââââââââââââââââââââââââ
-        // Cloud vence para configuraÃ§Ãµes e perfil.
-        // Local vence para refeiÃ§Ãµes/Ã¡gua DE HOJE se tiver mais entradas.
+        // ── MERGE INTELIGENTE ──────────────────────────────────────
+        // Cloud vence para configurações e perfil.
+        // Local vence para refeições/água DE HOJE se tiver mais entradas.
         var merged=Object.assign({},state,cloudState);
 
         function countMeals(s){
@@ -3049,16 +3049,16 @@ function loadFromFirestore(uid){
         var cloudCount=countMeals(cloudState);
 
         if(localState.today===today && localCount>cloudCount){
-          // Dados locais de hoje sÃ£o mais completos â protege
+          // Dados locais de hoje são mais completos — protege
           merged.meals=localState.meals;
           merged.today=today;
           if(localState.waterMl!==undefined) merged.waterMl=localState.waterMl;
           if(localState.log) merged.log=localState.log;
-          if(typeof showToast==='function') showToast('â Dados locais preservados!');
+          if(typeof showToast==='function') showToast('✅ Dados locais preservados!');
         } else {
-          if(typeof showToast==='function') showToast('â Dados carregados da nuvem!');
+          if(typeof showToast==='function') showToast('✅ Dados carregados da nuvem!');
         }
-        // ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+        // ──────────────────────────────────────────────────────────
 
         state=merged;
         localStorage.setItem('betteryou_v1',JSON.stringify(state));
@@ -3070,7 +3070,7 @@ function loadFromFirestore(uid){
         // Sincroniza o vencedor de volta ao Firestore
         saveToFirestore();
       } else {
-        // Novo usuÃ¡rio â salva dados locais na nuvem
+        // Novo usuário — salva dados locais na nuvem
         saveToFirestore();
       }
     })
@@ -3081,7 +3081,7 @@ function loadFromFirestore(uid){
 
 function saveToFirestore(){
   if(!_fbUser) return;
-  // Debounce: evita salvar centenas de vezes em sequÃªncia
+  // Debounce: evita salvar centenas de vezes em sequência
   clearTimeout(_fbSaveTimer);
   _fbSaveTimer=setTimeout(function(){
     _fbDb.collection('users').doc(_fbUser.uid).set({
@@ -3092,8 +3092,8 @@ function saveToFirestore(){
   },1500);
 }
 
-// Carrega os SDKs do Firebase SOMENTE APÃS o splash terminar.
-// Assim o vÃ­deo de abertura tem prioridade total na rede do iOS.
+// Carrega os SDKs do Firebase SOMENTE APÓS o splash terminar.
+// Assim o vídeo de abertura tem prioridade total na rede do iOS.
 (function(){
   function doLoadFirebase(){
     var sdks=[
@@ -3113,10 +3113,10 @@ function saveToFirestore(){
   }
 
   if(window._splashDone){
-    // Splash jÃ¡ terminou (improvÃ¡vel, mas defensivo)
+    // Splash já terminou (improvável, mas defensivo)
     doLoadFirebase();
   } else {
-    // Encadeia com qualquer callback _onSplashDone jÃ¡ existente
+    // Encadeia com qualquer callback _onSplashDone já existente
     var prevCallback = window._onSplashDone;
     window._onSplashDone = function(){
       if(prevCallback) prevCallback();
