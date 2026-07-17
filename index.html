@@ -2049,6 +2049,7 @@ function renderProgressPhotos(sortOrder){
   }
 }
 
+function closeProgView(){var ov=document.getElementById('progPhotoViewer');if(ov)ov.remove();}
 function viewProgressPhoto(sortedIdx){
   var sorted=(state.progressPhotos||[]).slice().sort(function(a,b){return b.date.localeCompare(a.date);});
   if(!sorted[sortedIdx]) return;
@@ -2080,24 +2081,23 @@ function renderProgView(){
   var prevBtn=i>0?'<button onclick="window._progViewIdx='+(i-1)+';renderProgView()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px 22px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">&#8592;</button>':'<div style="width:60px;"></div>';
   var nextBtn=i<photos.length-1?'<button onclick="window._progViewIdx='+(i+1)+';renderProgView()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px 22px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">&#8594;</button>':'<div style="width:60px;"></div>';
   ov.innerHTML=
-    '<button onclick="document.getElementById('progPhotoViewer').remove()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.12);border:none;border-radius:50%;width:44px;height:44px;color:#fff;font-size:24px;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">&#215;</button>'
+    '<button onclick="closeProgView()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.12);border:none;border-radius:50%;width:44px;height:44px;color:#fff;font-size:24px;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;">&#215;</button>'
     +'<div style="text-align:center;margin-bottom:14px;">'
-      +'<div style="font-size:13px;color:#9ca3af;margin-bottom:4px;">'+ds+'</div>'
-      +(p.label?'<div style="font-size:24px;font-weight:800;color:#f0b429;letter-spacing:-0.5px;">'+p.label+'</div>':'')
+    +'<div style="font-size:13px;color:#9ca3af;margin-bottom:4px;">'+ds+'</div>'
+    +(p.label?'<div style="font-size:24px;font-weight:800;color:#f0b429;">'+p.label+'</div>':'')
     +'</div>'
     +'<img src="'+p.dataUrl+'" style="max-width:88vw;max-height:62vh;object-fit:contain;border-radius:14px;display:block;box-shadow:0 0 0 2px rgba(240,180,41,.3);">'
     +'<div style="display:flex;gap:20px;margin-top:18px;align-items:center;">'
-      +prevBtn
-      +'<span style="font-size:12px;color:#6b7280;min-width:50px;text-align:center;">'+(i+1)+' / '+photos.length+'</span>'
-      +nextBtn
+    +prevBtn
+    +'<span style="font-size:12px;color:#6b7280;min-width:50px;text-align:center;">'+(i+1)+' / '+photos.length+'</span>'
+    +nextBtn
     +'</div>'
     +delBtn;
 }
 function _delProgPhoto(origIdx){
   if(!confirm('Excluir esta foto de progresso?')) return;
   deleteProgressPhoto(origIdx);
-  var ov=document.getElementById('progPhotoViewer');
-  if(ov) ov.remove();
+  closeProgView();
 }
 
 function formatProgDate(dateStr){
