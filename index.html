@@ -2379,9 +2379,11 @@ function addFotoIAItem(i){
     photo:window._fotoIAPhoto||null,
     photoKey:window._fotoIAPhotoKey||null
   });
-  save();renderMeals();closeFotoIAResult();
+  save();
+  try{renderMeals();}catch(e){}
+  closeFotoIAResult();
   showToast((sel.nome||a.nome)+" adicionado!","success");
-  setTimeout(function(){switchTab("hoje");},400);
+  switchTab("hoje");
 }
 function addAllFotoIAItems(){
   var items=window._fotoIAItems||[]; if(!items.length) return;
@@ -2404,9 +2406,11 @@ function addAllFotoIAItems(){
       photoKey:window._fotoIAPhotoKey||null
     });
   });
-  save();renderMeals();closeFotoIAResult();
+  save();
+  try{renderMeals();}catch(e){}
+  closeFotoIAResult();
   showToast(items.length+" itens adicionados!","success");
-  setTimeout(function(){switchTab("hoje");},400);
+  switchTab("hoje");
 }
 function closeFotoIAResult(){
   var b=document.getElementById("fotoIABox");if(b) b.remove();
