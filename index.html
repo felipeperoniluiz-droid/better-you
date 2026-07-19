@@ -2202,9 +2202,7 @@ function handleFotoIA(input){
       var parts=thumb.split(',');
       var mtype=(parts[0].match(/:(.*?);/)||[])[1]||'image/jpeg';
       var base64=parts[1];
-      var prompt='Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto com precisao. Identifique TODOS os alimentos e bebidas visiveis. Para cada item estime a quantidade em gramas (ml para bebidas) com base no tamanho visual, e calcule kcal, proteina, carboidrato e gordura. Responda APENAS com JSON valido exatamente neste formato:
-{"alimentos":[{"nome":"nome do alimento","gramas":150,"kcal":200,"prot":15,"carb":20,"fat":6}],"total_kcal":200}
-Nada fora do JSON.';
+      var prompt='Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto com precisao. Identifique TODOS os alimentos e bebidas visiveis. Para cada item estime a quantidade em gramas (ml para bebidas) com base no tamanho visual, e calcule kcal, proteina, carboidrato e gordura. Responda APENAS com JSON valido exatamente neste formato:\n{"alimentos":[{"nome":"nome do alimento","gramas":150,"kcal":200,"prot":15,"carb":20,"fat":6}],"total_kcal":200}\nNada fora do JSON.';
       fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+state.apiKey,"anthropic-version":"2023-06-01"},body:JSON.stringify({model:"claude-opus-4-6",max_tokens:1000,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:prompt}]}]})}).then(function(r){return r.json();}).then(function(data){
         URL.revokeObjectURL(objUrl);
         var txt=data.content&&data.content[0]&&data.content[0].text;
