@@ -2380,10 +2380,13 @@ function addFotoIAItem(i){
     photoKey:window._fotoIAPhotoKey||null
   });
   save();
-  try{renderMeals();}catch(e){}
   closeFotoIAResult();
   showToast((sel.nome||a.nome)+" adicionado!","success");
-  switchTab("hoje");
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  var _hj=document.getElementById('tab-hoje'); if(_hj) _hj.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
+  var _hjNav=document.querySelector('.nav-item[onclick*=hoje]'); if(_hjNav) _hjNav.classList.add('active');
+  setTimeout(function(){try{renderMeals();}catch(e){}},50);
 }
 function addAllFotoIAItems(){
   var items=window._fotoIAItems||[]; if(!items.length) return;
@@ -2407,10 +2410,13 @@ function addAllFotoIAItems(){
     });
   });
   save();
-  try{renderMeals();}catch(e){}
   closeFotoIAResult();
   showToast(items.length+" itens adicionados!","success");
-  switchTab("hoje");
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  var _hj=document.getElementById('tab-hoje'); if(_hj) _hj.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
+  var _hjNav=document.querySelector('.nav-item[onclick*=hoje]'); if(_hjNav) _hjNav.classList.add('active');
+  setTimeout(function(){try{renderMeals();}catch(e){}},50);
 }
 function closeFotoIAResult(){
   var b=document.getElementById("fotoIABox");if(b) b.remove();
