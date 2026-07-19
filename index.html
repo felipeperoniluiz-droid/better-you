@@ -1979,6 +1979,7 @@ function switchTab(name,navEl){
   if(name==="hist"){renderHistory();renderCalendar();}
   if(name==="foto"){checkApiKeyBanner();renderProgressPhotos();}
   if(name==="relatorios")renderReports();
+  if(name==="hoje")renderMeals();
 }
 
 // ── FOTOS DE PROGRESSO ──────────────────────────────────────────
@@ -2378,9 +2379,9 @@ function addFotoIAItem(i){
     photo:window._fotoIAPhoto||null,
     photoKey:window._fotoIAPhotoKey||null
   });
-  save();closeFotoIAResult();
+  save();renderMeals();closeFotoIAResult();
   showToast((sel.nome||a.nome)+" adicionado!","success");
-  setTimeout(function(){switchTab("hoje");},1200);
+  setTimeout(function(){switchTab("hoje");},400);
 }
 function addAllFotoIAItems(){
   var items=window._fotoIAItems||[]; if(!items.length) return;
@@ -2403,9 +2404,9 @@ function addAllFotoIAItems(){
       photoKey:window._fotoIAPhotoKey||null
     });
   });
-  save();closeFotoIAResult();
+  save();renderMeals();closeFotoIAResult();
   showToast(items.length+" itens adicionados!","success");
-  setTimeout(function(){switchTab("hoje");},1200);
+  setTimeout(function(){switchTab("hoje");},400);
 }
 function closeFotoIAResult(){
   var b=document.getElementById("fotoIABox");if(b) b.remove();
