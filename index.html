@@ -1238,12 +1238,36 @@ var isPro=false;
 var PROXY_URL='https://anthropic-proxy.felipeperoniluiz.workers.dev';
 
 function save(){
-  localStorage.setItem("betteryou_v1",JSON.stringify(state));
-  if(typeof saveToFirestore==='function')saveToFirestore();
+  try{
+    // Build a safe copy: compress stored photos to tiny thumbnails
+    var toSave=JSON.parse(JSON.stringify(state));
+    Object.keys(toSave.meals||{}).forEach(function(k){
+      (toSave.meals[k]||[]).forEach(function(e){
+        if(e.photo&&e.photo.length>30000) e.photo=null;
+      });
+    });
+    localStorage.setItem("betteryou_v1",JSON.stringify(toSave));
+    if(typeof saveToFirestore==="function") saveToFirestore();
+  }catch(err){
+    if(err.name==="QuotaExceededError"||err.code===22){
+      try{
+        // Last resort: save without any photos
+        var slim=JSON.parse(JSON.stringify(state));
+        Object.keys(slim.meals||{}).forEach(function(k){(slim.meals[k]||[]).forEach(function(e){delete e.photo;});});
+        slim.progressPhotos=(slim.progressPhotos||[]).map(function(p){return {date:p.date,label:p.label,dataUrl:null};});
+        localStorage.setItem("betteryou_v1",JSON.stringify(slim));
+        showToast("Armazenamento cheio - fotos nao salvas","error");
+      }catch(e2){showToast("Erro critico ao salvar dados!","error");}
+    }
+  }
 }
 function load(){
-  var d=localStorage.getItem("betteryou_v1");
-  if(d){var s=JSON.parse(d);state=Object.assign({},state,s);}
+  try{
+    var d=localStorage.getItem("betteryou_v1");
+    if(d){var s=JSON.parse(d);state=Object.assign({},state,s);}
+  }catch(err){
+    console.error("Erro ao carregar dados:",err);
+  }
   checkDayReset();
 }
 function todayKey(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
@@ -2195,7 +2219,7 @@ function handleFotoIA(input){
         if(w>MAX||h>MAX){var sc=MAX/Math.max(w,h);w=Math.round(w*sc);h=Math.round(h*sc);}
         var cv=document.createElement("canvas");cv.width=w;cv.height=h;
         cv.getContext("2d").drawImage(img,0,0,w,h);
-        var b64=cv.toDataURL("image/jpeg",0.75).split(",")[1]; window._fotoIAPhoto="data:image/jpeg;base64,"+b64;
+        var b64=cv.toDataURL("image/jpeg",0.75).split(",")[1]; var cThumb=document.createElement("canvas"); var tSz=150; var tw=w>tSz?(h>tSz?(w>h?tSz:Math.round(tSz*w/h)):Math.round(tSz*w/h)):w; var th=w>h?Math.round(tSz*h/w):Math.min(tSz,h); if(w<=tSz&&h<=tSz){tw=w;th=h;}else{var scT=tSz/Math.max(w,h);tw=Math.round(w*scT);th=Math.round(h*scT);} cThumb.width=tw;cThumb.height=th; cThumb.getContext("2d").drawImage(cv,0,0,tw,th); window._fotoIAPhoto=cThumb.toDataURL("image/jpeg",0.5);
         var prompt="Analise esta foto de alimentos. Para cada item visivel: identifique o nome mais provavel; se houver duvida entre dois nomes possiveis informe o nome alternativo no campo alternativa; estime a quantidade em gramas ou ml; sugira 2 ou 3 opcoes de porcao realistas em opcoes_porcao; informe a unidade g ou ml em unidade; calcule kcal proteina carboidrato e gordura. Responda SOMENTE com JSON: {\"alimentos\":[{\"nome\":\"cafe com leite\",\"alternativa\":\"cappuccino\",\"gramas\":300,\"opcoes_porcao\":[200,300,500],\"unidade\":\"ml\",\"kcal\":75,\"prot\":3,\"carb\":4,\"fat\":4}],\"total_kcal\":75}";
         fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
           method:"POST",headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
