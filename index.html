@@ -2179,104 +2179,87 @@ function handleFotoIA(input){
   var file=input.files[0];
   if(!file) return;
   input.value='';
-  var url=URL.createObjectURL(file);
+  if(!state.apiKey){checkApiKeyBanner();showToast('Configure sua chave API Anthropic para usar Foto IA','error');return;}
   closeFotoIAResult();
-  window._fotoIAFood=null;
+  window._fotoIAItems=null;
+  var objUrl=URL.createObjectURL(file);
   var sec=document.getElementById('section-fotoIA');
   var box=document.createElement('div');
   box.id='fotoIABox';
   box.style.cssText='margin-top:16px;border-radius:18px;overflow:hidden;background:#1c1f26;border:1px solid rgba(240,180,41,.25);';
   box.innerHTML='<div style="position:relative;">'
-    +'<img id="fotoIAPreview" src="'+url+'" style="width:100%;max-height:220px;object-fit:cover;display:block;">'
+    +'<img src="'+objUrl+'" style="width:100%;max-height:220px;object-fit:cover;display:block;">'
     +'<div id="fotoIAScan" style="position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">'
     +'<div style="width:56px;height:56px;border:3px solid #f0b429;border-top-color:transparent;border-radius:50%;animation:spin 0.9s linear infinite;"></div>'
-    +'<div style="color:#f0b429;font-size:14px;font-weight:700;">✨ IA analisando...</div>'
-    +'</div>'
-    +'</div>'
-    +'<div id="fotoIAForm" style="display:none;padding:16px 16px 20px;">'
-    +'<div style="font-size:13px;color:#9ca3af;margin-bottom:10px;">Busque o alimento para preencher os macros automaticamente:</div>'
-    +'<div style="position:relative;">'
-    +'<input id="fotoIANome" type="text" placeholder="Digite o alimento..." oninput="fotoIASearch(this.value)" autocomplete="off" '
-    +'style="width:100%;background:#252830;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;box-sizing:border-box;">'
-    +'<div id="fotoIASugg" style="display:none;background:#2a2d37;border:1px solid rgba(255,255,255,.1);border-radius:10px;overflow:hidden;margin-top:4px;position:relative;z-index:10;"></div>'
-    +'</div>'
-    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;margin-bottom:8px;">'
-    +'<input id="fotoIAKcal" type="number" placeholder="Kcal" style="background:#252830;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px;color:#fff;font-size:14px;box-sizing:border-box;">'
-    +'<input id="fotoIAGramas" type="number" placeholder="Gramas" oninput="fotoIACalcMacros(this.value)" style="background:#252830;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px;color:#fff;font-size:14px;box-sizing:border-box;">'
-    +'</div>'
-    +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">'
-    +'<input id="fotoIAProt" type="number" placeholder="Prot(g)" style="background:#252830;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px;color:#fff;font-size:13px;box-sizing:border-box;">'
-    +'<input id="fotoIACarb" type="number" placeholder="Carb(g)" style="background:#252830;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px;color:#fff;font-size:13px;box-sizing:border-box;">'
-    +'<input id="fotoIAGord" type="number" placeholder="Gord(g)" style="background:#252830;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px;color:#fff;font-size:13px;box-sizing:border-box;">'
-    +'</div>'
-    +'<div style="font-size:12px;color:#6b7280;margin-bottom:6px;">Adicionar em:</div>'
-    +'<select id="fotoIARef" style="width:100%;background:#252830;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px;color:#fff;font-size:14px;margin-bottom:14px;box-sizing:border-box;">'
-    +'<option value="cafe">Cafe da manha</option>'
-    +'<option value="almoco" selected>Almoco</option>'
-    +'<option value="lanche">Lanche</option>'
-    +'<option value="jantar">Jantar</option>'
-    +'</select>'
-    +'<button onclick="addFotoIAMeal()" style="width:100%;background:linear-gradient(135deg,#f0b429,#d4920a);border:none;border-radius:12px;padding:14px;color:#000;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;">+ Adicionar ao Diario</button>'
-    +'<button onclick="closeFotoIAResult()" style="width:100%;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px;color:#9ca3af;font-size:13px;cursor:pointer;">Cancelar</button>'
-    +'</div>';
+    +'<div style="color:#f0b429;font-size:14px;font-weight:700;">✨ IA identificando alimentos...</div>'
+    +'</div></div>'
+    +'<div id="fotoIAForm" style="display:none;padding:16px 16px 20px;"></div>';
   sec.appendChild(box);
   box.scrollIntoView({behavior:'smooth',block:'nearest'});
-  setTimeout(function(){
-    var scan=document.getElementById('fotoIAScan');
-    if(scan) scan.style.display='none';
-    var form=document.getElementById('fotoIAForm');
-    if(form) form.style.display='block';
-    var nomeEl=document.getElementById('fotoIANome');
-    if(nomeEl) nomeEl.focus();
-  },2000);
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    compressPhotoThumb(ev.target.result,function(thumb){
+      var parts=thumb.split(',');
+      var mtype=(parts[0].match(/:(.*?);/)||[])[1]||'image/jpeg';
+      var base64=parts[1];
+      var prompt='Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto com precisao. Identifique TODOS os alimentos e bebidas visiveis. Para cada item estime a quantidade em gramas (ml para bebidas) com base no tamanho visual, e calcule kcal, proteina, carboidrato e gordura. Responda APENAS com JSON valido exatamente neste formato:
+{"alimentos":[{"nome":"nome do alimento","gramas":150,"kcal":200,"prot":15,"carb":20,"fat":6}],"total_kcal":200}
+Nada fora do JSON.';
+      fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+state.apiKey,"anthropic-version":"2023-06-01"},body:JSON.stringify({model:"claude-opus-4-6",max_tokens:1000,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:prompt}]}]})}).then(function(r){return r.json();}).then(function(data){
+        URL.revokeObjectURL(objUrl);
+        var txt=data.content&&data.content[0]&&data.content[0].text;
+        if(!txt) throw new Error('vazio');
+        var m=txt.match(/{[sS]*}/);
+        if(!m) throw new Error('sem json');
+        renderFotoIAResult(JSON.parse(m[0]));
+      }).catch(function(){
+        var s=document.getElementById('fotoIAScan');
+        if(s) s.innerHTML='<div style="color:#f87171;font-size:13px;padding:20px;text-align:center;">Erro na analise. Verifique sua chave API Anthropic.</div>';
+      });
+    });
+  };
+  reader.readAsDataURL(file);
 }
-function fotoIASearch(q){
-  var sugg=document.getElementById('fotoIASugg');
-  if(!sugg) return;
-  if(!q||q.length<2){sugg.style.display='none';return;}
-  var all=(typeof FOOD_DB!=='undefined'?FOOD_DB:[]).concat(state.customFoods||[]);
-  var res=all.filter(function(f){return f.name.toLowerCase().indexOf(q.toLowerCase())>=0;}).slice(0,7);
-  window._fotoFoods=res;
-  if(!res.length){sugg.style.display='none';return;}
-  sugg.innerHTML=res.map(function(f,i){
-    return '<div onclick="fotoIASelectFood('+i+')" style="padding:11px 12px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;color:#e5e7eb;display:flex;justify-content:space-between;align-items:center;">'
-      +'<span>'+f.name+'</span>'
-      +'<span style="color:#f0b429;font-size:11px;font-weight:600;">'+f.kcal+' kcal/100g</span>'
-      +'</div>';
+function renderFotoIAResult(result){
+  var scan=document.getElementById('fotoIAScan');
+  if(scan) scan.style.display='none';
+  var form=document.getElementById('fotoIAForm');
+  if(!form) return;
+  var alimentos=result.alimentos||[];
+  if(!alimentos.length){
+    form.innerHTML='<div style="color:#9ca3af;text-align:center;padding:16px;">Nao foi possivel identificar alimentos nesta foto.</div><button onclick="closeFotoIAResult()" style="width:100%;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px;color:#9ca3af;font-size:13px;cursor:pointer;margin-top:8px;">Fechar</button>';
+    form.style.display='block';return;
+  }
+  window._fotoIAItems=alimentos;
+  var sel='<div style="font-size:12px;color:#6b7280;margin-bottom:6px;">Adicionar em:</div><select id="fotoIARef" style="width:100%;background:#252830;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px;color:#fff;font-size:14px;margin-bottom:12px;box-sizing:border-box;"><option value="cafe">Cafe da manha</option><option value="almoco" selected>Almoco</option><option value="lanche">Lanche</option><option value="jantar">Jantar</option></select>';
+  var cards=alimentos.map(function(a,i){
+    return '<div style="background:#252830;border-radius:12px;padding:12px;margin-bottom:8px;border:1px solid rgba(255,255,255,.06);"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;"><span style="font-weight:700;color:#fff;font-size:14px;flex:1;">'+a.nome+'</span><span style="background:rgba(240,180,41,.15);color:#f0b429;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;margin-left:8px;">'+a.gramas+'g</span></div><div style="display:flex;gap:12px;font-size:12px;color:#9ca3af;margin-bottom:10px;"><span>'+a.kcal+' kcal</span><span>P: '+a.prot+'g</span><span>C: '+a.carb+'g</span><span>G: '+a.fat+'g</span></div><button onclick="addFotoIAItem('+i+')" style="width:100%;background:linear-gradient(135deg,#f0b429,#d4920a);border:none;border-radius:10px;padding:9px;color:#000;font-size:13px;font-weight:700;cursor:pointer;">+ Adicionar</button></div>';
   }).join('');
-  sugg.style.display='block';
+  var addAll=alimentos.length>1?'<button onclick="addAllFotoIAItems()" style="width:100%;background:rgba(240,180,41,.12);border:1px solid rgba(240,180,41,.3);border-radius:12px;padding:12px;color:#f0b429;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:8px;">+ Adicionar tudo ('+(result.total_kcal||0)+' kcal)</button>':'';
+  form.innerHTML='<div style="font-size:13px;color:#9ca3af;margin-bottom:10px;">'+alimentos.length+' alimento(s) identificado(s) pela IA:</div>'+sel+cards+addAll+'<button onclick="closeFotoIAResult()" style="width:100%;background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px;color:#6b7280;font-size:13px;cursor:pointer;margin-top:4px;">Cancelar</button>';
+  form.style.display='block';
 }
-function fotoIASelectFood(i){
-  var food=(window._fotoFoods||[])[i];
-  if(!food) return;
-  window._fotoIAFood=food;
-  var nomeEl=document.getElementById('fotoIANome');
-  if(nomeEl) nomeEl.value=food.name;
-  var sugg=document.getElementById('fotoIASugg');
-  if(sugg) sugg.style.display='none';
-  var g=parseFloat(document.getElementById('fotoIAGramas')&&document.getElementById('fotoIAGramas').value)||100;
-  document.getElementById('fotoIAGramas').value=g;
-  fotoIACalcMacros(g);
+function addFotoIAItem(i){
+  var a=(window._fotoIAItems||[])[i];
+  if(!a) return;
+  var tipo=(document.getElementById('fotoIARef')||{}).value||currentMealType;
+  if(!state.meals) state.meals={cafe:[],almoco:[],lanche:[],jantar:[]};
+  if(!state.meals[tipo]) state.meals[tipo]=[];
+  state.meals[tipo].push({name:a.nome,grams:a.gramas,kcal:a.kcal,prot:a.prot,carb:a.carb,fat:a.fat,time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});
+  save();closeFotoIAResult();showToast(a.nome+' adicionado!','success');setTimeout(function(){switchTab('hoje');},1200);
 }
-function fotoIACalcMacros(g){
-  var food=window._fotoIAFood;
-  if(!food) return;
-  var gr=parseFloat(g)||100;
-  var r=gr/100;
-  var k=document.getElementById('fotoIAKcal');
-  var p=document.getElementById('fotoIAProt');
-  var c=document.getElementById('fotoIACarb');
-  var gd=document.getElementById('fotoIAGord');
-  if(k) k.value=Math.round(food.kcal*r);
-  if(p) p.value=Math.round(food.prot*r*10)/10;
-  if(c) c.value=Math.round(food.carb*r*10)/10;
-  if(gd) gd.value=Math.round(food.fat*r*10)/10;
+function addAllFotoIAItems(){
+  var items=window._fotoIAItems||[];
+  if(!items.length) return;
+  var tipo=(document.getElementById('fotoIARef')||{}).value||currentMealType;
+  if(!state.meals) state.meals={cafe:[],almoco:[],lanche:[],jantar:[]};
+  if(!state.meals[tipo]) state.meals[tipo]=[];
+  items.forEach(function(a){state.meals[tipo].push({name:a.nome,grams:a.gramas,kcal:a.kcal,prot:a.prot,carb:a.carb,fat:a.fat,time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});});
+  save();closeFotoIAResult();showToast(items.length+' alimentos adicionados!','success');setTimeout(function(){switchTab('hoje');},1200);
 }
 function closeFotoIAResult(){
-  var b=document.getElementById('fotoIABox');
-  if(b) b.remove();
-  window._fotoIAFood=null;
-  window._fotoFoods=null;
+  var b=document.getElementById('fotoIABox');if(b) b.remove();
+  window._fotoIAFood=null;window._fotoFoods=null;window._fotoIAItems=null;
 }
 function addFotoIAMeal(){
   var nomeEl=document.getElementById('fotoIANome');
