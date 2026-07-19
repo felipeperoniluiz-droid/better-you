@@ -2195,7 +2195,7 @@ function handleFotoIA(input){
         if(w>MAX||h>MAX){var sc=MAX/Math.max(w,h);w=Math.round(w*sc);h=Math.round(h*sc);}
         var cv=document.createElement("canvas");cv.width=w;cv.height=h;
         cv.getContext("2d").drawImage(img,0,0,w,h);
-        var b64=cv.toDataURL("image/jpeg",0.75).split(",")[1];
+        var b64=cv.toDataURL("image/jpeg",0.75).split(",")[1]; window._fotoIAPhoto="data:image/jpeg;base64,"+b64;
         var prompt="Analise esta foto de alimentos. Identifique TODOS os alimentos e bebidas visiveis. Estime gramas (ml para bebidas) com base no tamanho visual. Calcule kcal, proteina, carboidrato e gordura por item. Responda SOMENTE com JSON neste formato: {alimentos:[{nome:string,gramas:number,kcal:number,prot:number,carb:number,fat:number}],total_kcal:number}";
         fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
           method:"POST",
@@ -2248,7 +2248,7 @@ function addFotoIAItem(i){
   var tipo=(document.getElementById('fotoIARef')||{}).value||currentMealType;
   if(!state.meals) state.meals={cafe:[],almoco:[],lanche:[],jantar:[]};
   if(!state.meals[tipo]) state.meals[tipo]=[];
-  state.meals[tipo].push({name:a.nome,grams:a.gramas,kcal:a.kcal,prot:a.prot,carb:a.carb,fat:a.fat,time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});
+  state.meals[tipo].push({name:a.nome,grams:a.gramas,kcal:a.kcal,prot:a.prot,carb:a.carb,fat:a.fat,time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),photo:window._fotoIAPhoto||null});
   save();closeFotoIAResult();showToast(a.nome+' adicionado!','success');setTimeout(function(){switchTab('hoje');},1200);
 }
 function addAllFotoIAItems(){
@@ -2257,12 +2257,12 @@ function addAllFotoIAItems(){
   var tipo=(document.getElementById('fotoIARef')||{}).value||currentMealType;
   if(!state.meals) state.meals={cafe:[],almoco:[],lanche:[],jantar:[]};
   if(!state.meals[tipo]) state.meals[tipo]=[];
-  items.forEach(function(a){state.meals[tipo].push({name:a.nome,grams:a.gramas,kcal:a.kcal,prot:a.prot,carb:a.carb,fat:a.fat,time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})});});
+  items.forEach(function(a){state.meals[tipo].push({name:a.nome,grams:a.gramas,kcal:a.kcal,prot:a.prot,carb:a.carb,fat:a.fat,time:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),photo:window._fotoIAPhoto||null});});
   save();closeFotoIAResult();showToast(items.length+' alimentos adicionados!','success');setTimeout(function(){switchTab('hoje');},1200);
 }
 function closeFotoIAResult(){
   var b=document.getElementById('fotoIABox');if(b) b.remove();
-  window._fotoIAFood=null;window._fotoFoods=null;window._fotoIAItems=null;
+  window._fotoIAFood=null;window._fotoFoods=null;window._fotoIAItems=null; window._fotoIAPhoto=null;
 }
 function addFotoIAMeal(){
   var nomeEl=document.getElementById('fotoIANome');
