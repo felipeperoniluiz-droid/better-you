@@ -2259,6 +2259,8 @@ function showToast(msg,type){
 }
 function handleFotoIA(input){
   var file=input.files[0]; if(!file) return; input.value="";
+  window._fotoIAIsCamera=(input.id==="camInput");
+  if(window._fotoIAIsCamera){var _hr=new Date().getHours(); currentMealType=_hr>=5&&_hr<10?"cafe":_hr>=10&&_hr<14?"almoco":_hr>=14&&_hr<19?"lanche":"jantar";}
   if(!state.apiKey){checkApiKeyBanner();showToast("Configure sua chave API Anthropic","error");return;}
   closeFotoIAResult(); window._fotoIAItems=null; window._fotoIASelected=null;
   var objUrl=URL.createObjectURL(file);
@@ -2337,9 +2339,15 @@ function renderFotoIAResult(result){
   window._fotoIAItems=alimentos;
   window._fotoIASelected=alimentos.map(function(a){return {nome:a.nome,gramas:a.gramas,kcal:a.kcal,prot:a.prot,carb:a.carb,fat:a.fat};});
   var tipos=[{v:"cafe",l:"Cafe da manha"},{v:"almoco",l:"Almoco"},{v:"lanche",l:"Lanche"},{v:"jantar",l:"Jantar"}];
-  var html='<select id="fotoIARef" style="width:100%;background:#111318;color:#fff;border:1px solid rgba(240,180,41,.3);border-radius:10px;padding:10px;font-size:13px;margin-bottom:14px;">';
-  tipos.forEach(function(t){html+='<option value="'+t.v+'"'+( typeof currentMealType!=="undefined"&&currentMealType===t.v?" selected":"")+'>'+t.l+'</option>';});
-  html+='</select>';
+  var _mealLabels={cafe:"Café da manhã",almoco:"Almoço",lanche:"Lanche",jantar:"Jantar"};
+  var html='';
+  if(window._fotoIAIsCamera){
+    html+='<div style="background:#111318;border:1px solid rgba(240,180,41,.3);border-radius:10px;padding:10px;font-size:13px;color:#f0b429;margin-bottom:14px;text-align:center;">⏰ '+(_mealLabels[currentMealType]||"Refeição")+'</div>';
+  } else {
+    html+='<select id="fotoIARef" style="width:100%;background:#111318;color:#fff;border:1px solid rgba(240,180,41,.3);border-radius:10px;padding:10px;font-size:13px;margin-bottom:14px;">';
+    tipos.forEach(function(t){html+='<option value="'+t.v+'"'+(typeof currentMealType!=="undefined"&&currentMealType===t.v?" selected":"")+'>'+t.l+'</option>';});
+    html+='</select>';
+  }
   alimentos.forEach(function(a,i){
     var names=[a.nome]; if(a.alternativa) names.push(a.alternativa);
     var unit=a.unidade||"g";
