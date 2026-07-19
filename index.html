@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Better You">
-<title>Better You</title><!-- v2 -->
+<title>Better You</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -2281,14 +2281,7 @@ function handleFotoIA(input){
         cv.getContext("2d").drawImage(img,0,0,w,h);
         var b64=cv.toDataURL("image/jpeg",0.75).split(",")[1]; var cThumb=document.createElement("canvas"); var tSz=150; var tw=w>tSz?(h>tSz?(w>h?tSz:Math.round(tSz*w/h)):Math.round(tSz*w/h)):w; var th=w>h?Math.round(tSz*h/w):Math.min(tSz,h); if(w<=tSz&&h<=tSz){tw=w;th=h;}else{var scT=tSz/Math.max(w,h);tw=Math.round(w*scT);th=Math.round(h*scT);} cThumb.width=tw;cThumb.height=th; cThumb.getContext("2d").drawImage(cv,0,0,tw,th); window._fotoIAPhoto=cThumb.toDataURL("image/jpeg",0.5);
         var fullPhoto=ev.target.result; var photoKey="foto_"+Date.now(); window._fotoIAPhotoKey=photoKey; savePhotoToDB(photoKey,fullPhoto,null);
-        var prompt="Voce e um especialista em nutricao e visao computacional. Analise esta foto de alimentos com precisao e inteligencia.\n\nRetorne APENAS JSON valido, sem texto extra:\n{\"itens\":[{\"nome\":\"nome\",\"gramas\":150,\"kcal\":60,\"prot\":1,\"carb\":15,\"fat\":0,\"unidade\":\"g\"}],\"total_kcal\":60}\n\nREGRAS CRITICAS:\n1. Campo \"alternativa\": inclua SOMENTE se o alimento for visualmente ambiguo e dificil de distinguir (ex: cappuccino vs cafe com leite, laranja vs tangerina em foto ruim). Para frutas inteiras, vegetais, alimentos claramente identificaveis: OMITA COMPLETAMENTE este campo.\n2. Campo \"opcoes_porcao\": inclua SOMENTE para bebidas em copo/xicara ou alimentos servidos em porcoes variaveis. Para frutas/legumes inteiros unitarios: OMITA COMPLETAMENTE este campo.\n3. Para uma laranja, maca, banana ou qualquer fruta/vegetal claramente visivel: identifique diretamente sem perguntar alternativas.\n4. Estime gramas pelo tamanho visual real (laranja media=130g, banana media=120g, maca media=150g).\n5. Seja direto e preciso como um especialista."
-        fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
-          method:"POST",headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
-          body:JSON.stringify({model:"claude-haiku-4-5-20251001",max_tokens:1000,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},{type:"text",text:prompt}]}]})
-        }).then(function(r){return r.json();}).then(function(data){
-          URL.revokeObjectURL(objUrl);
-          if(data.error) throw new Error(data.error.message||"API error");
-          var txt=data.content&&data.content[0]&&data.content[0].text||"";
+        var prompt="Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto e identifique TODOS os alimentos visiveis.\n\nRetorne APENAS JSON valido neste formato exato:\n{\"itens\":[{\"nome\":\"Banana\",\"gramas\":120,\"kcal\":89,\"prot\":1,\"carb\":23,\"fat\":0,\"unidade\":\"g\"}],\"total_kcal\":89}\n\nIMPORTANTE:\n- SEMPRE identifique e retorne todos os alimentos visiveis na foto\n- O campo \"alternativa\" e OPCIONAL: inclua apenas se houver ambiguidade real entre dois alimentos muito similares (ex: cappuccino vs cafe com leite, tangerina vs laranja em foto ruim). Omita para frutas e vegetais claramente identificaveis.\n- O campo \"opcoes_porcao\" e OPCIONAL: inclua apenas para bebidas em recipiente ou pratos com porcao variavel. Omita para frutas e vegetais unitarios.\n- Estime gramas pelo tamanho visual (banana media=120g, laranja media=130g, maca media=150g)\n- Retorne somente o JSON, sem texto adicional"
           if(!txt) throw new Error("Resposta vazia");
           var m=txt.match(/\{[\s\S]*\}/);
           if(!m) throw new Error("IA nao retornou JSON");
