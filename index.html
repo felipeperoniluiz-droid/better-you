@@ -2199,7 +2199,7 @@ function handleFotoIA(input){
         var prompt="Analise esta foto de alimentos. Identifique TODOS os alimentos e bebidas visiveis. Estime gramas (ml para bebidas) com base no tamanho visual. Calcule kcal, proteina, carboidrato e gordura por item. Responda SOMENTE com JSON neste formato: {alimentos:[{nome:string,gramas:number,kcal:number,prot:number,carb:number,fat:number}],total_kcal:number}";
         fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
           method:"POST",
-          headers:{"Content-Type":"application/json","Authorization":"Bearer "+state.apiKey,"anthropic-version":"2023-06-01"},
+          headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
           body:JSON.stringify({model:"claude-haiku-4-5-20251001",max_tokens:1000,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},{type:"text",text:prompt}]}]})
         }).then(function(r){return r.json();}).then(function(data){
           URL.revokeObjectURL(objUrl);
