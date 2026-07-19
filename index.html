@@ -2176,45 +2176,50 @@ function showToast(msg,type){
   toastTimer=setTimeout(function(){t.classList.remove("show");},2600);
 }
 function handleFotoIA(input){
-  var file=input.files[0];
-  if(!file) return;
-  input.value='';
-  if(!state.apiKey){checkApiKeyBanner();showToast('Configure sua chave API Anthropic para usar Foto IA','error');return;}
-  closeFotoIAResult();
-  window._fotoIAItems=null;
+  var file=input.files[0]; if(!file) return; input.value="";
+  if(!state.apiKey){checkApiKeyBanner();showToast("Configure sua chave API Anthropic para usar Foto IA","error");return;}
+  closeFotoIAResult(); window._fotoIAItems=null;
   var objUrl=URL.createObjectURL(file);
-  var sec=document.getElementById('section-fotoIA');
-  var box=document.createElement('div');
-  box.id='fotoIABox';
-  box.style.cssText='margin-top:16px;border-radius:18px;overflow:hidden;background:#1c1f26;border:1px solid rgba(240,180,41,.25);';
-  box.innerHTML='<div style="position:relative;">'
-    +'<img src="'+objUrl+'" style="width:100%;max-height:220px;object-fit:cover;display:block;">'
-    +'<div id="fotoIAScan" style="position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">'
-    +'<div style="width:56px;height:56px;border:3px solid #f0b429;border-top-color:transparent;border-radius:50%;animation:spin 0.9s linear infinite;"></div>'
-    +'<div style="color:#f0b429;font-size:14px;font-weight:700;">✨ IA identificando alimentos...</div>'
-    +'</div></div>'
-    +'<div id="fotoIAForm" style="display:none;padding:16px 16px 20px;"></div>';
-  sec.appendChild(box);
-  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  var sec=document.getElementById("section-fotoIA");
+  var old=document.getElementById("fotoIABox"); if(old) old.remove();
+  var box=document.createElement("div"); box.id="fotoIABox";
+  box.style.cssText="margin-top:16px;border-radius:18px;overflow:hidden;background:#1c1f26;border:1px solid rgba(240,180,41,.25);";
+  box.innerHTML='<div style="position:relative;"><img id="fotoIAPreview" src="'+objUrl+'" style="width:100%;max-height:220px;object-fit:cover;display:block;"><div id="fotoIAScan" style="position:absolute;inset:0;background:rgba(0,0,0,.65);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;"><div style="width:52px;height:52px;border:3px solid #f0b429;border-top-color:transparent;border-radius:50%;animation:spin 0.9s linear infinite;"></div><div style="color:#f0b429;font-size:14px;font-weight:700;">IA analisando foto...</div></div></div><div id="fotoIAForm" style="display:none;padding:16px 16px 20px;"></div>';
+  sec.appendChild(box); box.scrollIntoView({behavior:"smooth",block:"nearest"});
   var reader=new FileReader();
   reader.onload=function(ev){
-    compressPhotoThumb(ev.target.result,function(thumb){
-      var parts=thumb.split(',');
-      var mtype=(parts[0].match(/:(.*?);/)||[])[1]||'image/jpeg';
-      var base64=parts[1];
-      var prompt='Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto com precisao. Identifique TODOS os alimentos e bebidas visiveis. Para cada item estime a quantidade em gramas (ml para bebidas) com base no tamanho visual, e calcule kcal, proteina, carboidrato e gordura. Responda APENAS com JSON valido exatamente neste formato:\n{"alimentos":[{"nome":"nome do alimento","gramas":150,"kcal":200,"prot":15,"carb":20,"fat":6}],"total_kcal":200}\nNada fora do JSON.';
-      fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+state.apiKey,"anthropic-version":"2023-06-01"},body:JSON.stringify({model:"claude-opus-4-6",max_tokens:1000,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:prompt}]}]})}).then(function(r){return r.json();}).then(function(data){
-        URL.revokeObjectURL(objUrl);
-        var txt=data.content&&data.content[0]&&data.content[0].text;
-        if(!txt) throw new Error('vazio');
-        var m=txt.match(/{[sS]*}/);
-        if(!m) throw new Error('sem json');
-        renderFotoIAResult(JSON.parse(m[0]));
-      }).catch(function(){
-        var s=document.getElementById('fotoIAScan');
-        if(s) s.innerHTML='<div style="color:#f87171;font-size:13px;padding:20px;text-align:center;">Erro na analise. Verifique sua chave API Anthropic.</div>';
-      });
-    });
+    var img=new Image();
+    img.onload=function(){
+      try{
+        var MAX=800; var w=img.width,h=img.height;
+        if(w>MAX||h>MAX){var sc=MAX/Math.max(w,h);w=Math.round(w*sc);h=Math.round(h*sc);}
+        var cv=document.createElement("canvas");cv.width=w;cv.height=h;
+        cv.getContext("2d").drawImage(img,0,0,w,h);
+        var b64=cv.toDataURL("image/jpeg",0.75).split(",")[1];
+        var prompt="Analise esta foto de alimentos. Identifique TODOS os alimentos e bebidas visiveis. Estime gramas (ml para bebidas) com base no tamanho visual. Calcule kcal, proteina, carboidrato e gordura por item. Responda SOMENTE com JSON neste formato: {alimentos:[{nome:string,gramas:number,kcal:number,prot:number,carb:number,fat:number}],total_kcal:number}";
+        fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
+          method:"POST",
+          headers:{"Content-Type":"application/json","Authorization":"Bearer "+state.apiKey,"anthropic-version":"2023-06-01"},
+          body:JSON.stringify({model:"claude-haiku-4-5-20251001",max_tokens:1000,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},{type:"text",text:prompt}]}]})
+        }).then(function(r){return r.json();}).then(function(data){
+          URL.revokeObjectURL(objUrl);
+          if(data.error) throw new Error(data.error.message||"API error");
+          var txt=data.content&&data.content[0]&&data.content[0].text||"";
+          if(!txt) throw new Error("Resposta vazia da IA");
+          var jsonStr=txt.replace(/[""]/g,'"').replace(/['']/g,"'");
+          var m=jsonStr.match(/\{[\s\S]*\}/);
+          if(!m) throw new Error("IA nao retornou JSON");
+          renderFotoIAResult(JSON.parse(m[0]));
+        }).catch(function(err){
+          var s=document.getElementById("fotoIAScan");
+          if(s) s.innerHTML='<div style="color:#f87171;font-size:13px;padding:20px;text-align:center;">'+(err&&err.message?err.message:"Erro na analise")+'</div>';
+        });
+      }catch(e){
+        var s=document.getElementById("fotoIAScan");
+        if(s) s.innerHTML='<div style="color:#f87171;font-size:13px;padding:20px;text-align:center;">'+e.message+'</div>';
+      }
+    };
+    img.src=ev.target.result;
   };
   reader.readAsDataURL(file);
 }
