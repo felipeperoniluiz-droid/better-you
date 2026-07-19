@@ -2278,7 +2278,7 @@ function handleFotoIA(input){
         var cv=document.createElement("canvas");cv.width=w;cv.height=h;
         cv.getContext("2d").drawImage(img,0,0,w,h);
         var b64=cv.toDataURL("image/jpeg",0.75).split(",")[1]; var cThumb=document.createElement("canvas"); var tSz=150; var tw=w>tSz?(h>tSz?(w>h?tSz:Math.round(tSz*w/h)):Math.round(tSz*w/h)):w; var th=w>h?Math.round(tSz*h/w):Math.min(tSz,h); if(w<=tSz&&h<=tSz){tw=w;th=h;}else{var scT=tSz/Math.max(w,h);tw=Math.round(w*scT);th=Math.round(h*scT);} cThumb.width=tw;cThumb.height=th; cThumb.getContext("2d").drawImage(cv,0,0,tw,th); window._fotoIAPhoto=cThumb.toDataURL("image/jpeg",0.5);
-        var fullPhoto="data:image/jpeg;base64,"+b64; var photoKey="foto_"+Date.now(); window._fotoIAPhotoKey=photoKey; savePhotoToDB(photoKey,fullPhoto,null);
+        var fullPhoto=ev.target.result; var photoKey="foto_"+Date.now(); window._fotoIAPhotoKey=photoKey; savePhotoToDB(photoKey,fullPhoto,null);
         var prompt="Analise esta foto de alimentos. Para cada item visivel: identifique o nome mais provavel; se houver duvida entre dois nomes possiveis informe o nome alternativo no campo alternativa; estime a quantidade em gramas ou ml; sugira 2 ou 3 opcoes de porcao realistas em opcoes_porcao; informe a unidade g ou ml em unidade; calcule kcal proteina carboidrato e gordura. Responda SOMENTE com JSON: {\"alimentos\":[{\"nome\":\"cafe com leite\",\"alternativa\":\"cappuccino\",\"gramas\":300,\"opcoes_porcao\":[200,300,500],\"unidade\":\"ml\",\"kcal\":75,\"prot\":3,\"carb\":4,\"fat\":4}],\"total_kcal\":75}";
         fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
           method:"POST",headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
