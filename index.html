@@ -1237,6 +1237,39 @@ var chatMessages=[];
 var isPro=false;
 var PROXY_URL='https://anthropic-proxy.felipeperoniluiz.workers.dev';
 
+var _photoDB=null;
+function openPhotoDB(cb){
+  if(_photoDB){cb(_photoDB);return;}
+  var req=indexedDB.open("betteryou_photos",1);
+  req.onupgradeneeded=function(e){e.target.result.createObjectStore("photos",{keyPath:"key"});};
+  req.onsuccess=function(e){_photoDB=e.target.result;cb(_photoDB);};
+  req.onerror=function(){cb(null);};
+}
+function savePhotoToDB(key,dataUrl,cb){
+  openPhotoDB(function(db){
+    if(!db){if(cb)cb(false);return;}
+    var tx=db.transaction("photos","readwrite");
+    tx.objectStore("photos").put({key:key,data:dataUrl});
+    tx.oncomplete=function(){if(cb)cb(true);};
+    tx.onerror=function(){if(cb)cb(false);};
+  });
+}
+function getPhotoFromDB(key,cb){
+  openPhotoDB(function(db){
+    if(!db){cb(null);return;}
+    var tx=db.transaction("photos","readonly");
+    var req=tx.objectStore("photos").get(key);
+    req.onsuccess=function(e){cb(e.target.result?e.target.result.data:null);};
+    req.onerror=function(){cb(null);};
+  });
+}
+function deletePhotoFromDB(key){
+  if(!key) return;
+  openPhotoDB(function(db){
+    if(!db) return;
+    db.transaction("photos","readwrite").objectStore("photos").delete(key);
+  });
+}
 function save(){
   try{
     // Build a safe copy: compress stored photos to tiny thumbnails
@@ -1392,7 +1425,31 @@ function addPremeal(idx){
   updateMealOrder(mk);save();renderToday();showToast(m.name+" adicionado!","success");
 }
 
-function openFoodPhoto(mealKey,idx){var items=state.meals[mealKey]||[];var item=items[idx];if(!item||!item.photo||item.photo.length<500)return;var m=document.getElementById("modalFoodPhoto");if(!m){m=document.createElement("div");m.id="modalFoodPhoto";m.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;";m.onclick=function(){m.style.display="none";};var imgEl=document.createElement("img");imgEl.id="modalFoodPhotoImg";imgEl.style.cssText="width:82vw;height:82vw;border-radius:16px;object-fit:cover;box-shadow:0 8px 32px rgba(0,0,0,0.6);";imgEl.onerror=function(){this.style.display="none";var e=document.getElementById("modalFoodPhotoErr");if(e)e.style.display="flex";};var errDiv=document.createElement("div");errDiv.id="modalFoodPhotoErr";errDiv.style.cssText="display:none;width:82vw;height:82vw;border-radius:16px;background:#1a1a1a;align-items:center;justify-content:center;flex-direction:column;color:#888;font-size:14px;";errDiv.innerHTML="<div style='font-size:40px;margin-bottom:12px;'>&#128247;</div><div>Foto indisponível</div>";var lbl=document.createElement("div");lbl.style.cssText="color:#888;font-size:12px;margin-top:16px;letter-spacing:1px;";lbl.textContent="✕  Toque para fechar";m.appendChild(imgEl);m.appendChild(errDiv);m.appendChild(lbl);document.body.appendChild(m);}var imgEl2=document.getElementById("modalFoodPhotoImg");var errDiv2=document.getElementById("modalFoodPhotoErr");if(imgEl2){imgEl2.style.display="block";}if(errDiv2){errDiv2.style.display="none";}imgEl2.src=item.photo;m.style.display="flex";}function updateMealOrder(mk){if(!state.mealOrder)state.mealOrder=[];var i=state.mealOrder.indexOf(mk);if(i>-1)state.mealOrder.splice(i,1);state.mealOrder.unshift(mk);}function getMealByTime(){var h=new Date().getHours();if(h<10)return"cafe";if(h<13)return"almoco";if(h<18)return"lanche";return"jantar";}function compressPhotoThumb(dataUrl,cb){if(!dataUrl||typeof dataUrl!=="string"||dataUrl.length<100)return;function tryDraw(imgEl,srcW,srcH){try{var MAX=1200,srcEl=imgEl;if(srcW>MAX||srcH>MAX){var sc=MAX/Math.max(srcW,srcH);var c0=document.createElement("canvas");c0.width=Math.round(srcW*sc);c0.height=Math.round(srcH*sc);var ctx0=c0.getContext("2d");if(!ctx0)return;ctx0.drawImage(imgEl,0,0,c0.width,c0.height);srcEl=c0;srcW=c0.width;srcH=c0.height;}var c=document.createElement("canvas");c.width=500;c.height=500;var ctx=c.getContext("2d");if(!ctx)return;var s=Math.min(srcW,srcH);ctx.drawImage(srcEl,(srcW-s)/2,(srcH-s)/2,s,s,0,0,500,500);var r=c.toDataURL("image/jpeg",0.85);if(r&&r.length>5000)cb(r);}catch(e){}}try{fetch(dataUrl).then(function(res){return res.blob();}).then(function(blob){var ou=URL.createObjectURL(blob);var img=new Image();img.onerror=function(){URL.revokeObjectURL(ou);};img.onload=function(){var w=img.width,hh=img.height;URL.revokeObjectURL(ou);if(w&&hh)tryDraw(img,w,hh);};img.src=ou;}).catch(function(){var img2=new Image();img2.onerror=function(){};img2.onload=function(){if(img2.width&&img2.height)tryDraw(img2,img2.width,img2.height);};img2.src=dataUrl;});}catch(e){var img3=new Image();img3.onerror=function(){};img3.onload=function(){if(img3.width&&img3.height)tryDraw(img3,img3.width,img3.height);};img3.src=dataUrl;}}
+function openFoodPhoto(mealKey,idx){
+  var items=state.meals[mealKey]||[];var item=items[idx];
+  if(!item) return;
+  function showModal(src){
+    if(!src) return;
+    var m=document.getElementById("modalFoodPhoto");
+    if(!m){m=document.createElement("div");m.id="modalFoodPhoto";
+    m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;";
+    m.addEventListener("click",function(e){if(e.target===m)m.remove();});
+    document.body.appendChild(m);}
+    var d=new Date(); var ts=d.toLocaleDateString("pt-BR")+", "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+    m.innerHTML='<button onclick="document.getElementById(\'modalFoodPhoto\').remove()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;">&#215;</button>'
+    +'<div style="color:#aaa;font-size:12px;margin-bottom:12px;">'+item.name+' &middot; '+ts+'</div>'
+    +'<img src="'+src+'" style="max-width:100%;max-height:70vh;border-radius:12px;object-fit:contain;" />'
+    +'<a href="'+src+'" download="'+item.name+'.jpg" style="margin-top:14px;background:rgba(240,180,41,.15);color:#f0b429;border:1px solid rgba(240,180,41,.4);border-radius:10px;padding:10px 20px;font-size:13px;font-weight:700;text-decoration:none;">Baixar foto</a>';
+  }
+  if(item.photoKey){
+    getPhotoFromDB(item.photoKey,function(data){
+      if(data) showModal(data);
+      else if(item.photo&&item.photo.length>500) showModal(item.photo);
+    });
+  } else if(item.photo&&item.photo.length>500){
+    showModal(item.photo);
+  }
+}
 function findFood(name){var all=FOOD_DB.concat(state.customFoods||[]);return all.find(function(f){return f.name.toLowerCase()===name.toLowerCase();});}
 
 function setGoal(g){
@@ -2220,6 +2277,7 @@ function handleFotoIA(input){
         var cv=document.createElement("canvas");cv.width=w;cv.height=h;
         cv.getContext("2d").drawImage(img,0,0,w,h);
         var b64=cv.toDataURL("image/jpeg",0.75).split(",")[1]; var cThumb=document.createElement("canvas"); var tSz=150; var tw=w>tSz?(h>tSz?(w>h?tSz:Math.round(tSz*w/h)):Math.round(tSz*w/h)):w; var th=w>h?Math.round(tSz*h/w):Math.min(tSz,h); if(w<=tSz&&h<=tSz){tw=w;th=h;}else{var scT=tSz/Math.max(w,h);tw=Math.round(w*scT);th=Math.round(h*scT);} cThumb.width=tw;cThumb.height=th; cThumb.getContext("2d").drawImage(cv,0,0,tw,th); window._fotoIAPhoto=cThumb.toDataURL("image/jpeg",0.5);
+        var fullPhoto="data:image/jpeg;base64,"+b64; var photoKey="foto_"+Date.now(); window._fotoIAPhotoKey=photoKey; savePhotoToDB(photoKey,fullPhoto,null);
         var prompt="Analise esta foto de alimentos. Para cada item visivel: identifique o nome mais provavel; se houver duvida entre dois nomes possiveis informe o nome alternativo no campo alternativa; estime a quantidade em gramas ou ml; sugira 2 ou 3 opcoes de porcao realistas em opcoes_porcao; informe a unidade g ou ml em unidade; calcule kcal proteina carboidrato e gordura. Responda SOMENTE com JSON: {\"alimentos\":[{\"nome\":\"cafe com leite\",\"alternativa\":\"cappuccino\",\"gramas\":300,\"opcoes_porcao\":[200,300,500],\"unidade\":\"ml\",\"kcal\":75,\"prot\":3,\"carb\":4,\"fat\":4}],\"total_kcal\":75}";
         fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
           method:"POST",headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
@@ -2317,7 +2375,8 @@ function addFotoIAItem(i){
     carb:sel.carb!==undefined?sel.carb:Math.round(a.carb*ratio*10)/10,
     fat:sel.fat!==undefined?sel.fat:Math.round(a.fat*ratio*10)/10,
     time:new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
-    photo:window._fotoIAPhoto||null
+    photo:window._fotoIAPhoto||null,
+    photoKey:window._fotoIAPhotoKey||null
   });
   save();closeFotoIAResult();
   showToast((sel.nome||a.nome)+" adicionado!","success");
@@ -2340,7 +2399,8 @@ function addAllFotoIAItems(){
       carb:sel.carb!==undefined?sel.carb:Math.round(a.carb*ratio*10)/10,
       fat:sel.fat!==undefined?sel.fat:Math.round(a.fat*ratio*10)/10,
       time:new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
-      photo:window._fotoIAPhoto||null
+      photo:window._fotoIAPhoto||null,
+      photoKey:window._fotoIAPhotoKey||null
     });
   });
   save();closeFotoIAResult();
@@ -2349,7 +2409,7 @@ function addAllFotoIAItems(){
 }
 function closeFotoIAResult(){
   var b=document.getElementById("fotoIABox");if(b) b.remove();
-  window._fotoIAItems=null; window._fotoIASelected=null; window._fotoIAPhoto=null;
+  window._fotoIAItems=null; window._fotoIASelected=null; window._fotoIAPhoto=null; window._fotoIAPhotoKey=null;
 }
 function addFotoIAMeal(){
   var nomeEl=document.getElementById('fotoIANome');
