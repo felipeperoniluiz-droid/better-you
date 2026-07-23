@@ -2326,9 +2326,9 @@ function _selPort(idx,grams,bk,bg,bp,bc,bf){
   var m=document.getElementById("fmacro_"+idx);
   if(m) m.innerHTML='<span style="color:#f0b429;font-weight:700;">'+sel[idx].kcal+'</span> kcal &nbsp;&middot;&nbsp; P:'+sel[idx].prot+'g C:'+sel[idx].carb+'g G:'+sel[idx].fat+'g';
   var a=(window._fotoIAItems||[])[idx]; if(!a) return;
-  (a.opcoes_porcao||[a.gramas]).forEach(function(p,pi){
+  (a.opcoes_porcao||[a.gramas]).forEach(function(p,pi){var pN=typeof p==='number'?p:parseInt(String(p));
     var b=document.getElementById("fport_"+idx+"_"+pi);
-    if(b) b.style.cssText=(p===grams?"background:#f0b429;color:#000;":"background:rgba(240,180,41,.12);color:#f0b429;")+"border:1px solid rgba(240,180,41,.4);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;margin:2px;";
+    if(b) b.style.cssText=(pN===grams?"background:#f0b429;color:#000;":"background:rgba(240,180,41,.12);color:#f0b429;")+"border:1px solid rgba(240,180,41,.4);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;margin:2px;";
   });
 }
 function renderFotoIAResult(result){
