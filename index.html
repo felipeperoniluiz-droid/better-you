@@ -2334,7 +2334,7 @@ function _selPort(idx,grams,bk,bg,bp,bc,bf){
 function renderFotoIAResult(result){
   var scan=document.getElementById("fotoIAScan"); if(scan) scan.style.display="none";
   var form=document.getElementById("fotoIAForm"); if(!form) return;
-  var alimentos=result.alimentos||[];
+  var alimentos=result.itens||result.alimentos||[];
   if(!alimentos.length){form.innerHTML='<div style="color:#aaa;text-align:center;padding:16px;">Nenhum alimento identificado.</div>';form.style.display="block";return;}
   window._fotoIAItems=alimentos;
   window._fotoIASelected=alimentos.map(function(a){return {nome:a.nome,gramas:a.gramas,kcal:a.kcal,prot:a.prot,carb:a.carb,fat:a.fat};});
