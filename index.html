@@ -2359,7 +2359,7 @@ function renderFotoIAResult(result){
     html+='</div>';
     if(porcoes.length>1) html+='<div style="color:#aaa;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;">Qual a porcao?</div>';
     html+='<div style="margin-bottom:10px;">';
-    porcoes.forEach(function(p,pi){html+='<button id="fport_'+i+'_'+pi+'" onclick="_selPort('+i+','+p+','+a.kcal+','+a.gramas+','+a.prot+','+a.carb+','+a.fat+')" style="'+( p===a.gramas?"background:#f0b429;color:#000;":"background:rgba(240,180,41,.12);color:#f0b429;")+'border:1px solid rgba(240,180,41,.4);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;margin:2px;">'+p+unit+'</button>';});
+    porcoes.forEach(function(p,pi){var pNum=typeof p==='number'?p:parseInt(String(p));var pLabel=typeof p==='number'?p+unit:String(p);html+='<button id="fport_'+i+'_'+pi+'" onclick="_selPort('+i+','+pNum+','+a.kcal+','+a.gramas+','+a.prot+','+a.carb+','+a.fat+')" style="'+( pNum===a.gramas?"background:#f0b429;color:#000;":"background:rgba(240,180,41,.12);color:#f0b429;")+'border:1px solid rgba(240,180,41,.4);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;margin:2px;">'+pLabel+'</button>';});
     html+='</div>';
     html+='<div id="fmacro_'+i+'" style="color:#aaa;font-size:12px;margin-bottom:10px;"><span style="color:#f0b429;font-weight:700;">'+a.kcal+'</span> kcal &nbsp;&middot;&nbsp; P:'+Math.round(a.prot)+'g C:'+Math.round(a.carb)+'g G:'+Math.round(a.fat)+'g</div>';
     html+='<button onclick="addFotoIAItem('+i+')" style="width:100%;background:#f0b429;color:#000;border:none;border-radius:10px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;">+ Adicionar</button>';
