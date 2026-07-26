@@ -3272,10 +3272,18 @@ function doForgotPassword(){
 }
 
 function doSignOut(){
-  _fbAuth.signOut().then(function(){
-    if(typeof closeModal==='function') closeModal('modalProfile');
-    if(typeof showToast==='function') showToast('Até logo! 👋');
-  });
+  if(typeof closeModal==='function') closeModal('modalProfile');
+  if(typeof showToast==='function') showToast('Salvando e saindo... 👋');
+  // Cancela debounce e salva imediatamente antes de sair
+  clearTimeout(_fbSaveTimer);
+  var doExit=function(){ _fbAuth.signOut(); };
+  if(_fbUser&&_fbDb){
+    _fbDb.collection('users').doc(_fbUser.uid).set({
+      data:JSON.stringify(state),
+      updatedAt:new Date().toISOString(),
+      email:_fbUser.email
+    }).then(doExit).catch(doExit);
+  } else { doExit(); }
 }
 
 // ── FIRESTORE SYNC ────────────────────────────────────────────────
@@ -3291,7 +3299,8 @@ function loadFromFirestore(uid){
         // ── MERGE INTELIGENTE ──────────────────────────────────────
         // Cloud vence para configurações e perfil.
         // Local vence para refeições/água DE HOJE se tiver mais entradas.
-        var merged=Object.assign({},state,cloudState);
+        // Merge: cloudState vence para settings/perfil, mas local é preservado antes da comparação
+        var merged=Object.assign({},state,localState,cloudState);
 
         function countMeals(s){
           if(!s||!s.meals)return 0;
