@@ -3311,14 +3311,20 @@ function loadFromFirestore(uid){
         var localCount=countMeals(localState);
         var cloudCount=countMeals(cloudState);
 
-        if(localState.today===today && localCount>cloudCount){
+        if(localState.lastReset===today && localCount>=cloudCount){
           // Dados locais de hoje são mais completos — protege
           merged.meals=localState.meals;
-          merged.today=today;
+          merged.lastReset=today; merged.today=today;
           if(localState.waterMl!==undefined) merged.waterMl=localState.waterMl;
           if(localState.log) merged.log=localState.log;
           if(typeof showToast==='function') showToast('✅ Dados locais preservados!');
         } else {
+          // Se cloud é de outro dia mas local é de hoje, preserva refeições locais
+          if(cloudState.lastReset!==today && localState.lastReset===today){
+            merged.meals=localState.meals;
+            merged.waterMl=localState.waterMl!==undefined?localState.waterMl:merged.waterMl;
+            merged.lastReset=today;
+          }
           if(typeof showToast==='function') showToast('✅ Dados carregados da nuvem!');
         }
         // ──────────────────────────────────────────────────────────
