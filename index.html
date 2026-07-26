@@ -1301,6 +1301,13 @@ function load(){
   }catch(err){
     console.error("Erro ao carregar dados:",err);
   }
+  // PRO cache: ativa instantaneamente se verificado nas últimas 24h
+  var _subId=localStorage.getItem('betteryou_subscriptionId');
+  var _proAt=parseInt(localStorage.getItem('betteryou_pro_verified_at')||'0');
+  if(_subId&&_proAt&&(Date.now()-_proAt<86400000)){
+    isPro=true;
+    document.body.classList.add('pro-mode');
+  }
   checkDayReset();
 }
 function todayKey(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
@@ -3067,9 +3074,11 @@ async function verifyLocalSubscription(){
     var data=await res.json();
     if(data.isPro){
       setProStatus(true, true); // silencioso — usuário já era PRO
+      localStorage.setItem('betteryou_pro_verified_at', String(Date.now())); // atualiza cache
     }else{
       // Assinatura cancelada ou não encontrada no Stripe
       localStorage.removeItem('betteryou_subscriptionId');
+      localStorage.removeItem('betteryou_pro_verified_at');
       isPro=false;
     }
   }catch(e){
