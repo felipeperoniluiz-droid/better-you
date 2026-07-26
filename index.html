@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Better You">
-<title>Better You</title><!-- bust1785072996733 -->
+<title>Better You</title><!-- bust1785073701455 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -1446,7 +1446,8 @@ function openFoodPhoto(mealKey,idx){
     m.innerHTML='<button onclick="document.getElementById(\'modalFoodPhoto\').remove()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;">&#215;</button>'
     +'<div style="color:#aaa;font-size:12px;margin-bottom:12px;">'+item.name+' &middot; '+ts+'</div>'
     +'<img src="'+src+'" style="max-width:100%;max-height:70vh;border-radius:12px;object-fit:contain;" />'
-    +'<a href="'+src+'" download="'+item.name+'.jpg" style="margin-top:14px;background:rgba(240,180,41,.15);color:#f0b429;border:1px solid rgba(240,180,41,.4);border-radius:10px;padding:10px 20px;font-size:13px;font-weight:700;text-decoration:none;">Baixar foto</a>';
+    +'<a href="'+src+'" download="'+item.name+'.jpg" style="margin-top:14px;background:rgba(240,180,41,.15);color:#f0b429;border:1px solid rgba(240,180,41,.4);border-radius:10px;padding:10px 20px;font-size:13px;font-weight:700;text-decoration:none;">Baixar foto</a>'
+    +((item.vitaminas&&item.vitaminas.length)||(item.beneficios&&item.beneficios.length)?'<div style="margin-top:14px;background:rgba(240,180,41,.06);border:1px solid rgba(240,180,41,.15);border-radius:12px;padding:12px;">'+(item.vitaminas&&item.vitaminas.length?'<div style="font-size:11px;font-weight:700;color:#f0b429;margin-bottom:6px;">🧪 Vitaminas & Minerais</div><div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">'+item.vitaminas.map(function(v){return'<span style="background:rgba(240,180,41,.12);color:#f0b429;border-radius:20px;padding:2px 8px;font-size:11px;">'+v+'</span>';}).join('')+'</div>':'')+(item.beneficios&&item.beneficios.length?'<div style="font-size:11px;font-weight:700;color:#4caf50;margin-bottom:6px;">✨ Benefícios</div><div style="display:flex;flex-wrap:wrap;gap:4px;">'+item.beneficios.map(function(b){return'<span style="background:rgba(76,175,80,.12);color:#4caf50;border-radius:20px;padding:2px 8px;font-size:11px;">'+b+'</span>';}).join('')+'</div>':'')+'</div>':'');
   }
   if(item.photoKey){
     getPhotoFromDB(item.photoKey,function(data){
@@ -2392,7 +2393,9 @@ function addFotoIAItem(i){
     fat:sel.fat!==undefined?sel.fat:Math.round(a.fat*ratio*10)/10,
     time:new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
     photo:window._fotoIAPhoto||null,
-    photoKey:window._fotoIAPhotoKey||null
+    photoKey:window._fotoIAPhotoKey||null,
+    vitaminas:a.vitaminas||[],
+    beneficios:a.beneficios||[]
   });
   save();
   closeFotoIAResult();
@@ -2421,7 +2424,9 @@ function addAllFotoIAItems(){
       fat:sel.fat!==undefined?sel.fat:Math.round(a.fat*ratio*10)/10,
       time:new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
       photo:window._fotoIAPhoto||null,
-      photoKey:window._fotoIAPhotoKey||null
+      photoKey:window._fotoIAPhotoKey||null,
+    vitaminas:a.vitaminas||[],
+    beneficios:a.beneficios||[]
     });
   });
   save();
