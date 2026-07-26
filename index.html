@@ -765,7 +765,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div class="input-group" style="margin-top:6px;">
       <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,62,100,.06);border:1px solid rgba(255,62,100,.18);border-radius:12px;padding:12px 14px;cursor:pointer;" onclick="var cb=document.getElementById('profPerformanceMode');cb.checked=!cb.checked;updateTDEEPreview();">
         <div>
-          <div style="font-weight:700;font-size:13px;color:#ff3e64;">&#9889; Atleta Avan&ccedil;ado</div>
+          <div style="display:flex;align-items:center;gap:6px;"><span style="font-weight:700;font-size:13px;color:#ff3e64;">&#9889; Atleta Avan&ccedil;ado</span><span onclick="event.stopPropagation();document.getElementById('atletaInfoModal').style.display='flex';" style="width:18px;height:18px;border-radius:50%;background:rgba(255,62,100,.25);color:#ff3e64;font-size:11px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border:1px solid rgba(255,62,100,.4);">i</span></div>
           <div style="font-size:11px;color:#8b95a3;margin-top:3px;">Prote&iacute;na 3g/kg &middot; Calorias elevadas &middot; Metabolismo acelerado</div>
         </div>
         <input type="checkbox" id="profPerformanceMode" onclick="event.stopPropagation();updateTDEEPreview();" style="width:20px;height:20px;accent-color:#ff3e64;cursor:pointer;">
@@ -1858,14 +1858,14 @@ function updateTDEEPreview(){
   box.style.display='block';
   var r=calcTDEE(w,h,a,sex,act);
   var g=state.goal||'mass';
-  var goalKcal=g==='mass'?r.tdee+300:(g==='cut'?r.tdee-500:r.tdee);
+  var pm2=!!(document.getElementById('profPerformanceMode')&&document.getElementById('profPerformanceMode').checked);var goalKcal=g==='mass'?r.tdee+(pm2?500:300):(g==='cut'?r.tdee-(pm2?300:500):r.tdee);
   var goalWater=Math.round(w*35);
   document.getElementById('tmbVal').textContent=r.bmr+' kcal';
   document.getElementById('tdeeVal').textContent=r.tdee+' kcal';
   document.getElementById('goalKcalVal').textContent=goalKcal+' kcal';
   document.getElementById('goalWaterVal').textContent=goalWater+' ml';
   // Macros estimados por objetivo
-  var protG=g==='cut'?Math.round(w*2.2):g==='mass'?Math.round(w*2.0):Math.round(w*1.8);
+  var pm2=pm2||!!(document.getElementById('profPerformanceMode')&&document.getElementById('profPerformanceMode').checked);var protG=pm2?Math.round(w*3.0):g==='cut'?Math.round(w*2.2):g==='mass'?Math.round(w*2.0):Math.round(w*1.8);
   var protKcal=protG*4;
   var fat=Math.round(goalKcal*0.25/9);
   var fatKcal=fat*9;
@@ -3411,5 +3411,20 @@ function saveToFirestore(){
   }
 })();
 </script>
+<div id="atletaInfoModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:99999;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;" onclick="this.style.display='none';">
+  <div style="background:#1c1c2e;border:1px solid rgba(255,62,100,.35);border-radius:18px;padding:22px;max-width:360px;width:100%;" onclick="event.stopPropagation();">
+    <div style="font-weight:800;font-size:16px;color:#ff3e64;margin-bottom:10px;">&#9889; Modo Atleta Avan&ccedil;ado</div>
+    <p style="color:#b0b8c8;font-size:13px;line-height:1.6;margin:0 0 14px;">Ative este modo se voc&ecirc; utiliza recursos farmacol&oacute;gicos (anabolizantes) ou possui metabolismo significativamente acelerado. Os c&aacute;lculos ser&atilde;o ajustados para refletir essa realidade.</p>
+    <div style="background:rgba(255,62,100,.07);border:1px solid rgba(255,62,100,.15);border-radius:12px;padding:14px;">
+      <div style="color:#ff3e64;font-size:12px;font-weight:700;margin-bottom:10px;">O que muda com este modo:</div>
+      <div style="color:#b0b8c8;font-size:13px;line-height:2.0;">
+        &#129385; Prote&iacute;na: <b style="color:#fff;">3g/kg</b> <span style="color:#888;font-size:11px;">(vs. 2,0&ndash;2,2g/kg padr&atilde;o)</span><br>
+        &#128200; Ganho de massa: <b style="color:#fff;">+500 kcal</b> <span style="color:#888;font-size:11px;">(vs. +300 kcal)</span><br>
+        &#128293; Emagrecimento: <b style="color:#fff;">-300 kcal</b> <span style="color:#888;font-size:11px;">(vs. -500 kcal)</span>
+      </div>
+    </div>
+    <button onclick="document.getElementById('atletaInfoModal').style.display='none';" style="width:100%;margin-top:16px;padding:12px;background:rgba(255,62,100,.12);border:1px solid rgba(255,62,100,.3);border-radius:12px;color:#ff3e64;font-weight:700;font-size:14px;cursor:pointer;">Entendido &#10003;</button>
+  </div>
+</div>
 </body>
 </html>
