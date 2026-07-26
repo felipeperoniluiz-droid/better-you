@@ -765,8 +765,8 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div class="input-group" style="margin-top:6px;">
       <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,62,100,.06);border:1px solid rgba(255,62,100,.18);border-radius:12px;padding:12px 14px;cursor:pointer;" onclick="var cb=document.getElementById('profPerformanceMode');cb.checked=!cb.checked;updateTDEEPreview();">
         <div>
-          <div style="display:flex;align-items:center;gap:6px;"><span style="font-weight:700;font-size:13px;color:#ff3e64;">&#9889; Atleta Avan&ccedil;ado</span><span onclick="event.stopPropagation();document.getElementById('atletaInfoModal').style.display='flex';" style="width:18px;height:18px;border-radius:50%;background:rgba(255,62,100,.25);color:#ff3e64;font-size:11px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border:1px solid rgba(255,62,100,.4);">i</span></div>
-          <div style="font-size:11px;color:#8b95a3;margin-top:3px;">Prote&iacute;na 3g/kg &middot; Calorias elevadas &middot; Metabolismo acelerado</div>
+          <div style="display:flex;align-items:center;gap:6px;"><span data-i18n="atletaAvancadoLabel" style="font-weight:700;font-size:13px;color:#ff3e64;">&#9889; Atleta Avan&ccedil;ado</span><span onclick="event.stopPropagation();document.getElementById('atletaInfoModal').style.display='flex';" style="width:18px;height:18px;border-radius:50%;background:rgba(255,62,100,.25);color:#ff3e64;font-size:11px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border:1px solid rgba(255,62,100,.4);">i</span></div>
+          <div data-i18n="atletaSubtitle" style="font-size:11px;color:#8b95a3;margin-top:3px;">Prote&iacute;na 3g/kg &middot; Calorias elevadas &middot; Metabolismo acelerado</div>
         </div>
         <input type="checkbox" id="profPerformanceMode" onclick="event.stopPropagation();updateTDEEPreview();" style="width:20px;height:20px;accent-color:#ff3e64;cursor:pointer;">
       </div>
@@ -854,6 +854,7 @@ pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:
   cadastrarNovo:'+ Cadastrar alimento novo',cadastrarAlimento:'Cadastrar Alimento',nomeLabel:'Nome',
   cal100g:'Calorias /100g',prot100g:'Proteina /100g',carb100g:'Carbo /100g',gord100g:'Gordura /100g',salvarAlimento:'Salvar Alimento',
   toqueAlterarFoto:'Toque para alterar foto',nivelAtividade:'Nível de Atividade',objetivo:'Objetivo',massaGoal:'💪 Massa',
+  atletaAvancadoLabel:'&#9889; Atleta Avan�ado',atletaSubtitle:'Prote�na 3g/kg &middot; Calorias elevadas &middot; Metabolismo acelerado',
   tmbLabel:'Metabolismo Basal (TMB)',tdeeLabel:'Gasto Total (TDEE)',metaCalorias:'Meta de Calorias',metaAguaLabel:'Meta de Água',
   macrosEst:'Macros estimados',proteinaPura:'Proteina',carboidratos:'Carboidratos',gorduraPura:'Gordura',
   chaveAPILabel:'Chave API Anthropic (Foto IA)',salvarAplicar:'Salvar e Aplicar',sairConta:'🚪 Sair da conta',
@@ -907,6 +908,7 @@ en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcu
   cadastrarNovo:'+ Add new food',cadastrarAlimento:'Add Food',nomeLabel:'Name',
   cal100g:'Calories /100g',prot100g:'Protein /100g',carb100g:'Carbs /100g',gord100g:'Fat /100g',salvarAlimento:'Save Food',
   toqueAlterarFoto:'Tap to change photo',nivelAtividade:'Activity Level',objetivo:'Goal',massaGoal:'💪 Build Muscle',
+  atletaAvancadoLabel:'&#9889; Advanced Athlete',atletaSubtitle:'Protein 3g/kg &middot; Higher calories &middot; Accelerated metabolism',
   tmbLabel:'Basal Metabolic Rate (BMR)',tdeeLabel:'Total Daily Expenditure (TDEE)',metaCalorias:'Calorie Goal',metaAguaLabel:'Water Goal',
   macrosEst:'Estimated Macros',proteinaPura:'Protein',carboidratos:'Carbohydrates',gorduraPura:'Fat',
   chaveAPILabel:'Anthropic API Key (AI Photo)',salvarAplicar:'Save & Apply',sairConta:'🚪 Sign out',
@@ -960,6 +962,7 @@ es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'
   cadastrarNovo:'+ Agregar nuevo alimento',cadastrarAlimento:'Agregar Alimento',nomeLabel:'Nombre',
   cal100g:'Calorías /100g',prot100g:'Proteína /100g',carb100g:'Carbos /100g',gord100g:'Grasa /100g',salvarAlimento:'Guardar Alimento',
   toqueAlterarFoto:'Toca para cambiar foto',nivelAtividade:'Nivel de Actividad',objetivo:'Objetivo',massaGoal:'💪 Masa',
+  atletaAvancadoLabel:'&#9889; Atleta Avanzado',atletaSubtitle:'Prote�na 3g/kg &middot; Calor�as elevadas &middot; Metabolismo acelerado',
   tmbLabel:'Metabolismo Basal (TMB)',tdeeLabel:'Gasto Total (TDEE)',metaCalorias:'Meta de Calorías',metaAguaLabel:'Meta de Agua',
   macrosEst:'Macros estimados',proteinaPura:'Proteína',carboidratos:'Carbohidratos',gorduraPura:'Grasa',
   chaveAPILabel:'Clave API Anthropic (Foto IA)',salvarAplicar:'Guardar y Aplicar',sairConta:'🚪 Cerrar sesión',
@@ -1013,6 +1016,7 @@ it:{hoje:'Oggi',fotoIA:'Foto IA',agua:'Acqua',dieta:'Dieta',peso:'Peso',calcular
   cadastrarNovo:'+ Aggiungi nuovo alimento',cadastrarAlimento:'Aggiungi Alimento',nomeLabel:'Nome',
   cal100g:'Calorie /100g',prot100g:'Proteina /100g',carb100g:'Carboidrati /100g',gord100g:'Grassi /100g',salvarAlimento:'Salva Alimento',
   toqueAlterarFoto:'Tocca per cambiare foto',nivelAtividade:"Livello di Attività",objetivo:'Obiettivo',massaGoal:'💪 Massa',
+  atletaAvancadoLabel:'&#9889; Atleta Avanzato',atletaSubtitle:'Proteina 3g/kg &middot; Calorie elevate &middot; Metabolismo accelerato',
   tmbLabel:'Metabolismo Basale (MB)',tdeeLabel:'Spesa Totale (TDEE)',metaCalorias:'Obiettivo Calorico',metaAguaLabel:'Obiettivo Acqua',
   macrosEst:'Macro stimati',proteinaPura:'Proteina',carboidratos:'Carboidrati',gorduraPura:'Grassi',
   chaveAPILabel:'Chiave API Anthropic (Foto IA)',salvarAplicar:'Salva e Applica',sairConta:'🚪 Disconnetti',
@@ -1066,6 +1070,7 @@ fr:{hoje:'Aujourd\'hui',fotoIA:'Photo IA',agua:'Eau',dieta:'Régime',peso:'Poids
   cadastrarNovo:'+ Ajouter nouvel aliment',cadastrarAlimento:'Ajouter Aliment',nomeLabel:'Nom',
   cal100g:'Calories /100g',prot100g:'Protéines /100g',carb100g:'Glucides /100g',gord100g:'Lipides /100g',salvarAlimento:'Sauvegarder Aliment',
   toqueAlterarFoto:'Appuyez pour changer photo',nivelAtividade:"Niveau d'Activité",objetivo:'Objectif',massaGoal:'💪 Muscles',
+  atletaAvancadoLabel:'&#9889; Athl�te Avanc�',atletaSubtitle:'Prot�ine 3g/kg &middot; Calories �lev�es &middot; M�tabolisme acc�l�r�',
   tmbLabel:'Métabolisme de Base (MB)',tdeeLabel:'Dépense Totale (TDEE)',metaCalorias:'Objectif Calorique',metaAguaLabel:"Objectif Eau",
   macrosEst:'Macros estimés',proteinaPura:'Protéines',carboidratos:'Glucides',gorduraPura:'Lipides',
   chaveAPILabel:'Clé API Anthropic (Photo IA)',salvarAplicar:'Sauvegarder & Appliquer',sairConta:'🚪 Se déconnecter',
@@ -1119,6 +1124,7 @@ de:{hoje:'Heute',fotoIA:'Foto KI',agua:'Wasser',dieta:'Diät',peso:'Gewicht',cal
   cadastrarNovo:'+ Neues Lebensmittel hinzufügen',cadastrarAlimento:'Lebensmittel hinzufügen',nomeLabel:'Name',
   cal100g:'Kalorien /100g',prot100g:'Protein /100g',carb100g:'Kohlenhydrate /100g',gord100g:'Fett /100g',salvarAlimento:'Lebensmittel speichern',
   toqueAlterarFoto:'Tippen zum Ändern des Fotos',nivelAtividade:'Aktivitätslevel',objetivo:'Ziel',massaGoal:'💪 Muskeln aufbauen',
+  atletaAvancadoLabel:'&#9889; Fortgeschrittener Athlet',atletaSubtitle:'Protein 3g/kg &middot; H�here Kalorien &middot; Beschleunigter Stoffwechsel',
   tmbLabel:'Grundumsatz (GU)',tdeeLabel:'Gesamtverbrauch (TDEE)',metaCalorias:'Kalorienziel',metaAguaLabel:'Wasserziel',
   macrosEst:'Geschätzte Makros',proteinaPura:'Protein',carboidratos:'Kohlenhydrate',gorduraPura:'Fett',
   chaveAPILabel:'Anthropic API-Schlüssel (KI-Foto)',salvarAplicar:'Speichern & Anwenden',sairConta:'🚪 Abmelden',
