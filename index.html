@@ -1709,37 +1709,7 @@ function analyzePhoto(dataUrl){lastAnalyzedPhotoUrl=null;compressPhotoThumb(data
     :state.goal==='mass'
     ?'\n\nContexto: usuário em ganho de massa muscular. Destaque proteínas, carboidratos e calorias totais. Mencione se é boa refeição pré ou pós-treino.'
     :'\n\nContexto: usuário em manutenção. Análise equilibrada de todos os macros e qualidade nutricional.';
-  var prompt="Voce e um nutricionista especialista em culinaria BRASILEIRA e analise visual de alimentos. Analise esta foto com maxima atencao e precisao.
-
-CULINARIA BRASILEIRA - identifique corretamente:
-- TAPIOCA: disco branco/bege translucido, textura porosa/granulada, geralmente DOBRADA ao meio com recheio (nutella, queijo, frango, morango). Formato semi-circular ou circular. NAO e bolo nem crepe!
-- CUSCUZ: massa de milho granulada e solta, cor amarelo-palha ou branca, formato cilindrico ou esfarelado no prato
-- PAO DE QUEIJO: bolinha dourada e inflada, exterior levemente crocante
-- ACAI: creme denso roxo-escuro (quase preto), servido em tigela/copo com frutas/granola
-- BRIGADEIRO: bolinha pequena recoberta de granulado de chocolate marrom
-- COXINHA: formato de gota/pera com massa frita dourada
-- ARROZ E FEIJAO: pratos classicos separados ou combinados
-- VITAMINA/SUCO: bebida cremosa ou liquida colorida
-- IOGURTE: creme branco liso em pote/tigela
-- GRANOLA: flocos dourados secos misturados
-
-PROCESSO DE ANALISE - SIGA ESSA ORDEM:
-1. Observe a TEXTURA: granulada, lisa, crocante, mole?
-2. Observe a COR predominante
-3. Observe o FORMATO: redondo, dobrado, irregular, em camadas?
-4. Identifique o RECIPIENTE: prato, tigela, copo, embalagem
-5. Verifique se ha RECHEIO ou COBERTURA visiveis
-6. Considere o contexto: cafe da manha BR = tapioca/pao/fruta. Almoco BR = arroz/feijao/carne
-7. Estime GRAMAS pelo tamanho vs prato (prato normal = ~26cm diametro)
-
-"+goalCtxPhoto+"
-
-Identifique TODOS os alimentos e bebidas visiveis. Para cada item, estime a quantidade em gramas (ou ml para bebidas) com base no tamanho visual do prato/recipiente.
-
-Responda SOMENTE com JSON valido, sem texto adicional:
-{\"descricao\":\"descricao detalhada do que ve na foto\",\"alimentos\":[{\"nome\":\"nome do alimento\",\"gramas\":150,\"kcal\":200,\"prot\":10,\"carb\":20,\"fat\":8}],\"liquidos\":[{\"nome\":\"nome da bebida\",\"ml\":300,\"kcal\":50}],\"total_kcal\":400,\"total_ml\":300}
-
-Se nao houver liquidos, use liquidos:[]. Se nao houver alimentos solidos, use alimentos:[]. Seja preciso nas calorias usando tabelas nutricionais TACO/IBGE brasileiras.";
+  var prompt="Voce e um nutricionista especialista em culinaria BRASILEIRA e analise visual de alimentos. Analise esta foto com maxima atencao e precisao.\n\nCULINARIA BRASILEIRA - identifique corretamente:\n- TAPIOCA: disco branco/bege translucido, textura porosa/granulada, geralmente DOBRADA ao meio com recheio (nutella, queijo, frango, morango). Formato semi-circular ou circular. NAO e bolo nem crepe!\n- CUSCUZ: massa de milho granulada e solta, cor amarelo-palha ou branca, formato cilindrico ou esfarelado\n- PAO DE QUEIJO: bolinha dourada e inflada, exterior levemente crocante\n- ACAI: creme denso roxo-escuro (quase preto), servido em tigela/copo com frutas/granola\n- BRIGADEIRO: bolinha pequena recoberta de granulado de chocolate marrom\n- COXINHA: formato de gota/pera com massa frita dourada\n- ARROZ E FEIJAO: pratos classicos separados ou combinados\n- VITAMINA/SUCO: bebida cremosa ou liquida colorida\n\nPROCESSO - SIGA ESSA ORDEM:\n1. Observe a TEXTURA: granulada, lisa, crocante, mole?\n2. Observe a COR predominante\n3. Observe o FORMATO: redondo, dobrado, irregular, em camadas?\n4. Identifique o RECIPIENTE: prato, tigela, copo, embalagem\n5. Verifique se ha RECHEIO ou COBERTURA visiveis\n6. Considere o contexto: cafe da manha BR = tapioca/pao/fruta. Almoco BR = arroz/feijao/carne\n7. Estime GRAMAS pelo tamanho vs prato (prato normal = ~26cm diametro)\n"+goalCtxPhoto+"\n\nIdentifique TODOS os alimentos e bebidas visiveis. Para cada item, estime a quantidade em gramas (ou ml para bebidas) com base no tamanho visual do prato/recipiente.\n\nResponda SOMENTE com JSON valido, sem texto adicional:\n{\"descricao\":\"descricao detalhada do que ve na foto\",\"alimentos\":[{\"nome\":\"nome do alimento\",\"gramas\":150,\"kcal\":200,\"prot\":10,\"carb\":20,\"fat\":8}],\"liquidos\":[{\"nome\":\"nome da bebida\",\"ml\":300,\"kcal\":50}],\"total_kcal\":400,\"total_ml\":300}\n\nSe nao houver liquidos, use liquidos:[]. Se nao houver alimentos solidos, use alimentos:[]. Seja preciso nas calorias usando tabelas nutricionais TACO/IBGE brasileiras.";
   fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
     method:"POST",
     headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
