@@ -1714,7 +1714,8 @@ function analyzePhoto(dataUrl){lastAnalyzedPhotoUrl=null;compressPhotoThumb(data
     method:"POST",
     headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
     body:JSON.stringify({model:"claude-opus-4-6",max_tokens:3000,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:prompt}]}]})
-  }).then(function(r){return r.json();}).then(function(data){
+  }).then(function(r){return r.text();}).then(function(rawText){
+var data;try{data=JSON.parse(rawText);}catch(pe){document.getElementById("aiLoading").style.display="none";showToast("Proxy: "+rawText.slice(0,80),"error");return;}
     document.getElementById("aiLoading").style.display="none";
     if(data.error){showToast("Erro API: "+data.error.message,"error");return;}
     if(!data.content||!data.content[0]){showToast("Resposta invalida da IA","error");return;}
