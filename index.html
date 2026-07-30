@@ -1720,10 +1720,13 @@ var data;try{data=JSON.parse(rawText);}catch(pe){document.getElementById("aiLoad
     if(data.error){showToast("Erro API: "+data.error.message,"error");return;}
     if(!data.content||!data.content[0]){showToast("Resposta invalida da IA","error");return;}
     var text=data.content[0].text;
-    var m=text.match(/\{[\s\S]*\}/);
-    if(!m){showToast("Nao foi possivel identificar o alimento","error");return;}
-    try{aiResultData=JSON.parse(m[0]);renderAiResult(aiResultData);}
-    catch(e){try{var s2=m[0];var st=[];var inS=false;var ci=0;while(ci<s2.length){var cc=s2[ci];if(inS){if(cc=='\x5c')ci++;else if(cc=='\x22')inS=false;}else{if(cc=='\x22')inS=true;else if(cc=='\x7b'||cc=='\x5b')st.push(cc=='\x7b'?'\x7d':'\x5d');else if(cc=='\x7d'||cc=='\x5d')st.pop();}ci++;}aiResultData=JSON.parse(s2+st.reverse().join(''));renderAiResult(aiResultData);}catch(e2){showToast("Erro ao processar resultado","error");}}
+    var jsonStart=text.indexOf('\x7b');
+    if(jsonStart===-1){showToast("Nao foi possivel identificar o alimento","error");return;}
+    var depth=0,inStr=false,jsonEnd=-1;
+    for(var ji=jsonStart;ji<text.length;ji++){var jc=text[ji];if(inStr){if(jc=='\x5c'){ji++;continue;}if(jc=='\x22')inStr=false;}else{if(jc=='\x22')inStr=true;else if(jc=='\x7b')depth++;else if(jc=='\x7d'){depth--;if(depth===0){jsonEnd=ji;break;}}}}
+    var jsonStr=jsonEnd>-1?text.slice(jsonStart,jsonEnd+1):text.slice(jsonStart);
+    try{aiResultData=JSON.parse(jsonStr);renderAiResult(aiResultData);}
+    catch(e){try{var s2=jsonStr,st=[],inS=false,ci=0;while(ci<s2.length){var cc=s2[ci];if(inS){if(cc=='\x5c')ci++;else if(cc=='\x22')inS=false;}else{if(cc=='\x22')inS=true;else if(cc=='\x7b'||cc=='\x5b')st.push(cc=='\x7b'?'\x7d':'\x5d');else if(cc=='\x7d'||cc=='\x5d')st.pop();}ci++;}var suffix=(inS?'\x22':'')+st.reverse().join('');aiResultData=JSON.parse(s2+suffix);renderAiResult(aiResultData);}catch(e2){showToast("Erro ao processar resultado","error");}}
   }).catch(function(e){document.getElementById("aiLoading").style.display="none";showToast("Erro de conexao: "+e.message,"error");});
 }
 function renderAiResult(d){
