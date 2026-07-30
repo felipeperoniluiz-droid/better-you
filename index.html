@@ -1713,7 +1713,7 @@ function analyzePhoto(dataUrl){lastAnalyzedPhotoUrl=null;compressPhotoThumb(data
   fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
     method:"POST",
     headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
-    body:JSON.stringify({model:"claude-opus-4-6",max_tokens:1500,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:prompt}]}]})
+    body:JSON.stringify({model:"claude-opus-4-6",max_tokens:3000,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:prompt}]}]})
   }).then(function(r){return r.json();}).then(function(data){
     document.getElementById("aiLoading").style.display="none";
     if(data.error){showToast("Erro API: "+data.error.message,"error");return;}
@@ -1722,7 +1722,7 @@ function analyzePhoto(dataUrl){lastAnalyzedPhotoUrl=null;compressPhotoThumb(data
     var m=text.match(/\{[\s\S]*\}/);
     if(!m){showToast("Nao foi possivel identificar o alimento","error");return;}
     try{aiResultData=JSON.parse(m[0]);renderAiResult(aiResultData);}
-    catch(e){showToast("Erro ao processar resultado","error");}
+    catch(e){try{var s2=m[0];var st=[];var inS=false;var ci=0;while(ci<s2.length){var cc=s2[ci];if(inS){if(cc=='\x5c')ci++;else if(cc=='\x22')inS=false;}else{if(cc=='\x22')inS=true;else if(cc=='\x7b'||cc=='\x5b')st.push(cc=='\x7b'?'\x7d':'\x5d');else if(cc=='\x7d'||cc=='\x5d')st.pop();}ci++;}aiResultData=JSON.parse(s2+st.reverse().join(''));renderAiResult(aiResultData);}catch(e2){showToast("Erro ao processar resultado","error");}}
   }).catch(function(e){document.getElementById("aiLoading").style.display="none";showToast("Erro de conexao: "+e.message,"error");});
 }
 function renderAiResult(d){
