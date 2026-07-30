@@ -811,6 +811,8 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 <div class="toast" id="toast"></div>
 
 <script>
+window.addEventListener('unhandledrejection',function(ev){var msg=(ev.reason&&ev.reason.message)||String(ev.reason);try{showToast('Erro v4: '+msg.slice(0,80),'error');}catch(e){alert('Erro v4: '+msg.slice(0,80));}});
+window.onerror=function(msg,src,line,col,err){try{showToast('JS: '+msg.slice(0,80),'error');}catch(e){}return true;};
 var currentLang='pt';
 var T={
 pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Historico',
