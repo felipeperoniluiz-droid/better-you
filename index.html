@@ -811,6 +811,27 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 <div class="toast" id="toast"></div>
 
 <script>
+var APP_VERSION="20260730_2340";
+function checkForUpdate(){
+  fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
+  .then(function(r){return r.text();})
+  .then(function(html){
+    var m=html.match(/APP_VERSION="([^"]+)"/);
+    if(m&&m[1]&&m[1]!==APP_VERSION){
+      var bar=document.getElementById('updateBar');
+      if(!bar){
+        bar=document.createElement('div');
+        bar.id='updateBar';
+        bar.style.cssText='position:fixed;bottom:70px;left:0;right:0;background:#f0b429;color:#1a1a2e;text-align:center;padding:14px 12px;z-index:9999;font-weight:600;cursor:pointer;font-size:15px;box-shadow:0 -2px 12px rgba(0,0,0,0.3);';
+        bar.innerHTML='&#x1F504; Nova versão disponível! <b>Toque para atualizar</b>';
+        bar.onclick=function(){window.location.reload(true);};
+        document.body.appendChild(bar);
+      }
+    }
+  }).catch(function(){});
+}
+setTimeout(checkForUpdate,4000);
+setInterval(checkForUpdate,5*60*1000);
 window.addEventListener('unhandledrejection',function(ev){var msg=(ev.reason&&ev.reason.message)||String(ev.reason);try{showToast('Erro v4: '+msg.slice(0,80),'error');}catch(e){alert('Erro v4: '+msg.slice(0,80));}});
 window.onerror=function(msg,src,line,col,err){try{showToast('JS: '+msg.slice(0,80),'error');}catch(e){}return true;};
 var currentLang='pt';
