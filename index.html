@@ -1751,9 +1751,11 @@ function renderAiResult(d){
   document.getElementById("aiTotalKcal").textContent=(d.total_kcal||0)+" kcal";
   document.getElementById("aiResultBox").style.display="block";
 }
+function getMealByTime(){return currentMealType||'cafe';}
 function addAiResult(){
   if(!aiResultData)return;
   var mk=getMealByTime();
+  if(!state.meals[mk])state.meals[mk]=[];
   var _nowT=new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});(aiResultData.alimentos||[]).forEach(function(f){state.meals[mk].push({name:f.nome,grams:f.gramas,kcal:f.kcal,prot:f.prot,carb:f.carb,fat:f.fat,time:_nowT,photo:lastAnalyzedPhotoUrl});});
   var liquidos=aiResultData.liquidos||[];
   var totalMl=0;
