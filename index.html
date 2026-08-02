@@ -3355,6 +3355,8 @@ function loadFromFirestore(uid){
         // Local vence para refeições/água DE HOJE se tiver mais entradas.
         // Merge: cloudState vence para settings/perfil, mas local é preservado antes da comparação
         var merged=Object.assign({},state,localState,cloudState);
+        var _localPhoto=(localState.profile&&localState.profile.photo)||(state.profile&&state.profile.photo);
+        if(_localPhoto&&(!merged.profile||!merged.profile.photo)){merged.profile=Object.assign({},merged.profile||{},{photo:_localPhoto});}
 
         function countMeals(s){
           if(!s||!s.meals)return 0;
