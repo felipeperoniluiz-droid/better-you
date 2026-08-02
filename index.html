@@ -3333,7 +3333,7 @@ function doSignOut(){
   var doExit=function(){ _fbAuth.signOut(); };
   if(_fbUser&&_fbDb){
     _fbDb.collection('users').doc(_fbUser.uid).set({
-      data:(function(){var _p=state.profile?Object.assign({},state.profile):{};delete _p.photo;return JSON.stringify(Object.assign({},state,{profile:_p}));})(),
+      data:(function(){var _c=JSON.parse(JSON.stringify(state));if(_c.profile)delete _c.profile.photo;Object.keys(_c.meals||{}).forEach(function(k){(_c.meals[k]||[]).forEach(function(e){delete e.photo;});});if(_c.progressPhotos)_c.progressPhotos=_c.progressPhotos.map(function(p){return{date:p.date,label:p.label,dataUrl:null};});return JSON.stringify(_c);})(),
       updatedAt:new Date().toISOString(),
       email:_fbUser.email
     }).then(doExit).catch(doExit);
@@ -3408,7 +3408,7 @@ function saveToFirestore(){
   clearTimeout(_fbSaveTimer);
   _fbSaveTimer=setTimeout(function(){
     _fbDb.collection('users').doc(_fbUser.uid).set({
-      data:(function(){var _p=state.profile?Object.assign({},state.profile):{};delete _p.photo;return JSON.stringify(Object.assign({},state,{profile:_p}));})(),
+      data:(function(){var _c=JSON.parse(JSON.stringify(state));if(_c.profile)delete _c.profile.photo;Object.keys(_c.meals||{}).forEach(function(k){(_c.meals[k]||[]).forEach(function(e){delete e.photo;});});if(_c.progressPhotos)_c.progressPhotos=_c.progressPhotos.map(function(p){return{date:p.date,label:p.label,dataUrl:null};});return JSON.stringify(_c);})(),
       updatedAt:new Date().toISOString(),
       email:_fbUser.email
     }).then(function(){showToast('Nuvem: dados salvos!','success');}).catch(function(e){showToast('Erro Firestore: '+(e.code||e.message),'error');});
