@@ -3342,10 +3342,21 @@ function doSignOut(){
 
 // ── FIRESTORE SYNC ────────────────────────────────────────────────
 function loadFromFirestore(uid){
-  _fbDb.collection('users').doc(uid).get()
-    .then(function(doc){
+  Promise.all([_fbDb.collection('users').doc(uid).get(),_fbDb.collection('users').doc(uid).collection('photos').get()])
+    .then(function(_results){
+      var doc=_results[0];
+      var _photosSnap=_results[1];
+      var _pm={};
+      _photosSnap.forEach(function(_ps){var _pd=_ps.data();_pm[_ps.id]=_pd&&_pd.data;});
       if(doc.exists&&doc.data().data){
         var cloudState=JSON.parse(doc.data().data);
+        (function(){
+          function _fill(o,f,id){if(o&&o[f]===true&&_pm[id]!==undefined)o[f]=_pm[id];}
+          if(cloudState.profile)_fill(cloudState.profile,'photo','profile');
+          Object.keys(cloudState.meals||{}).forEach(function(k){(cloudState.meals[k]||[]).forEach(function(e,i){_fill(e,'photo','today_'+k+'_'+i);});});
+          Object.keys(cloudState.history||{}).forEach(function(d){var h=cloudState.history[d];if(h&&h.meals){Object.keys(h.meals).forEach(function(k){(h.meals[k]||[]).forEach(function(e,i){_fill(e,'photo','hist_'+d+'_'+k+'_'+i);});});}});
+          (cloudState.progressPhotos||[]).forEach(function(p,i){_fill(p,'dataUrl','progress_'+i);});
+        })();
         var localRaw=localStorage.getItem('betteryou_v1_'+uid)||localStorage.getItem('betteryou_v1');
         var localState=localRaw?JSON.parse(localRaw):{};
         var today=new Date().toISOString().slice(0,10);
@@ -3409,11 +3420,30 @@ function saveToFirestore(){
   // Debounce: evita salvar centenas de vezes em sequência
   clearTimeout(_fbSaveTimer);
   _fbSaveTimer=setTimeout(function(){
-    _fbDb.collection('users').doc(_fbUser.uid).set({
-      data:(function(){var _c=JSON.parse(JSON.stringify(state));if(_c.profile)delete _c.profile.photo;Object.keys(_c.meals||{}).forEach(function(k){(_c.meals[k]||[]).forEach(function(e){delete e.photo;});});if(_c.progressPhotos)_c.progressPhotos=_c.progressPhotos.map(function(p){return{date:p.date,label:p.label,dataUrl:null};});return JSON.stringify(_c);})(),
-      updatedAt:new Date().toISOString(),
-      email:_fbUser.email
-    }).then(function(){showToast('Nuvem: dados salvos!','success');}).catch(function(e){showToast('Erro Firestore: '+(e.code||e.message),'error');});
+    try{
+      var _uid=_fbUser.uid;
+      var _c=JSON.parse(JSON.stringify(state));
+      var _photos=[];
+      function _grab(o,f,id){if(o&&typeof o[f]==='string'&&o[f].length>0){_photos.push({id:id,data:o[f]});o[f]=true;}}
+      if(_c.profile)_grab(_c.profile,'photo','profile');
+      Object.keys(_c.meals||{}).forEach(function(k){(_c.meals[k]||[]).forEach(function(e,i){_grab(e,'photo','today_'+k+'_'+i);});});
+      Object.keys(_c.history||{}).forEach(function(d){var h=_c.history[d];if(h&&h.meals){Object.keys(h.meals).forEach(function(k){(h.meals[k]||[]).forEach(function(e,i){_grab(e,'photo','hist_'+d+'_'+k+'_'+i);});});}});
+      (_c.progressPhotos||[]).forEach(function(p,i){_grab(p,'dataUrl','progress_'+i);});
+      var _photosCol=_fbDb.collection('users').doc(_uid).collection('photos');
+      var _writes=[];
+      for(var _bi=0;_bi<_photos.length;_bi+=450){
+        var _batch=_fbDb.batch();
+        _photos.slice(_bi,_bi+450).forEach(function(ph){_batch.set(_photosCol.doc(ph.id),{data:ph.data});});
+        _writes.push(_batch.commit());
+      }
+      Promise.all(_writes).then(function(){
+        return _fbDb.collection('users').doc(_uid).set({
+          data:JSON.stringify(_c),
+          updatedAt:new Date().toISOString(),
+          email:_fbUser.email
+        });
+      }).then(function(){showToast('Nuvem: dados salvos!','success');}).catch(function(e){showToast('Erro Firestore: '+(e.code||e.message),'error');});
+    }catch(_e){showToast('Erro ao preparar dados: '+_e.message,'error');}
   },1500);
 }
 
