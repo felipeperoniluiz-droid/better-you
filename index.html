@@ -3408,7 +3408,7 @@ function saveToFirestore(){
   clearTimeout(_fbSaveTimer);
   _fbSaveTimer=setTimeout(function(){
     _fbDb.collection('users').doc(_fbUser.uid).set({
-      data:JSON.stringify(state),
+      data:(function(){var _p=state.profile?Object.assign({},state.profile):{};delete _p.photo;return JSON.stringify(Object.assign({},state,{profile:_p}));})(),
       updatedAt:new Date().toISOString(),
       email:_fbUser.email
     }).then(function(){showToast('Nuvem: dados salvos!','success');}).catch(function(e){showToast('Erro Firestore: '+(e.code||e.message),'error');});
