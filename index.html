@@ -3332,11 +3332,30 @@ function doSignOut(){
   clearTimeout(_fbSaveTimer);
   var doExit=function(){ _fbAuth.signOut(); };
   if(_fbUser&&_fbDb){
-    _fbDb.collection('users').doc(_fbUser.uid).set({
-      data:(function(){var _c=JSON.parse(JSON.stringify(state));if(_c.profile)delete _c.profile.photo;Object.keys(_c.meals||{}).forEach(function(k){(_c.meals[k]||[]).forEach(function(e){delete e.photo;});});if(_c.progressPhotos)_c.progressPhotos=_c.progressPhotos.map(function(p){return{date:p.date,label:p.label,dataUrl:null};});return JSON.stringify(_c);})(),
-      updatedAt:new Date().toISOString(),
-      email:_fbUser.email
-    }).then(doExit).catch(doExit);
+    try{
+      var _uid2=_fbUser.uid;
+      var _c=JSON.parse(JSON.stringify(state));
+      var _photos2=[];
+      function _grab2(o,f,id){if(o&&typeof o[f]==='string'&&o[f].length>0){_photos2.push({id:id,data:o[f]});o[f]=true;}}
+      if(_c.profile)_grab2(_c.profile,'photo','profile');
+      Object.keys(_c.meals||{}).forEach(function(k){(_c.meals[k]||[]).forEach(function(e,i){_grab2(e,'photo','today_'+k+'_'+i);});});
+      Object.keys(_c.history||{}).forEach(function(d){var h=_c.history[d];if(h&&h.meals){Object.keys(h.meals).forEach(function(k){(h.meals[k]||[]).forEach(function(e,i){_grab2(e,'photo','hist_'+d+'_'+k+'_'+i);});});}});
+      (_c.progressPhotos||[]).forEach(function(p,i){_grab2(p,'dataUrl','progress_'+i);});
+      var _photosCol2=_fbDb.collection('users').doc(_uid2).collection('photos');
+      var _writes2=[];
+      for(var _bj=0;_bj<_photos2.length;_bj+=450){
+        var _batch2=_fbDb.batch();
+        _photos2.slice(_bj,_bj+450).forEach(function(ph){_batch2.set(_photosCol2.doc(ph.id),{data:ph.data});});
+        _writes2.push(_batch2.commit());
+      }
+      Promise.all(_writes2).then(function(){
+        return _fbDb.collection('users').doc(_uid2).set({
+          data:JSON.stringify(_c),
+          updatedAt:new Date().toISOString(),
+          email:_fbUser.email
+        });
+      }).then(doExit).catch(doExit);
+    }catch(_e2){doExit();}
   } else { doExit(); }
 }
 
