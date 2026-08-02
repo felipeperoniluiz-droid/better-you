@@ -811,7 +811,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260803_1310";
+var APP_VERSION="20260803_1330";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1736,7 +1736,7 @@ function analyzePhoto(dataUrl){lastAnalyzedPhotoUrl=null;compressPhotoThumb(data
   fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
     method:"POST",
     headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
-    body:JSON.stringify({model:"claude-opus-4-6",max_tokens:3000,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:prompt}]}]})
+    body:JSON.stringify({model:"claude-opus-4-6",max_tokens:3000,system:"REGRA ABSOLUTA DE SEPARACAO: Voce DEVE listar cada ingrediente/componente como item SEPARADO no array alimentos. NUNCA agrupe multiplos ingredientes em 1 item. Exemplos: Croissant com presunto e queijo = 3 itens [{nome:Pao croissant},{nome:Presunto},{nome:Queijo}]. Ovo mexido = item separado. Arroz e feijao = 2 itens separados. Esta regra e inviolavel e tem prioridade sobre qualquer outra consideracao.",messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:prompt}]}]})
   }).then(function(r){return r.text();}).then(function(rawText){
 var data;try{data=JSON.parse(rawText);}catch(pe){document.getElementById("aiLoading").style.display="none";showToast("Proxy: "+rawText.slice(0,80),"error");return;}
     document.getElementById("aiLoading").style.display="none";
