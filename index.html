@@ -1319,6 +1319,8 @@ function save(){
       });
     });
     localStorage.setItem("betteryou_v1",JSON.stringify(toSave));
+    var _fbu=window.firebase&&firebase.auth&&firebase.auth().currentUser;
+    if(_fbu&&_fbu.uid)localStorage.setItem("betteryou_v1_"+_fbu.uid,JSON.stringify(toSave));
     if(typeof saveToFirestore==="function") saveToFirestore();
   }catch(err){
     if(err.name==="QuotaExceededError"||err.code===22){
@@ -1335,7 +1337,7 @@ function save(){
 }
 function load(){
   try{
-    var d=localStorage.getItem("betteryou_v1");
+    var d=(function(){var _fbu2=window.firebase&&firebase.auth&&firebase.auth().currentUser;var _k2=_fbu2&&_fbu2.uid?"betteryou_v1_"+_fbu2.uid:"betteryou_v1";return localStorage.getItem(_k2)||localStorage.getItem("betteryou_v1");})();
     if(d){var s=JSON.parse(d);state=Object.assign({},state,s);}
   }catch(err){
     console.error("Erro ao carregar dados:",err);
@@ -1736,8 +1738,8 @@ function analyzePhoto(dataUrl){lastAnalyzedPhotoUrl=null;compressPhotoThumb(data
   fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
     method:"POST",
     headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
-    body:JSON.stringify({model:"claude-opus-4-6",max_tokens:4096,system:"REGRA ABSOLUTA DE SEPARACAO: Voce DEVE listar cada ingrediente/componente como item SEPARADO no array alimentos. NUNCA agrupe multiplos ingredientes em 1 item. Exemplos: Croissant com presunto e queijo = 3 itens [{nome:Pao croissant},{nome:Presunto},{nome:Queijo}]. Ovo mexido = item separado. Arroz e feijao = 2 itens separados. Esta regra e inviolavel e tem prioridade sobre qualquer outra consideracao.",messages:[{role:"user",content:"Ao analisar fotos de alimentos, voce DEVE sempre listar cada ingrediente visivel como item SEPARADO no array alimentos. Um sanduiche = pao + cada recheio como itens distintos. Confirme."},{role:"assistant",content:"Confirmado. Vou sempre listar cada ingrediente individualmente como item separado. Nunca agruparei multiplos ingredientes em um unico item."},{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:prompt}]}]})
-  }).then(function(r){return r.text();}).then(function(rawText){var _x0=rawText.indexOf("{"),_x1=rawText.lastIndexOf("}");if(_x0>=0&&_x1>_x0){var _xr=rawText.slice(_x0,_x1+1),_xo=0,_xb=0;for(var _xi=0;_xi<_xr.length;_xi++){if(_xr[_xi]==="[")_xo++;else if(_xr[_xi]==="]")_xo--;else if(_xr[_xi]==="{")_xb++;else if(_xr[_xi]==="}") _xb--;}if(_xo>0||_xb>1){var _xl=_xr.lastIndexOf("},");if(_xl>0)_xr=_xr.slice(0,_xl+1);for(var _xi=0;_xi<_xo;_xi++)_xr+="]";for(var _xi=0;_xi<_xb-1;_xi++)_xr+="}";_xr+="}";}rawText=_xr;}
+    body:JSON.stringify({model:"claude-opus-4-6",max_tokens:3000,system:"REGRA ABSOLUTA DE SEPARACAO: Voce DEVE listar cada ingrediente/componente como item SEPARADO no array alimentos. NUNCA agrupe multiplos ingredientes em 1 item. Exemplos: Croissant com presunto e queijo = 3 itens [{nome:Pao croissant},{nome:Presunto},{nome:Queijo}]. Ovo mexido = item separado. Arroz e feijao = 2 itens separados. Esta regra e inviolavel e tem prioridade sobre qualquer outra consideracao.",messages:[{role:"user",content:"Ao analisar fotos de alimentos, voce DEVE sempre listar cada ingrediente visivel como item SEPARADO no array alimentos. Um sanduiche = pao + cada recheio como itens distintos. Confirme."},{role:"assistant",content:"Confirmado. Vou sempre listar cada ingrediente individualmente como item separado. Nunca agruparei multiplos ingredientes em um unico item."},{role:"user",content:[{type:"image",source:{type:"base64",media_type:mtype,data:base64}},{type:"text",text:prompt}]}]})
+  }).then(function(r){return r.text();}).then(function(rawText){
 var data;try{data=JSON.parse(rawText);}catch(pe){document.getElementById("aiLoading").style.display="none";showToast("Proxy: "+rawText.slice(0,80),"error");return;}
     document.getElementById("aiLoading").style.display="none";
     if(data.error){showToast("Erro API: "+data.error.message,"error");return;}
@@ -2034,7 +2036,7 @@ function switchTab(name,navEl){
   if(name==="hist"){renderHistory();renderCalendar();}
   if(name==="foto"){checkApiKeyBanner();renderProgressPhotos();}
   if(name==="relatorios")renderReports();
-  if(name==="hoje")renderMeals();
+  if(name==="hoje"){renderToday();renderMeals();}
 }
 
 // ── FOTOS DE PROGRESSO ──────────────────────────────────────────
