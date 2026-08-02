@@ -3333,7 +3333,7 @@ function doSignOut(){
   var doExit=function(){ _fbAuth.signOut(); };
   if(_fbUser&&_fbDb){
     _fbDb.collection('users').doc(_fbUser.uid).set({
-      data:JSON.stringify(state),
+      data:(function(){var _p=state.profile?Object.assign({},state.profile):{};delete _p.photo;return JSON.stringify(Object.assign({},state,{profile:_p}));})(),
       updatedAt:new Date().toISOString(),
       email:_fbUser.email
     }).then(doExit).catch(doExit);
