@@ -3398,7 +3398,7 @@ function loadFromFirestore(uid){
       }
     })
     .catch(function(e){
-      console.log('Firestore load error:',e);
+      showToast('Erro ao carregar nuvem: '+(e.code||e.message),'error');
     });
 }
 
@@ -3411,7 +3411,7 @@ function saveToFirestore(){
       data:JSON.stringify(state),
       updatedAt:new Date().toISOString(),
       email:_fbUser.email
-    }).catch(function(e){console.log('Firestore save error:',e);});
+    }).then(function(){showToast('Nuvem: dados salvos!','success');}).catch(function(e){showToast('Erro Firestore: '+(e.code||e.message),'error');});
   },1500);
 }
 
