@@ -1728,7 +1728,8 @@ function saveQuickApiKey(){
    e handleFotoIA (busque por "function handleFotoIA"). Editar o prompt aqui
    NAO tem efeito nenhum no app. Ja custou uma sessao inteira de debug.
    ============================================================== */
-function analyzePhoto(dataUrl){lastAnalyzedPhotoUrl=null;compressPhotoThumb(dataUrl,function(thumb){lastAnalyzedPhotoUrl=thumb;});
+/* CODIGO MORTO - NAO EDITAR. O fluxo real e handleFotoIA. Editar o prompt aqui nao tem efeito no app. */
+        function analyzePhoto(dataUrl){lastAnalyzedPhotoUrl=null;compressPhotoThumb(dataUrl,function(thumb){lastAnalyzedPhotoUrl=thumb;});
   if(!state.apiKey){checkApiKeyBanner();showToast("Cole sua chave API acima para continuar","error");return;}
   document.getElementById("aiLoading").style.display="block";
   document.getElementById("aiResultBox").style.display="none";
@@ -2339,6 +2340,7 @@ function handleFotoIA(input){
       try{
         /* !!! NAO REDUZIR !!! Ja esteve em 800px/0.75 e a textura fina do alimento
            era destruida, causando identificacao errada. Limite util da API: ~1568px. */
+        /* NAO REDUZIR - ja esteve em 800px/0.75 e destruia a textura do alimento, causando erro de identificacao. */
         var MAX=1536; var w=img.width,h=img.height;
         if(w>MAX||h>MAX){var sc=MAX/Math.max(w,h);w=Math.round(w*sc);h=Math.round(h*sc);}
         var cv=document.createElement("canvas");cv.width=w;cv.height=h;
@@ -2351,7 +2353,8 @@ function handleFotoIA(input){
           /* !!! NAO TROCAR O MODELO !!! Este e o handler ATIVO da Foto IA.
            Ja esteve com claude-haiku-4-5 e o reconhecimento de alimentos despencou
            (tapioca virava "bolo de milho"). Opus 4.6 e obrigatorio aqui. */
-        body:JSON.stringify({model:"claude-opus-4-6",max_tokens:4096,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},{type:"text",text:prompt}]}]})
+        body:JSON.stringify({/* NAO TROCAR O MODELO - handler ATIVO da Foto IA. Ja esteve com haiku e o reconhecimento despencou. Opus 4.6 obrigatorio. */
+        model:"claude-opus-4-6",max_tokens:4096,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},{type:"text",text:prompt}]}]})
         }).then(function(r){return r.json();}).then(function(data){
           URL.revokeObjectURL(objUrl);
           if(data.error) throw new Error(data.error.message||"API error");
