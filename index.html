@@ -1723,6 +1723,11 @@ function saveQuickApiKey(){
   openProfile();
   showToast("Configure sua chave API no Perfil 👤","");
 }
+/* ================= CODIGO MORTO - NAO EDITAR =================
+   analyzePhoto/handlePhoto NAO sao chamados por nada. O fluxo real da Foto IA
+   e handleFotoIA (busque por "function handleFotoIA"). Editar o prompt aqui
+   NAO tem efeito nenhum no app. Ja custou uma sessao inteira de debug.
+   ============================================================== */
 function analyzePhoto(dataUrl){lastAnalyzedPhotoUrl=null;compressPhotoThumb(dataUrl,function(thumb){lastAnalyzedPhotoUrl=thumb;});
   if(!state.apiKey){checkApiKeyBanner();showToast("Cole sua chave API acima para continuar","error");return;}
   document.getElementById("aiLoading").style.display="block";
@@ -2332,6 +2337,8 @@ function handleFotoIA(input){
     var img=new Image();
     img.onload=function(){
       try{
+        /* !!! NAO REDUZIR !!! Ja esteve em 800px/0.75 e a textura fina do alimento
+           era destruida, causando identificacao errada. Limite util da API: ~1568px. */
         var MAX=1536; var w=img.width,h=img.height;
         if(w>MAX||h>MAX){var sc=MAX/Math.max(w,h);w=Math.round(w*sc);h=Math.round(h*sc);}
         var cv=document.createElement("canvas");cv.width=w;cv.height=h;
@@ -2341,7 +2348,10 @@ function handleFotoIA(input){
         var prompt="Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto e identifique TODOS os alimentos visiveis.\n\nRetorne APENAS JSON valido neste formato:\n{\"itens\":[{\"nome\":\"Banana\",\"gramas\":120,\"kcal\":89,\"prot\":1,\"carb\":23,\"fat\":0,\"unidade\":\"g\",\"vitaminas\":[\"Vitamina B6 (0.4mg)\",\"Vitamina C (9mg)\",\"Potassio (358mg)\"],\"beneficios\":[\"Fonte de energia rapida\",\"Rico em potassio\"]}],\"total_kcal\":89}\n\nREGRAS:\n- Identifique e retorne APENAS alimentos e bebidas consumiveis. Ignore completamente objetos, equipamentos, utensilios, maos, pessoas e qualquer item nao comestivel\n- Campo \"alternativa\": use APENAS se o alimento for visivelmente ambiguo (ex: cappuccino vs cafe com leite). Omita para frutas, legumes e alimentos claros.\n- Campo \"opcoes_porcao\": use APENAS para bebidas em copo ou pratos com porcao variavel. Omita para frutas e itens unitarios.\n- Campo \"vitaminas\": liste 3-5 principais vitaminas e minerais com quantidade aproximada (ex: Vitamina C (50mg), Calcio (120mg))\n- Campo \"beneficios\": liste 2-3 beneficios para a saude em frases curtas (ex: Fortalece imunidade, Rico em antioxidantes)\n- Campo \"vitaminas\": liste 3-5 principais vitaminas e minerais com quantidade aproximada (ex: Vitamina C (50mg), Calcio (120mg))\n- Campo \"beneficios\": liste 2-3 beneficios para a saude em frases curtas (ex: Fortalece imunidade, Rico em antioxidantes)\n- Estime gramas pelo tamanho visual: banana=120g, laranja=130g, maca=150g\n- Retorne somente JSON, sem texto extra";
         fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
           method:"POST",headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
-          body:JSON.stringify({model:"claude-opus-4-6",max_tokens:4096,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},{type:"text",text:prompt}]}]})
+          /* !!! NAO TROCAR O MODELO !!! Este e o handler ATIVO da Foto IA.
+           Ja esteve com claude-haiku-4-5 e o reconhecimento de alimentos despencou
+           (tapioca virava "bolo de milho"). Opus 4.6 e obrigatorio aqui. */
+        body:JSON.stringify({model:"claude-opus-4-6",max_tokens:4096,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},{type:"text",text:prompt}]}]})
         }).then(function(r){return r.json();}).then(function(data){
           URL.revokeObjectURL(objUrl);
           if(data.error) throw new Error(data.error.message||"API error");
