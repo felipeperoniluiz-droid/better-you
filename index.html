@@ -3361,7 +3361,7 @@ function doSignOut(){
 
 // ── FIRESTORE SYNC ────────────────────────────────────────────────
 function loadFromFirestore(uid){
-  Promise.all([_fbDb.collection('users').doc(uid).get(),_fbDb.collection('users').doc(uid).collection('photos').get()])
+  Promise.all([_fbDb.collection('users').doc(uid).get(),_fbDb.collection('users').doc(uid).collection('photos').get().catch(function(_pe){showToast('Fotos da nuvem indisponiveis: '+(_pe.code||_pe.message),'error');return{forEach:function(){}};})])
     .then(function(_results){
       var doc=_results[0];
       var _photosSnap=_results[1];
