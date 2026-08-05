@@ -2596,6 +2596,120 @@ function renderAlerts(){
       +'<div style="font-size:13px;color:#ddd;line-height:1.45;">'+a.text+'</div></div>';
   }).join("");
 }
+/* ===== D) PROJECAO ===== */
+function _linTrend(pts){
+  var n=pts.length; if(n<2) return null;
+  var sx=0,sy=0,sxx=0,sxy=0;
+  pts.forEach(function(p){sx+=p.x;sy+=p.y;sxx+=p.x*p.x;sxy+=p.x*p.y;});
+  var d=n*sxx-sx*sx; if(!d) return null;
+  return {slope:(n*sxy-sx*sy)/d};
+}
+function calcProjection(weeks){
+  weeks=weeks||8;
+  var p=state.profile||{}, out={ok:false,reason:""};
+  var wArr=(state.weights||[]).filter(function(w){return w&&w.val;});
+  var curW=wArr.length?+wArr[0].val:+p.weight||0;
+  if(!curW){ out.reason="Registre seu peso para ver a projecao."; return out; }
+  var Hh=+p.height||0;
+  var hist=state.history||{}, tdee=+p.tdee||+state.calGoal||0;
+  var days=Object.keys(hist).sort().slice(-21), deltas=[];
+  days.forEach(function(d){ var k=+(hist[d]||{}).kcal; if(k>0&&tdee>0) deltas.push(k-tdee); });
+  var avgDelta=deltas.length?deltas.reduce(function(a,b){return a+b;},0)/deltas.length:null;
+  var kgWkEnergy=avgDelta!==null?(avgDelta*7)/7700:null;
+  var kgWkTrend=null;
+  if(wArr.length>=3){
+    var base=new Date(wArr[wArr.length-1].date).getTime();
+    var pts=wArr.map(function(w){return {x:(new Date(w.date).getTime()-base)/86400000,y:+w.val};});
+    var span=Math.max.apply(null,pts.map(function(q){return q.x;}));
+    if(span>=10){ var t=_linTrend(pts); if(t) kgWkTrend=t.slope*7; }
+  }
+  var kgWk=kgWkTrend!==null?kgWkTrend:kgWkEnergy;
+  var source=kgWkTrend!==null?"tendencia real do seu peso":"seu saldo calorico";
+  if(kgWk===null||!isFinite(kgWk)){ out.reason="Registre suas refeicoes por alguns dias para ver a projecao."; return out; }
+  var maxRate=curW*0.015, clamped=false;
+  if(kgWk>maxRate){kgWk=maxRate;clamped=true;}
+  if(kgWk<-maxRate){kgWk=-maxRate;clamped=true;}
+  var damp=0.88;
+  var dW=kgWk*weeks*damp, projW=curW+dW;
+  var unc=Math.max(0.8, Math.abs(dW)*0.35);
+  function bmi(w){ return Hh>0 ? w/Math.pow(Hh/100,2) : null; }
+  function bfat(w){ var b=bmi(w); if(b===null||!p.age) return null;
+    var s=(p.sex==="m"||p.sex==="masculino"||p.sex==="male")?1:0;
+    return 1.20*b + 0.23*(+p.age) - 10.8*s - 5.4; }
+  var mArr=(state.measures||[]).filter(function(m){return m&&m.cintura;});
+  var waistNow=mArr.length?+mArr[0].cintura:null, waistProj=null;
+  if(waistNow!==null){
+    var wkT=null;
+    if(mArr.length>=3){
+      var b2=new Date(mArr[mArr.length-1].date).getTime();
+      var p2=mArr.map(function(m){return {x:(new Date(m.date).getTime()-b2)/86400000,y:+m.cintura};});
+      var sp2=Math.max.apply(null,p2.map(function(q){return q.x;}));
+      if(sp2>=10){ var t2=_linTrend(p2); if(t2) wkT=t2.slope*7; }
+    }
+    if(wkT!==null){ if(wkT>0.6)wkT=0.6; if(wkT<-0.6)wkT=-0.6; waistProj=waistNow+wkT*weeks*damp; }
+    else { waistProj=waistNow+dW*0.8; }
+  }
+  var ratePct=Math.abs(kgWk)/curW*100;
+  var r2=function(v){return Math.round(v*10)/10;};
+  return {ok:true,weeks:weeks,source:source,clamped:clamped,aggressive:ratePct>1.0,
+    kgPerWeek:Math.round(kgWk*100)/100,
+    current:{w:r2(curW),bmi:bmi(curW)!==null?r2(bmi(curW)):null,bf:bfat(curW)!==null?r2(bfat(curW)):null,waist:waistNow},
+    projected:{wLow:r2(projW-unc),wHigh:r2(projW+unc),wMid:r2(projW),
+      bmi:bmi(projW)!==null?r2(bmi(projW)):null,bf:bfat(projW)!==null?r2(bfat(projW)):null,
+      waist:waistProj!==null?r2(waistProj):null},
+    history:wArr.slice(0,12).map(function(w){return {date:w.date,val:+w.val};}).reverse()};
+}
+function _projSvg(pr){
+  var hs=pr.history||[]; if(hs.length<2) return "";
+  var W=300,Hp=110,pad=8;
+  var vals=hs.map(function(h){return h.val;}).concat([pr.projected.wLow,pr.projected.wHigh]);
+  var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals);
+  if(mx-mn<1){mn-=1;mx+=1;}
+  var histW=W*0.55;
+  function X(i,n){ return pad+(n<=1?0:(i/(n-1))*(histW-pad)); }
+  function Y(v){ return pad+(1-(v-mn)/(mx-mn))*(Hp-pad*2); }
+  var pts=hs.map(function(h,i){return X(i,hs.length)+","+Y(h.val);}).join(" ");
+  var lastX=histW, lastY=Y(hs[hs.length-1].val), pxEnd=W-pad;
+  var yLow=Y(pr.projected.wLow), yHigh=Y(pr.projected.wHigh), yMid=Y(pr.projected.wMid);
+  return '<svg viewBox="0 0 '+W+' '+Hp+'" style="width:100%;height:110px;display:block;">'
+    +'<path d="M'+lastX+','+lastY+' L'+pxEnd+','+yHigh+' L'+pxEnd+','+yLow+' Z" fill="rgba(240,180,41,.18)"/>'
+    +'<polyline points="'+pts+'" fill="none" stroke="#7cc4ff" stroke-width="2" stroke-linejoin="round"/>'
+    +'<line x1="'+lastX+'" y1="'+lastY+'" x2="'+pxEnd+'" y2="'+yMid+'" stroke="#f0b429" stroke-width="2" stroke-dasharray="4 3"/>'
+    +'<circle cx="'+lastX+'" cy="'+lastY+'" r="3" fill="#7cc4ff"/>'
+    +'<text x="'+pad+'" y="'+(Hp-1)+'" fill="#666" font-size="9">hoje</text>'
+    +'<text x="'+(pxEnd-48)+'" y="'+(Hp-1)+'" fill="#666" font-size="9">'+pr.weeks+' semanas</text>'
+    +'</svg>';
+}
+function renderProjectionHTML(){
+  var pr; try{ pr=calcProjection(8); }catch(e){ return ""; }
+  var h='<div class="card" style="margin-top:14px;"><div class="card-title">Projecao - proximas 8 semanas</div>';
+  if(!pr||!pr.ok) return h+'<div style="color:#888;font-size:13px;">'+((pr&&pr.reason)||"Sem dados suficientes.")+'</div></div>';
+  h+=_projSvg(pr);
+  h+='<div style="text-align:center;margin:10px 0 4px;">'
+    +'<div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Peso provavel</div>'
+    +'<div style="font-size:22px;font-weight:800;color:#f0b429;">'+pr.projected.wLow+' - '+pr.projected.wHigh+' kg</div>'
+    +'<div style="color:#888;font-size:12px;">hoje: '+pr.current.w+' kg &middot; ritmo '+(pr.kgPerWeek>0?"+":"")+pr.kgPerWeek+' kg/semana</div></div>';
+  var cells=[];
+  if(pr.current.bmi!==null) cells.push(["IMC",pr.current.bmi,pr.projected.bmi]);
+  if(pr.current.bf!==null) cells.push(["Gordura est.",pr.current.bf+"%",pr.projected.bf+"%"]);
+  if(pr.current.waist!==null) cells.push(["Cintura",pr.current.waist+" cm",pr.projected.waist+" cm"]);
+  if(cells.length){
+    h+='<div style="display:grid;grid-template-columns:repeat('+cells.length+',1fr);gap:8px;margin-top:10px;">';
+    cells.forEach(function(c){
+      h+='<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:8px;text-align:center;">'
+        +'<div style="color:#888;font-size:10px;text-transform:uppercase;">'+c[0]+'</div>'
+        +'<div style="font-size:13px;color:#ccc;margin-top:3px;">'+c[1]+'</div>'
+        +'<div style="font-size:14px;font-weight:700;color:#f0b429;">'+c[2]+'</div></div>';
+    });
+    h+='</div>';
+  }
+  h+='<div style="color:#777;font-size:11px;margin-top:10px;line-height:1.5;">Estimativa baseada em '+pr.source+'. Resultados reais variam com sono, treino, hidratacao e retencao de liquido.</div>';
+  if(pr.aggressive||pr.clamped){
+    h+='<div style="margin-top:8px;background:rgba(240,180,41,.10);border:1px solid rgba(240,180,41,.25);border-radius:10px;padding:9px 11px;color:#ddd;font-size:12px;line-height:1.45;">'
+      +'Seu ritmo atual esta acelerado. Mudancas muito rapidas costumam vir com perda de massa magra - vale acompanhar com um nutricionista.</div>';
+  }
+  return h+'</div>';
+}
 
 function init(){
   load();
@@ -3022,6 +3136,7 @@ html+='<div class="card"><div class="card-title">Metas da semana</div>'
   }
 
   if(currentLang!=='pt'){var _es={'Proje\u00e7\u00e3o de Resultados':'Proyecci\u00f3n de Resultados','Proje\u00e7\u00e3o de Crescimento':'Proyecci\u00f3n de Crecimiento','Perda estimada em 4 semanas':'P\u00e9rdida estimada en 4 semanas','Perda estimada em 8 semanas':'P\u00e9rdida estimada en 8 semanas','Super\u00e1vit estimado em 4 semanas':'Super\u00e1vit estimado en 4 semanas','Super\u00e1vit estimado em 8 semanas':'Super\u00e1vit estimado en 8 semanas','METAS DA SEMANA':'METAS DE LA SEMANA','Dentro do d\u00e9ficit':'Dentro del d\u00e9ficit','Meta cal\u00f3rica atingida':'Meta cal\u00f3rica alcanzada','Hidrata\u00e7\u00e3o \u226580% da meta':'Hidrataci\u00f3n \u226580% de la meta','Hidrata\u00e7\u00e3o \u226580% meta':'Hidrataci\u00f3n \u226580% meta','Prote\u00edna \u226580% da meta':'Prote\u00edna \u226580% de la meta','Calorias m\u00e9dias':'Calor\u00edas medias','Prote\u00edna m\u00e9dia':'Prote\u00edna media','Dica da Semana':'Consejo de la Semana','Sua jornada de emagrecimento':'Tu jornada de p\u00e9rdida de peso','Sua jornada de ganho de massa':'Tu jornada de ganancia muscular','Sua jornada de manuten\u00e7\u00e3o':'Tu jornada de mantenimiento','D\u00c9FICIT M\u00c9DIO':'D\u00c9FICIT MEDIO','BALAN\u00c7O M\u00c9DIO':'BALANCE MEDIO','SUPER\u00c1VIT M\u00c9DIO':'SUPER\u00c1VIT MEDIO','D\u00e9ficit forte! Monitore m\u00fasculo':'D\u00e9ficit fuerte! Monitorea m\u00fasculo','D\u00e9ficit leve':'D\u00e9ficit leve','D\u00e9ficit elevado':'D\u00e9ficit elevado','Super\u00e1vit controlado':'Super\u00e1vit controlado','Super\u00e1vit alto':'Super\u00e1vit alto','Atingindo o equil\u00edbrio. Continue assim.':'Alcanzando el equilibrio. Sigue as\u00ed.','Prote\u00edna abaixo do ideal':'Prote\u00edna por debajo del ideal','Calorias acima da meta':'Calor\u00edas por encima de la meta','Bom progresso! Mantenha o foco':'Buen progreso! Mant\u00e9n el enfoque','Foque na qualidade dos alimentos':'Enf\u00f3cate en calidad de los alimentos','Manuten\u00e7\u00e3o do equil\u00edbrio':'Mantenimiento del equilibrio','dentro do d\u00e9ficit':'dentro del d\u00e9ficit'};var _en={'Proje\u00e7\u00e3o de Resultados':'Results Projection','Proje\u00e7\u00e3o de Crescimento':'Growth Projection','Perda estimada em 4 semanas':'Estimated loss in 4 weeks','Perda estimada em 8 semanas':'Estimated loss in 8 weeks','Super\u00e1vit estimado em 4 semanas':'Estimated surplus in 4 weeks','Super\u00e1vit estimado em 8 semanas':'Estimated surplus in 8 weeks','METAS DA SEMANA':'WEEKLY GOALS','Dentro do d\u00e9ficit':'Within deficit','Meta cal\u00f3rica atingida':'Caloric goal met','Hidrata\u00e7\u00e3o \u226580% da meta':'Hydration \u226580% of goal','Hidrata\u00e7\u00e3o \u226580% meta':'Hydration \u226580% of goal','Prote\u00edna \u226580% da meta':'Protein \u226580% of goal','Calorias m\u00e9dias':'Average calories','Prote\u00edna m\u00e9dia':'Average protein','Dica da Semana':'Weekly Tip','Sua jornada de emagrecimento':'Your weight loss journey','Sua jornada de ganho de massa':'Your muscle gain journey','Sua jornada de manuten\u00e7\u00e3o':'Your maintenance journey','D\u00c9FICIT M\u00c9DIO':'AVERAGE DEFICIT','BALAN\u00c7O M\u00c9DIO':'AVERAGE BALANCE','SUPER\u00c1VIT M\u00c9DIO':'AVERAGE SURPLUS','D\u00e9ficit forte! Monitore m\u00fasculo':'Strong deficit! Monitor muscle','D\u00e9ficit leve':'Light deficit','D\u00e9ficit elevado':'High deficit','Super\u00e1vit controlado':'Controlled surplus','Super\u00e1vit alto':'High surplus','Atingindo o equil\u00edbrio. Continue assim.':'Reaching balance. Keep it up!','Prote\u00edna abaixo do ideal':'Protein below ideal','Calorias acima da meta':'Calories above goal','Bom progresso! Mantenha o foco':'Good progress! Stay focused','Foque na qualidade dos alimentos':'Focus on food quality','Manuten\u00e7\u00e3o do equil\u00edbrio':'Balance maintenance','dentro do d\u00e9ficit':'within deficit'};var _m=currentLang==='es'?_es:_en;for(var _k in _m)html=html.split(_k).join(_m[_k]);}
+html+=renderProjectionHTML();
 el.innerHTML=html;
 }
 
