@@ -364,6 +364,13 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     </div>
   </div>
   <div id="alertsBox" style="display:none;margin-bottom:12px;"></div>
+  <div class="card" style="margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <div style="font-size:13px;color:#ddd;font-weight:600;">Quantas horas voce dormiu?</div>
+      <div id="sleepVal" style="color:#f0b429;font-weight:800;font-size:15px;">--</div>
+    </div>
+    <div id="sleepChips" style="display:flex;gap:6px;"></div>
+  </div>
   <div id="mealsContainer"></div>
   <button class="add-food-btn" onclick="openAddFood()">+ Adicionar Alimento</button>
   <div class="card" id="freqCard" style="margin-top:14px;display:none;">
@@ -1273,7 +1280,7 @@ var PREMADE=[
   {icon:"muscle",name:"Pos-treino",foods:[{name:"Whey Protein",g:40},{name:"Banana",g:100},{name:"Aveia",g:60}]},
   {icon:"moon",name:"Jantar Leve",foods:[{name:"Frango grelhado",g:150},{name:"Brocolis",g:100},{name:"Azeite de oliva",g:10}]}
 ];
-var state={goal:"mass",calGoal:3000,waterGoal:2500,waterMl:0,lang:"en",meals:{cafe:[],almoco:[],lanche:[],jantar:[]},weights:[],selectedDiet:"normal",apiKey:"",profile:{},customFoods:[],history:{},lastReset:"",measures:[]};
+var state={goal:"mass",calGoal:3000,waterGoal:2500,waterMl:0,lang:"en",meals:{cafe:[],almoco:[],lanche:[],jantar:[]},weights:[],selectedDiet:"normal",apiKey:"",profile:{},customFoods:[],history:{},lastReset:"",measures:[],sleepH:0};
 var currentMealType="cafe";
 var selectedFoodData=null;
 var aiResultData=null;var lastAnalyzedPhotoUrl=null;var lastAnalyzedPhotoUrl=null;
@@ -1361,15 +1368,15 @@ function todayKey(){var d=new Date();return d.getFullYear()+"-"+String(d.getMont
 function checkDayReset(){
   var today=todayKey();
   if(state.lastReset!==today){
-    if(state.lastReset){var t=calcTotals();state.history[state.lastReset]={kcal:t.kcal,prot:t.prot,carb:t.carb,fat:t.fat,water:state.waterMl,meals:JSON.parse(JSON.stringify(state.meals))};}
+    if(state.lastReset){var t=calcTotals();state.history[state.lastReset]={kcal:t.kcal,prot:t.prot,carb:t.carb,fat:t.fat,fib:t.fib,sleep:state.sleepH||0,water:state.waterMl,meals:JSON.parse(JSON.stringify(state.meals))};}
     state.meals={cafe:[],almoco:[],lanche:[],jantar:[]};
     state.waterMl=0;state.lastReset=today;save();
   }
 }
 function calcTotals(){
-  var kcal=0,prot=0,carb=0,fat=0;
-  Object.values(state.meals).forEach(function(arr){arr.forEach(function(i){kcal+=i.kcal||0;prot+=i.prot||0;carb+=i.carb||0;fat+=i.fat||0;});});
-  return {kcal:Math.round(kcal),prot:Math.round(prot),carb:Math.round(carb),fat:Math.round(fat)};
+  var kcal=0,prot=0,carb=0,fat=0,fib=0;
+  Object.values(state.meals).forEach(function(arr){arr.forEach(function(i){kcal+=i.kcal||0;prot+=i.prot||0;carb+=i.carb||0;fat+=i.fat||0;fib+=i.fibras||0;});});
+  return {fib:Math.round(fib),kcal:Math.round(kcal),prot:Math.round(prot),carb:Math.round(carb),fat:Math.round(fat)};
 }
 function getMacroGoals(){
   var k=state.calGoal;
@@ -1437,6 +1444,7 @@ function renderToday(){
   document.getElementById("waterSummaryBar").style.width=wp+"%";
   renderPremade();
   renderDayScore();
+  try{ renderSleep(); }catch(e){}
   try{ renderFrequentMeals(); }catch(e){}
   try{ renderAlerts(); }catch(e){}
 }
@@ -2286,7 +2294,7 @@ function handleFotoIA(input){
         cv.getContext("2d").drawImage(img,0,0,w,h);
         var b64=cv.toDataURL("image/jpeg",0.92).split(",")[1]; var cThumb=document.createElement("canvas"); var tSz=150; var tw=w>tSz?(h>tSz?(w>h?tSz:Math.round(tSz*w/h)):Math.round(tSz*w/h)):w; var th=w>h?Math.round(tSz*h/w):Math.min(tSz,h); if(w<=tSz&&h<=tSz){tw=w;th=h;}else{var scT=tSz/Math.max(w,h);tw=Math.round(w*scT);th=Math.round(h*scT);} cThumb.width=tw;cThumb.height=th; cThumb.getContext("2d").drawImage(cv,0,0,tw,th); window._fotoIAPhoto=cThumb.toDataURL("image/jpeg",0.5);
         var fullPhoto=ev.target.result; var photoKey="foto_"+Date.now(); window._fotoIAPhotoKey=photoKey; savePhotoToDB(photoKey,fullPhoto,null);
-        var prompt="Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto e identifique TODOS os alimentos visiveis.\n\nRetorne APENAS JSON valido neste formato:\n{\"itens\":[{\"nome\":\"Banana\",\"gramas\":120,\"kcal\":89,\"prot\":1,\"carb\":23,\"fat\":0,\"unidade\":\"g\",\"vitaminas\":[\"Vitamina B6 (0.4mg)\",\"Vitamina C (9mg)\",\"Potassio (358mg)\"],\"beneficios\":[\"Fonte de energia rapida\",\"Rico em potassio\"]}],\"total_kcal\":89}\n\nREGRAS:\n- Identifique e retorne APENAS alimentos e bebidas consumiveis. Ignore completamente objetos, equipamentos, utensilios, maos, pessoas e qualquer item nao comestivel\n- Liste cada ingrediente como um item SEPARADO. Ex: sanduiche = pao + cada recheio; prato feito = arroz + feijao + carne + salada. Nao agrupe ingredientes distintos em um unico item.\n- Campo \"alternativa\": use APENAS se o alimento for visivelmente ambiguo (ex: cappuccino vs cafe com leite). Omita para frutas, legumes e alimentos claros.\n- Campo \"opcoes_porcao\": use APENAS para bebidas em copo ou pratos com porcao variavel. Omita para frutas e itens unitarios.\n- Campo \"vitaminas\": liste 3-5 principais vitaminas e minerais com quantidade aproximada (ex: Vitamina C (50mg), Calcio (120mg))\n- Campo \"beneficios\": liste 2-3 beneficios para a saude em frases curtas (ex: Fortalece imunidade, Rico em antioxidantes)\n- Campo \"vitaminas\": liste 3-5 principais vitaminas e minerais com quantidade aproximada (ex: Vitamina C (50mg), Calcio (120mg))\n- Campo \"beneficios\": liste 2-3 beneficios para a saude em frases curtas (ex: Fortalece imunidade, Rico em antioxidantes)\n- Estime gramas pelo tamanho visual: banana=120g, laranja=130g, maca=150g\n- Retorne somente JSON, sem texto extra";
+        var prompt="Voce e um nutricionista especialista em analise visual de alimentos. Analise esta foto e identifique TODOS os alimentos visiveis.\n\nRetorne APENAS JSON valido neste formato:\n{\"itens\":[{\"nome\":\"Banana\",\"gramas\":120,\"kcal\":89,\"prot\":1,\"carb\":23,\"fat\":0,\"fibras\":3,\"unidade\":\"g\",\"vitaminas\":[\"Vitamina B6 (0.4mg)\",\"Vitamina C (9mg)\",\"Potassio (358mg)\"],\"beneficios\":[\"Fonte de energia rapida\",\"Rico em potassio\"]}],\"total_kcal\":89}\n\nREGRAS:\n- Identifique e retorne APENAS alimentos e bebidas consumiveis. Ignore completamente objetos, equipamentos, utensilios, maos, pessoas e qualquer item nao comestivel\n- Liste cada ingrediente como um item SEPARADO. Ex: sanduiche = pao + cada recheio; prato feito = arroz + feijao + carne + salada. Nao agrupe ingredientes distintos em um unico item.\n- Campo \"alternativa\": use APENAS se o alimento for visivelmente ambiguo (ex: cappuccino vs cafe com leite). Omita para frutas, legumes e alimentos claros.\n- Campo \"opcoes_porcao\": use APENAS para bebidas em copo ou pratos com porcao variavel. Omita para frutas e itens unitarios.\n- Campo \"vitaminas\": liste 3-5 principais vitaminas e minerais com quantidade aproximada (ex: Vitamina C (50mg), Calcio (120mg))\n- Campo \"beneficios\": liste 2-3 beneficios para a saude em frases curtas (ex: Fortalece imunidade, Rico em antioxidantes)\n- Campo \"vitaminas\": liste 3-5 principais vitaminas e minerais com quantidade aproximada (ex: Vitamina C (50mg), Calcio (120mg))\n- Campo \"beneficios\": liste 2-3 beneficios para a saude em frases curtas (ex: Fortalece imunidade, Rico em antioxidantes)\n- Estime gramas pelo tamanho visual: banana=120g, laranja=130g, maca=150g\n- Retorne somente JSON, sem texto extra";
         fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
           method:"POST",headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
           /* !!! NAO TROCAR O MODELO !!! Este e o handler ATIVO da Foto IA.
@@ -2418,6 +2426,7 @@ function addFotoIAItem(i){
     prot:sel.prot!==undefined?sel.prot:Math.round(a.prot*ratio*10)/10,
     carb:sel.carb!==undefined?sel.carb:Math.round(a.carb*ratio*10)/10,
     fat:sel.fat!==undefined?sel.fat:Math.round(a.fat*ratio*10)/10,
+    fibras:(sel.fibras!==undefined?sel.fibras:(a.fibras!==undefined?Math.round(a.fibras*ratio*10)/10:0)),
     time:new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
     photo:window._fotoIAPhoto||null,
     photoKey:window._fotoIAPhotoKey||null,
@@ -2449,6 +2458,7 @@ function addAllFotoIAItems(){
       prot:sel.prot!==undefined?sel.prot:Math.round(a.prot*ratio*10)/10,
       carb:sel.carb!==undefined?sel.carb:Math.round(a.carb*ratio*10)/10,
       fat:sel.fat!==undefined?sel.fat:Math.round(a.fat*ratio*10)/10,
+    fibras:(sel.fibras!==undefined?sel.fibras:(a.fibras!==undefined?Math.round(a.fibras*ratio*10)/10:0)),
       time:new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
       photo:window._fotoIAPhoto||null,
       photoKey:window._fotoIAPhotoKey||null,
@@ -2708,6 +2718,102 @@ function renderProjectionHTML(){
     h+='<div style="margin-top:8px;background:rgba(240,180,41,.10);border:1px solid rgba(240,180,41,.25);border-radius:10px;padding:9px 11px;color:#ddd;font-size:12px;line-height:1.45;">'
       +'Seu ritmo atual esta acelerado. Mudancas muito rapidas costumam vir com perda de massa magra - vale acompanhar com um nutricionista.</div>';
   }
+  return h+'</div>';
+}
+/* ===== C) SONO + SCORES ===== */
+function setSleep(h){
+  h=+h||0; if(h<0)h=0; if(h>14)h=14;
+  state.sleepH=h; save(); renderSleep();
+  try{ renderDayScore(); }catch(e){}
+  if(typeof saveToFirestore==="function") saveToFirestore();
+}
+function renderSleep(){
+  var box=document.getElementById("sleepChips"); if(!box) return;
+  var cur=+state.sleepH||0;
+  var opts=[5,6,7,8,9];
+  var lbl=document.getElementById("sleepVal");
+  if(lbl) lbl.textContent = cur? (cur+"h") : "--";
+  box.innerHTML=opts.map(function(o){
+    var on=(cur===o);
+    return '<button onclick="setSleep('+o+')" style="flex:1;padding:8px 0;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid '
+      +(on?"#f0b429;background:#f0b429;color:#000;":"rgba(240,180,41,.35);background:rgba(240,180,41,.08);color:#f0b429;")+'">'+o+'h</button>';
+  }).join("");
+}
+function _clamp01(v){ return v<0?0:(v>1?1:v); }
+function calcScores(){
+  var t={kcal:0,prot:0,fib:0}; try{ t=calcTotals(); }catch(e){}
+  var g={prot:0}; try{ g=getMacroGoals()||{prot:0}; }catch(e){}
+  var hist=state.history||{};
+  var keys=Object.keys(hist).sort();
+  var out=[];
+  /* hidratacao */
+  var wg=+state.waterGoal||2500;
+  out.push({key:"agua",label:"Hidratacao",score:Math.round(_clamp01((+state.waterMl||0)/wg)*100),
+    detail:(+state.waterMl||0)+" / "+wg+" ml"});
+  /* proteina */
+  if(g.prot>0) out.push({key:"prot",label:"Proteina",score:Math.round(_clamp01(t.prot/g.prot)*100),
+    detail:Math.round(t.prot)+" / "+Math.round(g.prot)+" g"});
+  /* fibras - meta 25g */
+  var fibGoal=25;
+  out.push({key:"fib",label:"Fibras",score:Math.round(_clamp01((t.fib||0)/fibGoal)*100),
+    detail:Math.round(t.fib||0)+" / "+fibGoal+" g"});
+  /* sono - faixa saudavel 7-9h */
+  var sh=+state.sleepH||0;
+  if(sh>0){
+    var ss = sh>=7&&sh<=9 ? 100 : (sh>=6&&sh<10 ? 75 : (sh>=5 ? 50 : 30));
+    out.push({key:"sono",label:"Sono",score:ss,detail:sh+" h"});
+  } else {
+    out.push({key:"sono",label:"Sono",score:null,detail:"nao registrado"});
+  }
+  /* consistencia - dias com registro nos ultimos 7 */
+  var today=new Date(), reg=0;
+  for(var i=0;i<7;i++){
+    var d=new Date(today.getTime()-i*86400000).toISOString().slice(0,10);
+    if(i===0){ if(t.kcal>0) reg++; }
+    else if(hist[d] && +hist[d].kcal>0) reg++;
+  }
+  out.push({key:"consist",label:"Consistencia",score:Math.round(reg/7*100),detail:reg+" de 7 dias"});
+  /* regularidade - variacao do numero de refeicoes por dia */
+  var counts=[];
+  keys.slice(-7).forEach(function(d){
+    var mm=(hist[d]||{}).meals||{}; var n=0;
+    Object.keys(mm).forEach(function(k){ if((mm[k]||[]).length) n++; });
+    if(n>0) counts.push(n);
+  });
+  if(counts.length>=3){
+    var avg=counts.reduce(function(a,b){return a+b;},0)/counts.length;
+    var vari=counts.reduce(function(a,b){return a+Math.abs(b-avg);},0)/counts.length;
+    out.push({key:"reg",label:"Regularidade",score:Math.round(_clamp01(1-vari/2)*100),
+      detail:avg.toFixed(1)+" refeicoes/dia"});
+  } else {
+    out.push({key:"reg",label:"Regularidade",score:null,detail:"precisa de mais dias"});
+  }
+  var valid=out.filter(function(o){return o.score!==null;});
+  var geral=valid.length?Math.round(valid.reduce(function(a,b){return a+b.score;},0)/valid.length):0;
+  var loggedToday = t.kcal>0 || (+state.waterMl||0)>0 || (+state.sleepH||0)>0;
+  return {items:out, geral:geral, hasData:loggedToday};
+}
+function _scoreColor(s){ return s>=80?"#4ade80":(s>=50?"#f0b429":"#f87171"); }
+function renderScoresHTML(){
+  var r; try{ r=calcScores(); }catch(e){ return ""; }
+  if(!r) return "";
+  var h='<div class="card" style="margin-top:14px;"><div class="card-title">Seus indicadores de hoje</div>';
+  if(!r.hasData){ return h+'<div style="color:#888;font-size:13px;line-height:1.5;">Registre suas refeicoes, agua ou sono para ver seus indicadores de hoje.</div></div>'; }
+  h+='<div style="text-align:center;margin-bottom:14px;">'
+    +'<div style="font-size:34px;font-weight:800;color:'+_scoreColor(r.geral)+';line-height:1;">'+r.geral+'</div>'
+    +'<div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;">Indice geral</div></div>';
+  r.items.forEach(function(o){
+    var s=o.score;
+    var bar = s===null?0:s;
+    var col = s===null?"#444":_scoreColor(s);
+    h+='<div style="margin-bottom:10px;">'
+      +'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">'
+      +'<span style="font-size:13px;color:#ddd;font-weight:600;">'+o.label+'</span>'
+      +'<span style="font-size:11px;color:#888;">'+o.detail+(s===null?"":" &middot; "+s)+'</span></div>'
+      +'<div style="height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;">'
+      +'<div style="height:100%;width:'+bar+'%;background:'+col+';border-radius:99px;"></div></div></div>';
+  });
+  h+='<div style="color:#777;font-size:11px;margin-top:8px;line-height:1.5;">Indicadores servem para acompanhar tendencia, nao para bater 100 todo dia.</div>';
   return h+'</div>';
 }
 
@@ -3136,6 +3242,7 @@ html+='<div class="card"><div class="card-title">Metas da semana</div>'
   }
 
   if(currentLang!=='pt'){var _es={'Proje\u00e7\u00e3o de Resultados':'Proyecci\u00f3n de Resultados','Proje\u00e7\u00e3o de Crescimento':'Proyecci\u00f3n de Crecimiento','Perda estimada em 4 semanas':'P\u00e9rdida estimada en 4 semanas','Perda estimada em 8 semanas':'P\u00e9rdida estimada en 8 semanas','Super\u00e1vit estimado em 4 semanas':'Super\u00e1vit estimado en 4 semanas','Super\u00e1vit estimado em 8 semanas':'Super\u00e1vit estimado en 8 semanas','METAS DA SEMANA':'METAS DE LA SEMANA','Dentro do d\u00e9ficit':'Dentro del d\u00e9ficit','Meta cal\u00f3rica atingida':'Meta cal\u00f3rica alcanzada','Hidrata\u00e7\u00e3o \u226580% da meta':'Hidrataci\u00f3n \u226580% de la meta','Hidrata\u00e7\u00e3o \u226580% meta':'Hidrataci\u00f3n \u226580% meta','Prote\u00edna \u226580% da meta':'Prote\u00edna \u226580% de la meta','Calorias m\u00e9dias':'Calor\u00edas medias','Prote\u00edna m\u00e9dia':'Prote\u00edna media','Dica da Semana':'Consejo de la Semana','Sua jornada de emagrecimento':'Tu jornada de p\u00e9rdida de peso','Sua jornada de ganho de massa':'Tu jornada de ganancia muscular','Sua jornada de manuten\u00e7\u00e3o':'Tu jornada de mantenimiento','D\u00c9FICIT M\u00c9DIO':'D\u00c9FICIT MEDIO','BALAN\u00c7O M\u00c9DIO':'BALANCE MEDIO','SUPER\u00c1VIT M\u00c9DIO':'SUPER\u00c1VIT MEDIO','D\u00e9ficit forte! Monitore m\u00fasculo':'D\u00e9ficit fuerte! Monitorea m\u00fasculo','D\u00e9ficit leve':'D\u00e9ficit leve','D\u00e9ficit elevado':'D\u00e9ficit elevado','Super\u00e1vit controlado':'Super\u00e1vit controlado','Super\u00e1vit alto':'Super\u00e1vit alto','Atingindo o equil\u00edbrio. Continue assim.':'Alcanzando el equilibrio. Sigue as\u00ed.','Prote\u00edna abaixo do ideal':'Prote\u00edna por debajo del ideal','Calorias acima da meta':'Calor\u00edas por encima de la meta','Bom progresso! Mantenha o foco':'Buen progreso! Mant\u00e9n el enfoque','Foque na qualidade dos alimentos':'Enf\u00f3cate en calidad de los alimentos','Manuten\u00e7\u00e3o do equil\u00edbrio':'Mantenimiento del equilibrio','dentro do d\u00e9ficit':'dentro del d\u00e9ficit'};var _en={'Proje\u00e7\u00e3o de Resultados':'Results Projection','Proje\u00e7\u00e3o de Crescimento':'Growth Projection','Perda estimada em 4 semanas':'Estimated loss in 4 weeks','Perda estimada em 8 semanas':'Estimated loss in 8 weeks','Super\u00e1vit estimado em 4 semanas':'Estimated surplus in 4 weeks','Super\u00e1vit estimado em 8 semanas':'Estimated surplus in 8 weeks','METAS DA SEMANA':'WEEKLY GOALS','Dentro do d\u00e9ficit':'Within deficit','Meta cal\u00f3rica atingida':'Caloric goal met','Hidrata\u00e7\u00e3o \u226580% da meta':'Hydration \u226580% of goal','Hidrata\u00e7\u00e3o \u226580% meta':'Hydration \u226580% of goal','Prote\u00edna \u226580% da meta':'Protein \u226580% of goal','Calorias m\u00e9dias':'Average calories','Prote\u00edna m\u00e9dia':'Average protein','Dica da Semana':'Weekly Tip','Sua jornada de emagrecimento':'Your weight loss journey','Sua jornada de ganho de massa':'Your muscle gain journey','Sua jornada de manuten\u00e7\u00e3o':'Your maintenance journey','D\u00c9FICIT M\u00c9DIO':'AVERAGE DEFICIT','BALAN\u00c7O M\u00c9DIO':'AVERAGE BALANCE','SUPER\u00c1VIT M\u00c9DIO':'AVERAGE SURPLUS','D\u00e9ficit forte! Monitore m\u00fasculo':'Strong deficit! Monitor muscle','D\u00e9ficit leve':'Light deficit','D\u00e9ficit elevado':'High deficit','Super\u00e1vit controlado':'Controlled surplus','Super\u00e1vit alto':'High surplus','Atingindo o equil\u00edbrio. Continue assim.':'Reaching balance. Keep it up!','Prote\u00edna abaixo do ideal':'Protein below ideal','Calorias acima da meta':'Calories above goal','Bom progresso! Mantenha o foco':'Good progress! Stay focused','Foque na qualidade dos alimentos':'Focus on food quality','Manuten\u00e7\u00e3o do equil\u00edbrio':'Balance maintenance','dentro do d\u00e9ficit':'within deficit'};var _m=currentLang==='es'?_es:_en;for(var _k in _m)html=html.split(_k).join(_m[_k]);}
+html+=renderScoresHTML();
 html+=renderProjectionHTML();
 el.innerHTML=html;
 }
