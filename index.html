@@ -363,8 +363,14 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
       <div><div class="macro-label" id="macro-fat-label">&#129361; Gordura</div><div class="macro-val" style="color:#34d399" id="macroFatVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#34d399;width:0%" id="macroFatBar"></div></div></div>
     </div>
   </div>
+  <div id="alertsBox" style="display:none;margin-bottom:12px;"></div>
   <div id="mealsContainer"></div>
   <button class="add-food-btn" onclick="openAddFood()">+ Adicionar Alimento</button>
+  <div class="card" id="freqCard" style="margin-top:14px;display:none;">
+    <div class="card-title">Seus pratos frequentes</div>
+    <div style="color:#888;font-size:12px;margin:-4px 0 10px;">Toque para registrar sem foto e sem digitar</div>
+    <div id="freqGrid" class="premade-grid"></div>
+  </div>
   <div class="card" style="margin-top:14px;">
     <div class="card-title" data-i18n="refRapidas">Refeicoes Rapidas</div>
     <div class="premade-grid" id="premadeGrid"></div>
@@ -1431,6 +1437,8 @@ function renderToday(){
   document.getElementById("waterSummaryBar").style.width=wp+"%";
   renderPremade();
   renderDayScore();
+  try{ renderFrequentMeals(); }catch(e){}
+  try{ renderAlerts(); }catch(e){}
 }
 
 function renderMeals(){
@@ -2489,6 +2497,104 @@ function addFotoIAMeal(){
   closeFotoIAResult();
   showToast(nome+' adicionado!','success');
   setTimeout(function(){switchTab('hoje');},1200);
+}
+/* ===== A) MEMORIA NUTRICIONAL ===== */
+function _mealSig(items){
+  return (items||[]).map(function(f){return String((f&&f.name)||"").toLowerCase().trim();})
+    .filter(Boolean).sort().join("|");
+}
+function detectFrequentMeals(){
+  var map={}, hist=state.history||{};
+  var days=Object.keys(hist).sort().slice(-30);
+  days.forEach(function(d){
+    var mm=(hist[d]||{}).meals||{};
+    Object.keys(mm).forEach(function(k){
+      var items=(mm[k]||[]).filter(function(f){return f&&f.name;});
+      if(items.length<2) return;
+      var s=k+"::"+_mealSig(items); if(!s) return;
+      if(!map[s]) map[s]={count:0,mealKey:k,acc:{},order:[]};
+      var e=map[s]; e.count++;
+      items.forEach(function(f){
+        var n=String(f.name).toLowerCase().trim();
+        if(!e.acc[n]){e.acc[n]={name:f.name,g:0,kcal:0,prot:0,carb:0,fat:0,n:0};e.order.push(n);}
+        var a=e.acc[n];
+        a.g+=(+f.grams||0);a.kcal+=(+f.kcal||0);a.prot+=(+f.prot||0);a.carb+=(+f.carb||0);a.fat+=(+f.fat||0);a.n++;
+      });
+    });
+  });
+  return Object.keys(map).map(function(s){
+    var e=map[s];
+    var items=e.order.map(function(n){
+      var a=e.acc[n], c=a.n||1;
+      return {name:a.name,grams:Math.round(a.g/c),kcal:Math.round(a.kcal/c),
+        prot:Math.round(a.prot/c*10)/10,carb:Math.round(a.carb/c*10)/10,fat:Math.round(a.fat/c*10)/10};
+    });
+    return {count:e.count,mealKey:e.mealKey,items:items,
+      kcal:Math.round(items.reduce(function(t,f){return t+f.kcal;},0))};
+  }).filter(function(x){return x.count>=3;})
+   .sort(function(a,b){return b.count-a.count;}).slice(0,4);
+}
+function renderFrequentMeals(){
+  var card=document.getElementById("freqCard"), grid=document.getElementById("freqGrid");
+  if(!card||!grid) return;
+  var list=[]; try{ list=detectFrequentMeals(); }catch(e){ list=[]; }
+  window._freqMeals=list;
+  if(!list.length){ card.style.display="none"; grid.innerHTML=""; return; }
+  card.style.display="block";
+  var L={cafe:"Cafe da manha",almoco:"Almoco",lanche:"Lanche",jantar:"Jantar"};
+  grid.innerHTML=list.map(function(m,i){
+    var names=m.items.map(function(f){return f.name;}).join(" + ");
+    return '<div class="premade-card" onclick="addFrequentMeal('+i+')" style="text-align:left;">'
+      +'<div style="font-size:10px;color:#f0b429;font-weight:700;letter-spacing:.4px;text-transform:uppercase;">'
+      +(L[m.mealKey]||"")+' &middot; '+m.count+'x</div>'
+      +'<div style="font-weight:700;margin:5px 0 3px;font-size:13px;line-height:1.3;">'+escHtml(names)+'</div>'
+      +'<div style="color:#888;font-size:12px;">'+m.kcal+' kcal</div>';
+  }).join("")+'';
+}
+function addFrequentMeal(i){
+  var m=(window._freqMeals||[])[i]; if(!m) return;
+  var mk=m.mealKey||getMealByTime();
+  if(!state.meals[mk]) state.meals[mk]=[];
+  var t=new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+  m.items.forEach(function(f){
+    state.meals[mk].push({name:f.name,grams:f.grams,kcal:f.kcal,prot:f.prot,carb:f.carb,fat:f.fat,time:t});
+  });
+  save(); renderToday(); renderMeals();
+  if(typeof saveToFirestore==="function") saveToFirestore();
+  showToast("Refeicao registrada!","success");
+}
+/* ===== B) ALERTAS PREVENTIVOS (regras locais, sem chamar IA) ===== */
+function getPreventiveAlerts(){
+  var out=[], now=new Date(), h=now.getHours();
+  var t={kcal:0,prot:0}, g={prot:0};
+  try{ t=calcTotals(); }catch(e){}
+  try{ g=getMacroGoals()||{prot:0}; }catch(e){}
+  var wGoal=+state.waterGoal||2500, w=+state.waterMl||0;
+  if(h>=15 && w < wGoal*0.5){
+    out.push({icon:"&#128167;",text:"Voce bebeu "+w+" ml de agua ate agora. Faltam "+Math.max(0,wGoal-w)+" ml para a meta."});
+  }
+  if(h>=19 && g.prot>0 && t.prot < g.prot*0.7){
+    var falta=Math.max(0,Math.round(g.prot-t.prot));
+    var frango=Math.round(falta/0.31/10)*10;
+    out.push({icon:"&#129385;",text:"Proteina em "+Math.round(t.prot)+"g de "+Math.round(g.prot)+"g. Faltam "+falta+"g - cerca de "+frango+"g de frango fecham a meta."});
+  }
+  if(h>=20 && +state.calGoal>0){
+    var d=Math.round(state.calGoal-t.kcal);
+    if(d>250) out.push({icon:"&#127919;",text:"Faltam "+d+" kcal para fechar sua meta de hoje."});
+    else if(d<-250) out.push({icon:"&#9888;",text:"Voce esta "+Math.abs(d)+" kcal acima da meta de hoje."});
+  }
+  return out;
+}
+function renderAlerts(){
+  var box=document.getElementById("alertsBox"); if(!box) return;
+  var list=[]; try{ list=getPreventiveAlerts(); }catch(e){ list=[]; }
+  if(!list.length){ box.style.display="none"; box.innerHTML=""; return; }
+  box.style.display="block";
+  box.innerHTML=list.map(function(a){
+    return '<div style="display:flex;gap:10px;align-items:flex-start;background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.22);border-radius:12px;padding:10px 12px;margin-bottom:8px;">'
+      +'<div style="font-size:17px;line-height:1.2;">'+a.icon+'</div>'
+      +'<div style="font-size:13px;color:#ddd;line-height:1.45;">'+a.text+'</div></div>';
+  }).join("");
 }
 
 function init(){
