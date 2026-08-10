@@ -1280,7 +1280,7 @@ var PREMADE=[
   {icon:"muscle",name:"Pos-treino",foods:[{name:"Whey Protein",g:40},{name:"Banana",g:100},{name:"Aveia",g:60}]},
   {icon:"moon",name:"Jantar Leve",foods:[{name:"Frango grelhado",g:150},{name:"Brocolis",g:100},{name:"Azeite de oliva",g:10}]}
 ];
-var state={goal:"mass",calGoal:3000,waterGoal:2500,waterMl:0,lang:"en",meals:{cafe:[],almoco:[],lanche:[],jantar:[]},weights:[],selectedDiet:"normal",apiKey:"",profile:{},customFoods:[],history:{},lastReset:"",measures:[],sleepH:0};
+var state={goal:"mass",calGoal:3000,waterGoal:2500,waterMl:0,lang:"en",meals:{cafe:[],almoco:[],lanche:[],jantar:[]},weights:[],selectedDiet:"normal",apiKey:"",profile:{},customFoods:[],history:{},lastReset:"",measures:[],sleepH:0,belMemoria:{preferencias:[],restricoes:[],notas:[]}};
 var currentMealType="cafe";
 var selectedFoodData=null;
 var aiResultData=null;var lastAnalyzedPhotoUrl=null;var lastAnalyzedPhotoUrl=null;
@@ -3268,6 +3268,29 @@ el.innerHTML=html;
 }
 
 // ── IA NUTRICIONISTA ──────────────────────────────────────────
+/* ===== MEMORIA DA BEL ===== */
+function belAprender(txt){
+  if(!txt) return;
+  if(!state.belMemoria) state.belMemoria={preferencias:[],restricoes:[],notas:[]};
+  var m=state.belMemoria, t=String(txt).trim(), low=t.toLowerCase();
+  if(t.length>220) return;
+  function add(arr,val){ if(!val) return; val=val.trim(); if(val.length<3||val.length>140) return;
+    if(arr.indexOf(val)>=0) return; arr.push(val); while(arr.length>12) arr.shift(); }
+  if(/\b(sou alergic|tenho alergia|intoleran|nao posso comer|n�o posso comer|celiac|lactose)\b/i.test(low)){
+    add(m.restricoes, t);
+  } else if(/\b(nao gosto|n�o gosto|odeio|detesto|evito|prefiro|adoro|amo comer|sou vegetarian|sou vegan)\b/i.test(low)){
+    add(m.preferencias, t);
+  } else if(/\b(treino|trabalho|rotina|acordo|durmo|viajo|meu objetivo)\b/i.test(low)){
+    add(m.notas, t);
+  }
+  save(); if(typeof saveToFirestore==="function") saveToFirestore();
+}
+function belEsquecer(){
+  state.belMemoria={preferencias:[],restricoes:[],notas:[]};
+  save(); if(typeof saveToFirestore==="function") saveToFirestore();
+  if(typeof showToast==="function") showToast("Memoria da Bel apagada","success");
+}
+
 function sendChat(){
   var input=document.getElementById('chatInput');
   var msg=(input&&input.value)||'';
@@ -3290,8 +3313,14 @@ async function askNutritionist(prompt){
     +'\n'+cl.daily+': '+state.calGoal+' kcal | '+cl.prot+': '+mg.prot+'g | '+cl.carbs+': '+mg.carb+'g | '+cl.fat+': '+mg.fat+'g'
     +'\n'+cl.consumed+': '+t.kcal+' kcal | '+cl.prot+': '+t.prot+'g | '+cl.carbs+': '+t.carb+'g | '+cl.fat+': '+t.fat+'g'
     +'\n'+cl.water+': '+state.waterMl+' ml '+cl.of+' '+state.waterGoal+' ml'
+    +(function(){var m=state.belMemoria||{};var out='';
+      if((m.preferencias||[]).length) out+='\nPreferencias: '+m.preferencias.slice(-8).join('; ');
+      if((m.restricoes||[]).length) out+='\nRestricoes/alergias: '+m.restricoes.slice(-8).join('; ');
+      if((m.notas||[]).length) out+='\nDe conversas anteriores: '+m.notas.slice(-5).join(' | ');
+      return out;})()
     +((+state.sleepH>0)?('\nSono na ultima noite: '+state.sleepH+'h'):'');
   chatMessages.push({role:'user',text:prompt});
+  try{ belAprender(prompt); }catch(e){}
   var chatInputEl=document.getElementById('chatInput');
   if(chatInputEl)chatInputEl.value='';
   renderNutriChat();
@@ -3317,7 +3346,7 @@ async function askNutritionist(prompt){
           var gm=goalMap[currentLang]||goalMap['en'];
           var goalDesc=state.goal==='cut'?gm.cut:(state.goal==='mass'?gm.mass:gm.maint);
           var langName={pt:'Portuguese',en:'English',es:'Spanish',it:'Italian',fr:'French',de:'German'}[currentLang]||'English';
-          return 'You are an expert fitness nutritionist. The user\'s current goal is: '+goalDesc+'. CRITICAL: Your ENTIRE response — every word, every heading, every greeting — MUST be written exclusively in '+langName+'. Do NOT mix any other language. '+langInstr+'. Be direct, practical and motivational. Maximum 3 short paragraphs.';
+          return 'You are Bel, the Better You nutritionist. Persona: warm and direct. You never shame the user for slip-ups, you celebrate progress without exaggeration, and you are honest about the numbers. Speak naturally, like a professional who knows this person. Keep answers short (2-4 sentences) unless asked for detail. Never invent data you do not have. If asked for medical diagnosis or treatment, say it is outside your scope and suggest a health professional. The user\'s current goal is: '+goalDesc+'. CRITICAL: Your ENTIRE response — every word, every heading, every greeting — MUST be written exclusively in '+langName+'. Do NOT mix any other language. '+langInstr+'. Be direct, practical and motivational. Maximum 3 short paragraphs.';
         })(),
         messages:[{role:'user',content:cl.data+':\n'+context+'\n\n'+cl.q+': '+prompt}]
       })
