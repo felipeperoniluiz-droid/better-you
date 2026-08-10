@@ -364,9 +364,9 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     </div>
   </div>
   <div id="alertsBox" style="display:none;margin-bottom:12px;"></div>
-  <div class="card" style="margin-bottom:12px;">
+  <div class="card" id="sleepCard" style="margin-bottom:12px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <div style="font-size:13px;color:#ddd;font-weight:600;">Quantas horas voce dormiu?</div>
+      <div id="sleepTitulo" style="font-size:13px;color:#ddd;font-weight:600;">Quantas horas voce dormiu?</div>
       <div id="sleepVal" style="color:#f0b429;font-weight:800;font-size:15px;">--</div>
     </div>
     <div id="sleepChips" style="display:flex;gap:6px;"></div>
@@ -2588,6 +2588,10 @@ function getPreventiveAlerts(){
     var frango=Math.round(falta/0.31/10)*10;
     out.push({icon:"&#129385;",text:"Proteina em "+Math.round(t.prot)+"g de "+Math.round(g.prot)+"g. Faltam "+falta+"g - cerca de "+frango+"g de frango fecham a meta."});
   }
+  var sh2=+state.sleepH||0;
+  if(sh2>0 && sh2<6 && h>=9 && h<=20){
+    out.push({icon:"&#128564;",text:"Voce dormiu "+sh2+"h. Noites curtas costumam aumentar a fome e a vontade de doce - priorize proteina e nao pule refeicoes hoje."});
+  }
   if(h>=20 && +state.calGoal>0){
     var d=Math.round(state.calGoal-t.kcal);
     if(d>250) out.push({icon:"&#127919;",text:"Faltam "+d+" kcal para fechar sua meta de hoje."});
@@ -2723,6 +2727,7 @@ function renderProjectionHTML(){
 /* ===== C) SONO + SCORES ===== */
 function setSleep(h){
   h=+h||0; if(h<0)h=0; if(h>14)h=14;
+  window._sleepEditando=false;
   state.sleepH=h; save(); renderSleep();
   try{ renderDayScore(); }catch(e){}
   if(typeof saveToFirestore==="function") saveToFirestore();
@@ -2733,6 +2738,19 @@ function renderSleep(){
   var opts=[5,6,7,8,9];
   var lbl=document.getElementById("sleepVal");
   if(lbl) lbl.textContent = cur? (cur+"h") : "--";
+  /* ja registrou hoje: recolhe para uma linha discreta */
+  var card=document.getElementById("sleepCard");
+  var titulo=document.getElementById("sleepTitulo");
+  if(cur>0 && !window._sleepEditando){
+    box.style.display="none";
+    if(titulo) titulo.textContent="Sono registrado";
+    if(card){ card.style.cursor="pointer"; card.onclick=function(){ window._sleepEditando=true; renderSleep(); }; card.style.padding="9px 14px"; }
+    if(lbl) lbl.textContent = cur+"h  \u270E";
+    return;
+  }
+  box.style.display="flex";
+  if(titulo) titulo.textContent="Quantas horas voce dormiu?";
+  if(card){ card.style.cursor=""; card.onclick=null; card.style.padding=""; }
   box.innerHTML=opts.map(function(o){
     var on=(cur===o);
     return '<button onclick="setSleep('+o+')" style="flex:1;padding:8px 0;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid '
@@ -3269,7 +3287,8 @@ async function askNutritionist(prompt){
     +', '+cl.goal+': '+goalLabel
     +'\n'+cl.daily+': '+state.calGoal+' kcal | '+cl.prot+': '+mg.prot+'g | '+cl.carbs+': '+mg.carb+'g | '+cl.fat+': '+mg.fat+'g'
     +'\n'+cl.consumed+': '+t.kcal+' kcal | '+cl.prot+': '+t.prot+'g | '+cl.carbs+': '+t.carb+'g | '+cl.fat+': '+t.fat+'g'
-    +'\n'+cl.water+': '+state.waterMl+' ml '+cl.of+' '+state.waterGoal+' ml';
+    +'\n'+cl.water+': '+state.waterMl+' ml '+cl.of+' '+state.waterGoal+' ml'
+    +((+state.sleepH>0)?('\nSono na ultima noite: '+state.sleepH+'h'):'');
   chatMessages.push({role:'user',text:prompt});
   var chatInputEl=document.getElementById('chatInput');
   if(chatInputEl)chatInputEl.value='';
