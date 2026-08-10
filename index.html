@@ -366,7 +366,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
   <div id="alertsBox" style="display:none;margin-bottom:12px;"></div>
   <div class="card" id="sleepCard" style="margin-bottom:12px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <div id="sleepTitulo" style="font-size:13px;color:#ddd;font-weight:600;">Quantas horas voce dormiu?</div>
+      <div id="sleepTitulo" style="font-size:13px;color:#ddd;font-weight:600;">Quantas horas você dormiu?</div>
       <div id="sleepVal" style="color:#f0b429;font-weight:800;font-size:15px;">--</div>
     </div>
     <div id="sleepChips" style="display:flex;gap:6px;"></div>
@@ -383,7 +383,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div class="premade-grid" id="premadeGrid"></div>
   </div>
   <div class="card">
-    <div class="card-title" data-i18n="aguaHoje">Agua Hoje</div>
+    <div class="card-title" data-i18n="aguaHoje">Água Hoje</div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px;">
       <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;" id="waterSummaryVal">0</div>
       <div style="font-size:12px;color:#8b95a3;">ml de <b id="waterSummaryGoal">2500</b> ml</div>
@@ -590,14 +590,14 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
       </div>
       <button class="btn btn-primary" style="margin-top:14px;height:48px;font-size:15px;" onclick="addMeasure()" data-i18n="salvarMedidas">💾 Salvar Medidas</button>
     </div>
-    <div class="card"><div class="card-title" data-i18n="historicoMedidas">Historico de Medidas</div><div id="measureList"></div></div>
+    <div class="card"><div class="card-title" data-i18n="historicoMedidas">Histórico de Medidas</div><div id="measureList"></div></div>
   </div>
 </div>
 
 <!-- TAB CALCULAR -->
 <div class="tab" id="tab-calc">
   <div class="section-title" data-i18n="calculadora">Calculadora</div>
-  <div class="section-sub" data-i18n="calcSub">Calcule sua necessidade calorica diaria</div>
+  <div class="section-sub" data-i18n="calcSub">Calcule sua necessidade calórica diaria</div>
   <div class="card">
     <div class="input-group"><div class="input-label" data-i18n="sexo">Sexo</div><select class="input" id="calcSex"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
     <div class="input-group"><div class="input-label" data-i18n="idadeAnos">Idade (anos)</div><input type="number" class="input" id="calcAge" placeholder="Ex: 25"></div>
@@ -612,7 +612,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 <!-- TAB HISTORICO -->
 <div class="tab" id="tab-hist">
   <div class="section-title" data-i18n="histTitle">Historico</div>
-  <div class="section-sub" data-i18n="histSub">Toque em cada dia para ver as refeicoes</div>
+  <div class="section-sub" data-i18n="histSub">Toque em cada dia para ver as refeições</div>
   <div class="card"><div class="card-title" data-i18n="cal7Dias">Calorias — ultimos 7 dias</div><canvas id="histChart" height="130"></canvas></div>
   <!-- Calendário colorido -->
   <div class="card">
@@ -694,7 +694,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div class="modal-handle" onclick="closeModal('modalAddFood')"></div>
     <div class="modal-title" id="btn-add-food">+ Adicionar Alimento</div>
     <div class="chips" id="mealTypeChips">
-      <div class="chip active" onclick="selectMealType('cafe',this)" data-i18n="cafeManha">Cafe da manha</div>
+      <div class="chip active" onclick="selectMealType('cafe',this)" data-i18n="cafeManha">Café da manha</div>
       <div class="chip" onclick="selectMealType('almoco',this)" data-i18n="almoco">Almoco</div>
       <div class="chip" onclick="selectMealType('lanche',this)" data-i18n="lanche">Lanche</div>
       <div class="chip" onclick="selectMealType('jantar',this)" data-i18n="jantar">Jantar</div>
@@ -849,26 +849,26 @@ window.addEventListener('unhandledrejection',function(ev){var msg=(ev.reason&&ev
 window.onerror=function(msg,src,line,col,err){try{showToast('JS: '+msg.slice(0,80),'error');}catch(e){}return true;};
 var currentLang='pt';
 var T={
-pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Historico',
+pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Água',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Histórico',
   ganharMassa:'&#128170; Ganhar Massa',emagrecer:'&#128293; Emagrecer',manter:'&#9878; Manter Peso',
   ola:'Olá,',bemVindo:'Bem-vindo!',
-  proteina:'&#129385; Proteina',carbo:'&#127834; Carbo',gordura:'&#129361; Gordura',
-  cafeManha:'Cafe da manha',almoco:'Almoco',lanche:'Lanche',jantar:'Jantar',
+  proteina:'&#129385; Proteína',carbo:'&#127834; Carbo',gordura:'&#129361; Gordura',
+  cafeManha:'Café da manhã',almoco:'Almoço',lanche:'Lanche',jantar:'Jantar',
   nenhumAlimento:'Nenhum alimento',addFood:'+ Adicionar Alimento',
   refRapidas:'REFEICOES RAPIDAS',aguaHoje:'AGUA HOJE',
   faltam:'Faltam',acimaMeta:'acima da meta',metaAtingida:'Meta atingida!',
   meta:'Meta',buscar:'Buscar alimento...',gramas:'Gramas (g)',adicionar:'Adicionar',
   aplicarMeta:'Aplicar esta meta',removido:'Removido',
   pesoRegistrado:'Peso registrado!',pesoInvalido:'Peso invalido',
-  aguaAtualizada:'Meta de agua atualizada!',
+  aguaAtualizada:'Meta de água atualizada!',
   tmb:'TMB',tdee:'TDEE',resultados:'Resultados',calcBtn:'Calcular',
   masc:'Masculino',fem:'Feminino',
   tiposDieta:'Tipo de Dieta',evolPeso:'Evolucao do Peso',calculadora:'Calculadora',
-  calcSub:'Calcule sua necessidade calorica diaria',
-  histTitle:'Historico',profTitle:'Perfil',configTitle:'Configuracoes',
-  hidratacao:'Hidratacao',hidratacaoSub:'Mantenha-se hidratado durante o dia',
+  calcSub:'Calcule sua necessidade calórica diária',
+  histTitle:'Histórico',profTitle:'Perfil',configTitle:'Configurações',
+  hidratacao:'Hidratação',hidratacaoSub:'Mantenha-se hidratado durante o dia',
   mlConsumidos:'ml consumidos',mlRestantes:'ml restantes',daMetaLabel:'% da meta',
-  addAguaTitle:'Adicionar agua',zerarAgua:'Zerar agua',metaDiaria:'Meta diária',calcPerfil:'Calculado pelo seu perfil',
+  addAguaTitle:'Adicionar água',zerarAgua:'Zerar água',metaDiaria:'Meta diária',calcPerfil:'Calculado pelo seu perfil',
   scoreDia:'Score do Dia',
   camera:'Câmera',galeria:'Galeria',cancelar:'Cancelar',salvarFoto:'💾 Salvar foto',
   nenhumaFoto:'Nenhuma foto ainda',primeiraFoto:'Tire sua primeira foto e acompanhe sua evolução ao longo do tempo!',
@@ -876,23 +876,23 @@ pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:
   comoFuncionaTexto:'1. Tire uma foto do seu prato<br>2. A IA identifica cada ingrediente<br>3. Estima calorias e macros<br>4. Adicione tudo com um toque',
   fotosProgresso:'📸 Fotos de Progresso',fotosProgressoSub:'Registre e compare sua evolução corporal',
   corpoEvolucao:'Corpo & Evolucao',corpoEvolucaoSub:'Registre peso e medidas corporais',
-  grafico:'Grafico',ritmoIdeal:'Ritmo ideal',registrarMedidas:'Registrar Medidas',
-  salvarMedidas:'💾 Salvar Medidas',historicoMedidas:'Historico de Medidas',
+  grafico:'Gráfico',ritmoIdeal:'Ritmo ideal',registrarMedidas:'Registrar Medidas',
+  salvarMedidas:'💾 Salvar Medidas',historicoMedidas:'Histórico de Medidas',
   nenhumRegistro:'Nenhum registro ainda',registreAoMenos2Pesos:'Registre ao menos 2 pesos',
-  tipMassa:'Para ganho de massa o ideal e ganhar <b>0,5 a 1 kg por mes</b>. Mantenha um supravit de 200-400 kcal acima do TDEE.',
+  tipMassa:'Para ganho de massa o ideal é ganhar <b>0,5 a 1 kg por mês</b>. Mantenha um superávit de 200-400 kcal acima do TDEE.',
   tipCorte:'Para emagrecer de forma saudavel perca <b>0,5 a 1 kg por semana</b>. Deficit de 500 kcal por dia e sustentavel.',
-  histSub:'Toque em cada dia para ver as refeicoes',cal7Dias:'Calorias — ultimos 7 dias',
+  histSub:'Toque em cada dia para ver as refeições',cal7Dias:'Calorias — ultimos 7 dias',
   calendario:'Calendário',registrosDiarios:'Registros diarios',
   excellenteLegend:'● Excelente (80+)',bomLegend:'● Bom (50–79)',ruimLegend:'● Ruim (<50)',
   planoAlimentar:'Plano Alimentar',planoAlimentarSub:'Selecione seu estilo de dieta atual',
   onlineAgora:'Online agora — responde em segundos',
   alimSelecionado:'Alimento selecionado',quantidadeG:'Quantidade (g)',caloriasLabel:'Calorias',
   cadastrarNovo:'+ Cadastrar alimento novo',cadastrarAlimento:'Cadastrar Alimento',nomeLabel:'Nome',
-  cal100g:'Calorias /100g',prot100g:'Proteina /100g',carb100g:'Carbo /100g',gord100g:'Gordura /100g',salvarAlimento:'Salvar Alimento',
+  cal100g:'Calorias /100g',prot100g:'Proteína /100g',carb100g:'Carbo /100g',gord100g:'Gordura /100g',salvarAlimento:'Salvar Alimento',
   toqueAlterarFoto:'Toque para alterar foto',nivelAtividade:'Nível de Atividade',objetivo:'Objetivo',massaGoal:'💪 Massa',
   atletaAvancadoLabel:'&#9889; Atleta Avan&ccedil;ado',atletaSubtitle:'Prote&iacute;na 3g/kg &middot; Calorias elevadas &middot; Metabolismo acelerado',
   tmbLabel:'Metabolismo Basal (TMB)',tdeeLabel:'Gasto Total (TDEE)',metaCalorias:'Meta de Calorias',metaAguaLabel:'Meta de Água',
-  macrosEst:'Macros estimados',proteinaPura:'Proteina',carboidratos:'Carboidratos',gorduraPura:'Gordura',
+  macrosEst:'Macros estimados',proteinaPura:'Proteína',carboidratos:'Carboidratos',gorduraPura:'Gordura',
   chaveAPILabel:'Chave API Anthropic (Foto IA)',salvarAplicar:'Salvar e Aplicar',sairConta:'🚪 Sair da conta',
   preenchaTodos:'Preencha todos os campos',sexo:'Sexo',idadeAnos:'Idade (anos)',pesoKg:'Peso (kg)',alturaCm:'Altura (cm)',
   nivelAtividadeCalc:'Nivel de atividade',
@@ -960,20 +960,20 @@ en:{hoje:'Today',fotoIA:'AI Photo',agua:'Water',dieta:'Diet',peso:'Weight',calcu
 es:{hoje:'Hoy',fotoIA:'Foto IA',agua:'Agua',dieta:'Dieta',peso:'Peso',calcular:'Calcular',hist:'Historial',
   ganharMassa:'&#128170; Ganar Masa',emagrecer:'&#128293; Adelgazar',manter:'&#9878; Mantener',
   ola:'¡Hola,',bemVindo:'¡Bienvenido!',
-  proteina:'&#129385; Proteina',carbo:'&#127834; Carbos',gordura:'&#129361; Grasa',
+  proteina:'&#129385; Proteína',carbo:'&#127834; Carbos',gordura:'&#129361; Grasa',
   cafeManha:'Desayuno',almoco:'Almuerzo',lanche:'Merienda',jantar:'Cena',
   nenhumAlimento:'Sin alimentos',addFood:'+ Agregar Alimento',
   refRapidas:'COMIDAS RAPIDAS',aguaHoje:'AGUA HOY',
   faltam:'Faltan',acimaMeta:'sobre la meta',metaAtingida:'Meta alcanzada!',
   meta:'Meta',buscar:'Buscar alimento...',gramas:'Gramos (g)',adicionar:'Agregar',
   aplicarMeta:'Aplicar esta meta',removido:'Eliminado',
-  pesoRegistrado:'Peso registrado!',pesoInvalido:'Peso invalido',
+  pesoRegistrado:'Peso registrado!',pesoInvalido:'Peso inválido',
   aguaAtualizada:'Meta de agua actualizada!',
   tmb:'TMB',tdee:'TDEE',resultados:'Resultados',calcBtn:'Calcular',
   masc:'Masculino',fem:'Femenino',
   tiposDieta:'Tipo de Dieta',evolPeso:'Progreso de Peso',calculadora:'Calculadora',
-  calcSub:'Calcula tu necesidad calorica diaria',
-  histTitle:'Historial',profTitle:'Perfil',configTitle:'Configuracion',
+  calcSub:'Calcula tu necesidad calórica diaria',
+  histTitle:'Historial',profTitle:'Perfil',configTitle:'Configuración',
   hidratacao:'Hidratación',hidratacaoSub:'Mantente hidratado durante el día',
   mlConsumidos:'ml consumidos',mlRestantes:'ml restantes',daMetaLabel:'% de la meta',
   addAguaTitle:'Agregar agua',zerarAgua:'Reiniciar agua',metaDiaria:'Meta diaria',calcPerfil:'Calculado desde tu perfil',
@@ -1267,11 +1267,11 @@ var FOOD_DB=[
   {name:"Quinoa cozida",icon:"quinoa",kcal:120,prot:4.4,carb:21.3,fat:1.9}
 ];
 var DIET_TYPES=[
-  {id:"normal",icon:"plate",name:{pt:"Normal",en:"Normal",es:"Normal"},desc:{pt:"Dieta equilibrada",en:"Balanced diet",es:"Dieta equilibrada"},tips:{pt:["Variedade de grupos alimentares","Proteina carbo e gordura em equilibrio","3 refeicoes mais 2 lanches","Evite ultraprocessados"],en:["Variety of food groups","Balanced protein carbs and fat","3 meals plus 2 snacks","Avoid ultra-processed foods"],es:["Variedad de grupos alimentarios","Equilibrio entre proteína carbs y grasa","3 comidas y 2 meriendas","Evita los ultraprocesados"]}},
+  {id:"normal",icon:"plate",name:{pt:"Normal",en:"Normal",es:"Normal"},desc:{pt:"Dieta equilibrada",en:"Balanced diet",es:"Dieta equilibrada"},tips:{pt:["Variedade de grupos alimentares","Proteína carbo e gordura em equilibrio","3 refeições mais 2 lanches","Evite ultraprocessados"],en:["Variety of food groups","Balanced protein carbs and fat","3 meals plus 2 snacks","Avoid ultra-processed foods"],es:["Variedad de grupos alimentarios","Equilibrio entre proteína carbs y grasa","3 comidas y 2 meriendas","Evita los ultraprocesados"]}},
   {id:"lowcarb",icon:"meat",name:{pt:"Low Carb",en:"Low Carb",es:"Low Carb"},desc:{pt:"Reducao de carboidratos",en:"Carbohydrate reduction",es:"Reducción de carbohidratos"},tips:{pt:["Carbo menor que 100g por dia","Priorize proteinas e gorduras boas","Legumes e folhas a vontade","Evite acucar e farinhas brancas"],en:["Less than 100g carbs per day","Prioritize protein and healthy fats","Vegetables and greens freely","Avoid sugar and white flour"],es:["Menos de 100g de carbos por día","Prioriza proteínas y grasas saludables","Verduras y hojas libremente","Evita azúcar y harinas blancas"]}},
   {id:"keto",icon:"fire",name:{pt:"Cetogenica",en:"Ketogenic",es:"Cetogénica"},desc:{pt:"Cetose metabolica",en:"Metabolic ketosis",es:"Cetosis metabólica"},tips:{pt:["Carbo menor que 30g por dia","Gordura 70 a 80 porcento das calorias","Proteina moderada","Monitorar cetose"],en:["Less than 30g carbs per day","Fat 70-80 percent of calories","Moderate protein","Monitor ketosis"],es:["Menos de 30g de carbos por día","Grasa 70-80 por ciento de calorías","Proteína moderada","Monitorear cetosis"]}},
   {id:"carnivore",icon:"bone",name:{pt:"Carnivora",en:"Carnivore",es:"Carnívora"},desc:{pt:"Somente origem animal",en:"Animal-origin only",es:"Solo origen animal"},tips:{pt:["Carne peixe ovos laticinios","Zero vegetais e frutas","Alta proteina e gordura","Requer acompanhamento medico"],en:["Meat fish eggs dairy","Zero vegetables and fruits","High protein and fat","Requires medical supervision"],es:["Carne pescado huevos lácteos","Cero verduras y frutas","Alta proteína y grasa","Requiere supervisión médica"]}},
-  {id:"jejenum",icon:"clock",name:{pt:"Jejum Intermitente",en:"Intermittent Fasting",es:"Ayuno Intermitente"},desc:{pt:"Janela alimentar restrita",en:"Restricted eating window",es:"Ventana alimentaria restringida"},tips:{pt:["16:8 - 16h de jejum 8h comendo","Cafe preto e agua no jejum","Refeicoes mais densas na janela","Comece gradualmente"],en:["16:8 - 16h fasting 8h eating","Black coffee and water during fast","Denser meals in the eating window","Start gradually"],es:["16:8 - 16h de ayuno 8h comiendo","Café negro y agua en el ayuno","Comidas más densas en la ventana","Comienza gradualmente"]}},
+  {id:"jejenum",icon:"clock",name:{pt:"Jejum Intermitente",en:"Intermittent Fasting",es:"Ayuno Intermitente"},desc:{pt:"Janela alimentar restrita",en:"Restricted eating window",es:"Ventana alimentaria restringida"},tips:{pt:["16:8 - 16h de jejum 8h comendo","Café preto e água no jejum","Refeições mais densas na janela","Comece gradualmente"],en:["16:8 - 16h fasting 8h eating","Black coffee and water during fast","Denser meals in the eating window","Start gradually"],es:["16:8 - 16h de ayuno 8h comiendo","Café negro y agua en el ayuno","Comidas más densas en la ventana","Comienza gradualmente"]}},
   {id:"mediterranea",icon:"wave",name:{pt:"Mediterranea",en:"Mediterranean",es:"Mediterránea"},desc:{pt:"Estilo mediterraneo",en:"Mediterranean lifestyle",es:"Estilo mediterráneo"},tips:{pt:["Azeite peixes leguminosas","Oleaginosas e frutas diariamente","Graos integrais e vegetais","Estilo de vida saudavel"],en:["Olive oil fish legumes","Nuts and fruits daily","Whole grains and vegetables","Healthy lifestyle"],es:["Aceite de oliva pescados legumbres","Frutos secos y frutas diariamente","Granos integrales y verduras","Estilo de vida saludable"]}}
 ];
 var PREMADE=[
@@ -1652,7 +1652,7 @@ function renderWeight(){
 }
 function renderWeightTip(){
   var t=T[currentLang];
-  document.getElementById("weightTip").innerHTML=state.goal==="mass"?(t.tipMassa||"Para ganho de massa o ideal e ganhar <b>0,5 a 1 kg por mes</b>. Mantenha um supravit de 200-400 kcal acima do TDEE."):(t.tipCorte||"Para emagrecer de forma saudavel perca <b>0,5 a 1 kg por semana</b>. Deficit de 500 kcal por dia e sustentavel.");
+  document.getElementById("weightTip").innerHTML=state.goal==="mass"?(t.tipMassa||"Para ganho de massa o ideal e ganhar <b>0,5 a 1 kg por mês</b>. Mantenha um superávit de 200-400 kcal acima do TDEE."):(t.tipCorte||"Para emagrecer de forma saudavel perca <b>0,5 a 1 kg por semana</b>. Deficit de 500 kcal por dia e sustentavel.");
 }
 function drawWeightChart(){
   var canvas=document.getElementById("weightChart");if(!canvas)return;
@@ -1736,7 +1736,7 @@ function addAiResult(){
   var liquidos=aiResultData.liquidos||[];
   var totalMl=0;
   liquidos.forEach(function(l){totalMl+=(l.ml||0);state.meals[mk].push({name:l.nome,grams:l.ml,kcal:l.kcal,prot:0,carb:Math.round(l.kcal/4),fat:0,time:_nowT});});
-  if(totalMl>0){state.waterMl=(state.waterMl||0)+totalMl;renderWater();showToast(totalMl+"ml adicionado a agua!","success");}
+  if(totalMl>0){state.waterMl=(state.waterMl||0)+totalMl;renderWater();showToast(totalMl+"ml adicionado a água!","success");}
   updateMealOrder(mk);save();renderToday();showToast("Adicionado ao registro!","success");switchTab("hoje",null);
 }
 
@@ -1763,7 +1763,7 @@ function renderHistory(){
   var mealNames={cafe:'☕ Café da manhã',almoco:'🍽️ Almoço',lanche:'🥗 Lanche',jantar:'🌙 Jantar'};
   var keys=Object.keys(state.history||{}).sort().reverse().slice(0,30);
   if(!keys.length){
-    document.getElementById("histList").innerHTML="<div class='empty'><div class='empty-icon'>&#128197;</div><div class='empty-text'>Nenhum historico ainda.<br><span style='font-size:12px;'>Registros aparecem a partir do dia seguinte.</span></div></div>";
+    document.getElementById("histList").innerHTML="<div class='empty'><div class='empty-icon'>&#128197;</div><div class='empty-text'>Nenhum histórico ainda.<br><span style='font-size:12px;'>Registros aparecem a partir do dia seguinte.</span></div></div>";
     return;
   }
   document.getElementById("histList").innerHTML=keys.map(function(k){
@@ -2371,7 +2371,7 @@ function renderFotoIAResult(result){
   if(!alimentos.length){form.innerHTML='<div style="color:#aaa;text-align:center;padding:16px;">Nenhum alimento identificado.</div>';form.style.display="block";return;}
   window._fotoIAItems=alimentos;
   window._fotoIASelected=alimentos.map(function(a){return {nome:a.nome,gramas:a.gramas,kcal:a.kcal,prot:a.prot,carb:a.carb,fat:a.fat};});
-  var tipos=[{v:"cafe",l:"Cafe da manha"},{v:"almoco",l:"Almoco"},{v:"lanche",l:"Lanche"},{v:"jantar",l:"Jantar"}];
+  var tipos=[{v:"cafe",l:"Café da manha"},{v:"almoco",l:"Almoco"},{v:"lanche",l:"Lanche"},{v:"jantar",l:"Jantar"}];
   var _mealLabels={cafe:"Café da manhã",almoco:"Almoço",lanche:"Lanche",jantar:"Jantar"};
   var html='';
   if(window._fotoIAIsCamera){
@@ -2400,7 +2400,7 @@ function renderFotoIAResult(result){
     if(_isEgg){
       var _bg=(a.gramas&&a.gramas>0)?a.gramas:50;
       var _eggN=Math.max(1,Math.round(_bg/50));
-      html+='<div style="color:#aaa;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;">Quantos ovos voce usou?</div>';
+      html+='<div style="color:#aaa;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;">Quantos ovos você usou?</div>';
       html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">';
       html+='<input id="fegg_'+i+'" type="number" min="0" step="1" value="'+_eggN+'" inputmode="numeric" oninput="_selEggs('+i+',this.value,'+(a.kcal||0)+','+_bg+','+(a.prot||0)+','+(a.carb||0)+','+(a.fat||0)+')" style="width:76px;background:#111;border:1px solid #f0b429;color:#fff;border-radius:10px;padding:9px;font-size:16px;text-align:center;">';
       html+='<span style="color:#888;font-size:12px;">= <b id="feggg_'+i+'" style="color:#f0b429;">'+(_eggN*50)+'g</b></span>';
@@ -2553,7 +2553,7 @@ function renderFrequentMeals(){
   window._freqMeals=list;
   if(!list.length){ card.style.display="none"; grid.innerHTML=""; return; }
   card.style.display="block";
-  var L={cafe:"Cafe da manha",almoco:"Almoco",lanche:"Lanche",jantar:"Jantar"};
+  var L={cafe:"Café da manha",almoco:"Almoco",lanche:"Lanche",jantar:"Jantar"};
   grid.innerHTML=list.map(function(m,i){
     var names=m.items.map(function(f){return f.name;}).join(" + ");
     return '<div class="premade-card" onclick="addFrequentMeal('+i+')" style="text-align:left;">'
@@ -2583,21 +2583,21 @@ function getPreventiveAlerts(){
   try{ g=getMacroGoals()||{prot:0}; }catch(e){}
   var wGoal=+state.waterGoal||2500, w=+state.waterMl||0;
   if(h>=15 && w < wGoal*0.5){
-    out.push({icon:"&#128167;",text:"Voce bebeu "+w+" ml de agua ate agora. Faltam "+Math.max(0,wGoal-w)+" ml para a meta."});
+    out.push({icon:"&#128167;",text:"Você bebeu "+w+" ml de água até agora. Faltam "+Math.max(0,wGoal-w)+" ml para a meta."});
   }
   if(h>=19 && g.prot>0 && t.prot < g.prot*0.7){
     var falta=Math.max(0,Math.round(g.prot-t.prot));
     var frango=Math.round(falta/0.31/10)*10;
-    out.push({icon:"&#129385;",text:"Proteina em "+Math.round(t.prot)+"g de "+Math.round(g.prot)+"g. Faltam "+falta+"g - cerca de "+frango+"g de frango fecham a meta."});
+    out.push({icon:"&#129385;",text:"Proteína em "+Math.round(t.prot)+"g de "+Math.round(g.prot)+"g. Faltam "+falta+"g - cerca de "+frango+"g de frango fecham a meta."});
   }
   var sh2=+state.sleepH||0;
   if(sh2>0 && sh2<6 && h>=9 && h<=20){
-    out.push({icon:"&#128564;",text:"Voce dormiu "+sh2+"h. Noites curtas costumam aumentar a fome e a vontade de doce - priorize proteina e nao pule refeicoes hoje."});
+    out.push({icon:"&#128564;",text:"Você dormiu "+sh2+"h. Noites curtas costumam aumentar a fome e a vontade de doce - priorize proteína e não pule refeições hoje."});
   }
   if(h>=20 && +state.calGoal>0){
     var d=Math.round(state.calGoal-t.kcal);
     if(d>250) out.push({icon:"&#127919;",text:"Faltam "+d+" kcal para fechar sua meta de hoje."});
-    else if(d<-250) out.push({icon:"&#9888;",text:"Voce esta "+Math.abs(d)+" kcal acima da meta de hoje."});
+    else if(d<-250) out.push({icon:"&#9888;",text:"Você esta "+Math.abs(d)+" kcal acima da meta de hoje."});
   }
   return out;
 }
@@ -2625,7 +2625,7 @@ function calcProjection(weeks){
   var p=state.profile||{}, out={ok:false,reason:""};
   var wArr=(state.weights||[]).filter(function(w){return w&&w.val;});
   var curW=wArr.length?+wArr[0].val:+p.weight||0;
-  if(!curW){ out.reason="Registre seu peso para ver a projecao."; return out; }
+  if(!curW){ out.reason="Registre seu peso para ver a projeção."; return out; }
   var Hh=+p.height||0;
   var hist=state.history||{}, tdee=+p.tdee||+state.calGoal||0;
   var days=Object.keys(hist).sort().slice(-21), deltas=[];
@@ -2640,8 +2640,8 @@ function calcProjection(weeks){
     if(span>=10){ var t=_linTrend(pts); if(t) kgWkTrend=t.slope*7; }
   }
   var kgWk=kgWkTrend!==null?kgWkTrend:kgWkEnergy;
-  var source=kgWkTrend!==null?"tendencia real do seu peso":"seu saldo calorico";
-  if(kgWk===null||!isFinite(kgWk)){ out.reason="Registre suas refeicoes por alguns dias para ver a projecao."; return out; }
+  var source=kgWkTrend!==null?"tendência real do seu peso":"seu saldo calórico";
+  if(kgWk===null||!isFinite(kgWk)){ out.reason="Registre suas refeições por alguns dias para ver a projeção."; return out; }
   var maxRate=curW*0.015, clamped=false;
   if(kgWk>maxRate){kgWk=maxRate;clamped=true;}
   if(kgWk<-maxRate){kgWk=-maxRate;clamped=true;}
@@ -2719,7 +2719,7 @@ function renderProjectionHTML(){
     });
     h+='</div>';
   }
-  h+='<div style="color:#777;font-size:11px;margin-top:10px;line-height:1.5;">Estimativa baseada em '+pr.source+'. Resultados reais variam com sono, treino, hidratacao e retencao de liquido.</div>';
+  h+='<div style="color:#777;font-size:11px;margin-top:10px;line-height:1.5;">Estimativa baseada em '+pr.source+'. Resultados reais variam com sono, treino, hidratação e retencao de liquido.</div>';
   if(pr.aggressive||pr.clamped){
     h+='<div style="margin-top:8px;background:rgba(240,180,41,.10);border:1px solid rgba(240,180,41,.25);border-radius:10px;padding:9px 11px;color:#ddd;font-size:12px;line-height:1.45;">'
       +'Seu ritmo atual esta acelerado. Mudancas muito rapidas costumam vir com perda de massa magra - vale acompanhar com um nutricionista.</div>';
@@ -2751,7 +2751,7 @@ function renderSleep(){
     return;
   }
   box.style.display="flex";
-  if(titulo) titulo.textContent="Quantas horas voce dormiu?";
+  if(titulo) titulo.textContent="Quantas horas você dormiu?";
   if(card){ card.style.cursor=""; card.onclick=null; card.style.padding=""; }
   box.innerHTML=opts.map(function(o){
     var on=(cur===o);
@@ -2804,7 +2804,7 @@ function calcScores(){
     var avg=counts.reduce(function(a,b){return a+b;},0)/counts.length;
     var vari=counts.reduce(function(a,b){return a+Math.abs(b-avg);},0)/counts.length;
     out.push({key:"reg",label:"Regularidade",score:Math.round(_clamp01(1-vari/2)*100),
-      detail:avg.toFixed(1)+" refeicoes/dia"});
+      detail:avg.toFixed(1)+" refeições/dia"});
   } else {
     out.push({key:"reg",label:"Regularidade",score:null,detail:"precisa de mais dias"});
   }
@@ -2818,7 +2818,7 @@ function renderScoresHTML(){
   var r; try{ r=calcScores(); }catch(e){ return ""; }
   if(!r) return "";
   var h='<div class="card" style="margin-top:14px;"><div class="card-title">Seus indicadores de hoje</div>';
-  if(!r.hasData){ return h+'<div style="color:#888;font-size:13px;line-height:1.5;">Registre suas refeicoes, agua ou sono para ver seus indicadores de hoje.</div></div>'; }
+  if(!r.hasData){ return h+'<div style="color:#888;font-size:13px;line-height:1.5;">Registre suas refeições, água ou sono para ver seus indicadores de hoje.</div></div>'; }
   h+='<div style="text-align:center;margin-bottom:14px;">'
     +'<div style="font-size:34px;font-weight:800;color:'+_scoreColor(r.geral)+';line-height:1;">'+r.geral+'</div>'
     +'<div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;">Indice geral</div></div>';
@@ -2833,7 +2833,7 @@ function renderScoresHTML(){
       +'<div style="height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;">'
       +'<div style="height:100%;width:'+bar+'%;background:'+col+';border-radius:99px;"></div></div></div>';
   });
-  h+='<div style="color:#777;font-size:11px;margin-top:8px;line-height:1.5;">Indicadores servem para acompanhar tendencia, nao para bater 100 todo dia.</div>';
+  h+='<div style="color:#777;font-size:11px;margin-top:8px;line-height:1.5;">Indicadores servem para acompanhar tendência, não para bater 100 todo dia.</div>';
   return h+'</div>';
 }
 
