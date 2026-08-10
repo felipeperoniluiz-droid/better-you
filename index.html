@@ -2576,6 +2576,21 @@ function addFrequentMeal(i){
   showToast("Refeicao registrada!","success");
 }
 /* ===== B) ALERTAS PREVENTIVOS (regras locais, sem chamar IA) ===== */
+/* ---- textos multi-idioma gerados por codigo ---- */
+var TX={
+ alertAgua:{pt:'Voce bebeu {0} ml de agua ate agora. Faltam {1} ml para a meta.',en:'You have had {0} ml of water so far. {1} ml to go.',es:'Has bebido {0} ml de agua hasta ahora. Faltan {1} ml para la meta.'},
+ alertProt:{pt:'Proteina em {0}g de {1}g. Faltam {2}g - cerca de {3}g de frango fecham a meta.',en:'Protein at {0}g of {1}g. {2}g to go - about {3}g of chicken closes the gap.',es:'Proteina en {0}g de {1}g. Faltan {2}g - unos {3}g de pollo cierran la meta.'},
+ alertSono:{pt:'Voce dormiu {0}h. Noites curtas costumam aumentar a fome e a vontade de doce - priorize proteina e nao pule refeicoes hoje.',en:'You slept {0}h. Short nights tend to raise hunger and sugar cravings - prioritise protein and do not skip meals today.',es:'Dormiste {0}h. Las noches cortas suelen aumentar el hambre y las ganas de dulce - prioriza la proteina y no te saltes comidas hoy.'},
+ alertFaltaKcal:{pt:'Faltam {0} kcal para fechar sua meta de hoje.',en:'{0} kcal to go to close your goal today.',es:'Faltan {0} kcal para cerrar tu meta de hoy.'},
+ alertAcimaKcal:{pt:'Voce esta {0} kcal acima da meta de hoje.',en:'You are {0} kcal above your goal today.',es:'Estas {0} kcal por encima de la meta de hoy.'}
+};
+function tx(k){
+  var a=arguments;
+  var L=(typeof currentLang!=='undefined'&&currentLang)||(typeof state!=='undefined'&&state&&state.lang)||'pt';
+  var o=TX[k]; if(!o) return k;
+  var s=o[L]||o.pt||'';
+  return s.replace(/\{(\d+)\}/g,function(_,i){ var v=a[(+i)+1]; return v===undefined?'':v; });
+}
 function getPreventiveAlerts(){
   var out=[], now=new Date(), h=now.getHours();
   var t={kcal:0,prot:0}, g={prot:0};
@@ -2583,21 +2598,21 @@ function getPreventiveAlerts(){
   try{ g=getMacroGoals()||{prot:0}; }catch(e){}
   var wGoal=+state.waterGoal||2500, w=+state.waterMl||0;
   if(h>=15 && w < wGoal*0.5){
-    out.push({icon:"&#128167;",text:"Você bebeu "+w+" ml de água até agora. Faltam "+Math.max(0,wGoal-w)+" ml para a meta."});
+    out.push({icon:"&#128167;",text:tx('alertAgua',w,Math.max(0,wGoal-w))});
   }
   if(h>=19 && g.prot>0 && t.prot < g.prot*0.7){
     var falta=Math.max(0,Math.round(g.prot-t.prot));
     var frango=Math.round(falta/0.31/10)*10;
-    out.push({icon:"&#129385;",text:"Proteína em "+Math.round(t.prot)+"g de "+Math.round(g.prot)+"g. Faltam "+falta+"g - cerca de "+frango+"g de frango fecham a meta."});
+    out.push({icon:"&#129385;",text:tx('alertProt',Math.round(t.prot),Math.round(g.prot),falta,frango)});
   }
   var sh2=+state.sleepH||0;
   if(sh2>0 && sh2<6 && h>=9 && h<=20){
-    out.push({icon:"&#128564;",text:"Você dormiu "+sh2+"h. Noites curtas costumam aumentar a fome e a vontade de doce - priorize proteína e não pule refeições hoje."});
+    out.push({icon:"&#128564;",text:tx('alertSono',sh2)});
   }
   if(h>=20 && +state.calGoal>0){
     var d=Math.round(state.calGoal-t.kcal);
-    if(d>250) out.push({icon:"&#127919;",text:"Faltam "+d+" kcal para fechar sua meta de hoje."});
-    else if(d<-250) out.push({icon:"&#9888;",text:"Você esta "+Math.abs(d)+" kcal acima da meta de hoje."});
+    if(d>250) out.push({icon:"&#127919;",text:tx('alertFaltaKcal',d)});
+    else if(d<-250) out.push({icon:"&#9888;",text:tx('alertAcimaKcal',Math.abs(d))});
   }
   return out;
 }
