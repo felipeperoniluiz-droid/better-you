@@ -3272,7 +3272,9 @@ el.innerHTML=html;
 function belAprender(txt){
   if(!txt) return;
   if(!state.belMemoria) state.belMemoria={preferencias:[],restricoes:[],notas:[]};
-  var m=state.belMemoria, t=String(txt).trim(), low=t.toLowerCase();
+  var m=state.belMemoria, t=String(txt).trim();
+  /* normaliza acentos: 'alergico' e 'alérgico' devem casar igual */
+  var low=t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   if(t.length>220) return;
   function add(arr,val){ if(!val) return; val=val.trim(); if(val.length<3||val.length>140) return;
     if(arr.indexOf(val)>=0) return; arr.push(val); while(arr.length>12) arr.shift(); }
