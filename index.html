@@ -880,7 +880,7 @@ pt:{hoje:'Hoje',fotoIA:'Foto IA',agua:'Água',dieta:'Dieta',peso:'Peso',calcular
   salvarMedidas:'💾 Salvar Medidas',historicoMedidas:'Histórico de Medidas',
   nenhumRegistro:'Nenhum registro ainda',registreAoMenos2Pesos:'Registre ao menos 2 pesos',
   tipMassa:'Para ganho de massa o ideal é ganhar <b>0,5 a 1 kg por mês</b>. Mantenha um superávit de 200-400 kcal acima do TDEE.',
-  tipCorte:'Para emagrecer de forma saudavel perca <b>0,5 a 1 kg por semana</b>. Deficit de 500 kcal por dia e sustentavel.',
+  tipCorte:'Para emagrecer de forma saudável perca <b>0,5 a 1 kg por semana</b>. Déficit de 500 kcal por dia é sustentável.',
   histSub:'Toque em cada dia para ver as refeições',cal7Dias:'Calorias — ultimos 7 dias',
   calendario:'Calendário',registrosDiarios:'Registros diarios',
   excellenteLegend:'● Excelente (80+)',bomLegend:'● Bom (50–79)',ruimLegend:'● Ruim (<50)',
@@ -1652,7 +1652,7 @@ function renderWeight(){
 }
 function renderWeightTip(){
   var t=T[currentLang];
-  document.getElementById("weightTip").innerHTML=state.goal==="mass"?(t.tipMassa||"Para ganho de massa o ideal e ganhar <b>0,5 a 1 kg por mês</b>. Mantenha um superávit de 200-400 kcal acima do TDEE."):(t.tipCorte||"Para emagrecer de forma saudavel perca <b>0,5 a 1 kg por semana</b>. Deficit de 500 kcal por dia e sustentavel.");
+  document.getElementById("weightTip").innerHTML=state.goal==="mass"?(t.tipMassa||T.pt.tipMassa):(t.tipCorte||T.pt.tipCorte);
 }
 function drawWeightChart(){
   var canvas=document.getElementById("weightChart");if(!canvas)return;
@@ -2553,7 +2553,7 @@ function renderFrequentMeals(){
   window._freqMeals=list;
   if(!list.length){ card.style.display="none"; grid.innerHTML=""; return; }
   card.style.display="block";
-  var L={cafe:"Café da manha",almoco:"Almoco",lanche:"Lanche",jantar:"Jantar"};
+  var _tf=T[currentLang]||T.pt; var L={cafe:_tf.cafeManha,almoco:_tf.almoco,lanche:_tf.lanche,jantar:_tf.jantar};
   grid.innerHTML=list.map(function(m,i){
     var names=m.items.map(function(f){return f.name;}).join(" + ");
     return '<div class="premade-card" onclick="addFrequentMeal('+i+')" style="text-align:left;">'
