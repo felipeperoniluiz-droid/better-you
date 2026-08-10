@@ -2578,6 +2578,17 @@ function addFrequentMeal(i){
 /* ===== B) ALERTAS PREVENTIVOS (regras locais, sem chamar IA) ===== */
 /* ---- textos multi-idioma gerados por codigo ---- */
 var TX={
+ scoresTitulo:{pt:'Seus indicadores de hoje',en:'Your indicators today',es:'Tus indicadores de hoy'},
+ scoresSemDados:{pt:'Registre suas refeições, água ou sono para ver seus indicadores de hoje.',en:'Log your meals, water or sleep to see your indicators for today.',es:'Registra tus comidas, agua o sueño para ver tus indicadores de hoy.'},
+ scoresRodape:{pt:'Indicadores servem para acompanhar tendência, não para bater 100 todo dia.',en:'Indicators are for tracking a trend, not for hitting 100 every day.',es:'Los indicadores sirven para seguir una tendencia, no para llegar a 100 cada día.'},
+ scoreHidratacao:{pt:'Hidratação',en:'Hydration',es:'Hidratación'},
+ scoreProteina:{pt:'Proteína',en:'Protein',es:'Proteína'},
+ scoreFibras:{pt:'Fibras',en:'Fibre',es:'Fibra'},
+ scoreSono:{pt:'Sono',en:'Sleep',es:'Sueño'},
+ scoreConsistencia:{pt:'Consistência',en:'Consistency',es:'Consistencia'},
+ scoreNaoRegistrado:{pt:'não registrado',en:'not logged',es:'sin registrar'},
+ scoreDias:{pt:'{0} de 7 dias',en:'{0} of 7 days',es:'{0} de 7 días'},
+ scoreRefDia:{pt:'{0} refeições/dia',en:'{0} meals/day',es:'{0} comidas/día'},
  projSemPeso:{pt:'Registre seu peso para ver a projeção.',en:'Log your weight to see the projection.',es:'Registra tu peso para ver la proyección.'},
  projSemRef:{pt:'Registre suas refeições por alguns dias para ver a projeção.',en:'Log your meals for a few days to see the projection.',es:'Registra tus comidas durante unos días para ver la proyección.'},
  projFonteTend:{pt:'tendência real do seu peso',en:'the real trend of your weight',es:'la tendencia real de tu peso'},
@@ -2787,22 +2798,22 @@ function calcScores(){
   var out=[];
   /* hidratacao */
   var wg=+state.waterGoal||2500;
-  out.push({key:"agua",label:"Hidratacao",score:Math.round(_clamp01((+state.waterMl||0)/wg)*100),
+  out.push({key:"agua",label:tx('scoreHidratacao'),score:Math.round(_clamp01((+state.waterMl||0)/wg)*100),
     detail:(+state.waterMl||0)+" / "+wg+" ml"});
   /* proteina */
-  if(g.prot>0) out.push({key:"prot",label:"Proteina",score:Math.round(_clamp01(t.prot/g.prot)*100),
+  if(g.prot>0) out.push({key:"prot",label:tx('scoreProteina'),score:Math.round(_clamp01(t.prot/g.prot)*100),
     detail:Math.round(t.prot)+" / "+Math.round(g.prot)+" g"});
   /* fibras - meta 25g */
   var fibGoal=25;
-  out.push({key:"fib",label:"Fibras",score:Math.round(_clamp01((t.fib||0)/fibGoal)*100),
+  out.push({key:"fib",label:tx('scoreFibras'),score:Math.round(_clamp01((t.fib||0)/fibGoal)*100),
     detail:Math.round(t.fib||0)+" / "+fibGoal+" g"});
   /* sono - faixa saudavel 7-9h */
   var sh=+state.sleepH||0;
   if(sh>0){
     var ss = sh>=7&&sh<=9 ? 100 : (sh>=6&&sh<10 ? 75 : (sh>=5 ? 50 : 30));
-    out.push({key:"sono",label:"Sono",score:ss,detail:sh+" h"});
+    out.push({key:"sono",label:tx('scoreSono'),score:ss,detail:sh+" h"});
   } else {
-    out.push({key:"sono",label:"Sono",score:null,detail:"nao registrado"});
+    out.push({key:"sono",label:tx('scoreSono'),score:null,detail:tx('scoreNaoRegistrado')});
   }
   /* consistencia - dias com registro nos ultimos 7 */
   var today=new Date(), reg=0;
@@ -2811,7 +2822,7 @@ function calcScores(){
     if(i===0){ if(t.kcal>0) reg++; }
     else if(hist[d] && +hist[d].kcal>0) reg++;
   }
-  out.push({key:"consist",label:"Consistencia",score:Math.round(reg/7*100),detail:reg+" de 7 dias"});
+  out.push({key:"consist",label:tx('scoreConsistencia'),score:Math.round(reg/7*100),detail:tx('scoreDias',reg)});
   /* regularidade - variacao do numero de refeicoes por dia */
   var counts=[];
   keys.slice(-7).forEach(function(d){
@@ -2823,7 +2834,7 @@ function calcScores(){
     var avg=counts.reduce(function(a,b){return a+b;},0)/counts.length;
     var vari=counts.reduce(function(a,b){return a+Math.abs(b-avg);},0)/counts.length;
     out.push({key:"reg",label:"Regularidade",score:Math.round(_clamp01(1-vari/2)*100),
-      detail:avg.toFixed(1)+" refeições/dia"});
+      detail:tx('scoreRefDia',avg.toFixed(1))});
   } else {
     out.push({key:"reg",label:"Regularidade",score:null,detail:"precisa de mais dias"});
   }
@@ -2836,8 +2847,8 @@ function _scoreColor(s){ return s>=80?"#4ade80":(s>=50?"#f0b429":"#f87171"); }
 function renderScoresHTML(){
   var r; try{ r=calcScores(); }catch(e){ return ""; }
   if(!r) return "";
-  var h='<div class="card" style="margin-top:14px;"><div class="card-title">Seus indicadores de hoje</div>';
-  if(!r.hasData){ return h+'<div style="color:#888;font-size:13px;line-height:1.5;">Registre suas refeições, água ou sono para ver seus indicadores de hoje.</div></div>'; }
+  var h='<div class="card" style="margin-top:14px;"><div class="card-title">'+tx('scoresTitulo')+'</div>';
+  if(!r.hasData){ return h+'<div style="color:#888;font-size:13px;line-height:1.5;">'+tx('scoresSemDados')+'</div></div>'; }
   h+='<div style="text-align:center;margin-bottom:14px;">'
     +'<div style="font-size:34px;font-weight:800;color:'+_scoreColor(r.geral)+';line-height:1;">'+r.geral+'</div>'
     +'<div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;">Indice geral</div></div>';
@@ -2852,7 +2863,7 @@ function renderScoresHTML(){
       +'<div style="height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;">'
       +'<div style="height:100%;width:'+bar+'%;background:'+col+';border-radius:99px;"></div></div></div>';
   });
-  h+='<div style="color:#777;font-size:11px;margin-top:8px;line-height:1.5;">Indicadores servem para acompanhar tendência, não para bater 100 todo dia.</div>';
+  h+='<div style="color:#777;font-size:11px;margin-top:8px;line-height:1.5;">'+tx('scoresRodape')+'</div>';
   return h+'</div>';
 }
 
