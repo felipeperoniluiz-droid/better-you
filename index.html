@@ -3404,14 +3404,9 @@ async function verifyStripeSession(sessionId){
         localStorage.setItem('betteryou_subscriptionId', data.subscriptionId);
       }
       // Salvar no Firestore se logado
-      if(_fbUser&&_fbDb){
-        _fbDb.collection('users').doc(_fbUser.uid).set({
-          isPro:true,
-          stripeCustomerId:data.customerId||'',
-          subscriptionId:data.subscriptionId||'',
-          proActivatedAt:new Date().toISOString()
-        },{merge:true});
-      }
+      /* O PRO agora e gravado pelo SERVIDOR (Worker, via credencial admin).
+         As security rules bloqueiam o cliente de escrever isPro/subscriptionId.
+         O app apenas LE esse campo no login. Nao reintroduzir escrita aqui. */
       closeModal('upgradeModal');
     }
   }catch(e){console.warn('Stripe verify error:',e);}
