@@ -2371,8 +2371,8 @@ function renderFotoIAResult(result){
   if(!alimentos.length){form.innerHTML='<div style="color:#aaa;text-align:center;padding:16px;">Nenhum alimento identificado.</div>';form.style.display="block";return;}
   window._fotoIAItems=alimentos;
   window._fotoIASelected=alimentos.map(function(a){return {nome:a.nome,gramas:a.gramas,kcal:a.kcal,prot:a.prot,carb:a.carb,fat:a.fat};});
-  var tipos=[{v:"cafe",l:"Café da manha"},{v:"almoco",l:"Almoco"},{v:"lanche",l:"Lanche"},{v:"jantar",l:"Jantar"}];
-  var _mealLabels={cafe:"Café da manhã",almoco:"Almoço",lanche:"Lanche",jantar:"Jantar"};
+  var _tfi=T[currentLang]||T.pt; var tipos=[{v:"cafe",l:_tfi.cafeManha},{v:"almoco",l:_tfi.almoco},{v:"lanche",l:_tfi.lanche},{v:"jantar",l:_tfi.jantar}];
+  var _mealLabels={cafe:_tfi.cafeManha,almoco:_tfi.almoco,lanche:_tfi.lanche,jantar:_tfi.jantar};
   var html='';
   if(window._fotoIAIsCamera){
     html+='<div style="background:#111318;border:1px solid rgba(240,180,41,.3);border-radius:10px;padding:10px;font-size:13px;color:#f0b429;margin-bottom:14px;text-align:center;">⏰ '+(_mealLabels[currentMealType]||"Refeição")+'</div>';
@@ -2400,7 +2400,7 @@ function renderFotoIAResult(result){
     if(_isEgg){
       var _bg=(a.gramas&&a.gramas>0)?a.gramas:50;
       var _eggN=Math.max(1,Math.round(_bg/50));
-      html+='<div style="color:#aaa;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;">Quantos ovos você usou?</div>';
+      html+='<div style="color:#aaa;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;">'+tx('quantosOvos')+'</div>';
       html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">';
       html+='<input id="fegg_'+i+'" type="number" min="0" step="1" value="'+_eggN+'" inputmode="numeric" oninput="_selEggs('+i+',this.value,'+(a.kcal||0)+','+_bg+','+(a.prot||0)+','+(a.carb||0)+','+(a.fat||0)+')" style="width:76px;background:#111;border:1px solid #f0b429;color:#fff;border-radius:10px;padding:9px;font-size:16px;text-align:center;">';
       html+='<span style="color:#888;font-size:12px;">= <b id="feggg_'+i+'" style="color:#f0b429;">'+(_eggN*50)+'g</b></span>';
@@ -2578,6 +2578,7 @@ function addFrequentMeal(i){
 /* ===== B) ALERTAS PREVENTIVOS (regras locais, sem chamar IA) ===== */
 /* ---- textos multi-idioma gerados por codigo ---- */
 var TX={
+ quantosOvos:{pt:'Quantos ovos você usou?',en:'How many eggs did you use?',es:'¿Cuántos huevos usaste?'},
  projTitulo:{pt:'Projeção - próximas 8 semanas',en:'Projection - next 8 weeks',es:'Proyección - próximas 8 semanas'},
  projHoje:{pt:'hoje: {0} kg &middot; ritmo {1} kg/semana',en:'today: {0} kg &middot; pace {1} kg/week',es:'hoy: {0} kg &middot; ritmo {1} kg/semana'},
  projBase:{pt:'Estimativa baseada em {0}. Resultados reais variam com sono, treino, hidratação e retenção de líquido.',en:'Estimate based on {0}. Real results vary with sleep, training, hydration and water retention.',es:'Estimación basada en {0}. Los resultados reales varían con el sueño, el entrenamiento, la hidratación y la retención de líquidos.'},
