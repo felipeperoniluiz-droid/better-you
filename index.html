@@ -2578,6 +2578,13 @@ function addFrequentMeal(i){
 /* ===== B) ALERTAS PREVENTIVOS (regras locais, sem chamar IA) ===== */
 /* ---- textos multi-idioma gerados por codigo ---- */
 var TX={
+ errEmailNaoEncontrado:{pt:'E-mail não encontrado.',en:'Email not found.',es:'Correo no encontrado.'},
+ errSenhaIncorreta:{pt:'Senha incorreta.',en:'Wrong password.',es:'Contraseña incorrecta.'},
+ errEmailInvalido:{pt:'E-mail inválido.',en:'Invalid email.',es:'Correo inválido.'},
+ errCredencial:{pt:'E-mail ou senha incorretos.',en:'Wrong email or password.',es:'Correo o contraseña incorrectos.'},
+ errEmailEmUso:{pt:'E-mail já cadastrado. Faça login.',en:'Email already registered. Please sign in.',es:'Correo ya registrado. Inicia sesión.'},
+ errSenhaFraca:{pt:'Senha muito fraca.',en:'Password too weak.',es:'Contraseña demasiado débil.'},
+ errSenhasDiferentes:{pt:'As senhas não coincidem.',en:'Passwords do not match.',es:'Las contraseñas no coinciden.'},
  scoreGeral:{pt:'Índice geral',en:'Overall index',es:'Índice general'},
  relJornadaCut:{pt:'🔥 Sua jornada de emagrecimento',en:'🔥 Your weight loss journey',es:'🔥 Tu viaje de adelgazamiento'},
  relJornadaMass:{pt:'💪 Sua jornada de ganho de massa',en:'💪 Your muscle gain journey',es:'💪 Tu viaje de ganancia de masa'},
@@ -3687,19 +3694,19 @@ function doAuth(){
     _fbAuth.signInWithEmailAndPassword(email,pass)
       .catch(function(e){
         btn.textContent='Entrar';btn.disabled=false;
-        var m={'auth/user-not-found':'E-mail não encontrado.','auth/wrong-password':'Senha incorreta.',
-               'auth/invalid-email':'E-mail inválido.','auth/invalid-credential':'E-mail ou senha incorretos.',
+        var m={'auth/user-not-found':tx('errEmailNaoEncontrado'),'auth/wrong-password':tx('errSenhaIncorreta'),
+               'auth/invalid-email':tx('errEmailInvalido'),'auth/invalid-credential':tx('errCredencial'),
                'auth/too-many-requests':'Muitas tentativas. Tente mais tarde.'};
         showAuthMsg(m[e.code]||'Erro: '+e.message);
       });
   } else {
     var pass2=document.getElementById('authPassword2').value;
-    if(pass!==pass2){btn.textContent='Criar Conta';btn.disabled=false;showAuthMsg('As senhas não coincidem.');return;}
+    if(pass!==pass2){btn.textContent='Criar Conta';btn.disabled=false;showAuthMsg(tx('errSenhasDiferentes'));return;}
     if(pass.length<6){btn.textContent='Criar Conta';btn.disabled=false;showAuthMsg('Senha deve ter pelo menos 6 caracteres.');return;}
     _fbAuth.createUserWithEmailAndPassword(email,pass)
       .catch(function(e){
         btn.textContent='Criar Conta';btn.disabled=false;
-        var m={'auth/email-already-in-use':'E-mail já cadastrado. Faça login.','auth/invalid-email':'E-mail inválido.','auth/weak-password':'Senha muito fraca.'};
+        var m={'auth/email-already-in-use':tx('errEmailEmUso'),'auth/invalid-email':tx('errEmailInvalido'),'auth/weak-password':tx('errSenhaFraca')};
         showAuthMsg(m[e.code]||'Erro: '+e.message);
       });
   }
