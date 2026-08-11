@@ -1760,10 +1760,10 @@ function toggleHistDay(id){
   if(arrow)arrow.textContent=open?'▸':'▾';
 }
 function renderHistory(){
-  var mealNames={cafe:'☕ Café da manhã',almoco:'🍽️ Almoço',lanche:'🥗 Lanche',jantar:'🌙 Jantar'};
+  var _th=T[currentLang]||T.pt; var mealNames={cafe:'☕ '+_th.cafeManha,almoco:'🍽️ '+_th.almoco,lanche:'🥗 '+_th.lanche,jantar:'🌙 '+_th.jantar};
   var keys=Object.keys(state.history||{}).sort().reverse().slice(0,30);
   if(!keys.length){
-    document.getElementById("histList").innerHTML="<div class='empty'><div class='empty-icon'>&#128197;</div><div class='empty-text'>Nenhum histórico ainda.<br><span style='font-size:12px;'>Registros aparecem a partir do dia seguinte.</span></div></div>";
+    document.getElementById("histList").innerHTML="<div class='empty'><div class='empty-icon'>&#128197;</div><div class='empty-text'>"+tx('histVazio')+"<br><span style='font-size:12px;'>"+tx('histVazioSub')+"</span></div></div>";
     return;
   }
   document.getElementById("histList").innerHTML=keys.map(function(k){
@@ -1791,7 +1791,7 @@ function renderHistory(){
         mealsHtml+='</div>';
       });
     }
-    if(!hasMeals)mealsHtml='<div style="font-size:12px;color:#5a6270;padding:4px 0;">Refeições não registradas neste dia</div>';
+    if(!hasMeals)mealsHtml='<div style="font-size:12px;color:#5a6270;padding:4px 0;">'+tx('histSemRefeicoes')+'</div>';
     return '<div class="history-day" onclick="toggleHistDay(\''+uid+'\')">'
       +'<div style="display:flex;justify-content:space-between;align-items:flex-start;">'
         +'<div><div class="history-day-date">'+dateStr+'</div>'
@@ -2578,6 +2578,11 @@ function addFrequentMeal(i){
 /* ===== B) ALERTAS PREVENTIVOS (regras locais, sem chamar IA) ===== */
 /* ---- textos multi-idioma gerados por codigo ---- */
 var TX={
+ histVazio:{pt:'Nenhum histórico ainda.',en:'No history yet.',es:'Aún no hay historial.'},
+ histVazioSub:{pt:'Registros aparecem a partir do dia seguinte.',en:'Entries appear from the next day onwards.',es:'Los registros aparecen a partir del día siguiente.'},
+ histSemRefeicoes:{pt:'Refeições não registradas neste dia',en:'No meals logged on this day',es:'Comidas no registradas en este día'},
+ sonoPergunta:{pt:'Quantas horas você dormiu?',en:'How many hours did you sleep?',es:'¿Cuántas horas dormiste?'},
+ sonoRegistrado:{pt:'Sono registrado',en:'Sleep logged',es:'Sueño registrado'},
  scoresTitulo:{pt:'Seus indicadores de hoje',en:'Your indicators today',es:'Tus indicadores de hoy'},
  scoresSemDados:{pt:'Registre suas refeições, água ou sono para ver seus indicadores de hoje.',en:'Log your meals, water or sleep to see your indicators for today.',es:'Registra tus comidas, agua o sueño para ver tus indicadores de hoy.'},
  scoresRodape:{pt:'Indicadores servem para acompanhar tendência, não para bater 100 todo dia.',en:'Indicators are for tracking a trend, not for hitting 100 every day.',es:'Los indicadores sirven para seguir una tendencia, no para llegar a 100 cada día.'},
@@ -2775,13 +2780,13 @@ function renderSleep(){
   var titulo=document.getElementById("sleepTitulo");
   if(cur>0 && !window._sleepEditando){
     box.style.display="none";
-    if(titulo) titulo.textContent="Sono registrado";
+    if(titulo) titulo.textContent=tx('sonoRegistrado');
     if(card){ card.style.cursor="pointer"; card.onclick=function(){ window._sleepEditando=true; renderSleep(); }; card.style.padding="9px 14px"; }
     if(lbl) lbl.textContent = cur+"h  \u270E";
     return;
   }
   box.style.display="flex";
-  if(titulo) titulo.textContent="Quantas horas você dormiu?";
+  if(titulo) titulo.textContent=tx('sonoPergunta');
   if(card){ card.style.cursor=""; card.onclick=null; card.style.padding=""; }
   box.innerHTML=opts.map(function(o){
     var on=(cur===o);
