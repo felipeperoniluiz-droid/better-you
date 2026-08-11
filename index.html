@@ -2578,6 +2578,9 @@ function addFrequentMeal(i){
 /* ===== B) ALERTAS PREVENTIVOS (regras locais, sem chamar IA) ===== */
 /* ---- textos multi-idioma gerados por codigo ---- */
 var TX={
+ relJornadaCut:{pt:'🔥 Sua jornada de emagrecimento',en:'🔥 Your weight loss journey',es:'🔥 Tu viaje de adelgazamiento'},
+ relJornadaMass:{pt:'💪 Sua jornada de ganho de massa',en:'💪 Your muscle gain journey',es:'💪 Tu viaje de ganancia de masa'},
+ relJornadaManter:{pt:'⚖️ Seu plano de manutenção',en:'⚖️ Your maintenance plan',es:'⚖️ Tu plan de mantenimiento'},
  quantosOvos:{pt:'Quantos ovos você usou?',en:'How many eggs did you use?',es:'¿Cuántos huevos usaste?'},
  projTitulo:{pt:'Projeção - próximas 8 semanas',en:'Projection - next 8 weeks',es:'Proyección - próximas 8 semanas'},
  projHoje:{pt:'hoje: {0} kg &middot; ritmo {1} kg/semana',en:'today: {0} kg &middot; pace {1} kg/week',es:'hoy: {0} kg &middot; ritmo {1} kg/semana'},
@@ -3150,7 +3153,7 @@ function renderReports(){
   var goal=state.goal||'mass';
   var subEl=document.getElementById('reportSubtitle');
   if(subEl){
-    subEl.textContent=goal==='cut'?'🔥 Sua jornada de emagrecimento':goal==='mass'?'💪 Sua jornada de ganho de massa':'⚖️ Seu plano de manutenção';
+    subEl.textContent=goal==='cut'?tx('relJornadaCut'):goal==='mass'?tx('relJornadaMass'):tx('relJornadaManter');
   }
 
   // Últimos 7 dias (incluindo hoje)
