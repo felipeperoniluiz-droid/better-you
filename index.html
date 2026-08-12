@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0a0c0f">
+<meta name="theme-color" content="var(--bg)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Better You">
@@ -11,19 +11,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0c0f;--surface:#111418;--surface2:#181c22;--surface3:#1e2229;--border:#252b34;--gold:#f0b429;--orange:#e8834a;--green:#34d399;--red:#f87171;--blue:#60a5fa;--water:#38bdf8;--text:#f0f2f5;--text2:#8b95a3;--text3:#5a6270;--radius:16px;--radius-sm:10px;}
+:root{--bg:var(--bg);--surface:var(--surface);--surface2:var(--surface2);--surface3:var(--surface3);--border:var(--border);--gold:#f0b429;--orange:#e8834a;--green:#34d399;--red:#f87171;--blue:#60a5fa;--water:#38bdf8;--text:var(--text);--text2:var(--text2);--text3:var(--text3);--goldInk:#f0b429;--shadow:0 6px 20px rgba(0,0,0,.4);--radius:16px;--radius-sm:10px;}
+html[data-theme="light"]{--bg:#f4f6f8;--surface:#ffffff;--surface2:var(--text);--surface3:#e7eaef;--border:#dde2e8;--text:#151a21;--text2:#5f6b7a;--text3:var(--text2);--goldInk:#b8860b;--shadow:0 4px 16px rgba(19,26,36,.10);}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;background:#0a0c0f!important;color:#f0f2f5;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.5;overscroll-behavior:none;}
+html,body{height:100%;background:var(--bg)!important;color:var(--text);transition:background .2s ease,color .2s ease;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.5;overscroll-behavior:none;}
 body{display:flex;justify-content:center;}
-#app{width:100%;max-width:430px;min-height:100svh;display:flex;flex-direction:column;background:#0a0c0f;}
-.header{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;background:#0a0c0f;position:sticky;top:0;z-index:100;border-bottom:1px solid #252b34;}
+#app{width:100%;max-width:430px;min-height:100svh;display:flex;flex-direction:column;background:var(--bg);}
+.header{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;background:var(--bg);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border);}
 .header-actions{display:flex;gap:8px;}
-.icon-btn{width:36px;height:36px;background:#181c22;border:1px solid #252b34;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:.2s;}
+.icon-btn{width:36px;height:36px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:.2s;}
 .icon-btn:active{transform:scale(.92);}
 
 /* --- icones de traco na navegacao --- */
 .nav-item-icon{line-height:0;display:flex;align-items:center;justify-content:center;height:24px;}
-.nav-item-icon svg{width:23px;height:23px;display:block;stroke:#8b95a3;transition:stroke .18s ease,transform .18s ease;}
+.nav-item-icon svg{width:23px;height:23px;display:block;stroke:var(--text2);transition:stroke .18s ease,transform .18s ease;}
 .nav-item.active .nav-item-icon svg{stroke:var(--gold);transform:translateY(-1px);}
 .nav-badge{font-size:7px;border-radius:4px;padding:1px 3px;font-weight:800;vertical-align:middle;letter-spacing:.2px;}
 .nav-badge-ia{background:linear-gradient(135deg,#818cf8,#60a5fa);color:#fff;}
@@ -31,137 +32,137 @@ body{display:flex;justify-content:center;}
 
 /* ---- navegacao de 3 botoes + acao ---- */
 .navwrap{position:sticky;bottom:0;z-index:60;display:flex;align-items:center;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(10,12,15,0) 0%,rgba(10,12,15,.92) 45%);}
-.nav3{flex:1;display:flex;background:#161a20;border:1px solid #252b34;border-radius:26px;padding:5px;box-shadow:0 6px 20px rgba(0,0,0,.4);}
-.n3-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px 7px;border-radius:22px;cursor:pointer;color:#8b95a3;transition:background .18s ease,color .18s ease;}
-.n3-item.active{background:#232830;color:#f0b429;}
+.nav3{flex:1;display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:26px;padding:5px;box-shadow:0 6px 20px rgba(0,0,0,.4);}
+.n3-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px 7px;border-radius:22px;cursor:pointer;color:var(--text2);transition:background .18s ease,color .18s ease;}
+.n3-item.active{background:var(--surface3);color:#f0b429;}
 .n3-ic{line-height:0;display:flex;align-items:center;justify-content:center;height:22px;}
 .n3-ic svg{width:22px;height:22px;stroke:currentColor;}
 .n3-lb{font-size:11px;font-weight:600;letter-spacing:.1px;}
 .n3-item.active .n3-lb{font-weight:800;}
-.navfab{flex:none;width:54px;height:54px;border-radius:50%;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#0a0c0f;background:linear-gradient(135deg,#f0b429,#e8834a);box-shadow:0 6px 18px rgba(240,180,41,.35);transition:transform .15s ease;}
+.navfab{flex:none;width:54px;height:54px;border-radius:50%;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--bg);background:linear-gradient(135deg,#f0b429,#e8834a);box-shadow:0 6px 18px rgba(240,180,41,.35);transition:transform .15s ease;}
 .navfab:active{transform:scale(.93);}
-.navfab svg{width:26px;height:26px;stroke:#0a0c0f;stroke-width:2.2;}
+.navfab svg{width:26px;height:26px;stroke:var(--bg);stroke-width:2.2;}
 .sheet-ov{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);z-index:200;display:none;align-items:flex-end;}
 .sheet-ov.show{display:flex;}
-.sheet{width:100%;background:#141820;border-radius:22px 22px 0 0;border-top:1px solid #252b34;padding:10px 14px calc(20px + env(safe-area-inset-bottom));animation:sheetUp .22s ease;}
+.sheet{width:100%;background:var(--surface);border-radius:22px 22px 0 0;border-top:1px solid var(--border);padding:10px 14px calc(20px + env(safe-area-inset-bottom));animation:sheetUp .22s ease;}
 @keyframes sheetUp{from{transform:translateY(22px);opacity:.6}to{transform:translateY(0);opacity:1}}
-.sheet-grip{width:38px;height:4px;border-radius:3px;background:#333a45;margin:2px auto 12px;}
-.sheet-title{font-family:Syne,sans-serif;font-size:15px;font-weight:800;color:#f0f2f5;margin:0 4px 10px;}
-.sheet-item{display:flex;align-items:center;gap:13px;padding:13px 12px;border-radius:14px;cursor:pointer;color:#e6e9ee;transition:background .15s ease;}
+.sheet-grip{width:38px;height:4px;border-radius:3px;background:var(--border);margin:2px auto 12px;}
+.sheet-title{font-family:Syne,sans-serif;font-size:15px;font-weight:800;color:var(--text);margin:0 4px 10px;}
+.sheet-item{display:flex;align-items:center;gap:13px;padding:13px 12px;border-radius:14px;cursor:pointer;color:var(--text);transition:background .15s ease;}
 .sheet-item:active{background:#1e232b;}
 .sheet-item svg{width:22px;height:22px;stroke:#f0b429;flex:none;}
 .sheet-item-tx{font-size:14px;font-weight:600;}
-.nav{display:flex;background:#111418;border-top:1px solid #252b34;position:sticky;bottom:0;z-index:100;}
-.nav-item{flex:1;padding:10px 2px 12px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:.2s;border-top:2px solid transparent;color:#5a6270;}
+.nav{display:flex;background:var(--surface);border-top:1px solid var(--border);position:sticky;bottom:0;z-index:100;}
+.nav-item{flex:1;padding:10px 2px 12px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:.2s;border-top:2px solid transparent;color:var(--text3);}
 .nav-item.active{color:#f0b429;border-top-color:#f0b429;}
 .nav-item-icon{font-size:18px;}
 .nav-item-label{font-size:9px;font-weight:500;}
 .lang-selector{display:flex;gap:2px;align-items:center;flex-wrap:wrap;max-width:160px;}
-.lang-btn{padding:2px 5px;border:1px solid #3a4150;border-radius:5px;background:transparent;color:#8b95a3;font-size:9px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;}
+.lang-btn{padding:2px 5px;border:1px solid #3a4150;border-radius:5px;background:transparent;color:var(--text2);font-size:9px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;}
 .lang-btn.active{background:#f0b429;color:#000;border-color:#f0b429;}
 .content{flex:1;overflow-y:auto;padding:16px;padding-bottom:4px;}
 .tab{display:none;animation:fadeIn .2s ease;}
 .tab.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
-.card{background:#111418;border:1px solid #252b34;border-radius:var(--radius);padding:16px;margin-bottom:14px;}
-.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#8b95a3;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;}
-.section-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#f0f2f5;margin-bottom:4px;}
-.section-sub{font-size:13px;color:#8b95a3;margin-bottom:16px;}
-.goal-toggle{display:flex;background:#181c22;border-radius:12px;padding:3px;margin-bottom:14px;gap:3px;}
-.goal-btn{flex:1;padding:9px;border-radius:9px;border:none;background:transparent;color:#8b95a3;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
+.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;}
+.section-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.section-sub{font-size:13px;color:var(--text2);margin-bottom:16px;}
+.goal-toggle{display:flex;background:var(--surface2);border-radius:12px;padding:3px;margin-bottom:14px;gap:3px;}
+.goal-btn{flex:1;padding:9px;border-radius:9px;border:none;background:transparent;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;}
 .goal-btn.active{background:#f0b429;color:#000;font-weight:700;}
 .calorie-ring-wrap{display:flex;flex-direction:column;align-items:center;padding:4px 0;}
-.calorie-num{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#f0f2f5;}
-.calorie-label{font-size:12px;color:#8b95a3;}
-.calorie-remaining{font-size:13px;color:#8b95a3;margin-top:4px;text-align:center;}
+.calorie-num{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--text);}
+.calorie-label{font-size:12px;color:var(--text2);}
+.calorie-remaining{font-size:13px;color:var(--text2);margin-top:4px;text-align:center;}
 .macro-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:4px;}
-.macro-label{font-size:11px;color:#8b95a3;margin-bottom:4px;font-weight:500;}
+.macro-label{font-size:11px;color:var(--text2);margin-bottom:4px;font-weight:500;}
 .macro-val{font-size:14px;font-weight:700;margin-bottom:5px;}
-.macro-bar-bg{height:5px;background:#1e2229;border-radius:99px;overflow:hidden;}
+.macro-bar-bg{height:5px;background:var(--surface3);border-radius:99px;overflow:hidden;}
 .macro-bar-fill{height:100%;border-radius:99px;transition:width .5s ease;}
-.divider{height:1px;background:#252b34;margin:12px 0;}
+.divider{height:1px;background:var(--border);margin:12px 0;}
 .meal-section{margin-bottom:14px;}
 .meal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
 .meal-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;}
-.meal-kcal{font-size:12px;color:#8b95a3;}
-.meal-item{display:flex;align-items:center;background:#181c22;border-radius:var(--radius-sm);padding:9px 11px;margin-bottom:5px;gap:9px;}
+.meal-kcal{font-size:12px;color:var(--text2);}
+.meal-item{display:flex;align-items:center;background:var(--surface2);border-radius:var(--radius-sm);padding:9px 11px;margin-bottom:5px;gap:9px;}
 .meal-item-icon{font-size:18px;flex-shrink:0;}
 .meal-item-info{flex:1;}
 .meal-item-name{font-size:13px;font-weight:500;}
-.meal-item-detail{font-size:11px;color:#8b95a3;}
+.meal-item-detail{font-size:11px;color:var(--text2);}
 .meal-item-kcal{font-size:13px;font-weight:700;color:#f0b429;flex-shrink:0;}
 .meal-item-del{width:26px;height:26px;background:rgba(248,113,113,.12);border:none;border-radius:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:#f87171;flex-shrink:0;}
 .add-food-btn{width:100%;padding:12px;background:rgba(240,180,41,.08);border:1px dashed rgba(240,180,41,.3);border-radius:var(--radius-sm);color:#f0b429;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px;}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
-.modal{background:#111418;border-radius:22px 22px 0 0;padding:20px 18px 30px;width:100%;max-width:430px;transform:translateY(30px);transition:transform .25s cubic-bezier(.34,1.56,.64,1);max-height:92svh;overflow-y:auto;}
+.modal{background:var(--surface);border-radius:22px 22px 0 0;padding:20px 18px 30px;width:100%;max-width:430px;transform:translateY(30px);transition:transform .25s cubic-bezier(.34,1.56,.64,1);max-height:92svh;overflow-y:auto;}
 .modal-overlay.open .modal{transform:none;}
-.modal-handle{width:36px;height:4px;background:#252b34;border-radius:99px;margin:0 auto 18px;cursor:pointer;}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:99px;margin:0 auto 18px;cursor:pointer;}
 .modal-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:14px;}
 .input-group{margin-bottom:12px;}
-.input-label{font-size:12px;color:#8b95a3;margin-bottom:5px;font-weight:500;}
-.input{width:100%;padding:11px 13px;background:#181c22;border:1px solid #252b34;border-radius:var(--radius-sm);color:#f0f2f5;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+.input-label{font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:500;}
+.input{width:100%;padding:11px 13px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
 .input:focus{border-color:#f0b429;}
-.input::placeholder{color:#5a6270;}
+.input::placeholder{color:var(--text3);}
 select.input{appearance:none;-webkit-appearance:none;cursor:pointer;}
 .search-wrap{position:relative;margin-bottom:12px;}
-.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:#5a6270;font-size:15px;pointer-events:none;}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:15px;pointer-events:none;}
 .search-input{padding-left:36px!important;}
-.search-results{background:#181c22;border:1px solid #252b34;border-radius:var(--radius-sm);margin-top:3px;max-height:190px;overflow-y:auto;}
-.search-item{padding:9px 13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #252b34;transition:.15s;}
+.search-results{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);margin-top:3px;max-height:190px;overflow-y:auto;}
+.search-item{padding:9px 13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);transition:.15s;}
 .search-item:last-child{border-bottom:none;}
-.search-item:active{background:#1e2229;}
+.search-item:active{background:var(--surface3);}
 .search-item-name{font-size:13px;}
-.search-item-info{font-size:11px;color:#8b95a3;}
+.search-item-info{font-size:11px;color:var(--text2);}
 .btn{padding:12px 18px;border-radius:var(--radius-sm);border:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:7px;}
 .btn:active{transform:scale(.96);}
 .btn-primary{background:linear-gradient(135deg,#f0b429,#e8834a);color:#000;width:100%;}
-.btn-secondary{background:#181c22;border:1px solid #252b34;color:#f0f2f5;width:100%;}
-.btn-ghost{background:transparent;border:1px solid #252b34;color:#8b95a3;}
+.btn-secondary{background:var(--surface2);border:1px solid var(--border);color:var(--text);width:100%;}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2);}
 .btn-sm{padding:8px 13px;font-size:12px;border-radius:8px;}
 .chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
-.chip{padding:6px 11px;background:#181c22;border:1px solid #252b34;border-radius:99px;font-size:12px;cursor:pointer;transition:.2s;}
+.chip{padding:6px 11px;background:var(--surface2);border:1px solid var(--border);border-radius:99px;font-size:12px;cursor:pointer;transition:.2s;}
 .chip.active{background:rgba(240,180,41,.15);border-color:#f0b429;color:#f0b429;}
 .cups-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:16px;}
-.cup{background:#181c22;border:2px solid #252b34;border-radius:13px;padding:12px 5px 9px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.2s;}
+.cup{background:var(--surface2);border:2px solid var(--border);border-radius:13px;padding:12px 5px 9px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.2s;}
 .cup.filled{border-color:#38bdf8;background:rgba(56,189,248,.1);}
 .cup-icon{font-size:22px;line-height:1;}
-.cup-ml{font-size:10px;color:#8b95a3;font-weight:500;}
+.cup-ml{font-size:10px;color:var(--text2);font-weight:500;}
 .cup.filled .cup-ml{color:#38bdf8;}
-.water-progress{height:9px;background:#181c22;border-radius:99px;overflow:hidden;margin-bottom:7px;}
+.water-progress{height:9px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-bottom:7px;}
 .water-fill{height:100%;background:linear-gradient(90deg,#38bdf8,#818cf8);border-radius:99px;transition:width .5s ease;}
 .quick-add{display:flex;gap:7px;}
-.quick-btn{flex:1;padding:10px;background:#181c22;border:1px solid #252b34;border-radius:var(--radius-sm);color:#38bdf8;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;text-align:center;}
+.quick-btn{flex:1;padding:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:#38bdf8;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;text-align:center;}
 .quick-btn:active{background:rgba(56,189,248,.15);border-color:#38bdf8;}
 .diet-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;}
-.diet-card{background:#181c22;border:2px solid #252b34;border-radius:var(--radius-sm);padding:13px;cursor:pointer;transition:.2s;}
+.diet-card{background:var(--surface2);border:2px solid var(--border);border-radius:var(--radius-sm);padding:13px;cursor:pointer;transition:.2s;}
 .diet-card.selected{border-color:#f0b429;background:rgba(240,180,41,.07);}
 .diet-card-icon{font-size:22px;margin-bottom:5px;}
 .diet-card-name{font-size:12px;font-weight:700;font-family:'Syne',sans-serif;}
-.diet-card-desc{font-size:10px;color:#8b95a3;margin-top:2px;}
-.diet-detail{background:#181c22;border-radius:var(--radius);padding:14px;border-left:3px solid #f0b429;}
+.diet-card-desc{font-size:10px;color:var(--text2);margin-top:2px;}
+.diet-detail{background:var(--surface2);border-radius:var(--radius);padding:14px;border-left:3px solid #f0b429;}
 .diet-tip{display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;}
 .diet-tip-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
-.diet-tip-text{font-size:12px;color:#8b95a3;}
-.weight-big{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:#f0f2f5;line-height:1;}
-.weight-entry{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #252b34;}
+.diet-tip-text{font-size:12px;color:var(--text2);}
+.weight-big{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:var(--text);line-height:1;}
+.weight-entry{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);}
 .weight-entry:last-child{border-bottom:none;}
-.weight-entry-date{font-size:12px;color:#8b95a3;}
+.weight-entry-date{font-size:12px;color:var(--text2);}
 .weight-entry-val{font-size:14px;font-weight:700;}
 canvas{width:100%!important;border-radius:10px;}
 .calc-result{background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.2);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
 .calc-result-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
 .calc-result-row:last-child{margin-bottom:0;}
-.calc-result-label{font-size:12px;color:#8b95a3;}
+.calc-result-label{font-size:12px;color:var(--text2);}
 .calc-result-val{font-size:14px;font-weight:700;}
-.photo-drop{border:2px dashed #252b34;border-radius:var(--radius);padding:28px 18px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:.2s;margin-bottom:14px;text-align:center;}
+.photo-drop{border:2px dashed var(--border);border-radius:var(--radius);padding:28px 18px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:.2s;margin-bottom:14px;text-align:center;}
 .photo-preview{width:100%;border-radius:var(--radius);object-fit:cover;max-height:240px;margin-bottom:12px;display:none;}
-.ai-result{background:#181c22;border-radius:var(--radius);padding:14px;margin-bottom:12px;}
-.ai-food-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #252b34;}
+.ai-result{background:var(--surface2);border-radius:var(--radius);padding:14px;margin-bottom:12px;}
+.ai-food-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);}
 .ai-food-item:last-child{border-bottom:none;}
 .ai-food-name{font-size:13px;}
 .ai-food-kcal{font-size:12px;color:#f0b429;font-weight:700;}
-.ai-food-macros{font-size:10px;color:#8b95a3;}
+.ai-food-macros{font-size:10px;color:var(--text2);}
 .ai-total{display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(240,180,41,.1);border-radius:var(--radius-sm);margin-top:9px;}
 .ai-total-val{font-size:16px;font-weight:800;color:#f0b429;}
 .loading-dots{display:flex;gap:6px;align-items:center;justify-content:center;padding:18px;}
@@ -169,46 +170,46 @@ canvas{width:100%!important;border-radius:10px;}
 .dot:nth-child(2){animation-delay:.16s;}
 .dot:nth-child(3){animation-delay:.32s;}
 @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-.history-day{background:#181c22;border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.15s;}
+.history-day{background:var(--surface2);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.15s;}
 .history-day:active{opacity:.85;}
-.history-day-date{font-size:13px;font-weight:700;color:#f0f2f5;}
+.history-day-date{font-size:13px;font-weight:700;color:var(--text);}
 .history-day-bar-wrap{margin:7px 0 2px;}
-.history-day-bar{height:4px;background:#1e2229;border-radius:99px;overflow:hidden;margin-bottom:4px;}
+.history-day-bar{height:4px;background:var(--surface3);border-radius:99px;overflow:hidden;margin-bottom:4px;}
 .history-day-bar-fill{height:100%;border-radius:99px;transition:width .4s ease;}
 .history-day-kcal{font-size:14px;font-weight:800;color:#f0b429;}
 .hist-meal-block{padding:5px 0;}
-.hist-meal-title{font-size:11px;font-weight:700;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
-.hist-food-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1e2229;font-size:13px;}
+.hist-meal-title{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.hist-food-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--surface3);font-size:13px;}
 .hist-food-row:last-child{border-bottom:none;}
-.hist-expand{display:none;margin-top:10px;padding-top:10px;border-top:1px solid #252b34;}
+.hist-expand{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
 .premade-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
-.premade-card{background:#181c22;border:1px solid #252b34;border-radius:var(--radius-sm);padding:13px;cursor:pointer;transition:.2s;}
+.premade-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px;cursor:pointer;transition:.2s;}
 .premade-card:active{transform:scale(.96);border-color:#f0b429;}
 .premade-icon{font-size:24px;margin-bottom:5px;}
 .premade-name{font-size:12px;font-weight:700;font-family:'Syne',sans-serif;margin-bottom:2px;}
 .premade-kcal{font-size:11px;color:#f0b429;}
-.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(16px);background:#111418;border:1px solid #252b34;border-radius:11px;padding:9px 16px;font-size:13px;font-weight:500;color:#f0f2f5;z-index:500;opacity:0;transition:.25s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.5);}
+.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:9px 16px;font-size:13px;font-weight:500;color:var(--text);z-index:500;opacity:0;transition:.25s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.5);}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.success{border-color:#34d399;color:#34d399;}
 .toast.error{border-color:#f87171;color:#f87171;}
-.empty{text-align:center;padding:24px 16px;color:#5a6270;}
+.empty{text-align:center;padding:24px 16px;color:var(--text3);}
 .empty-icon{font-size:36px;margin-bottom:8px;}
 .empty-text{font-size:13px;}
 ::-webkit-scrollbar{width:3px;}
-::-webkit-scrollbar-thumb{background:#252b34;border-radius:99px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
 /* ── SPLASH ── */
-#splash{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .7s ease;}
+#splash{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .7s ease;}
 @keyframes splashPop{from{transform:scale(.65);opacity:0;}to{transform:scale(1);opacity:1;}}
 .splash-img{animation:splashPop .55s cubic-bezier(.34,1.56,.64,1) forwards;}
 @keyframes splashFade{from{opacity:0;}to{opacity:.75;}}
 .splash-sub{animation:splashFade .7s .4s both;}
 /* ── PERFIL FOTO ── */
 .prof-avatar-wrap{display:flex;justify-content:center;margin-bottom:4px;}
-.prof-avatar{width:82px;height:82px;border-radius:50%;border:2.5px solid #f0b429;cursor:pointer;background:#181c22;display:flex;align-items:center;justify-content:center;font-size:34px;overflow:hidden;transition:.2s;}
+.prof-avatar{width:82px;height:82px;border-radius:50%;border:2.5px solid #f0b429;cursor:pointer;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:34px;overflow:hidden;transition:.2s;}
 .prof-avatar:active{transform:scale(.94);}
-.prof-avatar-label{text-align:center;font-size:11px;color:#8b95a3;margin-top:5px;cursor:pointer;}
+.prof-avatar-label{text-align:center;font-size:11px;color:var(--text2);margin-top:5px;cursor:pointer;}
 /* ── TDEE BOX ── */
-.tdee-box{background:#181c22;border:1px solid #252b34;border-radius:12px;padding:10px 14px;margin:8px 0 2px;}
+.tdee-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin:8px 0 2px;}
 .tdee-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:13px;}
 .tdee-val{font-weight:700;font-size:13px;}
 /* ── SCORE ── */
@@ -221,24 +222,24 @@ canvas{width:100%!important;border-radius:10px;}
 .cal-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;transition:.15s;}
 /* ── CHAT ── */
 .chat-bubble-user{background:#f0b429;color:#000;border-radius:14px 14px 4px 14px;padding:10px 13px;font-size:13px;line-height:1.6;max-width:85%;align-self:flex-end;}
-.chat-bubble-ai{background:#181c22;color:#f0f2f5;border-radius:14px 14px 14px 4px;padding:10px 13px;font-size:13px;line-height:1.6;max-width:85%;align-self:flex-start;}
+.chat-bubble-ai{background:var(--surface2);color:var(--text);border-radius:14px 14px 14px 4px;padding:10px 13px;font-size:13px;line-height:1.6;max-width:85%;align-self:flex-start;}
 .chat-input-row{display:flex;gap:8px;margin-top:10px;}
 /* ── SUB TABS (Peso/Medidas) ── */
-.subtab-row{display:flex;background:#181c22;border-radius:10px;padding:3px;margin-bottom:14px;gap:3px;}
-.subtab-btn{flex:1;padding:8px;border-radius:7px;border:none;background:transparent;color:#8b95a3;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;}
-.subtab-btn.active{background:#1e2229;color:#f0f2f5;font-weight:700;}
+.subtab-row{display:flex;background:var(--surface2);border-radius:10px;padding:3px;margin-bottom:14px;gap:3px;}
+.subtab-btn{flex:1;padding:8px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;}
+.subtab-btn.active{background:var(--surface3);color:var(--text);font-weight:700;}
 /* ── FOTOS DE PROGRESSO ── */
 .prog-photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px;}
-.prog-photo-item{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;border:2px solid #252b34;transition:.2s;}
+.prog-photo-item{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;border:2px solid var(--border);transition:.2s;}
 .prog-photo-item.selected{border-color:#f0b429;box-shadow:0 0 0 3px rgba(240,180,41,.25);}
 .prog-photo-item img{width:100%;height:100%;object-fit:cover;display:block;}
 .prog-photo-meta{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.8));padding:18px 7px 6px;text-align:center;}
-.prog-photo-date-label{font-size:10px;font-weight:700;color:#f0f2f5;}
+.prog-photo-date-label{font-size:10px;font-weight:700;color:var(--text);}
 .prog-photo-sub-label{font-size:9px;color:#d1d5db;margin-top:1px;}
 .prog-photo-del{position:absolute;top:5px;right:5px;width:22px;height:22px;background:rgba(248,113,113,.85);border:none;border-radius:50%;color:#fff;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;line-height:1;}
 .prog-photo-sel-badge{position:absolute;top:5px;left:5px;width:22px;height:22px;background:rgba(240,180,41,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#000;z-index:5;display:none;}
 .prog-photo-item.selected .prog-photo-sel-badge{display:flex;}
-.compare-bar{background:#181c22;border:1px solid #252b34;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
+.compare-bar{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
 /* ── COMPARE SLIDER MODAL ── */
 .compare-wrap{position:relative;width:100%;overflow:hidden;border-radius:14px;touch-action:none;-webkit-user-select:none;user-select:none;background:#000;aspect-ratio:3/4;}
 .compare-img-base{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;}
@@ -271,17 +272,17 @@ body.pro-mode .macro-bar-fill{opacity:.9;}
 body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9px;font-weight:800;color:#d97706;letter-spacing:.4px;}
 .upgrade-banner{background:linear-gradient(135deg,rgba(240,180,41,.1),rgba(232,131,74,.06));border:1.5px solid rgba(240,180,41,.35);border-radius:14px;padding:14px;margin-bottom:14px;}
 /* ── RELATÓRIOS AVANÇADOS ── */
-.report-hero{background:linear-gradient(135deg,#181c22,#1e2229);border:1px solid #252b34;border-radius:16px;padding:18px;margin-bottom:12px;text-align:center;}
+.report-hero{background:linear-gradient(135deg,var(--surface2),var(--surface3));border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:12px;text-align:center;}
 .report-hero-num{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;line-height:1.1;}
 .report-hero-sub{font-size:13px;margin-top:8px;font-weight:500;}
 .report-week-wrap{display:flex;gap:5px;margin:0 0 12px;}
 .report-day-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.report-day-label{font-size:9px;color:#5a6270;text-transform:uppercase;font-weight:600;}
+.report-day-label{font-size:9px;color:var(--text3);text-transform:uppercase;font-weight:600;}
 .report-day-dot{width:100%;aspect-ratio:1;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
-.report-stat-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #1e2229;}
+.report-stat-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--surface3);}
 .report-stat-row:last-child{border-bottom:none;}
-.report-stat-label{font-size:12px;color:#8b95a3;}
-.report-stat-val{font-size:13px;font-weight:700;color:#f0f2f5;}
+.report-stat-label{font-size:12px;color:var(--text2);}
+.report-stat-val{font-size:13px;font-weight:700;color:var(--text);}
 .report-projection{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2);border-radius:12px;padding:14px;margin-bottom:12px;}
 .report-tip{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.2);border-radius:12px;padding:14px;margin-bottom:12px;}
 </style>
@@ -289,7 +290,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 <body>
 
 <!-- ── SPLASH SCREEN (CSS Animation) ─────────────────────────── -->
-<div id="splash" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9999;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+<div id="splash" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9999;overflow:hidden;display:flex;align-items:center;justify-content:center;">
   <style>
     @keyframes sp-logo-in{0%{opacity:0;transform:scale(.6)}60%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
     @keyframes sp-text-in{0%{opacity:0;letter-spacing:10px}100%{opacity:1;letter-spacing:4px}}
@@ -320,32 +321,32 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 </div>
 
 <!-- ── AUTH SCREEN ─────────────────────────────────────────────── -->
-<div id="authScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0c0f;z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;overflow-y:auto;">
+<div id="authScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;overflow-y:auto;">
   <div style="text-align:center;margin-bottom:32px;">
     <div style="font-size:52px;margin-bottom:8px;">💪</div>
     <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#f0b429;">Better You</div>
-    <div style="font-size:13px;color:#8b95a3;margin-top:4px;">Seus dados salvos na nuvem</div>
+    <div style="font-size:13px;color:var(--text2);margin-top:4px;">Seus dados salvos na nuvem</div>
   </div>
-  <div style="display:flex;background:#181c22;border-radius:12px;padding:3px;margin-bottom:20px;width:100%;max-width:320px;">
+  <div style="display:flex;background:var(--surface2);border-radius:12px;padding:3px;margin-bottom:20px;width:100%;max-width:320px;">
     <button id="authTabLogin" onclick="switchAuthTab('login')" style="flex:1;padding:9px;border-radius:9px;border:none;background:#f0b429;color:#000;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;">Entrar</button>
-    <button id="authTabRegister" onclick="switchAuthTab('register')" style="flex:1;padding:9px;border-radius:9px;border:none;background:transparent;color:#8b95a3;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;">Criar conta</button>
+    <button id="authTabRegister" onclick="switchAuthTab('register')" style="flex:1;padding:9px;border-radius:9px;border:none;background:transparent;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;">Criar conta</button>
   </div>
   <div style="width:100%;max-width:320px;">
     <div style="margin-bottom:12px;">
-      <div style="font-size:12px;color:#8b95a3;margin-bottom:5px;font-weight:500;">E-mail</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:500;">E-mail</div>
       <input type="email" id="authEmail" class="input" placeholder="seu@email.com" style="width:100%;">
     </div>
     <div style="margin-bottom:12px;">
-      <div style="font-size:12px;color:#8b95a3;margin-bottom:5px;font-weight:500;">Senha</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:500;">Senha</div>
       <input type="password" id="authPassword" class="input" placeholder="••••••••" style="width:100%;" onkeydown="if(event.key==='Enter')doAuth()">
     </div>
     <div id="authConfirmWrap" style="margin-bottom:12px;display:none;">
-      <div style="font-size:12px;color:#8b95a3;margin-bottom:5px;font-weight:500;">Confirmar Senha</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:500;">Confirmar Senha</div>
       <input type="password" id="authPassword2" class="input" placeholder="••••••••" style="width:100%;">
     </div>
     <div id="authError" style="font-size:12px;margin-bottom:10px;text-align:center;display:none;padding:8px;border-radius:8px;background:rgba(248,113,113,.1);color:#f87171;"></div>
     <button id="authBtn" class="btn btn-primary" onclick="doAuth()" style="width:100%;margin-bottom:10px;">Entrar</button>
-    <button id="authForgotBtn" onclick="doForgotPassword()" style="background:none;border:none;color:#8b95a3;font-size:12px;cursor:pointer;width:100%;text-align:center;display:block;padding:4px;">Esqueci minha senha</button>
+    <button id="authForgotBtn" onclick="doForgotPassword()" style="background:none;border:none;color:var(--text2);font-size:12px;cursor:pointer;width:100%;text-align:center;display:block;padding:4px;">Esqueci minha senha</button>
   </div>
 </div>
 
@@ -362,10 +363,10 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 <div class="tab active" id="tab-hoje">
   <!-- Saudação com foto do perfil -->
   <div id="homeGreeting" style="display:none;align-items:center;gap:13px;padding:14px 0 4px;">
-    <div id="homeAvatar" onclick="openProfile()" style="width:52px;height:52px;border-radius:50%;border:2.5px solid #f0b429;background:#181c22;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;flex-shrink:0;cursor:pointer;">&#128100;</div>
+    <div id="homeAvatar" onclick="openProfile()" style="width:52px;height:52px;border-radius:50%;border:2.5px solid #f0b429;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;flex-shrink:0;cursor:pointer;">&#128100;</div>
     <div style="flex:1;min-width:0;">
       <div id="homeGreetName" style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
-      <div id="homeGreetGoal" style="font-size:12px;color:#8b95a3;margin-top:2px;"></div>
+      <div id="homeGreetGoal" style="font-size:12px;color:var(--text2);margin-top:2px;"></div>
     </div>
   </div>
   <div class="goal-toggle">
@@ -376,7 +377,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div class="calorie-ring-wrap">
       <div style="position:relative;width:170px;height:170px;">
         <svg width="170" height="170" style="transform:rotate(-90deg)">
-          <circle cx="85" cy="85" r="74" fill="none" stroke="#1e2229" stroke-width="11"/>
+          <circle cx="85" cy="85" r="74" fill="none" stroke="var(--surface3)" stroke-width="11"/>
           <circle cx="85" cy="85" r="74" fill="none" stroke="url(#rg)" stroke-width="11" stroke-linecap="round" stroke-dasharray="465" id="calRingFill" stroke-dashoffset="465" style="transition:stroke-dashoffset .6s ease;"/>
           <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f0b429"/><stop offset="100%" stop-color="#e8834a"/></linearGradient></defs>
         </svg>
@@ -417,7 +418,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div class="card-title" data-i18n="aguaHoje">Água Hoje</div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px;">
       <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;" id="waterSummaryVal">0</div>
-      <div style="font-size:12px;color:#8b95a3;">ml de <b id="waterSummaryGoal">2500</b> ml</div>
+      <div style="font-size:12px;color:var(--text2);">ml de <b id="waterSummaryGoal">2500</b> ml</div>
     </div>
     <div class="water-progress"><div class="water-fill" id="waterSummaryBar" style="width:0%"></div></div>
   </div>
@@ -427,13 +428,13 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div class="score-ring-wrap">
       <div style="position:relative;width:90px;height:90px;flex-shrink:0;">
         <svg width="90" height="90" style="transform:rotate(-90deg)">
-          <circle cx="45" cy="45" r="38" fill="none" stroke="#1e2229" stroke-width="8"/>
+          <circle cx="45" cy="45" r="38" fill="none" stroke="var(--surface3)" stroke-width="8"/>
           <circle cx="45" cy="45" r="38" fill="none" stroke="url(#scoreGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="239" id="scoreRingFill" stroke-dashoffset="239" style="transition:stroke-dashoffset .6s ease;"/>
           <defs><linearGradient id="scoreGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient></defs>
         </svg>
         <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
           <div class="score-num" id="scoreNum">0</div>
-          <div style="font-size:10px;color:#8b95a3;">/ 100</div>
+          <div style="font-size:10px;color:var(--text2);">/ 100</div>
         </div>
       </div>
       <div class="score-checks" id="scoreChecks"></div>
@@ -451,8 +452,8 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
 
   <!-- ────── SECTION: FOTO IA ────── -->
   <div id="section-fotoIA">
-<div style="background:linear-gradient(135deg,#1c1f26,#252930);border:1px solid rgba(240,180,41,0.25);border-radius:18px;padding:20px;margin-bottom:14px;overflow:hidden;"><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;"><div><span style="background:#f0b429;color:#000;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:.5px;">PRO</span><div style="font-size:28px;font-weight:800;margin:10px 0 8px;line-height:1.1;">Foto <span style="color:#f0b429;">IA</span></div><div style="font-size:12px;color:#8892a0;line-height:1.5;margin-bottom:14px;" data-i18n="fotoIASub">Sua alimentação em análise com inteligência artificial.</div><div style="display:flex;flex-direction:column;gap:9px;"><div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#f0b429;font-size:14px;margin-top:1px;">&#127919;</span><div><div style="font-size:11px;font-weight:700;color:#f0b429;" data-i18n="fotoF1T">Reconhecimento preciso</div><div style="font-size:10px;color:#6b7685;" data-i18n="fotoF1D">A IA identifica cada ingrediente</div></div></div><div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#f0b429;font-size:14px;margin-top:1px;">&#9889;</span><div><div style="font-size:11px;font-weight:700;color:#f0b429;" data-i18n="fotoF2T">Resultados instantâneos</div><div style="font-size:10px;color:#6b7685;" data-i18n="fotoF2D">Calorias e macros na hora</div></div></div><div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#f0b429;font-size:14px;margin-top:1px;">&#9989;</span><div><div style="font-size:11px;font-weight:700;color:#f0b429;" data-i18n="fotoF3T">Prático e inteligente</div><div style="font-size:10px;color:#6b7685;" data-i18n="fotoF3D">Tudo com apenas uma foto</div></div></div></div></div><div style="position:relative;"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=280&q=75" style="width:100%;height:175px;object-fit:cover;border-radius:14px;display:block;" alt="Prato"><div style="position:absolute;inset:0;border-radius:14px;border:2px solid rgba(240,180,41,0.5);pointer-events:none;"><div style="position:absolute;top:7px;left:7px;width:16px;height:16px;border-top:3px solid #f0b429;border-left:3px solid #f0b429;border-radius:2px;"></div><div style="position:absolute;top:7px;right:7px;width:16px;height:16px;border-top:3px solid #f0b429;border-right:3px solid #f0b429;border-radius:2px;"></div><div style="position:absolute;bottom:7px;left:7px;width:16px;height:16px;border-bottom:3px solid #f0b429;border-left:3px solid #f0b429;border-radius:2px;"></div><div style="position:absolute;bottom:7px;right:7px;width:16px;height:16px;border-bottom:3px solid #f0b429;border-right:3px solid #f0b429;border-radius:2px;"></div></div><div style="position:absolute;bottom:10px;right:10px;width:40px;height:40px;background:rgba(10,10,15,0.9);border:2px solid #f0b429;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#f0b429;">AI&#10024;</div></div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;"><button onclick="document.getElementById('camInput').click()" style="background:linear-gradient(135deg,#f0b429,#d4920a);border:none;border-radius:16px;padding:16px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">&#128247;</span><div style="text-align:left;"><div style="font-size:13px;font-weight:800;color:#000;" data-i18n="fotoCam">Câmera</div><div style="font-size:10px;color:rgba(0,0,0,.55);">Tirar foto agora</div></div></button><button onclick="document.getElementById('galInput').click()" style="background:#1a1d24;border:1px solid #2d3340;border-radius:16px;padding:16px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">&#128444;</span><div style="text-align:left;"><div style="font-size:13px;font-weight:800;color:#f0f2f5;">Galeria</div><div style="font-size:10px;color:#6b7685;">Escolher da galeria</div></div></button></div><div style="background:#181b22;border-radius:16px;padding:18px;margin-bottom:14px;"><div style="font-size:13px;font-weight:700;color:#f0b429;margin-bottom:18px;">&#10024; COMO FUNCIONA</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;position:relative;"><div style="position:absolute;top:19px;left:17%;right:17%;height:2px;background:repeating-linear-gradient(90deg,#f0b429 0,#f0b429 6px,transparent 6px,transparent 14px);"></div><div style="text-align:center;position:relative;z-index:1;"><div style="width:40px;height:40px;background:#181b22;border:2px solid #f0b429;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#f0b429;">1</div><div style="font-size:9px;color:#8892a0;line-height:1.4;">Tire uma foto de seu prato</div></div><div style="text-align:center;position:relative;z-index:1;"><div style="width:40px;height:40px;background:#181b22;border:2px solid #f0b429;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#f0b429;">2</div><div style="font-size:9px;color:#8892a0;line-height:1.4;">A IA identifica os ingredientes</div></div><div style="text-align:center;position:relative;z-index:1;"><div style="width:40px;height:40px;background:#181b22;border:2px solid #f0b429;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#f0b429;">3</div><div style="font-size:9px;color:#8892a0;line-height:1.4;">Estimamos calorias e macros</div></div><div style="text-align:center;position:relative;z-index:1;"><div style="width:40px;height:40px;background:#181b22;border:2px solid #f0b429;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#f0b429;">4</div><div style="font-size:9px;color:#8892a0;line-height:1.4;" data-i18n="fotoRevise">Revise e salve no diário</div></div></div></div><div style="background:#181b22;border-radius:16px;padding:16px;display:flex;align-items:center;gap:12px;"><div style="width:44px;height:44px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">&#128274;</div><div><div style="font-size:12px;font-weight:700;color:#f0b429;margin-bottom:3px;" data-i18n="fotoPrivT">Privacidade e segurança</div><div style="font-size:11px;color:#6b7685;line-height:1.5;" data-i18n="fotoPrivD">Suas fotos são analisadas com segurança e não são armazenadas em nossos servidores.</div></div></div><input type="file" id="camInput" accept="image/*" capture="environment" style="display:none" onchange="handleFotoIA(this)"><input type="file" id="galInput" accept="image/*" style="display:none" onchange="handleFotoIA(this)"></div><div id="section-progresso" style="display:none">
-<div style="background:linear-gradient(135deg,#1c1f26,#252930);border:1px solid rgba(240,180,41,0.2);border-radius:18px;padding:20px;margin-bottom:14px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:22px;font-weight:800;line-height:1.2;margin-bottom:8px;">Seu <span style="color:#f0b429;">progresso</span> importa!</div><div style="font-size:12px;color:#8892a0;line-height:1.5;max-width:200px;">Acompanhe sua evolução com fotos e veja resultados reais ao longo do tempo.</div></div><div style="width:64px;height:64px;background:rgba(240,180,41,0.1);border:2px solid rgba(240,180,41,0.3);border-radius:50%;display:flex;align-items:flex-end;justify-content:center;gap:4px;padding:12px 10px;flex-shrink:0;"><div style="width:9px;background:#f0b429;border-radius:2px 2px 0 0;height:40%;"></div><div style="width:9px;background:#f0b429;border-radius:2px 2px 0 0;height:65%;"></div><div style="width:9px;background:#f0b429;border-radius:2px 2px 0 0;height:90%;"></div></div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;"><button onclick="document.getElementById('progCamInput').click()" style="background:linear-gradient(135deg,#f0b429,#d4920a);border:none;border-radius:16px;padding:16px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">&#128247;</span><div style="text-align:left;"><div style="font-size:13px;font-weight:800;color:#000;">Tirar foto</div><div style="font-size:10px;color:rgba(0,0,0,.55);">Registrar agora</div></div></button><button onclick="document.getElementById('progGalInput').click()" style="background:#1a1d24;border:1px solid #2d3340;border-radius:16px;padding:16px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">&#128444;&#65039;</span><div style="text-align:left;"><div style="font-size:13px;font-weight:800;color:#f0f2f5;">Escolher da galeria</div><div style="font-size:10px;color:#6b7685;">Selecionar foto</div></div></button></div><div style="background:#181b22;border-radius:16px;padding:16px;margin-bottom:14px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div style="font-size:13px;font-weight:700;color:#f0f2f5;display:flex;align-items:center;gap:6px;" data-i18n="suaEvolucao">&#128200; Sua evolução</div><select onchange="renderProgressPhotos(this.value)" style="background:#252930;border:1px solid #3d4555;border-radius:8px;color:#f0f2f5;font-size:11px;padding:4px 10px;cursor:pointer;outline:none;"><option value="desc">Mais recentes ▾</option><option value="asc">Mais antigos ▾</option></select></div><div id="progressGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;"><div style="text-align:center;color:#6b7685;font-size:11px;padding:32px 0;grid-column:1/-1;">&#128247; Adicione sua primeira foto de progresso!</div></div></div><div style="background:#181b22;border-radius:16px;padding:16px;margin-bottom:14px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:13px;font-weight:700;color:#f0f2f5;">Resumo do seu progresso</div><div id="progRange" style="font-size:10px;color:#f0b429;font-weight:600;background:rgba(240,180,41,0.1);padding:3px 8px;border-radius:6px;">— dias</div></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"><div style="background:#1a1d24;border-radius:12px;padding:12px;"><div style="font-size:10px;color:#8892a0;margin-bottom:6px;" data-i18n="cardPeso">&#128202; Peso</div><div id="progPesoVal" style="font-size:20px;font-weight:800;color:#f0f2f5;margin-bottom:3px;">—</div><div id="progPesoDe" style="font-size:9px;color:#6b7685;line-height:1.3;">Adicione fotos com peso</div></div><div style="background:#1a1d24;border-radius:12px;padding:12px;"><div style="font-size:10px;color:#8892a0;margin-bottom:6px;">&#128170; Massa Magra</div><div id="progMassaVal" style="font-size:20px;font-weight:800;color:#f0f2f5;margin-bottom:3px;">—</div><div style="font-size:9px;color:#6b7685;">Ganho de massa</div></div><div style="background:#1a1d24;border-radius:12px;padding:12px;"><div style="font-size:10px;color:#8892a0;margin-bottom:6px;">&#128167; Gordura</div><div id="progGorduraVal" style="font-size:20px;font-weight:800;color:#f0f2f5;margin-bottom:3px;">—</div><div style="font-size:9px;color:#6b7685;">Redução percentual</div></div></div></div><div style="background:linear-gradient(135deg,rgba(240,180,41,0.06),rgba(240,180,41,0.02));border:1px solid rgba(240,180,41,0.15);border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start;"><div style="font-size:36px;color:#f0b429;line-height:.8;font-family:Georgia,serif;opacity:.9;">“</div><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;margin-bottom:5px;">Disciplina hoje, resultado amanhã.</div><div style="font-size:12px;color:#8892a0;">Você está no <span style="color:#f0b429;font-weight:700;">caminho certo!</span></div></div></div><input type="file" id="progCamInput" accept="image/*" capture="environment" style="display:none" onchange="handleProgressPhoto(this)"><input type="file" id="progGalInput" accept="image/*" style="display:none" onchange="handleProgressPhoto(this)"><div id="progressPreviewBox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9998;"><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#1c1f26;border-radius:20px;padding:24px;max-width:320px;width:calc(100% - 40px);border:1px solid rgba(240,180,41,0.3);box-shadow:0 20px 60px rgba(0,0,0,.6);"><div style="font-size:14px;font-weight:700;color:#f0b429;margin-bottom:14px;" data-i18n="salvarFotoProg">&#128247; Salvar foto de progresso</div><img id="progressPreviewImg" style="width:100%;height:200px;object-fit:cover;border-radius:12px;margin-bottom:16px;display:block;border:1px solid rgba(240,180,41,0.2);" src=""><div style="margin-bottom:10px;"><label style="font-size:11px;color:#8892a0;display:block;margin-bottom:5px;">Data</label><input type="date" id="progressPhotoDate" style="width:100%;background:#252930;border:1px solid #3d4555;border-radius:10px;padding:10px;color:#f0f2f5;font-size:13px;box-sizing:border-box;outline:none;"></div><div style="margin-bottom:18px;"><label style="font-size:11px;color:#8892a0;display:block;margin-bottom:5px;">Peso atual (opcional)</label><input type="text" id="progressPhotoLabel" placeholder="Ex: 79,5 kg" style="width:100%;background:#252930;border:1px solid #3d4555;border-radius:10px;padding:10px;color:#f0f2f5;font-size:13px;box-sizing:border-box;outline:none;"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><button onclick="cancelProgressPhoto()" style="background:#252930;border:1px solid #3d4555;border-radius:12px;padding:13px;color:#f0f2f5;font-size:13px;font-weight:600;cursor:pointer;">Cancelar</button><button onclick="saveProgressPhoto()" style="background:linear-gradient(135deg,#f0b429,#d4920a);border:none;border-radius:12px;padding:13px;color:#000;font-size:13px;font-weight:800;cursor:pointer;" data-i18n="salvarCheck">Salvar ✓</button></div></div></div></div><!-- /section-progresso -->
+<div style="background:linear-gradient(135deg,#1c1f26,#252930);border:1px solid rgba(240,180,41,0.25);border-radius:18px;padding:20px;margin-bottom:14px;overflow:hidden;"><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;"><div><span style="background:#f0b429;color:#000;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:.5px;">PRO</span><div style="font-size:28px;font-weight:800;margin:10px 0 8px;line-height:1.1;">Foto <span style="color:#f0b429;">IA</span></div><div style="font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:14px;" data-i18n="fotoIASub">Sua alimentação em análise com inteligência artificial.</div><div style="display:flex;flex-direction:column;gap:9px;"><div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#f0b429;font-size:14px;margin-top:1px;">&#127919;</span><div><div style="font-size:11px;font-weight:700;color:#f0b429;" data-i18n="fotoF1T">Reconhecimento preciso</div><div style="font-size:10px;color:#6b7685;" data-i18n="fotoF1D">A IA identifica cada ingrediente</div></div></div><div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#f0b429;font-size:14px;margin-top:1px;">&#9889;</span><div><div style="font-size:11px;font-weight:700;color:#f0b429;" data-i18n="fotoF2T">Resultados instantâneos</div><div style="font-size:10px;color:#6b7685;" data-i18n="fotoF2D">Calorias e macros na hora</div></div></div><div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#f0b429;font-size:14px;margin-top:1px;">&#9989;</span><div><div style="font-size:11px;font-weight:700;color:#f0b429;" data-i18n="fotoF3T">Prático e inteligente</div><div style="font-size:10px;color:#6b7685;" data-i18n="fotoF3D">Tudo com apenas uma foto</div></div></div></div></div><div style="position:relative;"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=280&q=75" style="width:100%;height:175px;object-fit:cover;border-radius:14px;display:block;" alt="Prato"><div style="position:absolute;inset:0;border-radius:14px;border:2px solid rgba(240,180,41,0.5);pointer-events:none;"><div style="position:absolute;top:7px;left:7px;width:16px;height:16px;border-top:3px solid #f0b429;border-left:3px solid #f0b429;border-radius:2px;"></div><div style="position:absolute;top:7px;right:7px;width:16px;height:16px;border-top:3px solid #f0b429;border-right:3px solid #f0b429;border-radius:2px;"></div><div style="position:absolute;bottom:7px;left:7px;width:16px;height:16px;border-bottom:3px solid #f0b429;border-left:3px solid #f0b429;border-radius:2px;"></div><div style="position:absolute;bottom:7px;right:7px;width:16px;height:16px;border-bottom:3px solid #f0b429;border-right:3px solid #f0b429;border-radius:2px;"></div></div><div style="position:absolute;bottom:10px;right:10px;width:40px;height:40px;background:rgba(10,10,15,0.9);border:2px solid #f0b429;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#f0b429;">AI&#10024;</div></div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;"><button onclick="document.getElementById('camInput').click()" style="background:linear-gradient(135deg,#f0b429,#d4920a);border:none;border-radius:16px;padding:16px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">&#128247;</span><div style="text-align:left;"><div style="font-size:13px;font-weight:800;color:#000;" data-i18n="fotoCam">Câmera</div><div style="font-size:10px;color:rgba(0,0,0,.55);">Tirar foto agora</div></div></button><button onclick="document.getElementById('galInput').click()" style="background:#1a1d24;border:1px solid #2d3340;border-radius:16px;padding:16px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">&#128444;</span><div style="text-align:left;"><div style="font-size:13px;font-weight:800;color:var(--text);">Galeria</div><div style="font-size:10px;color:#6b7685;">Escolher da galeria</div></div></button></div><div style="background:#181b22;border-radius:16px;padding:18px;margin-bottom:14px;"><div style="font-size:13px;font-weight:700;color:#f0b429;margin-bottom:18px;">&#10024; COMO FUNCIONA</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;position:relative;"><div style="position:absolute;top:19px;left:17%;right:17%;height:2px;background:repeating-linear-gradient(90deg,#f0b429 0,#f0b429 6px,transparent 6px,transparent 14px);"></div><div style="text-align:center;position:relative;z-index:1;"><div style="width:40px;height:40px;background:#181b22;border:2px solid #f0b429;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#f0b429;">1</div><div style="font-size:9px;color:var(--text2);line-height:1.4;">Tire uma foto de seu prato</div></div><div style="text-align:center;position:relative;z-index:1;"><div style="width:40px;height:40px;background:#181b22;border:2px solid #f0b429;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#f0b429;">2</div><div style="font-size:9px;color:var(--text2);line-height:1.4;">A IA identifica os ingredientes</div></div><div style="text-align:center;position:relative;z-index:1;"><div style="width:40px;height:40px;background:#181b22;border:2px solid #f0b429;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#f0b429;">3</div><div style="font-size:9px;color:var(--text2);line-height:1.4;">Estimamos calorias e macros</div></div><div style="text-align:center;position:relative;z-index:1;"><div style="width:40px;height:40px;background:#181b22;border:2px solid #f0b429;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#f0b429;">4</div><div style="font-size:9px;color:var(--text2);line-height:1.4;" data-i18n="fotoRevise">Revise e salve no diário</div></div></div></div><div style="background:#181b22;border-radius:16px;padding:16px;display:flex;align-items:center;gap:12px;"><div style="width:44px;height:44px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">&#128274;</div><div><div style="font-size:12px;font-weight:700;color:#f0b429;margin-bottom:3px;" data-i18n="fotoPrivT">Privacidade e segurança</div><div style="font-size:11px;color:#6b7685;line-height:1.5;" data-i18n="fotoPrivD">Suas fotos são analisadas com segurança e não são armazenadas em nossos servidores.</div></div></div><input type="file" id="camInput" accept="image/*" capture="environment" style="display:none" onchange="handleFotoIA(this)"><input type="file" id="galInput" accept="image/*" style="display:none" onchange="handleFotoIA(this)"></div><div id="section-progresso" style="display:none">
+<div style="background:linear-gradient(135deg,#1c1f26,#252930);border:1px solid rgba(240,180,41,0.2);border-radius:18px;padding:20px;margin-bottom:14px;"><div style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:22px;font-weight:800;line-height:1.2;margin-bottom:8px;">Seu <span style="color:#f0b429;">progresso</span> importa!</div><div style="font-size:12px;color:var(--text2);line-height:1.5;max-width:200px;">Acompanhe sua evolução com fotos e veja resultados reais ao longo do tempo.</div></div><div style="width:64px;height:64px;background:rgba(240,180,41,0.1);border:2px solid rgba(240,180,41,0.3);border-radius:50%;display:flex;align-items:flex-end;justify-content:center;gap:4px;padding:12px 10px;flex-shrink:0;"><div style="width:9px;background:#f0b429;border-radius:2px 2px 0 0;height:40%;"></div><div style="width:9px;background:#f0b429;border-radius:2px 2px 0 0;height:65%;"></div><div style="width:9px;background:#f0b429;border-radius:2px 2px 0 0;height:90%;"></div></div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;"><button onclick="document.getElementById('progCamInput').click()" style="background:linear-gradient(135deg,#f0b429,#d4920a);border:none;border-radius:16px;padding:16px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">&#128247;</span><div style="text-align:left;"><div style="font-size:13px;font-weight:800;color:#000;">Tirar foto</div><div style="font-size:10px;color:rgba(0,0,0,.55);">Registrar agora</div></div></button><button onclick="document.getElementById('progGalInput').click()" style="background:#1a1d24;border:1px solid #2d3340;border-radius:16px;padding:16px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">&#128444;&#65039;</span><div style="text-align:left;"><div style="font-size:13px;font-weight:800;color:var(--text);">Escolher da galeria</div><div style="font-size:10px;color:#6b7685;">Selecionar foto</div></div></button></div><div style="background:#181b22;border-radius:16px;padding:16px;margin-bottom:14px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div style="font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;" data-i18n="suaEvolucao">&#128200; Sua evolução</div><select onchange="renderProgressPhotos(this.value)" style="background:#252930;border:1px solid #3d4555;border-radius:8px;color:var(--text);font-size:11px;padding:4px 10px;cursor:pointer;outline:none;"><option value="desc">Mais recentes ▾</option><option value="asc">Mais antigos ▾</option></select></div><div id="progressGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;"><div style="text-align:center;color:#6b7685;font-size:11px;padding:32px 0;grid-column:1/-1;">&#128247; Adicione sua primeira foto de progresso!</div></div></div><div style="background:#181b22;border-radius:16px;padding:16px;margin-bottom:14px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:13px;font-weight:700;color:var(--text);">Resumo do seu progresso</div><div id="progRange" style="font-size:10px;color:#f0b429;font-weight:600;background:rgba(240,180,41,0.1);padding:3px 8px;border-radius:6px;">— dias</div></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"><div style="background:#1a1d24;border-radius:12px;padding:12px;"><div style="font-size:10px;color:var(--text2);margin-bottom:6px;" data-i18n="cardPeso">&#128202; Peso</div><div id="progPesoVal" style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:3px;">—</div><div id="progPesoDe" style="font-size:9px;color:#6b7685;line-height:1.3;">Adicione fotos com peso</div></div><div style="background:#1a1d24;border-radius:12px;padding:12px;"><div style="font-size:10px;color:var(--text2);margin-bottom:6px;">&#128170; Massa Magra</div><div id="progMassaVal" style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:3px;">—</div><div style="font-size:9px;color:#6b7685;">Ganho de massa</div></div><div style="background:#1a1d24;border-radius:12px;padding:12px;"><div style="font-size:10px;color:var(--text2);margin-bottom:6px;">&#128167; Gordura</div><div id="progGorduraVal" style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:3px;">—</div><div style="font-size:9px;color:#6b7685;">Redução percentual</div></div></div></div><div style="background:linear-gradient(135deg,rgba(240,180,41,0.06),rgba(240,180,41,0.02));border:1px solid rgba(240,180,41,0.15);border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start;"><div style="font-size:36px;color:#f0b429;line-height:.8;font-family:Georgia,serif;opacity:.9;">“</div><div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;">Disciplina hoje, resultado amanhã.</div><div style="font-size:12px;color:var(--text2);">Você está no <span style="color:#f0b429;font-weight:700;">caminho certo!</span></div></div></div><input type="file" id="progCamInput" accept="image/*" capture="environment" style="display:none" onchange="handleProgressPhoto(this)"><input type="file" id="progGalInput" accept="image/*" style="display:none" onchange="handleProgressPhoto(this)"><div id="progressPreviewBox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9998;"><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#1c1f26;border-radius:20px;padding:24px;max-width:320px;width:calc(100% - 40px);border:1px solid rgba(240,180,41,0.3);box-shadow:0 20px 60px rgba(0,0,0,.6);"><div style="font-size:14px;font-weight:700;color:#f0b429;margin-bottom:14px;" data-i18n="salvarFotoProg">&#128247; Salvar foto de progresso</div><img id="progressPreviewImg" style="width:100%;height:200px;object-fit:cover;border-radius:12px;margin-bottom:16px;display:block;border:1px solid rgba(240,180,41,0.2);" src=""><div style="margin-bottom:10px;"><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:5px;">Data</label><input type="date" id="progressPhotoDate" style="width:100%;background:#252930;border:1px solid #3d4555;border-radius:10px;padding:10px;color:var(--text);font-size:13px;box-sizing:border-box;outline:none;"></div><div style="margin-bottom:18px;"><label style="font-size:11px;color:var(--text2);display:block;margin-bottom:5px;">Peso atual (opcional)</label><input type="text" id="progressPhotoLabel" placeholder="Ex: 79,5 kg" style="width:100%;background:#252930;border:1px solid #3d4555;border-radius:10px;padding:10px;color:var(--text);font-size:13px;box-sizing:border-box;outline:none;"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><button onclick="cancelProgressPhoto()" style="background:#252930;border:1px solid #3d4555;border-radius:12px;padding:13px;color:var(--text);font-size:13px;font-weight:600;cursor:pointer;">Cancelar</button><button onclick="saveProgressPhoto()" style="background:linear-gradient(135deg,#f0b429,#d4920a);border:none;border-radius:12px;padding:13px;color:#000;font-size:13px;font-weight:800;cursor:pointer;" data-i18n="salvarCheck">Salvar ✓</button></div></div></div></div><!-- /section-progresso -->
 
 </div>
 
@@ -461,9 +462,9 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
   <div class="modal" style="padding-bottom:24px;">
     <div class="modal-handle" onclick="closeModal('modalCompare')"></div>
     <div class="modal-title">🔄 Comparação de Evolução</div>
-    <div style="display:flex;justify-content:space-between;font-size:11px;color:#8b95a3;margin-bottom:8px;">
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:8px;">
       <span id="compareBeforeDate" style="color:#60a5fa;font-weight:700;">Antes</span>
-      <span style="color:#5a6270;">⟵ arraste o slider ⟶</span>
+      <span style="color:var(--text3);">⟵ arraste o slider ⟶</span>
       <span id="compareAfterDate" style="color:#34d399;font-weight:700;">Depois</span>
     </div>
     <div class="compare-wrap" id="compareContainer">
@@ -487,11 +488,11 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
   <div class="section-sub" data-i18n="hidratacaoSub">Mantenha-se hidratado durante o dia</div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
-      <div><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#38bdf8;" id="waterCurrent">0</div><div style="font-size:11px;color:#8b95a3;" data-i18n="mlConsumidos">ml consumidos</div></div>
-      <div style="text-align:right;"><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;" id="waterRemaining">2500</div><div style="font-size:11px;color:#8b95a3;" data-i18n="mlRestantes">ml restantes</div></div>
+      <div><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#38bdf8;" id="waterCurrent">0</div><div style="font-size:11px;color:var(--text2);" data-i18n="mlConsumidos">ml consumidos</div></div>
+      <div style="text-align:right;"><div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;" id="waterRemaining">2500</div><div style="font-size:11px;color:var(--text2);" data-i18n="mlRestantes">ml restantes</div></div>
     </div>
     <div class="water-progress"><div class="water-fill" id="waterBar" style="width:0%"></div></div>
-    <div style="text-align:center;font-size:12px;color:#8b95a3;margin-top:7px;" id="waterPercent">0% '+tx('daMeta')+'</div>
+    <div style="text-align:center;font-size:12px;color:var(--text2);margin-top:7px;" id="waterPercent">0% '+tx('daMeta')+'</div>
   </div>
   <div class="card">
     <div class="card-title" data-i18n="addAguaTitle">Adicionar agua</div>
@@ -506,9 +507,9 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;">
       <div>
-        <div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;" data-i18n="metaDiaria">Meta diária</div>
+        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;" data-i18n="metaDiaria">Meta diária</div>
         <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#38bdf8;" id="waterGoalDisplay"><span id="waterGoalVal">2500</span> ml</div>
-        <div style="font-size:11px;color:#8b95a3;margin-top:2px;" id="waterGoalBasis">Calculado pelo seu perfil</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:2px;" id="waterGoalBasis">Calculado pelo seu perfil</div>
       </div>
       <button class="icon-btn" onclick="openProfile()" style="flex-shrink:0;">&#128100;</button>
     </div>
@@ -531,7 +532,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
       </div>
       <div style="flex:1;padding:16px 14px 12px 6px;display:flex;flex-direction:column;justify-content:space-between;">
         <div>
-          <div style="font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:#f0f2f5;line-height:1.15;margin-bottom:6px;">Bel<br><span style="font-size:13px;font-weight:600;color:#9aa3ad;" data-i18n="belRole">Nutricionista</span></div>
+          <div style="font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:var(--text);line-height:1.15;margin-bottom:6px;">Bel<br><span style="font-size:13px;font-weight:600;color:#9aa3ad;" data-i18n="belRole">Nutricionista</span></div>
           <span class="pro-badge" style="display:inline-flex;margin-bottom:8px;">PRO</span>
           <div style="font-size:12px;color:#818cf8;font-weight:700;margin-top:6px;" id="nutriGoalLabel" data-i18n="belSubtitulo">Sua nutricionista - conhece seu objetivo e sua rotina</div>
         </div>
@@ -555,7 +556,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
   <div class="card" style="padding:14px;margin-bottom:14px;">
     <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px;">
       <div style="width:8px;height:8px;background:#34d399;border-radius:50%;box-shadow:0 0 6px rgba(52,211,153,.6);flex-shrink:0;"></div>
-      <span style="font-size:12px;color:#8b95a3;font-weight:500;" data-i18n="onlineAgora">Online agora — responde em segundos</span>
+      <span style="font-size:12px;color:var(--text2);font-weight:500;" data-i18n="onlineAgora">Online agora — responde em segundos</span>
     </div>
     <div id="chatMessages" style="display:flex;flex-direction:column;gap:8px;min-height:170px;max-height:400px;overflow-y:auto;margin-bottom:10px;"></div>
     <div id="chatLoading" style="display:none;padding:10px 0;"><div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
@@ -568,7 +569,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
   <!-- Plano alimentar (diet type selector — moved here) -->
   <div class="card">
     <div class="card-title" style="margin-bottom:6px;" data-i18n="planoAlimentar">Plano Alimentar</div>
-    <div style="font-size:12px;color:#8b95a3;margin-bottom:12px;" data-i18n="planoAlimentarSub">Selecione seu estilo de dieta atual</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:12px;" data-i18n="planoAlimentarSub">Selecione seu estilo de dieta atual</div>
     <div class="diet-grid" id="dietGrid"></div>
     <div id="dietDetail"></div>
   </div>
@@ -589,7 +590,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div class="card">
       <div style="text-align:center;margin-bottom:14px;">
         <div class="weight-big" id="weightCurrent">--</div>
-        <div style="font-size:16px;color:#8b95a3;">kg</div>
+        <div style="font-size:16px;color:var(--text2);">kg</div>
         <div style="font-size:13px;margin-top:3px;" id="weightChange"></div>
       </div>
       <div style="display:flex;gap:9px;align-items:flex-end;">
@@ -599,7 +600,7 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     </div>
     <div class="card"><div class="card-title" data-i18n="grafico">Grafico</div><canvas id="weightChart" height="150"></canvas></div>
     <div class="card"><div class="card-title" data-i18n="histTitle">Historico</div><div id="weightList"></div></div>
-    <div class="card"><div class="card-title" data-i18n="ritmoIdeal">Ritmo ideal</div><div id="weightTip" style="font-size:13px;color:#8b95a3;line-height:1.7;"></div></div>
+    <div class="card"><div class="card-title" data-i18n="ritmoIdeal">Ritmo ideal</div><div id="weightTip" style="font-size:13px;color:var(--text2);line-height:1.7;"></div></div>
   </div>
   <!-- Seção Medidas -->
   <div id="section-medidas" style="display:none;">
@@ -607,16 +608,16 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
       <div class="card-title" data-i18n="registrarMedidas">Registrar Medidas</div>
       <div style="display:flex;flex-direction:column;gap:0;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">📏 Cintura (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCintura',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCintura" placeholder="82" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCintura',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">📏 Quadril (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mQuadril',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mQuadril" placeholder="98" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mQuadril',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">📏 Cintura (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCintura',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCintura" placeholder="82" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCintura',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">📏 Quadril (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mQuadril',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mQuadril" placeholder="98" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mQuadril',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">💪 Peito (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPeito',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mPeito" placeholder="100" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPeito',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">💪 Braço (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mBraco',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mBraco" placeholder="36" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mBraco',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">💪 Peito (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPeito',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mPeito" placeholder="100" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPeito',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">💪 Braço (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mBraco',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mBraco" placeholder="36" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mBraco',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">🦵 Coxa (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCoxa',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCoxa" placeholder="58" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCoxa',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">🦵 Panturrilha (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPanturrilha',-0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:8px 0 0 8px;color:#f0f2f5;font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mPanturrilha" placeholder="38" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPanturrilha',0.5)" style="width:32px;height:44px;background:#181c22;border:1px solid #252b34;border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">🦵 Coxa (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCoxa',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCoxa" placeholder="58" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCoxa',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label">🦵 Panturrilha (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPanturrilha',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mPanturrilha" placeholder="38" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPanturrilha',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
         </div>
       </div>
       <button class="btn btn-primary" style="margin-top:14px;height:48px;font-size:15px;" onclick="addMeasure()" data-i18n="salvarMedidas">💾 Salvar Medidas</button>
@@ -650,9 +651,9 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <div class="card-title" style="margin-bottom:0;" data-i18n="calendario">Calendário</div>
       <div style="display:flex;align-items:center;gap:8px;">
-        <button onclick="changeCalMonth(-1)" style="background:#181c22;border:1px solid #252b34;border-radius:7px;color:#f0f2f5;width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">‹</button>
+        <button onclick="changeCalMonth(-1)" style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;color:var(--text);width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">‹</button>
         <div id="calMonthLabel" style="font-size:13px;font-weight:700;min-width:80px;text-align:center;"></div>
-        <button onclick="changeCalMonth(1)" style="background:#181c22;border:1px solid #252b34;border-radius:7px;color:#f0f2f5;width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">›</button>
+        <button onclick="changeCalMonth(1)" style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;color:var(--text);width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">›</button>
       </div>
     </div>
     <div id="calendarGrid"></div>
@@ -684,22 +685,22 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
     <!-- Hero -->
     <div style="text-align:center;margin-bottom:20px;">
       <div style="width:64px;height:64px;background:linear-gradient(135deg,#f0b429,#e8834a);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 14px;box-shadow:0 8px 24px rgba(240,180,41,.3);">⚡</div>
-      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#f0f2f5;margin-bottom:6px;">Better You PRO</div>
-      <div style="font-size:13px;color:#8b95a3;" data-i18n="proSubtitle">Desbloqueie todo o potencial do app</div>
+      <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);margin-bottom:6px;">Better You PRO</div>
+      <div style="font-size:13px;color:var(--text2);" data-i18n="proSubtitle">Desbloqueie todo o potencial do app</div>
     </div>
     <!-- Features list -->
-    <div style="background:#181c22;border-radius:14px;padding:16px;margin-bottom:18px;">
-      <div style="font-size:11px;color:#5a6270;text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:12px;" data-i18n="proIncluido">Incluído no PRO</div>
+    <div style="background:var(--surface2);border-radius:14px;padding:16px;margin-bottom:18px;">
+      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:12px;" data-i18n="proIncluido">Incluído no PRO</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📸</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatFotoIA">Foto IA</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatFotoIASub">Analisa calorias e macros por foto</div></div></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">🤖</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatNutri">Nutricionista IA</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatNutriSub">Chat personalizado 24h por dia</div></div></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📊</span><div><div style="font-size:13px;font-weight:600;color:#f0f2f5;" data-i18n="proFeatRel">Relatórios Avançados</div><div style="font-size:11px;color:#8b95a3;" data-i18n="proFeatRelSub">Projeções e análise semanal detalhada</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📸</span><div><div style="font-size:13px;font-weight:600;color:var(--text);" data-i18n="proFeatFotoIA">Foto IA</div><div style="font-size:11px;color:var(--text2);" data-i18n="proFeatFotoIASub">Analisa calorias e macros por foto</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">🤖</span><div><div style="font-size:13px;font-weight:600;color:var(--text);" data-i18n="proFeatNutri">Nutricionista IA</div><div style="font-size:11px;color:var(--text2);" data-i18n="proFeatNutriSub">Chat personalizado 24h por dia</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📊</span><div><div style="font-size:13px;font-weight:600;color:var(--text);" data-i18n="proFeatRel">Relatórios Avançados</div><div style="font-size:11px;color:var(--text2);" data-i18n="proFeatRelSub">Projeções e análise semanal detalhada</div></div></div>
       </div>
     </div>
     <!-- Pricing -->
     <div style="text-align:center;margin-bottom:18px;">
       <div style="font-size:11px;color:#34d399;font-weight:600;margin-bottom:4px;" data-i18n="proTrialBadge">✅ 2 DIAS GRÁTIS • CANCELE QUANDO QUISER</div>
-      <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f0b429;">€5,99<span style="font-size:14px;color:#8b95a3;font-weight:400;" data-i18n="proMes">/mês</span></div>
+      <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f0b429;">€5,99<span style="font-size:14px;color:var(--text2);font-weight:400;" data-i18n="proMes">/mês</span></div>
     </div>
     <!-- CTA -->
     <button onclick="subscribePro()" id="subscribeBtn" class="btn btn-primary" style="font-size:15px;padding:15px;" data-i18n="proCtaBtn">⚡ Começar 2 dias grátis</button>
@@ -811,27 +812,27 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
       <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,62,100,.06);border:1px solid rgba(255,62,100,.18);border-radius:12px;padding:12px 14px;cursor:pointer;" onclick="var cb=document.getElementById('profPerformanceMode');cb.checked=!cb.checked;updateTDEEPreview();">
         <div>
           <div style="display:flex;align-items:center;gap:6px;"><span data-i18n="atletaAvancadoLabel" style="font-weight:700;font-size:13px;color:#ff3e64;">&#9889; Atleta Avan&ccedil;ado</span><span onclick="event.stopPropagation();document.getElementById('atletaInfoModal').style.display='flex';" style="width:18px;height:18px;border-radius:50%;background:rgba(255,62,100,.25);color:#ff3e64;font-size:11px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border:1px solid rgba(255,62,100,.4);">i</span></div>
-          <div data-i18n="atletaSubtitle" style="font-size:11px;color:#8b95a3;margin-top:3px;">Prote&iacute;na 3g/kg &middot; Calorias elevadas &middot; Metabolismo acelerado</div>
+          <div data-i18n="atletaSubtitle" style="font-size:11px;color:var(--text2);margin-top:3px;">Prote&iacute;na 3g/kg &middot; Calorias elevadas &middot; Metabolismo acelerado</div>
         </div>
         <input type="checkbox" id="profPerformanceMode" onclick="event.stopPropagation();updateTDEEPreview();" style="width:20px;height:20px;accent-color:#ff3e64;cursor:pointer;">
       </div>
     </div>
     <div class="tdee-box" id="tdeeBox" style="display:none">
-      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="tmbLabel">Metabolismo Basal (TMB)</span><span class="tdee-val" id="tmbVal" style="color:#f0b429;">-</span></div>
-      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="tdeeLabel">Gasto Total (TDEE)</span><span class="tdee-val" id="tdeeVal" style="color:#f0b429;">-</span></div>
-      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="metaCalorias">Meta de Calorias</span><span class="tdee-val" id="goalKcalVal" style="color:#34d399;">-</span></div>
-      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="metaAguaLabel">Meta de Água</span><span class="tdee-val" id="goalWaterVal" style="color:#38bdf8;">-</span></div>
+      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="tmbLabel">Metabolismo Basal (TMB)</span><span class="tdee-val" id="tmbVal" style="color:#f0b429;">-</span></div>
+      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="tdeeLabel">Gasto Total (TDEE)</span><span class="tdee-val" id="tdeeVal" style="color:#f0b429;">-</span></div>
+      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="metaCalorias">Meta de Calorias</span><span class="tdee-val" id="goalKcalVal" style="color:#34d399;">-</span></div>
+      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="metaAguaLabel">Meta de Água</span><span class="tdee-val" id="goalWaterVal" style="color:#38bdf8;">-</span></div>
       <div style="border-top:1px solid #2a2f3a;margin:8px 0 4px;"></div>
-      <div style="font-size:10px;color:#8b95a3;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;" data-i18n="macrosEst">Macros estimados</div>
-      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="proteinaPura">Proteina</span><span class="tdee-val" id="prevProtVal" style="color:#f87171;">-</span></div>
-      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="carboidratos">Carboidratos</span><span class="tdee-val" id="prevCarbVal" style="color:#fbbf24;">-</span></div>
-      <div class="tdee-row"><span style="color:#8b95a3;" data-i18n="gorduraPura">Gordura</span><span class="tdee-val" id="prevFatVal" style="color:#a78bfa;">-</span></div>
+      <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;" data-i18n="macrosEst">Macros estimados</div>
+      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="proteinaPura">Proteina</span><span class="tdee-val" id="prevProtVal" style="color:#f87171;">-</span></div>
+      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="carboidratos">Carboidratos</span><span class="tdee-val" id="prevCarbVal" style="color:#fbbf24;">-</span></div>
+      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="gorduraPura">Gordura</span><span class="tdee-val" id="prevFatVal" style="color:#a78bfa;">-</span></div>
     </div>
     <!-- Chave API -->
     <div class="input-group">
       <div class="input-label" data-i18n="chaveAPILabel">Chave API Anthropic (Foto IA)</div>
       <input type="password" class="input" id="profApiKey" placeholder="sk-ant-api03-...">
-      <div style="font-size:11px;color:#8b95a3;margin-top:4px;line-height:1.6;">Necessária para identificar alimentos por foto.<br>Obtenha gratuitamente em: <b style="color:#38bdf8;">console.anthropic.com</b></div>
+      <div style="font-size:11px;color:var(--text2);margin-top:4px;line-height:1.6;">Necessária para identificar alimentos por foto.<br>Obtenha gratuitamente em: <b style="color:#38bdf8;">console.anthropic.com</b></div>
     </div>
     <!-- Idioma -->
     <div class="input-group" style="margin-top:4px;">
@@ -845,10 +846,10 @@ body.pro-mode .header span[style*="Syne"]::after{content:' \2746PRO';font-size:9
         <button onclick="setLang('de')" id="lang-de" class="lang-btn">DE</button>
       </div>
     </div>
-    <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:14px 16px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:13px;font-weight:700;color:#f0b429;">&#128081; Meu Plano</span><span style="background:#f0b429;color:#000;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;">PRO</span></div><div style="font-size:12px;color:#b0b8c1;">Plano: <b style="color:#f0f2f5;">€5,99/mês</b></div><div style="font-size:11px;color:#34d399;margin-top:4px;">&#9989; Disponível gratuitamente no período beta</div></div><button class="btn btn-primary" onclick="saveProfile()" style="margin-top:12px;" data-i18n="salvarAplicar">Salvar e Aplicar</button>
-    <div style="margin-top:14px;padding-top:14px;border-top:1px solid #252b34;">
-      <div id="authUserInfo" style="font-size:11px;color:#8b95a3;text-align:center;margin-bottom:8px;"></div>
-      <button class="btn btn-ghost" onclick="belEsquecerConfirm()" style="width:100%;margin-bottom:8px;color:#8b95a3;border-color:rgba(139,149,163,.3);" data-i18n="esquecerMemoria">🧠 Apagar memória da Bel</button>
+    <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:14px 16px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:13px;font-weight:700;color:#f0b429;">&#128081; Meu Plano</span><span style="background:#f0b429;color:#000;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;">PRO</span></div><div style="font-size:12px;color:#b0b8c1;">Plano: <b style="color:var(--text);">€5,99/mês</b></div><div style="font-size:11px;color:#34d399;margin-top:4px;">&#9989; Disponível gratuitamente no período beta</div></div><button class="btn btn-primary" onclick="saveProfile()" style="margin-top:12px;" data-i18n="salvarAplicar">Salvar e Aplicar</button>
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+      <div id="authUserInfo" style="font-size:11px;color:var(--text2);text-align:center;margin-bottom:8px;"></div>
+      <button class="btn btn-ghost" onclick="belEsquecerConfirm()" style="width:100%;margin-bottom:8px;color:var(--text2);border-color:rgba(139,149,163,.3);" data-i18n="esquecerMemoria">🧠 Apagar memória da Bel</button>
       <button class="btn btn-ghost" onclick="doSignOut()" style="width:100%;color:#f87171;border-color:rgba(248,113,113,.3);" data-i18n="sairConta">🚪 Sair da conta</button>
     </div>
   </div>
@@ -1207,6 +1208,32 @@ de:{'subtabCorpo':'🏋️ Fortschritt deines Körpers','navProgresso':'Fortschr
   proTrialBadge:'✅ 2 TAGE GRATIS • JEDERZEIT KÜNDIGEN',proMes:'/Monat',
   proCtaBtn:'⚡ 2 Tage gratis starten',proCtaFree:'Mit kostenloser Version fortfahren'}
 };
+/* ---- tema claro / escuro ---- */
+function aplicarTema(){
+  var pref=(typeof state!=="undefined"&&state&&state.theme)||"dark";
+  var efetivo=pref;
+  if(pref==="auto"){
+    try{ efetivo=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"; }catch(e){ efetivo="dark"; }
+  }
+  document.documentElement.setAttribute("data-theme",efetivo);
+  var meta=document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute("content", efetivo==="light"?"#f4f6f8":"#0a0c0f");
+  ["light","dark","auto"].forEach(function(k){
+    var b=document.getElementById("theme-"+k);
+    if(b) b.classList.toggle("active", pref===k);
+  });
+}
+function setTheme(t){
+  if(typeof state==="undefined"||!state) return;
+  state.theme=t;
+  try{ save(); }catch(e){}
+  try{ if(typeof saveToFirestore==="function") saveToFirestore(); }catch(e){}
+  aplicarTema();
+}
+try{
+  var _mq=window.matchMedia("(prefers-color-scheme: light)");
+  if(_mq.addEventListener) _mq.addEventListener("change",function(){ if(state&&state.theme==="auto") aplicarTema(); });
+}catch(e){}
 function setLang(lang){
   currentLang=lang;
   state.lang=lang;save();
@@ -1483,7 +1510,7 @@ function renderMeals(){
     var items=state.meals[key]||[];
     var mKcal=items.reduce(function(a,b){return a+(b.kcal||0);},0);
     html+="<div class='meal-section'><div class='meal-header'><div class='meal-name'>"+labels[key]+"</div><div class='meal-kcal'>"+Math.round(mKcal)+" kcal</div></div>";
-    if(!items.length)html+="<div style='font-size:12px;color:#5a6270;padding:5px 0;'>"+T[currentLang].nenhumAlimento+"</div>";
+    if(!items.length)html+="<div style='font-size:12px;color:var(--text3);padding:5px 0;'>"+T[currentLang].nenhumAlimento+"</div>";
     else items.forEach(function(item,i){
       var timeTag=item.time?"<span style=\"color:#5a9a72;font-size:10px;margin-left:6px;\">"+item.time+"</span>":"";
       var iconHtml=(item.photo&&item.photo.length>500)?"<img src=\""+item.photo+"\" onclick=\"openFoodPhoto('"+key+"',"+ i +");\" style=\"width:38px;height:38px;border-radius:7px;object-fit:cover;flex-shrink:0;cursor:pointer;\" />":"<div class=\"meal-item-icon\">&#127860;</div>";
@@ -1686,7 +1713,7 @@ function drawWeightChart(){
   var data=state.weights.slice(0,14).reverse();
   canvas.width=(canvas.offsetWidth||350)*2;canvas.height=300;
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  if(data.length<2){ctx.fillStyle="#5a6270";ctx.font="24px DM Sans";ctx.textAlign="center";ctx.fillText(T[currentLang].registreAoMenos2Pesos||"Registre ao menos 2 pesos",canvas.width/2,canvas.height/2);return;}
+  if(data.length<2){ctx.fillStyle="var(--text3)";ctx.font="24px DM Sans";ctx.textAlign="center";ctx.fillText(T[currentLang].registreAoMenos2Pesos||"Registre ao menos 2 pesos",canvas.width/2,canvas.height/2);return;}
   var vals=data.map(function(d){return d.val;});
   var mn=Math.min.apply(null,vals)-1,mx=Math.max.apply(null,vals)+1;
   var w=canvas.width,h=canvas.height,p=45;
@@ -1699,8 +1726,8 @@ function drawWeightChart(){
   ctx.beginPath();ctx.moveTo(xf(0),yf(vals[0]));
   data.forEach(function(_,i){if(i>0)ctx.lineTo(xf(i),yf(vals[i]));});
   ctx.strokeStyle="#f0b429";ctx.lineWidth=3;ctx.lineJoin="round";ctx.stroke();
-  data.forEach(function(_,i){ctx.beginPath();ctx.arc(xf(i),yf(vals[i]),5,0,Math.PI*2);ctx.fillStyle="#f0b429";ctx.fill();ctx.strokeStyle="#0a0c0f";ctx.lineWidth=2;ctx.stroke();});
-  ctx.fillStyle="#8b95a3";ctx.font="20px DM Sans";ctx.textAlign="center";
+  data.forEach(function(_,i){ctx.beginPath();ctx.arc(xf(i),yf(vals[i]),5,0,Math.PI*2);ctx.fillStyle="#f0b429";ctx.fill();ctx.strokeStyle="var(--bg)";ctx.lineWidth=2;ctx.stroke();});
+  ctx.fillStyle="var(--text2)";ctx.font="20px DM Sans";ctx.textAlign="center";
   data.forEach(function(d,i){if(i%(Math.ceil(data.length/5))===0||i===data.length-1)ctx.fillText(d.date.slice(5),xf(i),h-8);});
 }
 
@@ -1718,7 +1745,7 @@ function calcNeeds(){
   var prot=Math.round(w*2.2),fat=Math.round(w*1.1);
   var carb=Math.round((goal-(prot*4)-(fat*9))/4);
   var el=document.getElementById("calcResult");el.style.display="block";
-  el.innerHTML="<div class='calc-result'><div style='font-family:Syne,sans-serif;font-size:13px;font-weight:700;color:#f0b429;margin-bottom:10px;'>"+(tt.resultados||'Resultados')+"</div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.tmb||'TMB')+"</span><span class='calc-result-val'>"+Math.round(tmb)+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.tdee||'TDEE')+"</span><span class='calc-result-val'>"+tdee+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.meta||'Meta')+"</span><span class='calc-result-val' style='color:#f0b429'>"+goal+" kcal</span></div><div style='margin-top:10px;padding-top:10px;border-top:1px solid #252b34;'><div class='calc-result-row'><span class='calc-result-label'>"+(tt.proteinaPura||'Proteina')+"</span><span class='calc-result-val' style='color:#60a5fa'>"+prot+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.gorduraPura||'Gordura')+"</span><span class='calc-result-val' style='color:#34d399'>"+fat+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.carboidratos||'Carboidrato')+"</span><span class='calc-result-val' style='color:#e8834a'>"+carb+"g</span></div></div></div><button class='btn btn-primary' onclick='applyCalcGoal("+goal+")'>"+(tt.aplicarMeta||'Aplicar esta meta')+"</button>";
+  el.innerHTML="<div class='calc-result'><div style='font-family:Syne,sans-serif;font-size:13px;font-weight:700;color:#f0b429;margin-bottom:10px;'>"+(tt.resultados||'Resultados')+"</div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.tmb||'TMB')+"</span><span class='calc-result-val'>"+Math.round(tmb)+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.tdee||'TDEE')+"</span><span class='calc-result-val'>"+tdee+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.meta||'Meta')+"</span><span class='calc-result-val' style='color:#f0b429'>"+goal+" kcal</span></div><div style='margin-top:10px;padding-top:10px;border-top:1px solid var(--border);'><div class='calc-result-row'><span class='calc-result-label'>"+(tt.proteinaPura||'Proteina')+"</span><span class='calc-result-val' style='color:#60a5fa'>"+prot+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.gorduraPura||'Gordura')+"</span><span class='calc-result-val' style='color:#34d399'>"+fat+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.carboidratos||'Carboidrato')+"</span><span class='calc-result-val' style='color:#e8834a'>"+carb+"g</span></div></div></div><button class='btn btn-primary' onclick='applyCalcGoal("+goal+")'>"+(tt.aplicarMeta||'Aplicar esta meta')+"</button>";
 }
 function applyCalcGoal(kcal){state.calGoal=kcal;save();renderToday();showToast("Meta: "+kcal+" kcal aplicada!","success");switchTab("hoje",document.querySelector(".nav-item"));}
 
@@ -1811,24 +1838,24 @@ function renderHistory(){
           +'<span style="color:#f0b429;font-weight:700;font-size:12px;float:right;">'+Math.round(mTotal)+' kcal</span></div>';
         mealsHtml+=items.map(function(f){
           return '<div class="hist-food-row"><span style="color:#e2e8f0;">'+f.name
-            +(f.grams?' <span style="color:#5a6270;">'+Math.round(f.grams)+'g</span>':'')
+            +(f.grams?' <span style="color:var(--text3);">'+Math.round(f.grams)+'g</span>':'')
             +'</span><span style="color:#f0b429;font-weight:600;">'+Math.round(f.kcal||0)+' kcal</span></div>';
         }).join('');
         mealsHtml+='</div>';
       });
     }
-    if(!hasMeals)mealsHtml='<div style="font-size:12px;color:#5a6270;padding:4px 0;">'+tx('histSemRefeicoes')+'</div>';
+    if(!hasMeals)mealsHtml='<div style="font-size:12px;color:var(--text3);padding:4px 0;">'+tx('histSemRefeicoes')+'</div>';
     return '<div class="history-day" onclick="toggleHistDay(\''+uid+'\')">'
       +'<div style="display:flex;justify-content:space-between;align-items:flex-start;">'
         +'<div><div class="history-day-date">'+dateStr+'</div>'
-        +'<div style="font-size:11px;color:#8b95a3;margin-top:3px;">💪 '+d.prot+'g prot &nbsp;🔥 '+d.carb+'g carb &nbsp;🥑 '+d.fat+'g fat &nbsp;💧'+(d.water||0)+'ml</div></div>'
+        +'<div style="font-size:11px;color:var(--text2);margin-top:3px;">💪 '+d.prot+'g prot &nbsp;🔥 '+d.carb+'g carb &nbsp;🥑 '+d.fat+'g fat &nbsp;💧'+(d.water||0)+'ml</div></div>'
         +'<div style="text-align:right;">'
           +'<div class="history-day-kcal">'+d.kcal+' kcal</div>'
           +'<div style="font-size:11px;color:'+barColor+';">'+pct+'% '+tx('daMeta')+'</div>'
         +'</div>'
       +'</div>'
       +'<div class="history-day-bar-wrap"><div class="history-day-bar"><div class="history-day-bar-fill" style="width:'+pct+'%;background:'+barColor+';"></div></div></div>'
-      +'<div style="font-size:11px;color:#5a6270;text-align:right;margin-top:2px;">'+tx('toqueVerRefeicoes')+' <span id="arr-'+uid+'">▸</span></div>'
+      +'<div style="font-size:11px;color:var(--text3);text-align:right;margin-top:2px;">'+tx('toqueVerRefeicoes')+' <span id="arr-'+uid+'">▸</span></div>'
       +'<div class="hist-expand" id="'+uid+'">'+mealsHtml+'</div>'
       +'</div>';
   }).join('');
@@ -1847,7 +1874,7 @@ function drawHistChart(keys){
     var x=p+i*gap+(gap-bw)/2,bh=(v/mx)*(h-p*2),by=h-p-bh;
     var gr=ctx.createLinearGradient(0,by,0,h-p);gr.addColorStop(0,"#f0b429");gr.addColorStop(1,"rgba(232,131,74,0.4)");
     ctx.fillStyle=gr;ctx.beginPath();ctx.rect(x,by,bw,bh);ctx.fill();
-    ctx.fillStyle="#8b95a3";ctx.font="18px DM Sans";ctx.textAlign="center";ctx.fillText(keys[i].slice(5),x+bw/2,h-6);
+    ctx.fillStyle="var(--text2)";ctx.font="18px DM Sans";ctx.textAlign="center";ctx.fillText(keys[i].slice(5),x+bw/2,h-6);
   });
 }
 
@@ -3140,7 +3167,7 @@ function renderDayScore(){
     checksEl.innerHTML=result.checks.map(function(c){
       return '<div class="score-check">'
         +'<div class="score-check-icon" style="background:'+(c.ok?'rgba(52,211,153,.2)':'rgba(248,113,113,.2)')+';color:'+(c.ok?'#34d399':'#f87171')+';">'+(c.ok?'✓':'✗')+'</div>'
-        +'<div><div style="font-weight:600;color:#f0f2f5;">'+c.label+'</div><div style="font-size:10px;color:#8b95a3;">'+c.val+'</div></div>'
+        +'<div><div style="font-weight:600;color:var(--text);">'+c.label+'</div><div style="font-size:10px;color:var(--text2);">'+c.val+'</div></div>'
         +'</div>';
     }).join('');
   }
@@ -3154,7 +3181,7 @@ function changeCalMonth(dir){
   renderCalendar();
 }
 
-function openDayDetail(dk){var d=state.history[dk];var pts=dk.split('-');var dObj=new Date(+pts[0],+pts[1]-1,+pts[2]);var dn=_dias('full')[dObj.getDay()];var mn=_dias('full')[+pts[1]-1];var dateDisp=dn+', '+pts[2]+' '+mn+' '+pts[0];var inner='<div style="padding:16px 4px 0;">';if(!d){inner+='<div style="text-align:center;color:#888;padding:40px 0;font-size:14px;">Sem registros para este dia.</div>';}else{var sc=calcDayScore(d).score;var sColor=sc>=80?'#34d399':sc>=50?'#fbb024':'#f87171';var sLabel=sc>=80?'Excelente':sc>=50?'Bom':'Ruim';inner+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><div style="background:'+sColor+'22;color:'+sColor+';font-size:22px;font-weight:800;padding:6px 16px;border-radius:20px;">'+sc+'</div><div style="color:'+sColor+';font-weight:600;">'+sLabel+'</div></div>';var goal=state.profile&&state.profile.tdee?state.profile.tdee:2000;var pct=Math.min(100,Math.round(((d.kcal||0)/goal)*100));inner+='<div style="background:#1e2229;border-radius:14px;padding:14px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="color:#888;font-size:12px;">CALORIAS</span><span style="color:#f0b429;font-weight:700;font-size:18px;">'+(d.kcal||0)+' kcal</span></div><div style="background:#2a3040;border-radius:6px;height:6px;margin-bottom:10px;"><div style="background:#f0b429;height:6px;border-radius:6px;width:'+pct+'%;"></div></div><div style="display:flex;gap:14px;font-size:13px;"><span>💪 <b style="color:#5b9cf6;">'+(d.prot||0)+'g</b></span><span>🔥 <b style="color:#f0b429;">'+(d.carb||0)+'g</b></span><span>🥑 <b style="color:#34d399;">'+(d.fat||0)+'g</b></span></div></div>';inner+='<div style="background:#1e2229;border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">💧</span><span style="color:#60b4d8;font-weight:600;">'+(d.water||0)+' ml</span></div>';var mLabels={cafe:'☕ Caf\u00e9 da Manh\u00e3',almoco:'🍽️ Almo\u00e7o',lanche:'🍎 Lanche',jantar:'🌙 Jantar',ceia:'🌛 Ceia',pos_treino:'💪 P\u00f3s-Treino'};var meals=d.meals||{};var hasMeals=false;Object.keys(mLabels).forEach(function(mk){var items=meals[mk]||[];if(!items.length)return;hasMeals=true;inner+='<div style="margin-bottom:12px;"><div style="color:#5a9a72;font-size:11px;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;">'+mLabels[mk]+'</div>';items.forEach(function(item){var thumb=(item.photo&&item.photo.length>500)?'<img src="'+item.photo+'" style="width:38px;height:38px;border-radius:8px;object-fit:cover;flex-shrink:0;"/>':'<div style="width:38px;height:38px;border-radius:8px;background:#2a3040;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🍽️</div>';inner+='<div style="display:flex;align-items:center;gap:10px;padding:8px;background:#12161c;border-radius:10px;margin-bottom:5px;">'+thumb+'<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:#e8eaf0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.name+'</div><div style="font-size:11px;color:#888;">'+(item.grams||item.ml||0)+'g · P:'+(item.prot||0)+'g C:'+(item.carb||0)+'g G:'+(item.fat||0)+'g'+(item.time?' · <span style="color:#5a9a72;">'+item.time+'</span>':'')+'</div></div><span style="color:#f0b429;font-weight:700;font-size:13px;">'+(item.kcal||0)+'</span></div>';});inner+='</div>';});if(!hasMeals)inner+='<div style="color:#555;font-size:13px;text-align:center;padding:12px 0;">Sem refeições registradas</div>';}var photos=(state.progressPhotos||[]).filter(function(p){return p.date===dk||p.date.startsWith(dk);});if(photos.length){inner+='<div style="margin-top:14px;"><div style="color:#888;font-size:11px;letter-spacing:1px;margin-bottom:8px;">📸 FOTOS DE PROGRESSO</div>';photos.forEach(function(p){inner+='<div style="margin-bottom:10px;"><img src="'+p.dataUrl+'" style="width:100%;border-radius:12px;max-height:320px;object-fit:contain;background:#1e2229;"/>'+(p.label?'<div style="color:#888;font-size:11px;margin-top:4px;text-align:center;">'+p.label+'</div>':'')+'</div>';});inner+='</div>';}inner+='</div>';var m=document.getElementById('dayDetailModal');if(!m){m=document.createElement('div');m.id='dayDetailModal';m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9100;display:flex;flex-direction:column;';var hdr=document.createElement('div');hdr.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:16px;background:#12161c;border-bottom:1px solid #2a3040;flex-shrink:0;';var ttl=document.createElement('div');ttl.id='dayDetailTitle';ttl.style.cssText='font-size:16px;font-weight:700;color:#e8eaf0;';var cb=document.createElement('button');cb.textContent='✕';cb.style.cssText='background:none;border:none;color:#888;font-size:22px;cursor:pointer;';cb.onclick=function(){m.style.display='none';};hdr.appendChild(ttl);hdr.appendChild(cb);var bd=document.createElement('div');bd.id='dayDetailContent';bd.style.cssText='flex:1;overflow-y:auto;padding:0 16px 32px;';m.appendChild(hdr);m.appendChild(bd);document.body.appendChild(m);}document.getElementById('dayDetailTitle').textContent=dateDisp;document.getElementById('dayDetailContent').innerHTML=inner;m.style.display='flex';}
+function openDayDetail(dk){var d=state.history[dk];var pts=dk.split('-');var dObj=new Date(+pts[0],+pts[1]-1,+pts[2]);var dn=_dias('full')[dObj.getDay()];var mn=_dias('full')[+pts[1]-1];var dateDisp=dn+', '+pts[2]+' '+mn+' '+pts[0];var inner='<div style="padding:16px 4px 0;">';if(!d){inner+='<div style="text-align:center;color:#888;padding:40px 0;font-size:14px;">Sem registros para este dia.</div>';}else{var sc=calcDayScore(d).score;var sColor=sc>=80?'#34d399':sc>=50?'#fbb024':'#f87171';var sLabel=sc>=80?'Excelente':sc>=50?'Bom':'Ruim';inner+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><div style="background:'+sColor+'22;color:'+sColor+';font-size:22px;font-weight:800;padding:6px 16px;border-radius:20px;">'+sc+'</div><div style="color:'+sColor+';font-weight:600;">'+sLabel+'</div></div>';var goal=state.profile&&state.profile.tdee?state.profile.tdee:2000;var pct=Math.min(100,Math.round(((d.kcal||0)/goal)*100));inner+='<div style="background:var(--surface3);border-radius:14px;padding:14px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="color:#888;font-size:12px;">CALORIAS</span><span style="color:#f0b429;font-weight:700;font-size:18px;">'+(d.kcal||0)+' kcal</span></div><div style="background:#2a3040;border-radius:6px;height:6px;margin-bottom:10px;"><div style="background:#f0b429;height:6px;border-radius:6px;width:'+pct+'%;"></div></div><div style="display:flex;gap:14px;font-size:13px;"><span>💪 <b style="color:#5b9cf6;">'+(d.prot||0)+'g</b></span><span>🔥 <b style="color:#f0b429;">'+(d.carb||0)+'g</b></span><span>🥑 <b style="color:#34d399;">'+(d.fat||0)+'g</b></span></div></div>';inner+='<div style="background:var(--surface3);border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">💧</span><span style="color:#60b4d8;font-weight:600;">'+(d.water||0)+' ml</span></div>';var mLabels={cafe:'☕ Caf\u00e9 da Manh\u00e3',almoco:'🍽️ Almo\u00e7o',lanche:'🍎 Lanche',jantar:'🌙 Jantar',ceia:'🌛 Ceia',pos_treino:'💪 P\u00f3s-Treino'};var meals=d.meals||{};var hasMeals=false;Object.keys(mLabels).forEach(function(mk){var items=meals[mk]||[];if(!items.length)return;hasMeals=true;inner+='<div style="margin-bottom:12px;"><div style="color:#5a9a72;font-size:11px;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;">'+mLabels[mk]+'</div>';items.forEach(function(item){var thumb=(item.photo&&item.photo.length>500)?'<img src="'+item.photo+'" style="width:38px;height:38px;border-radius:8px;object-fit:cover;flex-shrink:0;"/>':'<div style="width:38px;height:38px;border-radius:8px;background:#2a3040;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🍽️</div>';inner+='<div style="display:flex;align-items:center;gap:10px;padding:8px;background:#12161c;border-radius:10px;margin-bottom:5px;">'+thumb+'<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:#e8eaf0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.name+'</div><div style="font-size:11px;color:#888;">'+(item.grams||item.ml||0)+'g · P:'+(item.prot||0)+'g C:'+(item.carb||0)+'g G:'+(item.fat||0)+'g'+(item.time?' · <span style="color:#5a9a72;">'+item.time+'</span>':'')+'</div></div><span style="color:#f0b429;font-weight:700;font-size:13px;">'+(item.kcal||0)+'</span></div>';});inner+='</div>';});if(!hasMeals)inner+='<div style="color:#555;font-size:13px;text-align:center;padding:12px 0;">Sem refeições registradas</div>';}var photos=(state.progressPhotos||[]).filter(function(p){return p.date===dk||p.date.startsWith(dk);});if(photos.length){inner+='<div style="margin-top:14px;"><div style="color:#888;font-size:11px;letter-spacing:1px;margin-bottom:8px;">📸 FOTOS DE PROGRESSO</div>';photos.forEach(function(p){inner+='<div style="margin-bottom:10px;"><img src="'+p.dataUrl+'" style="width:100%;border-radius:12px;max-height:320px;object-fit:contain;background:var(--surface3);"/>'+(p.label?'<div style="color:#888;font-size:11px;margin-top:4px;text-align:center;">'+p.label+'</div>':'')+'</div>';});inner+='</div>';}inner+='</div>';var m=document.getElementById('dayDetailModal');if(!m){m=document.createElement('div');m.id='dayDetailModal';m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9100;display:flex;flex-direction:column;';var hdr=document.createElement('div');hdr.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:16px;background:#12161c;border-bottom:1px solid #2a3040;flex-shrink:0;';var ttl=document.createElement('div');ttl.id='dayDetailTitle';ttl.style.cssText='font-size:16px;font-weight:700;color:#e8eaf0;';var cb=document.createElement('button');cb.textContent='✕';cb.style.cssText='background:none;border:none;color:#888;font-size:22px;cursor:pointer;';cb.onclick=function(){m.style.display='none';};hdr.appendChild(ttl);hdr.appendChild(cb);var bd=document.createElement('div');bd.id='dayDetailContent';bd.style.cssText='flex:1;overflow-y:auto;padding:0 16px 32px;';m.appendChild(hdr);m.appendChild(bd);document.body.appendChild(m);}document.getElementById('dayDetailTitle').textContent=dateDisp;document.getElementById('dayDetailContent').innerHTML=inner;m.style.display='flex';}
 
 function renderCalendar(){
   var el=document.getElementById('calendarGrid');
@@ -3167,14 +3194,14 @@ function renderCalendar(){
   var daysInMonth=new Date(y,m+1,0).getDate();
   var dayNames=_dias('ini');
   var html='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px;">';
-  dayNames.forEach(function(n){html+='<div style="text-align:center;font-size:10px;color:#8b95a3;padding:2px 0;">'+n+'</div>';});
+  dayNames.forEach(function(n){html+='<div style="text-align:center;font-size:10px;color:var(--text2);padding:2px 0;">'+n+'</div>';});
   html+='</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;">';
   for(var i=0;i<firstDay;i++)html+='<div></div>';
   var todayStr=todayKey();
   for(var day=1;day<=daysInMonth;day++){
     var key=y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
     var d=state.history[key];
-    var bg='#1e2229',tc='#3a4150',border='transparent';
+    var bg='var(--surface3)',tc='#3a4150',border='transparent';
     if(d){
       var sc=calcDayScore(d).score;
       if(sc>=80){bg='rgba(52,211,153,.2)';tc='#34d399';}
@@ -3242,10 +3269,10 @@ function renderMeasures(){
   var labels={cintura:'Cintura',quadril:'Quadril',peito:'Peito',braco:'Braço',coxa:'Coxa',panturrilha:'Panturrilha'};
   el.innerHTML=list.slice(0,10).map(function(m){
     var items=Object.keys(labels).filter(function(k){return m[k];}).map(function(k){
-      return '<span style="font-size:12px;color:#8b95a3;">'+labels[k]+': <b style="color:#f0f2f5;">'+m[k]+'cm</b></span>';
+      return '<span style="font-size:12px;color:var(--text2);">'+labels[k]+': <b style="color:var(--text);">'+m[k]+'cm</b></span>';
     }).join(' &nbsp;·&nbsp; ');
-    return '<div style="padding:10px 0;border-bottom:1px solid #252b34;">'
-      +'<div style="font-size:12px;color:#8b95a3;margin-bottom:5px;">'+m.date.slice(5)+'</div>'
+    return '<div style="padding:10px 0;border-bottom:1px solid var(--border);">'
+      +'<div style="font-size:12px;color:var(--text2);margin-bottom:5px;">'+m.date.slice(5)+'</div>'
       +'<div style="line-height:1.8;">'+items+'</div>'
       +'</div>';
   }).join('');
@@ -3289,7 +3316,7 @@ function renderReports(){
   // ── Faixa de 7 dias colorida ──
   var dotHtml='<div class="report-week-wrap">';
   days.forEach(function(day){
-    var bg='#1e2229',tc='#3a4150',icon='–';
+    var bg='var(--surface3)',tc='#3a4150',icon='–';
     if(day.data&&day.data.kcal>0){
       var pct=day.data.kcal/calGoal;
       if(goal==='cut'){
@@ -3324,9 +3351,9 @@ function renderReports(){
     var heroColor=deficit>200?'#f87171':deficit>50?'#34d399':'#fbbf24';
     var heroMsg=deficit>400?'Déficit forte! Monitore músculo 💪':deficit>100?'Déficit no ponto certo! 🔥':deficit>0?'Déficit leve — pode intensificar':'Acima da meta ⚠️';
     html+='<div class="report-hero">'
-      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">🔥 DÉFICIT MÉDIO — 7 DIAS</div>'
+      +'<div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">🔥 DÉFICIT MÉDIO — 7 DIAS</div>'
       +'<div class="report-hero-num" style="color:'+heroColor+';">'+(deficit>0?'-':'+')+(Math.abs(Math.round(deficit)))+' kcal/dia</div>'
-      +'<div class="report-hero-sub" style="color:#f0f2f5;">'+heroMsg+'</div>'
+      +'<div class="report-hero-sub" style="color:var(--text);">'+heroMsg+'</div>'
       +'</div>';
     html+=dotHtml;
     if(kgPer4w>0){
@@ -3334,7 +3361,7 @@ function renderReports(){
         +'<div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#34d399;margin-bottom:10px;">📉 Projeção de Resultados</div>'
         +'<div class="report-stat-row"><span class="report-stat-label">Perda estimada em 4 semanas</span><span class="report-stat-val" style="color:#34d399;">−'+kgPer4w+' kg</span></div>'
         +'<div class="report-stat-row"><span class="report-stat-label">Perda estimada em 8 semanas</span><span class="report-stat-val" style="color:#34d399;">−'+Math.round(kgPer4w*2*10)/10+' kg</span></div>'
-        +'<div style="font-size:10px;color:#5a6270;margin-top:8px;line-height:1.5;">* Estimativa baseada no déficit médio da semana. Resultados individuais variam.</div>'
+        +'<div style="font-size:10px;color:var(--text3);margin-top:8px;line-height:1.5;">* Estimativa baseada no déficit médio da semana. Resultados individuais variam.</div>'
         +'</div>';
     }
 html+='<div class="card"><div class="card-title">Metas da semana</div>'
@@ -3342,7 +3369,7 @@ html+='<div class="card"><div class="card-title">Metas da semana</div>'
       +'<div class="report-stat-row"><span class="report-stat-label">💪 Proteína ≥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
       +'<div class="report-stat-row"><span class="report-stat-label">💧 Hidratação ≥80% da meta</span><span class="report-stat-val">'+waterDays+'/'+validDays.length+' dias</span></div>'
       +'<div class="report-stat-row"><span class="report-stat-label">📊 Calorias médias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:var(--text3);">(meta: '+mg.prot+'g)</span></span></div>'
       +'</div>';
         var tip='';
     if(avgProt<mg.prot*0.8)tip='💡 Proteína abaixo do ideal. Adicione frango, ovo ou whey — proteína preserva músculo durante o déficit.';
@@ -3350,7 +3377,7 @@ html+='<div class="card"><div class="card-title">Metas da semana</div>'
     else if(deficit<50)tip='💡 Déficit muito pequeno. Reduza 200–300 kcal da alimentação ou adicione 30 minutos de caminhada por dia.';
     else if(waterDays<4)tip='💧 Água abaixo da meta. Hidratação ajuda a controlar o apetite e melhora o metabolismo durante o emagrecimento.';
     else tip='✅ Você está no caminho certo! O segredo do emagrecimento é a regularidade ao longo das semanas — continue assim.';
-    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">'+tip+'</div></div>';
+    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:var(--text2);line-height:1.7;">'+tip+'</div></div>';
 
   }else if(goal==='mass'){
     var surplus=avgKcal-calGoal;
@@ -3361,9 +3388,9 @@ html+='<div class="card"><div class="card-title">Metas da semana</div>'
     var heroColor=surplus>=200&&surplus<=600?'#34d399':surplus>0?'#fbbf24':'#f87171';
     var heroMsg=surplus>=200&&surplus<=600?'Superávit ideal! 💪':surplus>600?'Superávit alto — monitore':surplus>0?'Superávit leve — pode aumentar':'Abaixo da meta calórica ⚠️';
     html+='<div class="report-hero">'
-      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">💪 SUPERÁVIT MÉDIO — 7 DIAS</div>'
+      +'<div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">💪 SUPERÁVIT MÉDIO — 7 DIAS</div>'
       +'<div class="report-hero-num" style="color:'+heroColor+';">'+(surplus>=0?'+':'')+Math.round(surplus)+' kcal/dia</div>'
-      +'<div class="report-hero-sub" style="color:#f0f2f5;">'+heroMsg+'</div>'
+      +'<div class="report-hero-sub" style="color:var(--text);">'+heroMsg+'</div>'
       +'</div>';
     html+=dotHtml;
     html+='<div class="card"><div class="card-title">Metas da semana</div>'
@@ -3371,14 +3398,14 @@ html+='<div class="card"><div class="card-title">Metas da semana</div>'
       +'<div class="report-stat-row"><span class="report-stat-label">💪 Proteína ≥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
       +'<div class="report-stat-row"><span class="report-stat-label">💧 Hidratação ≥80% da meta</span><span class="report-stat-val">'+waterDays+'/'+validDays.length+' dias</span></div>'
       +'<div class="report-stat-row"><span class="report-stat-label">📊 Calorias médias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:var(--text3);">(meta: '+mg.prot+'g)</span></span></div>'
       +'</div>';
     if(surplus>50&&kgPer4w>0){
       html+='<div class="report-projection">'
         +'<div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#34d399;margin-bottom:10px;">📈 Projeção de Crescimento</div>'
         +'<div class="report-stat-row"><span class="report-stat-label">Ganho estimado em 4 semanas</span><span class="report-stat-val" style="color:#34d399;">+'+kgPer4w+' kg</span></div>'
         +'<div class="report-stat-row"><span class="report-stat-label">Ganho estimado em 12 semanas</span><span class="report-stat-val" style="color:#34d399;">+'+Math.round(kgPer4w*3*10)/10+' kg</span></div>'
-        +'<div style="font-size:10px;color:#5a6270;margin-top:8px;line-height:1.5;">* Estimativa — resultados dependem de treino, sono e genética individual.</div>'
+        +'<div style="font-size:10px;color:var(--text3);margin-top:8px;line-height:1.5;">* Estimativa — resultados dependem de treino, sono e genética individual.</div>'
         +'</div>';
     }
     var tip='';
@@ -3387,7 +3414,7 @@ html+='<div class="card"><div class="card-title">Metas da semana</div>'
     else if(surplus>700)tip='⚠️ Superávit muito alto. Mantenha 200–500 kcal/dia para maximizar ganho muscular e minimizar acúmulo de gordura.';
     else if(waterDays<4)tip='💧 Água é fundamental para síntese proteica e recuperação. Tente beber pelo menos '+state.waterGoal+'ml todos os dias.';
     else tip='✅ Excelente consistência! O ganho de massa é lento mas recompensador — continue sendo regular no treino e na alimentação.';
-    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">'+tip+'</div></div>';
+    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:var(--text2);line-height:1.7;">'+tip+'</div></div>';
 
   }else{
     var balance=avgKcal-calGoal;
@@ -3396,18 +3423,18 @@ html+='<div class="card"><div class="card-title">Metas da semana</div>'
     var heroColor=Math.abs(balance)<150?'#34d399':Math.abs(balance)<350?'#fbbf24':'#f87171';
     var heroMsg=Math.abs(balance)<150?'Balanço perfeito! ⚖️':Math.abs(balance)<350?'Balanço bom 👍':balance>0?'Superávit elevado ⚠️':'Déficit elevado ⚠️';
     html+='<div class="report-hero">'
-      +'<div style="font-size:11px;color:#8b95a3;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">⚖️ BALANÇO MÉDIO — 7 DIAS</div>'
+      +'<div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">⚖️ BALANÇO MÉDIO — 7 DIAS</div>'
       +'<div class="report-hero-num" style="color:'+heroColor+';">'+(balance>=0?'+':'')+Math.round(balance)+' kcal/dia</div>'
-      +'<div class="report-hero-sub" style="color:#f0f2f5;">'+heroMsg+'</div>'
+      +'<div class="report-hero-sub" style="color:var(--text);">'+heroMsg+'</div>'
       +'</div>';
     html+=dotHtml;
     html+='<div class="card"><div class="card-title">Metas da semana</div>'
       +'<div class="report-stat-row"><span class="report-stat-label">⚖️ Dentro do equilíbrio (±10%)</span><span class="report-stat-val">'+balanceDays+'/'+validDays.length+' dias</span></div>'
       +'<div class="report-stat-row"><span class="report-stat-label">💪 Proteína ≥80% da meta</span><span class="report-stat-val">'+protDays+'/'+validDays.length+' dias</span></div>'
       +'<div class="report-stat-row"><span class="report-stat-label">📊 Calorias médias</span><span class="report-stat-val">'+avgKcal+' kcal/dia</span></div>'
-      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:#5a6270;">(meta: '+mg.prot+'g)</span></span></div>'
+      +'<div class="report-stat-row"><span class="report-stat-label">🥩 Proteína média</span><span class="report-stat-val">'+avgProt+'g <span style="color:var(--text3);">(meta: '+mg.prot+'g)</span></span></div>'
       +'</div>';
-    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:#8b95a3;line-height:1.7;">✅ Manutenção é equilíbrio. Foque na qualidade dos alimentos, regularidade nos treinos e mantenha a hidratação em dia.</div></div>';
+    html+='<div class="report-tip"><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">💡 Dica da Semana</div><div style="font-size:13px;color:var(--text2);line-height:1.7;">✅ Manutenção é equilíbrio. Foque na qualidade dos alimentos, regularidade nos treinos e mantenha a hidratação em dia.</div></div>';
   }
 
   if(currentLang!=='pt'){var _es={' DIAS':' DÍAS',' dias':' días','/dia':'/día','Metas da semana':'Metas de la semana','Registre sua alimentação por alguns dias para ver seu relatório personalizado.':'Registra tu alimentación durante unos días para ver tu informe personalizado.','* Estimativa baseada no déficit médio da semana. Resultados individuais variam.':'* Estimación basada en el déficit medio de la semana. Los resultados individuales varían.','* Estimativa — resultados dependem de treino, sono e genética individual.':'* Estimación — los resultados dependen del entrenamiento, el sueño y la genética individual.','Dentro do equilíbrio (±10%)':'Dentro del equilibrio (±10%)','Déficit no ponto certo!':'¡Déficit en el punto justo!','Superávit leve — pode aumentar':'Superávit leve — puedes aumentarlo','Superávit ideal!':'¡Superávit ideal!','Superávit elevado':'Superávit elevado','Balanço perfeito!':'¡Balance perfecto!','Balanço bom':'Buen balance','Seu plano de manutenção':'Tu plan de mantenimiento','Abaixo da meta calórica':'Por debajo de la meta calórica','Proje\u00e7\u00e3o de Resultados':'Proyecci\u00f3n de Resultados','Proje\u00e7\u00e3o de Crescimento':'Proyecci\u00f3n de Crecimiento','Perda estimada em 4 semanas':'P\u00e9rdida estimada en 4 semanas','Perda estimada em 8 semanas':'P\u00e9rdida estimada en 8 semanas','Super\u00e1vit estimado em 4 semanas':'Super\u00e1vit estimado en 4 semanas','Super\u00e1vit estimado em 8 semanas':'Super\u00e1vit estimado en 8 semanas','METAS DA SEMANA':'METAS DE LA SEMANA','Dentro do d\u00e9ficit':'Dentro del d\u00e9ficit','Meta cal\u00f3rica atingida':'Meta cal\u00f3rica alcanzada','Hidrata\u00e7\u00e3o \u226580% da meta':'Hidrataci\u00f3n \u226580% de la meta','Hidrata\u00e7\u00e3o \u226580% meta':'Hidrataci\u00f3n \u226580% meta','Prote\u00edna \u226580% da meta':'Prote\u00edna \u226580% de la meta','Calorias m\u00e9dias':'Calor\u00edas medias','Prote\u00edna m\u00e9dia':'Prote\u00edna media','Dica da Semana':'Consejo de la Semana','Sua jornada de emagrecimento':'Tu jornada de p\u00e9rdida de peso','Sua jornada de ganho de massa':'Tu jornada de ganancia muscular','Sua jornada de manuten\u00e7\u00e3o':'Tu jornada de mantenimiento','D\u00c9FICIT M\u00c9DIO':'D\u00c9FICIT MEDIO','BALAN\u00c7O M\u00c9DIO':'BALANCE MEDIO','SUPER\u00c1VIT M\u00c9DIO':'SUPER\u00c1VIT MEDIO','D\u00e9ficit forte! Monitore m\u00fasculo':'D\u00e9ficit fuerte! Monitorea m\u00fasculo','D\u00e9ficit leve':'D\u00e9ficit leve','D\u00e9ficit elevado':'D\u00e9ficit elevado','Super\u00e1vit controlado':'Super\u00e1vit controlado','Super\u00e1vit alto':'Super\u00e1vit alto','Atingindo o equil\u00edbrio. Continue assim.':'Alcanzando el equilibrio. Sigue as\u00ed.','Prote\u00edna abaixo do ideal':'Prote\u00edna por debajo del ideal','Calorias acima da meta':'Calor\u00edas por encima de la meta','Bom progresso! Mantenha o foco':'Buen progreso! Mant\u00e9n el enfoque','Foque na qualidade dos alimentos':'Enf\u00f3cate en calidad de los alimentos','Manuten\u00e7\u00e3o do equil\u00edbrio':'Mantenimiento del equilibrio','dentro do d\u00e9ficit':'dentro del d\u00e9ficit'};var _en={' DIAS':' DAYS','Metas da semana':'Weekly goals',' dias':' days','/dia':'/day','Registre sua alimentação por alguns dias para ver seu relatório personalizado.':'Log your meals for a few days to see your personalised report.','* Estimativa baseada no déficit médio da semana. Resultados individuais variam.':'* Estimate based on the average deficit for the week. Individual results vary.','* Estimativa — resultados dependem de treino, sono e genética individual.':'* Estimate — results depend on training, sleep and individual genetics.','Dentro do equilíbrio (±10%)':'Within balance (±10%)','Déficit no ponto certo!':'Deficit right on point!','Superávit leve — pode aumentar':'Mild surplus — you can increase it','Superávit ideal!':'Ideal surplus!','Superávit elevado':'High surplus','Balanço perfeito!':'Perfect balance!','Balanço bom':'Good balance','Seu plano de manutenção':'Your maintenance plan','Abaixo da meta calórica':'Below the calorie goal','Proje\u00e7\u00e3o de Resultados':'Results Projection','Proje\u00e7\u00e3o de Crescimento':'Growth Projection','Perda estimada em 4 semanas':'Estimated loss in 4 weeks','Perda estimada em 8 semanas':'Estimated loss in 8 weeks','Super\u00e1vit estimado em 4 semanas':'Estimated surplus in 4 weeks','Super\u00e1vit estimado em 8 semanas':'Estimated surplus in 8 weeks','METAS DA SEMANA':'WEEKLY GOALS','Dentro do d\u00e9ficit':'Within deficit','Meta cal\u00f3rica atingida':'Caloric goal met','Hidrata\u00e7\u00e3o \u226580% da meta':'Hydration \u226580% of goal','Hidrata\u00e7\u00e3o \u226580% meta':'Hydration \u226580% of goal','Prote\u00edna \u226580% da meta':'Protein \u226580% of goal','Calorias m\u00e9dias':'Average calories','Prote\u00edna m\u00e9dia':'Average protein','Dica da Semana':'Weekly Tip','Sua jornada de emagrecimento':'Your weight loss journey','Sua jornada de ganho de massa':'Your muscle gain journey','Sua jornada de manuten\u00e7\u00e3o':'Your maintenance journey','D\u00c9FICIT M\u00c9DIO':'AVERAGE DEFICIT','BALAN\u00c7O M\u00c9DIO':'AVERAGE BALANCE','SUPER\u00c1VIT M\u00c9DIO':'AVERAGE SURPLUS','D\u00e9ficit forte! Monitore m\u00fasculo':'Strong deficit! Monitor muscle','D\u00e9ficit leve':'Light deficit','D\u00e9ficit elevado':'High deficit','Super\u00e1vit controlado':'Controlled surplus','Super\u00e1vit alto':'High surplus','Atingindo o equil\u00edbrio. Continue assim.':'Reaching balance. Keep it up!','Prote\u00edna abaixo do ideal':'Protein below ideal','Calorias acima da meta':'Calories above goal','Bom progresso! Mantenha o foco':'Good progress! Stay focused','Foque na qualidade dos alimentos':'Focus on food quality','Manuten\u00e7\u00e3o do equil\u00edbrio':'Balance maintenance','dentro do d\u00e9ficit':'within deficit'};var _it={' DIAS':' GIORNI','Metas da semana':'Obiettivi della settimana',' dias':' giorni','/dia':'/giorno','Registre sua alimentação por alguns dias para ver seu relatório personalizado.':'Registra i tuoi pasti per qualche giorno per vedere il tuo report personalizzato.','* Estimativa baseada no déficit médio da semana. Resultados individuais variam.':'* Stima basata sul deficit medio della settimana. I risultati individuali variano.','* Estimativa — resultados dependem de treino, sono e genética individual.':'* Stima — i risultati dipendono da allenamento, sonno e genetica individuale.','Dentro do equilíbrio (±10%)':'In equilibrio (±10%)','Déficit no ponto certo!':'Deficit al punto giusto!','Superávit leve — pode aumentar':'Surplus lieve — puoi aumentare','Superávit ideal!':'Surplus ideale!','Superávit elevado':'Surplus elevato','Balanço perfeito!':'Bilancio perfetto!','Balanço bom':'Buon bilancio','Seu plano de manutenção':'Il tuo piano di mantenimento','Abaixo da meta calórica':'Sotto la meta calorica','Projeção de Resultados':'Proiezione dei Risultati','Projeção de Crescimento':'Proiezione di Crescita','Perda estimada em 4 semanas':'Perdita stimata in 4 settimane','Perda estimada em 8 semanas':'Perdita stimata in 8 settimane','Superávit estimado em 4 semanas':'Surplus stimato in 4 settimane','Superávit estimado em 8 semanas':'Surplus stimato in 8 settimane','METAS DA SEMANA':'OBIETTIVI DELLA SETTIMANA','Dentro do déficit':'Nel deficit','Meta calórica atingida':'Meta calorica raggiunta','Hidratação ≥80% da meta':'Idratazione ≥80% della meta','Hidratação ≥80% meta':'Idratazione ≥80% meta','Proteína ≥80% da meta':'Proteine ≥80% della meta','Calorias médias':'Calorie medie','Proteína média':'Proteine medie','Dica da Semana':'Consiglio della Settimana','Sua jornada de emagrecimento':'Il tuo percorso di dimagrimento','Sua jornada de ganho de massa':'Il tuo percorso di massa muscolare','Sua jornada de manutenção':'Il tuo percorso di mantenimento','DÉFICIT MÉDIO':'DEFICIT MEDIO','BALANÇO MÉDIO':'BILANCIO MEDIO','SUPERÁVIT MÉDIO':'SURPLUS MEDIO','Déficit forte! Monitore músculo':'Deficit forte! Controlla la massa muscolare','Déficit leve':'Deficit lieve','Déficit elevado':'Deficit elevato','Superávit controlado':'Surplus controllato','Superávit alto':'Surplus alto','Atingindo o equilíbrio. Continue assim.':'Stai raggiungendo l\'equilibrio. Continua così.','Proteína abaixo do ideal':'Proteine sotto il livello ideale','Calorias acima da meta':'Calorie sopra la meta','Bom progresso! Mantenha o foco':'Buoni progressi! Mantieni la concentrazione','Foque na qualidade dos alimentos':'Punta sulla qualità degli alimenti','Manutenção do equilíbrio':'Mantenimento dell\'equilibrio','dentro do déficit':'nel deficit'};var _fr={' DIAS':' JOURS','Metas da semana':'Objectifs de la semaine',' dias':' jours','/dia':'/jour','Registre sua alimentação por alguns dias para ver seu relatório personalizado.':'Enregistrez vos repas pendant quelques jours pour voir votre rapport personnalisé.','* Estimativa baseada no déficit médio da semana. Resultados individuais variam.':'* Estimation basée sur le déficit moyen de la semaine. Les résultats individuels varient.','* Estimativa — resultados dependem de treino, sono e genética individual.':'* Estimation — les résultats dépendent de l\'entraînement, du sommeil et de la génétique.','Dentro do equilíbrio (±10%)':'Dans l\'équilibre (±10%)','Déficit no ponto certo!':'Déficit au bon niveau !','Superávit leve — pode aumentar':'Surplus léger — vous pouvez augmenter','Superávit ideal!':'Surplus idéal !','Superávit elevado':'Surplus élevé','Balanço perfeito!':'Bilan parfait !','Balanço bom':'Bon bilan','Seu plano de manutenção':'Votre plan de maintien','Abaixo da meta calórica':'En dessous de l\'objectif calorique','Projeção de Resultados':'Projection des Résultats','Projeção de Crescimento':'Projection de Croissance','Perda estimada em 4 semanas':'Perte estimée en 4 semaines','Perda estimada em 8 semanas':'Perte estimée en 8 semaines','Superávit estimado em 4 semanas':'Surplus estimé en 4 semaines','Superávit estimado em 8 semanas':'Surplus estimé en 8 semaines','METAS DA SEMANA':'OBJECTIFS DE LA SEMAINE','Dentro do déficit':'Dans le déficit','Meta calórica atingida':'Objectif calorique atteint','Hidratação ≥80% da meta':'Hydratation ≥80% de l\'objectif','Hidratação ≥80% meta':'Hydratation ≥80% objectif','Proteína ≥80% da meta':'Protéines ≥80% de l\'objectif','Calorias médias':'Calories moyennes','Proteína média':'Protéines moyennes','Dica da Semana':'Conseil de la Semaine','Sua jornada de emagrecimento':'Votre parcours de perte de poids','Sua jornada de ganho de massa':'Votre parcours de prise de masse','Sua jornada de manutenção':'Votre parcours de maintien','DÉFICIT MÉDIO':'DÉFICIT MOYEN','BALANÇO MÉDIO':'BILAN MOYEN','SUPERÁVIT MÉDIO':'SURPLUS MOYEN','Déficit forte! Monitore músculo':'Déficit important ! Surveillez le muscle','Déficit leve':'Déficit léger','Déficit elevado':'Déficit élevé','Superávit controlado':'Surplus contrôlé','Superávit alto':'Surplus élevé','Atingindo o equilíbrio. Continue assim.':'Vous atteignez l\'équilibre. Continuez ainsi.','Proteína abaixo do ideal':'Protéines en dessous de l\'idéal','Calorias acima da meta':'Calories au-dessus de l\'objectif','Bom progresso! Mantenha o foco':'Bons progrès ! Gardez le cap','Foque na qualidade dos alimentos':'Misez sur la qualité des aliments','Manutenção do equilíbrio':'Maintien de l\'équilibre','dentro do déficit':'dans le déficit'};var _de={' DIAS':' TAGE','Metas da semana':'Wochenziele',' dias':' Tage','/dia':'/Tag','Registre sua alimentação por alguns dias para ver seu relatório personalizado.':'Erfasse einige Tage lang deine Mahlzeiten, um deinen persönlichen Bericht zu sehen.','* Estimativa baseada no déficit médio da semana. Resultados individuais variam.':'* Schätzung auf Basis des durchschnittlichen Wochendefizits. Individuelle Ergebnisse variieren.','* Estimativa — resultados dependem de treino, sono e genética individual.':'* Schätzung — die Ergebnisse hängen von Training, Schlaf und individueller Genetik ab.','Dentro do equilíbrio (±10%)':'Im Gleichgewicht (±10%)','Déficit no ponto certo!':'Defizit genau richtig!','Superávit leve — pode aumentar':'Leichter Überschuss — du kannst erhöhen','Superávit ideal!':'Idealer Überschuss!','Superávit elevado':'Hoher Überschuss','Balanço perfeito!':'Perfekte Bilanz!','Balanço bom':'Gute Bilanz','Seu plano de manutenção':'Dein Erhaltungsplan','Abaixo da meta calórica':'Unter dem Kalorienziel','Projeção de Resultados':'Ergebnisprognose','Projeção de Crescimento':'Wachstumsprognose','Perda estimada em 4 semanas':'Geschätzter Verlust in 4 Wochen','Perda estimada em 8 semanas':'Geschätzter Verlust in 8 Wochen','Superávit estimado em 4 semanas':'Geschätzter Überschuss in 4 Wochen','Superávit estimado em 8 semanas':'Geschätzter Überschuss in 8 Wochen','METAS DA SEMANA':'WOCHENZIELE','Dentro do déficit':'Im Defizit','Meta calórica atingida':'Kalorienziel erreicht','Hidratação ≥80% da meta':'Flüssigkeit ≥80% des Ziels','Hidratação ≥80% meta':'Flüssigkeit ≥80% Ziel','Proteína ≥80% da meta':'Protein ≥80% des Ziels','Calorias médias':'Durchschnittliche Kalorien','Proteína média':'Durchschnittliches Protein','Dica da Semana':'Tipp der Woche','Sua jornada de emagrecimento':'Dein Weg zur Gewichtsabnahme','Sua jornada de ganho de massa':'Dein Weg zum Muskelaufbau','Sua jornada de manutenção':'Dein Weg zur Gewichtserhaltung','DÉFICIT MÉDIO':'DURCHSCHNITTLICHES DEFIZIT','BALANÇO MÉDIO':'DURCHSCHNITTLICHE BILANZ','SUPERÁVIT MÉDIO':'DURCHSCHNITTLICHER ÜBERSCHUSS','Déficit forte! Monitore músculo':'Starkes Defizit! Achte auf die Muskulatur','Déficit leve':'Leichtes Defizit','Déficit elevado':'Hohes Defizit','Superávit controlado':'Kontrollierter Überschuss','Superávit alto':'Hoher Überschuss','Atingindo o equilíbrio. Continue assim.':'Du erreichst das Gleichgewicht. Weiter so.','Proteína abaixo do ideal':'Protein unter dem Idealwert','Calorias acima da meta':'Kalorien über dem Ziel','Bom progresso! Mantenha o foco':'Guter Fortschritt! Bleib dran','Foque na qualidade dos alimentos':'Achte auf die Qualität der Lebensmittel','Manutenção do equilíbrio':'Erhaltung des Gleichgewichts','dentro do déficit':'im Defizit'};var _m={es:_es,en:_en,it:_it,fr:_fr,de:_de}[currentLang]||_en;for(var _k in _m)html=html.split(_k).join(_m[_k]);}
@@ -3689,7 +3716,7 @@ function renderNutriContext(){
     {label:sl.water,val:waterMl+'ml',pct:waterPct,color:pctColor(waterPct,'mass'),goal:waterGoal+'ml'}
   ].map(function(s){
     return '<div style="text-align:center;">'
-      +'<div style="font-size:10px;color:#5a6270;margin-bottom:3px;font-weight:500;">'+s.label+'</div>'
+      +'<div style="font-size:10px;color:var(--text3);margin-bottom:3px;font-weight:500;">'+s.label+'</div>'
       +'<div style="font-size:16px;font-weight:800;color:'+s.color+';font-family:\'Syne\',sans-serif;">'+Math.min(s.pct,999)+'%</div>'
       +'<div style="font-size:9px;color:#3a4150;margin-top:2px;">'+s.val+'</div>'
       +'</div>';
@@ -3767,10 +3794,10 @@ function switchAuthTab(tab){
   var btnL=document.getElementById('authTabLogin');
   var btnR=document.getElementById('authTabRegister');
   btnL.style.background=isLogin?'#f0b429':'transparent';
-  btnL.style.color=isLogin?'#000':'#8b95a3';
+  btnL.style.color=isLogin?'#000':'var(--text2)';
   btnL.style.fontWeight=isLogin?'700':'500';
   btnR.style.background=isLogin?'transparent':'#f0b429';
-  btnR.style.color=isLogin?'#8b95a3':'#000';
+  btnR.style.color=isLogin?'var(--text2)':'#000';
   btnR.style.fontWeight=isLogin?'500':'700';
   document.getElementById('authConfirmWrap').style.display=isLogin?'none':'';
   document.getElementById('authBtn').textContent=isLogin?'Entrar':'Criar Conta';
