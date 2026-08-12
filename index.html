@@ -2998,6 +2998,75 @@ function _projSvg(pr){
     +'</svg>';
 }
 /* ---- Digital Twin: caminho reverso ate a meta ---- */
+/* ---- Bel: analise semanal de padroes ---- */
+function analisarSemana(){
+  var hist=state.history||{}, p=state.profile||{};
+  var dias=Object.keys(hist).sort().slice(-14);
+  if(dias.length<4) return {ok:false,motivo:"poucosDados",dias:dias.length};
+  var uteis=[], fds=[], todos=[];
+  dias.forEach(function(d){
+    var h=hist[d]||{}; if(!(+h.kcal>0)) return;
+    var dt=new Date(d.slice(0,4)+"-"+d.slice(4,6)+"-"+d.slice(6,8)+"T12:00:00");
+    var wd=dt.getDay();
+    var reg={data:d,kcal:+h.kcal||0,prot:+h.prot||0,water:+h.water||0,sleep:+h.sleep||0,dia:wd};
+    todos.push(reg);
+    if(wd===0||wd===6) fds.push(reg); else uteis.push(reg);
+  });
+  if(todos.length<4) return {ok:false,motivo:"poucosDados",dias:todos.length};
+  function media(arr,campo){ if(!arr.length) return 0; return Math.round(arr.reduce(function(a,b){return a+b[campo];},0)/arr.length); }
+  var meta=+state.calGoal||0, mg=null;
+  try{ mg=getMacroGoals(); }catch(e){}
+  var metaProt=(mg&&mg.prot)||0;
+  var o={ok:true};
+  o.diasAnalisados=todos.length;
+  o.kcalMedia=media(todos,"kcal");
+  o.kcalUteis=media(uteis,"kcal");
+  o.kcalFds=media(fds,"kcal");
+  o.protMedia=media(todos,"prot");
+  o.aguaMedia=media(todos,"water");
+  o.sonoMedia=Math.round(media(todos,"sleep")*10)/10;
+  o.meta=meta; o.metaProt=metaProt;
+  o.diasNaMeta=meta?todos.filter(function(r){return r.kcal<=meta;}).length:0;
+  o.diasProtOk=metaProt?todos.filter(function(r){return r.prot>=metaProt*0.8;}).length:0;
+  /* padroes detectados, sem IA */
+  var pad=[];
+  if(uteis.length>=2&&fds.length>=1&&o.kcalFds>o.kcalUteis*1.15) pad.push("fimDeSemanaEstoura");
+  if(uteis.length>=2&&fds.length>=1&&o.kcalUteis>o.kcalFds*1.15) pad.push("semanaEstoura");
+  if(metaProt&&o.protMedia<metaProt*0.7) pad.push("proteinaBaixa");
+  if(o.sonoMedia>0&&o.sonoMedia<6.5) pad.push("sonoCurto");
+  var wg=+state.waterGoal||2500;
+  if(o.aguaMedia<wg*0.6) pad.push("aguaBaixa");
+  if(meta&&o.diasNaMeta>=todos.length*0.8) pad.push("consistente");
+  /* variacao: dia mais alto e mais baixo */
+  var ord=todos.slice().sort(function(a,b){return b.kcal-a.kcal;});
+  o.maiorDia={data:ord[0].data,kcal:ord[0].kcal};
+  o.menorDia={data:ord[ord.length-1].data,kcal:ord[ord.length-1].kcal};
+  if(ord[0].kcal>ord[ord.length-1].kcal*1.8) pad.push("oscilacaoAlta");
+  o.padroes=pad;
+  return o;
+}
+function montarPromptSemana(a){
+  var p=state.profile||{};
+  var objetivo={cut:"emagrecer",mass:"ganhar massa muscular",maint:"manter o peso"}[state.goal]||"melhorar a saude";
+  var L={pt:"Responda em portugues",en:"Respond in English",es:"Responde en espanol",it:"Rispondi in italiano",fr:"Reponds en francais",de:"Antworte auf Deutsch"}[currentLang]||"Respond in English";
+  var mapa={fimDeSemanaEstoura:"as calorias sobem muito no fim de semana",semanaEstoura:"as calorias sobem mais nos dias uteis",
+    proteinaBaixa:"a proteina esta bem abaixo da meta",sonoCurto:"o sono medio esta curto",
+    aguaBaixa:"a hidratacao esta baixa",consistente:"houve boa consistencia com a meta",oscilacaoAlta:"ha muita oscilacao entre os dias"};
+  var obs=(a.padroes||[]).map(function(k){return mapa[k]||k;}).join("; ")||"sem padrao marcante";
+  var d=[];
+  d.push("Dias analisados: "+a.diasAnalisados);
+  d.push("Media diaria: "+a.kcalMedia+" kcal (meta "+a.meta+")");
+  if(a.kcalUteis&&a.kcalFds) d.push("Dias uteis: "+a.kcalUteis+" kcal | Fim de semana: "+a.kcalFds+" kcal");
+  d.push("Proteina media: "+a.protMedia+"g de "+a.metaProt+"g");
+  d.push("Agua media: "+a.aguaMedia+" ml");
+  if(a.sonoMedia) d.push("Sono medio: "+a.sonoMedia+"h");
+  d.push("Dias dentro da meta calorica: "+a.diasNaMeta+" de "+a.diasAnalisados);
+  return L+". Voce e a Bel, nutricionista do usuario. Objetivo dele: "+objetivo+".\n"
+    +"Dados reais da ultima semana:\n"+d.join("\n")
+    +"\nPadroes observados: "+obs
+    +"\n\nEscreva um diagnostico curto e pessoal em no maximo 4 frases: 1) o que foi bem, 2) o padrao que mais atrapalha, 3) UMA acao concreta para a proxima semana."
+    +" Use os numeros reais. Nao invente dados. Nao use listas nem titulos, escreva corrido e direto. Nao repita todos os numeros, escolha os que importam.";
+}
 function cardCaminhoMeta(){
   var p=state.profile||{};
   var wArr=(state.weights||[]).filter(function(w){return w&&w.val;});
