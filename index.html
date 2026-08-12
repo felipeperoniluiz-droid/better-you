@@ -2981,6 +2981,66 @@ function _projSvg(pr){
     +'<text x="'+(pxEnd-48)+'" y="'+(Hp-1)+'" fill="#666" font-size="9">'+pr.weeks+' semanas</text>'
     +'</svg>';
 }
+/* ---- Digital Twin: caminho reverso ate a meta ---- */
+function calcCaminhoMeta(pesoAlvo,dataAlvo){
+  var p=state.profile||{}, out={ok:false,motivo:""};
+  var wArr=(state.weights||[]).filter(function(w){return w&&w.val;});
+  var curW=wArr.length?+wArr[0].val:+p.weight||0;
+  if(!curW){ out.motivo="semPeso"; return out; }
+  pesoAlvo=+pesoAlvo||0;
+  if(!pesoAlvo){ out.motivo="semAlvo"; return out; }
+  var hoje=new Date(); hoje.setHours(0,0,0,0);
+  var alvo=new Date(dataAlvo+"T00:00:00");
+  if(isNaN(alvo.getTime())){ out.motivo="semData"; return out; }
+  var dias=Math.round((alvo-hoje)/86400000);
+  if(dias<7){ out.motivo="prazoCurto"; return out; }
+  var kgTotal=pesoAlvo-curW;
+  if(Math.abs(kgTotal)<0.3){ out.motivo="jaEstaLa"; return out; }
+  var semanas=dias/7;
+  var kgSemana=kgTotal/semanas;
+  var kcalDia=(kgTotal*7700)/dias;
+  var r=null; try{ r=calcTDEE(curW,+p.height,+p.age,p.sex,p.activity); }catch(e){}
+  var tdee=(r&&r.tdee)||+p.tdee||+state.calGoal||0;
+  var bmr=(r&&r.bmr)||Math.round(tdee*0.72);
+  var metaKcal=Math.round(tdee+kcalDia);
+  var limSeguro=curW*0.0075, limTeto=curW*0.015;
+  var abs=Math.abs(kgSemana), status="seguro";
+  if(abs>limTeto) status="inviavel"; else if(abs>limSeguro) status="agressivo";
+  var abaixoBasal=(kgTotal<0 && metaKcal<bmr);
+  if(abaixoBasal) status="inviavel";
+  var diasMin=Math.ceil(Math.abs(kgTotal)/limTeto*7);
+  var dr=new Date(hoje.getTime()+diasMin*86400000);
+  out.ok=true; out.curW=curW; out.alvo=pesoAlvo; out.dias=dias;
+  out.semanas=Math.round(semanas*10)/10;
+  out.kgTotal=Math.round(kgTotal*10)/10;
+  out.kgSemana=Math.round(kgSemana*100)/100;
+  out.kcalDia=Math.round(kcalDia); out.metaKcal=metaKcal;
+  out.tdee=Math.round(tdee); out.bmr=Math.round(bmr);
+  out.status=status; out.abaixoBasal=abaixoBasal;
+  out.dataRealista=dr.toISOString().slice(0,10);
+  return out;
+}
+function renderCaminhoMeta(){
+  var el=document.getElementById("metaResultado"); if(!el) return;
+  var pa=(document.getElementById("metaPesoAlvo")||{}).value;
+  var da=(document.getElementById("metaDataAlvo")||{}).value;
+  var r=calcCaminhoMeta(pa,da);
+  if(!r.ok){ el.innerHTML='<div style="color:var(--text2);font-size:13px;padding:8px 2px;">'+tx("meta_"+r.motivo)+'</div>'; return; }
+  var cor=r.status==="seguro"?"var(--green)":(r.status==="agressivo"?"var(--gold)":"var(--red)");
+  var aviso=r.abaixoBasal?tx("metaAbaixoBasal",r.bmr)
+    :(r.status==="inviavel"?tx("metaInviavel",r.dataRealista.split("-").reverse().join("/"))
+    :(r.status==="agressivo"?tx("metaAgressivo"):tx("metaSeguro")));
+  var sinal=r.kcalDia<0?"":"+";
+  var h='<div style="border-top:1px solid var(--border);margin-top:12px;padding-top:12px;">';
+  h+='<div style="font-size:13px;color:var(--text2);margin-bottom:10px;">'+tx("metaPlano",r.curW,r.alvo,r.semanas)+'</div>';
+  h+='<div style="display:flex;gap:10px;margin-bottom:10px;">';
+  h+='<div style="flex:1;background:var(--surface2);border-radius:12px;padding:10px;"><div style="font-size:11px;color:var(--text2);">'+tx("metaRitmoLabel")+'</div><div style="font-size:17px;font-weight:800;color:'+cor+';">'+(r.kgSemana>0?"+":"")+r.kgSemana+' kg/sem</div></div>';
+  h+='<div style="flex:1;background:var(--surface2);border-radius:12px;padding:10px;"><div style="font-size:11px;color:var(--text2);">'+tx("metaCalLabel")+'</div><div style="font-size:17px;font-weight:800;">'+r.metaKcal+' kcal</div><div style="font-size:11px;color:var(--text2);">'+sinal+r.kcalDia+' vs '+r.tdee+'</div></div>';
+  h+='</div>';
+  h+='<div style="font-size:12px;line-height:1.5;color:'+cor+';font-weight:600;">'+aviso+'</div>';
+  h+='</div>';
+  el.innerHTML=h;
+}
 function renderProjectionHTML(){
   var pr; try{ pr=calcProjection(8); }catch(e){ return ""; }
   var h='<div class="card" style="margin-top:14px;"><div class="card-title">'+tx('projTitulo')+'</div>';
