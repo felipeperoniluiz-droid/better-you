@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0a0c0f;--surface:#111418;--surface2:#181c22;--surface3:#1e2229;--border:#252b34;--gold:#f0b429;--orange:#e8834a;--green:#34d399;--red:#f87171;--blue:#60a5fa;--water:#38bdf8;--text:#f0f2f5;--text2:#8b95a3;--text3:#5a6270;--goldInk:#f0b429;--goldBg:#1a160a;--goldBg2:#2d2710;--blueBg:#0d1020;--shadow:0 6px 20px rgba(0,0,0,.4);--radius:16px;--radius-sm:10px;}
-html[data-theme="light"]{--bg:#f7f8fa;--surface:#ffffff;--surface2:#f2f4f7;--surface3:#e8ebf0;--border:#e3e7ed;--text:#0f1419;--text2:#4a5563;--text3:#6b7684;--goldInk:#a8730a;--goldBg:#fffaf0;--goldBg2:#fdf2d9;--blueBg:#eff4fd;--shadow:0 2px 8px rgba(15,20,25,.06),0 1px 2px rgba(15,20,25,.04);}
+html[data-theme="light"]{--bg:#ffffff;--surface:#ffffff;--surface2:#f5f6f8;--surface3:#eceef2;--border:#e6e9ee;--text:#0f1419;--text2:#4a5563;--text3:#6b7684;--goldInk:#a8730a;--goldBg:#ffffff;--goldBg2:#fdf6e3;--blueBg:#f4f7fd;--shadow:0 1px 3px rgba(15,20,25,.08),0 1px 2px rgba(15,20,25,.04);}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;background:var(--bg)!important;color:var(--text);transition:background .2s ease,color .2s ease;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.5;overscroll-behavior:none;}
 body{display:flex;justify-content:center;}
@@ -368,6 +368,12 @@ html[data-theme="light"] .navfab{box-shadow:0 6px 18px rgba(232,131,74,.42)!impo
 html[data-theme="light"] .card-title{color:var(--text)!important;font-weight:800;}
 /* numeros grandes mantem a cor da marca, mas mais escura para leitura */
 html[data-theme="light"] .big-number,html[data-theme="light"] .kcal-value{color:var(--text)!important;}
+
+html[data-theme="light"] .card{background:#fff!important;border:1px solid var(--border)!important;box-shadow:var(--shadow)!important;}
+html[data-theme="light"] [style*="var(--goldBg)"]{background:#fff!important;border:1px solid var(--border)!important;}
+html[data-theme="light"] .compare-tag,html[data-theme="light"] .compare-wrap{background:var(--surface2)!important;color:var(--text)!important;border:1px solid var(--border)!important;}
+html[data-theme="light"] .navwrap{background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.95) 45%)!important;}
+html[data-theme="light"] .tab,html[data-theme="light"] #content{background:#fff!important;}
 </style>
   <!-- Anéis pulsantes -->
   <div class="sp-ring" style="width:160px;height:160px;"></div>
@@ -1288,7 +1294,7 @@ function aplicarTema(){
   }
   document.documentElement.setAttribute("data-theme",efetivo);
   var meta=document.querySelector('meta[name="theme-color"]');
-  if(meta) meta.setAttribute("content", efetivo==="light"?"#f4f6f8":"#0a0c0f");
+  if(meta) meta.setAttribute("content", efetivo==="light"?"#ffffff":"#0a0c0f");
   ["light","dark","auto"].forEach(function(k){
     var b=document.getElementById("theme-"+k);
     if(b) b.classList.toggle("active", pref===k);
