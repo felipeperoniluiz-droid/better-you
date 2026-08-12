@@ -1528,7 +1528,11 @@ function checkDayReset(){
   if(state.lastReset!==today){
     if(state.lastReset){var t=calcTotals();state.history[state.lastReset]={kcal:t.kcal,prot:t.prot,carb:t.carb,fat:t.fat,fib:t.fib,sleep:state.sleepH||0,water:state.waterMl,meals:JSON.parse(JSON.stringify(state.meals))};}
     state.meals={cafe:[],almoco:[],lanche:[],jantar:[]};
-    state.waterMl=0;state.lastReset=today;save();
+    state.waterMl=0;
+    state.sleepH=0;
+    window._sleepEditando=false;
+    state.lastReset=today;save();
+    try{ if(typeof saveToFirestore==="function") saveToFirestore(); }catch(e){}
   }
 }
 function calcTotals(){
