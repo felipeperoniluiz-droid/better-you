@@ -3261,16 +3261,20 @@ function importarMedidasWithings(medidas){
   state.weights.forEach(function(w){ if(w&&w.date) existentes[w.date]=w; });
   var novas=0;
   medidas.forEach(function(m){
-    if(!m.peso) return;
-    var atual=existentes[m.data];
-    if(atual){ if(!atual.fonte){ return; } if(atual.val===m.peso) return; }
-    if(atual){ atual.val=m.peso; atual.fonte="withings"; }
-    else { state.weights.push({date:m.data,val:m.peso,fonte:"withings"}); novas++; }
+    /* composicao corporal nao conflita com peso manual: sempre aproveitamos */
     if(m.gordura){
       if(!state.bodyFat) state.bodyFat=[];
       var jaTem=state.bodyFat.filter(function(b){ return b.date===m.data; })[0];
       if(jaTem) jaTem.val=m.gordura; else state.bodyFat.push({date:m.data,val:m.gordura,fonte:"withings"});
     }
+    if(!m.peso) return;
+    var atual=existentes[m.data];
+    /* pesagem digitada a mao tem prioridade e nunca e sobrescrita */
+    if(atual && !atual.fonte) return;
+    if(atual){ if(atual.val!==m.peso){ atual.val=m.peso; atual.fonte="withings"; } return; }
+    state.weights.push({date:m.data,val:m.peso,fonte:"withings"});
+    existentes[m.data]=state.weights[state.weights.length-1];
+    novas++;
   });
   state.weights.sort(function(a,b){ return (b.date||"").localeCompare(a.date||""); });
   return novas;
