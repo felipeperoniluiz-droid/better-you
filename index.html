@@ -2004,7 +2004,7 @@ var _NAVGRUPO={hoje:"hoje",peso:"prog",hist:"prog",relatorios:"prog",agua:"mais"
 var _SHEETS={
   prog:{t:"navProgresso",itens:[{tab:"peso",k:"peso",ic:"peso"},{tab:"hist",k:"hist",ic:"hist"},{tab:"relatorios",k:"navRelat",ic:"prog"}]},
   mais:{t:"navMais",itens:[{tab:"agua",k:"agua",ic:"agua"},{tab:"dieta",k:"navNutri",ic:"bel"},{tab:"calc",k:"calcular",ic:"calc"},{fn:"openProfile",k:"profTitle",ic:"perfil"}]},
-  add:{t:"navRegistrar",itens:[{tab:"foto",k:"fotoIA",ic:"foto"},{fn:"irAdicionarAlimento",k:"addAlimento",ic:"add"},{fn:"irFotoCorpo",k:"subtabCorpo",ic:"corpo"}]}
+  add:{t:"navRegistrar",itens:[{tab:"foto",k:"fotoIA",ic:"foto"},{fn:"irFotoCorpo",k:"subtabCorpo",ic:"corpo"},{fn:"irAdicionarAlimento",k:"addAlimento",ic:"add"}]}
 };
 function _navIcone(n){ return (window._NAVIC&&window._NAVIC[n])||""; }
 function irFotoCorpo(){
@@ -2023,7 +2023,7 @@ function openSheet(k){
   var t=(typeof T!=="undefined"&&T[currentLang])||{};
   document.getElementById("sheetTitle").textContent=t[cfg.t]||cfg.t;
   document.getElementById("sheetBody").innerHTML=cfg.itens.map(function(it){
-    var rot=t[it.k]||it.k;
+    var rot=(t[it.k]||it.k).replace(/^[^A-Za-z\u00C0-\u017F0-9]+/,'').trim();
     var acao=it.fn?(it.fn+"()"):("navGo('"+it.tab+"')");
     return "<div class=\"sheet-item\" onclick=\"closeSheet();"+acao+"\">"+_navIcone(it.ic)+"<span class=\"sheet-item-tx\">"+rot+"</span></div>";
   }).join("");
