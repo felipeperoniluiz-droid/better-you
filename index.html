@@ -2004,9 +2004,16 @@ var _NAVGRUPO={hoje:"hoje",peso:"prog",hist:"prog",relatorios:"prog",agua:"mais"
 var _SHEETS={
   prog:{t:"navProgresso",itens:[{tab:"peso",k:"peso",ic:"peso"},{tab:"hist",k:"hist",ic:"hist"},{tab:"relatorios",k:"navRelat",ic:"prog"}]},
   mais:{t:"navMais",itens:[{tab:"agua",k:"agua",ic:"agua"},{tab:"dieta",k:"navNutri",ic:"bel"},{tab:"calc",k:"calcular",ic:"calc"},{fn:"openProfile",k:"profTitle",ic:"perfil"}]},
-  add:{t:"navRegistrar",itens:[{tab:"foto",k:"fotoIA",ic:"foto"},{tab:"agua",k:"addAguaTitle",ic:"agua"}]}
+  add:{t:"navRegistrar",itens:[{tab:"foto",k:"fotoIA",ic:"foto"},{fn:"irAdicionarAlimento",k:"addAlimento",ic:"add"}]}
 };
 function _navIcone(n){ return (window._NAVIC&&window._NAVIC[n])||""; }
+function irAdicionarAlimento(){
+  navGo("hoje");
+  setTimeout(function(){
+    var el=document.querySelector('[data-i18n="addAlimento"]');
+    if(el&&el.scrollIntoView) el.scrollIntoView({behavior:"smooth",block:"center"});
+  },160);
+}
 function openSheet(k){
   var cfg=_SHEETS[k]; if(!cfg) return;
   var t=(typeof T!=="undefined"&&T[currentLang])||{};
