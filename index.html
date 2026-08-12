@@ -354,7 +354,7 @@ html[data-theme="light"] .alert-card,html[data-theme="light"] .tip-card,html[dat
 html[data-theme="light"] [style*="var(--goldBg)"]{background:#fff!important;border:1px solid var(--border)!important;box-shadow:var(--shadow)!important;}
 /* qualquer texto secundario fraco vira legivel */
 html[data-theme="light"] [style*="color:var(--text2)"],html[data-theme="light"] [style*="color:var(--text3)"]{color:var(--text2)!important;}
-html[data-theme="light"] [style*="color:#777"],html[data-theme="light"] [style*="color:#888"],html[data-theme="light"] [style*="color:#999"],html[data-theme="light"] [style*="color:#aaa"]{color:var(--text2)!important;}
+html[data-theme="light"] [style*="color:var(--text2)"],html[data-theme="light"] [style*="color:var(--text2)"],html[data-theme="light"] [style*="color:var(--text2)"],html[data-theme="light"] [style*="color:var(--text2)"]{color:var(--text2)!important;}
 /* botoes com contorno definido */
 html[data-theme="light"] .btn,html[data-theme="light"] .lang-btn,html[data-theme="light"] .goal-btn,html[data-theme="light"] .theme-btn,html[data-theme="light"] .chip,html[data-theme="light"] .compare-tag,html[data-theme="light"] .icon-btn,html[data-theme="light"] .add-food-btn,html[data-theme="light"] .quick-btn{background:#fff!important;border:1px solid var(--border)!important;color:var(--text)!important;}
 html[data-theme="light"] .btn-primary,html[data-theme="light"] .goal-btn.active,html[data-theme="light"] .lang-btn.active,html[data-theme="light"] .theme-btn.active{background:linear-gradient(135deg,#f0b429,#e8834a)!important;border-color:transparent!important;color:#161001!important;font-weight:800;box-shadow:0 2px 10px rgba(232,131,74,.28)!important;}
@@ -374,6 +374,22 @@ html[data-theme="light"] [style*="var(--goldBg)"]{background:#fff!important;bord
 html[data-theme="light"] .compare-tag,html[data-theme="light"] .compare-wrap{background:var(--surface2)!important;color:var(--text)!important;border:1px solid var(--border)!important;}
 html[data-theme="light"] .navwrap{background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.95) 45%)!important;}
 html[data-theme="light"] .tab,html[data-theme="light"] #content{background:#fff!important;}
+
+/* ---- tema claro: legibilidade e presenca do texto ---- */
+html[data-theme="light"] body{color:var(--text);}
+html[data-theme="light"] p,html[data-theme="light"] span,html[data-theme="light"] div,html[data-theme="light"] li,html[data-theme="light"] td,html[data-theme="light"] label{color:inherit;}
+/* nenhum texto pode ficar mais claro que o cinza medio */
+html[data-theme="light"] [style*="color:var(--text3)"]{color:var(--text2)!important;}
+/* alertas: texto forte e faixa colorida a esquerda */
+html[data-theme="light"] .alert-card,html[data-theme="light"] .tip-card{color:var(--text)!important;}
+/* titulos e numeros ganham peso */
+html[data-theme="light"] .card-title{color:var(--text)!important;font-weight:800!important;letter-spacing:-.2px;}
+html[data-theme="light"] h1,html[data-theme="light"] h2,html[data-theme="light"] h3{color:var(--text)!important;}
+html[data-theme="light"] strong,html[data-theme="light"] b{color:var(--text)!important;font-weight:800;}
+/* rotulos de macro com a cor do proprio nutriente, mais saturada */
+html[data-theme="light"] .macro-label{color:var(--text2)!important;font-weight:600!important;}
+/* o dourado como texto precisa do tom escuro para ter contraste */
+html[data-theme="light"] [style*="color:var(--gold)"],html[data-theme="light"] [style*="color:#f0b429"]{color:var(--goldInk)!important;font-weight:700;}
 </style>
   <!-- Anéis pulsantes -->
   <div class="sp-ring" style="width:160px;height:160px;"></div>
@@ -467,7 +483,7 @@ html[data-theme="light"] .tab,html[data-theme="light"] #content{background:#fff!
   <div id="alertsBox" style="display:none;margin-bottom:12px;"></div>
   <div class="card" id="sleepCard" style="margin-bottom:12px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <div id="sleepTitulo" style="font-size:13px;color:#ddd;font-weight:600;">Quantas horas você dormiu?</div>
+      <div id="sleepTitulo" style="font-size:13px;color:var(--text);font-weight:600;">Quantas horas você dormiu?</div>
       <div id="sleepVal" style="color:#f0b429;font-weight:800;font-size:15px;">--</div>
     </div>
     <div id="sleepChips" style="display:flex;gap:6px;"></div>
@@ -476,7 +492,7 @@ html[data-theme="light"] .tab,html[data-theme="light"] #content{background:#fff!
   <button class="add-food-btn" onclick="openAddFood()" data-i18n="addAlimento">+ Adicionar Alimento</button>
   <div class="card" id="freqCard" style="margin-top:14px;display:none;">
     <div class="card-title">Seus pratos frequentes</div>
-    <div style="color:#888;font-size:12px;margin:-4px 0 10px;" data-i18n="toqueRegistrar">Toque para registrar sem foto e sem digitar</div>
+    <div style="color:var(--text2);font-size:12px;margin:-4px 0 10px;" data-i18n="toqueRegistrar">Toque para registrar sem foto e sem digitar</div>
     <div id="freqGrid" class="premade-grid"></div>
   </div>
   <div class="card" style="margin-top:14px;">
@@ -601,7 +617,7 @@ html[data-theme="light"] .tab,html[data-theme="light"] #content{background:#fff!
       </div>
       <div style="flex:1;padding:16px 14px 12px 6px;display:flex;flex-direction:column;justify-content:space-between;">
         <div>
-          <div style="font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:var(--text);line-height:1.15;margin-bottom:6px;">Bel<br><span style="font-size:13px;font-weight:600;color:#9aa3ad;" data-i18n="belRole">Nutricionista</span></div>
+          <div style="font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:var(--text);line-height:1.15;margin-bottom:6px;">Bel<br><span style="font-size:13px;font-weight:600;color:var(--text2);" data-i18n="belRole">Nutricionista</span></div>
           <span class="pro-badge" style="display:inline-flex;margin-bottom:8px;">PRO</span>
           <div style="font-size:12px;color:#818cf8;font-weight:700;margin-top:6px;" id="nutriGoalLabel" data-i18n="belSubtitulo">Sua nutricionista - conhece seu objetivo e sua rotina</div>
         </div>
@@ -1631,7 +1647,7 @@ function openFoodPhoto(mealKey,idx){
     document.body.appendChild(m);}
     var d=new Date(); var ts=d.toLocaleDateString("pt-BR")+", "+d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
     m.innerHTML='<button onclick="document.getElementById(\'modalFoodPhoto\').remove()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;">&#215;</button>'
-    +'<div style="color:#aaa;font-size:12px;margin-bottom:12px;">'+item.name+' &middot; '+ts+'</div>'
+    +'<div style="color:var(--text2);font-size:12px;margin-bottom:12px;">'+item.name+' &middot; '+ts+'</div>'
     +'<img src="'+src+'" style="max-width:100%;max-height:70vh;border-radius:12px;object-fit:contain;" />'
     +'<a href="'+src+'" download="'+item.name+'.jpg" style="margin-top:14px;background:rgba(240,180,41,.15);color:#f0b429;border:1px solid rgba(240,180,41,.4);border-radius:10px;padding:10px 20px;font-size:13px;font-weight:700;text-decoration:none;">Baixar foto</a>'
     +((item.vitaminas&&item.vitaminas.length)||(item.beneficios&&item.beneficios.length)?'<div style="margin-top:14px;background:rgba(240,180,41,.06);border:1px solid rgba(240,180,41,.15);border-radius:12px;padding:12px;">'+(item.vitaminas&&item.vitaminas.length?'<div style="font-size:11px;font-weight:700;color:#f0b429;margin-bottom:6px;">🧪 Vitaminas & Minerais</div><div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">'+item.vitaminas.map(function(v){return'<span style="background:rgba(240,180,41,.12);color:#f0b429;border-radius:20px;padding:2px 8px;font-size:11px;">'+v+'</span>';}).join('')+'</div>':'')+(item.beneficios&&item.beneficios.length?'<div style="font-size:11px;font-weight:700;color:#4caf50;margin-bottom:6px;">✨ Benefícios</div><div style="display:flex;flex-wrap:wrap;gap:4px;">'+item.beneficios.map(function(b){return'<span style="background:rgba(76,175,80,.12);color:#4caf50;border-radius:20px;padding:2px 8px;font-size:11px;">'+b+'</span>';}).join('')+'</div>':'')+'</div>':'');
@@ -2292,7 +2308,7 @@ function renderProgressPhotos(sortOrder){
     html2+='<img src="'+p.dataUrl+'" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block;">';
     if(star)html2+='<div style="position:absolute;top:5px;left:5px;font-size:13px;">&#11088;</div>';
     html2+='<div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.9));padding:7px 4px 4px;text-align:center;">';
-    html2+='<div style="font-size:8px;color:#ccc;">'+ds+'</div>';
+    html2+='<div style="font-size:8px;color:var(--text);">'+ds+'</div>';
     if(p.label)html2+='<div style="font-size:10px;font-weight:800;color:#f0b429;">'+p.label+'</div>';
     html2+='</div></div>';
   });
@@ -2551,7 +2567,7 @@ function renderFotoIAResult(result){
   var scan=document.getElementById("fotoIAScan"); if(scan) scan.style.display="none";
   var form=document.getElementById("fotoIAForm"); if(!form) return;
   var alimentos=(result.itens||result.alimentos||[]).filter(function(a){return (a.kcal||0)>0;});
-  if(!alimentos.length){form.innerHTML='<div style="color:#aaa;text-align:center;padding:16px;">Nenhum alimento identificado.</div>';form.style.display="block";return;}
+  if(!alimentos.length){form.innerHTML='<div style="color:var(--text2);text-align:center;padding:16px;">Nenhum alimento identificado.</div>';form.style.display="block";return;}
   window._fotoIAItems=alimentos;
   window._fotoIASelected=alimentos.map(function(a){return {nome:a.nome,gramas:a.gramas,kcal:a.kcal,prot:a.prot,carb:a.carb,fat:a.fat};});
   var _tfi=T[currentLang]||T.pt; var tipos=[{v:"cafe",l:_tfi.cafeManha},{v:"almoco",l:_tfi.almoco},{v:"lanche",l:_tfi.lanche},{v:"jantar",l:_tfi.jantar}];
@@ -2575,7 +2591,7 @@ function renderFotoIAResult(result){
     html+='<div style="margin-bottom:10px;">';
     names.forEach(function(n,ni){html+='<button id="fname_'+i+'_'+ni+'" onclick="_selName('+i+','+ni+')" style="'+( ni===0?"background:#f0b429;color:#000;":"background:rgba(240,180,41,.12);color:#f0b429;")+'border:1px solid #f0b429;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;margin:2px;">'+_capFirst(n)+'</button>';});
     html+='</div>';
-    if(porcoes.length>1) html+='<div style="color:#aaa;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;">Qual a porcao?</div>';
+    if(porcoes.length>1) html+='<div style="color:var(--text2);font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;">Qual a porcao?</div>';
     html+='<div style="margin-bottom:10px;">';
     porcoes.forEach(function(p,pi){var pNum=typeof p==='number'?p:parseInt(String(p));var pLabel=typeof p==='number'?p+unit:String(p);html+='<button id="fport_'+i+'_'+pi+'" onclick="_selPort('+i+','+pNum+','+a.kcal+','+a.gramas+','+a.prot+','+a.carb+','+a.fat+')" style="'+( pNum===a.gramas?"background:#f0b429;color:#000;":"background:rgba(240,180,41,.12);color:#f0b429;")+'border:1px solid rgba(240,180,41,.4);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;margin:2px;">'+pLabel+'</button>';});
     html+='</div>';
@@ -2583,13 +2599,13 @@ function renderFotoIAResult(result){
     if(_isEgg){
       var _bg=(a.gramas&&a.gramas>0)?a.gramas:50;
       var _eggN=Math.max(1,Math.round(_bg/50));
-      html+='<div style="color:#aaa;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;">'+tx('quantosOvos')+'</div>';
+      html+='<div style="color:var(--text2);font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;">'+tx('quantosOvos')+'</div>';
       html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">';
       html+='<input id="fegg_'+i+'" type="number" min="0" step="1" value="'+_eggN+'" inputmode="numeric" oninput="_selEggs('+i+',this.value,'+(a.kcal||0)+','+_bg+','+(a.prot||0)+','+(a.carb||0)+','+(a.fat||0)+')" style="width:76px;background:#111;border:1px solid #f0b429;color:#fff;border-radius:10px;padding:9px;font-size:16px;text-align:center;">';
-      html+='<span style="color:#888;font-size:12px;">= <b id="feggg_'+i+'" style="color:#f0b429;">'+(_eggN*50)+'g</b></span>';
+      html+='<span style="color:var(--text2);font-size:12px;">= <b id="feggg_'+i+'" style="color:#f0b429;">'+(_eggN*50)+'g</b></span>';
       html+='</div>';
     }
-    html+='<div id="fmacro_'+i+'" style="color:#aaa;font-size:12px;margin-bottom:10px;"><span style="color:#f0b429;font-weight:700;">'+a.kcal+'</span> kcal &nbsp;&middot;&nbsp; P:'+Math.round(a.prot)+'g C:'+Math.round(a.carb)+'g G:'+Math.round(a.fat)+'g</div>';if((a.vitaminas&&a.vitaminas.length)||(a.beneficios&&a.beneficios.length)){html+='<div style="background:rgba(240,180,41,.06);border:1px solid rgba(240,180,41,.15);border-radius:12px;padding:10px 12px;margin-bottom:10px;">';if(a.vitaminas&&a.vitaminas.length){html+='<div style="font-size:11px;font-weight:700;color:#f0b429;margin-bottom:6px;">🧪 Vitaminas & Minerais</div><div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">';a.vitaminas.forEach(function(v){html+='<span style="background:rgba(240,180,41,.12);color:#f0b429;border-radius:20px;padding:2px 8px;font-size:11px;">'+v+'</span>';});html+='</div>';}if(a.beneficios&&a.beneficios.length){html+='<div style="font-size:11px;font-weight:700;color:#4caf50;margin-bottom:6px;">✨ Benefícios</div><div style="display:flex;flex-wrap:wrap;gap:4px;">';a.beneficios.forEach(function(b){html+='<span style="background:rgba(76,175,80,.12);color:#4caf50;border-radius:20px;padding:2px 8px;font-size:11px;">'+b+'</span>';});html+='</div>';}html+='</div>';}
+    html+='<div id="fmacro_'+i+'" style="color:var(--text2);font-size:12px;margin-bottom:10px;"><span style="color:#f0b429;font-weight:700;">'+a.kcal+'</span> kcal &nbsp;&middot;&nbsp; P:'+Math.round(a.prot)+'g C:'+Math.round(a.carb)+'g G:'+Math.round(a.fat)+'g</div>';if((a.vitaminas&&a.vitaminas.length)||(a.beneficios&&a.beneficios.length)){html+='<div style="background:rgba(240,180,41,.06);border:1px solid rgba(240,180,41,.15);border-radius:12px;padding:10px 12px;margin-bottom:10px;">';if(a.vitaminas&&a.vitaminas.length){html+='<div style="font-size:11px;font-weight:700;color:#f0b429;margin-bottom:6px;">🧪 Vitaminas & Minerais</div><div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">';a.vitaminas.forEach(function(v){html+='<span style="background:rgba(240,180,41,.12);color:#f0b429;border-radius:20px;padding:2px 8px;font-size:11px;">'+v+'</span>';});html+='</div>';}if(a.beneficios&&a.beneficios.length){html+='<div style="font-size:11px;font-weight:700;color:#4caf50;margin-bottom:6px;">✨ Benefícios</div><div style="display:flex;flex-wrap:wrap;gap:4px;">';a.beneficios.forEach(function(b){html+='<span style="background:rgba(76,175,80,.12);color:#4caf50;border-radius:20px;padding:2px 8px;font-size:11px;">'+b+'</span>';});html+='</div>';}html+='</div>';}
     html+='<button onclick="addFotoIAItem('+i+')" style="width:100%;background:#f0b429;color:#000;border:none;border-radius:10px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;">+ Adicionar</button>';
     html+='</div>';
   });
@@ -2743,7 +2759,7 @@ function renderFrequentMeals(){
       +'<div style="font-size:10px;color:#f0b429;font-weight:700;letter-spacing:.4px;text-transform:uppercase;">'
       +(L[m.mealKey]||"")+' &middot; '+m.count+'x</div>'
       +'<div style="font-weight:700;margin:5px 0 3px;font-size:13px;line-height:1.3;">'+escHtml(names)+'</div>'
-      +'<div style="color:#888;font-size:12px;">'+m.kcal+' kcal</div>';
+      +'<div style="color:var(--text2);font-size:12px;">'+m.kcal+' kcal</div>';
   }).join("")+'';
 }
 function addFrequentMeal(i){
@@ -2862,7 +2878,7 @@ function renderAlerts(){
   box.innerHTML=list.map(function(a){
     return '<div style="display:flex;gap:10px;align-items:flex-start;background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.22);border-radius:12px;padding:10px 12px;margin-bottom:8px;">'
       +'<div style="font-size:17px;line-height:1.2;">'+a.icon+'</div>'
-      +'<div style="font-size:13px;color:#ddd;line-height:1.45;">'+a.text+'</div></div>';
+      +'<div style="font-size:13px;color:var(--text);line-height:1.45;">'+a.text+'</div></div>';
   }).join("");
 }
 /* ===== D) PROJECAO ===== */
@@ -2952,12 +2968,12 @@ function _projSvg(pr){
 function renderProjectionHTML(){
   var pr; try{ pr=calcProjection(8); }catch(e){ return ""; }
   var h='<div class="card" style="margin-top:14px;"><div class="card-title">'+tx('projTitulo')+'</div>';
-  if(!pr||!pr.ok) return h+'<div style="color:#888;font-size:13px;">'+((pr&&pr.reason)||"Sem dados suficientes.")+'</div></div>';
+  if(!pr||!pr.ok) return h+'<div style="color:var(--text2);font-size:13px;">'+((pr&&pr.reason)||"Sem dados suficientes.")+'</div></div>';
   h+=_projSvg(pr);
   h+='<div style="text-align:center;margin:10px 0 4px;">'
-    +'<div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Peso provavel</div>'
+    +'<div style="color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Peso provavel</div>'
     +'<div style="font-size:22px;font-weight:800;color:#f0b429;">'+pr.projected.wLow+' - '+pr.projected.wHigh+' kg</div>'
-    +'<div style="color:#888;font-size:12px;">'+tx('projHoje',pr.current.w,(pr.kgPerWeek>0?"+":"")+pr.kgPerWeek)+'</div></div>';
+    +'<div style="color:var(--text2);font-size:12px;">'+tx('projHoje',pr.current.w,(pr.kgPerWeek>0?"+":"")+pr.kgPerWeek)+'</div></div>';
   var cells=[];
   if(pr.current.bmi!==null) cells.push(["IMC",pr.current.bmi,pr.projected.bmi]);
   if(pr.current.bf!==null) cells.push(["Gordura est.",pr.current.bf+"%",pr.projected.bf+"%"]);
@@ -2966,15 +2982,15 @@ function renderProjectionHTML(){
     h+='<div style="display:grid;grid-template-columns:repeat('+cells.length+',1fr);gap:8px;margin-top:10px;">';
     cells.forEach(function(c){
       h+='<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:8px;text-align:center;">'
-        +'<div style="color:#888;font-size:10px;text-transform:uppercase;">'+c[0]+'</div>'
-        +'<div style="font-size:13px;color:#ccc;margin-top:3px;">'+c[1]+'</div>'
+        +'<div style="color:var(--text2);font-size:10px;text-transform:uppercase;">'+c[0]+'</div>'
+        +'<div style="font-size:13px;color:var(--text);margin-top:3px;">'+c[1]+'</div>'
         +'<div style="font-size:14px;font-weight:700;color:#f0b429;">'+c[2]+'</div></div>';
     });
     h+='</div>';
   }
-  h+='<div style="color:#777;font-size:11px;margin-top:10px;line-height:1.5;">'+tx('projBase',pr.source)+'</div>';
+  h+='<div style="color:var(--text2);font-size:11px;margin-top:10px;line-height:1.5;">'+tx('projBase',pr.source)+'</div>';
   if(pr.aggressive||pr.clamped){
-    h+='<div style="margin-top:8px;background:rgba(240,180,41,.10);border:1px solid rgba(240,180,41,.25);border-radius:10px;padding:9px 11px;color:#ddd;font-size:12px;line-height:1.45;">'
+    h+='<div style="margin-top:8px;background:rgba(240,180,41,.10);border:1px solid rgba(240,180,41,.25);border-radius:10px;padding:9px 11px;color:var(--text);font-size:12px;line-height:1.45;">'
       +tx('projAcelerado')+'</div>';
   }
   return h+'</div>';
@@ -3071,22 +3087,22 @@ function renderScoresHTML(){
   var r; try{ r=calcScores(); }catch(e){ return ""; }
   if(!r) return "";
   var h='<div class="card" style="margin-top:14px;"><div class="card-title">'+tx('scoresTitulo')+'</div>';
-  if(!r.hasData){ return h+'<div style="color:#888;font-size:13px;line-height:1.5;">'+tx('scoresSemDados')+'</div></div>'; }
+  if(!r.hasData){ return h+'<div style="color:var(--text2);font-size:13px;line-height:1.5;">'+tx('scoresSemDados')+'</div></div>'; }
   h+='<div style="text-align:center;margin-bottom:14px;">'
     +'<div style="font-size:34px;font-weight:800;color:'+_scoreColor(r.geral)+';line-height:1;">'+r.geral+'</div>'
-    +'<div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;">'+tx('scoreGeral')+'</div></div>';
+    +'<div style="color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;">'+tx('scoreGeral')+'</div></div>';
   r.items.forEach(function(o){
     var s=o.score;
     var bar = s===null?0:s;
     var col = s===null?"#444":_scoreColor(s);
     h+='<div style="margin-bottom:10px;">'
       +'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">'
-      +'<span style="font-size:13px;color:#ddd;font-weight:600;">'+o.label+'</span>'
-      +'<span style="font-size:11px;color:#888;">'+o.detail+(s===null?"":" &middot; "+s)+'</span></div>'
+      +'<span style="font-size:13px;color:var(--text);font-weight:600;">'+o.label+'</span>'
+      +'<span style="font-size:11px;color:var(--text2);">'+o.detail+(s===null?"":" &middot; "+s)+'</span></div>'
       +'<div style="height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;">'
       +'<div style="height:100%;width:'+bar+'%;background:'+col+';border-radius:99px;"></div></div></div>';
   });
-  h+='<div style="color:#777;font-size:11px;margin-top:8px;line-height:1.5;">'+tx('scoresRodape')+'</div>';
+  h+='<div style="color:var(--text2);font-size:11px;margin-top:8px;line-height:1.5;">'+tx('scoresRodape')+'</div>';
   return h+'</div>';
 }
 
@@ -3259,7 +3275,7 @@ function changeCalMonth(dir){
   renderCalendar();
 }
 
-function openDayDetail(dk){var d=state.history[dk];var pts=dk.split('-');var dObj=new Date(+pts[0],+pts[1]-1,+pts[2]);var dn=_dias('full')[dObj.getDay()];var mn=_dias('full')[+pts[1]-1];var dateDisp=dn+', '+pts[2]+' '+mn+' '+pts[0];var inner='<div style="padding:16px 4px 0;">';if(!d){inner+='<div style="text-align:center;color:#888;padding:40px 0;font-size:14px;">Sem registros para este dia.</div>';}else{var sc=calcDayScore(d).score;var sColor=sc>=80?'#34d399':sc>=50?'#fbb024':'#f87171';var sLabel=sc>=80?'Excelente':sc>=50?'Bom':'Ruim';inner+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><div style="background:'+sColor+'22;color:'+sColor+';font-size:22px;font-weight:800;padding:6px 16px;border-radius:20px;">'+sc+'</div><div style="color:'+sColor+';font-weight:600;">'+sLabel+'</div></div>';var goal=state.profile&&state.profile.tdee?state.profile.tdee:2000;var pct=Math.min(100,Math.round(((d.kcal||0)/goal)*100));inner+='<div style="background:var(--surface3);border-radius:14px;padding:14px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="color:#888;font-size:12px;">CALORIAS</span><span style="color:#f0b429;font-weight:700;font-size:18px;">'+(d.kcal||0)+' kcal</span></div><div style="background:var(--surface3);border-radius:6px;height:6px;margin-bottom:10px;"><div style="background:#f0b429;height:6px;border-radius:6px;width:'+pct+'%;"></div></div><div style="display:flex;gap:14px;font-size:13px;"><span>💪 <b style="color:#5b9cf6;">'+(d.prot||0)+'g</b></span><span>🔥 <b style="color:#f0b429;">'+(d.carb||0)+'g</b></span><span>🥑 <b style="color:#34d399;">'+(d.fat||0)+'g</b></span></div></div>';inner+='<div style="background:var(--surface3);border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">💧</span><span style="color:#60b4d8;font-weight:600;">'+(d.water||0)+' ml</span></div>';var mLabels={cafe:'☕ Caf\u00e9 da Manh\u00e3',almoco:'🍽️ Almo\u00e7o',lanche:'🍎 Lanche',jantar:'🌙 Jantar',ceia:'🌛 Ceia',pos_treino:'💪 P\u00f3s-Treino'};var meals=d.meals||{};var hasMeals=false;Object.keys(mLabels).forEach(function(mk){var items=meals[mk]||[];if(!items.length)return;hasMeals=true;inner+='<div style="margin-bottom:12px;"><div style="color:#5a9a72;font-size:11px;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;">'+mLabels[mk]+'</div>';items.forEach(function(item){var thumb=(item.photo&&item.photo.length>500)?'<img src="'+item.photo+'" style="width:38px;height:38px;border-radius:8px;object-fit:cover;flex-shrink:0;"/>':'<div style="width:38px;height:38px;border-radius:8px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🍽️</div>';inner+='<div style="display:flex;align-items:center;gap:10px;padding:8px;background:#12161c;border-radius:10px;margin-bottom:5px;">'+thumb+'<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:#e8eaf0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.name+'</div><div style="font-size:11px;color:#888;">'+(item.grams||item.ml||0)+'g · P:'+(item.prot||0)+'g C:'+(item.carb||0)+'g G:'+(item.fat||0)+'g'+(item.time?' · <span style="color:#5a9a72;">'+item.time+'</span>':'')+'</div></div><span style="color:#f0b429;font-weight:700;font-size:13px;">'+(item.kcal||0)+'</span></div>';});inner+='</div>';});if(!hasMeals)inner+='<div style="color:#555;font-size:13px;text-align:center;padding:12px 0;">Sem refeições registradas</div>';}var photos=(state.progressPhotos||[]).filter(function(p){return p.date===dk||p.date.startsWith(dk);});if(photos.length){inner+='<div style="margin-top:14px;"><div style="color:#888;font-size:11px;letter-spacing:1px;margin-bottom:8px;">📸 FOTOS DE PROGRESSO</div>';photos.forEach(function(p){inner+='<div style="margin-bottom:10px;"><img src="'+p.dataUrl+'" style="width:100%;border-radius:12px;max-height:320px;object-fit:contain;background:var(--surface3);"/>'+(p.label?'<div style="color:#888;font-size:11px;margin-top:4px;text-align:center;">'+p.label+'</div>':'')+'</div>';});inner+='</div>';}inner+='</div>';var m=document.getElementById('dayDetailModal');if(!m){m=document.createElement('div');m.id='dayDetailModal';m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9100;display:flex;flex-direction:column;';var hdr=document.createElement('div');hdr.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:16px;background:#12161c;border-bottom:1px solid var(--surface3);flex-shrink:0;';var ttl=document.createElement('div');ttl.id='dayDetailTitle';ttl.style.cssText='font-size:16px;font-weight:700;color:#e8eaf0;';var cb=document.createElement('button');cb.textContent='✕';cb.style.cssText='background:none;border:none;color:#888;font-size:22px;cursor:pointer;';cb.onclick=function(){m.style.display='none';};hdr.appendChild(ttl);hdr.appendChild(cb);var bd=document.createElement('div');bd.id='dayDetailContent';bd.style.cssText='flex:1;overflow-y:auto;padding:0 16px 32px;';m.appendChild(hdr);m.appendChild(bd);document.body.appendChild(m);}document.getElementById('dayDetailTitle').textContent=dateDisp;document.getElementById('dayDetailContent').innerHTML=inner;m.style.display='flex';}
+function openDayDetail(dk){var d=state.history[dk];var pts=dk.split('-');var dObj=new Date(+pts[0],+pts[1]-1,+pts[2]);var dn=_dias('full')[dObj.getDay()];var mn=_dias('full')[+pts[1]-1];var dateDisp=dn+', '+pts[2]+' '+mn+' '+pts[0];var inner='<div style="padding:16px 4px 0;">';if(!d){inner+='<div style="text-align:center;color:var(--text2);padding:40px 0;font-size:14px;">Sem registros para este dia.</div>';}else{var sc=calcDayScore(d).score;var sColor=sc>=80?'#34d399':sc>=50?'#fbb024':'#f87171';var sLabel=sc>=80?'Excelente':sc>=50?'Bom':'Ruim';inner+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><div style="background:'+sColor+'22;color:'+sColor+';font-size:22px;font-weight:800;padding:6px 16px;border-radius:20px;">'+sc+'</div><div style="color:'+sColor+';font-weight:600;">'+sLabel+'</div></div>';var goal=state.profile&&state.profile.tdee?state.profile.tdee:2000;var pct=Math.min(100,Math.round(((d.kcal||0)/goal)*100));inner+='<div style="background:var(--surface3);border-radius:14px;padding:14px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="color:var(--text2);font-size:12px;">CALORIAS</span><span style="color:#f0b429;font-weight:700;font-size:18px;">'+(d.kcal||0)+' kcal</span></div><div style="background:var(--surface3);border-radius:6px;height:6px;margin-bottom:10px;"><div style="background:#f0b429;height:6px;border-radius:6px;width:'+pct+'%;"></div></div><div style="display:flex;gap:14px;font-size:13px;"><span>💪 <b style="color:#5b9cf6;">'+(d.prot||0)+'g</b></span><span>🔥 <b style="color:#f0b429;">'+(d.carb||0)+'g</b></span><span>🥑 <b style="color:#34d399;">'+(d.fat||0)+'g</b></span></div></div>';inner+='<div style="background:var(--surface3);border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">💧</span><span style="color:#60b4d8;font-weight:600;">'+(d.water||0)+' ml</span></div>';var mLabels={cafe:'☕ Caf\u00e9 da Manh\u00e3',almoco:'🍽️ Almo\u00e7o',lanche:'🍎 Lanche',jantar:'🌙 Jantar',ceia:'🌛 Ceia',pos_treino:'💪 P\u00f3s-Treino'};var meals=d.meals||{};var hasMeals=false;Object.keys(mLabels).forEach(function(mk){var items=meals[mk]||[];if(!items.length)return;hasMeals=true;inner+='<div style="margin-bottom:12px;"><div style="color:#5a9a72;font-size:11px;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;">'+mLabels[mk]+'</div>';items.forEach(function(item){var thumb=(item.photo&&item.photo.length>500)?'<img src="'+item.photo+'" style="width:38px;height:38px;border-radius:8px;object-fit:cover;flex-shrink:0;"/>':'<div style="width:38px;height:38px;border-radius:8px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🍽️</div>';inner+='<div style="display:flex;align-items:center;gap:10px;padding:8px;background:#12161c;border-radius:10px;margin-bottom:5px;">'+thumb+'<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:#e8eaf0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.name+'</div><div style="font-size:11px;color:var(--text2);">'+(item.grams||item.ml||0)+'g · P:'+(item.prot||0)+'g C:'+(item.carb||0)+'g G:'+(item.fat||0)+'g'+(item.time?' · <span style="color:#5a9a72;">'+item.time+'</span>':'')+'</div></div><span style="color:#f0b429;font-weight:700;font-size:13px;">'+(item.kcal||0)+'</span></div>';});inner+='</div>';});if(!hasMeals)inner+='<div style="color:#555;font-size:13px;text-align:center;padding:12px 0;">Sem refeições registradas</div>';}var photos=(state.progressPhotos||[]).filter(function(p){return p.date===dk||p.date.startsWith(dk);});if(photos.length){inner+='<div style="margin-top:14px;"><div style="color:var(--text2);font-size:11px;letter-spacing:1px;margin-bottom:8px;">📸 FOTOS DE PROGRESSO</div>';photos.forEach(function(p){inner+='<div style="margin-bottom:10px;"><img src="'+p.dataUrl+'" style="width:100%;border-radius:12px;max-height:320px;object-fit:contain;background:var(--surface3);"/>'+(p.label?'<div style="color:var(--text2);font-size:11px;margin-top:4px;text-align:center;">'+p.label+'</div>':'')+'</div>';});inner+='</div>';}inner+='</div>';var m=document.getElementById('dayDetailModal');if(!m){m=document.createElement('div');m.id='dayDetailModal';m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9100;display:flex;flex-direction:column;';var hdr=document.createElement('div');hdr.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:16px;background:#12161c;border-bottom:1px solid var(--surface3);flex-shrink:0;';var ttl=document.createElement('div');ttl.id='dayDetailTitle';ttl.style.cssText='font-size:16px;font-weight:700;color:#e8eaf0;';var cb=document.createElement('button');cb.textContent='✕';cb.style.cssText='background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer;';cb.onclick=function(){m.style.display='none';};hdr.appendChild(ttl);hdr.appendChild(cb);var bd=document.createElement('div');bd.id='dayDetailContent';bd.style.cssText='flex:1;overflow-y:auto;padding:0 16px 32px;';m.appendChild(hdr);m.appendChild(bd);document.body.appendChild(m);}document.getElementById('dayDetailTitle').textContent=dateDisp;document.getElementById('dayDetailContent').innerHTML=inner;m.style.display='flex';}
 
 function renderCalendar(){
   var el=document.getElementById('calendarGrid');
@@ -4111,9 +4127,9 @@ function saveToFirestore(){
     <div style="background:rgba(255,62,100,.07);border:1px solid rgba(255,62,100,.15);border-radius:12px;padding:14px;">
       <div style="color:#ff3e64;font-size:12px;font-weight:700;margin-bottom:10px;">O que muda com este modo:</div>
       <div style="color:#b0b8c8;font-size:13px;line-height:2.0;">
-        &#129385; Prote&iacute;na: <b style="color:#fff;">3g/kg</b> <span style="color:#888;font-size:11px;">(vs. 2,0&ndash;2,2g/kg padr&atilde;o)</span><br>
-        &#128200; Ganho de massa: <b style="color:#fff;">+500 kcal</b> <span style="color:#888;font-size:11px;">(vs. +300 kcal)</span><br>
-        &#128293; Emagrecimento: <b style="color:#fff;">-300 kcal</b> <span style="color:#888;font-size:11px;">(vs. -500 kcal)</span>
+        &#129385; Prote&iacute;na: <b style="color:#fff;">3g/kg</b> <span style="color:var(--text2);font-size:11px;">(vs. 2,0&ndash;2,2g/kg padr&atilde;o)</span><br>
+        &#128200; Ganho de massa: <b style="color:#fff;">+500 kcal</b> <span style="color:var(--text2);font-size:11px;">(vs. +300 kcal)</span><br>
+        &#128293; Emagrecimento: <b style="color:#fff;">-300 kcal</b> <span style="color:var(--text2);font-size:11px;">(vs. -500 kcal)</span>
       </div>
     </div>
     <button onclick="document.getElementById('atletaInfoModal').style.display='none';" style="width:100%;margin-top:16px;padding:12px;background:rgba(255,62,100,.12);border:1px solid rgba(255,62,100,.3);border-radius:12px;color:#ff3e64;font-weight:700;font-size:14px;cursor:pointer;">Entendido &#10003;</button>
