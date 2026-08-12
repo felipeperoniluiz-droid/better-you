@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0a0c0f;--surface:#111418;--surface2:#181c22;--surface3:#1e2229;--border:#252b34;--gold:#f0b429;--orange:#e8834a;--green:#34d399;--red:#f87171;--blue:#60a5fa;--water:#38bdf8;--text:#f0f2f5;--text2:#8b95a3;--text3:#5a6270;--goldInk:#f0b429;--goldBg:#1a160a;--goldBg2:#2d2710;--blueBg:#0d1020;--shadow:0 6px 20px rgba(0,0,0,.4);--radius:16px;--radius-sm:10px;}
-html[data-theme="light"]{--bg:#f4f6f8;--surface:#ffffff;--surface2:#f0f2f5;--surface3:#e7eaef;--border:#dde2e8;--text:#151a21;--text2:#5f6b7a;--text3:#8b95a3;--goldInk:#b8860b;--goldBg:#fdf7e8;--goldBg2:#f7edd4;--blueBg:#eef2fb;--shadow:0 4px 16px rgba(19,26,36,.10);}
+html[data-theme="light"]{--bg:#f7f8fa;--surface:#ffffff;--surface2:#f2f4f7;--surface3:#e8ebf0;--border:#e3e7ed;--text:#0f1419;--text2:#4a5563;--text3:#6b7684;--goldInk:#a8730a;--goldBg:#fffaf0;--goldBg2:#fdf2d9;--blueBg:#eff4fd;--shadow:0 2px 8px rgba(15,20,25,.06),0 1px 2px rgba(15,20,25,.04);}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;background:var(--bg)!important;color:var(--text);transition:background .2s ease,color .2s ease;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.5;overscroll-behavior:none;}
 body{display:flex;justify-content:center;}
@@ -345,6 +345,29 @@ html[data-theme="light"] input,html[data-theme="light"] .input,html[data-theme="
 html[data-theme="light"] .compare-tag,html[data-theme="light"] .premade-card,html[data-theme="light"] .meal-item,html[data-theme="light"] .chip,html[data-theme="light"] .macro-bar-bg{background:var(--surface2)!important;color:var(--text)!important;}
 html[data-theme="light"] .modal{background:var(--surface)!important;}
 html[data-theme="light"] .card{background:var(--surface)!important;}
+
+/* ---- tema claro: contraste e profundidade ---- */
+html[data-theme="light"] .card{background:#fff!important;border:1px solid var(--border)!important;box-shadow:var(--shadow)!important;}
+html[data-theme="light"] .card *{color:inherit;}
+/* alertas: fundo branco, faixa colorida e texto forte */
+html[data-theme="light"] .alert-card,html[data-theme="light"] .tip-card,html[data-theme="light"] .info-card{background:#fff!important;border:1px solid var(--border)!important;box-shadow:var(--shadow)!important;}
+html[data-theme="light"] [style*="var(--goldBg)"]{background:#fff!important;border:1px solid var(--border)!important;box-shadow:var(--shadow)!important;}
+/* qualquer texto secundario fraco vira legivel */
+html[data-theme="light"] [style*="color:var(--text2)"],html[data-theme="light"] [style*="color:var(--text3)"]{color:var(--text2)!important;}
+html[data-theme="light"] [style*="color:#777"],html[data-theme="light"] [style*="color:#888"],html[data-theme="light"] [style*="color:#999"],html[data-theme="light"] [style*="color:#aaa"]{color:var(--text2)!important;}
+/* botoes com contorno definido */
+html[data-theme="light"] .btn,html[data-theme="light"] .lang-btn,html[data-theme="light"] .goal-btn,html[data-theme="light"] .theme-btn,html[data-theme="light"] .chip,html[data-theme="light"] .compare-tag,html[data-theme="light"] .icon-btn,html[data-theme="light"] .add-food-btn,html[data-theme="light"] .quick-btn{background:#fff!important;border:1px solid var(--border)!important;color:var(--text)!important;}
+html[data-theme="light"] .btn-primary,html[data-theme="light"] .goal-btn.active,html[data-theme="light"] .lang-btn.active,html[data-theme="light"] .theme-btn.active{background:linear-gradient(135deg,#f0b429,#e8834a)!important;border-color:transparent!important;color:#161001!important;font-weight:800;box-shadow:0 2px 10px rgba(232,131,74,.28)!important;}
+/* navegacao com presenca */
+html[data-theme="light"] .nav3{background:#fff!important;border:1px solid var(--border)!important;box-shadow:0 4px 18px rgba(15,20,25,.10)!important;}
+html[data-theme="light"] .n3-item{color:var(--text3)!important;}
+html[data-theme="light"] .n3-item.active{background:#fff7e6!important;color:#a8730a!important;}
+html[data-theme="light"] .n3-item.active .n3-ic svg{stroke:#c9861a!important;}
+html[data-theme="light"] .navfab{box-shadow:0 6px 18px rgba(232,131,74,.42)!important;}
+/* titulos com peso */
+html[data-theme="light"] .card-title{color:var(--text)!important;font-weight:800;}
+/* numeros grandes mantem a cor da marca, mas mais escura para leitura */
+html[data-theme="light"] .big-number,html[data-theme="light"] .kcal-value{color:var(--text)!important;}
 </style>
   <!-- Anéis pulsantes -->
   <div class="sp-ring" style="width:160px;height:160px;"></div>
