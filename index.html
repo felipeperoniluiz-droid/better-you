@@ -3155,6 +3155,81 @@ function cardCaminhoMeta(){
   return h;
 }
 /* ---- Digital Twin: simulador de cenarios ---- */
+/* ---- Withings: balanca inteligente ---- */
+function _uid(){ try{ return (firebase.auth().currentUser||{}).uid||""; }catch(e){ return ""; } }
+function conectarWithings(){
+  var uid=_uid();
+  if(!uid){ showToast(tx("wConecteConta"),"error"); return; }
+  fetch(PROXY_URL+"/withings/connect?uid="+encodeURIComponent(uid))
+   .then(function(r){ return r.json(); })
+   .then(function(d){ if(d.url){ location.href=d.url; } else { showToast(tx("wErroConfig"),"error"); } })
+   .catch(function(){ showToast(tx("wErro"),"error"); });
+}
+function desconectarWithings(){
+  var uid=_uid(); if(!uid) return;
+  if(!confirm(tx("wConfirmarDesconectar"))) return;
+  fetch(PROXY_URL+"/withings/disconnect",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({uid:uid})})
+   .then(function(){ state.withingsOn=false; save(); renderConexoes(); showToast(tx("wDesconectado"),"success"); });
+}
+/* o code da Withings expira em 30s: trocamos assim que a pagina volta */
+function checarRetornoWithings(){
+  var q=new URLSearchParams(location.search);
+  var code=q.get("code"), st=q.get("state");
+  if(!code||!st) return;
+  if(q.get("session_id")) return;
+  history.replaceState({},"",location.pathname);
+  showToast(tx("wConectando"),"info");
+  fetch(PROXY_URL+"/withings/callback",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({code:code,uid:st})})
+   .then(function(r){ return r.json(); })
+   .then(function(d){
+     if(d.ok){ state.withingsOn=true; save();
+       if(typeof saveToFirestore==="function") saveToFirestore();
+       showToast(tx("wConectado"),"success"); sincronizarWithings(true); }
+     else showToast(tx("wErro"),"error");
+   })
+   .catch(function(){ showToast(tx("wErro"),"error"); });
+}
+function sincronizarWithings(silencioso){
+  var uid=_uid(); if(!uid) return;
+  var el=document.getElementById("wStatus");
+  if(el) el.textContent=tx("wSincronizando");
+  fetch(PROXY_URL+"/withings/sync?uid="+encodeURIComponent(uid))
+   .then(function(r){ return r.json(); })
+   .then(function(d){
+     if(!d.conectado){ state.withingsOn=false; save(); renderConexoes(); return; }
+     state.withingsOn=true;
+     var novas=importarMedidasWithings(d.medidas||[]);
+     state.withingsSync=Date.now(); save();
+     if(typeof saveToFirestore==="function") saveToFirestore();
+     renderConexoes();
+     try{ renderWeight(); renderMeasures(); }catch(e){}
+     if(!silencioso||novas>0) showToast(tx("wImportadas",novas),"success");
+   })
+   .catch(function(){ if(el) el.textContent=tx("wErro"); });
+}
+/* nao sobrescreve pesagem manual do mesmo dia */
+function importarMedidasWithings(medidas){
+  if(!state.weights) state.weights=[];
+  var existentes={};
+  state.weights.forEach(function(w){ if(w&&w.date) existentes[w.date]=w; });
+  var novas=0;
+  medidas.forEach(function(m){
+    if(!m.peso) return;
+    var atual=existentes[m.data];
+    if(atual){ if(!atual.fonte){ return; } if(atual.val===m.peso) return; }
+    if(atual){ atual.val=m.peso; atual.fonte="withings"; }
+    else { state.weights.push({date:m.data,val:m.peso,fonte:"withings"}); novas++; }
+    if(m.gordura){
+      if(!state.bodyFat) state.bodyFat=[];
+      var jaTem=state.bodyFat.filter(function(b){ return b.date===m.data; })[0];
+      if(jaTem) jaTem.val=m.gordura; else state.bodyFat.push({date:m.data,val:m.gordura,fonte:"withings"});
+    }
+  });
+  state.weights.sort(function(a,b){ return (b.date||"").localeCompare(a.date||""); });
+  return novas;
+}
 function simularCenario(kcalDia,treinos,sono,semanas){
   semanas=semanas||8;
   var p=state.profile||{}, out={ok:false};
@@ -3452,6 +3527,7 @@ function renderScoresHTML(){
 
 function init(){
   load();
+  try{ checarRetornoWithings(); }catch(e){}
   try{ aplicarTema(); }catch(e){}
   if(state.lang){currentLang=state.lang;setLang(state.lang);}else{renderToday();}
   document.getElementById("goal-mass").className="goal-btn"+(state.goal==="mass"?" active":"");
