@@ -3168,25 +3168,46 @@ function analisarSemana(){
 }
 function montarPromptSemana(a){
   var p=state.profile||{};
+  var nome=(p.name||"").split(" ")[0]||"";
   var objetivo={cut:"emagrecer",mass:"ganhar massa muscular",maint:"manter o peso"}[state.goal]||"melhorar a saude";
-  var L={pt:"Responda em portugues",en:"Respond in English",es:"Responde en espanol",it:"Rispondi in italiano",fr:"Reponds en francais",de:"Antworte auf Deutsch"}[currentLang]||"Respond in English";
-  var mapa={fimDeSemanaEstoura:"as calorias sobem muito no fim de semana",semanaEstoura:"as calorias sobem mais nos dias uteis",
-    proteinaBaixa:"a proteina esta bem abaixo da meta",sonoCurto:"o sono medio esta curto",
-    aguaBaixa:"a hidratacao esta baixa",consistente:"houve boa consistencia com a meta",oscilacaoAlta:"ha muita oscilacao entre os dias"};
-  var obs=(a.padroes||[]).map(function(k){return mapa[k]||k;}).join("; ")||"sem padrao marcante";
+  var L={pt:"Escreva em portugues do Brasil",en:"Write in English",es:"Escribe en espanol",it:"Scrivi in italiano",fr:"Ecris en francais",de:"Schreibe auf Deutsch"}[currentLang]||"Write in English";
   var d=[];
-  d.push("Dias analisados: "+a.diasAnalisados);
-  d.push("Media diaria: "+a.kcalMedia+" kcal (meta "+a.meta+")");
-  if(a.kcalUteis&&a.kcalFds) d.push("Dias uteis: "+a.kcalUteis+" kcal | Fim de semana: "+a.kcalFds+" kcal");
+  d.push("Dias com registro: "+a.diasAnalisados+" de "+a.diasNaJanela);
+  if(a.diasVazios>0) d.push("Dias SEM nenhum registro: "+a.diasVazios);
+  if(a.diasSemRegistrar>0) d.push("Esta ha "+a.diasSemRegistrar+" dia(s) seguidos sem registrar nada");
+  d.push("Media diaria nos dias registrados: "+a.kcalMedia+" kcal (meta "+a.meta+")");
+  if(a.kcalUteis&&a.kcalFds) d.push("Dias uteis: "+a.kcalUteis+" | Fim de semana: "+a.kcalFds);
   d.push("Proteina media: "+a.protMedia+"g de "+a.metaProt+"g");
   d.push("Agua media: "+a.aguaMedia+" ml");
-  if(a.sonoMedia) d.push("Sono medio: "+a.sonoMedia+"h");
-  d.push("Dias dentro da meta calorica: "+a.diasNaMeta+" de "+a.diasAnalisados);
-  return L+". Voce e a Bel, nutricionista do usuario. Objetivo dele: "+objetivo+".\n"
-    +"Dados reais da ultima semana:\n"+d.join("\n")
-    +"\nPadroes observados: "+obs
-    +"\n\nEscreva um diagnostico curto e pessoal em no maximo 4 frases: 1) o que foi bem, 2) o padrao que mais atrapalha, 3) UMA acao concreta para a proxima semana."
-    +" Use os numeros reais. Nao invente dados. Nao use listas nem titulos, escreva corrido e direto. Nao repita todos os numeros, escolha os que importam.";
+  if(a.diasComSono>0) d.push("Sono medio: "+a.sonoMedia+"h (registrado em "+a.diasComSono+" dias)");
+  else d.push("Sono: nao registrado nesse periodo");
+  d.push("Dias dentro da meta calorica: "+a.diasNaMeta+" dos "+a.diasAnalisados+" registrados");
+
+  var sumiu=(a.diasSemRegistrar>=2);
+  var falhou=(a.diasVazios>=2);
+
+  var pessoa="Voce e a Bel, nutricionista do usuario"+(nome?" ("+nome+")":"")+". Objetivo dele: "+objetivo+".";
+  var estilo=" Fale como uma pessoa real falaria com alguem de quem gosta: calorosa, direta, sem formalidade."
+    +" Nada de linguagem de relatorio. Nada de listas, titulos ou bullet points. Texto corrido, no maximo 5 frases."
+    +" Use no maximo os numeros que importam - nao repita todos os dados.";
+  var regra=" REGRA CRITICA: dia sem registro NAO e dia dentro da meta. Nunca parabenize por dias que a pessoa nao registrou."
+    +" Nunca invente dados. Se algo nao foi registrado, trate como desconhecido, nao como zero.";
+
+  var missao;
+  if(sumiu){
+    missao=" A pessoa sumiu ha "+a.diasSemRegistrar+" dia(s). Nao cobre, nao de licao de moral e nao finja que esta tudo bem."
+      +" Comece demonstrando preocupacao verdadeira e perguntando como ela esta - se andou comendo, como esta se sentindo."
+      +" Depois convide de volta de um jeito facil: peca que ela te conte o que comeu hoje e quanta agua bebeu, oferecendo ajuda para retomar sem culpa."
+      +" Termine com uma pergunta aberta e acolhedora. O objetivo e ela querer voltar a usar o app hoje.";
+  } else if(falhou){
+    missao=" Houve "+a.diasVazios+" dia(s) sem registro. Reconheca isso com leveza, sem culpa,"
+      +" comente o que os dias registrados mostram e convide a pessoa a registrar hoje.";
+  } else {
+    missao=" Diga o que foi bem, aponte o padrao que mais atrapalha e sugira UMA acao concreta para a proxima semana.";
+  }
+
+  return L+". "+pessoa+estilo+regra+missao
+    +"\n\nDados reais:\n"+d.join("\n");
 }
 function cardCaminhoMeta(){
   var p=state.profile||{};
