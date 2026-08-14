@@ -1748,6 +1748,7 @@ function updateFoodPreview(){
   var g=parseFloat(document.getElementById("foodQty").value)||0;
   document.getElementById("foodKcalPreview").value=Math.round(selectedFoodData.kcal*g/100)+" kcal";
 }
+function _saveJa(){ try{ save(); saveToFirestore(true); }catch(e){} }
 function addFoodEntry(){
   if(!selectedFoodData){showToast("Selecione um alimento","error");return;}
   var grams=parseFloat(document.getElementById("foodQty").value)||0;
@@ -3583,6 +3584,14 @@ function renderScoresHTML(){
   return h+'</div>';
 }
 
+
+/* nada pode se perder ao fechar, trocar de app ou recarregar */
+(function(){
+  function _flush(){ try{ if(_fbPendente){ clearTimeout(_fbSaveTimer); _fbEnviarAgora(); } }catch(e){} }
+  window.addEventListener("pagehide", _flush);
+  window.addEventListener("beforeunload", _flush);
+  document.addEventListener("visibilitychange", function(){ if(document.visibilityState==="hidden") _flush(); });
+})();
 function init(){
   load();
   try{ checarRetornoWithings(); }catch(e){}
@@ -4535,11 +4544,19 @@ function loadFromFirestore(uid){
     });
 }
 
-function saveToFirestore(){
+var _fbPendente=false;
+function saveToFirestore(imediato){
   if(!_fbUser) return;
+  _fbPendente=true;
+  if(imediato){ clearTimeout(_fbSaveTimer); _fbEnviarAgora(); return; }
   // Debounce: evita salvar centenas de vezes em sequência
   clearTimeout(_fbSaveTimer);
-  _fbSaveTimer=setTimeout(function(){
+  _fbSaveTimer=setTimeout(_fbEnviarAgora,1500);
+}
+function _fbEnviarAgora(){
+  if(!_fbUser) return;
+  _fbPendente=false;
+  (function(){
     try{
       var _uid=_fbUser.uid;
       var _c=JSON.parse(JSON.stringify(state));
@@ -4564,7 +4581,7 @@ function saveToFirestore(){
         });
       }).then(function(){showToast('Nuvem: dados salvos!','success');}).catch(function(e){showToast('Erro Firestore: '+(e.code||e.message),'error');});
     }catch(_e){showToast('Erro ao preparar dados: '+_e.message,'error');}
-  },1500);
+  })();
 }
 
 // Carrega os SDKs do Firebase SOMENTE APÓS o splash terminar.
