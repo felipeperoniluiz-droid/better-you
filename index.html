@@ -1503,6 +1503,10 @@ function save(){
         if(e.photo&&e.photo.length>30000) e.photo=null;
       });
     });
+    Object.keys(toSave.history||{}).forEach(function(_d){
+      var _h=toSave.history[_d]; if(!_h||!_h.meals) return;
+      Object.keys(_h.meals).forEach(function(_k){ (_h.meals[_k]||[]).forEach(function(_e){ if(_e.photo) _e.photo=null; }); });
+    });
     localStorage.setItem("betteryou_v1",JSON.stringify(toSave));
     var _fbu=window.firebase&&firebase.auth&&firebase.auth().currentUser;
     if(_fbu&&_fbu.uid)localStorage.setItem("betteryou_v1_"+_fbu.uid,JSON.stringify(toSave));
@@ -3630,7 +3634,7 @@ function renderScoresHTML(){
 
 /* nada pode se perder ao fechar, trocar de app ou recarregar */
 (function(){
-  function _flush(){ try{ if(_fbPendente){ clearTimeout(_fbSaveTimer); _fbEnviarAgora(); } }catch(e){} }
+  function _flush(){ try{ if(_fbPendente){ clearTimeout(_fbSaveTimer); _fbEnviarAgora(true); } }catch(e){} }
   window.addEventListener("pagehide", _flush);
   window.addEventListener("beforeunload", _flush);
   document.addEventListener("visibilitychange", function(){ if(document.visibilityState==="hidden") _flush(); });
@@ -4513,6 +4517,7 @@ function doSignOut(){
 }
 
 // ── FIRESTORE SYNC ────────────────────────────────────────────────
+function _refotografar(ms,_pm){ try{ Object.keys(ms||{}).forEach(function(k){ (ms[k]||[]).forEach(function(e,i){ if(!e.photo&&_pm['today_'+k+'_'+i]) e.photo=_pm['today_'+k+'_'+i]; }); }); }catch(e){} }
 function loadFromFirestore(uid){
   Promise.all([_fbDb.collection('users').doc(uid).get(),_fbDb.collection('users').doc(uid).collection('photos').get().catch(function(_pe){showToast('Fotos da nuvem indisponiveis: '+(_pe.code||_pe.message),'error');return{forEach:function(){}};})])
     .then(function(_results){
@@ -4531,7 +4536,7 @@ function loadFromFirestore(uid){
         })();
         var localRaw=localStorage.getItem('betteryou_v1_'+uid)||localStorage.getItem('betteryou_v1');
         var localState=localRaw?JSON.parse(localRaw):{};
-        var today=new Date().toISOString().slice(0,10);
+        var today=(typeof todayKey==='function')?todayKey():new Date().toISOString().slice(0,10);
 
         // ── MERGE INTELIGENTE ──────────────────────────────────────
         // Cloud vence para configurações e perfil.
@@ -4552,7 +4557,7 @@ function loadFromFirestore(uid){
 
         if(localState.lastReset===today && localCount>=cloudCount){
           // Dados locais de hoje são mais completos — protege
-          merged.meals=localState.meals;
+          merged.meals=localState.meals; _refotografar(merged.meals,_pm);
           merged.lastReset=today; merged.today=today;
           if(localState.waterMl!==undefined) merged.waterMl=localState.waterMl;
           if(localState.log) merged.log=localState.log;
@@ -4560,7 +4565,7 @@ function loadFromFirestore(uid){
         } else {
           // Se cloud é de outro dia mas local é de hoje, preserva refeições locais
           if(cloudState.lastReset!==today && localState.lastReset===today){
-            merged.meals=localState.meals;
+            merged.meals=localState.meals; _refotografar(merged.meals,_pm);
             merged.waterMl=localState.waterMl!==undefined?localState.waterMl:merged.waterMl;
             merged.lastReset=today;
           }
@@ -4596,35 +4601,47 @@ function saveToFirestore(imediato){
   clearTimeout(_fbSaveTimer);
   _fbSaveTimer=setTimeout(_fbEnviarAgora,1500);
 }
-function _fbEnviarAgora(){
+function _fbEnviarAgora(soDoc){
   if(!_fbUser) return;
   _fbPendente=false;
-  (function(){
-    try{
-      var _uid=_fbUser.uid;
-      var _c=JSON.parse(JSON.stringify(state));
-      var _photos=[];
-      function _grab(o,f,id){if(o&&typeof o[f]==='string'&&o[f].length>0){_photos.push({id:id,data:o[f]});o[f]=true;}}
-      if(_c.profile)_grab(_c.profile,'photo','profile');
-      Object.keys(_c.meals||{}).forEach(function(k){(_c.meals[k]||[]).forEach(function(e,i){_grab(e,'photo','today_'+k+'_'+i);});});
-      Object.keys(_c.history||{}).forEach(function(d){var h=_c.history[d];if(h&&h.meals){Object.keys(h.meals).forEach(function(k){(h.meals[k]||[]).forEach(function(e,i){_grab(e,'photo','hist_'+d+'_'+k+'_'+i);});});}});
-      (_c.progressPhotos||[]).forEach(function(p,i){_grab(p,'dataUrl','progress_'+i);});
-      var _photosCol=_fbDb.collection('users').doc(_uid).collection('photos');
-      var _writes=[];
-      for(var _bi=0;_bi<_photos.length;_bi+=450){
-        var _batch=_fbDb.batch();
-        _photos.slice(_bi,_bi+450).forEach(function(ph){_batch.set(_photosCol.doc(ph.id),{data:ph.data});});
-        _writes.push(_batch.commit());
-      }
-      Promise.all(_writes).then(function(){
-        return _fbDb.collection('users').doc(_uid).set({
-          data:JSON.stringify(_c),
-          updatedAt:new Date().toISOString(),
-          email:_fbUser.email
-        });
-      }).then(function(){showToast('Nuvem: dados salvos!','success');}).catch(function(e){showToast('Erro Firestore: '+(e.code||e.message),'error');});
-    }catch(_e){showToast('Erro ao preparar dados: '+_e.message,'error');}
-  })();
+  try{
+    var _uid=_fbUser.uid;
+    var _c=JSON.parse(JSON.stringify(state));
+    var _photos=[];
+    function _grab(o,f,id){if(o&&typeof o[f]==='string'&&o[f].length>0){_photos.push({id:id,data:o[f]});o[f]=true;}}
+    if(_c.profile)_grab(_c.profile,'photo','profile');
+    Object.keys(_c.meals||{}).forEach(function(k){(_c.meals[k]||[]).forEach(function(e,i){_grab(e,'photo','today_'+k+'_'+i);});});
+    Object.keys(_c.history||{}).forEach(function(d){var h=_c.history[d];if(h&&h.meals){Object.keys(h.meals).forEach(function(k){(h.meals[k]||[]).forEach(function(e,i){_grab(e,'photo','hist_'+d+'_'+k+'_'+i);});});}});
+    (_c.progressPhotos||[]).forEach(function(p,i){_grab(p,'dataUrl','progress_'+i);});
+    /* O documento principal (~30 KB, contem as refeicoes) vai PRIMEIRO.
+       Antes ele so era gravado depois de subir 1,2 MB de fotos, entao recarregar
+       a pagina no meio apagava o registro. Foto nunca mais custa uma refeicao. */
+    _fbDb.collection('users').doc(_uid).set({
+      data:JSON.stringify(_c),
+      updatedAt:new Date().toISOString(),
+      email:_fbUser.email
+    }).then(function(){
+      showToast('Nuvem: dados salvos!','success');
+      if(!soDoc) _fbEnviarFotos(_uid,_photos);
+    }).catch(function(e){ showToast('Erro Firestore: '+(e.code||e.message),'error'); });
+  }catch(_e){ showToast('Erro ao preparar dados: '+_e.message,'error'); }
+}
+function _fbEnviarFotos(_uid,_photos){
+  var mapa={};
+  try{ mapa=JSON.parse(localStorage.getItem('betteryou_fotos_'+_uid)||'{}'); }catch(e){ mapa={}; }
+  var pend=_photos.filter(function(p){ return mapa[p.id]!==p.data.length; });
+  if(!pend.length) return;
+  var col=_fbDb.collection('users').doc(_uid).collection('photos');
+  var writes=[],lote=_fbDb.batch(),bytes=0,n=0;
+  pend.forEach(function(ph){
+    if(n>0&&(bytes+ph.data.length>1500000||n>=100)){ writes.push(lote.commit()); lote=_fbDb.batch(); bytes=0; n=0; }
+    lote.set(col.doc(ph.id),{data:ph.data}); bytes+=ph.data.length; n++;
+  });
+  if(n>0) writes.push(lote.commit());
+  Promise.all(writes).then(function(){
+    pend.forEach(function(p){ mapa[p.id]=p.data.length; });
+    try{ localStorage.setItem('betteryou_fotos_'+_uid,JSON.stringify(mapa)); }catch(e){}
+  }).catch(function(e){ showToast('Fotos: '+(e.code||e.message)+' (dados ja salvos)','error'); });
 }
 
 // Carrega os SDKs do Firebase SOMENTE APÓS o splash terminar.
