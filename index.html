@@ -987,7 +987,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_203623";
+var APP_VERSION="20260815_204743";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -4519,6 +4519,7 @@ var DICA_TXT={
  fr:{t:"Commencez par votre prochain repas",b:"Touchez + et photographiez votre assiette. Bel identifie les aliments, calcule les calories et compose votre journée.",x:"Je sais déjà enregistrer",a:"Bel, votre nutritionniste"},
  de:{t:"Starte mit deiner nächsten Mahlzeit",b:"Tippe auf + und fotografiere den Teller. Bel erkennt die Lebensmittel, berechnet die Kalorien und baut deinen Tag auf.",x:"Ich weiss, wie es geht",a:"Bel, deine Ernährungsberaterin"}
 };
+/* Fecha e marca como vista. So e chamada pelos dois botoes, nunca por toque solto. */
 function dicaAddFechar(){
   var el=document.getElementById("dicaAdd"); if(el) el.style.display="none";
   try{ state.dicaAdd=true; save(); }catch(e){}
@@ -6005,6 +6006,6 @@ function _qPassos(){ return 12+_qMetas.length+((_qResp&&_qResp.plano===0)||(_qRe
 <div id="jejumInfo" onclick="if(event.target===this)jejumInfoFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:9995;display:none;align-items:flex-end;justify-content:center"></div>
 <div id="belFab" onclick="belFabClique()" style="position:fixed;left:16px;bottom:96px;width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--gold);box-shadow:0 6px 20px rgba(0,0,0,.4);cursor:grab;z-index:9990;touch-action:none;user-select:none;-webkit-user-select:none;display:none;align-items:center;justify-content:center;font-weight:800;color:var(--goldInk)"></div><div id="belSheet" onclick="if(event.target===this)belFabFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:9994;display:none;align-items:flex-end;justify-content:center"></div>
 <div id="calBox" onclick="if(event.target===this)calFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:9993;display:none;align-items:center;justify-content:center;padding:20px;box-sizing:border-box"></div>
-<div id="dicaAdd" onclick="if(event.target===this)dicaAddFechar()" style="position:fixed;left:0;bottom:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:9992;display:none;align-items:flex-end;justify-content:center;padding:0 14px 96px;box-sizing:border-box"></div>
+<div id="dicaAdd" style="position:fixed;left:0;bottom:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:9992;display:none;align-items:flex-end;justify-content:center;padding:0 14px 96px;box-sizing:border-box"></div>
 </body>
 </html>
