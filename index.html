@@ -2485,6 +2485,44 @@ function openSheet(k){
 }
 function closeSheet(){ var o=document.getElementById("sheetOv"); if(o)o.classList.remove("show"); }
 /* A Bel flutuante acompanha todas as telas. Clicando, abre o recado dela. */
+var BREC_TXT={
+pt:{jFecha:'Sua janela fecha em {0} e ainda faltam {1}g de proteína. Dá tempo de resolver.',
+ jAbre:'Falta {0} para a sua janela abrir. Segura mais um pouco — a fome dessa hora costuma passar.',
+ semReg:'Ainda não vi nada seu hoje. Me conta o que você comeu?',
+ prot:'Faltam {0}g de proteína para fechar o dia. Um iogurte grego ou 100g de frango resolvem.',
+ agua:'Você bebeu {0}ml de {1}ml hoje. Ainda dá para virar isso antes de dormir.',
+ tudoCerto:'Seu dia está redondo até agora. Continua assim.'},
+en:{jFecha:'Your window closes in {0} and you are still {1}g short on protein. There is time.',
+ jAbre:'{0} until your window opens. Hold on a bit — the hunger at this hour usually passes.',
+ semReg:'I have not seen anything from you today. Tell me what you ate?',
+ prot:'You are {0}g of protein short today. A Greek yoghurt or 100g of chicken closes it.',
+ agua:'You drank {0}ml of {1}ml today. Still time to turn that around before bed.',
+ tudoCerto:'Your day looks solid so far. Keep going.'},
+es:{jFecha:'Tu ventana cierra en {0} y aún te faltan {1}g de proteína. Da tiempo.',
+ jAbre:'Faltan {0} para que abra tu ventana. Aguanta un poco — el hambre de esta hora suele pasar.',
+ semReg:'Todavía no he visto nada tuyo hoy. Me cuentas qué comiste?',
+ prot:'Te faltan {0}g de proteína para cerrar el día. Un yogur griego o 100g de pollo lo resuelven.',
+ agua:'Bebiste {0}ml de {1}ml hoy. Aún puedes darle la vuelta antes de dormir.',
+ tudoCerto:'Tu día va bien hasta ahora. Sigue así.'},
+it:{jFecha:'La tua finestra chiude tra {0} e ti mancano ancora {1}g di proteine. Sei in tempo.',
+ jAbre:'Mancano {0} all apertura della finestra. Resisti un po — la fame di quest ora di solito passa.',
+ semReg:'Non ho ancora visto niente oggi. Mi racconti cosa hai mangiato?',
+ prot:'Ti mancano {0}g di proteine per chiudere la giornata. Uno yogurt greco o 100g di pollo bastano.',
+ agua:'Hai bevuto {0}ml su {1}ml oggi. Sei ancora in tempo per rimediare.',
+ tudoCerto:'La tua giornata sta andando bene. Continua così.'},
+fr:{jFecha:'Votre fenetre ferme dans {0} et il vous manque encore {1}g de proteines. Vous avez le temps.',
+ jAbre:'{0} avant l ouverture de votre fenetre. Tenez bon — la faim de cette heure passe souvent.',
+ semReg:'Je n ai rien vu de votre part aujourd hui. Vous me dites ce que vous avez mange?',
+ prot:'Il vous manque {0}g de proteines pour boucler la journee. Un yaourt grec ou 100g de poulet suffisent.',
+ agua:'Vous avez bu {0}ml sur {1}ml aujourd hui. Il est encore temps de rattraper.',
+ tudoCerto:'Votre journee tient la route. Continuez.'},
+de:{jFecha:'Dein Fenster schließt in {0} und dir fehlen noch {1}g Protein. Das schaffst du.',
+ jAbre:'Noch {0} bis dein Fenster öffnet. Halt durch — der Hunger um diese Zeit geht meist vorbei.',
+ semReg:'Ich habe heute noch nichts von dir gesehen. Erzähl mir, was du gegessen hast?',
+ prot:'Dir fehlen heute {0}g Protein. Ein griechischer Joghurt oder 100g Hähnchen reichen.',
+ agua:'Du hast heute {0}ml von {1}ml getrunken. Bis zum Schlafen ist noch Zeit.',
+ tudoCerto:'Dein Tag sieht bisher rund aus. Weiter so.'}
+};
 function belFabFoto(){ var b=document.querySelector('img[alt="Nutricionista"]'); return b?b.src:""; }
 function belNaoLido(){
   try{ var r=state.resumoSemana; if(!r||!r.texto) return false; return !(state.belLido)||state.belLido<r.em; }catch(e){ return false; }
