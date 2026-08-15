@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_171548";
+var APP_VERSION="20260815_172333";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -4787,6 +4787,32 @@ function doSignOut(){
 
 // ── FIRESTORE SYNC ────────────────────────────────────────────────
 function _refotografar(ms,_pm){ try{ Object.keys(ms||{}).forEach(function(k){ (ms[k]||[]).forEach(function(e,i){ if(e.photo&&e.photo!==true) return; var _k=e.pid||('today_'+k+'_'+i); if(_pm[_k]) e.photo=_pm[_k]; else if(_pm['today_'+k+'_'+i]) e.photo=_pm['today_'+k+'_'+i]; }); }); }catch(e){} }
+/* O questionario e so para conta nova. Antes ele abria 1,4s apos o login,
+   sem esperar a nuvem, e por isso reaparecia para quem ja tinha conta. */
+function _qJaUsa(){
+  try{
+    if(state.quest&&state.quest.feito) return true;
+    var p=state.profile||{};
+    if(p.weight||p.height||p.age) return true;
+    if(state.weights&&state.weights.length) return true;
+    if(state.history&&Object.keys(state.history).length) return true;
+    if(state.progressPhotos&&state.progressPhotos.length) return true;
+    var m=state.meals||{}; if(["cafe","almoco","lanche","jantar"].some(function(k){ return (m[k]||[]).length; })) return true;
+    return false;
+  }catch(e){ return true; }
+}
+function _qTalvezAbrir(){
+  try{
+    if(state.quest&&state.quest.feito) return;
+    if(_qJaUsa()){
+      /* conta antiga: marca como respondido para nunca mais perguntar */
+      state.quest=state.quest||{}; state.quest.feito=true; state.quest.legado=true;
+      save(); if(typeof saveToFirestore==="function") saveToFirestore();
+      return;
+    }
+    if(typeof qAbrir==="function") qAbrir();
+  }catch(e){}
+}
 function loadFromFirestore(uid){
   Promise.all([_fbDb.collection('users').doc(uid).get(),_fbDb.collection('users').doc(uid).collection('photos').get().catch(function(_pe){showToast('Fotos da nuvem indisponiveis: '+(_pe.code||_pe.message),'error');return{forEach:function(){}};})])
     .then(function(_results){
@@ -4851,8 +4877,10 @@ function loadFromFirestore(uid){
         if(state.profile&&state.profile.photo){setTimeout(function(){renderProfileAvatar(state.profile.photo);},50);}
         // Sincroniza o vencedor de volta ao Firestore
         saveToFirestore();
+        setTimeout(_qTalvezAbrir,400);
       } else {
         // Novo usuário — salva dados locais na nuvem
+        setTimeout(_qTalvezAbrir,400);
         saveToFirestore();
       }
     })
@@ -5139,6 +5167,6 @@ function _qPassos(){ return 12+_qMetas.length+((_qResp&&_qResp.plano===0)||(_qRe
   var _meta=_qCalcMeta(); if(_meta) state.calGoal=_meta;
   if(pe){ state.weights=state.weights||[]; var _hj=(typeof todayKey==="function")?todayKey():"";
     if(_hj&&!state.weights.some(function(w){return w.date===_hj;})) state.weights.push({date:_hj,val:pe}); }
-  save(); if(typeof saveToFirestore==="function") saveToFirestore(true);  if(typeof recalcGoals==="function") recalcGoals();  if(typeof renderToday==="function") renderToday(); }catch(e){} document.getElementById("questScreen").style.display="none"; }function qAbrir(){ var el=document.getElementById("questScreen"); if(!el) return; _qPasso=0; _qMetas=[]; _qHabs=[]; _qOutro=""; _qResp={plan:-1,cook:-1,plano:-1,ativ:-1,sexo:(state.profile&&state.profile.sex)||"",idade:(state.profile&&state.profile.age)||"",pais:"",altura:(state.profile&&state.profile.height)||"",peso:(state.profile&&state.profile.weight)||"",unA:"cm",unP:"kg",atleta:false,lembretes:false}; _qNome=((state.profile&&state.profile.name)||"").split(" ")[0]||""; el.style.display="flex"; _qRender(); _qBarra(); }(function(){ function pronto(){ try{ if(typeof _fbAuth==="undefined"||!_fbAuth){ setTimeout(pronto,500); return; }  _fbAuth.onAuthStateChanged(function(u){ if(!u) return;   setTimeout(function(){ try{ if(!state.quest||!state.quest.feito) qAbrir(); }catch(e){} },1400); }); }catch(e){ setTimeout(pronto,800); } } pronto(); })();</script>
+  save(); if(typeof saveToFirestore==="function") saveToFirestore(true);  if(typeof recalcGoals==="function") recalcGoals();  if(typeof renderToday==="function") renderToday(); }catch(e){} document.getElementById("questScreen").style.display="none"; }function qAbrir(){ var el=document.getElementById("questScreen"); if(!el) return; _qPasso=0; _qMetas=[]; _qHabs=[]; _qOutro=""; _qResp={plan:-1,cook:-1,plano:-1,ativ:-1,sexo:(state.profile&&state.profile.sex)||"",idade:(state.profile&&state.profile.age)||"",pais:"",altura:(state.profile&&state.profile.height)||"",peso:(state.profile&&state.profile.weight)||"",unA:"cm",unP:"kg",atleta:false,lembretes:false}; _qNome=((state.profile&&state.profile.name)||"").split(" ")[0]||""; el.style.display="flex"; _qRender(); _qBarra(); }(function(){ function pronto(){ try{ if(typeof _fbAuth==="undefined"||!_fbAuth){ setTimeout(pronto,500); return; }  /* gatilho movido para depois do carregamento da nuvem */ }catch(e){ setTimeout(pronto,800); } } pronto(); })();</script>
 </body>
 </html>
