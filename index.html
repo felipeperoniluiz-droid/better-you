@@ -988,7 +988,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_205354";
+var APP_VERSION="20260815_205501";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2854,6 +2854,7 @@ function navGo(tab){
   _navMarca(tab);
   try{ if(typeof aplicarI18n==="function") aplicarI18n(); }catch(e){}
   try{ if(typeof jejumTelaRender==="function") jejumTelaRender(); }catch(e){}
+  try{ if(typeof sonoTelaRender==="function") sonoTelaRender(); }catch(e){}
   try{ if(typeof maisRender==="function") maisRender(); }catch(e){}
   try{ if(typeof semanaFaixaRender==="function") semanaFaixaRender(); }catch(e){}
   try{ if(typeof hojeProRender==="function") hojeProRender(); }catch(e){}
@@ -4577,6 +4578,123 @@ var SONO_TXT={
  fr:{t:"Sommeil",total:"Sommeil total",rec:"Recommandé : 7h à 9h",dentro:"Dans la plage recommandée",abaixo:"Sous la plage recommandée",acima:"Au-dessus de la plage recommandée",sem:"Aucun enregistrement ce jour",pergunta:"Combien d heures avez-vous dormi ?",sete:"7 derniers jours",media:"Moyenne",reg:"Régularité",r1:"Constant",r2:"Irrégulier",r3:"Très irrégulier",fasesT:"Et les phases de sommeil ?",fasesB:"Better You enregistre combien d heures vous avez dormi, pas les phases. Mesurer le sommeil paradoxal et profond exige un appareil au poignet ou dans le lit. Nous préférons ne pas estimer ce que nous ne mesurons pas.",belT:"Bel relie votre sommeil à ce que vous mangez",belFree:"Avec PRO, Bel compare vos nuits et vos journées et montre ce qui gêne votre repos.",belPoucos:"Enregistrez au moins 5 nuits pour que Bel trouve des tendances.",belMais:"Les nuits de moins de 7h, vous avez mangé {0} kcal en moyenne — {1} kcal de plus que les nuits bien dormies.",belMenos:"Les nuits de moins de 7h, vous avez mangé {0} kcal en moyenne — {1} kcal de moins que les nuits bien dormies.",belIgual:"Jusqu ici votre consommation ne change pas nettement entre nuits courtes et nuits complètes.",noites:"nuits"},
  de:{t:"Schlaf",total:"Gesamtschlaf",rec:"Empfohlen: 7 bis 9 Stunden",dentro:"Im empfohlenen Bereich",abaixo:"Unter dem empfohlenen Bereich",acima:"Über dem empfohlenen Bereich",sem:"An diesem Tag nichts erfasst",pergunta:"Wie viele Stunden hast du geschlafen?",sete:"Letzte 7 Tage",media:"Durchschnitt",reg:"Regelmässigkeit",r1:"Gleichmässig",r2:"Unregelmässig",r3:"Sehr unregelmässig",fasesT:"Und die Schlafphasen?",fasesB:"Better You erfasst, wie viele Stunden du geschlafen hast, nicht die Phasen. REM und Tiefschlaf zu messen erfordert ein Gerät am Handgelenk oder im Bett. Wir schätzen lieber nicht, was wir nicht messen.",belT:"Bel verbindet deinen Schlaf mit dem, was du isst",belFree:"Mit PRO vergleicht Bel deine Nächte mit deinen Tagen und zeigt, was deine Erholung stört.",belPoucos:"Erfasse mindestens 5 Nächte, damit Bel Muster findet.",belMais:"In Nächten unter 7 Stunden hast du im Schnitt {0} kcal gegessen — {1} kcal mehr als in gut geschlafenen Nächten.",belMenos:"In Nächten unter 7 Stunden hast du im Schnitt {0} kcal gegessen — {1} kcal weniger als in gut geschlafenen Nächten.",belIgual:"Bisher ändert sich deine Aufnahme zwischen kurzen und vollen Nächten nicht deutlich.",noites:"Nächte"}
 };
+function _sonoT(){ return SONO_TXT[currentLang]||SONO_TXT.pt; }
+var _sonoDia=null;
+function _sonoChave(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function _sonoHoras(d){
+  var hoje=new Date(); hoje.setHours(0,0,0,0);
+  if(d.getTime()===hoje.getTime()) return +state.sleepH||0;
+  var e=(state.history||{})[_sonoChave(d)];
+  return e?(+e.sleep||0):0;
+}
+function sonoDiaMudar(n){ var d=_sonoDia||new Date(); d=new Date(d.getTime()+n*86400000); var hoje=new Date(); hoje.setHours(23,59,59,0); if(d.getTime()>hoje.getTime()) return; d.setHours(0,0,0,0); _sonoDia=d; sonoTelaRender(); }
+/* Serie dos ultimos 7 dias, so com o que foi realmente registrado. */
+function _sonoSerie(){
+  var out=[], hoje=new Date(); hoje.setHours(0,0,0,0);
+  for(var i=6;i>=0;i--){ var d=new Date(hoje.getTime()-i*86400000); out.push({d:d,h:_sonoHoras(d)}); }
+  return out;
+}
+/* Leitura honesta: so cruza noites que tem sono E calorias registrados. */
+function _sonoPadrao(){
+  var h=state.history||{}, curto=[], pleno=[];
+  for(var k in h){ var e=h[k]; if(!e) continue;
+    var s=+e.sleep||0, c=+e.kcal||0; if(s<=0||c<=0) continue;
+    (s<7?curto:pleno).push(c); }
+  var n=curto.length+pleno.length;
+  if(n<5||!curto.length||!pleno.length) return {n:n};
+  function med(a){ var t=0; a.forEach(function(x){t+=x;}); return Math.round(t/a.length); }
+  var mc=med(curto), mp=med(pleno), dif=mc-mp;
+  return {n:n,curto:mc,pleno:mp,dif:dif,rel:Math.abs(dif)/mp};
+}
+function sonoTelaRender(){
+  var el=document.getElementById("sonoBox"); if(!el) return;
+  var t=_sonoT(), tt=(T[currentLang]||T.pt);
+  var hoje=new Date(); hoje.setHours(0,0,0,0);
+  if(!_sonoDia) _sonoDia=new Date(hoje.getTime());
+  var d=_sonoDia, eHoje=d.getTime()===hoje.getTime();
+  var loc={pt:"pt-BR",en:"en-GB",es:"es-ES",it:"it-IT",fr:"fr-FR",de:"de-DE"}[currentLang]||"en-GB";
+  var horas=_sonoHoras(d);
+  var h='';
+  /* cabecalho com navegacao de dia */
+  var rot=d.toLocaleDateString(loc,{weekday:"short",day:"numeric",month:"short"});
+  rot=rot.charAt(0).toUpperCase()+rot.slice(1);
+  h+='<div class="section-title">'+t.t+'</div>';
+  h+='<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px">'+
+   '<button onclick="sonoDiaMudar(-1)" style="width:36px;height:36px;border-radius:11px;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-size:17px">&#8249;</button>'+
+   '<span style="flex:1;text-align:center;font-size:14px;font-weight:700;color:var(--text)">'+rot+'</span>'+
+   '<button onclick="sonoDiaMudar(1)"'+(eHoje?' disabled':'')+' style="width:36px;height:36px;border-radius:11px;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:'+(eHoje?"default":"pointer")+';opacity:'+(eHoje?".35":"1")+';font-size:17px">&#8250;</button></div>';
+  /* anel */
+  var alvo=8, pct=Math.min(100,Math.round((horas/alvo)*100));
+  var raio=54, circ=Math.round(2*Math.PI*raio);
+  var off=Math.round(circ-(circ*Math.min(1,horas/alvo)));
+  var faixa=horas<=0?"":(horas<7?t.abaixo:(horas>9?t.acima:t.dentro));
+  var cor=horas<=0?"var(--surface3)":(horas>=7&&horas<=9?"#f0b429":"#e8834a");
+  h+='<div class="card" style="text-align:center">';
+  h+='<div style="position:relative;width:140px;height:140px;margin:2px auto 0">'+
+   '<svg width="140" height="140" style="transform:rotate(-90deg)">'+
+    '<circle cx="70" cy="70" r="'+raio+'" fill="none" stroke="var(--surface3)" stroke-width="10"/>'+
+    '<circle cx="70" cy="70" r="'+raio+'" fill="none" stroke="'+cor+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+off+'" style="transition:stroke-dashoffset .6s ease"/>'+
+   '</svg>'+
+   '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">'+
+    '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="'+cor+'" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:3px"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>'+
+    '<span style="font-family:\'Syne\',sans-serif;font-size:27px;font-weight:800;color:var(--text);line-height:1">'+(horas>0?(horas+"h"):"--")+'</span>'+
+    '<span style="font-size:10px;color:var(--text3);margin-top:3px">'+t.total+'</span>'+
+   '</div></div>';
+  h+='<div style="font-size:12px;font-weight:700;color:'+(horas<=0?"var(--text3)":cor)+';margin-top:10px">'+(horas>0?faixa:t.sem)+'</div>';
+  h+='<div style="font-size:11px;color:var(--text3);margin-top:3px">'+t.rec+'</div>';
+  if(eHoje){
+    h+='<div style="display:flex;gap:6px;margin-top:14px">';
+    [5,6,7,8,9].forEach(function(o){
+      var on=(horas===o);
+      h+='<button onclick="setSleep('+o+');sonoTelaRender()" style="flex:1;padding:9px 0;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid '+(on?"#f0b429;background:#f0b429;color:#000;":"rgba(240,180,41,.35);background:rgba(240,180,41,.08);color:#f0b429;")+'">'+o+'h</button>';
+    });
+    h+='</div>';
+  }
+  h+='</div>';
+  /* 7 dias */
+  var serie=_sonoSerie(), reg=serie.filter(function(x){return x.h>0;});
+  h+='<div class="card"><div class="card-title">'+t.sete+'</div>';
+  h+='<div style="display:flex;align-items:flex-end;gap:5px;height:96px">';
+  serie.forEach(function(x){
+    var alt=x.h>0?Math.max(10,Math.round((Math.min(x.h,10)/10)*88)):4;
+    var c=x.h<=0?"var(--surface3)":(x.h>=7&&x.h<=9?"#f0b429":"#e8834a");
+    var sel=x.d.getTime()===d.getTime();
+    h+='<div onclick="_sonoDia=new Date('+x.d.getTime()+');sonoTelaRender()" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;cursor:pointer">'+
+     '<span style="font-size:9px;color:var(--text3);margin-bottom:3px">'+(x.h>0?x.h+"h":"")+'</span>'+
+     '<span style="width:100%;height:'+alt+'px;border-radius:6px;background:'+c+';'+(sel?"outline:2px solid var(--gold);outline-offset:1px;":"")+'"></span></div>';
+  });
+  h+='</div><div style="display:flex;gap:5px;margin-top:5px">';
+  serie.forEach(function(x){ var ini=(typeof _dias==="function")?_dias("ini"):["D","S","T","Q","Q","S","S"];
+    h+='<span style="flex:1;text-align:center;font-size:10px;color:var(--text3);font-weight:700">'+ini[x.d.getDay()]+'</span>'; });
+  h+='</div>';
+  if(reg.length){
+    var soma=0,mn=99,mx=0; reg.forEach(function(x){ soma+=x.h; if(x.h<mn)mn=x.h; if(x.h>mx)mx=x.h; });
+    var med=Math.round((soma/reg.length)*10)/10, amp=mx-mn;
+    var rlab=amp<=1?t.r1:(amp<=2.5?t.r2:t.r3);
+    h+='<div style="display:flex;gap:10px;margin-top:14px;padding-top:13px;border-top:1px solid var(--border)">'+
+     '<div style="flex:1"><div style="font-size:10px;color:var(--text3);font-weight:700">'+t.media+'</div><div style="font-size:16px;font-weight:800;color:var(--text)">'+med+'h</div></div>'+
+     '<div style="flex:1;text-align:right"><div style="font-size:10px;color:var(--text3);font-weight:700">'+t.reg+'</div><div style="font-size:16px;font-weight:800;color:var(--text)">'+rlab+'</div></div></div>';
+  }
+  h+='</div>';
+  /* Bel: sono x alimentacao */
+  var p=_sonoPadrao(), txtBel;
+  if(!isPro) txtBel=t.belFree;
+  else if(!p.curto) txtBel=t.belPoucos;
+  else if(p.rel<0.08) txtBel=t.belIgual;
+  else txtBel=(p.dif>0?t.belMais:t.belMenos).replace("{0}",p.curto).replace("{1}",Math.abs(p.dif));
+  h+='<div class="card" style="border:1px solid var(--gold);background:linear-gradient(135deg,#141a33 0%,#0d1020 70%)">';
+  h+='<div style="display:flex;gap:12px;align-items:flex-start">';
+  var foto=(typeof _dicaBelSrc==="function")?_dicaBelSrc():"";
+  if(foto) h+='<img src="'+foto+'" alt="Bel" style="width:54px;height:54px;border-radius:50%;object-fit:cover;object-position:top center;flex-shrink:0;border:1px solid rgba(240,180,41,.5)">';
+  h+='<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:800;color:#fff;line-height:1.3">'+t.belT+'</div>'+
+   '<div style="font-size:12px;color:rgba(255,255,255,.72);line-height:1.5;margin-top:6px">'+txtBel+'</div>';
+  if(!isPro) h+='<span onclick="subscribePro()" style="display:inline-flex;margin-top:12px;padding:8px 15px;border-radius:99px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:12px;font-weight:800;cursor:pointer">'+((T[currentLang]||T.pt).calsejaPro||"Seja PRO")+'</span>';
+  h+='</div></div></div>';
+  /* fases do sono: o que nao medimos */
+  h+='<div class="card"><div class="card-title">'+t.fasesT+'</div>'+
+   '<div style="font-size:12px;color:var(--text2);line-height:1.6">'+t.fasesB+'</div></div>';
+  el.innerHTML=h;
+}
 function sinaisDiaRender(){
   var el=document.getElementById("sinaisDia"); if(!el) return;
   var t=(T[currentLang]||T.pt), chips=[];
@@ -4597,11 +4715,8 @@ function sinaisDiaRender(){
 }
 /* Reabre o registro de sono (usado pelo sinal e pelo menu Mais). */
 function sonoEditar(){
-  window._sleepEditando=true;
-  try{ if(typeof navGo==="function") navGo("hoje"); }catch(e){}
-  renderSleep();
-  var c=document.getElementById("sleepCard");
-  if(c) setTimeout(function(){ try{ c.scrollIntoView({behavior:"smooth",block:"center"}); }catch(e){} },80);
+  _sonoDia=null;
+  try{ if(typeof navGo==="function") navGo("sono"); }catch(e){}
 }
 function renderSleep(){
   var box=document.getElementById("sleepChips"); if(!box) return;
