@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" translate="no" class="notranslate">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0a0c0f">
+<meta name="google" content="notranslate">
+  <meta name="theme-color" content="#0a0c0f">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -989,7 +990,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_173232";
+var APP_VERSION="20260815_173524";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1365,7 +1366,7 @@ try{
   var _mq=window.matchMedia("(prefers-color-scheme: light)");
   if(_mq.addEventListener) _mq.addEventListener("change",function(){ if(state&&state.theme==="auto") aplicarTema(); });
 }catch(e){}
-function _syncHtmlLang(l){ try{ document.documentElement.setAttribute("lang",{pt:"pt-BR",en:"en",es:"es",it:"it",fr:"fr",de:"de"}[l]||"en"); }catch(e){} }
+function _syncHtmlLang(l){ try{ var h=document.documentElement; h.setAttribute("lang",{pt:"pt-BR",en:"en",es:"es",it:"it",fr:"fr",de:"de"}[l]||"en"); h.setAttribute("translate","no"); if(h.className.indexOf("notranslate")<0) h.className=(h.className+" notranslate").trim(); }catch(e){} }
 /* O setLang traduzia o HTML e SO DEPOIS mandava redesenhar as telas, entao tudo que
    os renderizadores recriavam voltava em portugues. Esta funcao reaplica as traducoes
    e e chamada tambem no fim do setLang e a cada troca de tela. */
