@@ -987,7 +987,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_202251";
+var APP_VERSION="20260815_203623";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -4512,35 +4512,45 @@ function _jejumFeitoHoje(){
 }
 /* Dica de primeiro uso: aponta o botao + uma unica vez, quando a pessoa entra no app. */
 var DICA_TXT={
- pt:{t:"Comece pela sua próxima refeição",b:"Toque no + e fotografe o prato. A Bel identifica os alimentos, calcula as calorias e monta o seu dia.",x:"Já sei registrar"},
- en:{t:"Start with your next meal",b:"Tap + and photograph your plate. Bel identifies the food, works out the calories and builds your day.",x:"I know how to log"},
- es:{t:"Empieza por tu próxima comida",b:"Toca + y fotografía el plato. Bel identifica los alimentos, calcula las calorías y arma tu día.",x:"Ya sé registrar"},
- it:{t:"Inizia dal tuo prossimo pasto",b:"Tocca + e fotografa il piatto. Bel riconosce gli alimenti, calcola le calorie e costruisce la tua giornata.",x:"So già registrare"},
- fr:{t:"Commencez par votre prochain repas",b:"Touchez + et photographiez votre assiette. Bel identifie les aliments, calcule les calories et compose votre journée.",x:"Je sais déjà enregistrer"},
- de:{t:"Starte mit deiner nächsten Mahlzeit",b:"Tippe auf + und fotografiere den Teller. Bel erkennt die Lebensmittel, berechnet die Kalorien und baut deinen Tag auf.",x:"Ich weiss, wie es geht"}
+ pt:{t:"Comece pela sua próxima refeição",b:"Toque no + e fotografe o prato. A Bel identifica os alimentos, calcula as calorias e monta o seu dia.",x:"Já sei registrar",a:"Bel, sua nutricionista"},
+ en:{t:"Start with your next meal",b:"Tap + and photograph your plate. Bel identifies the food, works out the calories and builds your day.",x:"I know how to log",a:"Bel, your nutritionist"},
+ es:{t:"Empieza por tu próxima comida",b:"Toca + y fotografía el plato. Bel identifica los alimentos, calcula las calorías y arma tu día.",x:"Ya sé registrar",a:"Bel, tu nutricionista"},
+ it:{t:"Inizia dal tuo prossimo pasto",b:"Tocca + e fotografa il piatto. Bel riconosce gli alimenti, calcola le calorie e costruisce la tua giornata.",x:"So già registrare",a:"Bel, la tua nutrizionista"},
+ fr:{t:"Commencez par votre prochain repas",b:"Touchez + et photographiez votre assiette. Bel identifie les aliments, calcule les calories et compose votre journée.",x:"Je sais déjà enregistrer",a:"Bel, votre nutritionniste"},
+ de:{t:"Starte mit deiner nächsten Mahlzeit",b:"Tippe auf + und fotografiere den Teller. Bel erkennt die Lebensmittel, berechnet die Kalorien und baut deinen Tag auf.",x:"Ich weiss, wie es geht",a:"Bel, deine Ernährungsberaterin"}
 };
 function dicaAddFechar(){
   var el=document.getElementById("dicaAdd"); if(el) el.style.display="none";
   try{ state.dicaAdd=true; save(); }catch(e){}
 }
 function dicaAddAgir(){ dicaAddFechar(); try{ openSheet("add"); }catch(e){} }
+/* A foto da Bel ja existe no app; aqui so lemos o src, sem duplicar o base64. */
+function _dicaBelSrc(){
+  try{ var i=document.querySelector('img[alt="Nutricionista"]')||document.querySelector("#belFab img"); return (i&&i.src)||""; }catch(e){ return ""; }
+}
 function dicaAddMostrar(){
   var el=document.getElementById("dicaAdd"); if(!el) return;
   var d=DICA_TXT[currentLang]||DICA_TXT.pt;
-  var cam='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--goldInk)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.6h3.4l1.5-2.2h8.2l1.5 2.2H21v10H3Z"/><circle cx="12" cy="13.4" r="3.4"/></svg>';
+  var foto=_dicaBelSrc();
   var h='<div style="width:100%;max-width:430px;margin:0 auto;pointer-events:auto">';
-  h+='<div style="background:var(--surface);border:1px solid var(--gold);border-radius:20px;padding:18px 18px 14px;box-shadow:0 18px 44px rgba(0,0,0,.55)">';
-  h+='<div style="display:flex;gap:12px;align-items:flex-start">';
-  h+='<span style="flex-shrink:0;width:38px;height:38px;border-radius:12px;background:var(--goldBg2);display:flex;align-items:center;justify-content:center">'+cam+'</span>';
-  h+='<span style="flex:1"><span style="display:block;font-size:16px;font-weight:800;color:var(--text);line-height:1.3">'+d.t+'</span>';
-  h+='<span style="display:block;font-size:13px;color:var(--text2);line-height:1.5;margin-top:6px">'+d.b+'</span></span></div>';
-  h+='<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px">';
-  h+='<span onclick="dicaAddFechar()" style="font-size:12px;color:var(--text3);cursor:pointer;padding:8px 2px">'+d.x+'</span>';
-  h+='<span onclick="dicaAddAgir()" style="display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:99px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:13px;font-weight:800;cursor:pointer">';
-  h+='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5.5v13M5.5 12h13"/></svg>';
-  h+='<span>'+((T[currentLang]||T.pt).addAlimento||"Adicionar").replace(/^[+\s]+/,"")+'</span></span></div></div>';
+  h+='<div style="position:relative;overflow:hidden;border-radius:20px;border:1px solid var(--gold);background:linear-gradient(135deg,#141a33 0%,#0d1020 60%,#0a0c18 100%);box-shadow:0 18px 44px rgba(0,0,0,.6);display:flex;min-height:150px">';
+  /* coluna da foto */
+  h+='<div style="position:relative;width:118px;flex-shrink:0;align-self:stretch">';
+  if(foto) h+='<img src="'+foto+'" alt="Bel" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:100%;width:auto;object-fit:contain;object-position:bottom center">';
+  h+='<div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent 40%,rgba(13,16,32,.95) 100%)"></div></div>';
+  /* coluna do texto */
+  h+='<div style="flex:1;padding:15px 16px 13px 4px;display:flex;flex-direction:column;justify-content:center;min-width:0">';
+  h+='<span style="display:block;font-size:10px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--goldInk);margin-bottom:6px">'+d.a+'</span>';
+  h+='<span style="display:block;font-family:\'Syne\',sans-serif;font-size:16px;font-weight:800;color:#fff;line-height:1.25">'+d.t+'</span>';
+  h+='<span style="display:block;font-size:12px;color:rgba(255,255,255,.72);line-height:1.5;margin-top:7px">'+d.b+'</span>';
+  h+='<span style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:14px">';
+  h+='<span onclick="dicaAddFechar()" style="font-size:11px;color:rgba(255,255,255,.45);cursor:pointer;padding:6px 0;white-space:nowrap">'+d.x+'</span>';
+  h+='<span onclick="dicaAddAgir()" style="display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:99px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap">';
+  h+='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M12 5.5v13M5.5 12h13"/></svg>';
+  h+='<span>'+((T[currentLang]||T.pt).addAlimento||"Adicionar").replace(/^[+\s]+/,"")+'</span></span></span>';
+  h+='</div></div>';
   /* seta apontando para o botao + da barra inferior */
-  h+='<div style="display:flex;justify-content:flex-end;padding-right:34px;margin-top:-1px"><svg width="26" height="14" viewBox="0 0 26 14"><path d="M13 14 1 0h24Z" fill="var(--surface)" stroke="var(--gold)" stroke-width="1.5"/></svg></div>';
+  h+='<div style="display:flex;justify-content:flex-end;padding-right:34px;margin-top:-1px"><svg width="26" height="14" viewBox="0 0 26 14"><path d="M13 14 1 0h24Z" fill="#0a0c18" stroke="var(--gold)" stroke-width="1.5"/></svg></div>';
   el.innerHTML=h+'</div>';
   el.style.display="flex";
 }
