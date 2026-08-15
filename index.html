@@ -599,7 +599,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 </div>
 
 <!-- TAB AGUA -->
-<div class="tab" id="tab-jejum"><div id="jejumBox"></div><div id="jejumHist" style="margin-top:14px"></div></div>
+<div class="tab" id="tab-jejum"><div id="jejumRelogio"></div><div id="jejumBox"></div><div id="jejumFases" style="margin-top:14px"></div><div id="jejumSemana" style="margin-top:14px"></div><div id="jejumPlanos" style="margin-top:14px"></div><div id="jejumHist" style="margin-top:14px"></div></div>
 <div class="tab" id="tab-agua">
   <div class="section-title" data-i18n="hidratacao">Hidratacao</div>
   <div class="section-sub" data-i18n="hidratacaoSub">Mantenha-se hidratado durante o dia</div>
@@ -991,7 +991,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_173757";
+var APP_VERSION="20260815_174135";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1767,6 +1767,97 @@ function jejumHtml(){
    '<button class="btn btn-primary" onclick="jejumEncerrar();jejumIniciar()" style="width:100%;margin-top:14px">'+J.iniciar+'</button></div>';
   return h;
 }
+function _jF(){ return JFASE_TXT[currentLang]||JFASE_TXT.pt; }
+var _JFASES=[[0,4],[4,12],[12,16],[16,24]];
+function _jFaseAtual(h){ for(var i=_JFASES.length-1;i>=0;i--){ if(h>=_JFASES[i][0]) return i; } return 0; }
+/* cronometro grande, com segundos */
+function jejumRelogioHtml(){
+  var J=_jT(), s=jejumStatus(), e=_jEstado();
+  if(s.fase==="parado") return "";
+  var ms=s.passado, hh=Math.floor(ms/3600000), mm=Math.floor((ms%3600000)/60000), ss=Math.floor((ms%60000)/1000);
+  var pct=Math.min(1,ms/(e.proto*3600000));
+  var r=62, c=2*Math.PI*r, off=c*(1-pct);
+  return '<div style="display:flex;flex-direction:column;align-items:center;padding:6px 0 2px">'+
+   '<div style="position:relative;width:180px;height:180px">'+
+    '<svg viewBox="0 0 150 150" style="width:180px;height:180px;transform:rotate(-90deg)">'+
+     '<circle cx="75" cy="75" r="'+r+'" fill="none" stroke="var(--surface2)" stroke-width="9"/>'+
+     '<circle cx="75" cy="75" r="'+r+'" fill="none" stroke="var(--gold)" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+off+'"/></svg>'+
+    '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">'+
+     '<div style="font-size:12px;color:var(--text2)">'+(s.fase==="jejum"?J.emJejum:J.aberta)+'</div>'+
+     '<div style="font-size:30px;font-weight:800;color:var(--text);letter-spacing:.5px;line-height:1.15">'+
+      String(hh).padStart(2,"0")+":"+String(mm).padStart(2,"0")+":"+String(ss).padStart(2,"0")+'</div>'+
+     '<div style="font-size:12px;color:var(--goldInk);font-weight:700;margin-top:2px">'+e.proto+":"+(24-e.proto)+'</div>'+
+    '</div></div></div>';
+}
+/* fases: faixas honestas, sem numero inventado */
+function jejumFasesHtml(){
+  var F=_jF(), s=jejumStatus(), e=_jEstado();
+  var h=(s.fase==="parado")?0:s.passado/3600000;
+  var at=_jFaseAtual(h);
+  var out='<div class="card"><div class="card-title">'+F.est+'</div><div style="margin-top:12px">';
+  F.f.forEach(function(f,i){
+    var ativo=(s.fase!=="parado")&&i===at, passou=(s.fase!=="parado")&&i<at;
+    var faixa=_JFASES[i][0]+"h" + (i<_JFASES.length-1?(" – "+_JFASES[i][1]+"h"):"+");
+    out+='<div style="display:flex;gap:12px;padding:12px 0;'+(i<F.f.length-1?"border-bottom:1px solid var(--border);":"")+'">'+
+     '<div style="width:10px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding-top:4px">'+
+      '<span style="width:10px;height:10px;border-radius:50%;background:'+(ativo?"var(--gold)":(passou?"var(--green)":"var(--border)"))+'"></span></div>'+
+     '<div style="flex:1"><div style="display:flex;align-items:baseline;gap:8px">'+
+      '<span style="font-size:14px;font-weight:800;color:'+(ativo?"var(--goldInk)":"var(--text)")+'">'+f[0]+'</span>'+
+      '<span style="font-size:11px;color:var(--text3)">'+faixa+'</span></div>'+
+      '<div style="font-size:12.5px;color:var(--text2);line-height:1.55;margin-top:3px">'+f[1]+'</div></div></div>';
+  });
+  return out+'</div><div style="font-size:11px;color:var(--text3);line-height:1.6;margin-top:10px">'+F.var_+'</div></div>';
+}
+/* semana em barras */
+function jejumSemanaHtml(){
+  var F=_jF(), e=_jEstado();
+  var hoje=new Date(); hoje.setHours(0,0,0,0);
+  var barras="", maior=1, dados=[];
+  for(var i=6;i>=0;i--){
+    var d=new Date(hoje.getTime()-i*86400000);
+    var tot=0;
+    (e.hist||[]).forEach(function(x){ var f=new Date(x.fim); f.setHours(0,0,0,0); if(f.getTime()===d.getTime()) tot=Math.max(tot,x.horas); });
+    dados.push({dia:F.dias[d.getDay()],h:tot,alvo:e.proto});
+    if(tot>maior) maior=tot;
+  }
+  maior=Math.max(maior,e.proto);
+  dados.forEach(function(x){
+    var alt=Math.round((x.h/maior)*70);
+    barras+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">'+
+     '<div style="height:74px;width:100%;display:flex;align-items:flex-end;justify-content:center">'+
+      (x.h>0?'<div style="width:70%;height:'+Math.max(alt,6)+'px;border-radius:5px 5px 2px 2px;background:'+(x.h>=x.alvo?"var(--gold)":"var(--surface3)")+'"></div>':'<div style="width:70%;height:4px;border-radius:2px;background:var(--border)"></div>')+'</div>'+
+     '<span style="font-size:10px;color:var(--text3)">'+x.dia+'</span></div>';
+  });
+  return '<div class="card"><div class="card-title">'+F.sem+'</div><div style="display:flex;gap:6px;margin-top:12px">'+barras+'</div></div>';
+}
+/* planos */
+function jejumPlanoEscolher(p){ var e=_jEstado(); e.proto=p; save(); jejumTelaRender(); }
+function jejumPlanosHtml(){
+  var F=_jF(), e=_jEstado();
+  var out='<div class="card"><div class="card-title">'+F.planos+'</div><div style="margin-top:10px">';
+  F.p.forEach(function(p,i){
+    var horas=parseInt(p[0],10), sel=e.proto===horas;
+    out+='<div onclick="jejumPlanoEscolher('+horas+')" style="display:flex;align-items:center;gap:12px;padding:13px;margin-bottom:8px;border-radius:12px;cursor:pointer;background:'+(sel?"var(--goldBg2)":"var(--surface2)")+';border:1px solid '+(sel?"var(--gold)":"transparent")+'">'+
+     '<span style="font-size:14px;font-weight:800;color:'+(sel?"var(--goldInk)":"var(--text)")+';min-width:46px">'+p[0]+'</span>'+
+     '<span style="flex:1"><span style="display:block;font-size:13px;font-weight:700;color:var(--text)">'+p[1]+'</span>'+
+      '<span style="display:block;font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:2px">'+p[2]+'</span></span></div>';
+  });
+  return out+'</div></div>';
+}
+function jejumTelaRender(){
+  try{
+    jejumRender();
+    var rel=document.getElementById("jejumRelogio"); if(rel) rel.innerHTML=jejumRelogioHtml();
+    var fa=document.getElementById("jejumFases"); if(fa) fa.innerHTML=(typeof isPro!=="undefined"&&!isPro)?"":jejumFasesHtml();
+    var se=document.getElementById("jejumSemana"); if(se) se.innerHTML=(typeof isPro!=="undefined"&&!isPro)?"":jejumSemanaHtml();
+    var pl=document.getElementById("jejumPlanos"); if(pl) pl.innerHTML=(typeof isPro!=="undefined"&&!isPro)?"":jejumPlanosHtml();
+    var jh=document.getElementById("jejumHist"); if(jh) jh.innerHTML=jejumHistHtml();
+  }catch(e){}
+}
+(function(){ setInterval(function(){ try{
+  var t=document.getElementById("tab-jejum");
+  if(t&&getComputedStyle(t).display!=="none"&&jejumStatus().fase!=="parado"){ var r=document.getElementById("jejumRelogio"); if(r) r.innerHTML=jejumRelogioHtml(); }
+ }catch(e){} },1000); })();
 function jejumHistHtml(){
   try{
     if(typeof isPro!=="undefined" && !isPro) return "";
@@ -2378,7 +2469,7 @@ function navGo(tab){
   switchTab(tab,null);
   _navMarca(tab);
   try{ if(typeof aplicarI18n==="function") aplicarI18n(); }catch(e){}
-  try{ if(typeof jejumRender==="function") jejumRender(); if(typeof jejumHistHtml==="function"){ var jh=document.getElementById("jejumHist"); if(jh) jh.innerHTML=jejumHistHtml(); } }catch(e){}
+  try{ if(typeof jejumTelaRender==="function") jejumTelaRender(); }catch(e){}
 }
 function _navMarca(tab){
   var g=_NAVGRUPO[tab];
