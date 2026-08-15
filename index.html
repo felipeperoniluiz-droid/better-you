@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_1041";
+var APP_VERSION="20260815_1056";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1366,6 +1366,18 @@ try{
   if(_mq.addEventListener) _mq.addEventListener("change",function(){ if(state&&state.theme==="auto") aplicarTema(); });
 }catch(e){}
 function _syncHtmlLang(l){ try{ document.documentElement.setAttribute("lang",{pt:"pt-BR",en:"en",es:"es",it:"it",fr:"fr",de:"de"}[l]||"en"); }catch(e){} }
+/* O setLang traduzia o HTML e SO DEPOIS mandava redesenhar as telas, entao tudo que
+   os renderizadores recriavam voltava em portugues. Esta funcao reaplica as traducoes
+   e e chamada tambem no fim do setLang e a cada troca de tela. */
+function aplicarI18n(){
+  try{
+    var t=T[currentLang]||T.pt;
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      var k=el.getAttribute("data-i18n");
+      if(t[k]!==undefined) el.innerHTML=t[k];
+    });
+  }catch(e){}
+}
 function setLang(lang){_syncHtmlLang(lang);
   currentLang=lang;
   state.lang=lang;save();
@@ -1431,6 +1443,7 @@ function setLang(lang){_syncHtmlLang(lang);
   if(typeof updateNutriButtons==='function')updateNutriButtons();
   if(typeof renderNutriContext==='function')renderNutriContext();
   try{ if(typeof montarResumoSemana==="function") montarResumoSemana(); }catch(e){}
+  aplicarI18n();
   try{ if(typeof traduzirAlimentos==="function") traduzirAlimentos(); }catch(e){}
 }
 var FOOD_DB=[
@@ -2248,6 +2261,7 @@ function navGo(tab){
   closeSheet();
   switchTab(tab,null);
   _navMarca(tab);
+  try{ if(typeof aplicarI18n==="function") aplicarI18n(); }catch(e){}
 }
 function _navMarca(tab){
   var g=_NAVGRUPO[tab];
