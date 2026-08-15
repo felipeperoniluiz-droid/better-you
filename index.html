@@ -3072,10 +3072,17 @@ function _projSvg(pr){
 function montarResumoSemana(){
   var alvo=document.getElementById("nutriContext")||document.getElementById("tab-dieta");
   if(!alvo) return;
+  /* O card so era montado quando ainda nao existia, entao ficava congelado no idioma
+     em que foi criado. Agora ele guarda o idioma e e refeito quando o usuario troca. */
+  var box=document.getElementById("resumoSemanaBox");
+  var cartao=box?box.closest(".card"):null;
+  if(cartao&&cartao.getAttribute("data-lang")!==currentLang){ cartao.remove(); box=null; }
   if(!document.getElementById("resumoSemanaBox")){
     var wrap=document.createElement("div");
     wrap.innerHTML=cardResumoSemana();
-    alvo.parentNode.insertBefore(wrap.firstChild, alvo);
+    var novo=wrap.firstChild;
+    try{ novo.setAttribute("data-lang",currentLang); }catch(e){}
+    alvo.parentNode.insertBefore(novo, alvo);
   }
   gerarResumoSemana(false);
 }
