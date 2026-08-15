@@ -1,0 +1,38 @@
+{
+  "name": "Better You",
+  "short_name": "Better You",
+  "description": "Acompanhamento nutricional com reconhecimento de alimentos por foto e acompanhamento diario da Bel.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0c0f",
+  "theme_color": "#0a0c0f",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "categories": [
+    "health",
+    "fitness",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
