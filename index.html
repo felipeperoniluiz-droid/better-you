@@ -991,7 +991,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_181630";
+var APP_VERSION="20260815_181936";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2594,6 +2594,7 @@ function _belArrastar(){
     var larg=window.innerWidth, alt=window.innerHeight, t=56;
     var nx=Math.max(6,Math.min(larg-t-6,x-_belDrag.dx));
     var ny=Math.max(70,Math.min(alt-t-90,y-_belDrag.dy));
+    _belDrag.ux=nx; _belDrag.uy=ny;
     f.style.left=nx+"px"; f.style.right="auto"; f.style.top=ny+"px"; f.style.bottom="auto";
   }
   function fim(){
@@ -2601,9 +2602,12 @@ function _belArrastar(){
     _belDrag.ativo=false;
     f.style.transition="left .18s ease, right .18s ease";
     if(!_belDrag.moveu) return;
-    var r=f.getBoundingClientRect(), larg=window.innerWidth;
-    var lado=(r.left+28)>larg/2?"dir":"esq";
-    try{ state.belFabPos={y:Math.round(r.top),lado:lado}; save(); }catch(e){}
+    /* usa a ultima posicao do movimento: ler o layout aqui e sujeito a corrida */
+    var larg=window.innerWidth;
+    var ux=(typeof _belDrag.ux==="number")?_belDrag.ux:f.getBoundingClientRect().left;
+    var uy=(typeof _belDrag.uy==="number")?_belDrag.uy:f.getBoundingClientRect().top;
+    var lado=(ux+28)>larg/2?"dir":"esq";
+    try{ state.belFabPos={y:Math.round(uy),lado:lado}; save(); }catch(e){}
     _belAplicarPos();
   }
   f.addEventListener("touchstart",function(e){ var t=e.touches[0]; inicio(t.clientX,t.clientY); },{passive:true});
