@@ -488,7 +488,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
     </div>
   </div>
   
-  <div class="card">
+  <div id="jejumBox"></div><div class="card">
     <div class="calorie-ring-wrap">
       <div style="position:relative;width:170px;height:170px;">
         <svg width="170" height="170" style="transform:rotate(-90deg)">
@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_172333";
+var APP_VERSION="20260815_173204";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1444,6 +1444,7 @@ function setLang(lang){_syncHtmlLang(lang);
   if(typeof renderNutriContext==='function')renderNutriContext();
   try{ if(typeof montarResumoSemana==="function") montarResumoSemana(); }catch(e){}
   aplicarI18n();
+  try{ if(typeof jejumRender==="function") jejumRender(); }catch(e){}
   try{ var qs=document.getElementById("questScreen"); if(qs&&getComputedStyle(qs).display!=="none"&&typeof _qRender==="function"){ _qRender(); _qBarra(); } }catch(e){}
   try{ if(typeof traduzirAlimentos==="function") traduzirAlimentos(); }catch(e){}
 }
@@ -1671,6 +1672,101 @@ function renderHomeGreeting(){
   }else{el.style.display='none';}
 }
 
+function _jT(){ return JEJ_TXT[currentLang]||JEJ_TXT.pt; }
+function _jEstado(){ if(!state.jejum) state.jejum={proto:16,inicio:null,hist:[],aviso:false}; return state.jejum; }
+function _jHora(ts){ var d=new Date(ts); return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+function _jDur(ms){ var h=Math.floor(ms/3600000), m=Math.floor((ms%3600000)/60000); return h+"h "+String(m).padStart(2,"0")+"m"; }
+function jejumStatus(){
+  var e=_jEstado();
+  if(!e.inicio) return {fase:"parado",proto:e.proto};
+  var agora=Date.now(), passado=agora-e.inicio, alvo=e.proto*3600000;
+  if(passado<alvo) return {fase:"jejum",passado:passado,resta:alvo-passado,abre:e.inicio+alvo,proto:e.proto};
+  var fimJanela=e.inicio+24*3600000;
+  return {fase:"janela",passado:passado,fecha:fimJanela,proto:e.proto};
+}
+function jejumSeq(){
+  var e=_jEstado(), h=(e.hist||[]).slice().sort(function(a,b){return b.fim-a.fim;});
+  if(!h.length) return 0;
+  var n=0, dia=new Date(); dia.setHours(0,0,0,0);
+  for(var i=0;i<40;i++){
+    var alvo=dia.getTime()-i*86400000;
+    var achou=h.some(function(x){ var d=new Date(x.fim); d.setHours(0,0,0,0); return d.getTime()===alvo; });
+    if(achou) n++; else if(i>0) break;
+  }
+  return n;
+}
+function jejumProto(h){ var e=_jEstado(); e.proto=h; save(); jejumRender(); }
+function jejumAceitar(){ var e=_jEstado(); e.aviso=true; save(); jejumRender(); }
+function jejumIniciar(){
+  var e=_jEstado();
+  if(!e.aviso){ jejumRender(); return; }
+  e.inicio=Date.now(); save();
+  try{ if(typeof saveToFirestore==="function") saveToFirestore(); }catch(x){}
+  jejumRender();
+}
+function jejumEncerrar(){
+  var e=_jEstado(); if(!e.inicio) return;
+  var dur=Date.now()-e.inicio;
+  e.hist=e.hist||[]; e.hist.push({ini:e.inicio,fim:Date.now(),horas:Math.round(dur/360000)/10,proto:e.proto});
+  if(e.hist.length>120) e.hist=e.hist.slice(-120);
+  e.inicio=null; save();
+  try{ if(typeof saveToFirestore==="function") saveToFirestore(); }catch(x){}
+  try{ showToast(_jT().feito.replace("{0}",_jDur(dur)),"success"); }catch(x){}
+  jejumRender();
+}
+function _jAnel(pct){
+  var r=34, c=2*Math.PI*r, off=c*(1-Math.max(0,Math.min(1,pct)));
+  return '<svg viewBox="0 0 80 80" style="width:84px;height:84px;transform:rotate(-90deg)">'+
+   '<circle cx="40" cy="40" r="'+r+'" fill="none" stroke="var(--surface2)" stroke-width="6"/>'+
+   '<circle cx="40" cy="40" r="'+r+'" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+off+'"/></svg>';
+}
+function jejumHtml(){
+  var J=_jT();
+  if(typeof isPro!=="undefined" && !isPro){
+    return '<div class="card" onclick="try{subscribePro()}catch(e){}" style="cursor:pointer;display:flex;align-items:center;gap:14px">'+
+     '<div style="width:44px;height:44px;border-radius:12px;background:var(--goldBg2);display:flex;align-items:center;justify-content:center;color:var(--goldInk)">'+
+     '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/><path d="M9 2h6"/></svg></div>'+
+     '<div style="flex:1"><div style="font-size:15px;font-weight:800;color:var(--text)">'+J.tit+'</div>'+
+     '<div style="font-size:12px;color:var(--text2);margin-top:2px;line-height:1.45">'+J.proSub+'</div></div>'+
+     '<span style="background:var(--gold);color:#1a1206;font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;flex-shrink:0">PRO</span></div>';
+  }
+  var e=_jEstado(), s=jejumStatus(), seq=jejumSeq();
+  var h='<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">'+
+   '<div class="card-title" style="margin:0">'+J.tit+'</div>'+
+   '<div style="font-size:11px;color:var(--text2);font-weight:600">'+(seq>0?J.seq.replace("{0}",seq):J.semSeq)+'</div></div>';
+  if(!e.aviso){
+    return h+'<div style="font-size:13px;font-weight:800;color:var(--goldInk);margin-bottom:6px">'+J.avT+'</div>'+
+     '<div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:14px">'+J.avS+'</div>'+
+     '<button class="btn" onclick="jejumAceitar()" style="width:100%">'+J.avB+'</button></div>';
+  }
+  if(s.fase==="parado"){
+    h+='<div style="font-size:12px;color:var(--text3);font-weight:600;margin-bottom:10px">'+J.esc+'</div><div style="display:flex;gap:8px;margin-bottom:14px">';
+    [16,18,20].forEach(function(p){ var sel=e.proto===p;
+     h+='<div onclick="jejumProto('+p+')" style="flex:1;text-align:center;padding:12px 6px;border-radius:12px;cursor:pointer;background:'+(sel?"var(--goldBg2)":"var(--surface2)")+';border:1px solid '+(sel?"var(--gold)":"transparent")+'">'+
+      '<div style="font-size:15px;font-weight:800;color:'+(sel?"var(--goldInk)":"var(--text)")+'">'+p+':'+(24-p)+'</div>'+
+      '<div style="font-size:10px;color:var(--text2);margin-top:2px">'+p+'h '+J.jj+'</div></div>'; });
+    h+='</div><button class="btn btn-primary" onclick="jejumIniciar()" style="width:100%">'+J.iniciar+'</button></div>';
+    return h;
+  }
+  if(s.fase==="jejum"){
+    var pct=s.passado/(s.proto*3600000);
+    h+='<div style="display:flex;align-items:center;gap:16px"><div style="position:relative;flex-shrink:0">'+_jAnel(pct)+
+     '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--text)">'+Math.round(pct*100)+'%</div></div>'+
+     '<div style="flex:1"><div style="font-size:12px;color:var(--text2)">'+J.emJejum+'</div>'+
+     '<div style="font-size:24px;font-weight:800;color:var(--text);line-height:1.2">'+_jDur(s.passado)+'</div>'+
+     '<div style="font-size:12px;color:var(--goldInk);margin-top:4px">'+J.abre.replace("{0}",_jHora(s.abre))+'</div></div></div>'+
+     '<button class="btn" onclick="jejumEncerrar()" style="width:100%;margin-top:14px">'+J.encerrar+'</button></div>';
+    return h;
+  }
+  h+='<div style="display:flex;align-items:center;gap:14px"><div style="width:44px;height:44px;border-radius:50%;background:var(--goldBg2);display:flex;align-items:center;justify-content:center;color:var(--green)">'+
+   '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>'+
+   '<div style="flex:1"><div style="font-size:16px;font-weight:800;color:var(--text)">'+J.aberta+'</div>'+
+   '<div style="font-size:12px;color:var(--text2);margin-top:2px">'+J.fecha.replace("{0}",_jHora(s.fecha))+'</div></div></div>'+
+   '<button class="btn btn-primary" onclick="jejumEncerrar();jejumIniciar()" style="width:100%;margin-top:14px">'+J.iniciar+'</button></div>';
+  return h;
+}
+function jejumRender(){ var el=document.getElementById("jejumBox"); if(el) el.innerHTML=jejumHtml(); }
+(function(){ setInterval(function(){ try{ var s=jejumStatus(); if(s.fase==="jejum") jejumRender(); }catch(e){} },30000); })();
 function renderToday(){
   renderHomeGreeting();
   var t=calcTotals(),g=getMacroGoals();
