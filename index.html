@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_131425";
+var APP_VERSION="20260815_171149";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1444,6 +1444,7 @@ function setLang(lang){_syncHtmlLang(lang);
   if(typeof renderNutriContext==='function')renderNutriContext();
   try{ if(typeof montarResumoSemana==="function") montarResumoSemana(); }catch(e){}
   aplicarI18n();
+  try{ var qs=document.getElementById("questScreen"); if(qs&&getComputedStyle(qs).display!=="none"&&typeof _qRender==="function"){ _qRender(); _qBarra(); } }catch(e){}
   try{ if(typeof traduzirAlimentos==="function") traduzirAlimentos(); }catch(e){}
 }
 var FOOD_DB=[
