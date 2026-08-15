@@ -991,7 +991,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_174135";
+var APP_VERSION="20260815_174628";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1692,7 +1692,7 @@ function jejumSeq(){
   var n=0, dia=new Date(); dia.setHours(0,0,0,0);
   for(var i=0;i<40;i++){
     var alvo=dia.getTime()-i*86400000;
-    var achou=h.some(function(x){ var d=new Date(x.fim); d.setHours(0,0,0,0); return d.getTime()===alvo; });
+    var achou=h.some(function(x){ var d=new Date(x.fim); d.setHours(0,0,0,0); return d.getTime()===alvo && x.horas>=(x.proto||0); });
     if(achou) n++; else if(i>0) break;
   }
   return n;
