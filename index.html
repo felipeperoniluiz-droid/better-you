@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_1056";
+var APP_VERSION="20260815_1101";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -3257,45 +3257,46 @@ function analisarSemana(){
 function montarPromptSemana(a){
   var p=state.profile||{};
   var nome=(p.name||"").split(" ")[0]||"";
-  var objetivo={cut:"emagrecer",mass:"ganhar massa muscular",maint:"manter o peso"}[state.goal]||"melhorar a saude";
-  var L={pt:"Escreva em portugues do Brasil",en:"Write in English",es:"Escribe en espanol",it:"Scrivi in italiano",fr:"Ecris en francais",de:"Schreibe auf Deutsch"}[currentLang]||"Write in English";
+  var objetivo={cut:"lose weight",mass:"gain muscle",maint:"maintain weight"}[state.goal]||"improve health";
+  var idioma={pt:"Brazilian Portuguese",en:"English",es:"Spanish",it:"Italian",fr:"French",de:"German"}[currentLang]||"English";
   var d=[];
-  d.push("Dias com registro: "+a.diasAnalisados+" de "+a.diasNaJanela);
-  if(a.diasVazios>0) d.push("Dias SEM nenhum registro: "+a.diasVazios);
-  if(a.diasSemRegistrar>0) d.push("Esta ha "+a.diasSemRegistrar+" dia(s) seguidos sem registrar nada");
-  d.push("Media diaria nos dias registrados: "+a.kcalMedia+" kcal (meta "+a.meta+")");
-  if(a.kcalUteis&&a.kcalFds) d.push("Dias uteis: "+a.kcalUteis+" | Fim de semana: "+a.kcalFds);
-  d.push("Proteina media: "+a.protMedia+"g de "+a.metaProt+"g");
-  d.push("Agua media: "+a.aguaMedia+" ml");
-  if(a.diasComSono>0) d.push("Sono medio: "+a.sonoMedia+"h (registrado em "+a.diasComSono+" dias)");
-  else d.push("Sono: nao registrado nesse periodo");
-  d.push("Dias dentro da meta calorica: "+a.diasNaMeta+" dos "+a.diasAnalisados+" registrados");
+  d.push("Days with records: "+a.diasAnalisados+" of "+a.diasNaJanela);
+  if(a.diasVazios>0) d.push("Days with NO record at all: "+a.diasVazios);
+  if(a.diasSemRegistrar>0) d.push("Has gone "+a.diasSemRegistrar+" consecutive day(s) without logging anything");
+  d.push("Daily average on logged days: "+a.kcalMedia+" kcal (target "+a.meta+")");
+  if(a.kcalUteis&&a.kcalFds) d.push("Weekdays: "+a.kcalUteis+" | Weekend: "+a.kcalFds);
+  d.push("Average protein: "+a.protMedia+"g of "+a.metaProt+"g");
+  d.push("Average water: "+a.aguaMedia+" ml");
+  if(a.diasComSono>0) d.push("Average sleep: "+a.sonoMedia+"h (recorded on "+a.diasComSono+" days)");
+  else d.push("Sleep: not recorded in this period");
+  d.push("Days within the calorie target: "+a.diasNaMeta+" of the "+a.diasAnalisados+" logged");
 
   var sumiu=(a.diasSemRegistrar>=2);
   var falhou=(a.diasVazios>=2);
 
-  var pessoa="Voce e a Bel, nutricionista do usuario"+(nome?" ("+nome+")":"")+". Objetivo dele: "+objetivo+".";
-  var estilo=" Fale como uma pessoa real falaria com alguem de quem gosta: calorosa, direta, sem formalidade."
-    +" Nada de linguagem de relatorio. Nada de listas, titulos ou bullet points. Texto corrido, no maximo 5 frases."
-    +" Use no maximo os numeros que importam - nao repita todos os dados.";
-  var regra=" REGRA CRITICA: dia sem registro NAO e dia dentro da meta. Nunca parabenize por dias que a pessoa nao registrou."
-    +" Nunca invente dados. Se algo nao foi registrado, trate como desconhecido, nao como zero.";
+  var pessoa="You are Bel, the user's nutritionist"+(nome?" (their name is "+nome+")":"")+". Their goal: "+objetivo+".";
+  var estilo=" Write like a real person talking to someone they care about: warm, direct, informal."
+    +" No report language. No lists, headings or bullet points. Flowing text, at most 5 sentences."
+    +" Use only the numbers that matter - do not repeat every data point.";
+  var regra=" CRITICAL RULE: a day with no record is NOT a day within target. Never congratulate the person for days they did not log."
+    +" Never invent data. If something was not recorded, treat it as unknown, not as zero.";
 
   var missao;
   if(sumiu){
-    missao=" A pessoa sumiu ha "+a.diasSemRegistrar+" dia(s). Nao cobre, nao de licao de moral e nao finja que esta tudo bem."
-      +" Comece demonstrando preocupacao verdadeira e perguntando como ela esta - se andou comendo, como esta se sentindo."
-      +" Depois convide de volta de um jeito facil: peca que ela te conte o que comeu hoje e quanta agua bebeu, oferecendo ajuda para retomar sem culpa."
-      +" Termine com uma pergunta aberta e acolhedora. O objetivo e ela querer voltar a usar o app hoje.";
+    missao=" The person has been away for "+a.diasSemRegistrar+" day(s). Do not scold, do not lecture, and do not pretend everything is fine."
+      +" Open by showing genuine concern and asking how they are - whether they have been eating, how they are feeling."
+      +" Then invite them back in an easy way: ask them to tell you what they ate today and how much water they drank, offering help to restart without guilt."
+      +" End with an open, welcoming question. The goal is for them to want to use the app again today.";
   } else if(falhou){
-    missao=" Houve "+a.diasVazios+" dia(s) sem registro. Reconheca isso com leveza, sem culpa,"
-      +" comente o que os dias registrados mostram e convide a pessoa a registrar hoje.";
+    missao=" There were "+a.diasVazios+" day(s) with no record. Acknowledge it lightly, without guilt,"
+      +" comment on what the logged days show, and invite the person to log something today.";
   } else {
-    missao=" Diga o que foi bem, aponte o padrao que mais atrapalha e sugira UMA acao concreta para a proxima semana.";
+    missao=" Say what went well, point out the pattern that gets in the way the most, and suggest ONE concrete action for next week.";
   }
 
-  return L+". "+pessoa+estilo+regra+missao
-    +"\n\nDados reais:\n"+d.join("\n");
+  return "Write your entire answer in "+idioma+". "+pessoa+estilo+regra+missao
+    +"\n\nReal data:\n"+d.join("\n")
+    +"\n\nCRITICAL: your ENTIRE response - every single word - must be written in "+idioma+" and nothing else.";
 }
 function cardCaminhoMeta(){
   var p=state.profile||{};
