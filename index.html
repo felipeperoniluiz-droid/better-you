@@ -991,7 +991,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_180836";
+var APP_VERSION="20260815_181630";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2567,6 +2567,54 @@ function belNaoLido(){
     return (Date.now()-quando)>6*3600000;
   }catch(e){ return false; }
 }
+/* Arrastar com o dedo, gruda na borda mais proxima e lembra a posicao.
+   Arrastar nao pode abrir o painel: so conta como toque se mexeu pouco. */
+var _belDrag={ativo:false,moveu:false,dx:0,dy:0};
+function _belPos(){ var p=state.belFabPos; if(!p||typeof p.y!=="number") return null; return p; }
+function _belAplicarPos(){
+  var f=document.getElementById("belFab"); if(!f) return;
+  var p=_belPos();
+  if(!p){ f.style.left="16px"; f.style.right="auto"; f.style.bottom="96px"; f.style.top="auto"; return; }
+  var larg=window.innerWidth, alt=window.innerHeight, t=56;
+  var y=Math.max(70,Math.min(alt-t-90,p.y));
+  f.style.top=y+"px"; f.style.bottom="auto";
+  if(p.lado==="dir"){ f.style.right="16px"; f.style.left="auto"; }
+  else { f.style.left="16px"; f.style.right="auto"; }
+}
+function _belArrastar(){
+  var f=document.getElementById("belFab"); if(!f||f._dragOn) return; f._dragOn=true;
+  function inicio(x,y){
+    var r=f.getBoundingClientRect();
+    _belDrag={ativo:true,moveu:false,dx:x-r.left,dy:y-r.top};
+    f.style.transition="none";
+  }
+  function mover(x,y){
+    if(!_belDrag.ativo) return;
+    _belDrag.moveu=true;
+    var larg=window.innerWidth, alt=window.innerHeight, t=56;
+    var nx=Math.max(6,Math.min(larg-t-6,x-_belDrag.dx));
+    var ny=Math.max(70,Math.min(alt-t-90,y-_belDrag.dy));
+    f.style.left=nx+"px"; f.style.right="auto"; f.style.top=ny+"px"; f.style.bottom="auto";
+  }
+  function fim(){
+    if(!_belDrag.ativo) return;
+    _belDrag.ativo=false;
+    f.style.transition="left .18s ease, right .18s ease";
+    if(!_belDrag.moveu) return;
+    var r=f.getBoundingClientRect(), larg=window.innerWidth;
+    var lado=(r.left+28)>larg/2?"dir":"esq";
+    try{ state.belFabPos={y:Math.round(r.top),lado:lado}; save(); }catch(e){}
+    _belAplicarPos();
+  }
+  f.addEventListener("touchstart",function(e){ var t=e.touches[0]; inicio(t.clientX,t.clientY); },{passive:true});
+  f.addEventListener("touchmove",function(e){ var t=e.touches[0]; mover(t.clientX,t.clientY); e.preventDefault(); },{passive:false});
+  f.addEventListener("touchend",fim);
+  f.addEventListener("mousedown",function(e){ inicio(e.clientX,e.clientY); e.preventDefault(); });
+  window.addEventListener("mousemove",function(e){ mover(e.clientX,e.clientY); });
+  window.addEventListener("mouseup",fim);
+  window.addEventListener("resize",_belAplicarPos);
+}
+function belFabClique(){ if(_belDrag.moveu){ _belDrag.moveu=false; return; } belFabAbrir(); }
 function belFabFoto(){ var b=document.querySelector('img[alt="Nutricionista"]'); return b?b.src:""; }
 
 function belFabRender(){
@@ -2577,6 +2625,7 @@ function belFabRender(){
   ["onboardScreen","questScreen","authScreen"].forEach(function(id){
     var el=document.getElementById(id); if(el&&getComputedStyle(el).display!=="none") esconder=true; });
   f.style.display=esconder?"none":"flex";
+  try{ _belArrastar(); _belAplicarPos(); }catch(e){}
   var foto=belFabFoto();
   f.innerHTML=(foto?'<img src="'+foto+'" alt="Bel" style="width:100%;height:100%;border-radius:50%;object-fit:cover">':"Bel")+
    (belNaoLido()?'<span style="position:absolute;top:-2px;right:-2px;width:14px;height:14px;border-radius:50%;background:var(--red);border:2px solid var(--bg)"></span>':"");
@@ -5611,6 +5660,6 @@ function _qPassos(){ return 12+_qMetas.length+((_qResp&&_qResp.plano===0)||(_qRe
     if(_hj&&!state.weights.some(function(w){return w.date===_hj;})) state.weights.push({date:_hj,val:pe}); }
   save(); if(typeof saveToFirestore==="function") saveToFirestore(true);  if(typeof recalcGoals==="function") recalcGoals();  if(typeof renderToday==="function") renderToday(); }catch(e){} document.getElementById("questScreen").style.display="none"; }function qAbrir(){ var el=document.getElementById("questScreen"); if(!el) return; _qPasso=0; _qMetas=[]; _qHabs=[]; _qOutro=""; _qResp={plan:-1,cook:-1,plano:-1,ativ:-1,sexo:(state.profile&&state.profile.sex)||"",idade:(state.profile&&state.profile.age)||"",pais:"",altura:(state.profile&&state.profile.height)||"",peso:(state.profile&&state.profile.weight)||"",unA:"cm",unP:"kg",atleta:false,lembretes:false}; _qNome=((state.profile&&state.profile.name)||"").split(" ")[0]||""; el.style.display="flex"; _qRender(); _qBarra(); }(function(){ function pronto(){ try{ if(typeof _fbAuth==="undefined"||!_fbAuth){ setTimeout(pronto,500); return; }  /* gatilho movido para depois do carregamento da nuvem */ }catch(e){ setTimeout(pronto,800); } } pronto(); })();</script>
 <div id="jejumInfo" onclick="if(event.target===this)jejumInfoFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:9995;display:none;align-items:flex-end;justify-content:center"></div>
-<div id="belFab" onclick="belFabAbrir()" style="position:fixed;left:16px;bottom:96px;width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--gold);box-shadow:0 6px 20px rgba(0,0,0,.4);cursor:pointer;z-index:9990;display:none;align-items:center;justify-content:center;font-weight:800;color:var(--goldInk)"></div><div id="belSheet" onclick="if(event.target===this)belFabFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:9994;display:none;align-items:flex-end;justify-content:center"></div>
+<div id="belFab" onclick="belFabClique()" style="position:fixed;left:16px;bottom:96px;width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--gold);box-shadow:0 6px 20px rgba(0,0,0,.4);cursor:grab;z-index:9990;touch-action:none;user-select:none;-webkit-user-select:none;display:none;align-items:center;justify-content:center;font-weight:800;color:var(--goldInk)"></div><div id="belSheet" onclick="if(event.target===this)belFabFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:9994;display:none;align-items:flex-end;justify-content:center"></div>
 </body>
 </html>
