@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_123520";
+var APP_VERSION="20260815_123542";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -4313,6 +4313,17 @@ function contextoMetas(){
     if(q.metas.indexOf("estresse")>=0) txt+=" Connect sleep and stress to their eating when relevant.";
     if(q.metas.indexOf("planejar")>=0) txt+=" They want help deciding meals in advance, not after hunger hits.";
     if(q.metas.indexOf("massa")>=0) txt+=" Remind them that the scale rising early is expected when building muscle.";
+    if(q.habitos&&q.habitos.length){
+      var hd={prot:"eat more protein",mover:"move more",macros:"track macros",equilibrio:"eat a balanced diet",
+        calorias:"track calories",sono:"prioritise sleep",planejar:"plan meals",atividade:"be more active",
+        nutrientes:"track nutrients",cozinhar:"cook and prep meals",consciente:"eat mindfully",
+        naoproc:"eat less processed food",fibras:"eat more fibre",vegetais:"eat more vegetables",
+        frutas:"eat more fruit",agua:"drink more water"};
+      var hl=q.habitos.map(function(k){ return hd[k]; }).filter(Boolean);
+      if(hl.length) txt+=" The habits they want to build: "+hl.join("; ")+". Prefer suggestions that fit these habits.";
+      if(q.habitos.indexOf("incerto")>=0) txt+=" They said they are not sure which habits to pick, so be directive: suggest one clear thing instead of asking them to choose.";
+    }
+    if(q.outro&&String(q.outro).trim()) txt+=" In their own words, what they want: \""+String(q.outro).trim().slice(0,200)+"\". Treat this as their real motivation.";
     txt+=" Use this to make your answer specific to them. Never ask them to repeat it.";
     return txt;
   }catch(e){ return ""; }
