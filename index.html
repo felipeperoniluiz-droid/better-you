@@ -3104,6 +3104,7 @@ function _resumoMostrar(texto,quando){
 function gerarResumoSemana(forcar){
   var el=document.getElementById("resumoSemanaBox"); if(!el) return;
   var a=analisarSemana();
+  var pedidoLang=currentLang;   /* resposta que chega depois de trocar de idioma e ignorada */
   if(!a.ok){ el.innerHTML='<div style="font-size:13px;color:var(--text2);line-height:1.5;">'+tx("semanaPoucosDados",a.dias||0)+'</div>'; return; }
   var c=state.resumoSemana;
   if(!forcar&&c&&c.texto&&c.lang===currentLang&&(Date.now()-c.em)<7*86400000){ _resumoMostrar(c.texto,c.em); return; }
@@ -3114,6 +3115,7 @@ function gerarResumoSemana(forcar){
       messages:[{role:"user",content:montarPromptSemana(a)}]})})
   .then(function(r){ return r.json(); })
   .then(function(d){
+    if(pedidoLang!==currentLang) return;
     var txt=(d&&d.content&&d.content[0]&&d.content[0].text)||"";
     if(!txt){ el.innerHTML='<div style="font-size:13px;color:var(--red);">'+tx("semanaErro")+'</div>'; return; }
     txt=txt.trim();
@@ -3121,7 +3123,7 @@ function gerarResumoSemana(forcar){
     try{ save(); if(typeof saveToFirestore==="function") saveToFirestore(); }catch(e){}
     _resumoMostrar(txt,state.resumoSemana.em);
   })
-  .catch(function(){ el.innerHTML='<div style="font-size:13px;color:var(--red);">'+tx("semanaErro")+'</div>'; });
+  .catch(function(){ if(pedidoLang!==currentLang) return; el.innerHTML='<div style="font-size:13px;color:var(--red);">'+tx("semanaErro")+'</div>'; });
 }
 function analisarSemana(){
   var hist=state.history||{}, p=state.profile||{};
