@@ -991,7 +991,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_180251";
+var APP_VERSION="20260815_180705";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2523,10 +2523,52 @@ de:{jFecha:'Dein Fenster schließt in {0} und dir fehlen noch {1}g Protein. Das 
  agua:'Du hast heute {0}ml von {1}ml getrunken. Bis zum Schlafen ist noch Zeit.',
  tudoCerto:'Dein Tag sieht bisher rund aus. Weiter so.'}
 };
-function belFabFoto(){ var b=document.querySelector('img[alt="Nutricionista"]'); return b?b.src:""; }
-function belNaoLido(){
-  try{ var r=state.resumoSemana; if(!r||!r.texto) return false; return !(state.belLido)||state.belLido<r.em; }catch(e){ return false; }
+/* Um recado por vez, e so quando ele muda alguma decisao da pessoa.
+   Tudo calculado aqui dentro: nao custa chamada de API. */
+function belRecado(){
+  try{
+    var R=BREC_TXT[currentLang]||BREC_TXT.pt;
+    var agora=new Date(), hora=agora.getHours();
+    var tot=(typeof calcTotals==="function")?calcTotals():{kcal:0,prot:0};
+    var mg=(typeof getMacroGoals==="function")?getMacroGoals():null;
+    var metaProt=mg?(mg[state.goal]||mg.maint||{}).prot:0;
+    var faltaProt=metaProt?Math.round(metaProt-(tot.prot||0)):0;
+    /* 1. janela de jejum prestes a fechar */
+    if(typeof isPro!=="undefined"&&isPro&&state.jejum&&state.jejum.aviso&&typeof jejumStatus==="function"){
+      var s=jejumStatus();
+      if(s.fase==="janela"){
+        var faltaFechar=s.fecha-Date.now();
+        if(faltaFechar>0&&faltaFechar<5400000&&faltaProt>15)
+          return {id:"jFecha",txt:R.jFecha.replace("{0}",Math.round(faltaFechar/60000)+"min").replace("{1}",faltaProt)};
+      }
+      if(s.fase==="jejum"&&s.resta>0&&s.resta<3600000)
+        return {id:"jAbre",txt:R.jAbre.replace("{0}",Math.round(s.resta/60000)+"min")};
+    }
+    /* 2. nada registrado ate a tarde */
+    var itens=0; try{ ["cafe","almoco","lanche","jantar"].forEach(function(k){ itens+=((state.meals||{})[k]||[]).length; }); }catch(e){}
+    if(hora>=14&&itens===0) return {id:"semReg",txt:R.semReg};
+    /* 3. proteina a fechar, no fim do dia */
+    if(hora>=18&&itens>0&&faltaProt>20) return {id:"prot",txt:R.prot.replace("{0}",faltaProt)};
+    /* 4. agua bem abaixo, no fim do dia */
+    var ag=state.waterMl||0, metaAg=state.waterGoal||0;
+    if(hora>=17&&metaAg&&ag<metaAg*0.5) return {id:"agua",txt:R.agua.replace("{0}",ag).replace("{1}",metaAg)};
+    /* 5. resumo semanal, se houver */
+    var r=state.resumoSemana;
+    if(r&&r.texto) return {id:"semana"+(r.em||0),txt:r.texto};
+    if(itens>0) return {id:"ok",txt:R.tudoCerto};
+    return null;
+  }catch(e){ return null; }
 }
+function belNaoLido(){
+  try{ var rec=belRecado(); if(!rec) return false;
+    var lidos=state.belLidos||{};
+    /* recado de contexto volta a valer depois de 6 horas */
+    var quando=lidos[rec.id]||0;
+    return (Date.now()-quando)>6*3600000;
+  }catch(e){ return false; }
+}
+function belFabFoto(){ var b=document.querySelector('img[alt="Nutricionista"]'); return b?b.src:""; }
+
 function belFabRender(){
   var f=document.getElementById("belFab"); if(!f) return;
   var esconder=false;
@@ -2542,8 +2584,8 @@ function belFabRender(){
 function belFabAbrir(){
   var s=document.getElementById("belSheet"); if(!s) return;
   var t=(T[currentLang]||T.pt);
-  var r=state.resumoSemana||{};
-  var texto=(r.texto&&r.lang===currentLang)?r.texto:(r.texto?r.texto:t.belSemAnalise);
+  var rec=belRecado();
+  var texto=rec?rec.txt:t.belSemAnalise;
   var foto=belFabFoto();
   s.innerHTML='<div style="width:100%;max-width:480px;max-height:80%;background:var(--surface);border-radius:20px 20px 0 0;padding:18px 20px 24px;box-sizing:border-box;overflow-y:auto">'+
    '<div style="width:38px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 16px"></div>'+
@@ -2554,7 +2596,7 @@ function belFabAbrir(){
    '<div style="font-size:14px;color:var(--text);line-height:1.7;white-space:pre-wrap">'+String(texto).replace(/</g,"&lt;")+'</div>'+
    '<button class="btn btn-primary" onclick="belFabFechar();navGo(\'dieta\')" style="width:100%;margin-top:18px">'+t.falarBel+'</button></div>';
   s.style.display="flex";
-  try{ state.belLido=Date.now(); save(); }catch(e){}
+  try{ if(rec){ state.belLidos=state.belLidos||{}; state.belLidos[rec.id]=Date.now(); save(); } }catch(e){}
   belFabRender();
 }
 function belFabFechar(){ var s=document.getElementById("belSheet"); if(s) s.style.display="none"; }
