@@ -991,7 +991,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_180705";
+var APP_VERSION="20260815_180836";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2531,7 +2531,7 @@ function belRecado(){
     var agora=new Date(), hora=agora.getHours();
     var tot=(typeof calcTotals==="function")?calcTotals():{kcal:0,prot:0};
     var mg=(typeof getMacroGoals==="function")?getMacroGoals():null;
-    var metaProt=mg?(mg[state.goal]||mg.maint||{}).prot:0;
+    var metaProt=mg?(mg.prot||0):0;
     var faltaProt=metaProt?Math.round(metaProt-(tot.prot||0)):0;
     /* 1. janela de jejum prestes a fechar */
     if(typeof isPro!=="undefined"&&isPro&&state.jejum&&state.jejum.aviso&&typeof jejumStatus==="function"){
