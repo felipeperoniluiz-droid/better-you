@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_173204";
+var APP_VERSION="20260815_173232";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -3575,6 +3575,7 @@ function montarPromptSemana(a){
   var falhou=(a.diasVazios>=2);
 
   var metasTxt=(typeof contextoMetas==="function")?contextoMetas():"";
+  try{ if(typeof contextoJejum==="function") metasTxt+=contextoJejum(); }catch(e){}
   var pessoa="You are Bel, the user's nutritionist"+(nome?" (their name is "+nome+")":"")+". Their goal: "+objetivo+".";
   var estilo=" Write like a real person talking to someone they care about: warm, direct, informal."
     +" No report language. No lists, headings or bullet points. Flowing text, at most 5 sentences."
@@ -4500,6 +4501,24 @@ function sendChat(){
 
 /* O que a pessoa respondeu no cadastro vira contexto permanente da Bel:
    no chat, no resumo semanal e nos alertas. Ela nunca pergunta de novo. */
+/* A Bel precisa saber da janela para nao sugerir comida na hora errada,
+   e para reparar quando a pessoa esta prestes a fechar sem bater a proteina. */
+function contextoJejum(){
+  try{
+    if(typeof isPro!=="undefined" && !isPro) return "";
+    var e=state.jejum; if(!e||!e.aviso) return "";
+    var s=jejumStatus(); var seq=jejumSeq();
+    if(s.fase==="parado"){
+      if(!e.hist||!e.hist.length) return "";
+      return " They use intermittent fasting ("+e.proto+":"+(24-e.proto)+") but are not fasting right now.";
+    }
+    if(s.fase==="jejum"){
+      var hFalta=Math.round(s.resta/360000)/10;
+      return " They are fasting right now ("+e.proto+":"+(24-e.proto)+"), "+Math.round(s.passado/3600000)+"h in, about "+hFalta+"h until the eating window opens"+(seq>1?", "+seq+" days in a row":"")+". Do not suggest eating before the window opens; suggest what to break the fast with instead.";
+    }
+    return " Their eating window is open right now ("+e.proto+":"+(24-e.proto)+" fasting)"+(seq>1?", "+seq+" days in a row":"")+". Meals should fit inside this window.";
+  }catch(e){ return ""; }
+}
 function contextoMetas(){
   try{
     var q=state.quest; if(!q||!q.metas||!q.metas.length) return "";
@@ -4575,7 +4594,7 @@ async function askNutritionist(prompt){
           var gm=goalMap[currentLang]||goalMap['en'];
           var goalDesc=state.goal==='cut'?gm.cut:(state.goal==='mass'?gm.mass:gm.maint);
           var langName={pt:'Portuguese',en:'English',es:'Spanish',it:'Italian',fr:'French',de:'German'}[currentLang]||'English';
-          return 'You are Bel, the Better You nutritionist. Persona: warm and direct. You never shame the user for slip-ups, you celebrate progress without exaggeration, and you are honest about the numbers. Speak naturally, like a professional who knows this person. Keep answers short (2-4 sentences) unless asked for detail. Never invent data you do not have. If asked for medical diagnosis or treatment, say it is outside your scope and suggest a health professional. The user\'s current goal is: '+goalDesc+contextoMetas()+'. CRITICAL: Your ENTIRE response — every word, every heading, every greeting — MUST be written exclusively in '+langName+'. Do NOT mix any other language. '+langInstr+'. Be direct, practical and motivational. Maximum 3 short paragraphs.';
+          return 'You are Bel, the Better You nutritionist. Persona: warm and direct. You never shame the user for slip-ups, you celebrate progress without exaggeration, and you are honest about the numbers. Speak naturally, like a professional who knows this person. Keep answers short (2-4 sentences) unless asked for detail. Never invent data you do not have. If asked for medical diagnosis or treatment, say it is outside your scope and suggest a health professional. The user\'s current goal is: '+goalDesc+contextoMetas()+contextoJejum()+'. CRITICAL: Your ENTIRE response — every word, every heading, every greeting — MUST be written exclusively in '+langName+'. Do NOT mix any other language. '+langInstr+'. Be direct, practical and motivational. Maximum 3 short paragraphs.';
         })(),
         messages:[{role:'user',content:cl.data+':\n'+context+'\n\n'+cl.q+': '+prompt}]
       })
