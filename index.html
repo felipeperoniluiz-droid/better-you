@@ -481,13 +481,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <!-- TAB HOJE -->
 <div class="tab active" id="tab-hoje">
   <!-- Saudação com foto do perfil -->
-  <div id="homeGreeting" style="display:none;align-items:center;gap:13px;padding:14px 0 4px;">
-    <div id="homeAvatar" onclick="openProfile()" style="width:52px;height:52px;border-radius:50%;border:2.5px solid #f0b429;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;flex-shrink:0;cursor:pointer;"></div>
-    <div style="flex:1;min-width:0;">
-      <div id="homeGreetName" style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
-      <div id="homeGreetGoal" style="font-size:12px;color:var(--text2);margin-top:2px;"></div>
-    </div>
-  </div>
+  <div id="semanaFaixa" style="padding:12px 0 6px"></div>
   
   <div class="card">
     <div class="calorie-ring-wrap">
@@ -992,7 +986,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_182717";
+var APP_VERSION="20260815_183351";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1930,6 +1924,7 @@ function renderToday(){
 }
 
 function renderMeals(){
+  try{ if(typeof semanaFaixaRender==="function") semanaFaixaRender(); }catch(e){}
   var t=T[currentLang];var labels={cafe:t.cafeManha,almoco:t.almoco,lanche:t.lanche,jantar:t.jantar};
   var html="";
   var allMK=Object.keys(labels);if(!state.mealOrder||!state.mealOrder.length){state.mealOrder=allMK.filter(function(k){return (state.meals[k]||[]).length>0;}).sort(function(a,b){var ia=state.meals[a]||[];var ib=state.meals[b]||[];var ta=ia[ia.length-1]&&ia[ia.length-1].time||"00:00";var tb=ib[ib.length-1]&&ib[ib.length-1].time||"00:00";return tb.localeCompare(ta);});}var ord=state.mealOrder||[];var _withFood=ord.filter(function(k){return !!labels[k]&&(state.meals[k]||[]).length>0;});allMK.forEach(function(k){if(_withFood.indexOf(k)===-1&&(state.meals[k]||[]).length>0)_withFood.push(k);});var _noFood=allMK.filter(function(k){return!((state.meals[k]||[]).length>0);});var mealKeys=_withFood.concat(_noFood);
@@ -2677,6 +2672,33 @@ function _maisItem(icone,rotulo,acao){
    '<span style="flex:1;font-size:15px;color:var(--text)">'+rotulo+'</span>'+
    '<span style="color:var(--text3);font-size:18px;line-height:1">&#8250;</span></div>';
 }
+/* Faixa da semana: mostra de cara em que dias a pessoa registrou. */
+function semanaFaixaHtml(){
+  var ini=(typeof _dias==="function")?_dias("ini"):["D","S","T","Q","Q","S","S"];
+  var hoje=new Date(); hoje.setHours(0,0,0,0);
+  var dom=new Date(hoje.getTime()-hoje.getDay()*86400000);
+  function chave(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+  var meta=state.calGoal||0, h="";
+  for(var i=0;i<7;i++){
+    var d=new Date(dom.getTime()+i*86400000), k=chave(d);
+    var eHoje=d.getTime()===hoje.getTime();
+    var futuro=d.getTime()>hoje.getTime();
+    var kcal=0, tem=false;
+    if(eHoje){ try{ var t=calcTotals(); kcal=t.kcal||0; tem=kcal>0; }catch(e){} }
+    else if(state.history&&state.history[k]){ kcal=state.history[k].kcal||0; tem=true; }
+    var pct=meta?Math.max(0,Math.min(1,kcal/meta)):0;
+    var r=13, c=2*Math.PI*r, off=c*(1-pct);
+    var anel='<svg viewBox="0 0 32 32" style="width:32px;height:32px;transform:rotate(-90deg)">'+
+      '<circle cx="16" cy="16" r="'+r+'" fill="none" stroke="var(--surface3)" stroke-width="2.5"'+(futuro?' stroke-dasharray="2 3"':"")+'/>'+
+      (tem?'<circle cx="16" cy="16" r="'+r+'" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+off+'"/>':"")+'</svg>';
+    h+='<div onclick="'+(futuro?"":"navGo(\'hist\')")+'" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:'+(futuro?"default":"pointer")+'">'+
+     '<span style="font-size:11px;font-weight:'+(eHoje?"800":"600")+';color:'+(eHoje?"var(--goldInk)":"var(--text3)")+'">'+ini[d.getDay()]+'</span>'+
+     '<span style="position:relative;width:32px;height:32px;display:flex;align-items:center;justify-content:center">'+anel+
+      (eHoje?'<span style="position:absolute;width:6px;height:6px;border-radius:50%;background:var(--gold)"></span>':"")+'</span></div>';
+  }
+  return '<div style="display:flex;gap:2px">'+h+'</div>';
+}
+function semanaFaixaRender(){ var el=document.getElementById("semanaFaixa"); if(el) el.innerHTML=semanaFaixaHtml(); }
 function maisRender(){
   var el=document.getElementById("maisBox"); if(!el) return;
   var M=_maisT(), ic=(window._NAVIC||{});
@@ -2719,6 +2741,7 @@ function navGo(tab){
   try{ if(typeof aplicarI18n==="function") aplicarI18n(); }catch(e){}
   try{ if(typeof jejumTelaRender==="function") jejumTelaRender(); }catch(e){}
   try{ if(typeof maisRender==="function") maisRender(); }catch(e){}
+  try{ if(typeof semanaFaixaRender==="function") semanaFaixaRender(); }catch(e){}
   try{ if(typeof belFabRender==="function") belFabRender(); }catch(e){}
 }
 function _navMarca(tab){
