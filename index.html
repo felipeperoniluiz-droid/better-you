@@ -991,7 +991,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_175256";
+var APP_VERSION="20260815_180123";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -3620,7 +3620,8 @@ function montarResumoSemana(){
     wrap.innerHTML=cardResumoSemana();
     var novo=wrap.firstChild;
     try{ novo.setAttribute("data-lang",currentLang); }catch(e){}
-    alvo.parentNode.insertBefore(novo, alvo);
+    if(alvo.id==="tab-dieta"){ alvo.insertBefore(novo, alvo.firstChild); }
+    else { alvo.parentNode.insertBefore(novo, alvo); }
   }
   gerarResumoSemana(false);
 }
