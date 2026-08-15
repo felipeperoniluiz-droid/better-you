@@ -753,7 +753,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
     <div class="input-group"><div class="input-label" data-i18n="idadeAnos">Idade (anos)</div><input type="number" class="input" id="calcAge" placeholder="Ex: 25"></div>
     <div class="input-group"><div class="input-label" data-i18n="pesoKg">Peso (kg)</div><input type="number" class="input" id="calcWeight" placeholder="Ex: 75" step="0.1"></div>
     <div class="input-group"><div class="input-label" data-i18n="alturaCm">Altura (cm)</div><input type="number" class="input" id="calcHeight" placeholder="Ex: 175"></div>
-    <div class="input-group"><div class="input-label" data-i18n="nivelAtividadeCalc">Nivel de atividade</div><select class="input" id="calcActivity"><option value="1.2">Sedentario</option><option value="1.375">Levemente ativo (1-3x/sem)</option><option value="1.55" selected>Moderado (3-5x/sem)</option><option value="1.725">Muito ativo (6-7x/sem)</option><option value="1.9">Extremamente ativo</option></select></div>
+    <div class="input-group"><div class="input-label" data-i18n="nivelAtividadeCalc">Nível de atividade</div><select class="input" id="calcActivity"><option value="1.2">Sedentario</option><option value="1.375">Levemente ativo (1-3x/sem)</option><option value="1.55" selected>Moderado (3-5x/sem)</option><option value="1.725">Muito ativo (6-7x/sem)</option><option value="1.9">Extremamente ativo</option></select></div>
     <button class="btn btn-primary" onclick="calcNeeds()" data-i18n="calcBtn">Calcular</button>
   </div>
   <div id="calcResult" style="display:none;"></div>
@@ -781,7 +781,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
       <span style="font-size:10px;color:#f87171;" data-i18n="ruimLegend">● Ruim (&lt;50)</span>
     </div>
   </div>
-  <div class="card"><div class="card-title" data-i18n="registrosDiarios">Registros diarios</div><div id="histList"></div></div>
+  <div class="card"><div class="card-title" data-i18n="registrosDiarios">Registros diários</div><div id="histList"></div></div>
 </div>
 
 <!-- TAB RELATORIOS -->
@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_1109";
+var APP_VERSION="20260815_1114";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1060,7 +1060,7 @@ pt:{'navNut':'Nut','conexoesTitulo':'Dispositivos','temaTitulo':'Tema','temaClar
   macrosEst:'Macros estimados',proteinaPura:'Proteína',carboidratos:'Carboidratos',gorduraPura:'Gordura',
   chaveAPILabel:'Chave API Anthropic (Foto IA)',salvarAplicar:'Salvar e Aplicar',sairConta:'Sair da conta',
   preenchaTodos:'Preencha todos os campos',sexo:'Sexo',idadeAnos:'Idade (anos)',pesoKg:'Peso (kg)',alturaCm:'Altura (cm)',
-  nivelAtividadeCalc:'Nivel de atividade',
+  nivelAtividadeCalc:'Nível de atividade',
   actSed:'Sedentario',actLight:'Levemente ativo (1-3x/sem)',actMod:'Moderado (3-5x/sem)',actActive:'Muito ativo (6-7x/sem)',actVery:'Extremamente ativo',
   proSubtitle:'Desbloqueie todo o potencial do app',proIncluido:'INCLUÍDO NO PRO',
   proFeatFotoIA:'Foto IA',proFeatFotoIASub:'Analisa calorias e macros por foto',
