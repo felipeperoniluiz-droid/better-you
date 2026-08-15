@@ -986,7 +986,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260815_183928";
+var APP_VERSION="20260815_184110";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2692,6 +2692,9 @@ function calFechar(){ var el=document.getElementById("calBox"); if(el) el.style.
 var _calDia=null;
 function calIrDia(k){ _calDia=k; calRender(); }
 function calVoltar(){ _calDia=null; calRender(); }
+function _calNomeRef(mk,NOMES){ var t=(T[currentLang]||T.pt); var mapa={cafe:"cafeManha",almoco:"almoco",lanche:"lanche",jantar:"jantar"};
+  var kk=mapa[mk]; if(kk&&t[kk]) return t[kk]; return NOMES[mk]; }
+function _calCap(s){ return s?(s.charAt(0).toUpperCase()+s.slice(1)):s; }
 function calDiaHtml(k){
   var t=(T[currentLang]||T.pt);
   var loc={pt:"pt-BR",en:"en-GB",es:"es-ES",it:"it-IT",fr:"fr-FR",de:"de-DE"}[currentLang]||"en-GB";
@@ -2706,7 +2709,7 @@ function calDiaHtml(k){
   var h='<div style="width:100%;max-width:420px;max-height:80vh;overflow:auto;background:var(--surface);border-radius:20px;padding:18px;box-sizing:border-box">';
   h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">'+
    '<button onclick="calVoltar()" style="width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-size:16px">&#8249;</button>'+
-   '<span style="font-size:15px;font-weight:800;color:var(--text);text-transform:capitalize">'+titulo+'</span></div>';
+   '<span style="font-size:15px;font-weight:800;color:var(--text);">'+_calCap(titulo)+'</span></div>';
   if(!dd){ h+='<div style="padding:26px 10px;text-align:center;color:var(--text3);font-size:13px">'+t.calnadaReg+'</div></div>'; return h; }
   var pct=meta?Math.round((dd.kcal/meta)*100):0;
   var badge=(st==="ok")?{c:"var(--gold)",ci:"#1a1206",tx:t.calcumpriu}:{c:"var(--surface3)",ci:"var(--text)",tx:t.calfalhou};
@@ -2722,7 +2725,7 @@ function calDiaHtml(k){
   var mm=dd.meals||{};
   for(var mk in NOMES){ var arr=mm[mk]; if(!arr||!arr.length) continue;
     var soma=0; arr.forEach(function(x){soma+=x.kcal||0;});
-    h+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:var(--text2);margin-bottom:5px"><span>'+(typeof tx==="function"?(tx("meal_"+mk)||NOMES[mk]):NOMES[mk])+'</span><span style="color:var(--text3)">'+Math.round(soma)+' kcal</span></div>';
+    h+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:var(--text2);margin-bottom:5px"><span>'+_calNomeRef(mk,NOMES)+'</span><span style="color:var(--text3)">'+Math.round(soma)+' kcal</span></div>';
     arr.forEach(function(x){ h+='<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text);padding:4px 0"><span>'+nomeAlimento(x.name||"")+'</span><span style="color:var(--text3)">'+Math.round(x.kcal||0)+'</span></div>'; });
     h+='</div>'; }
   var extra=[];
@@ -2743,7 +2746,7 @@ function calRender(){
   var cores={ok:"var(--gold)",reg:"var(--surface3)",vazio:"transparent",futuro:"transparent"};
   var h='<div style="width:100%;max-width:420px;background:var(--surface);border-radius:20px;padding:18px;box-sizing:border-box">';
   h+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">'+
-   '<span style="font-size:16px;font-weight:800;color:var(--text);text-transform:capitalize">'+titulo+'</span>'+
+   '<span style="font-size:16px;font-weight:800;color:var(--text);">'+_calCap(titulo)+'</span>'+
    '<span style="display:flex;gap:6px">'+
     '<button onclick="calMudarMes(-1)" style="width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-size:16px">&#8249;</button>'+
     '<button onclick="calMudarMes(1)" style="width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-size:16px">&#8250;</button>'+
