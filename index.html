@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260818_190934";
+var APP_VERSION="20260818_191129";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -5009,6 +5009,103 @@ function bcAdicionar(){
   try{ showToast("Adicionado ao registro!","success"); }catch(e){}
   try{ switchTab("hoje",null); }catch(e){}
 }
+/* Direitos do titular (GDPR Art. 15, 17 e 20): exportar e apagar. */
+var GDPR_TXT={
+ pt:{sec:"Privacidade e dados",expT:"Exportar os meus dados",expS:"Baixa um arquivo com tudo o que guardamos de você.",expIndo:"Preparando o arquivo...",expOk:"Arquivo baixado.",delT:"Apagar a minha conta",delS:"Apaga a conta e todos os dados, sem volta.",delTit:"Apagar a conta?",delCorpo:"Isto apaga o seu perfil, refeições, histórico, fotos, medidas e as conversas com a Bel. Não há como desfazer.",delAssn:"Você tem uma assinatura ativa. Cancele antes de apagar a conta, senão a cobrança continua.",delConf:"Para confirmar, escreva APAGAR abaixo.",delPalavra:"APAGAR",delBtn:"Apagar tudo",cancelar:"Cancelar",delFeito:"Conta apagada.",delErro:"Não consegui apagar. Entre de novo e tente outra vez.",relogar:"Por segurança, entre novamente antes de apagar a conta."},
+ en:{sec:"Privacy and data",expT:"Export my data",expS:"Download a file with everything we hold about you.",expIndo:"Preparing the file...",expOk:"File downloaded.",delT:"Delete my account",delS:"Deletes the account and all data, permanently.",delTit:"Delete the account?",delCorpo:"This deletes your profile, meals, history, photos, measurements and conversations with Bel. There is no undo.",delAssn:"You have an active subscription. Cancel it before deleting, otherwise billing continues.",delConf:"To confirm, type DELETE below.",delPalavra:"DELETE",delBtn:"Delete everything",cancelar:"Cancel",delFeito:"Account deleted.",delErro:"I could not delete it. Sign in again and retry.",relogar:"For security, sign in again before deleting the account."},
+ es:{sec:"Privacidad y datos",expT:"Exportar mis datos",expS:"Descarga un archivo con todo lo que guardamos de ti.",expIndo:"Preparando el archivo...",expOk:"Archivo descargado.",delT:"Eliminar mi cuenta",delS:"Elimina la cuenta y todos los datos, sin vuelta atrás.",delTit:"¿Eliminar la cuenta?",delCorpo:"Esto elimina tu perfil, comidas, historial, fotos, medidas y las conversaciones con Bel. No se puede deshacer.",delAssn:"Tienes una suscripción activa. Cancélala antes de eliminar, o el cobro continuará.",delConf:"Para confirmar, escribe ELIMINAR abajo.",delPalavra:"ELIMINAR",delBtn:"Eliminar todo",cancelar:"Cancelar",delFeito:"Cuenta eliminada.",delErro:"No pude eliminarla. Entra de nuevo e inténtalo otra vez.",relogar:"Por seguridad, entra de nuevo antes de eliminar la cuenta."},
+ it:{sec:"Privacy e dati",expT:"Esporta i miei dati",expS:"Scarica un file con tutto ciò che conserviamo su di te.",expIndo:"Preparazione del file...",expOk:"File scaricato.",delT:"Elimina il mio account",delS:"Elimina account e dati, senza ritorno.",delTit:"Eliminare l account?",delCorpo:"Questo elimina profilo, pasti, cronologia, foto, misure e le conversazioni con Bel. Non si può annullare.",delAssn:"Hai un abbonamento attivo. Annullalo prima di eliminare, altrimenti l addebito continua.",delConf:"Per confermare, scrivi ELIMINA qui sotto.",delPalavra:"ELIMINA",delBtn:"Elimina tutto",cancelar:"Annulla",delFeito:"Account eliminato.",delErro:"Non sono riuscito a eliminarlo. Accedi di nuovo e riprova.",relogar:"Per sicurezza, accedi di nuovo prima di eliminare l account."},
+ fr:{sec:"Confidentialité et données",expT:"Exporter mes données",expS:"Téléchargez un fichier avec tout ce que nous conservons sur vous.",expIndo:"Préparation du fichier...",expOk:"Fichier téléchargé.",delT:"Supprimer mon compte",delS:"Supprime le compte et toutes les données, définitivement.",delTit:"Supprimer le compte ?",delCorpo:"Cela supprime votre profil, vos repas, votre historique, vos photos, vos mesures et vos conversations avec Bel. Aucun retour possible.",delAssn:"Vous avez un abonnement actif. Annulez-le avant de supprimer, sinon la facturation continue.",delConf:"Pour confirmer, tapez SUPPRIMER ci-dessous.",delPalavra:"SUPPRIMER",delBtn:"Tout supprimer",cancelar:"Annuler",delFeito:"Compte supprimé.",delErro:"Je n ai pas pu le supprimer. Reconnectez-vous et réessayez.",relogar:"Par sécurité, reconnectez-vous avant de supprimer le compte."},
+ de:{sec:"Datenschutz und Daten",expT:"Meine Daten exportieren",expS:"Lade eine Datei mit allem herunter, was wir über dich speichern.",expIndo:"Datei wird vorbereitet...",expOk:"Datei heruntergeladen.",delT:"Mein Konto löschen",delS:"Löscht das Konto und alle Daten, endgültig.",delTit:"Konto löschen?",delCorpo:"Das löscht Profil, Mahlzeiten, Verlauf, Fotos, Messungen und die Gespräche mit Bel. Es gibt kein Zurück.",delAssn:"Du hast ein aktives Abo. Kündige es vor dem Löschen, sonst läuft die Abrechnung weiter.",delConf:"Zur Bestätigung schreibe LOESCHEN unten.",delPalavra:"LOESCHEN",delBtn:"Alles löschen",cancelar:"Abbrechen",delFeito:"Konto gelöscht.",delErro:"Löschen fehlgeschlagen. Melde dich neu an und versuche es erneut.",relogar:"Aus Sicherheitsgründen melde dich vor dem Löschen neu an."}
+};
+function _gT(){ return GDPR_TXT[currentLang]||GDPR_TXT.pt; }
+/* Art. 20: exportar em formato legivel por maquina. */
+function exportarDados(){
+  var t=_gT();
+  try{ showToast(t.expIndo,"info"); }catch(e){}
+  setTimeout(function(){
+    try{
+      var pacote={
+        _sobre:"Exportacao de dados pessoais - Better You",
+        _geradoEm:new Date().toISOString(),
+        _conta:{email:(typeof _fbUser!=="undefined"&&_fbUser)?_fbUser.email:null,uid:(typeof _fbUser!=="undefined"&&_fbUser)?_fbUser.uid:null},
+        perfil:state.profile||{}, objetivo:state.goal||null,
+        metas:{calorias:state.calGoal||null,agua:state.waterGoal||null},
+        questionario:state.quest||null,
+        refeicoesDeHoje:state.meals||{}, historico:state.history||{},
+        pesos:state.weights||[], medidas:state.measures||state.medidas||[],
+        fotosDeProgresso:state.progressPhotos||[],
+        agua:{hoje:state.waterMl||0}, sono:{hoje:state.sleepH||0},
+        jejum:state.jejum||null,
+        bel:{memoria:state.belMemoria||state.belMemory||null,resumoSemana:state.resumoSemana||null,temas:state.belTemas||[]},
+        preferencias:{idioma:currentLang,tema:state.theme||null}
+      };
+      var blob=new Blob([JSON.stringify(pacote,null,2)],{type:"application/json"});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement("a");
+      a.href=url; a.download="better-you-meus-dados-"+new Date().toISOString().slice(0,10)+".json";
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ try{ document.body.removeChild(a); URL.revokeObjectURL(url); }catch(e){} },1500);
+      try{ showToast(t.expOk,"success"); }catch(e){}
+    }catch(e){ try{ showToast(String(e.message||e),"error"); }catch(_){} }
+  },60);
+}
+/* Art. 17: apagar. A cobranca e externa, entao avisamos antes. */
+function apagarContaAbrir(){
+  var t=_gT(), el=document.getElementById("gdprDel"); if(!el) return;
+  var temAssn=false;
+  try{ temAssn=!!(localStorage.getItem("betteryou_subscriptionId")||(typeof isPro!=="undefined"&&isPro)); }catch(e){}
+  var h='<div style="width:100%;max-width:420px;background:var(--surface);border-radius:20px;padding:20px;box-sizing:border-box">';
+  h+='<div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:10px">'+t.delTit+'</div>';
+  h+='<div style="font-size:13px;color:var(--text2);line-height:1.6">'+t.delCorpo+'</div>';
+  if(temAssn) h+='<div style="margin-top:12px;padding:11px 13px;border-radius:12px;background:var(--goldBg2);border:1px solid rgba(240,180,41,.35);font-size:12px;color:var(--goldInk);line-height:1.5">'+t.delAssn+'</div>';
+  h+='<div style="font-size:12px;color:var(--text3);margin-top:14px;margin-bottom:6px">'+t.delConf+'</div>';
+  h+='<input id="gdprPalavra" type="text" autocomplete="off" style="width:100%;padding:12px 14px;border-radius:13px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:15px;font-weight:700;box-sizing:border-box;letter-spacing:1px">';
+  h+='<div style="display:flex;gap:9px;margin-top:16px">';
+  h+='<span onclick="apagarContaFechar()" style="flex:1;text-align:center;padding:13px;border-radius:14px;border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:700;cursor:pointer">'+t.cancelar+'</span>';
+  h+='<span onclick="apagarContaConfirmar()" style="flex:1;text-align:center;padding:13px;border-radius:14px;background:#dc2626;color:#fff;font-size:13px;font-weight:800;cursor:pointer">'+t.delBtn+'</span>';
+  h+='</div></div>';
+  el.innerHTML=h; el.style.display="flex";
+}
+function apagarContaFechar(){ var el=document.getElementById("gdprDel"); if(el) el.style.display="none"; }
+function apagarContaConfirmar(){
+  var t=_gT();
+  var campo=document.getElementById("gdprPalavra");
+  var v=((campo&&campo.value)||"").trim().toUpperCase();
+  if(v!==t.delPalavra.toUpperCase()){ try{ campo.style.borderColor="#dc2626"; }catch(e){} return; }
+  var u=(typeof _fbUser!=="undefined")?_fbUser:null;
+  if(!u){ try{ showToast(t.delErro,"error"); }catch(e){} return; }
+  var uid=u.uid;
+  _fbDb.collection("users").doc(uid).collection("photos").get()
+   .then(function(qs){ var ps=[]; qs.forEach(function(d){ ps.push(d.ref.delete()); }); return Promise.all(ps); })
+   .catch(function(){})
+   .then(function(){ return _fbDb.collection("users").doc(uid).delete().catch(function(){}); })
+   .then(function(){ return u.delete(); })
+   .then(function(){
+     try{ localStorage.removeItem("betteryou_v1"); localStorage.removeItem("betteryou_subscriptionId"); localStorage.removeItem("betteryou_pro_verified_at"); }catch(e){}
+     try{ showToast(t.delFeito,"success"); }catch(e){}
+     setTimeout(function(){ location.reload(); },900);
+   })
+   .catch(function(err){
+     var msg=(err&&err.code==="auth/requires-recent-login")?t.relogar:t.delErro;
+     try{ showToast(msg,"error"); }catch(e){}
+     apagarContaFechar();
+   });
+}
+function gdprRender(){
+  var el=document.getElementById("gdprBox"); if(!el) return;
+  var t=_gT();
+  function linha(titulo,sub,acao,cor){
+    return '<div onclick="'+acao+'" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--border);cursor:pointer">'+
+     '<span style="flex:1"><span style="display:block;font-size:14px;font-weight:700;color:'+(cor||"var(--text)")+'">'+titulo+'</span>'+
+     '<span style="display:block;font-size:11px;color:var(--text3);margin-top:2px;line-height:1.4">'+sub+'</span></span>'+
+     '<span style="color:var(--text3);font-size:18px">&#8250;</span></div>';
+  }
+  el.innerHTML='<div style="font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px">'+t.sec+'</div>'+
+    linha(t.expT,t.expS,"exportarDados()")+
+    linha(t.delT,t.delS,"apagarContaAbrir()","#dc2626");
+}
+
 function sinaisDiaRender(){
   var el=document.getElementById("sinaisDia"); if(!el) return;
   var t=(T[currentLang]||T.pt), chips=[];
@@ -6045,103 +6142,7 @@ function doSignOut(){
   try{ if(typeof showToast==="function") showToast((typeof tx==="function")?tx("saindo"):"Salvando e saindo..."); }catch(e){}
   clearTimeout(_fbSaveTimer);
   var saiu=false;
-  /* Direitos do titular (GDPR Art. 15, 17 e 20): exportar e apagar. */
-var GDPR_TXT={
- pt:{sec:"Privacidade e dados",expT:"Exportar os meus dados",expS:"Baixa um arquivo com tudo o que guardamos de você.",expIndo:"Preparando o arquivo...",expOk:"Arquivo baixado.",delT:"Apagar a minha conta",delS:"Apaga a conta e todos os dados, sem volta.",delTit:"Apagar a conta?",delCorpo:"Isto apaga o seu perfil, refeições, histórico, fotos, medidas e as conversas com a Bel. Não há como desfazer.",delAssn:"Você tem uma assinatura ativa. Cancele antes de apagar a conta, senão a cobrança continua.",delConf:"Para confirmar, escreva APAGAR abaixo.",delPalavra:"APAGAR",delBtn:"Apagar tudo",cancelar:"Cancelar",delFeito:"Conta apagada.",delErro:"Não consegui apagar. Entre de novo e tente outra vez.",relogar:"Por segurança, entre novamente antes de apagar a conta."},
- en:{sec:"Privacy and data",expT:"Export my data",expS:"Download a file with everything we hold about you.",expIndo:"Preparing the file...",expOk:"File downloaded.",delT:"Delete my account",delS:"Deletes the account and all data, permanently.",delTit:"Delete the account?",delCorpo:"This deletes your profile, meals, history, photos, measurements and conversations with Bel. There is no undo.",delAssn:"You have an active subscription. Cancel it before deleting, otherwise billing continues.",delConf:"To confirm, type DELETE below.",delPalavra:"DELETE",delBtn:"Delete everything",cancelar:"Cancel",delFeito:"Account deleted.",delErro:"I could not delete it. Sign in again and retry.",relogar:"For security, sign in again before deleting the account."},
- es:{sec:"Privacidad y datos",expT:"Exportar mis datos",expS:"Descarga un archivo con todo lo que guardamos de ti.",expIndo:"Preparando el archivo...",expOk:"Archivo descargado.",delT:"Eliminar mi cuenta",delS:"Elimina la cuenta y todos los datos, sin vuelta atrás.",delTit:"¿Eliminar la cuenta?",delCorpo:"Esto elimina tu perfil, comidas, historial, fotos, medidas y las conversaciones con Bel. No se puede deshacer.",delAssn:"Tienes una suscripción activa. Cancélala antes de eliminar, o el cobro continuará.",delConf:"Para confirmar, escribe ELIMINAR abajo.",delPalavra:"ELIMINAR",delBtn:"Eliminar todo",cancelar:"Cancelar",delFeito:"Cuenta eliminada.",delErro:"No pude eliminarla. Entra de nuevo e inténtalo otra vez.",relogar:"Por seguridad, entra de nuevo antes de eliminar la cuenta."},
- it:{sec:"Privacy e dati",expT:"Esporta i miei dati",expS:"Scarica un file con tutto ciò che conserviamo su di te.",expIndo:"Preparazione del file...",expOk:"File scaricato.",delT:"Elimina il mio account",delS:"Elimina account e dati, senza ritorno.",delTit:"Eliminare l account?",delCorpo:"Questo elimina profilo, pasti, cronologia, foto, misure e le conversazioni con Bel. Non si può annullare.",delAssn:"Hai un abbonamento attivo. Annullalo prima di eliminare, altrimenti l addebito continua.",delConf:"Per confermare, scrivi ELIMINA qui sotto.",delPalavra:"ELIMINA",delBtn:"Elimina tutto",cancelar:"Annulla",delFeito:"Account eliminato.",delErro:"Non sono riuscito a eliminarlo. Accedi di nuovo e riprova.",relogar:"Per sicurezza, accedi di nuovo prima di eliminare l account."},
- fr:{sec:"Confidentialité et données",expT:"Exporter mes données",expS:"Téléchargez un fichier avec tout ce que nous conservons sur vous.",expIndo:"Préparation du fichier...",expOk:"Fichier téléchargé.",delT:"Supprimer mon compte",delS:"Supprime le compte et toutes les données, définitivement.",delTit:"Supprimer le compte ?",delCorpo:"Cela supprime votre profil, vos repas, votre historique, vos photos, vos mesures et vos conversations avec Bel. Aucun retour possible.",delAssn:"Vous avez un abonnement actif. Annulez-le avant de supprimer, sinon la facturation continue.",delConf:"Pour confirmer, tapez SUPPRIMER ci-dessous.",delPalavra:"SUPPRIMER",delBtn:"Tout supprimer",cancelar:"Annuler",delFeito:"Compte supprimé.",delErro:"Je n ai pas pu le supprimer. Reconnectez-vous et réessayez.",relogar:"Par sécurité, reconnectez-vous avant de supprimer le compte."},
- de:{sec:"Datenschutz und Daten",expT:"Meine Daten exportieren",expS:"Lade eine Datei mit allem herunter, was wir über dich speichern.",expIndo:"Datei wird vorbereitet...",expOk:"Datei heruntergeladen.",delT:"Mein Konto löschen",delS:"Löscht das Konto und alle Daten, endgültig.",delTit:"Konto löschen?",delCorpo:"Das löscht Profil, Mahlzeiten, Verlauf, Fotos, Messungen und die Gespräche mit Bel. Es gibt kein Zurück.",delAssn:"Du hast ein aktives Abo. Kündige es vor dem Löschen, sonst läuft die Abrechnung weiter.",delConf:"Zur Bestätigung schreibe LOESCHEN unten.",delPalavra:"LOESCHEN",delBtn:"Alles löschen",cancelar:"Abbrechen",delFeito:"Konto gelöscht.",delErro:"Löschen fehlgeschlagen. Melde dich neu an und versuche es erneut.",relogar:"Aus Sicherheitsgründen melde dich vor dem Löschen neu an."}
-};
-function _gT(){ return GDPR_TXT[currentLang]||GDPR_TXT.pt; }
-/* Art. 20: exportar em formato legivel por maquina. */
-function exportarDados(){
-  var t=_gT();
-  try{ showToast(t.expIndo,"info"); }catch(e){}
-  setTimeout(function(){
-    try{
-      var pacote={
-        _sobre:"Exportacao de dados pessoais - Better You",
-        _geradoEm:new Date().toISOString(),
-        _conta:{email:(typeof _fbUser!=="undefined"&&_fbUser)?_fbUser.email:null,uid:(typeof _fbUser!=="undefined"&&_fbUser)?_fbUser.uid:null},
-        perfil:state.profile||{}, objetivo:state.goal||null,
-        metas:{calorias:state.calGoal||null,agua:state.waterGoal||null},
-        questionario:state.quest||null,
-        refeicoesDeHoje:state.meals||{}, historico:state.history||{},
-        pesos:state.weights||[], medidas:state.measures||state.medidas||[],
-        fotosDeProgresso:state.progressPhotos||[],
-        agua:{hoje:state.waterMl||0}, sono:{hoje:state.sleepH||0},
-        jejum:state.jejum||null,
-        bel:{memoria:state.belMemoria||state.belMemory||null,resumoSemana:state.resumoSemana||null,temas:state.belTemas||[]},
-        preferencias:{idioma:currentLang,tema:state.theme||null}
-      };
-      var blob=new Blob([JSON.stringify(pacote,null,2)],{type:"application/json"});
-      var url=URL.createObjectURL(blob);
-      var a=document.createElement("a");
-      a.href=url; a.download="better-you-meus-dados-"+new Date().toISOString().slice(0,10)+".json";
-      document.body.appendChild(a); a.click();
-      setTimeout(function(){ try{ document.body.removeChild(a); URL.revokeObjectURL(url); }catch(e){} },1500);
-      try{ showToast(t.expOk,"success"); }catch(e){}
-    }catch(e){ try{ showToast(String(e.message||e),"error"); }catch(_){} }
-  },60);
-}
-/* Art. 17: apagar. A cobranca e externa, entao avisamos antes. */
-function apagarContaAbrir(){
-  var t=_gT(), el=document.getElementById("gdprDel"); if(!el) return;
-  var temAssn=false;
-  try{ temAssn=!!(localStorage.getItem("betteryou_subscriptionId")||(typeof isPro!=="undefined"&&isPro)); }catch(e){}
-  var h='<div style="width:100%;max-width:420px;background:var(--surface);border-radius:20px;padding:20px;box-sizing:border-box">';
-  h+='<div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:10px">'+t.delTit+'</div>';
-  h+='<div style="font-size:13px;color:var(--text2);line-height:1.6">'+t.delCorpo+'</div>';
-  if(temAssn) h+='<div style="margin-top:12px;padding:11px 13px;border-radius:12px;background:var(--goldBg2);border:1px solid rgba(240,180,41,.35);font-size:12px;color:var(--goldInk);line-height:1.5">'+t.delAssn+'</div>';
-  h+='<div style="font-size:12px;color:var(--text3);margin-top:14px;margin-bottom:6px">'+t.delConf+'</div>';
-  h+='<input id="gdprPalavra" type="text" autocomplete="off" style="width:100%;padding:12px 14px;border-radius:13px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:15px;font-weight:700;box-sizing:border-box;letter-spacing:1px">';
-  h+='<div style="display:flex;gap:9px;margin-top:16px">';
-  h+='<span onclick="apagarContaFechar()" style="flex:1;text-align:center;padding:13px;border-radius:14px;border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:700;cursor:pointer">'+t.cancelar+'</span>';
-  h+='<span onclick="apagarContaConfirmar()" style="flex:1;text-align:center;padding:13px;border-radius:14px;background:#dc2626;color:#fff;font-size:13px;font-weight:800;cursor:pointer">'+t.delBtn+'</span>';
-  h+='</div></div>';
-  el.innerHTML=h; el.style.display="flex";
-}
-function apagarContaFechar(){ var el=document.getElementById("gdprDel"); if(el) el.style.display="none"; }
-function apagarContaConfirmar(){
-  var t=_gT();
-  var campo=document.getElementById("gdprPalavra");
-  var v=((campo&&campo.value)||"").trim().toUpperCase();
-  if(v!==t.delPalavra.toUpperCase()){ try{ campo.style.borderColor="#dc2626"; }catch(e){} return; }
-  var u=(typeof _fbUser!=="undefined")?_fbUser:null;
-  if(!u){ try{ showToast(t.delErro,"error"); }catch(e){} return; }
-  var uid=u.uid;
-  _fbDb.collection("users").doc(uid).collection("photos").get()
-   .then(function(qs){ var ps=[]; qs.forEach(function(d){ ps.push(d.ref.delete()); }); return Promise.all(ps); })
-   .catch(function(){})
-   .then(function(){ return _fbDb.collection("users").doc(uid).delete().catch(function(){}); })
-   .then(function(){ return u.delete(); })
-   .then(function(){
-     try{ localStorage.removeItem("betteryou_v1"); localStorage.removeItem("betteryou_subscriptionId"); localStorage.removeItem("betteryou_pro_verified_at"); }catch(e){}
-     try{ showToast(t.delFeito,"success"); }catch(e){}
-     setTimeout(function(){ location.reload(); },900);
-   })
-   .catch(function(err){
-     var msg=(err&&err.code==="auth/requires-recent-login")?t.relogar:t.delErro;
-     try{ showToast(msg,"error"); }catch(e){}
-     apagarContaFechar();
-   });
-}
-function gdprRender(){
-  var el=document.getElementById("gdprBox"); if(!el) return;
-  var t=_gT();
-  function linha(titulo,sub,acao,cor){
-    return '<div onclick="'+acao+'" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--border);cursor:pointer">'+
-     '<span style="flex:1"><span style="display:block;font-size:14px;font-weight:700;color:'+(cor||"var(--text)")+'">'+titulo+'</span>'+
-     '<span style="display:block;font-size:11px;color:var(--text3);margin-top:2px;line-height:1.4">'+sub+'</span></span>'+
-     '<span style="color:var(--text3);font-size:18px">&#8250;</span></div>';
-  }
-  el.innerHTML='<div style="font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px">'+t.sec+'</div>'+
-    linha(t.expT,t.expS,"exportarDados()")+
-    linha(t.delT,t.delS,"apagarContaAbrir()","#dc2626");
-}
-function sair(){ if(saiu) return; saiu=true; try{ _fbAuth.signOut(); }catch(e){} }
+  function sair(){ if(saiu) return; saiu=true; try{ _fbAuth.signOut(); }catch(e){} }
   /* Antes daqui subiam PRIMEIRO as fotos (1,2 MB) e so depois vinha o signOut,
      entao em rede lenta o usuario simplesmente nao conseguia sair do app.
      Agora grava so o documento (~30 KB) e sai; as fotos sobem no fluxo normal. */
