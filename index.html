@@ -988,7 +988,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260818_162823";
+var APP_VERSION="20260818_163744";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -4092,7 +4092,7 @@ function analisarSemana(){
   var uteis=[], fds=[], todos=[];
   dias.forEach(function(d){
     var h=hist[d]||{}; if(!(+h.kcal>0)) return;
-    var dt=new Date(d.slice(0,4)+"-"+d.slice(4,6)+"-"+d.slice(6,8)+"T12:00:00");
+    var dt=new Date(d+"T12:00:00");
     var wd=dt.getDay();
     var reg={data:d,kcal:+h.kcal||0,prot:+h.prot||0,water:+h.water||0,sleep:+h.sleep||0,dia:wd};
     todos.push(reg);
@@ -4106,7 +4106,7 @@ function analisarSemana(){
   var o={ok:true};
   /* janela real: do primeiro registro ate hoje, para saber quantos dias ficaram vazios */
   var hoje=new Date(); hoje.setHours(0,0,0,0);
-  function _dt(k){ return new Date(k.slice(0,4)+"-"+k.slice(4,6)+"-"+k.slice(6,8)+"T12:00:00"); }
+  function _dt(k){ return new Date(k+"T12:00:00"); }
   var chaves=todos.map(function(r){return r.data;}).sort();
   var ini=_dt(chaves[0]);
   var janela=Math.round((hoje-ini)/86400000)+1;
@@ -4114,12 +4114,17 @@ function analisarSemana(){
   o.diasVazios=Math.max(0,o.diasNaJanela-todos.length);
   /* dias seguidos sem registrar, contando de hoje para tras */
   var mapa={}; todos.forEach(function(r){ mapa[r.data]=1; });
+  /* hoje ainda nao esta no historico (entra so na virada do dia): olha as refeicoes ao vivo */
+  var comeuHoje=false;
+  try{ var _m=state.meals||{}; comeuHoje=["cafe","almoco","lanche","jantar","ceia","pos_treino"].some(function(k){ return (_m[k]||[]).length>0; }); }catch(e){}
   var seguidos=0;
-  for(var dd=0; dd<21; dd++){
-    var alvo=new Date(hoje.getTime()-dd*86400000);
-    var kk=alvo.getFullYear()+String(alvo.getMonth()+1).padStart(2,"0")+String(alvo.getDate()).padStart(2,"0");
-    if(mapa[kk]) break;
-    seguidos++;
+  if(!comeuHoje){
+    for(var dd=0; dd<21; dd++){
+      var alvo=new Date(hoje.getTime()-dd*86400000);
+      var kk=alvo.getFullYear()+"-"+String(alvo.getMonth()+1).padStart(2,"0")+"-"+String(alvo.getDate()).padStart(2,"0");
+      if(mapa[kk]) break;
+      seguidos++;
+    }
   }
   o.diasSemRegistrar=seguidos;
   o.diasAnalisados=todos.length;
