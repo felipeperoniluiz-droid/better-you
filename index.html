@@ -988,7 +988,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260818_163744";
+var APP_VERSION="20260818_163829";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -4067,7 +4067,7 @@ function gerarResumoSemana(forcar){
   var pedidoLang=currentLang;   /* resposta que chega depois de trocar de idioma e ignorada */
   if(!a.ok){ el.innerHTML='<div style="font-size:13px;color:var(--text2);line-height:1.5;">'+tx("semanaPoucosDados",a.dias||0)+'</div>'; return; }
   var c=state.resumoSemana;
-  if(!forcar&&c&&c.texto&&c.lang===currentLang&&(Date.now()-c.em)<7*86400000){ _resumoMostrar(c.texto,c.em); return; }
+  if(!forcar&&c&&c.texto&&c.lang===currentLang&&(Date.now()-c.em)<2*86400000){ _resumoMostrar(c.texto,c.em); return; }
   if(!state.apiKey){ el.innerHTML='<div style="font-size:13px;color:var(--text2);">'+tx("semanaSemChave")+'</div>'; return; }
   el.innerHTML='<div style="font-size:13px;color:var(--text2);">'+tx("semanaGerando")+'</div>';
   fetch(PROXY_URL,{method:"POST",headers:{"Content-Type":"application/json","x-api-key":state.apiKey},
@@ -4158,6 +4158,52 @@ function analisarSemana(){
   o.padroes=pad;
   return o;
 }
+/* A Bel nao deve repetir assunto. Aqui escolhemos o angulo da semana entre os que
+   os dados realmente sustentam, evitando os tres ultimos ja usados. */
+var BEL_ANGULOS={
+ retorno:"They came back after being away. Acknowledge the return without guilt-tripping, and set one small next step.",
+ constancia:"They have been logging without gaps. Talk about what consistency is building, not about calories.",
+ proteina:"Protein is short of target. Talk about protein in practical food terms, not grams alone.",
+ proteinaOk:"Protein is on target. Say what that protects and what to keep doing.",
+ caloriaBaixa:"Intake is well under target. Explain the cost of eating too little for their goal.",
+ caloriaAlta:"Intake is over target. Be direct and kind, and point at one adjustable habit.",
+ fimDeSemana:"Weekdays and weekend look different. Explore that contrast and what it says about their routine.",
+ agua:"Hydration is the weak point this week. Connect water to how they feel and perform.",
+ sono:"Sleep is outside the healthy range. Connect sleep to appetite and to their goal.",
+ sonoOk:"Sleep is steady and healthy. Point out what that is doing for recovery and appetite.",
+ variacao:"Some days are very high and others very low. Talk about the swing itself, not the average.",
+ jejum:"They are running an intermittent fasting protocol. Comment on how the eating window is going.",
+ metaDias:"Look at how many days landed inside the calorie target and what separates those days from the rest.",
+ proximo:"Zoom out: where they are relative to the goal, and the single thing that would move it most."
+};
+function _belTema(a){
+  var vivos=[];
+  function add(k,cond){ if(cond) vivos.push(k); }
+  var meta=a.meta||0, metaP=a.metaProt||0;
+  add("retorno", a.diasSemRegistrar>=3);
+  add("constancia", a.diasSemRegistrar===0 && a.diasAnalisados>=5);
+  add("proteina", metaP>0 && a.protMedia < metaP*0.8);
+  add("proteinaOk", metaP>0 && a.protMedia >= metaP*0.9);
+  add("caloriaBaixa", meta>0 && a.kcalMedia < meta*0.85);
+  add("caloriaAlta", meta>0 && a.kcalMedia > meta*1.15);
+  add("fimDeSemana", a.kcalFds>0 && a.kcalUteis>0 && Math.abs(a.kcalFds-a.kcalUteis) > a.kcalUteis*0.15);
+  add("agua", a.aguaMedia>0 && a.aguaMedia < 2000);
+  add("sono", a.diasComSono>=3 && (a.sonoMedia<7 || a.sonoMedia>9));
+  add("sonoOk", a.diasComSono>=3 && a.sonoMedia>=7 && a.sonoMedia<=9);
+  add("variacao", a.maiorDia && a.menorDia && a.menorDia.kcal>0 && (a.maiorDia.kcal-a.menorDia.kcal) > a.menorDia.kcal*0.4);
+  add("jejum", !!(typeof isPro!=="undefined" && isPro && state.jejum && state.jejum.hist && state.jejum.hist.length));
+  add("metaDias", a.diasAnalisados>=5);
+  vivos.push("proximo");
+  var usados=(state.belTemas||[]).slice(-3);
+  var novos=vivos.filter(function(k){ return usados.indexOf(k)<0; });
+  var lista=novos.length?novos:vivos;
+  /* retorno tem prioridade quando e verdade: e a coisa mais relevante a dizer */
+  var esc=(lista.indexOf("retorno")>=0)?"retorno":lista[Math.floor(Math.random()*lista.length)];
+  return esc;
+}
+function _belRegistraTema(t){
+  try{ state.belTemas=(state.belTemas||[]).concat([t]).slice(-6); save(); }catch(e){}
+}
 function montarPromptSemana(a){
   var p=state.profile||{};
   var nome=(p.name||"").split(" ")[0]||"";
@@ -4180,11 +4226,16 @@ function montarPromptSemana(a){
 
   var metasTxt=(typeof contextoMetas==="function")?contextoMetas():"";
   try{ if(typeof contextoJejum==="function") metasTxt+=contextoJejum(); }catch(e){}
+  var _tema=_belTema(a);
+  var _foco=" THIS WEEK'S ANGLE - build the whole message around this and nothing else: "+(BEL_ANGULOS[_tema]||BEL_ANGULOS.proximo)
+    +" Do not open with a greeting template you would use every week. Vary how you start."
+    +" Never mention days of absence unless the angle is about the return.";
+  try{ _belRegistraTema(_tema); }catch(e){}
   var pessoa="You are Bel, the user's nutritionist"+(nome?" (their name is "+nome+")":"")+". Their goal: "+objetivo+".";
   var estilo=" Write like a real person talking to someone they care about: warm, direct, informal."
     +" No report language. No lists, headings or bullet points. Flowing text, at most 5 sentences."
     +" Use only the numbers that matter - do not repeat every data point.";
-  var regra=" CRITICAL RULE: a day with no record is NOT a day within target. Never congratulate the person for days they did not log."
+  var regra=_foco+" CRITICAL RULE: a day with no record is NOT a day within target. Never congratulate the person for days they did not log."
     +" Never invent data. If something was not recorded, treat it as unknown, not as zero.";
 
   var missao;
