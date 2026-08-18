@@ -988,7 +988,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260816_193133";
+var APP_VERSION="20260818_162823";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -4730,47 +4730,71 @@ var BC_TXT={
  de:{t:"Barcode",mire:"Richte die Kamera auf den Barcode der Verpackung",buscando:"Produkt wird gesucht...",por100:"pro 100 g",por100ml:"pro 100 ml",porcao:"Portion",gramas:"Menge (g)",ml:"Menge (ml)",add:"Hinzufuegen",refeicao:"Mahlzeit",naoAchou:"Dieses Produkt haben wir nicht gefunden",naoAchouSub:"Die Datenbank wird von der Community gepflegt und enthaelt nicht jedes Produkt. Du kannst das Etikett fotografieren, Bel liest die Werte.",foto:"Etikett fotografieren",manual:"Manuell eingeben",semCam:"Ich konnte die Kamera nicht oeffnen. Pruefe die Browser-Berechtigung.",semLib:"Ich konnte den Scanner nicht laden. Pruefe deine Verbindung.",fonte:"Daten: Open Food Facts",semFibra:"kein Wert",cancelar:"Abbrechen",incompleto:"Bei diesem Produkt fehlen Werte in der Datenbank. Pruefe sie vor dem Speichern.",digitar:"Liest nicht? Nummer eingeben",digiteSub:"Gib die Ziffern unter dem Barcode ein.",buscar:"Suchen",voltarCam:"Zurueck zur Kamera",tirarFoto:"Foto vom Barcode machen",lendoFoto:"Foto wird gelesen...",naoLeu:"Ich konnte den Barcode nicht lesen",naoLeuSub:"Das Bild muss scharf sein. Geh so nah heran, dass der Barcode die Breite fuellt, halte still und warte auf den Fokus. Oder gib die Ziffern ein.",tentar:"Nochmal versuchen"}
 };
 function _bcT(){ return BC_TXT[currentLang]||BC_TXT.pt; }
-var _bcLeitor=null,_bcProd=null,_bcRef="lanche";
+var _bcProd=null,_bcRef="lanche";
 function _bcCorpo(){ return document.getElementById("bcCorpo"); }
 function _bcCard(html){ var c=_bcCorpo(); if(c) c.innerHTML=html; }
 /* Carrega o leitor so quando a pessoa abre o scanner: 367 KB nao entram no arranque do app. */
+/* Decodificador: zxing-wasm (WebAssembly do zxing-cpp).
+   O leitor anterior, em JavaScript puro, nao decodificava os quadros que o Safari entrega. */
+var _bcOcupado=false,_bcStream=null,_bcTimer=null;
+var BC_FORMATOS=["EAN-13","EAN-8","UPC-A","UPC-E","Code128"];
 function bcCarregarLib(){
   return new Promise(function(res,rej){
-    if(window.Html5Qrcode) return res();
+    if(window.ZXingWASM) return res();
     var s=document.createElement("script");
-    s.src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js";
+    s.src="https://cdn.jsdelivr.net/npm/zxing-wasm@3.1.3/dist/iife/reader/index.min.js";
     s.onload=function(){ res(); }; s.onerror=function(){ rej(new Error("lib")); };
     document.head.appendChild(s);
   });
 }
+function _bcOk(res){ var b=(res||[]).filter(function(r){ return r.isValid&&r.text; }); return b.length?String(b[0].text).trim():null; }
 function bcAbrir(){
   var el=document.getElementById("bcOverlay"); if(!el) return;
   _bcProd=null; el.style.display="flex";
   var t=_bcT();
-  _bcCard('<div id="bcCam" style="width:100%;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#000"></div>'+
+  _bcCard('<div style="position:relative;width:100%;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#000">'+
+   '<video id="bcVideo" playsinline muted autoplay style="width:100%;height:100%;object-fit:cover"></video>'+
+   '<div style="position:absolute;left:4%;right:4%;top:28%;height:44%;border:2px solid rgba(240,180,41,.9);border-radius:10px"></div></div>'+
    '<div style="text-align:center;font-size:13px;color:var(--text2);margin-top:14px">'+t.mire+'</div>'+
    '<div onclick="bcFoto()" style="text-align:center;font-size:14px;font-weight:800;margin-top:14px;padding:13px;border-radius:14px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;cursor:pointer">'+t.tirarFoto+'</div>'+
    '<div onclick="bcDigitar()" style="text-align:center;font-size:12px;color:var(--text3);font-weight:700;margin-top:9px;padding:10px;cursor:pointer">'+t.digitar+'</div>');
   bcCarregarLib().then(bcIniciar).catch(function(){ bcAviso(t.semLib); });
 }
 function bcIniciar(){
-  var t=_bcT();
-  try{
-    var F=window.Html5QrcodeSupportedFormats||{};
-    var fmt=[F.EAN_13,F.EAN_8,F.UPC_A,F.UPC_E,F.CODE_128].filter(function(x){return x!==undefined;});
-    _bcLeitor=new Html5Qrcode("bcCam",{formatsToSupport:fmt,verbose:false});
-    var cfg={ fps:15,
-      qrbox:function(vw,vh){ var w=Math.floor(vw*0.94), h=Math.floor(Math.min(vh*0.55,Math.max(90,w*0.42))); return {width:w,height:h}; },
-      aspectRatio:1.3333, disableFlip:true,
-      experimentalFeatures:{useBarCodeDetectorIfSupported:true},
-      videoConstraints:{facingMode:"environment",width:{ideal:1920},height:{ideal:1080}} };
-    _bcLeitor.start({facingMode:"environment"},cfg,
-      function(txt){ bcParar(); bcBuscar(String(txt).trim()); },
-      function(){});
-  }catch(e){ bcAviso(t.semCam); }
+  var t=_bcT(), v=document.getElementById("bcVideo"); if(!v) return;
+  navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"},width:{ideal:1920},height:{ideal:1080}},audio:false})
+   .then(function(st){
+     _bcStream=st; v.srcObject=st;
+     var p=v.play(); if(p&&p.catch) p.catch(function(){});
+     if(_bcTimer) clearInterval(_bcTimer);
+     _bcTimer=setInterval(bcQuadro,320);
+   })
+   .catch(function(){ bcAviso(t.semCam); });
+}
+/* Le a faixa central do quadro, onde o codigo fica quando a pessoa mira. */
+function bcQuadro(){
+  if(_bcOcupado||!window.ZXingWASM) return;
+  var v=document.getElementById("bcVideo");
+  if(!v||!v.videoWidth||!v.videoHeight) return;
+  var vw=v.videoWidth, vh=v.videoHeight;
+  var cw=Math.floor(vw*0.92), ch=Math.floor(vh*0.5);
+  var sx=Math.floor((vw-cw)/2), sy=Math.floor((vh-ch)/2);
+  var c=window._bcCv||(window._bcCv=document.createElement("canvas"));
+  c.width=cw; c.height=ch;
+  var x=c.getContext("2d",{willReadFrequently:true});
+  x.drawImage(v,sx,sy,cw,ch,0,0,cw,ch);
+  var dados; try{ dados=x.getImageData(0,0,cw,ch); }catch(e){ return; }
+  _bcOcupado=true;
+  ZXingWASM.readBarcodesFromImageData(dados,{tryHarder:true,formats:BC_FORMATOS})
+   .then(function(res){ var cod=_bcOk(res); if(cod){ bcParar(); bcBuscar(cod); } })
+   .catch(function(){})
+   .then(function(){ _bcOcupado=false; });
 }
 function bcParar(){
-  try{ if(_bcLeitor){ var l=_bcLeitor; _bcLeitor=null; l.stop().then(function(){ try{l.clear();}catch(e){} }).catch(function(){}); } }catch(e){}
+  try{ if(_bcTimer){ clearInterval(_bcTimer); _bcTimer=null; } }catch(e){}
+  try{ if(_bcStream){ _bcStream.getTracks().forEach(function(tr){ tr.stop(); }); _bcStream=null; } }catch(e){}
+  try{ var v=document.getElementById("bcVideo"); if(v) v.srcObject=null; }catch(e){}
+  _bcOcupado=false;
 }
 function bcFechar(){ bcParar(); var el=document.getElementById("bcOverlay"); if(el) el.style.display="none"; }
 function bcAviso(msg){
@@ -4803,21 +4827,13 @@ function bcBuscar(cod){
    A camera nativa (input capture) foca de verdade e devolve uma foto em alta resolucao. */
 function bcFoto(){ var i=document.getElementById("bcFile"); if(i){ i.value=""; i.click(); } }
 function bcArquivo(ev){
-  var f=ev.target&&ev.target.files&&ev.target.files[0]; if(!f) return;
+  var f=ev&&ev.target&&ev.target.files&&ev.target.files[0]; if(!f) return;
   var t=_bcT(); bcParar();
   _bcCard('<div style="padding:36px 6px;text-align:center;color:var(--text2);font-size:13px">'+t.lendoFoto+'</div>');
-  bcCarregarLib().then(function(){
-    var alvo=document.getElementById("bcScanFile");
-    if(!alvo){ alvo=document.createElement("div"); alvo.id="bcScanFile"; alvo.style.cssText="position:fixed;left:-9999px;top:0;width:500px;height:500px"; document.body.appendChild(alvo); }
-    var F=window.Html5QrcodeSupportedFormats||{};
-    var fmt=[F.EAN_13,F.EAN_8,F.UPC_A,F.UPC_E,F.CODE_128].filter(function(x){return x!==undefined;});
-    var l=new Html5Qrcode("bcScanFile",{formatsToSupport:fmt,verbose:false});
-    l.scanFileV2(f,false)
-     .then(function(res){ bcBuscar(String(res.decodedText).trim()); })
-     .catch(function(){ bcNaoLeu(); })
-     .then(function(){ try{ l.clear(); }catch(e){} });
-  }).catch(function(){ bcAviso(t.semLib); });
-  ev.target.value="";
+  bcCarregarLib().then(function(){ return ZXingWASM.readBarcodes(f,{tryHarder:true,formats:BC_FORMATOS}); })
+   .then(function(res){ var cod=_bcOk(res); if(cod) bcBuscar(cod); else bcNaoLeu(); })
+   .catch(function(){ bcNaoLeu(); });
+  try{ ev.target.value=""; }catch(e){}
 }
 function bcNaoLeu(){
   var t=_bcT();
