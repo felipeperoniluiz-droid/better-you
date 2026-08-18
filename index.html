@@ -965,6 +965,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
     <button class="goal-btn" id="goal-cut" onclick="setGoal('cut')">Emagrecer</button>
   </div></div><button class="btn btn-primary" onclick="saveProfile()" style="margin-top:12px;" data-i18n="salvarAplicar">Salvar e Aplicar</button>
     <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+      <div id="gdprBox" style="margin-bottom:16px"></div>
       <div id="authUserInfo" style="font-size:11px;color:var(--text2);text-align:center;margin-bottom:8px;"></div>
       <div style="margin-bottom:14px;">
         <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;" data-i18n="conexoesTitulo">Dispositivos</div>
@@ -988,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260818_190747";
+var APP_VERSION="20260818_190934";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2421,6 +2422,7 @@ function setProfGoal(g){
 
 // ── PERFIL ────────────────────────────────────────────────────
 function openProfile(){
+  try{ gdprRender(); }catch(e){}
   setTimeout(function(){ try{ renderConexoes(); }catch(e){} },60);
   var p=state.profile||{};
   document.getElementById("profName").value=p.name||"";
@@ -6053,6 +6055,92 @@ var GDPR_TXT={
  de:{sec:"Datenschutz und Daten",expT:"Meine Daten exportieren",expS:"Lade eine Datei mit allem herunter, was wir über dich speichern.",expIndo:"Datei wird vorbereitet...",expOk:"Datei heruntergeladen.",delT:"Mein Konto löschen",delS:"Löscht das Konto und alle Daten, endgültig.",delTit:"Konto löschen?",delCorpo:"Das löscht Profil, Mahlzeiten, Verlauf, Fotos, Messungen und die Gespräche mit Bel. Es gibt kein Zurück.",delAssn:"Du hast ein aktives Abo. Kündige es vor dem Löschen, sonst läuft die Abrechnung weiter.",delConf:"Zur Bestätigung schreibe LOESCHEN unten.",delPalavra:"LOESCHEN",delBtn:"Alles löschen",cancelar:"Abbrechen",delFeito:"Konto gelöscht.",delErro:"Löschen fehlgeschlagen. Melde dich neu an und versuche es erneut.",relogar:"Aus Sicherheitsgründen melde dich vor dem Löschen neu an."}
 };
 function _gT(){ return GDPR_TXT[currentLang]||GDPR_TXT.pt; }
+/* Art. 20: exportar em formato legivel por maquina. */
+function exportarDados(){
+  var t=_gT();
+  try{ showToast(t.expIndo,"info"); }catch(e){}
+  setTimeout(function(){
+    try{
+      var pacote={
+        _sobre:"Exportacao de dados pessoais - Better You",
+        _geradoEm:new Date().toISOString(),
+        _conta:{email:(typeof _fbUser!=="undefined"&&_fbUser)?_fbUser.email:null,uid:(typeof _fbUser!=="undefined"&&_fbUser)?_fbUser.uid:null},
+        perfil:state.profile||{}, objetivo:state.goal||null,
+        metas:{calorias:state.calGoal||null,agua:state.waterGoal||null},
+        questionario:state.quest||null,
+        refeicoesDeHoje:state.meals||{}, historico:state.history||{},
+        pesos:state.weights||[], medidas:state.measures||state.medidas||[],
+        fotosDeProgresso:state.progressPhotos||[],
+        agua:{hoje:state.waterMl||0}, sono:{hoje:state.sleepH||0},
+        jejum:state.jejum||null,
+        bel:{memoria:state.belMemoria||state.belMemory||null,resumoSemana:state.resumoSemana||null,temas:state.belTemas||[]},
+        preferencias:{idioma:currentLang,tema:state.theme||null}
+      };
+      var blob=new Blob([JSON.stringify(pacote,null,2)],{type:"application/json"});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement("a");
+      a.href=url; a.download="better-you-meus-dados-"+new Date().toISOString().slice(0,10)+".json";
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ try{ document.body.removeChild(a); URL.revokeObjectURL(url); }catch(e){} },1500);
+      try{ showToast(t.expOk,"success"); }catch(e){}
+    }catch(e){ try{ showToast(String(e.message||e),"error"); }catch(_){} }
+  },60);
+}
+/* Art. 17: apagar. A cobranca e externa, entao avisamos antes. */
+function apagarContaAbrir(){
+  var t=_gT(), el=document.getElementById("gdprDel"); if(!el) return;
+  var temAssn=false;
+  try{ temAssn=!!(localStorage.getItem("betteryou_subscriptionId")||(typeof isPro!=="undefined"&&isPro)); }catch(e){}
+  var h='<div style="width:100%;max-width:420px;background:var(--surface);border-radius:20px;padding:20px;box-sizing:border-box">';
+  h+='<div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:10px">'+t.delTit+'</div>';
+  h+='<div style="font-size:13px;color:var(--text2);line-height:1.6">'+t.delCorpo+'</div>';
+  if(temAssn) h+='<div style="margin-top:12px;padding:11px 13px;border-radius:12px;background:var(--goldBg2);border:1px solid rgba(240,180,41,.35);font-size:12px;color:var(--goldInk);line-height:1.5">'+t.delAssn+'</div>';
+  h+='<div style="font-size:12px;color:var(--text3);margin-top:14px;margin-bottom:6px">'+t.delConf+'</div>';
+  h+='<input id="gdprPalavra" type="text" autocomplete="off" style="width:100%;padding:12px 14px;border-radius:13px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:15px;font-weight:700;box-sizing:border-box;letter-spacing:1px">';
+  h+='<div style="display:flex;gap:9px;margin-top:16px">';
+  h+='<span onclick="apagarContaFechar()" style="flex:1;text-align:center;padding:13px;border-radius:14px;border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:700;cursor:pointer">'+t.cancelar+'</span>';
+  h+='<span onclick="apagarContaConfirmar()" style="flex:1;text-align:center;padding:13px;border-radius:14px;background:#dc2626;color:#fff;font-size:13px;font-weight:800;cursor:pointer">'+t.delBtn+'</span>';
+  h+='</div></div>';
+  el.innerHTML=h; el.style.display="flex";
+}
+function apagarContaFechar(){ var el=document.getElementById("gdprDel"); if(el) el.style.display="none"; }
+function apagarContaConfirmar(){
+  var t=_gT();
+  var campo=document.getElementById("gdprPalavra");
+  var v=((campo&&campo.value)||"").trim().toUpperCase();
+  if(v!==t.delPalavra.toUpperCase()){ try{ campo.style.borderColor="#dc2626"; }catch(e){} return; }
+  var u=(typeof _fbUser!=="undefined")?_fbUser:null;
+  if(!u){ try{ showToast(t.delErro,"error"); }catch(e){} return; }
+  var uid=u.uid;
+  _fbDb.collection("users").doc(uid).collection("photos").get()
+   .then(function(qs){ var ps=[]; qs.forEach(function(d){ ps.push(d.ref.delete()); }); return Promise.all(ps); })
+   .catch(function(){})
+   .then(function(){ return _fbDb.collection("users").doc(uid).delete().catch(function(){}); })
+   .then(function(){ return u.delete(); })
+   .then(function(){
+     try{ localStorage.removeItem("betteryou_v1"); localStorage.removeItem("betteryou_subscriptionId"); localStorage.removeItem("betteryou_pro_verified_at"); }catch(e){}
+     try{ showToast(t.delFeito,"success"); }catch(e){}
+     setTimeout(function(){ location.reload(); },900);
+   })
+   .catch(function(err){
+     var msg=(err&&err.code==="auth/requires-recent-login")?t.relogar:t.delErro;
+     try{ showToast(msg,"error"); }catch(e){}
+     apagarContaFechar();
+   });
+}
+function gdprRender(){
+  var el=document.getElementById("gdprBox"); if(!el) return;
+  var t=_gT();
+  function linha(titulo,sub,acao,cor){
+    return '<div onclick="'+acao+'" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--border);cursor:pointer">'+
+     '<span style="flex:1"><span style="display:block;font-size:14px;font-weight:700;color:'+(cor||"var(--text)")+'">'+titulo+'</span>'+
+     '<span style="display:block;font-size:11px;color:var(--text3);margin-top:2px;line-height:1.4">'+sub+'</span></span>'+
+     '<span style="color:var(--text3);font-size:18px">&#8250;</span></div>';
+  }
+  el.innerHTML='<div style="font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px">'+t.sec+'</div>'+
+    linha(t.expT,t.expS,"exportarDados()")+
+    linha(t.delT,t.delS,"apagarContaAbrir()","#dc2626");
+}
 function sair(){ if(saiu) return; saiu=true; try{ _fbAuth.signOut(); }catch(e){} }
   /* Antes daqui subiam PRIMEIRO as fotos (1,2 MB) e so depois vinha o signOut,
      entao em rede lenta o usuario simplesmente nao conseguia sair do app.
@@ -6456,5 +6544,6 @@ function _qPassos(){ return 12+_qMetas.length+((_qResp&&_qResp.plano===0)||(_qRe
 <div id="voltarBar" onclick="navVoltar()" style="display:none;align-items:center;gap:7px;margin:0 0 12px;padding:8px 13px 8px 9px;border-radius:99px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;width:fit-content"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg><span data-rot="1">Voltar</span></div>
 <input type="file" id="bcFile" accept="image/*" capture="environment" onchange="bcArquivo(event)" style="display:none">
 <div id="bcOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.72);z-index:9995;display:none;align-items:flex-end;justify-content:center"><div style="width:100%;max-width:430px;max-height:92vh;overflow:auto;background:var(--surface);border-radius:22px 22px 0 0;padding:16px 18px 26px;box-sizing:border-box"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><span id="bcTitulo" style="font-size:16px;font-weight:800;color:var(--text)">Codigo de barras</span><span onclick="bcFechar()" style="width:32px;height:32px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);cursor:pointer;font-size:15px">&#10005;</span></div><div id="bcCorpo"></div></div></div>
+<div id="gdprDel" onclick="if(event.target===this)apagarContaFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.65);z-index:9996;display:none;align-items:center;justify-content:center;padding:18px;box-sizing:border-box"></div>
 </body>
 </html>
