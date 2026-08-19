@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260819_174421";
+var APP_VERSION="20260819_174626";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1864,7 +1864,7 @@ function jejumPlanosHtml(){
   });
   return out+'</div></div>';
 }
-function jejumInfoAbrir(){ var el=document.getElementById("jejumInfo"); if(!el) return; el.innerHTML=jejumInfoHtml(); el.style.display="flex"; }
+function jejumInfoAbrir(){ setTimeout(_histSincronizar,30); var el=document.getElementById("jejumInfo"); if(!el) return; el.innerHTML=jejumInfoHtml(); el.style.display="flex"; }
 function jejumInfoFechar(){ var el=document.getElementById("jejumInfo"); if(el) el.style.display="none"; }
 function jejumInfoHtml(){
   var I=JINFO_TXT[currentLang]||JINFO_TXT.pt;
@@ -4680,7 +4680,7 @@ function dicaAddAgir(){ dicaAddFechar(); try{ openSheet("add"); }catch(e){} }
 function _dicaBelSrc(){
   try{ var i=document.querySelector('img[alt="Nutricionista"]')||document.querySelector("#belFab img"); return (i&&i.src)||""; }catch(e){ return ""; }
 }
-function dicaAddMostrar(){
+function dicaAddMostrar(){ setTimeout(_histSincronizar,30);
   var el=document.getElementById("dicaAdd"); if(!el) return;
   var d=DICA_TXT[currentLang]||DICA_TXT.pt;
   var foto=_dicaBelSrc();
@@ -4970,7 +4970,7 @@ function bcNaoLeu(){
   h+='</div></div>';
   _bcCard(h);
 }
-function bcDigitar(){
+function bcDigitar(){ setTimeout(_histSincronizar,30);
   var t=_bcT(); bcParar();
   var h='<div style="padding:8px 2px">';
   h+='<div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5">'+t.digiteSub+'</div>';
