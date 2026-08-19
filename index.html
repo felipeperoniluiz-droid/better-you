@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260818_191129";
+var APP_VERSION="20260819_174200";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2423,6 +2423,7 @@ function setProfGoal(g){
 // ── PERFIL ────────────────────────────────────────────────────
 function openProfile(){
   try{ gdprRender(); }catch(e){}
+  try{ _histSincronizar(); }catch(e){}
   setTimeout(function(){ try{ renderConexoes(); }catch(e){} },60);
   var p=state.profile||{};
   document.getElementById("profName").value=p.name||"";
@@ -2475,7 +2476,7 @@ function saveProfile(){
   showToast("Perfil salvo"+nome,"success");
 }
 
-function openModal(id){document.getElementById(id).classList.add("open");}
+function openModal(id){ setTimeout(_histSincronizar,30);document.getElementById(id).classList.add("open");}
 function closeModal(id){document.getElementById(id).classList.remove("open");}
 document.querySelectorAll(".modal-overlay").forEach(function(el){el.addEventListener("click",function(e){if(e.target===el)closeModal(el.id);});});
 
@@ -2498,7 +2499,7 @@ function irAdicionarAlimento(){
     if(el&&el.scrollIntoView) el.scrollIntoView({behavior:"smooth",block:"center"});
   },160);
 }
-function openSheet(k){
+function openSheet(k){ setTimeout(_histSincronizar,30);
   var cfg=_SHEETS[k]; if(!cfg) return;
   var t=(typeof T!=="undefined"&&T[currentLang])||{};
   document.getElementById("sheetTitle").textContent=t[cfg.t]||cfg.t;
@@ -2660,7 +2661,7 @@ function belFabRender(){
   f.innerHTML=(foto?'<img src="'+foto+'" alt="Bel" style="width:100%;height:100%;border-radius:50%;object-fit:cover">':"Bel")+
    (belNaoLido()?'<span style="position:absolute;top:-2px;right:-2px;width:14px;height:14px;border-radius:50%;background:var(--red);border:2px solid var(--bg)"></span>':"");
 }
-function belFabAbrir(){
+function belFabAbrir(){ setTimeout(_histSincronizar,30);
   var s=document.getElementById("belSheet"); if(!s) return;
   var t=(T[currentLang]||T.pt);
   var rec=belRecado();
@@ -2717,7 +2718,7 @@ function _calStatus(d){
   return (p>=0.85&&p<=1.15)?"ok":"reg";
 }
 function calMudarMes(n){ _calMes=new Date((_calMes||new Date()).getTime()); _calMes.setDate(1); _calMes.setMonth(_calMes.getMonth()+n); calRender(); }
-function calAbrir(){ _calDia=null; _calMes=new Date(); _calMes.setDate(1); var el=document.getElementById("calBox"); if(!el) return; el.style.display="flex"; calRender(); }
+function calAbrir(){ _calDia=null; setTimeout(_histSincronizar,30); _calMes=new Date(); _calMes.setDate(1); var el=document.getElementById("calBox"); if(!el) return; el.style.display="flex"; calRender(); }
 function calFechar(){ var el=document.getElementById("calBox"); if(el) el.style.display="none"; }
 var _calDia=null;
 function calIrDia(k){ _calDia=k; calRender(); }
@@ -2891,6 +2892,48 @@ function voltarRender(tab){
   var rot=el.querySelector("span[data-rot]"); if(rot) rot.textContent=(t.navVoltar||"Voltar");
   el.style.display="flex";
   if(alvo.firstChild!==el) alvo.insertBefore(el,alvo.firstChild);
+}
+/* Gesto de voltar do aparelho: fecha a camada aberta, senao volta uma tela,
+   e so deixa sair do app quando ja estamos em Hoje sem nada aberto. */
+var _histPreso=false, _histLigado=false;
+function _visivel(id){ var e=document.getElementById(id); return !!(e&&getComputedStyle(e).display!=="none"); }
+function _camadaAberta(){
+  if(_visivel("gdprDel"))  return function(){ apagarContaFechar(); };
+  if(_visivel("bcOverlay"))return function(){ bcFechar(); };
+  if(_visivel("belSheet")) return function(){ belFabFechar(); };
+  if(_visivel("calBox"))   return function(){ calFechar(); };
+  /* a dica de primeiro uso fecha, mas NAO e marcada como vista:
+     voltar nao pode consumir um aviso que so aparece uma vez */
+  if(_visivel("dicaAdd"))  return function(){ document.getElementById("dicaAdd").style.display="none"; };
+  var sv=document.getElementById("sheetOv");
+  if(sv&&sv.classList.contains("show")) return function(){ closeSheet(); };
+  var m=document.querySelector(".modal-overlay.open");
+  if(m) return function(){ closeModal(m.id); };
+  return null;
+}
+function _histPrecisa(){
+  try{
+    if(_camadaAberta()) return true;
+    var a=(typeof _navAtual==="function")?_navAtual():"hoje";
+    return a!=="hoje";
+  }catch(e){ return false; }
+}
+function _histSincronizar(){
+  try{
+    _histIniciar();
+    if(_histPrecisa()&&!_histPreso){ history.pushState({by:1},"",location.href); _histPreso=true; }
+  }catch(e){}
+}
+function _histIniciar(){
+  if(_histLigado) return; _histLigado=true;
+  window.addEventListener("popstate",function(){
+    _histPreso=false;
+    var fechar=_camadaAberta();
+    if(fechar){ try{ fechar(); }catch(e){} _histSincronizar(); return; }
+    var atual=(typeof _navAtual==="function")?_navAtual():"hoje";
+    if(atual!=="hoje"){ try{ navVoltar(); }catch(e){} _histSincronizar(); return; }
+    /* em Hoje, sem nada aberto: deixa o aparelho sair do app */
+  });
 }
 function navGo(tab){
   closeSheet();
@@ -4829,7 +4872,7 @@ function bcCarregarLib(){
 }
 function _bcOk(res){ var b=(res||[]).filter(function(r){ return r.isValid&&r.text; }); return b.length?String(b[0].text).trim():null; }
 function bcAbrir(){
-  var el=document.getElementById("bcOverlay"); if(!el) return;
+  var el=document.getElementById("bcOverlay"); if(!el) return; setTimeout(_histSincronizar,30);
   _bcProd=null; el.style.display="flex";
   var t=_bcT();
   _bcCard('<div style="position:relative;width:100%;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#000">'+
@@ -5051,7 +5094,7 @@ function exportarDados(){
   },60);
 }
 /* Art. 17: apagar. A cobranca e externa, entao avisamos antes. */
-function apagarContaAbrir(){
+function apagarContaAbrir(){ setTimeout(_histSincronizar,30);
   var t=_gT(), el=document.getElementById("gdprDel"); if(!el) return;
   var temAssn=false;
   try{ temAssn=!!(localStorage.getItem("betteryou_subscriptionId")||(typeof isPro!=="undefined"&&isPro)); }catch(e){}
