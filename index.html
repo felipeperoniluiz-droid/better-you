@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260819_174200";
+var APP_VERSION="20260819_174421";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2946,6 +2946,7 @@ function navGo(tab){
   try{ if(typeof jejumTelaRender==="function") jejumTelaRender(); }catch(e){}
   try{ if(typeof sonoTelaRender==="function") sonoTelaRender(); }catch(e){}
   try{ voltarRender(tab); }catch(e){}
+  try{ _histSincronizar(); }catch(e){}
   try{ var _bt=document.getElementById("bcTitulo"); if(_bt) _bt.textContent=_bcT().t; }catch(e){}
   try{ if(typeof maisRender==="function") maisRender(); }catch(e){}
   try{ if(typeof semanaFaixaRender==="function") semanaFaixaRender(); }catch(e){}
