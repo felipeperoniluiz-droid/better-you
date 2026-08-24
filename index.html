@@ -943,11 +943,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
       <div class="tdee-row"><span style="color:var(--text2);" data-i18n="gorduraPura">Gordura</span><span class="tdee-val" id="prevFatVal" style="color:#a78bfa;">-</span></div>
     </div>
     <!-- Chave API -->
-    <div class="input-group">
-      <div class="input-label" data-i18n="chaveAPILabel">Chave API Anthropic (Foto IA)</div>
-      <input type="password" class="input" id="profApiKey" placeholder="sk-ant-api03-...">
-      <div style="font-size:11px;color:var(--text2);margin-top:4px;line-height:1.6;" data-i18n="apiKeyAjuda">Necessária para identificar alimentos por foto.<br>Obtenha gratuitamente em: <b style="color:#38bdf8;">console.anthropic.com</b></div>
-    </div>
+    
     <!-- Idioma -->
     <div class="input-group" style="margin-top:4px;">
       <div class="input-label"><span data-i18n="idiomaLabel">Idioma / Language</span></div>
@@ -989,7 +985,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260824_172623";
+var APP_VERSION="20260824_172833";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2205,7 +2201,7 @@ function triggerCamera(){document.getElementById("cameraInput").click();}
 function triggerUpload(){document.getElementById("photoInput").click();}
 function checkApiKeyBanner(){
   var banner=document.getElementById("apiKeyBanner");
-  if(banner) banner.style.display=state.apiKey?"none":"block";
+  if(banner) banner.style.display="none";
 }
 function saveQuickApiKey(){
   // Redireciona para o Perfil onde a chave é configurada
@@ -2432,7 +2428,7 @@ function openProfile(){
   document.getElementById("profAge").value=p.age||"";
   document.getElementById("profSex").value=p.sex||"m";
   document.getElementById("profActivity").value=p.activity||"1.55";
-  document.getElementById("profApiKey").value=state.apiKey||"";
+  /* campo removido: a chave vive no servidor */
   // Carrega objetivo
   setProfGoal(state.goal||'mass');
   renderProfileAvatar(p.photo||null);
@@ -2450,8 +2446,8 @@ function saveProfile(){
   var act=parseFloat(document.getElementById("profActivity").value)||1.55;
   var photo=(state.profile&&state.profile.photo)||null;
   // Salva chave API
-  var apiKey=document.getElementById("profApiKey").value.trim();
-  if(apiKey&&apiKey.length>10) state.apiKey=apiKey;
+  var apiKey="";
+  /* nao guardamos mais chave de usuario */
   state.profile={
     name:document.getElementById("profName").value.trim(),
     weight:w,height:h,age:a,sex:sex,activity:act,photo:photo,
@@ -6303,10 +6299,12 @@ function loadFromFirestore(uid){
         if(state.profile&&state.profile.photo){setTimeout(function(){renderProfileAvatar(state.profile.photo);},50);}
         // Sincroniza o vencedor de volta ao Firestore
         saveToFirestore();
+        try{ _limparChaveAntiga(); }catch(e){}
         setTimeout(_qTalvezAbrir,400);
         setTimeout(function(){ dicaAddTalvez(0); },2200);
       } else {
         // Novo usuário — salva dados locais na nuvem
+        try{ _limparChaveAntiga(); }catch(e){}
         setTimeout(_qTalvezAbrir,400);
         setTimeout(function(){ dicaAddTalvez(0); },2200);
         saveToFirestore();
@@ -6343,6 +6341,12 @@ function _garantirPids(){
     (state.progressPhotos||[]).forEach(function(p,i){marca(p,'dataUrl','progress_'+i);});
     state._pidsCongelados=true;
   }catch(e){}
+}
+/* A chave saiu do produto. Se alguma conta ainda tiver uma gravada,
+   apagamos na primeira oportunidade: credencial de terceiro nao fica no nosso banco. */
+function _limparChaveAntiga(){
+  try{ if(state && state.apiKey){ delete state.apiKey; try{ save(); }catch(e){} return true; } }catch(e){}
+  return false;
 }
 function _fbEnviarAgora(soDoc){
   if(!_fbUser) return;
