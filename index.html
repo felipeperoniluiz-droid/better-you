@@ -985,7 +985,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260824_172833";
+var APP_VERSION="20260824_181025";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -5108,6 +5108,18 @@ function apagarContaAbrir(){ setTimeout(_histSincronizar,30);
   el.innerHTML=h; el.style.display="flex";
 }
 function apagarContaFechar(){ var el=document.getElementById("gdprDel"); if(el) el.style.display="none"; }
+/* A cobranca e externa ao app. Cancelar ANTES de apagar, porque o identificador
+   da assinatura vive no documento que estamos prestes a destruir. */
+function cancelarAssinatura(){
+  var u=(typeof _fbUser!=="undefined")?_fbUser:null;
+  if(!u) return Promise.resolve({ok:false});
+  return u.getIdToken().then(function(tok){
+    return fetch(PROXY_URL+"/cancel-subscription",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","x-user-id":u.uid,"x-user-token":tok}
+    }).then(function(r){ return r.json(); });
+  }).catch(function(){ return {ok:false}; });
+}
 function apagarContaConfirmar(){
   var t=_gT();
   var campo=document.getElementById("gdprPalavra");
@@ -5116,7 +5128,8 @@ function apagarContaConfirmar(){
   var u=(typeof _fbUser!=="undefined")?_fbUser:null;
   if(!u){ try{ showToast(t.delErro,"error"); }catch(e){} return; }
   var uid=u.uid;
-  _fbDb.collection("users").doc(uid).collection("photos").get()
+  cancelarAssinatura()
+   .then(function(){ return _fbDb.collection("users").doc(uid).collection("photos").get(); })
    .then(function(qs){ var ps=[]; qs.forEach(function(d){ ps.push(d.ref.delete()); }); return Promise.all(ps); })
    .catch(function(){})
    .then(function(){ return _fbDb.collection("users").doc(uid).delete().catch(function(){}); })
