@@ -989,7 +989,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 <div class="toast" id="toast"></div>
 
 <script>
-var APP_VERSION="20260819_174626";
+var APP_VERSION="20260824_172458";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1535,7 +1535,7 @@ function traduzirAlimentos(){
   var faltam=_nomesEmUso().filter(function(n){ return !c[n]; }).slice(0,80);
   if(!faltam.length) return;
   window._tradEmCurso=true;
-  fetch(PROXY_URL,{method:"POST",headers:{"Content-Type":"application/json","x-api-key":state.apiKey},
+  _proxyFetch(PROXY_URL,{method:"POST",
     body:JSON.stringify({model:"claude-haiku-4-5-20251001",max_tokens:2000,messages:[{role:"user",
       content:"Translate these food names to "+(_IDIOMA_NOME[lang]||"English")+". Keep them short and natural, as they would appear on a food label. Return ONLY a JSON object mapping each original string to its translation, no other text.\n"+JSON.stringify(faltam)}]})})
   .then(function(r){ return r.json(); })
@@ -3293,8 +3293,8 @@ function handleFotoIA(input){
             es:"\n- Escribe los valores de \"nome\", \"unidade\" y \"beneficios\" en espanol. Manten todas las claves del JSON exactamente como se indica."
           }[currentLang]||"";
         })();
-        fetch("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
-          method:"POST",headers:{"Content-Type":"application/json","x-api-key":state.apiKey,"anthropic-version":"2023-06-01"},
+        _proxyFetchFoto("https://anthropic-proxy.felipeperoniluiz.workers.dev",{
+          method:"POST",
           /* !!! NAO TROCAR O MODELO !!! Este e o handler ATIVO da Foto IA.
            Ja esteve com claude-haiku-4-5 e o reconhecimento de alimentos despencou
            (tapioca virava "bolo de milho"). Opus 4.6 e obrigatorio aqui. */
@@ -4138,7 +4138,7 @@ function gerarResumoSemana(forcar){
   if(!forcar&&c&&c.texto&&c.lang===currentLang&&(Date.now()-c.em)<2*86400000){ _resumoMostrar(c.texto,c.em); return; }
   if(!state.apiKey){ el.innerHTML='<div style="font-size:13px;color:var(--text2);">'+tx("semanaSemChave")+'</div>'; return; }
   el.innerHTML='<div style="font-size:13px;color:var(--text2);">'+tx("semanaGerando")+'</div>';
-  fetch(PROXY_URL,{method:"POST",headers:{"Content-Type":"application/json","x-api-key":state.apiKey},
+  _proxyFetch(PROXY_URL,{method:"POST",
     body:JSON.stringify({model:"claude-haiku-4-5-20251001",max_tokens:400,
       messages:[{role:"user",content:montarPromptSemana(a)}]})})
   .then(function(r){ return r.json(); })
@@ -5150,6 +5150,25 @@ function gdprRender(){
     linha(t.delT,t.delS,"apagarContaAbrir()","#dc2626");
 }
 
+/* A chave da Anthropic vive no Worker. O app manda so a identidade do usuario;
+   o servidor decide. Nenhuma credencial passa mais pelo aparelho. */
+var _tokCache={v:null,em:0};
+function _sessaoHeaders(extra){
+  var h={"Content-Type":"application/json"};
+  if(extra) for(var k in extra) h[k]=extra[k];
+  try{
+    if(typeof _fbUser==="undefined"||!_fbUser) return Promise.resolve(h);
+    h["x-user-id"]=_fbUser.uid;
+    if(_tokCache.v && (Date.now()-_tokCache.em)<30*60000){ h["x-user-token"]=_tokCache.v; return Promise.resolve(h); }
+    return _fbUser.getIdToken().then(function(t){ _tokCache={v:t,em:Date.now()}; h["x-user-token"]=t; return h; })
+      .catch(function(){ return h; });
+  }catch(e){ return Promise.resolve(h); }
+}
+function _proxyFetch(url,opts,extraH){
+  return _sessaoHeaders(extraH).then(function(h){ var o=opts||{}; o.headers=h; return fetch(url,o); });
+}
+function _proxyFetchFoto(url,opts){ return _proxyFetch(url,opts,{"anthropic-version":"2023-06-01"}); }
+function _temSessao(){ return (typeof _fbUser!=="undefined") && !!_fbUser; }
 function sinaisDiaRender(){
   var el=document.getElementById("sinaisDia"); if(!el) return;
   var t=(T[currentLang]||T.pt), chips=[];
@@ -5838,9 +5857,8 @@ async function askNutritionist(prompt){
   var loadEl=document.getElementById('chatLoading');
   if(loadEl)loadEl.style.display='flex';
   try{
-    var res=await fetch('https://anthropic-proxy.felipeperoniluiz.workers.dev',{
+    var res=await _proxyFetch('https://anthropic-proxy.felipeperoniluiz.workers.dev',{
       method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':state.apiKey},
       body:JSON.stringify({
         model:'claude-haiku-4-5-20251001',
         max_tokens:350,
