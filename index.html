@@ -942,8 +942,6 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
       <div class="tdee-row"><span style="color:var(--text2);" data-i18n="carboidratos">Carboidratos</span><span class="tdee-val" id="prevCarbVal" style="color:#fbbf24;">-</span></div>
       <div class="tdee-row"><span style="color:var(--text2);" data-i18n="gorduraPura">Gordura</span><span class="tdee-val" id="prevFatVal" style="color:#a78bfa;">-</span></div>
     </div>
-    <!-- Chave API -->
-    
     <!-- Idioma -->
     <div class="input-group" style="margin-top:4px;">
       <div class="input-label"><span data-i18n="idiomaLabel">Idioma / Language</span></div>
@@ -956,7 +954,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
         <button onclick="setLang('de')" id="lang-de" class="lang-btn">DE</button>
       </div>
     </div>
-    <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:14px 16px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:13px;font-weight:700;color:#f0b429;" data-i18n="meuPlano">Meu Plano</span><span style="background:#f0b429;color:#000;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;">PRO</span></div><div style="font-size:12px;color:#b0b8c1;" data-i18n="planoValor">Plano: <b style="color:var(--text);">€8,99/mês</b></div><div style="font-size:11px;color:#34d399;margin-top:4px;" data-i18n="planoBeta">Disponível gratuitamente no período beta</div></div><div style="margin:6px 0 14px"><div class="input-label" data-i18n="objetivoLabel">Objetivo</div><div class="goal-toggle">
+    <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:14px 16px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:13px;font-weight:700;color:#f0b429;" data-i18n="meuPlano">Meu Plano</span><span style="background:#f0b429;color:#000;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;">PRO</span></div><div style="font-size:12px;color:#b0b8c1;" data-i18n="planoValor">Plano: <b style="color:var(--text);">€8,99/mês</b></div><div id="planoStatus" style="font-size:11px;color:#34d399;margin-top:4px;"></div><div id="planoAcoes" style="margin-top:9px;"></div></div><div style="margin:6px 0 14px"><div class="input-label" data-i18n="objetivoLabel">Objetivo</div><div class="goal-toggle">
     <button class="goal-btn active" id="goal-mass" onclick="setGoal('mass')">Ganhar Massa</button>
     <button class="goal-btn" id="goal-cut" onclick="setGoal('cut')">Emagrecer</button>
   </div></div><button class="btn btn-primary" onclick="saveProfile()" style="margin-top:12px;" data-i18n="salvarAplicar">Salvar e Aplicar</button>
@@ -1006,7 +1004,7 @@ function checkForUpdate(){
 }
 setTimeout(checkForUpdate,4000);
 setInterval(checkForUpdate,5*60*1000);
-window.addEventListener('unhandledrejection',function(ev){var msg=(ev.reason&&ev.reason.message)||String(ev.reason);try{showToast('Erro v4: '+msg.slice(0,80),'error');}catch(e){alert('Erro v4: '+msg.slice(0,80));}});
+window.addEventListener('unhandledrejection',function(ev){var msg=(ev.reason&&ev.reason.message)||String(ev.reason);try{showToast(tx('tstErro')+': '+msg.slice(0,80),'error');}catch(e){alert('Erro v4: '+msg.slice(0,80));}});
 window.onerror=function(msg,src,line,col,err){try{showToast('JS: '+msg.slice(0,80),'error');}catch(e){}return true;};
 var currentLang='pt';
 var T={
@@ -1478,7 +1476,7 @@ var PREMADE=[
   {icon:"muscle",name:"Pos-treino",foods:[{name:"Whey Protein",g:40},{name:"Banana",g:100},{name:"Aveia",g:60}]},
   {icon:"moon",name:"Jantar Leve",foods:[{name:"Frango grelhado",g:150},{name:"Brocolis",g:100},{name:"Azeite de oliva",g:10}]}
 ];
-var state={goal:"mass",calGoal:3000,waterGoal:2500,waterMl:0,lang:"en",meals:{cafe:[],almoco:[],lanche:[],jantar:[]},weights:[],selectedDiet:"normal",apiKey:"",profile:{},customFoods:[],history:{},lastReset:"",measures:[],sleepH:0,belMemoria:{preferencias:[],restricoes:[],notas:[]}};
+var state={goal:"mass",calGoal:3000,waterGoal:2500,waterMl:0,lang:"en",meals:{cafe:[],almoco:[],lanche:[],jantar:[]},weights:[],selectedDiet:"normal",profile:{},customFoods:[],history:{},lastReset:"",measures:[],sleepH:0,belMemoria:{preferencias:[],restricoes:[],notas:[]}};
 var currentMealType="cafe";
 var selectedFoodData=null;
 var aiResultData=null;var lastAnalyzedPhotoUrl=null;var lastAnalyzedPhotoUrl=null;
@@ -1611,8 +1609,8 @@ function save(){
         Object.keys(slim.meals||{}).forEach(function(k){(slim.meals[k]||[]).forEach(function(e){delete e.photo;});});
         slim.progressPhotos=(slim.progressPhotos||[]).map(function(p){return {date:p.date,label:p.label,dataUrl:null};});
         localStorage.setItem("betteryou_v1",JSON.stringify(slim));
-        showToast("Armazenamento cheio - fotos nao salvas","error");
-      }catch(e2){showToast("Erro critico ao salvar dados!","error");}
+        showToast(tx("tstArmazenCheio"),"error");
+      }catch(e2){showToast(tx("tstErroSalvar"),"error");}
     }
   }
 }
@@ -2073,7 +2071,7 @@ function updateFoodPreview(){
 }
 function _saveJa(){ try{ save(); saveToFirestore(true); }catch(e){} }
 function addFoodEntry(){
-  if(!selectedFoodData){showToast("Selecione um alimento","error");return;}
+  if(!selectedFoodData){showToast(tx("tstSelAlimento"),"error");return;}
   var grams=parseFloat(document.getElementById("foodQty").value)||0;
   if(grams<=0){showToast("Informe a quantidade","error");return;}
   var r=grams/100;
@@ -2202,11 +2200,6 @@ function triggerUpload(){document.getElementById("photoInput").click();}
 function checkApiKeyBanner(){
   var banner=document.getElementById("apiKeyBanner");
   if(banner) banner.style.display="none";
-}
-function saveQuickApiKey(){
-  // Redireciona para o Perfil onde a chave é configurada
-  openProfile();
-  showToast("Configure sua chave API no Perfil","");
 }
 function renderAiResult(d){
   document.getElementById("aiDescription").textContent=d.descricao||"";
@@ -2390,7 +2383,7 @@ function handleProfilePhoto(input){
     renderHomeGreeting(); // atualiza saudação na tela Hoje
     showToast("Foto salva!","success");
   };
-  img.onerror=function(){URL.revokeObjectURL(url);showToast("Erro ao carregar foto","error");};
+  img.onerror=function(){URL.revokeObjectURL(url);showToast(tx("tstErroFoto"),"error");};
   img.src=url;
 }
 
@@ -2420,7 +2413,7 @@ function setProfGoal(g){
 function openProfile(){
   try{ gdprRender(); }catch(e){}
   try{ _histSincronizar(); }catch(e){}
-  setTimeout(function(){ try{ renderConexoes(); }catch(e){} },60);
+  setTimeout(function(){ try{ renderConexoes(); }catch(e){} try{ renderMeuPlano(); }catch(e){} },60);
   var p=state.profile||{};
   document.getElementById("profName").value=p.name||"";
   document.getElementById("profWeight").value=p.weight||"";
@@ -2997,7 +2990,7 @@ function handleProgressPhoto(input){
   input.value='';
   var objectUrl = URL.createObjectURL(file);
   var img = new Image();
-  img.onerror = function(){URL.revokeObjectURL(objectUrl); showToast('Erro ao carregar foto','error');};
+  img.onerror = function(){URL.revokeObjectURL(objectUrl); showToast(tx('tstErroFoto'),'error');};
   img.onload = function(){
     try{
       var MAX = 900;
@@ -3019,7 +3012,7 @@ function handleProgressPhoto(input){
       document.getElementById('progressPreviewBox').style.display = 'block';
       // Guarda dataUrl temporariamente
       window._pendingProgressPhoto = dataUrl;
-    }catch(err){URL.revokeObjectURL(objectUrl); showToast('Erro: '+err.message,'error');}
+    }catch(err){URL.revokeObjectURL(objectUrl); showToast(tx('tstErro')+': '+err.message,'error');}
   };
   img.src = objectUrl;
 }
@@ -3066,7 +3059,7 @@ function toggleProgressSelect(idx){
     _progressSelection.splice(pos,1);
   } else {
     if(_progressSelection.length>=2){
-      showToast('Selecione no máximo 2 fotos para comparar','error'); return;
+      showToast(tx('tstMax2'),'error'); return;
     }
     _progressSelection.push(idx);
   }
@@ -3191,7 +3184,7 @@ function escHtml(str){
 }
 
 function openCompareModal(){
-  if(_progressSelection.length!==2){showToast('Selecione exatamente 2 fotos','error');return;}
+  if(_progressSelection.length!==2){showToast(tx('tstExato2'),'error');return;}
   var photos = state.progressPhotos || [];
   // idx mais alto = mais antigo (lista está mais recente primeiro)
   var a = Math.min(_progressSelection[0],_progressSelection[1]);
@@ -3839,6 +3832,37 @@ massa:{fmt:'texto',
    de:{k:'Fang an, wo es geht',t:'Der Körper reagiert auf das, was du wiederholst.',s:'Kein Studio und keine feste Uhrzeit nötig. Bel zählt, was du ohnehin tust, und hilft daraus Beständigkeit zu machen.'}}
 };
 var TX={
+ /* ---- Plano e assinatura (25/08/2026) ---- */
+ planoAtivoLbl:{pt:'Assinatura ativa · renova todo mês',en:'Subscription active · renews monthly',es:'Suscripción activa · se renueva cada mes',it:'Abbonamento attivo · si rinnova ogni mese',fr:'Abonnement actif · renouvelé chaque mois',de:'Abo aktiv · verlängert sich monatlich'},
+ planoCriadorLbl:{pt:'Acesso de criador · sem cobrança',en:'Creator access · no charge',es:'Acceso de creador · sin cargo',it:'Accesso creatore · senza addebito',fr:'Accès créateur · sans facturation',de:'Creator-Zugang · keine Abrechnung'},
+ planoInativoLbl:{pt:'Sem assinatura ativa',en:'No active subscription',es:'Sin suscripción activa',it:'Nessun abbonamento attivo',fr:'Aucun abonnement actif',de:'Kein aktives Abo'},
+ planoAteLbl:{pt:'PRO até {0} · não haverá nova cobrança',en:'PRO until {0} · you will not be charged again',es:'PRO hasta {0} · no habrá nuevo cargo',it:'PRO fino al {0} · nessun nuovo addebito',fr:'PRO jusqu\'au {0} · aucun nouveau prélèvement',de:'PRO bis {0} · keine weitere Abbuchung'},
+ planoCancelBtn:{pt:'Cancelar assinatura',en:'Cancel subscription',es:'Cancelar suscripción',it:'Disdici abbonamento',fr:'Résilier l\'abonnement',de:'Abo kündigen'},
+ planoCancelTit:{pt:'Cancelar a assinatura?',en:'Cancel your subscription?',es:'¿Cancelar la suscripción?',it:'Disdire l\'abbonamento?',fr:'Résilier votre abonnement ?',de:'Abo wirklich kündigen?'},
+ planoCancelMsg:{pt:'Você continua com o PRO até o fim do período já pago. Depois disso não haverá nova cobrança. A sua conta, o seu histórico e as suas fotos continuam salvos.',en:'You keep PRO until the end of the period you already paid for. After that you will not be charged again. Your account, history and photos stay saved.',es:'Mantienes PRO hasta el final del periodo ya pagado. Después no habrá nuevo cargo. Tu cuenta, tu historial y tus fotos siguen guardados.',it:'Mantieni PRO fino alla fine del periodo già pagato. Dopo non ci saranno altri addebiti. Account, storico e foto restano salvati.',fr:'Vous gardez PRO jusqu\'à la fin de la période déjà payée. Ensuite, aucun nouveau prélèvement. Votre compte, votre historique et vos photos restent enregistrés.',de:'Du behältst PRO bis zum Ende des bereits bezahlten Zeitraums. Danach wird nichts mehr abgebucht. Konto, Verlauf und Fotos bleiben erhalten.'},
+ planoCancelSim:{pt:'Sim, cancelar',en:'Yes, cancel',es:'Sí, cancelar',it:'Sì, disdici',fr:'Oui, résilier',de:'Ja, kündigen'},
+ planoCancelNao:{pt:'Manter assinatura',en:'Keep subscription',es:'Mantener suscripción',it:'Mantieni abbonamento',fr:'Garder l\'abonnement',de:'Abo behalten'},
+ planoCancelando:{pt:'Cancelando...',en:'Cancelling...',es:'Cancelando...',it:'Disdetta in corso...',fr:'Résiliation...',de:'Wird gekündigt...'},
+ planoCancelOk:{pt:'Assinatura cancelada. O seu PRO segue até {0}.',en:'Subscription cancelled. Your PRO runs until {0}.',es:'Suscripción cancelada. Tu PRO sigue hasta {0}.',it:'Abbonamento disdetto. Il tuo PRO resta fino al {0}.',fr:'Abonnement résilié. Votre PRO reste actif jusqu\'au {0}.',de:'Abo gekündigt. Dein PRO läuft bis {0}.'},
+ planoCancelOkSemData:{pt:'Assinatura cancelada. Não haverá nova cobrança.',en:'Subscription cancelled. You will not be charged again.',es:'Suscripción cancelada. No habrá nuevo cargo.',it:'Abbonamento disdetto. Nessun nuovo addebito.',fr:'Abonnement résilié. Aucun nouveau prélèvement.',de:'Abo gekündigt. Keine weitere Abbuchung.'},
+ planoSemAssin:{pt:'Não encontrei uma assinatura ativa para cancelar.',en:'No active subscription found to cancel.',es:'No encontré una suscripción activa para cancelar.',it:'Nessun abbonamento attivo da disdire.',fr:'Aucun abonnement actif à résilier.',de:'Kein aktives Abo zum Kündigen gefunden.'},
+ planoCancelErro:{pt:'Não consegui cancelar agora. Tente de novo em instantes.',en:'Could not cancel right now. Please try again shortly.',es:'No pude cancelar ahora. Inténtalo de nuevo en un momento.',it:'Non sono riuscito a disdire ora. Riprova tra poco.',fr:'Impossible de résilier pour le moment. Réessayez dans un instant.',de:'Kündigung gerade nicht möglich. Bitte gleich erneut versuchen.'},
+ /* ---- Avisos que estavam fixos em portugues ---- */
+ tstErro:{pt:'Erro',en:'Error',es:'Error',it:'Errore',fr:'Erreur',de:'Fehler'},
+ tstArmazenCheio:{pt:'Armazenamento cheio — fotos não salvas',en:'Storage full — photos not saved',es:'Almacenamiento lleno — fotos no guardadas',it:'Memoria piena — foto non salvate',fr:'Stockage plein — photos non enregistrées',de:'Speicher voll — Fotos nicht gespeichert'},
+ tstErroSalvar:{pt:'Erro crítico ao salvar os seus dados',en:'Critical error saving your data',es:'Error crítico al guardar tus datos',it:'Errore critico nel salvataggio dei dati',fr:'Erreur critique lors de l\'enregistrement',de:'Kritischer Fehler beim Speichern'},
+ tstSelAlimento:{pt:'Selecione um alimento',en:'Select a food',es:'Selecciona un alimento',it:'Seleziona un alimento',fr:'Sélectionnez un aliment',de:'Wähle ein Lebensmittel'},
+ tstErroFoto:{pt:'Erro ao carregar a foto',en:'Could not load the photo',es:'Error al cargar la foto',it:'Impossibile caricare la foto',fr:'Impossible de charger la photo',de:'Foto konnte nicht geladen werden'},
+ tstMax2:{pt:'Selecione no máximo 2 fotos para comparar',en:'Select at most 2 photos to compare',es:'Selecciona como máximo 2 fotos para comparar',it:'Seleziona al massimo 2 foto da confrontare',fr:'Sélectionnez au maximum 2 photos à comparer',de:'Wähle höchstens 2 Fotos zum Vergleich'},
+ tstExato2:{pt:'Selecione exatamente 2 fotos',en:'Select exactly 2 photos',es:'Selecciona exactamente 2 fotos',it:'Seleziona esattamente 2 foto',fr:'Sélectionnez exactement 2 photos',de:'Wähle genau 2 Fotos'},
+ tstNotifOn:{pt:'Notificações ativadas',en:'Notifications on',es:'Notificaciones activadas',it:'Notifiche attivate',fr:'Notifications activées',de:'Benachrichtigungen aktiviert'},
+ tstProAtivo:{pt:'Better You PRO ativo!',en:'Better You PRO is active!',es:'¡Better You PRO activo!',it:'Better You PRO attivo!',fr:'Better You PRO activé !',de:'Better You PRO ist aktiv!'},
+ tstPagErro:{pt:'Não consegui iniciar o pagamento. Tente novamente.',en:'Could not start the payment. Please try again.',es:'No pude iniciar el pago. Inténtalo de nuevo.',it:'Non sono riuscito ad avviare il pagamento. Riprova.',fr:'Impossible de démarrer le paiement. Réessayez.',de:'Zahlung konnte nicht gestartet werden. Bitte erneut versuchen.'},
+ tstConexao:{pt:'Erro de conexão. Verifique a sua internet.',en:'Connection error. Check your internet.',es:'Error de conexión. Revisa tu internet.',it:'Errore di connessione. Controlla la tua rete.',fr:'Erreur de connexion. Vérifiez votre internet.',de:'Verbindungsfehler. Prüfe dein Internet.'},
+ tstCheckoutSaiu:{pt:'Pagamento não concluído. Você pode assinar quando quiser.',en:'Payment not completed. You can subscribe whenever you want.',es:'Pago no completado. Puedes suscribirte cuando quieras.',it:'Pagamento non completato. Puoi abbonarti quando vuoi.',fr:'Paiement non finalisé. Vous pouvez vous abonner quand vous voulez.',de:'Zahlung nicht abgeschlossen. Du kannst jederzeit abonnieren.'},
+ tstErroNuvem:{pt:'Não consegui carregar os seus dados da nuvem',en:'Could not load your data from the cloud',es:'No pude cargar tus datos de la nube',it:'Non sono riuscito a caricare i tuoi dati dal cloud',fr:'Impossible de charger vos données du cloud',de:'Deine Daten konnten nicht aus der Cloud geladen werden'},
+ tstErroEnviar:{pt:'Não consegui salvar na nuvem',en:'Could not save to the cloud',es:'No pude guardar en la nube',it:'Non sono riuscito a salvare nel cloud',fr:'Impossible d\'enregistrer dans le cloud',de:'Speichern in der Cloud fehlgeschlagen'},
+
   scoreCal:{pt:'Calorias',en:'Calories',es:'Calorías',it:'Calorie',fr:'Calories',de:'Kalorien'},
   scoreAgua:{pt:'Água',en:'Water',es:'Agua',it:'Acqua',fr:'Eau',de:'Wasser'},
   scoreProt:{pt:'Proteína',en:'Protein',es:'Proteína',it:'Proteine',fr:'Protéines',de:'Protein'},
@@ -4341,9 +4365,15 @@ function cardCaminhoMeta(){
 }
 /* ---- Digital Twin: simulador de cenarios ---- */
 /* ---- Withings: balanca inteligente ---- */
+/* DESLIGADO em 25/08/2026. As rotas /withings/connect, /callback, /sync e
+   /disconnect nao existem no Worker — a tela apontava para o vazio e o
+   botao Conectar nunca teria como funcionar. O codigo fica inteiro aqui;
+   quando as rotas existirem, basta trocar para true e a tela volta. */
+var WITHINGS_ATIVO=false;
 function _uid(){ try{ return (firebase.auth().currentUser||{}).uid||""; }catch(e){ return ""; } }
 function renderConexoes(){
   var el=document.getElementById("conexoesBox"); if(!el) return;
+  if(!WITHINGS_ATIVO){ try{ el.parentNode.style.display="none"; }catch(e){} return; }
   var on=!!state.withingsOn;
   var quando="";
   if(on&&state.withingsSync){ var d=new Date(state.withingsSync);
@@ -4382,6 +4412,7 @@ function desconectarWithings(){
 }
 /* o code da Withings expira em 30s: trocamos assim que a pagina volta */
 function checarRetornoWithings(){
+  if(!WITHINGS_ATIVO) return;
   var q=new URLSearchParams(location.search);
   var code=q.get("code"), st=q.get("state");
   if(!code||!st) return;
@@ -5367,7 +5398,7 @@ function initNotifications() {
         Notification.requestPermission().then(function(perm) {
           if (perm === 'granted') {
             agendarLembretes();
-            showToast('Notificações ativadas!', 'success');
+            showToast(tx('tstNotifOn'),'success');
           }
         });
       }, 3000);
@@ -5936,12 +5967,76 @@ function renderNutriChat(){
 // Conta do criador — acesso PRO permanente
 var CREATOR_EMAIL = 'felipeperoniluiz@gmail.com';
 
+/* ── Meu Plano: status honesto + cancelamento sem apagar a conta ──────
+   Ate 25/08/2026 a unica forma de parar a cobranca era apagar a conta:
+   cancelarAssinatura() so era chamada de dentro do fluxo de exclusao.
+   Na Uniao Europeia isso e problema de direito do consumidor. */
+function _planoDataBR(ms){
+  try{ var d=new Date(ms);
+    return ("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();
+  }catch(e){ return ""; }
+}
+function _planoAcessoAte(){
+  try{ var v=localStorage.getItem("by_acessoAte"); return v?parseInt(v,10):0; }catch(e){ return 0; }
+}
+function renderMeuPlano(){
+  var st=document.getElementById("planoStatus");
+  var ac=document.getElementById("planoAcoes");
+  if(!st||!ac) return;
+  var criador=false; try{ criador=isCreatorAccount(); }catch(e){}
+  var ate=_planoAcessoAte();
+  ac.innerHTML="";
+  if(criador){
+    st.style.color="#34d399"; st.textContent=tx("planoCriadorLbl"); return;
+  }
+  if(ate && ate>Date.now()){
+    st.style.color="#f0b429"; st.textContent=tx("planoAteLbl",_planoDataBR(ate)); return;
+  }
+  if(typeof isPro!=="undefined" && isPro){
+    st.style.color="#34d399"; st.textContent=tx("planoAtivoLbl");
+    ac.innerHTML='<button class="btn btn-ghost" id="planoCancelBtn" style="width:100%;font-size:12.5px;padding:9px;color:var(--text2);border-color:rgba(139,149,163,.3);" onclick="planoCancelarAbrir()">'+tx("planoCancelBtn")+'</button>';
+    return;
+  }
+  st.style.color="var(--text2)"; st.textContent=tx("planoInativoLbl");
+}
+function planoCancelarAbrir(){
+  var el=document.getElementById("planoCancelBox");
+  if(!el){
+    el=document.createElement("div"); el.id="planoCancelBox";
+    el.style.cssText="position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.62);display:flex;align-items:center;justify-content:center;padding:22px;";
+    document.body.appendChild(el);
+  }
+  el.innerHTML='<div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;max-width:340px;width:100%;">'
+   +'<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:9px;">'+tx("planoCancelTit")+'</div>'
+   +'<div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:16px;">'+tx("planoCancelMsg")+'</div>'
+   +'<button class="btn btn-primary" style="width:100%;margin-bottom:8px;" onclick="planoCancelarFechar()">'+tx("planoCancelNao")+'</button>'
+   +'<button class="btn btn-ghost" id="planoCancelSim" style="width:100%;color:#f87171;border-color:rgba(248,113,113,.3);" onclick="planoCancelarConfirmar()">'+tx("planoCancelSim")+'</button>'
+   +'</div>';
+  el.style.display="flex";
+  try{ if(typeof _historicoEmpurrar==="function") _historicoEmpurrar(); }catch(e){}
+}
+function planoCancelarFechar(){ var el=document.getElementById("planoCancelBox"); if(el) el.style.display="none"; }
+function planoCancelarConfirmar(){
+  var b=document.getElementById("planoCancelSim");
+  if(b){ b.disabled=true; b.textContent=tx("planoCancelando"); }
+  cancelarAssinatura().then(function(d){
+    planoCancelarFechar();
+    if(!d||d.ok!==true){ showToast(tx("planoCancelErro"),"error"); return; }
+    if(d.semAssinatura){ showToast(tx("planoSemAssin"),""); renderMeuPlano(); return; }
+    var ms=d.acessoAte?d.acessoAte*1000:0;
+    if(ms){ try{ localStorage.setItem("by_acessoAte",String(ms)); }catch(e){}
+      showToast(tx("planoCancelOk",_planoDataBR(ms)),"success"); }
+    else showToast(tx("planoCancelOkSemData"),"success");
+    renderMeuPlano();
+  }).catch(function(){ planoCancelarFechar(); showToast(tx("planoCancelErro"),"error"); });
+}
 function isCreatorAccount(){
   return _fbUser && _fbUser.email && _fbUser.email.toLowerCase() === CREATOR_EMAIL.toLowerCase();
 }
 
 function setProStatus(val, silent){
   isPro=!!val;
+  try{ renderMeuPlano(); }catch(e){}
   document.body.classList.toggle('pro-mode', isPro);
   try{ if(typeof hojeProRender==="function") hojeProRender(); }catch(e){}
   try{ if(typeof sinaisDiaRender==="function") sinaisDiaRender(); }catch(e){}
@@ -5950,7 +6045,7 @@ function setProStatus(val, silent){
     ni.style.opacity='1';
   });
   if(isPro&&!silent){
-    showToast('Better You PRO ativo!','success');
+    showToast(tx('tstProAtivo'),'success');
   }
 }
 
@@ -5970,10 +6065,10 @@ async function subscribePro(){
     if(data.url){
       window.location.href=data.url;
     }else{
-      showToast('Erro ao iniciar pagamento. Tente novamente.','error');
+      showToast(tx('tstPagErro'),'error');
     }
   }catch(e){
-    showToast('Erro de conexão. Verifique sua internet.','error');
+    showToast(tx('tstConexao'),'error');
   }finally{
     if(btn){btn.disabled=false;btn.textContent=(T[currentLang]&&T[currentLang].proCtaBtn)||'Começar 2 dias grátis';}
   }
@@ -6030,7 +6125,7 @@ function checkUrlProStatus(){
     window.history.replaceState({},'',window.location.pathname);
   }
   if(cancel==='cancel'){
-    showToast('Assinatura cancelada. Você pode assinar quando quiser!','');
+    showToast(tx('tstCheckoutSaiu'),'');
     window.history.replaceState({},'',window.location.pathname);
   }
 }
@@ -6324,7 +6419,7 @@ function loadFromFirestore(uid){
       }
     })
     .catch(function(e){
-      showToast('Erro ao carregar nuvem: '+(e.code||e.message),'error');
+      showToast(tx('tstErroNuvem'),'error');
     });
 }
 
@@ -6384,8 +6479,8 @@ function _fbEnviarAgora(soDoc){
     }).then(function(){
       showToast('Nuvem: dados salvos!','success');
       if(!soDoc) _fbEnviarFotos(_uid,_photos);
-    }).catch(function(e){ showToast('Erro Firestore: '+(e.code||e.message),'error'); });
-  }catch(_e){ showToast('Erro ao preparar dados: '+_e.message,'error'); }
+    }).catch(function(e){ showToast(tx('tstErroEnviar'),'error'); });
+  }catch(_e){ showToast(tx('tstErroSalvar'),'error'); }
 }
 function _fbEnviarFotos(_uid,_photos){
   var mapa={};
