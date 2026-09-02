@@ -975,7 +975,7 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
       </div>
             <button class="btn btn-ghost" onclick="belEsquecerConfirm()" style="width:100%;margin-bottom:8px;color:var(--text2);border-color:rgba(139,149,163,.3);" data-i18n="esquecerMemoria">Apagar memória da Bel</button>
       <button class="btn btn-ghost" onclick="doSignOut()" style="width:100%;color:#f87171;border-color:rgba(248,113,113,.3);" data-i18n="sairConta">Sair da conta</button>
-          <div style="margin-top:14px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--text2);line-height:1.6" data-i18n="avisoMedico">O Better You é uma ferramenta de acompanhamento e não substitui consulta com médico ou nutricionista. Procure um profissional antes de mudanças importantes na alimentação, e sempre em caso de gravidez, doença crônica ou uso de medicamentos.</div><div id="legalPerfil" style="font-size:11px;text-align:center;margin-top:12px;line-height:1.9"><a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkPriv">Política de Privacidade</a><span style="color:var(--text2);margin:0 8px">&middot;</span><a href="termos.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkTermos">Termos de Uso</a></div>
+          <div style="margin-top:14px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--text2);line-height:1.6" data-i18n="avisoMedico">O Better You é uma ferramenta de acompanhamento e não substitui consulta com médico ou nutricionista. Procure um profissional antes de mudanças importantes na alimentação, e sempre em caso de gravidez, doença crônica ou uso de medicamentos.</div><div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:9px" id="algTitulo">Alergias e intolerâncias</div><div id="algBox"></div></div><div id="legalPerfil" style="font-size:11px;text-align:center;margin-top:12px;line-height:1.9"><a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkPriv">Política de Privacidade</a><span style="color:var(--text2);margin:0 8px">&middot;</span><a href="termos.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkTermos">Termos de Uso</a></div>
     </div>
   </div>
 </div>
@@ -1476,7 +1476,7 @@ var PREMADE=[
   {icon:"muscle",name:"Pos-treino",foods:[{name:"Whey Protein",g:40},{name:"Banana",g:100},{name:"Aveia",g:60}]},
   {icon:"moon",name:"Jantar Leve",foods:[{name:"Frango grelhado",g:150},{name:"Brocolis",g:100},{name:"Azeite de oliva",g:10}]}
 ];
-var state={goal:"mass",calGoal:3000,waterGoal:2500,waterMl:0,lang:"en",meals:{cafe:[],almoco:[],lanche:[],jantar:[]},weights:[],selectedDiet:"normal",profile:{},customFoods:[],history:{},lastReset:"",measures:[],sleepH:0,belMemoria:{preferencias:[],restricoes:[],notas:[]}};
+var state={goal:"mass",calGoal:3000,waterGoal:2500,waterMl:0,lang:"en",meals:{cafe:[],almoco:[],lanche:[],jantar:[]},weights:[],selectedDiet:"normal",alergias:{graves:[],leves:[]},profile:{},customFoods:[],history:{},lastReset:"",measures:[],sleepH:0,belMemoria:{preferencias:[],restricoes:[],notas:[]}};
 var currentMealType="cafe";
 var selectedFoodData=null;
 var aiResultData=null;var lastAnalyzedPhotoUrl=null;var lastAnalyzedPhotoUrl=null;
@@ -2413,7 +2413,7 @@ function setProfGoal(g){
 function openProfile(){
   try{ gdprRender(); }catch(e){}
   try{ _histSincronizar(); }catch(e){}
-  setTimeout(function(){ try{ renderConexoes(); }catch(e){} try{ renderMeuPlano(); }catch(e){} },60);
+  setTimeout(function(){ try{ renderConexoes(); }catch(e){} try{ renderMeuPlano(); }catch(e){} try{ algRender(); }catch(e){} },60);
   var p=state.profile||{};
   document.getElementById("profName").value=p.name||"";
   document.getElementById("profWeight").value=p.weight||"";
@@ -4901,6 +4901,99 @@ function bcCarregarLib(){
   });
 }
 function _bcOk(res){ var b=(res||[]).filter(function(r){ return r.isValid&&r.text; }); return b.length?String(b[0].text).trim():null; }
+/* ── Alergenos: os 14 de declaracao obrigatoria na Uniao Europeia ────────
+   As etiquetas sao as MESMAS da OpenFoodFacts porque ambas seguem o
+   Anexo II do Regulamento (UE) 1169/2011. Correspondencia de um para um,
+   nao adivinhacao. */
+var ALERGENOS=[
+ {tag:"en:milk",              pt:"Leite / lactose", en:"Milk / lactose",     es:"Leche / lactosa",    it:"Latte / lattosio",   fr:"Lait / lactose",       de:"Milch / Laktose"},
+ {tag:"en:gluten",            pt:"Glúten",          en:"Gluten",             es:"Gluten",             it:"Glutine",            fr:"Gluten",               de:"Gluten"},
+ {tag:"en:eggs",              pt:"Ovo",             en:"Eggs",               es:"Huevo",              it:"Uova",               fr:"Œufs",                 de:"Eier"},
+ {tag:"en:nuts",              pt:"Frutos secos",    en:"Tree nuts",          es:"Frutos secos",       it:"Frutta a guscio",    fr:"Fruits à coque",       de:"Schalenfrüchte"},
+ {tag:"en:peanuts",           pt:"Amendoim",        en:"Peanuts",            es:"Cacahuete",          it:"Arachidi",           fr:"Arachides",            de:"Erdnüsse"},
+ {tag:"en:soybeans",          pt:"Soja",            en:"Soy",                es:"Soja",               it:"Soia",               fr:"Soja",                 de:"Soja"},
+ {tag:"en:fish",              pt:"Peixe",           en:"Fish",               es:"Pescado",            it:"Pesce",              fr:"Poisson",              de:"Fisch"},
+ {tag:"en:crustaceans",       pt:"Crustáceos",      en:"Crustaceans",        es:"Crustáceos",         it:"Crostacei",          fr:"Crustacés",            de:"Krebstiere"},
+ {tag:"en:molluscs",          pt:"Moluscos",        en:"Molluscs",           es:"Moluscos",           it:"Molluschi",          fr:"Mollusques",           de:"Weichtiere"},
+ {tag:"en:sesame-seeds",      pt:"Gergelim",        en:"Sesame",             es:"Sésamo",             it:"Sesamo",             fr:"Sésame",               de:"Sesam"},
+ {tag:"en:celery",            pt:"Aipo",            en:"Celery",             es:"Apio",               it:"Sedano",             fr:"Céleri",               de:"Sellerie"},
+ {tag:"en:mustard",           pt:"Mostarda",        en:"Mustard",            es:"Mostaza",            it:"Senape",             fr:"Moutarde",             de:"Senf"},
+ {tag:"en:lupin",             pt:"Tremoço",         en:"Lupin",              es:"Altramuces",         it:"Lupini",             fr:"Lupin",                de:"Lupinen"},
+ {tag:"en:sulphur-dioxide-and-sulphites", pt:"Sulfitos", en:"Sulphites",     es:"Sulfitos",           it:"Solfiti",            fr:"Sulfites",             de:"Sulfite"}
+];
+function _algNome(tag){
+  var L=(typeof currentLang!=="undefined"&&currentLang)||"pt";
+  for(var i=0;i<ALERGENOS.length;i++) if(ALERGENOS[i].tag===tag) return ALERGENOS[i][L]||ALERGENOS[i].pt;
+  return tag.replace(/^en:/,"").replace(/-/g," ");
+}
+function _algDo(){ var a=state.alergias||{}; return {graves:a.graves||[], leves:a.leves||[]}; }
+function _algNivel(tag){
+  var a=_algDo();
+  if(a.graves.indexOf(tag)>=0) return "grave";
+  if(a.leves.indexOf(tag)>=0) return "leve";
+  return null;
+}
+/* Compara o que o produto declara com o que o cliente marcou.
+   Ingrediente e traco ficam SEPARADOS de proposito: metade dos
+   industrializados diz "pode conter", e se tudo virar alerta vermelho
+   o cliente para de ler os alertas. */
+function algConferir(alergTags, tracoTags){
+  var r={graveIng:[], graveTraco:[], leveIng:[], leveTraco:[]};
+  (alergTags||[]).forEach(function(t){
+    var n=_algNivel(t); if(n==="grave") r.graveIng.push(t); else if(n==="leve") r.leveIng.push(t);
+  });
+  (tracoTags||[]).forEach(function(t){
+    if((alergTags||[]).indexOf(t)>=0) return;      /* ja avisado como ingrediente */
+    var n=_algNivel(t); if(n==="grave") r.graveTraco.push(t); else if(n==="leve") r.leveTraco.push(t);
+  });
+  return r;
+}
+/* Alterna alergia/intolerancia/nenhum para um alergeno. */
+function algAlternar(tag){
+  if(!state.alergias) state.alergias={graves:[],leves:[]};
+  var a=state.alergias;
+  a.graves=a.graves||[]; a.leves=a.leves||[];
+  var ig=a.graves.indexOf(tag), il=a.leves.indexOf(tag);
+  if(ig<0 && il<0){ a.graves.push(tag); }
+  else if(ig>=0){ a.graves.splice(ig,1); a.leves.push(tag); }
+  else { a.leves.splice(il,1); }
+  try{ save(); }catch(e){}
+  algRender();
+}
+function algRender(){
+  var el=document.getElementById("algBox"); if(!el) return;
+  var t=_algT();
+  /* o titulo e desenhado aqui, junto com o resto: se ficasse numa linha
+     separada e ela falhasse, um alemao veria o titulo em portugues */
+  try{ var _t=document.getElementById("algTitulo"); if(_t) _t.textContent=t.titulo; }catch(e){}
+  var h='<div style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:10px">'+t.explica+'</div>';
+  h+='<div style="display:flex;flex-wrap:wrap;gap:6px">';
+  ALERGENOS.forEach(function(a){
+    var n=_algNivel(a.tag);
+    var cor = n==="grave" ? "background:rgba(248,113,113,.16);border-color:rgba(248,113,113,.5);color:#f87171"
+            : n==="leve"  ? "background:rgba(240,180,41,.14);border-color:rgba(240,180,41,.45);color:#f0b429"
+            : "background:var(--surface2);border-color:var(--border);color:var(--text2)";
+    var suf = n==="grave" ? " &middot; "+t.alergia : (n==="leve" ? " &middot; "+t.intol : "");
+    h+='<span onclick="algAlternar(&quot;'+a.tag+'&quot;)" style="cursor:pointer;user-select:none;'+cor+
+       ';border:1px solid;border-radius:11px;padding:8px 11px;font-size:12px;font-weight:700">'+
+       _algNome(a.tag)+suf+'</span>';
+  });
+  h+='</div>';
+  h+='<div style="font-size:10.5px;color:var(--text3);margin-top:10px;line-height:1.6">'+t.toque+'</div>';
+  el.innerHTML=h;
+}
+function _algT(){
+  var L=(typeof currentLang!=="undefined"&&currentLang)||"pt";
+  var D={
+   pt:{titulo:"Alergias e intolerâncias",explica:"Marque o que você não pode comer. Ao ler um código de barras, a Bel avisa antes de você consumir ou comprar.",alergia:"alergia",intol:"intolerância",toque:"Toque uma vez para alergia (aviso forte), duas para intolerância (aviso leve), três para desmarcar."},
+   en:{titulo:"Allergies and intolerances",explica:"Mark what you cannot eat. When you scan a barcode, Bel warns you before you eat or buy it.",alergia:"allergy",intol:"intolerance",toque:"Tap once for allergy (strong warning), twice for intolerance (mild), three times to clear."},
+   es:{titulo:"Alergias e intolerancias",explica:"Marca lo que no puedes comer. Al escanear un código de barras, Bel te avisa antes de consumir o comprar.",alergia:"alergia",intol:"intolerancia",toque:"Toca una vez para alergia (aviso fuerte), dos para intolerancia (leve), tres para quitar."},
+   it:{titulo:"Allergie e intolleranze",explica:"Segna ciò che non puoi mangiare. Alla scansione del codice a barre, Bel ti avvisa prima che tu consumi o compri.",alergia:"allergia",intol:"intolleranza",toque:"Tocca una volta per allergia (avviso forte), due per intolleranza (lieve), tre per togliere."},
+   fr:{titulo:"Allergies et intolérances",explica:"Indiquez ce que vous ne pouvez pas manger. Au scan d'un code-barres, Bel vous prévient avant que vous consommiez ou achetiez.",alergia:"allergie",intol:"intolérance",toque:"Touchez une fois pour allergie (alerte forte), deux pour intolérance (légère), trois pour retirer."},
+   de:{titulo:"Allergien und Unverträglichkeiten",explica:"Markiere, was du nicht essen kannst. Beim Scannen eines Barcodes warnt Bel dich, bevor du isst oder kaufst.",alergia:"Allergie",intol:"Unverträglichkeit",toque:"Einmal tippen für Allergie (starke Warnung), zweimal für Unverträglichkeit (mild), dreimal zum Entfernen."}
+  };
+  return D[L]||D.pt;
+}
 function bcAbrir(){
   var el=document.getElementById("bcOverlay"); if(!el) return; setTimeout(_histSincronizar,30);
   _bcProd=null; el.style.display="flex";
@@ -4960,7 +5053,7 @@ function bcAviso(msg){
 function bcBuscar(cod){
   var t=_bcT();
   _bcCard('<div style="padding:34px 6px;text-align:center;color:var(--text2);font-size:13px">'+t.buscando+'<div style="font-size:11px;color:var(--text3);margin-top:6px">'+cod+'</div></div>');
-  var campos="product_name,product_name_pt,brands,nutriments,serving_size,quantity,image_small_url";
+  var campos="product_name,product_name_pt,brands,nutriments,serving_size,serving_quantity,quantity,image_small_url,allergens_tags,traces_tags";
   fetch("https://world.openfoodfacts.org/api/v2/product/"+encodeURIComponent(cod)+".json?fields="+campos)
    .then(function(r){ return r.json(); })
    .then(function(d){
@@ -4971,7 +5064,7 @@ function bcBuscar(cod){
      if(kcal===undefined){ bcNaoAchou(cod); return; }
      _bcProd={cod:cod,nome:(p.product_name_pt||p.product_name||cod),marca:(p.brands||"").split(",")[0].trim(),
        kcal:+kcal, prot:n.proteins_100g, carb:n.carbohydrates_100g, fat:n.fat_100g, fib:n.fiber_100g,
-       porcao:p.serving_size||"", img:p.image_small_url||"", liq:/ml|l$|litro|litre/i.test(p.quantity||"")};
+       porcao:p.serving_size||"", porcaoQtd:(typeof p.serving_quantity==="number"?p.serving_quantity:null),alerg:(p.allergens_tags||[]), tracos:(p.traces_tags||[]), img:p.image_small_url||"", liq:/ml|l$|litro|litre/i.test(p.quantity||"")};
      bcResultado();
    })
    .catch(function(){ bcNaoAchou(cod); });
@@ -5027,11 +5120,37 @@ function bcResultado(){
   var un=p.liq?"ml":"g";
   var g=_bcPorcaoNum(p.porcao)||100;
   var faltando=(p.prot===undefined||p.carb===undefined||p.fat===undefined);
+  /* Alerta de alergeno: comparacao literal entre o que o rotulo declara
+     e o que o cliente marcou. Nunca dizemos que e seguro — ausencia de
+     dado nao e ausencia de alergeno. */
+  var _alg=algConferir(p.alerg,p.tracos);
+  var _at=_algAvisoT();
+  var _av='';
+  if(_alg.graveIng.length){
+    _av+='<div style="background:rgba(248,113,113,.14);border:1px solid rgba(248,113,113,.55);border-radius:13px;padding:12px 14px;margin-bottom:14px">'+
+      '<div style="font-size:13.5px;font-weight:800;color:#f87171;margin-bottom:3px">'+_at.contem+'</div>'+
+      '<div style="font-size:12.5px;color:var(--text)">'+_alg.graveIng.map(_algNome).join(', ')+'</div>'+
+      '<div style="font-size:11px;color:var(--text2);margin-top:5px">'+_at.marcouAlergia+'</div></div>';
+  }
+  if(_alg.graveTraco.length){
+    _av+='<div style="background:rgba(248,113,113,.09);border:1px solid rgba(248,113,113,.35);border-radius:13px;padding:11px 14px;margin-bottom:12px">'+
+      '<div style="font-size:12.5px;font-weight:800;color:#f87171">'+_at.traco+': '+_alg.graveTraco.map(_algNome).join(', ')+'</div>'+
+      '<div style="font-size:11px;color:var(--text2);margin-top:3px">'+_at.tracoExp+'</div></div>';
+  }
+  if(_alg.leveIng.length||_alg.leveTraco.length){
+    var _l=_alg.leveIng.map(_algNome).concat(_alg.leveTraco.map(function(t){return _algNome(t)+' ('+_at.traco.toLowerCase()+')';}));
+    _av+='<div style="background:var(--goldBg2);border:1px solid rgba(240,180,41,.35);border-radius:13px;padding:11px 14px;margin-bottom:12px">'+
+      '<div style="font-size:12.5px;font-weight:800;color:var(--goldInk)">'+_at.intol+': '+_l.join(', ')+'</div></div>';
+  }
+  if(!(p.alerg&&p.alerg.length) && (_algDo().graves.length||_algDo().leves.length)){
+    _av+='<div style="font-size:11px;color:var(--text3);background:var(--surface2);border-radius:11px;padding:9px 12px;margin-bottom:12px;line-height:1.55">'+_at.semDados+'</div>';
+  }
   function val(x){ return (x===undefined||x===null)?null:Math.round(x*10)/10; }
   var h='<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">';
   if(p.img) h+='<img src="'+p.img+'" alt="" style="width:52px;height:52px;border-radius:12px;object-fit:cover;background:var(--surface2);flex-shrink:0">';
   h+='<div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:800;color:var(--text);line-height:1.3">'+p.nome+'</div>'+
    (p.marca?'<div style="font-size:12px;color:var(--text3);margin-top:2px">'+p.marca+'</div>':'')+'</div></div>';
+  h+=_av;
   h+='<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:6px">';
   var linhas=[["kcal",Math.round(p.kcal)],["P",val(p.prot)],["C",val(p.carb)],["G",val(p.fat)],["F",val(p.fib)]];
   linhas.forEach(function(x){
@@ -5042,7 +5161,19 @@ function bcResultado(){
   });
   h+='</div><div style="font-size:10px;color:var(--text3);margin-bottom:16px">'+(p.liq?t.por100ml:t.por100)+'</div>';
   if(faltando) h+='<div style="font-size:11px;color:var(--goldInk);background:var(--goldBg2);border:1px solid rgba(240,180,41,.3);border-radius:11px;padding:9px 11px;margin-bottom:14px;line-height:1.5">'+t.incompleto+'</div>';
-  h+='<div style="font-size:11px;color:var(--text3);font-weight:700;margin-bottom:6px">'+(p.liq?t.ml:t.gramas)+(p.porcao?(' &middot; '+t.porcao+': '+p.porcao):'')+'</div>';
+    /* Unidades naturais: ninguem sabe quantos gramas tem uma fatia.
+     So aparece quando a base traz serving_quantity do fabricante —
+     nunca inventamos o peso de uma porcao. */
+  if(p.porcaoQtd){
+    h+='<div style="font-size:11px;color:var(--text3);font-weight:700;margin-bottom:6px">'+_at.quantas+
+       ' <span style="color:var(--text2);font-weight:600">('+_at.cada+' '+p.porcaoQtd+un+')</span></div>';
+    h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">';
+    h+='<span onclick="bcPorcoes(-1)" style="cursor:pointer;user-select:none;width:44px;height:44px;border-radius:13px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--text)">&minus;</span>';
+    h+='<input id="bcPorc" type="number" inputmode="decimal" step="0.5" min="0" value="1" oninput="bcDePorcoes()" style="flex:1;text-align:center;padding:12px;border-radius:13px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:17px;font-weight:800">';
+    h+='<span onclick="bcPorcoes(1)" style="cursor:pointer;user-select:none;width:44px;height:44px;border-radius:13px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--text)">+</span>';
+    h+='</div>';
+  }
+h+='<div style="font-size:11px;color:var(--text3);font-weight:700;margin-bottom:6px">'+(p.liq?t.ml:t.gramas)+(p.porcao?(' &middot; '+t.porcao+': '+p.porcao):'')+'</div>';
   h+='<input id="bcQtd" type="number" inputmode="numeric" value="'+g+'" oninput="bcPreview()" style="width:100%;padding:12px 14px;border-radius:13px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:15px;font-weight:700;box-sizing:border-box;margin-bottom:12px">';
   h+='<div style="font-size:11px;color:var(--text3);font-weight:700;margin-bottom:6px">'+t.refeicao+'</div>';
   var tt=(T[currentLang]||T.pt);
@@ -5057,6 +5188,30 @@ function bcResultado(){
   h+='<span onclick="bcAdicionar()" style="display:block;text-align:center;padding:14px;border-radius:15px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:15px;font-weight:800;cursor:pointer">'+t.add+'</span>';
   h+='<div style="text-align:center;font-size:10px;color:var(--text3);margin-top:12px">'+t.fonte+'</div>';
   _bcCard(h); bcPreview();
+}
+function bcPorcoes(d){
+  var e=document.getElementById("bcPorc"); if(!e) return;
+  var v=(parseFloat(e.value)||0)+d; if(v<0) v=0;
+  e.value=Math.round(v*2)/2; bcDePorcoes();
+}
+function bcDePorcoes(){
+  var e=document.getElementById("bcPorc"), q=document.getElementById("bcQtd");
+  if(!e||!q||!_bcProd||!_bcProd.porcaoQtd) return;
+  var n=parseFloat(e.value)||0;
+  q.value=Math.round(n*_bcProd.porcaoQtd);
+  bcPreview();
+}
+function _algAvisoT(){
+  var L=(typeof currentLang!=="undefined"&&currentLang)||"pt";
+  var D={
+   pt:{contem:"Contém o que você não pode comer",marcouAlergia:"Você marcou isto como alergia no seu perfil.",traco:"Pode conter traços",tracoExp:"O fabricante avisa que pode haver contaminação cruzada.",intol:"Atenção",semDados:"Este produto não declara alérgenos na base. Isso não quer dizer que não contenha — confira o rótulo.",quantas:"Quantas porções?",cada:"cada"},
+   en:{contem:"Contains something you cannot eat",marcouAlergia:"You marked this as an allergy in your profile.",traco:"May contain traces",tracoExp:"The maker warns about possible cross-contamination.",intol:"Heads up",semDados:"This product declares no allergens in the database. That does not mean it has none — check the label.",quantas:"How many servings?",cada:"each"},
+   es:{contem:"Contiene algo que no puedes comer",marcouAlergia:"Lo marcaste como alergia en tu perfil.",traco:"Puede contener trazas",tracoExp:"El fabricante advierte de posible contaminación cruzada.",intol:"Atención",semDados:"Este producto no declara alérgenos en la base. Eso no significa que no los tenga — revisa la etiqueta.",quantas:"¿Cuántas porciones?",cada:"cada"},
+   it:{contem:"Contiene qualcosa che non puoi mangiare",marcouAlergia:"L'hai segnato come allergia nel tuo profilo.",traco:"Può contenere tracce",tracoExp:"Il produttore avvisa di possibile contaminazione crociata.",intol:"Attenzione",semDados:"Questo prodotto non dichiara allergeni nella banca dati. Non significa che non ne contenga — controlla l'etichetta.",quantas:"Quante porzioni?",cada:"ognuna"},
+   fr:{contem:"Contient ce que vous ne pouvez pas manger",marcouAlergia:"Vous l'avez marqué comme allergie dans votre profil.",traco:"Peut contenir des traces",tracoExp:"Le fabricant signale une contamination croisée possible.",intol:"Attention",semDados:"Ce produit ne déclare aucun allergène dans la base. Cela ne veut pas dire qu'il n'en contient pas — vérifiez l'étiquette.",quantas:"Combien de portions ?",cada:"chacune"},
+   de:{contem:"Enthält etwas, das du nicht essen kannst",marcouAlergia:"Du hast das im Profil als Allergie markiert.",traco:"Kann Spuren enthalten",tracoExp:"Der Hersteller warnt vor möglicher Kreuzkontamination.",intol:"Achtung",semDados:"Für dieses Produkt sind in der Datenbank keine Allergene angegeben. Das heißt nicht, dass keine enthalten sind — prüfe das Etikett.",quantas:"Wie viele Portionen?",cada:"je"}
+  };
+  return D[L]||D.pt;
 }
 function bcPreview(){
   var p=_bcProd; if(!p) return;
