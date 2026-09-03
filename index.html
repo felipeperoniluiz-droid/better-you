@@ -957,9 +957,9 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
     <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:14px 16px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:13px;font-weight:700;color:#f0b429;" data-i18n="meuPlano">Meu Plano</span><span style="background:#f0b429;color:#000;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;">PRO</span></div><div style="font-size:12px;color:#b0b8c1;" data-i18n="planoValor">Plano: <b style="color:var(--text);">€8,99/mês</b></div><div id="planoStatus" style="font-size:11px;color:#34d399;margin-top:4px;"></div><div id="planoAcoes" style="margin-top:9px;"></div></div><div style="margin:6px 0 14px"><div class="input-label" data-i18n="objetivoLabel">Objetivo</div><div class="goal-toggle">
     <button class="goal-btn active" id="goal-mass" onclick="setGoal('mass')">Ganhar Massa</button>
     <button class="goal-btn" id="goal-cut" onclick="setGoal('cut')">Emagrecer</button>
-  </div></div><button class="btn btn-primary" onclick="saveProfile()" style="margin-top:12px;" data-i18n="salvarAplicar">Salvar e Aplicar</button>
+  </div></div><div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:9px" id="algTitulo">Alergias e intolerâncias</div><div id="algBox"></div></div>
     <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
-      <div id="gdprBox" style="margin-bottom:16px"></div>
+      
       <div id="authUserInfo" style="font-size:11px;color:var(--text2);text-align:center;margin-bottom:8px;"></div>
       <div style="margin-bottom:14px;">
         <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;" data-i18n="conexoesTitulo">Dispositivos</div>
@@ -975,7 +975,9 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
       </div>
             <button class="btn btn-ghost" onclick="belEsquecerConfirm()" style="width:100%;margin-bottom:8px;color:var(--text2);border-color:rgba(139,149,163,.3);" data-i18n="esquecerMemoria">Apagar memória da Bel</button>
       <button class="btn btn-ghost" onclick="doSignOut()" style="width:100%;color:#f87171;border-color:rgba(248,113,113,.3);" data-i18n="sairConta">Sair da conta</button>
-          <div style="margin-top:14px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--text2);line-height:1.6" data-i18n="avisoMedico">O Better You é uma ferramenta de acompanhamento e não substitui consulta com médico ou nutricionista. Procure um profissional antes de mudanças importantes na alimentação, e sempre em caso de gravidez, doença crônica ou uso de medicamentos.</div><div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:9px" id="algTitulo">Alergias e intolerâncias</div><div id="algBox"></div></div><div id="legalPerfil" style="font-size:11px;text-align:center;margin-top:12px;line-height:1.9"><a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkPriv">Política de Privacidade</a><span style="color:var(--text2);margin:0 8px">&middot;</span><a href="termos.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkTermos">Termos de Uso</a></div>
+          <div style="margin-top:14px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--text2);line-height:1.6" data-i18n="avisoMedico">O Better You é uma ferramenta de acompanhamento e não substitui consulta com médico ou nutricionista. Procure um profissional antes de mudanças importantes na alimentação, e sempre em caso de gravidez, doença crônica ou uso de medicamentos.</div><div id="legalPerfil" style="font-size:11px;text-align:center;margin-top:12px;line-height:1.9"><a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkPriv">Política de Privacidade</a><span style="color:var(--text2);margin:0 8px">&middot;</span><a href="termos.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkTermos">Termos de Uso</a></div>
+      <div style="margin-top:18px"><button class="btn btn-primary" onclick="saveProfile()" style="margin-top:12px;" data-i18n="salvarAplicar">Salvar e Aplicar</button></div>
+      <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border)"><div id="gdprBox" style="margin-bottom:16px"></div></div>
     </div>
   </div>
 </div>
@@ -4882,6 +4884,179 @@ var BC_TXT={
  fr:{t:"Code-barres",mire:"Visez le code-barres de l emballage",buscando:"Recherche du produit...",por100:"pour 100 g",por100ml:"pour 100 ml",porcao:"Portion",gramas:"Quantite (g)",ml:"Quantite (ml)",add:"Ajouter",refeicao:"Repas",naoAchou:"Produit introuvable",naoAchouSub:"La base est collaborative et ne contient pas tous les produits. Vous pouvez photographier l etiquette, Bel lira les valeurs.",foto:"Photographier l etiquette",manual:"Saisir manuellement",semCam:"Je n ai pas pu ouvrir la camera. Verifiez l autorisation du navigateur.",semLib:"Je n ai pas pu charger le lecteur. Verifiez votre connexion.",fonte:"Donnees : Open Food Facts",semFibra:"pas de donnee",cancelar:"Annuler",incompleto:"Il manque des valeurs pour ce produit dans la base. Verifiez avant d enregistrer.",digitar:"Ca ne lit pas ? Saisir le numero",digiteSub:"Tapez les chiffres imprimes sous le code-barres.",buscar:"Rechercher",voltarCam:"Retour a la camera",tirarFoto:"Prendre une photo du code",lendoFoto:"Lecture de la photo...",naoLeu:"Je n ai pas pu lire le code",naoLeuSub:"L image doit etre nette. Approchez jusqu a ce que le code occupe la largeur, tenez ferme et laissez la mise au point se faire. Ou tapez les chiffres.",tentar:"Reessayer"},
  de:{t:"Barcode",mire:"Richte die Kamera auf den Barcode der Verpackung",buscando:"Produkt wird gesucht...",por100:"pro 100 g",por100ml:"pro 100 ml",porcao:"Portion",gramas:"Menge (g)",ml:"Menge (ml)",add:"Hinzufuegen",refeicao:"Mahlzeit",naoAchou:"Dieses Produkt haben wir nicht gefunden",naoAchouSub:"Die Datenbank wird von der Community gepflegt und enthaelt nicht jedes Produkt. Du kannst das Etikett fotografieren, Bel liest die Werte.",foto:"Etikett fotografieren",manual:"Manuell eingeben",semCam:"Ich konnte die Kamera nicht oeffnen. Pruefe die Browser-Berechtigung.",semLib:"Ich konnte den Scanner nicht laden. Pruefe deine Verbindung.",fonte:"Daten: Open Food Facts",semFibra:"kein Wert",cancelar:"Abbrechen",incompleto:"Bei diesem Produkt fehlen Werte in der Datenbank. Pruefe sie vor dem Speichern.",digitar:"Liest nicht? Nummer eingeben",digiteSub:"Gib die Ziffern unter dem Barcode ein.",buscar:"Suchen",voltarCam:"Zurueck zur Kamera",tirarFoto:"Foto vom Barcode machen",lendoFoto:"Foto wird gelesen...",naoLeu:"Ich konnte den Barcode nicht lesen",naoLeuSub:"Das Bild muss scharf sein. Geh so nah heran, dass der Barcode die Breite fuellt, halte still und warte auf den Fokus. Oder gib die Ziffern ein.",tentar:"Nochmal versuchen"}
 };
+/* Textos do modo Mercado. Um bloco so, nos 6 idiomas, para nao haver
+   caminho em que o cliente veja metade da tela na lingua errada. */
+var MC_TXT={
+ pt:{consumo:"Comi isto",mercado:"Mercado",titulo:"Modo Mercado",destaque:"Mercado",
+  sub:"A Bel lê o rótulo por você, antes de o produto entrar no carrinho.",
+  b1t:"Confere as suas alergias",b1d:"Compara o rótulo com o seu perfil",
+  b2t:"Ficha completa do produto",b2d:"Nutri-Score, aditivos, processamento",
+  b3t:"Decide no corredor",b3d:"Resposta em segundos",
+  escanear:"Escanear produto",ultimos:"Últimos lidos",vale:"Vale a pena?",
+  suasAlergias:"As suas alergias no Perfil:",
+  semAlergias:"Você ainda não marcou alergias. Marque no Perfil para a Bel avisar.",
+  alterar:"Alterar",registrar:"Registrar no diário",comiIsto:"Na verdade, comi isto",
+  semDado:"A base não traz este dado para este produto.",
+  naoDeclara:"Este produto não declara alérgenos na base. Isso não quer dizer que não contenha — confira o rótulo.",
+  nenhumAlerg:"Nenhum dos alérgenos que você marcou aparece no rótulo.",
+  lAlerg:"Alérgenos",lAdit:"Aditivos",lNutri:"Nutri-Score",lNova:"Processamento",
+  lIngr:"Ingredientes",lSal:"Sal e açúcar",lPalma:"Óleo de palma",lVegan:"Vegano",
+  eAlerg:"Comparado com o que você marcou no Perfil. A base nem sempre traz tudo — confira o rótulo.",
+  eAdit:"Substâncias adicionadas na indústria. O numero vem do rótulo, não e conta nossa.",
+  eNutri:"Escala oficial da União Europeia, de A a E. Calculada pela fórmula da UE.",
+  eNova:"Classificação da Universidade de São Paulo, usada pela Open Food Facts.",
+  eIngr:"Lista longa costuma indicar mais processamento.",
+  eSal:"Valores por 100 g declarados no rótulo.",
+  ePalma:"Derivado da análise dos ingredientes pela Open Food Facts.",
+  eVegan:"Derivado da análise dos ingredientes pela Open Food Facts.",
+  nova1:"Alimento in natura ou minimamente processado",nova2:"Ingrediente culinário processado",
+  nova3:"Alimento processado",nova4:"Ultraprocessado",
+  palmaNao:"Sem óleo de palma",palmaSim:"Contém óleo de palma",
+  veganSim:"Vegano",veganNao:"Não e vegano",vegetSim:"Vegetariano",
+  sal:"sal",açúcar:"acucar",gordSat:"gordura saturada",por100:"por 100 g",
+  itens:"itens",nenhum:"nenhum",naoLevaria:"Não levaria",contem:"Contém"},
+ en:{consumo:"I ate this",mercado:"Shopping",titulo:"Shopping mode",destaque:"Shopping",
+  sub:"Bel reads the label for you, before the product goes in the trolley.",
+  b1t:"Checks your allergies",b1d:"Compares the label with your profile",
+  b2t:"Full product breakdown",b2d:"Nutri-Score, additives, processing",
+  b3t:"Decide in the aisle",b3d:"An answer in seconds",
+  escanear:"Scan product",ultimos:"Recently scanned",vale:"Worth buying?",
+  suasAlergias:"Your allergies in your profile:",
+  semAlergias:"You have not marked any allergies yet. Mark them in your profile so Bel can warn you.",
+  alterar:"Change",registrar:"Log it",comiIsto:"Actually, I ate this",
+  semDado:"The database does not have this for this product.",
+  naoDeclara:"This product declares no allergens in the database. That does not mean it contains none — check the label.",
+  nenhumAlerg:"None of the allergens you marked appear on the label.",
+  lAlerg:"Allergens",lAdit:"Additives",lNutri:"Nutri-Score",lNova:"Processing",
+  lIngr:"Ingredients",lSal:"Salt and sugar",lPalma:"Palm oil",lVegan:"Vegan",
+  eAlerg:"Compared with what you marked in your profile. The database is not always complete — check the label.",
+  eAdit:"Substances added in manufacturing. The count comes from the label, not from us.",
+  eNutri:"Official European Union scale, A to E, calculated with the EU formula.",
+  eNova:"Classification from the University of Sao Paulo, used by Open Food Facts.",
+  eIngr:"A long list usually means more processing.",
+  eSal:"Values per 100 g as declared on the label.",
+  ePalma:"Derived from the ingredient analysis by Open Food Facts.",
+  eVegan:"Derived from the ingredient analysis by Open Food Facts.",
+  nova1:"Unprocessed or minimally processed food",nova2:"Processed culinary ingredient",
+  nova3:"Processed food",nova4:"Ultra-processed",
+  palmaNao:"No palm oil",palmaSim:"Contains palm oil",
+  veganSim:"Vegan",veganNao:"Not vegan",vegetSim:"Vegetarian",
+  sal:"salt",açúcar:"sugar",gordSat:"saturated fat",por100:"per 100 g",
+  itens:"items",nenhum:"none",naoLevaria:"I would not buy it",contem:"Contains"},
+ es:{consumo:"Comi esto",mercado:"Compra",titulo:"Modo Compra",destaque:"Compra",
+  sub:"Bel lee la etiqueta por ti, antes de que el producto entre en el carro.",
+  b1t:"Revisa tus alergias",b1d:"Compara la etiqueta con tu perfil",
+  b2t:"Ficha completa del producto",b2d:"Nutri-Score, aditivos, procesamiento",
+  b3t:"Decide en el pasillo",b3d:"Respuesta en segundos",
+  escanear:"Escanear producto",ultimos:"Últimos escaneados",vale:"¿Vale la pena?",
+  suasAlergias:"Tus alergias en el perfil:",
+  semAlergias:"Todavía no has marcado alergias. Márcalas en el perfil para que Bel te avise.",
+  alterar:"Cambiar",registrar:"Registrar",comiIsto:"En realidad, comi esto",
+  semDado:"La base no tiene este dato para este producto.",
+  naoDeclara:"Este producto no declara alérgenos en la base. Eso no significa que no los contenga — revisa la etiqueta.",
+  nenhumAlerg:"Ninguno de los alérgenos que marcaste aparece en la etiqueta.",
+  lAlerg:"Alérgenos",lAdit:"Aditivos",lNutri:"Nutri-Score",lNova:"Procesamiento",
+  lIngr:"Ingredientes",lSal:"Sal y azúcar",lPalma:"Aceite de palma",lVegan:"Vegano",
+  eAlerg:"Comparado con lo que marcaste en el perfil. La base no siempre está completa — revisa la etiqueta.",
+  eAdit:"Sustancias añadidas en la industria. El número viene de la etiqueta, no es cuenta nuestra.",
+  eNutri:"Escala oficial de la Unión Europea, de A a E, con la fórmula de la UE.",
+  eNova:"Clasificación de la Universidad de São Paulo, usada por Open Food Facts.",
+  eIngr:"Una lista larga suele indicar mas procesamiento.",
+  eSal:"Valores por 100 g declarados en la etiqueta.",
+  ePalma:"Derivado del análisis de ingredientes de Open Food Facts.",
+  eVegan:"Derivado del análisis de ingredientes de Open Food Facts.",
+  nova1:"Alimento sin procesar o mínimamente procesado",nova2:"Ingrediente culinario procesado",
+  nova3:"Alimento procesado",nova4:"Ultraprocesado",
+  palmaNao:"Sin aceite de palma",palmaSim:"Contiene aceite de palma",
+  veganSim:"Vegano",veganNao:"No es vegano",vegetSim:"Vegetariano",
+  sal:"sal",açúcar:"azúcar",gordSat:"grasa saturada",por100:"por 100 g",
+  itens:"elementos",nenhum:"ninguno",naoLevaria:"No lo llevaria",contem:"Contiene"},
+ it:{consumo:"Ho mangiato questo",mercado:"Spesa",titulo:"Modalità Spesa",destaque:"Spesa",
+  sub:"Bel legge l'etichetta per te, prima che il prodotto finisca nel carrello.",
+  b1t:"Controlla le tue allergie",b1d:"Confronta l'etichetta con il tuo profilo",
+  b2t:"Scheda completa del prodotto",b2d:"Nutri-Score, additivi, lavorazione",
+  b3t:"Decidi nella corsia",b3d:"Risposta in pochi secondi",
+  escanear:"Scansiona il prodotto",ultimos:"Ultimi letti",vale:"Ne vale la pena?",
+  suasAlergias:"Le tue allergie nel profilo:",
+  semAlergias:"Non hai ancora indicato allergie. Indicale nel profilo così Bel può avvisarti.",
+  alterar:"Modifica",registrar:"Registra",comiIsto:"In realtà l'ho mangiato",
+  semDado:"La banca dati non ha questo dato per questo prodotto.",
+  naoDeclara:"Questo prodotto non dichiara allergeni nella banca dati. Non significa che non ne contenga — controlla l'etichetta.",
+  nenhumAlerg:"Nessuno degli allergeni che hai indicato compare sull'etichetta.",
+  lAlerg:"Allergeni",lAdit:"Additivi",lNutri:"Nutri-Score",lNova:"Lavorazione",
+  lIngr:"Ingredienti",lSal:"Sale e zucchero",lPalma:"Olio di palma",lVegan:"Vegano",
+  eAlerg:"Confrontato con quanto hai indicato nel profilo. La banca dati non è sempre completa — controlla l'etichetta.",
+  eAdit:"Sostanze aggiunte nella produzione. Il numero viene dall'etichetta, non è un nostro calcolo.",
+  eNutri:"Scala ufficiale dell'Unione Europea, da A a E, con la formula UE.",
+  eNova:"Classificazione dell'Università di San Paolo, usata da Open Food Facts.",
+  eIngr:"Una lista lunga di solito indica una lavorazione maggiore.",
+  eSal:"Valori per 100 g dichiarati in etichetta.",
+  ePalma:"Ricavato dall'analisi degli ingredienti di Open Food Facts.",
+  eVegan:"Ricavato dall'analisi degli ingredienti di Open Food Facts.",
+  nova1:"Alimento non lavorato o poco lavorato",nova2:"Ingrediente culinario lavorato",
+  nova3:"Alimento lavorato",nova4:"Ultra-lavorato",
+  palmaNao:"Senza olio di palma",palmaSim:"Contiene olio di palma",
+  veganSim:"Vegano",veganNao:"Non è vegano",vegetSim:"Vegetariano",
+  sal:"sale",açúcar:"zucchero",gordSat:"grassi saturi",por100:"per 100 g",
+  itens:"voci",nenhum:"nessuno",naoLevaria:"Non lo prenderei",contem:"Contiene"},
+ fr:{consumo:"J'ai mangé ceci",mercado:"Courses",titulo:"Mode Courses",destaque:"Courses",
+  sub:"Bel lit l'étiquette pour vous, avant que le produit n'entre dans le chariot.",
+  b1t:"Vérifie vos allergies",b1d:"Compare l'étiquette à votre profil",
+  b2t:"Fiche complète du produit",b2d:"Nutri-Score, additifs, transformation",
+  b3t:"Décidez dans le rayon",b3d:"Une réponse en quelques secondes",
+  escanear:"Scanner le produit",ultimos:"Derniers scannés",vale:"Ça vaut le coup ?",
+  suasAlergias:"Vos allergies dans le profil :",
+  semAlergias:"Vous n'avez pas encore indiqué d'allergies. Indiquez-les dans le profil pour que Bel vous prévienne.",
+  alterar:"Modifier",registrar:"Enregistrer",comiIsto:"En fait, je l'ai mange",
+  semDado:"La base n'a pas cette donnée pour ce produit.",
+  naoDeclara:"Ce produit ne déclare aucun allergène dans la base. Cela ne veut pas dire qu'il n'en contient pas — vérifiez l'étiquette.",
+  nenhumAlerg:"Aucun des allergènes que vous avez indiqués n'apparaît sur l'étiquette.",
+  lAlerg:"Allergènes",lAdit:"Additifs",lNutri:"Nutri-Score",lNova:"Transformation",
+  lIngr:"Ingrédients",lSal:"Sel et sucre",lPalma:"Huile de palme",lVegan:"Vegan",
+  eAlerg:"Comparé à ce que vous avez indiqué dans le profil. La base n'est pas toujours complète — vérifiez l'étiquette.",
+  eAdit:"Substances ajoutées en fabrication. Le nombre vient de l'étiquette, ce n'est pas notre calcul.",
+  eNutri:"Échelle officielle de l'Union européenne, de A à E, selon la formule de l'UE.",
+  eNova:"Classification de l'Université de São Paulo, utilisee par Open Food Facts.",
+  eIngr:"Une liste longue indique souvent une transformation plus poussée.",
+  eSal:"Valeurs pour 100 g déclarées sur l'étiquette.",
+  ePalma:"Déduit de l'analyse des ingredients par Open Food Facts.",
+  eVegan:"Déduit de l'analyse des ingredients par Open Food Facts.",
+  nova1:"Aliment brut ou peu transformé",nova2:"Ingrédient culinaire transformé",
+  nova3:"Aliment transformé",nova4:"Ultra-transformé",
+  palmaNao:"Sans huile de palme",palmaSim:"Contient de l'huile de palme",
+  veganSim:"Vegan",veganNao:"Non vegan",vegetSim:"Végétarien",
+  sal:"sel",açúcar:"sucre",gordSat:"acides gras saturés",por100:"pour 100 g",
+  itens:"éléments",nenhum:"aucun",naoLevaria:"Je ne le prendrais pas",contem:"Contient"},
+ de:{consumo:"Das habe ich gegessen",mercado:"Einkauf",titulo:"Modus Einkauf",destaque:"Einkauf",
+  sub:"Bel liest das Etikett für dich, bevor das Produkt in den Wagen kommt.",
+  b1t:"Prüft deine Allergien",b1d:"Vergleicht das Etikett mit deinem Profil",
+  b2t:"Vollständige Produktübersicht",b2d:"Nutri-Score, Zusatzstoffe, Verarbeitung",
+  b3t:"Entscheide im Gang",b3d:"Antwort in Sekunden",
+  escanear:"Produkt scannen",ultimos:"Zuletzt gescannt",vale:"Lohnt es sich?",
+  suasAlergias:"Deine Allergien im Profil:",
+  semAlergias:"Du hast noch keine Allergien markiert. Markiere sie im Profil, damit Bel dich warnen kann.",
+  alterar:"Ändern",registrar:"Eintragen",comiIsto:"Eigentlich habe ich es gegessen",
+  semDado:"Die Datenbank hat diese Angabe für dieses Produkt nicht.",
+  naoDeclara:"Dieses Produkt gibt in der Datenbank keine Allergene an. Das heisst nicht, dass keine enthalten sind — prüfe das Etikett.",
+  nenhumAlerg:"Keines der von dir markierten Allergene steht auf dem Etikett.",
+  lAlerg:"Allergene",lAdit:"Zusatzstoffe",lNutri:"Nutri-Score",lNova:"Verarbeitung",
+  lIngr:"Zutaten",lSal:"Salz und Zucker",lPalma:"Palmöl",lVegan:"Vegan",
+  eAlerg:"Verglichen mit dem, was du im Profil markiert hast. Die Datenbank ist nicht immer vollstaendig — prüfe das Etikett.",
+  eAdit:"In der Herstellung zugesetzte Stoffe. Die Zahl stammt vom Etikett, nicht von uns.",
+  eNutri:"Offizielle EU-Skala von A bis E, berechnet nach der EU-Formel.",
+  eNova:"Klassifikation der Universität São Paulo, genutzt von Open Food Facts.",
+  eIngr:"Eine lange Liste deutet meist auf stärkere Verarbeitung hin.",
+  eSal:"Werte pro 100 g laut Etikett.",
+  ePalma:"Abgeleitet aus der Zutatenanalyse von Open Food Facts.",
+  eVegan:"Abgeleitet aus der Zutatenanalyse von Open Food Facts.",
+  nova1:"Unverarbeitetes oder kaum verarbeitetes Lebensmittel",nova2:"Verarbeitete Kochzutat",
+  nova3:"Verarbeitetes Lebensmittel",nova4:"Hochverarbeitet",
+  palmaNao:"Ohne Palmöl",palmaSim:"Enthält Palmöl",
+  veganSim:"Vegan",veganNao:"Nicht vegan",vegetSim:"Vegetarisch",
+  sal:"Salz",açúcar:"Zucker",gordSat:"gesättigte Fettsäuren",por100:"pro 100 g",
+  itens:"Einträge",nenhum:"keine",naoLevaria:"Ich würde es nicht kaufen",contem:"Enthält"}
+};
+
 function _bcT(){ return BC_TXT[currentLang]||BC_TXT.pt; }
 var _bcProd=null,_bcRef="lanche";
 function _bcCorpo(){ return document.getElementById("bcCorpo"); }
@@ -4891,6 +5066,24 @@ function _bcCard(html){ var c=_bcCorpo(); if(c) c.innerHTML=html; }
    O leitor anterior, em JavaScript puro, nao decodificava os quadros que o Safari entrega. */
 var _bcOcupado=false,_bcStream=null,_bcTimer=null;
 var BC_FORMATOS=["EAN-13","EAN-8","UPC-A","UPC-E","Code128"];
+/* Foto do cartao do modo Mercado. Embutida, nao linkada: um app pago nao
+   pode depender de um servidor de terceiros para desenhar a propria tela. */
+var BC_FOTO_MERCADO="data:image/jpeg;base64,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";
+/* consumo = "comi isto"  |  mercado = "devo levar?" */
+var _bcModo="consumo";
+function _bcModoSet(m){
+  _bcModo=(m==="mercado")?"mercado":"consumo";
+  try{ state.bcModo=_bcModo; save(); }catch(e){}
+  try{
+    var h=document.getElementById("bcTitulo");
+    if(h) h.textContent=(_bcModo==="mercado")?_mcT().vale:_bcT().t;
+  }catch(e){}
+  /* Com um produto ja lido, trocar de modo troca a vista do MESMO produto.
+     Voltar para a camera aqui obrigaria a escanear de novo. */
+  if(_bcProd){ bcResultado(); return; }
+  bcAbrir();
+}
+function _mcT(){ return MC_TXT[currentLang]||MC_TXT.pt; }
 function bcCarregarLib(){
   return new Promise(function(res,rej){
     if(window.ZXingWASM) return res();
@@ -4994,17 +5187,81 @@ function _algT(){
   };
   return D[L]||D.pt;
 }
-function bcAbrir(){
-  var el=document.getElementById("bcOverlay"); if(!el) return; setTimeout(_histSincronizar,30);
-  _bcProd=null; el.style.display="flex";
+/* ── Os dois modos do leitor ─────────────────────────────────────────────
+   consumo: "comi isto" -> quantidade e registro no diario
+   mercado: "devo levar?" -> ficha do produto com os blocos              */
+function _bcAba(k,rot){
+  var on=(_bcModo===k);
+  return '<span onclick="_bcModoSet(\''+k+'\')" style="flex:1;text-align:center;padding:10px 6px;border-radius:11px;cursor:pointer;font-size:12.5px;font-weight:800;'+
+   (on?'background:var(--gold);color:#1a1206':'color:var(--text2)')+'">'+rot+'</span>';
+}
+function _bcBarraModos(){
+  var m=_mcT();
+  return '<div style="display:flex;gap:6px;background:var(--surface2);border-radius:14px;padding:4px;margin-bottom:14px">'+
+   _bcAba("consumo",m.consumo)+_bcAba("mercado",m.mercado)+'</div>';
+}
+function _bcCamHtml(){
   var t=_bcT();
-  _bcCard('<div style="position:relative;width:100%;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#000">'+
+  return '<div style="position:relative;width:100%;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#000">'+
    '<video id="bcVideo" playsinline muted autoplay style="width:100%;height:100%;object-fit:cover"></video>'+
    '<div style="position:absolute;left:4%;right:4%;top:28%;height:44%;border:2px solid rgba(240,180,41,.9);border-radius:10px"></div></div>'+
    '<div style="text-align:center;font-size:13px;color:var(--text2);margin-top:14px">'+t.mire+'</div>'+
    '<div onclick="bcFoto()" style="text-align:center;font-size:14px;font-weight:800;margin-top:14px;padding:13px;border-radius:14px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;cursor:pointer">'+t.tirarFoto+'</div>'+
-   '<div onclick="bcDigitar()" style="text-align:center;font-size:12px;color:var(--text3);font-weight:700;margin-top:9px;padding:10px;cursor:pointer">'+t.digitar+'</div>');
+   '<div onclick="bcDigitar()" style="text-align:center;font-size:12px;color:var(--text3);font-weight:700;margin-top:9px;padding:10px;cursor:pointer">'+t.digitar+'</div>';
+}
+/* Tarja com as alergias marcadas. Quando esta vazia vira convite:
+   o cliente precisa saber ANTES de escanear que a Bel nao tem o que comparar. */
+function _bcTarjaAlergias(){
+  var m=_mcT(), a=_algDo();
+  var g=a.graves.map(function(x){ return '<span style="color:var(--red)">'+_algNome(x)+'</span>'; });
+  var l=a.leves.map(function(x){ return '<span style="color:var(--goldInk)">'+_algNome(x)+'</span>'; });
+  var lista=g.concat(l).join(", ");
+  var txt = lista ? (m.suasAlergias+' '+lista+'.') : m.semAlergias;
+  return '<div style="background:var(--surface2);border-radius:14px;padding:11px 12px;margin-top:12px;font-size:11px;color:var(--text3);line-height:1.55">'+
+    txt+' <span onclick="bcFechar();openProfile()" style="color:var(--text2);text-decoration:underline;cursor:pointer">'+m.alterar+'</span></div>';
+}
+/* Cartao de apresentacao do Mercado, no molde do cartao da Foto IA. */
+function bcMercadoIntro(){
+  bcParar();
+  var m=_mcT(), t=_bcT();
+  try{ var h=document.getElementById("bcTitulo"); if(h) h.textContent=m.vale; }catch(e){}
+  var tit=m.titulo, d=m.destaque;
+  if(d && tit.indexOf(d)>=0) tit=tit.split(d).join('<span style="color:var(--gold)">'+d+'</span>');
+  function ben(a,b){
+    return '<div style="display:flex;gap:7px;align-items:flex-start">'+
+      '<span style="color:var(--gold);font-size:13px;line-height:1.35;flex-shrink:0">&#9679;</span>'+
+      '<div><div style="font-size:10.5px;font-weight:700;color:var(--goldInk)">'+a+'</div>'+
+      '<div style="font-size:10px;color:var(--text3);line-height:1.4">'+b+'</div></div></div>';
+  }
+  var h='<div style="background:linear-gradient(135deg,var(--surface2),var(--surface3));border:1px solid rgba(240,180,41,.25);border-radius:18px;padding:18px;margin-bottom:12px">'+
+   '<div style="display:grid;grid-template-columns:1fr 1fr;gap:13px;align-items:center">'+
+    '<div><span style="background:#f0b429;color:#000;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:.5px">PRO</span>'+
+     '<div style="font-size:25px;font-weight:800;margin:10px 0 7px;line-height:1.12;color:var(--text)">'+tit+'</div>'+
+     '<div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-bottom:14px">'+m.sub+'</div>'+
+     '<div style="display:flex;flex-direction:column;gap:10px">'+ben(m.b1t,m.b1d)+ben(m.b2t,m.b2d)+ben(m.b3t,m.b3d)+'</div></div>'+
+    '<div style="position:relative">'+
+     '<img src="'+BC_FOTO_MERCADO+'" alt="" style="width:100%;height:196px;object-fit:cover;border-radius:14px;display:block">'+
+     '<div style="position:absolute;inset:0;border-radius:14px;border:2px solid rgba(240,180,41,.5);pointer-events:none"></div></div>'+
+   '</div></div>'+
+   '<div onclick="bcCamera()" style="text-align:center;font-size:14px;font-weight:800;padding:14px;border-radius:15px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;cursor:pointer">'+m.escanear+'</div>'+
+   '<div onclick="bcDigitar()" style="text-align:center;font-size:12px;color:var(--text3);font-weight:700;margin-top:9px;padding:10px;cursor:pointer">'+t.digitar+'</div>'+
+   _bcTarjaAlergias();
+  _bcCard(_bcBarraModos()+h);
+}
+/* Abre a camera dentro do modo em que o cliente esta. */
+function bcCamera(){
+  var t=_bcT();
+  _bcCard(_bcBarraModos()+_bcCamHtml());
   bcCarregarLib().then(bcIniciar).catch(function(){ bcAviso(t.semLib); });
+}
+function bcAbrir(){
+  var el=document.getElementById("bcOverlay"); if(!el) return; setTimeout(_histSincronizar,30);
+  _bcProd=null; el.style.display="flex";
+  try{ if(state && state.bcModo) _bcModo=state.bcModo; }catch(e){}
+  var m=_mcT(), t=_bcT();
+  try{ var h=document.getElementById("bcTitulo"); if(h) h.textContent=(_bcModo==="mercado")?m.vale:t.t; }catch(e){}
+  if(_bcModo==="mercado"){ bcMercadoIntro(); return; }
+  bcCamera();
 }
 function bcIniciar(){
   var t=_bcT(), v=document.getElementById("bcVideo"); if(!v) return;
@@ -5053,7 +5310,7 @@ function bcAviso(msg){
 function bcBuscar(cod){
   var t=_bcT();
   _bcCard('<div style="padding:34px 6px;text-align:center;color:var(--text2);font-size:13px">'+t.buscando+'<div style="font-size:11px;color:var(--text3);margin-top:6px">'+cod+'</div></div>');
-  var campos="product_name,product_name_pt,brands,nutriments,serving_size,serving_quantity,quantity,image_small_url,allergens_tags,traces_tags";
+  var campos="product_name,product_name_pt,brands,nutriments,serving_size,serving_quantity,quantity,image_small_url,allergens_tags,traces_tags,nutriscore_grade,nova_group,additives_tags,ingredients_n,ingredients_text,ingredients_text_pt,ingredients_analysis_tags";
   fetch("https://world.openfoodfacts.org/api/v2/product/"+encodeURIComponent(cod)+".json?fields="+campos)
    .then(function(r){ return r.json(); })
    .then(function(d){
@@ -5064,7 +5321,12 @@ function bcBuscar(cod){
      if(kcal===undefined){ bcNaoAchou(cod); return; }
      _bcProd={cod:cod,nome:(p.product_name_pt||p.product_name||cod),marca:(p.brands||"").split(",")[0].trim(),
        kcal:+kcal, prot:n.proteins_100g, carb:n.carbohydrates_100g, fat:n.fat_100g, fib:n.fiber_100g,
-       porcao:p.serving_size||"", porcaoQtd:(typeof p.serving_quantity==="number"?p.serving_quantity:null),alerg:(p.allergens_tags||[]), tracos:(p.traces_tags||[]), img:p.image_small_url||"", liq:/ml|l$|litro|litre/i.test(p.quantity||"")};
+       porcao:p.serving_size||"", porcaoQtd:(typeof p.serving_quantity==="number"?p.serving_quantity:null),alerg:(p.allergens_tags||[]), tracos:(p.traces_tags||[]), img:p.image_small_url||"", liq:/ml|l$|litro|litre/i.test(p.quantity||""),
+       qtd:(p.quantity||""),
+       nutri:(p.nutriscore_grade||"").toLowerCase(), nova:(typeof p.nova_group==="number"?p.nova_group:null),
+       adit:(p.additives_tags||[]), ingrN:(typeof p.ingredients_n==="number"?p.ingredients_n:null),
+       ingrTxt:(p.ingredients_text_pt||p.ingredients_text||""), analise:(p.ingredients_analysis_tags||[]),
+       sal:n.salt_100g, acu:n.sugars_100g, sat:n["saturated-fat_100g"]};
      bcResultado();
    })
    .catch(function(){ bcNaoAchou(cod); });
@@ -5115,14 +5377,9 @@ function bcNaoAchou(cod){
 }
 /* extrai o numero da porcao declarada ("37.5 g", "1 portion (330 ml)") */
 function _bcPorcaoNum(s){ if(!s) return 0; var m=String(s).match(/([\d.,]+)\s*(g|ml)/i); if(!m) return 0; var v=parseFloat(m[1].replace(",",".")); return (v>0&&v<2000)?Math.round(v):0; }
-function bcResultado(){
-  var t=_bcT(), p=_bcProd; if(!p) return;
-  var un=p.liq?"ml":"g";
-  var g=_bcPorcaoNum(p.porcao)||100;
-  var faltando=(p.prot===undefined||p.carb===undefined||p.fat===undefined);
-  /* Alerta de alergeno: comparacao literal entre o que o rotulo declara
-     e o que o cliente marcou. Nunca dizemos que e seguro — ausencia de
-     dado nao e ausencia de alergeno. */
+/* Faixa de alerta de alergeno. Usada pelas duas telas: a comparacao e
+   a mesma, so o entorno muda. */
+function _bcAvisoAlergia(p){
   var _alg=algConferir(p.alerg,p.tracos);
   var _at=_algAvisoT();
   var _av='';
@@ -5145,6 +5402,147 @@ function bcResultado(){
   if(!(p.alerg&&p.alerg.length) && (_algDo().graves.length||_algDo().leves.length)){
     _av+='<div style="font-size:11px;color:var(--text3);background:var(--surface2);border-radius:11px;padding:9px 12px;margin-bottom:12px;line-height:1.55">'+_at.semDados+'</div>';
   }
+  return _av;
+}
+/* ── Ficha do modo Mercado ───────────────────────────────────────────────
+   Cada bloco e um dado que alguem mediu e publicou. Quando a base nao tem,
+   o bloco fica vazio e diz que nao tem — nunca preenchemos por estimativa. */
+var _mcSel=0;
+function _mcLimpaTag(t){ return String(t||"").replace(/^[a-z]{2}:/,"").replace(/-/g," "); }
+function _mcAnalise(p,alvo){
+  var a=p.analise||[];
+  for(var i=0;i<a.length;i++) if(a[i]===alvo) return true;
+  return false;
+}
+function _mcNum(v,un){ return (v===undefined||v===null)?null:(Math.round(v*100)/100)+un; }
+function _mcBlocos(p){
+  var m=_mcT(), at=_algAvisoT(), alg=algConferir(p.alerg,p.tracos), r=[];
+
+  var nAl=(p.alerg||[]).length;
+  var corAl=(alg.graveIng.length||alg.graveTraco.length)?"var(--red)":
+            ((alg.leveIng.length||alg.leveTraco.length)?"var(--goldInk)":"var(--text2)");
+  var corpoAl;
+  if(nAl){
+    corpoAl=p.alerg.map(_algNome).join(", ");
+    if(p.tracos&&p.tracos.length) corpoAl+=" &middot; "+at.traco+": "+p.tracos.map(_algNome).join(", ");
+    if(!alg.graveIng.length&&!alg.graveTraco.length&&!alg.leveIng.length&&!alg.leveTraco.length)
+      corpoAl+="<br><span style=\"color:var(--green)\">"+m.nenhumAlerg+"</span>";
+  } else corpoAl=m.naoDeclara;
+  r.push({n:nAl?String(nAl):"0",cor:corAl,lab:m.lAlerg,tit:m.lAlerg,corpo:corpoAl,exp:m.eAlerg});
+
+  var nAd=(p.adit||[]).length;
+  r.push({n:String(nAd),cor:nAd>3?"var(--goldInk)":"var(--text2)",lab:m.lAdit,tit:m.lAdit,
+    corpo: nAd? p.adit.map(function(t){ return _mcLimpaTag(t).toUpperCase(); }).join(" &middot; ") : m.nenhum,
+    exp:m.eAdit});
+
+  var g=(p.nutri||"").toUpperCase();
+  var corN={A:"var(--green)",B:"var(--green)",C:"var(--goldInk)",D:"var(--goldInk)",E:"var(--red)"}[g]||"var(--text3)";
+  r.push({n:g||"—",cor:corN,lab:m.lNutri,tit:m.lNutri+(g?" "+g:""),
+    corpo:g?(m.lNutri+" "+g):m.semDado, exp:m.eNutri});
+
+  var nv=p.nova;
+  r.push({n:nv?String(nv):"—",cor:(nv===4?"var(--red)":(nv===3?"var(--goldInk)":(nv?"var(--green)":"var(--text3)"))),
+    lab:m.lNova,tit:nv?("NOVA "+nv):m.lNova,
+    corpo:nv?m["nova"+nv]:m.semDado, exp:m.eNova});
+
+  var ni=p.ingrN;
+  r.push({n:ni?String(ni):"—",cor:"var(--text2)",lab:m.lIngr,
+    tit:(ni?(ni+" "+m.itens):m.lIngr),
+    corpo:(p.ingrTxt?p.ingrTxt:m.semDado), exp:m.eIngr});
+
+  var sal=_mcNum(p.sal," g"), acu=_mcNum(p.acu," g"), sat=_mcNum(p.sat," g");
+  var lin=[];
+  if(sal!==null) lin.push(m.sal+": "+sal);
+  if(acu!==null) lin.push(m.acucar+": "+acu);
+  if(sat!==null) lin.push(m.gordSat+": "+sat);
+  r.push({n:"",ico:"sal",cor:"var(--text2)",lab:m.lSal,tit:m.lSal,
+    corpo: lin.length? (lin.join(" &middot; ")+" <span style=\"color:var(--text3)\">("+m.por100+")</span>") : m.semDado,
+    exp:m.eSal});
+
+  var semPalma=_mcAnalise(p,"en:palm-oil-free"), comPalma=_mcAnalise(p,"en:palm-oil");
+  r.push({n:"",ico:"gota",cor:semPalma?"var(--green)":(comPalma?"var(--goldInk)":"var(--text3)"),
+    lab:m.lPalma,tit:semPalma?m.palmaNao:(comPalma?m.palmaSim:m.lPalma),
+    corpo:(semPalma||comPalma)?(semPalma?m.palmaNao:m.palmaSim):m.semDado, exp:m.ePalma});
+
+  var veg=_mcAnalise(p,"en:vegan"), naoVeg=_mcAnalise(p,"en:non-vegan"), vt=_mcAnalise(p,"en:vegetarian");
+  r.push({n:"",ico:"folha",cor:veg?"var(--green)":(naoVeg?"var(--red)":"var(--text3)"),
+    lab:m.lVegan,tit:veg?m.veganSim:(naoVeg?m.veganNao:(vt?m.vegetSim:m.lVegan)),
+    corpo:(veg||naoVeg||vt)?(veg?m.veganSim:(naoVeg?m.veganNao:m.vegetSim)):m.semDado, exp:m.eVegan});
+
+  return r;
+}
+function _mcIco(k,cor){
+  var d={sal:'<circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/>',
+         gota:'<path d="M12 3s6 6.4 6 10.2A6 6 0 0 1 6 13.2C6 9.4 12 3 12 3z"/>',
+         folha:'<path d="M4 20C4 12 10 5 20 4c0 10-7 16-16 16z"/><path d="M4 20c4-4 8-6 12-8"/>'}[k]||'';
+  return '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="'+cor+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+d+'</svg>';
+}
+function mcSel(i){ _mcSel=i; _mcPinta(); }
+function _mcPinta(){
+  var p=_bcProd; if(!p) return;
+  var B=_mcBlocos(p), c=document.getElementById("mcBlocos"), d=document.getElementById("mcDet");
+  if(!c||!d) return;
+  if(_mcSel<0||_mcSel>=B.length) _mcSel=0;
+  c.innerHTML=B.map(function(x,k){
+    var on=(k===_mcSel);
+    return '<div onclick="mcSel('+k+')" style="cursor:pointer;background:'+(on?"var(--goldBg2)":"var(--surface2)")+
+      ';border:1px solid '+(on?"rgba(240,180,41,.55)":"transparent")+';border-radius:13px;padding:10px 11px;display:flex;align-items:center;gap:8px">'+
+      (x.ico? '<span style="width:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0">'+_mcIco(x.ico,x.cor)+'</span>'
+            : '<span style="width:24px;height:24px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;color:'+x.cor+';flex-shrink:0">'+x.n+'</span>')+
+      '<span style="font-size:12px;font-weight:700;color:'+(on?"var(--goldInk)":"var(--text)")+';line-height:1.25">'+x.lab+'</span></div>';
+  }).join("");
+  var x=B[_mcSel];
+  d.innerHTML='<div style="font-size:13px;color:var(--text);font-weight:800;margin-bottom:5px">'+x.tit+'</div>'+
+    '<div style="font-size:12.5px;color:var(--text2);line-height:1.6">'+x.corpo+'</div>'+
+    '<div style="font-size:11.5px;color:var(--text3);line-height:1.55;margin-top:7px">'+x.exp+'</div>';
+}
+function bcResMercado(){
+  var m=_mcT(), p=_bcProd; if(!p) return;
+  _mcSel=0;
+  try{ var hh=document.getElementById("bcTitulo"); if(hh) hh.textContent=m.vale; }catch(e){}
+  var g=(p.nutri||"").toUpperCase();
+  var corN={A:"var(--green)",B:"var(--green)",C:"var(--goldInk)",D:"var(--goldInk)",E:"var(--red)"}[g]||"var(--text3)";
+
+  var h='<div style="background:var(--surface2);border-radius:16px;padding:11px 12px;display:flex;align-items:center;gap:10px;margin-bottom:11px">';
+  h+= p.img? '<img src="'+p.img+'" alt="" style="width:44px;height:44px;border-radius:11px;object-fit:cover;background:var(--surface3);flex-shrink:0">'
+           : '<div style="width:44px;height:44px;border-radius:11px;background:var(--surface3);flex-shrink:0"></div>';
+  h+='<div style="flex:1;min-width:0"><div style="font-size:14px;color:var(--text);font-weight:800;line-height:1.25">'+p.nome+'</div>'+
+     '<div style="font-size:11.5px;color:var(--text3)">'+[p.marca,p.qtd].filter(Boolean).join(" &middot; ")+'</div></div>';
+  if(g) h+='<div style="border:1.5px solid '+corN+';border-radius:12px;padding:5px 11px;text-align:center">'+
+     '<div style="font-size:17px;font-weight:800;color:'+corN+';line-height:1">'+g+'</div>'+
+     '<div style="font-size:8px;color:var(--text3);letter-spacing:.3px">NUTRI</div></div>';
+  h+='</div>';
+
+  h+=_bcAvisoAlergia(p);
+  h+='<div id="mcBlocos" style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:11px"></div>';
+  h+='<div id="mcDet" style="background:var(--surface2);border-radius:16px;padding:12px 13px;min-height:92px;margin-bottom:12px"></div>';
+  h+='<div onclick="_bcParaConsumo()" style="text-align:center;padding:12px;border-radius:14px;border:1px solid var(--border);color:var(--text2);font-size:12.5px;font-weight:700;cursor:pointer;margin-bottom:9px">'+m.comiIsto+'</div>';
+  h+='<div onclick="bcCamera()" style="text-align:center;padding:13px;border-radius:14px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:13px;font-weight:800;cursor:pointer">'+m.escanear+'</div>';
+  h+='<div style="font-size:10px;color:var(--text3);text-align:center;margin-top:10px">'+_bcT().fonte+'</div>';
+
+  _bcCard(_bcBarraModos()+h);
+  _mcPinta();
+}
+/* "Na verdade, comi isto": leva o mesmo produto para a tela de registro. */
+function _bcParaConsumo(){
+  _bcModo="consumo";
+  try{ state.bcModo="consumo"; save(); }catch(e){}
+  bcResConsumo();
+}
+/* Despachante: a mesma leitura, duas telas. */
+function bcResultado(){
+  if(_bcModo==="mercado") return bcResMercado();
+  return bcResConsumo();
+}
+function bcResConsumo(){
+  var t=_bcT(), p=_bcProd; if(!p) return;
+  var un=p.liq?"ml":"g";
+  var g=_bcPorcaoNum(p.porcao)||100;
+  var faltando=(p.prot===undefined||p.carb===undefined||p.fat===undefined);
+  /* Alerta de alergeno: comparacao literal entre o que o rotulo declara
+     e o que o cliente marcou. Nunca dizemos que e seguro — ausencia de
+     dado nao e ausencia de alergeno. */
+  var _av=_bcAvisoAlergia(p);
   function val(x){ return (x===undefined||x===null)?null:Math.round(x*10)/10; }
   var h='<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">';
   if(p.img) h+='<img src="'+p.img+'" alt="" style="width:52px;height:52px;border-radius:12px;object-fit:cover;background:var(--surface2);flex-shrink:0">';
@@ -5187,7 +5585,9 @@ h+='<div style="font-size:11px;color:var(--text3);font-weight:700;margin-bottom:
   h+='<div id="bcPrev" style="text-align:center;font-size:13px;color:var(--text2);margin-bottom:14px"></div>';
   h+='<span onclick="bcAdicionar()" style="display:block;text-align:center;padding:14px;border-radius:15px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:15px;font-weight:800;cursor:pointer">'+t.add+'</span>';
   h+='<div style="text-align:center;font-size:10px;color:var(--text3);margin-top:12px">'+t.fonte+'</div>';
-  _bcCard(h); bcPreview();
+  /* barra de modos tambem aqui: quem escaneou para comer pode querer
+     ver a ficha do mesmo produto sem escanear de novo */
+  _bcCard(_bcBarraModos()+h); bcPreview();
 }
 function bcPorcoes(d){
   var e=document.getElementById("bcPorc"); if(!e) return;
