@@ -2463,8 +2463,8 @@ window._NAVIC={barras:'<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"current
 /* ---- navegacao de 3 botoes: sheets e estado ---- */
 var _NAVGRUPO={hoje:"hoje",dieta:"bel",peso:"mais",hist:"mais",relatorios:"mais",agua:"mais",calc:"mais",jejum:"mais",sono:"mais",mais:"mais",foto:null};
 var _SHEETS={
-  mais:{t:"navMais",itens:[{tab:"peso",k:"peso",ic:"peso"},{tab:"hist",k:"hist",ic:"hist"},{tab:"relatorios",k:"navRelat",ic:"prog"},{tab:"agua",k:"agua",ic:"agua"},{tab:"jejum",k:"jejumNav",ic:"jejum"},{tab:"calc",k:"calcular",ic:"calc"},{fn:"openProfile",k:"profTitle",ic:"perfil"}]},
-  add:{t:"navRegistrar",itens:[{tab:"foto",k:"fotoIA",ic:"foto"},{fn:"bcAbrir",k:"bcItem",ic:"barras"},{fn:"irFotoCorpo",k:"subtabCorpo",ic:"corpo"},{fn:"irAdicionarAlimento",k:"addAlimento",ic:"add"},{tab:"agua",k:"agua",ic:"agua"},{fn:"sonoEditar",k:"calsonoItem",ic:"sono"}]}
+  mais:{t:"navMais",itens:[{tab:"peso",k:"peso",ic:"peso",d:"sdPeso"},{tab:"hist",k:"hist",ic:"hist",d:"sdHist"},{tab:"relatorios",k:"navRelat",ic:"prog",d:"sdRelat"},{tab:"agua",k:"agua",ic:"agua",d:"sdAgua"},{tab:"jejum",k:"jejumNav",ic:"jejum",d:"sdJejum"},{tab:"calc",k:"calcular",ic:"calc",d:"sdCalc"},{fn:"openProfile",k:"profTitle",ic:"perfil",d:"sdPerfil"}]},
+  add:{t:"navRegistrar",itens:[{tab:"foto",k:"fotoIA",ic:"foto",d:"sdFoto"},{fn:"bcAbrir",k:"bcItem",ic:"barras",d:"sdBarras"},{fn:"irFotoCorpo",k:"subtabCorpo",ic:"corpo",d:"sdCorpo"},{fn:"irAdicionarAlimento",k:"addAlimento",ic:"add",d:"sdAdd"},{tab:"agua",k:"agua",ic:"agua",d:"sdAgua"},{fn:"sonoEditar",k:"calsonoItem",ic:"sono",d:"sdSono"}]}
 };
 function _navIcone(n){ return (window._NAVIC&&window._NAVIC[n])||""; }
 function irFotoCorpo(){
@@ -2485,9 +2485,17 @@ function openSheet(k){ setTimeout(_histSincronizar,30);
   document.getElementById("sheetBody").innerHTML=cfg.itens.map(function(it){
     var rot=(t[it.k]||it.k).replace(/^[^A-Za-z\u00C0-\u017F0-9]+/,'').trim();
     var acao=it.fn?(it.fn+"()"):("navGo('"+it.tab+"')");
-    return "<div class=\"sheet-item\" onclick=\"closeSheet();"+acao+"\">"+_navIcone(it.ic)+"<span class=\"sheet-item-tx\">"+rot+"</span></div>";
+    /* A explicacao fica visivel, sem exigir toque: e no momento de escolher
+       que a duvida existe, e um menu com 6 nomes soltos nao ensina nada. */
+    var sub=it.d?tx(it.d):"";
+    return "<div class=\"sheet-item\" onclick=\"closeSheet();"+acao+"\">"+_navIcone(it.ic)+
+      "<span style=\"display:flex;flex-direction:column;gap:2px;min-width:0\">"+
+      "<span class=\"sheet-item-tx\">"+rot+"</span>"+
+      (sub?"<span style=\"font-size:11.5px;color:var(--text3);line-height:1.35;font-weight:500\">"+sub+"</span>":"")+
+      "</span></div>";
   }).join("");
   document.getElementById("sheetOv").classList.add("show");
+  try{ tourFolhaAbriu(); }catch(e){}
 }
 function closeSheet(){ var o=document.getElementById("sheetOv"); if(o)o.classList.remove("show"); }
 /* A Bel flutuante acompanha todas as telas. Clicando, abre o recado dela. */
@@ -3049,60 +3057,85 @@ var FREE_TXT={
    elemento real: se ele nao existir naquela conta, o passo e pulado em vez
    de apontar para o vazio. */
 var TOUR_TXT={
- pt:{pular:"Pular",prox:"Próximo",fim:"Entendi",de:"de",
+ pt:{pular:"Pular",toque:"Toque no + para abrir",esperando:"Estou esperando você tocar",prox:"Próximo",fim:"Entendi",de:"de",
   p:[["O seu dia em um anel","O centro mostra o que você já comeu. O anel se fecha conforme chega na sua meta — e o ponto laranja marca onde ela está."],
      ["Proteína, carboidrato e gordura","As três barras mostram como as calorias se dividiram. A proteína é a que mais importa se você treina."],
      ["Sono","Registre as horas e a Bel passa a cruzar sono com fome. Noites curtas costumam aparecer como fome no dia seguinte."],
      ["As suas refeições","Toque em qualquer refeição para adicionar o que comeu. O que você registra aqui alimenta todo o resto."],
-     ["Registrar","Este botão abre tudo: foto, código de barras, água, sono e alimento manual."],
-     ["A Bel","A sua nutricionista. Ela lê os seus dias e conta o que mudou na sua semana."],
+     ["Registrar","Toque no botão + aqui embaixo. É por ele que tudo entra no seu dia."],
+     ["Tudo o que dá para registrar","Cada linha diz o que faz. Foto IA para o prato pronto, código de barras para o que vem embalado, e o resto do seu dia."],
+     ["A Bel está sempre por perto","Arraste esta bolinha para onde não atrapalhar. Quando aparecer um ponto vermelho, é porque ela tem algo para te dizer."],
+     ["E aqui ela conversa","A sua nutricionista. Ela lê os seus dias e conta o que mudou na sua semana."],
      ["O resto está aqui","Peso, medidas, histórico, relatórios, jejum e a calculadora."]]},
- en:{pular:"Skip",prox:"Next",fim:"Got it",de:"of",
+ en:{pular:"Skip",toque:"Tap + to open",esperando:"Waiting for your tap",prox:"Next",fim:"Got it",de:"of",
   p:[["Your day in one ring","The centre shows what you have eaten. The ring closes as you reach your goal — the orange dot marks where it is."],
      ["Protein, carbs and fat","The three bars show how the calories split. Protein matters most if you train."],
      ["Sleep","Log your hours and Bel starts crossing sleep with hunger. Short nights often show up as hunger the next day."],
      ["Your meals","Tap any meal to add what you ate. What you log here feeds everything else."],
-     ["Log","This button opens everything: photo, barcode, water, sleep and manual food."],
-     ["Bel","Your nutritionist. She reads your days and tells you what changed in your week."],
+     ["Log","Tap the + button down here. Everything enters your day through it."],
+     ["Everything you can log","Each line says what it does. AI Photo for a plated meal, barcode for anything packaged, and the rest of your day."],
+     ["Bel is always within reach","Drag this bubble wherever it does not get in the way. A red dot means she has something to tell you."],
+     ["And here she talks","Your nutritionist. She reads your days and tells you what changed in your week."],
      ["Everything else is here","Weight, measurements, history, reports, fasting and the calculator."]]},
- es:{pular:"Saltar",prox:"Siguiente",fim:"Entendido",de:"de",
+ es:{pular:"Saltar",toque:"Toca + para abrir",esperando:"Esperando tu toque",prox:"Siguiente",fim:"Entendido",de:"de",
   p:[["Tu día en un anillo","El centro muestra lo que ya comiste. El anillo se cierra al acercarte a tu meta — el punto naranja marca dónde está."],
      ["Proteína, carbohidrato y grasa","Las tres barras muestran cómo se repartieron las calorías. La proteína es la que más importa si entrenas."],
      ["Sueño","Registra las horas y Bel empieza a cruzar sueño con hambre. Las noches cortas suelen aparecer como hambre al día siguiente."],
      ["Tus comidas","Toca cualquier comida para añadir lo que comiste. Lo que registras aquí alimenta todo lo demás."],
-     ["Registrar","Este botón abre todo: foto, código de barras, agua, sueño y alimento manual."],
-     ["Bel","Tu nutricionista. Lee tus días y te cuenta lo que cambió en tu semana."],
+     ["Registrar","Toca el botón + aquí abajo. Por ahí entra todo en tu día."],
+     ["Todo lo que puedes registrar","Cada línea dice lo que hace. Foto IA para el plato servido, código de barras para lo envasado, y el resto de tu día."],
+     ["Bel siempre está cerca","Arrastra esta burbuja adonde no estorbe. Si aparece un punto rojo, es que tiene algo que decirte."],
+     ["Y aquí ella conversa","Tu nutricionista. Lee tus días y te cuenta lo que cambió en tu semana."],
      ["El resto está aquí","Peso, medidas, historial, informes, ayuno y la calculadora."]]},
- it:{pular:"Salta",prox:"Avanti",fim:"Ho capito",de:"di",
+ it:{pular:"Salta",toque:"Tocca + per aprire",esperando:"Aspetto il tuo tocco",prox:"Avanti",fim:"Ho capito",de:"di",
   p:[["La tua giornata in un anello","Al centro c'è quello che hai mangiato. L'anello si chiude avvicinandoti all'obiettivo — il punto arancione segna dov'è."],
      ["Proteine, carboidrati e grassi","Le tre barre mostrano come si sono divise le calorie. Le proteine contano di più se ti alleni."],
      ["Sonno","Registra le ore e Bel inizia a incrociare sonno e fame. Le notti corte spesso tornano come fame il giorno dopo."],
      ["I tuoi pasti","Tocca un pasto per aggiungere quello che hai mangiato. Quello che registri qui alimenta tutto il resto."],
-     ["Registra","Questo pulsante apre tutto: foto, codice a barre, acqua, sonno e alimento manuale."],
-     ["Bel","La tua nutrizionista. Legge le tue giornate e ti dice cosa è cambiato nella settimana."],
+     ["Registra","Tocca il pulsante + qui sotto. Tutto entra nella tua giornata da lì."],
+     ["Tutto quello che puoi registrare","Ogni riga dice cosa fa. Foto IA per il piatto pronto, codice a barre per il confezionato, e il resto della giornata."],
+     ["Bel è sempre a portata di mano","Trascina questa bolla dove non dà fastidio. Un punto rosso significa che ha qualcosa da dirti."],
+     ["E qui lei parla","La tua nutrizionista. Legge le tue giornate e ti dice cosa è cambiato nella settimana."],
      ["Il resto è qui","Peso, misure, storico, report, digiuno e la calcolatrice."]]},
- fr:{pular:"Passer",prox:"Suivant",fim:"Compris",de:"sur",
+ fr:{pular:"Passer",toque:"Touchez + pour ouvrir",esperando:"J'attends votre geste",prox:"Suivant",fim:"Compris",de:"sur",
   p:[["Votre journée en un anneau","Le centre montre ce que vous avez mangé. L'anneau se ferme à mesure que vous approchez de votre objectif — le point orange le marque."],
      ["Protéines, glucides et lipides","Les trois barres montrent la répartition des calories. Les protéines comptent le plus si vous vous entraînez."],
      ["Sommeil","Enregistrez vos heures et Bel croise sommeil et faim. Les nuits courtes reviennent souvent en faim le lendemain."],
      ["Vos repas","Touchez un repas pour ajouter ce que vous avez mangé. Ce que vous notez ici nourrit tout le reste."],
-     ["Enregistrer","Ce bouton ouvre tout : photo, code-barres, eau, sommeil et aliment manuel."],
-     ["Bel","Votre nutritionniste. Elle lit vos journées et vous dit ce qui a changé dans votre semaine."],
+     ["Enregistrer","Touchez le bouton + en bas. Tout entre dans votre journée par là."],
+     ["Tout ce que vous pouvez noter","Chaque ligne dit ce qu'elle fait. Photo IA pour l'assiette, code-barres pour l'emballé, et le reste de votre journée."],
+     ["Bel est toujours à portée","Faites glisser cette bulle là où elle ne gêne pas. Un point rouge veut dire qu'elle a quelque chose à vous dire."],
+     ["Et ici elle parle","Votre nutritionniste. Elle lit vos journées et vous dit ce qui a changé dans votre semaine."],
      ["Le reste est ici","Poids, mesures, historique, rapports, jeûne et la calculatrice."]]},
- de:{pular:"Überspringen",prox:"Weiter",fim:"Verstanden",de:"von",
+ de:{pular:"Überspringen",toque:"Tippe auf +, um zu öffnen",esperando:"Ich warte auf deinen Tipp",prox:"Weiter",fim:"Verstanden",de:"von",
   p:[["Dein Tag in einem Ring","In der Mitte steht, was du gegessen hast. Der Ring schließt sich, je näher du deinem Ziel kommst — der orange Punkt markiert es."],
      ["Protein, Kohlenhydrate und Fett","Die drei Balken zeigen, wie sich die Kalorien verteilt haben. Protein zählt am meisten, wenn du trainierst."],
      ["Schlaf","Trage deine Stunden ein, und Bel verbindet Schlaf mit Hunger. Kurze Nächte zeigen sich oft als Hunger am nächsten Tag."],
      ["Deine Mahlzeiten","Tippe auf eine Mahlzeit, um einzutragen, was du gegessen hast. Was du hier erfasst, speist alles andere."],
-     ["Eintragen","Dieser Knopf öffnet alles: Foto, Barcode, Wasser, Schlaf und manuelle Eingabe."],
-     ["Bel","Deine Ernährungsberaterin. Sie liest deine Tage und sagt dir, was sich in deiner Woche verändert hat."],
+     ["Eintragen","Tippe unten auf den +-Knopf. Darüber kommt alles in deinen Tag."],
+     ["Alles, was du erfassen kannst","Jede Zeile sagt, was sie tut. KI-Foto für den fertigen Teller, Barcode für Verpacktes, und der Rest deines Tages."],
+     ["Bel ist immer in Reichweite","Zieh diese Blase dorthin, wo sie nicht stört. Ein roter Punkt heißt, sie hat dir etwas zu sagen."],
+     ["Und hier spricht sie","Deine Ernährungsberaterin. Sie liest deine Tage und sagt dir, was sich in deiner Woche verändert hat."],
      ["Der Rest ist hier","Gewicht, Maße, Verlauf, Berichte, Fasten und der Rechner."]]}
 };
-var TOUR_ALVOS=[".calorie-ring-wrap",".macro-row","#sleepCard","#mealsContainer",".navfab",
-                '.n3-item[data-g="bel"]','.n3-item[data-g="mais"]'];
+/* Alguns passos pedem que o cliente toque de verdade: aprender fazendo
+   gruda mais do que ler sobre. O passo do "+" espera o toque; o seguinte
+   so existe depois que a folha abriu. */
+var TOUR_PASSOS=[
+ {sel:".calorie-ring-wrap"},
+ {sel:".macro-row"},
+ {sel:"#sleepCard"},
+ {sel:"#mealsContainer"},
+ {sel:".navfab", toque:true},
+ {sel:"#sheetBody", naFolha:true},
+ {sel:"#belFab", fechaFolha:true},
+ {sel:'.n3-item[data-g="bel"]'},
+ {sel:'.n3-item[data-g="mais"]'}
+];
+var TOUR_ALVOS=TOUR_PASSOS.map(function(x){ return x.sel; });
 var _tourI=0;
 function _tourT(){ return TOUR_TXT[currentLang]||TOUR_TXT.pt; }
-function _tourEl(i){ try{ return document.querySelector(TOUR_ALVOS[i]); }catch(e){ return null; } }
+function _tourEl(i){ try{ return document.querySelector(TOUR_PASSOS[i].sel); }catch(e){ return null; } }
 function tourFechar(){
   var ov=document.getElementById("tourOv"); if(ov) ov.style.display="none";
   try{ state.tourVisto=true; state.dicaAdd=true; save(); }catch(e){}
@@ -3112,33 +3145,58 @@ function tourPasso(){
   var T=_tourT(), ov=document.getElementById("tourOv");
   if(!ov) return;
   /* pula alvos que nao existem nesta conta em vez de apontar para o vazio */
-  while(_tourI<TOUR_ALVOS.length && !_tourEl(_tourI)) _tourI++;
-  if(_tourI>=TOUR_ALVOS.length){ tourFechar(); return; }
+  while(_tourI<TOUR_PASSOS.length && !_tourEl(_tourI)) _tourI++;
+  if(_tourI>=TOUR_PASSOS.length){ tourFechar(); return; }
+  var cfg=TOUR_PASSOS[_tourI];
+
+  /* a folha fica aberta so enquanto o passo dela dura */
+  if(cfg.fechaFolha){ try{ closeSheet(); }catch(e){} }
+  if(cfg.naFolha){
+    var sb=document.getElementById("sheetBody");
+    if(!sb || !sb.offsetHeight){ _tourI++; return tourPasso(); }
+  }
+
   var el=_tourEl(_tourI);
-  try{ el.scrollIntoView({block:"center",behavior:"auto"}); }catch(e){}
+  if(!el){ _tourI++; return tourPasso(); }
+  try{ if(!cfg.naFolha) el.scrollIntoView({block:"center",behavior:"auto"}); }catch(e){}
   var r=el.getBoundingClientRect();
-  var vh=window.innerHeight||600, vw=window.innerWidth||360;
-  var pad=8;
+  var vh=window.innerHeight||600, pad=8;
   var foco=document.getElementById("tourFoco");
   foco.style.left=(r.left-pad)+"px"; foco.style.top=(r.top-pad)+"px";
   foco.style.width=(r.width+pad*2)+"px"; foco.style.height=(r.height+pad*2)+"px";
 
   var p=T.p[_tourI]||["",""];
-  var ultimo=(_tourI>=TOUR_ALVOS.length-1);
+  var ultimo=(_tourI>=TOUR_PASSOS.length-1);
   var cx=document.getElementById("tourCard");
+  var acao = cfg.toque
+    ? '<span style="flex:1.6;text-align:center;padding:13px;border-radius:14px;background:var(--goldBg2);border:1px solid rgba(240,180,41,.5);color:var(--goldInk);font-size:13px;font-weight:800">'+T.toque+'</span>'
+    : '<span onclick="tourProx()" style="flex:1.6;text-align:center;padding:13px;border-radius:14px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:13.5px;font-weight:800;cursor:pointer">'+(ultimo?T.fim:T.prox)+'</span>';
   cx.innerHTML=
-    '<div style="font-size:11px;color:var(--text3);letter-spacing:.5px;margin-bottom:6px">'+(_tourI+1)+' '+T.de+' '+TOUR_ALVOS.length+'</div>'+
+    '<div style="font-size:11px;color:var(--text3);letter-spacing:.5px;margin-bottom:6px">'+(_tourI+1)+' '+T.de+' '+TOUR_PASSOS.length+'</div>'+
     '<div style="font-size:16px;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:7px">'+p[0]+'</div>'+
     '<div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:16px">'+p[1]+'</div>'+
     '<div style="display:flex;gap:9px;align-items:center">'+
-      '<span onclick="tourFechar()" style="flex:1;text-align:center;padding:12px;border-radius:14px;color:var(--text3);font-size:13px;font-weight:700;cursor:pointer">'+T.pular+'</span>'+
-      '<span onclick="tourProx()" style="flex:1.6;text-align:center;padding:13px;border-radius:14px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:13.5px;font-weight:800;cursor:pointer">'+(ultimo?T.fim:T.prox)+'</span>'+
+      '<span onclick="tourFechar()" style="flex:1;text-align:center;padding:12px;border-radius:14px;color:var(--text3);font-size:13px;font-weight:700;cursor:pointer;pointer-events:auto">'+T.pular+'</span>'+
+      acao+
     '</div>';
   /* o cartao vai para o lado que tiver mais espaco, para nao cobrir o alvo */
   var embaixo = (r.top+r.height/2) < vh/2;
   cx.style.top = embaixo ? Math.min(vh-20, r.bottom+16)+"px" : "auto";
   cx.style.bottom = embaixo ? "auto" : Math.min(vh-20, vh-r.top+16)+"px";
+  /* No passo do toque a camada precisa deixar o dedo passar ate o botao;
+     nos outros ela bloqueia, para um toque perdido nao levar o cliente embora. */
+  ov.style.pointerEvents = cfg.toque ? "none" : "auto";
+  cx.style.pointerEvents = "auto";
   ov.style.display="block";
+}
+/* O toque de verdade no "+" e que faz o tour seguir. */
+function tourFolhaAbriu(){
+  try{
+    var ov=document.getElementById("tourOv");
+    if(!ov || ov.style.display!=="block") return;
+    var cfg=TOUR_PASSOS[_tourI];
+    if(cfg && cfg.toque) setTimeout(function(){ tourProx(); },320);
+  }catch(e){}
 }
 function tourComecar(){ _tourI=0; tourPasso(); }
 function tourTalvez(){
@@ -4445,6 +4503,18 @@ massa:{fmt:'texto',
    de:{k:'Fang an, wo es geht',t:'Der Körper reagiert auf das, was du wiederholst.',s:'Kein Studio und keine feste Uhrzeit nötig. Bel zählt, was du ohnehin tust, und hilft daraus Beständigkeit zu machen.'}}
 };
 var TX={
+ sdFoto:{pt:'Fotografe o prato e a IA calcula',en:'Photograph the plate and the AI works it out',es:'Fotografía el plato y la IA calcula',it:'Fotografa il piatto e l\'IA calcola',fr:'Photographiez l\'assiette, l\'IA calcule',de:'Fotografiere den Teller, die KI rechnet'},
+ sdBarras:{pt:'Leia o rótulo: para comer ou comprar',en:'Read the label: to eat or to buy',es:'Lee la etiqueta: para comer o comprar',it:'Leggi l\'etichetta: per mangiare o comprare',fr:'Lisez l\'étiquette : manger ou acheter',de:'Etikett lesen: essen oder kaufen'},
+ sdCorpo:{pt:'Fotos do seu antes e depois',en:'Photos of your before and after',es:'Fotos de tu antes y después',it:'Foto del tuo prima e dopo',fr:'Photos de votre avant et après',de:'Fotos von deinem Vorher und Nachher'},
+ sdAdd:{pt:'Buscar na base ou cadastrar o seu',en:'Search the database or add your own',es:'Buscar en la base o registrar el tuyo',it:'Cerca nel database o crea il tuo',fr:'Chercher dans la base ou créer le vôtre',de:'In der Datenbank suchen oder eigenes anlegen'},
+ sdAgua:{pt:'Registre quanto bebeu hoje',en:'Log how much you drank today',es:'Registra cuánto bebiste hoy',it:'Registra quanto hai bevuto oggi',fr:'Notez ce que vous avez bu aujourd\'hui',de:'Erfasse, wie viel du heute getrunken hast'},
+ sdSono:{pt:'Quantas horas você dormiu',en:'How many hours you slept',es:'Cuántas horas dormiste',it:'Quante ore hai dormito',fr:'Combien d\'heures vous avez dormi',de:'Wie viele Stunden du geschlafen hast'},
+ sdPeso:{pt:'Peso, medidas e gráficos',en:'Weight, measurements and charts',es:'Peso, medidas y gráficos',it:'Peso, misure e grafici',fr:'Poids, mesures et graphiques',de:'Gewicht, Maße und Diagramme'},
+ sdHist:{pt:'Todos os seus dias registrados',en:'Every day you have logged',es:'Todos tus días registrados',it:'Tutti i tuoi giorni registrati',fr:'Toutes vos journées enregistrées',de:'Alle deine erfassten Tage'},
+ sdRelat:{pt:'Projeções e análise da sua semana',en:'Projections and your week analysed',es:'Proyecciones y análisis de tu semana',it:'Proiezioni e analisi della settimana',fr:'Projections et analyse de votre semaine',de:'Prognosen und Analyse deiner Woche'},
+ sdJejum:{pt:'Cronômetro, fases e histórico',en:'Timer, phases and history',es:'Cronómetro, fases e historial',it:'Cronometro, fasi e storico',fr:'Minuteur, phases et historique',de:'Timer, Phasen und Verlauf'},
+ sdCalc:{pt:'Descubra a sua necessidade calórica',en:'Work out how much you need',es:'Descubre tu necesidad calórica',it:'Scopri il tuo fabbisogno calorico',fr:'Calculez vos besoins caloriques',de:'Ermittle deinen Kalorienbedarf'},
+ sdPerfil:{pt:'Seus dados, metas e alergias',en:'Your details, goals and allergies',es:'Tus datos, metas y alergias',it:'I tuoi dati, obiettivi e allergie',fr:'Vos données, objectifs et allergies',de:'Deine Daten, Ziele und Allergien'},
  fotoCamSub:{pt:'Tirar foto agora',en:'Take a photo now',es:'Sacar foto ahora',it:'Scatta ora',fr:'Prendre une photo',de:'Jetzt fotografieren'},
  fotoPasso1:{pt:'Tire uma foto de seu prato',en:'Take a photo of your plate',es:'Saca una foto de tu plato',it:'Scatta una foto del piatto',fr:'Photographiez votre assiette',de:'Fotografiere deinen Teller'},
  fotoPasso2:{pt:'A IA identifica os ingredientes',en:'The AI identifies the ingredients',es:'La IA identifica los ingredientes',it:'L\'IA identifica gli ingredienti',fr:'L\'IA identifie les ingrédients',de:'Die KI erkennt die Zutaten'},
@@ -8025,7 +8095,7 @@ function _qPassos(){ return 12+_qMetas.length+((_qResp&&_qResp.plano===0)||(_qRe
 <div id="dicaAdd" style="position:fixed;left:0;bottom:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:9992;display:none;align-items:flex-end;justify-content:center;padding:0 14px 96px;box-sizing:border-box"></div>
 <div id="voltarBar" onclick="navVoltar()" style="display:none;align-items:center;gap:7px;margin:0 0 12px;padding:8px 13px 8px 9px;border-radius:99px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;width:fit-content"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg><span data-rot="1">Voltar</span></div>
 <input type="file" id="bcFile" accept="image/*" capture="environment" onchange="bcArquivo(event)" style="display:none">
-<div id="tourOv" style="position:fixed;inset:0;z-index:9994;display:none;pointer-events:auto"><div id="tourFoco" style="position:fixed;border-radius:16px;border:2px solid #f0b429;box-shadow:0 0 0 9999px rgba(0,0,0,.72);transition:all .25s ease;pointer-events:none"></div><div id="tourCard" style="position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px 18px 18px;box-sizing:border-box;box-shadow:0 18px 44px rgba(0,0,0,.6)"></div></div>
+<div id="tourOv" style="position:fixed;inset:0;z-index:9991;display:none;pointer-events:auto"><div id="tourFoco" style="position:fixed;border-radius:16px;border:2px solid #f0b429;box-shadow:0 0 0 9999px rgba(0,0,0,.72);transition:all .25s ease;pointer-events:none"></div><div id="tourCard" style="position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px 18px 18px;box-sizing:border-box;box-shadow:0 18px 44px rgba(0,0,0,.6)"></div></div>
 <div id="fgOverlay" onclick="if(event.target===this)fgFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.72);z-index:9998;display:none;align-items:flex-end;justify-content:center"><div style="width:100%;max-width:430px;background:var(--surface);border-radius:22px 22px 0 0;padding:22px 20px 28px;box-sizing:border-box"><div id="fgCorpo"></div></div></div>
 <div id="expOverlay" onclick="if(event.target===this)expFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.72);z-index:9997;display:none;align-items:flex-end;justify-content:center"><div style="width:100%;max-width:430px;max-height:88vh;overflow:auto;background:var(--surface);border-radius:22px 22px 0 0;padding:18px 20px 28px;box-sizing:border-box"><div style="display:flex;justify-content:flex-end;margin-bottom:4px"><span onclick="expFechar()" style="width:32px;height:32px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);cursor:pointer;font-size:15px">&#10005;</span></div><div id="expCorpo"></div></div></div>
 <div id="bcOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.72);z-index:9995;display:none;align-items:flex-end;justify-content:center"><div style="width:100%;max-width:430px;max-height:92vh;overflow:auto;background:var(--surface);border-radius:22px 22px 0 0;padding:16px 18px 26px;box-sizing:border-box"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><span id="bcTitulo" style="font-size:16px;font-weight:800;color:var(--text)">Codigo de barras</span><span onclick="bcFechar()" style="width:32px;height:32px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);cursor:pointer;font-size:15px">&#10005;</span></div><div id="bcCorpo"></div></div></div>
