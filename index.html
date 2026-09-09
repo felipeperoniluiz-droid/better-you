@@ -4984,10 +4984,11 @@ function abrirResumoSemana(){
   /* A digitacao acontece aqui, na folha aberta — que e onde o cliente esta
      olhando. Era isso que faltava: ela corria numa tela que ninguem via. */
   gerarResumoSemana(false);
-  /* marca como lida e apaga o ponto de luz do cartao, sem mexer na folha */
+  /* Apaga o ponto de luz na hora, so por resposta visual. Quem MARCA como lida
+     e o _resumoMostrar, quando o texto realmente aparece — marcar aqui usava a
+     analise antiga, e se uma nova fosse gerada dentro da folha ela nascia "nao
+     lida" logo depois de o cliente ter acabado de ler. */
   try{
-    var r=state.resumoSemana;
-    if(r&&r.em&&state.resumoLido!==r.em){ state.resumoLido=r.em; save(); }
     var c=document.getElementById("avisoSemana");
     if(c){ var p=c.querySelector(".pontoLuz"); if(p) p.remove(); }
   }catch(e){}
@@ -5005,6 +5006,9 @@ function _resumoMostrar(texto,quando,animar){
   var d=new Date(quando);
   var q=("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2);
   var chave=String(quando)+":"+texto.length;
+  /* Lida = texto na tela do cliente. Vale para a analise em cache e para a que
+     acabou de ser gerada, que e o caso que o marcador antigo errava. */
+  try{ if(state.resumoLido!==quando){ state.resumoLido=quando; save(); } }catch(e){}
   if(animar===undefined) animar=!_resumoVistos[chave];
   /* A digitacao NAO consulta mais prefers-reduced-motion. Decisao do Felipe,
      09/09/2026, com a contrapartida dita: quem liga essa opcao no sistema
