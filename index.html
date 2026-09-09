@@ -621,9 +621,23 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
    ambiente que edita binario esta fora do ar. */
 var _al=document.getElementById("app-logo");
 if(_al){
-  _al.src="logo-dark.png";
-  var _a=document.getElementById("authLogo");if(_a)_a.src="logo-dark.png";
-  var _s=document.getElementById("splash-logo-img");if(_s)_s.src="logo-dark.png";
+  /* Guarda a logo antiga, que continua embutida no src acima, ANTES de trocar.
+     Ela vira a rede de seguranca: se o arquivo novo faltar no servidor, a logo
+     volta para esta em vez de sumir. Foi o que aconteceu em 09/09 — publiquei
+     o codigo apontando para dois PNGs que nao tinham subido, e a marca sumiu
+     de quatro telas. Codigo nao pode depender de um arquivo existir. */
+  window._LOGO_EMB=_al.getAttribute("src")||"";
+  window._logoReserva=function(img){
+    try{
+      if(!img||img.dataset.reserva) return;   /* uma vez so, senao entra em laco */
+      img.dataset.reserva="1";
+      if(window._LOGO_EMB) img.src=window._LOGO_EMB;
+    }catch(e){}
+  };
+  var _por=function(el){ if(!el) return; el.onerror=function(){ _logoReserva(el); }; el.src="logo-dark.png"; };
+  _por(_al);
+  _por(document.getElementById("authLogo"));
+  _por(document.getElementById("splash-logo-img"));
 }}catch(e){}</script><span id="pro-logo-badge">PRO</span>
   <div class="header-actions">
     <div class="icon-btn" id="headerProfileBtn" onclick="openProfile()"></div>
@@ -1504,13 +1518,18 @@ var LOGO_ARQ={dark:"logo-dark.png",light:"logo-light.png"};
 function aplicarLogo(tema){
   try{
     var arq=LOGO_ARQ[tema==="light"?"light":"dark"];
-    var cab=document.getElementById("app-logo");
-    if(cab) cab.src=arq;
-    var a=document.getElementById("authLogo"); if(a) a.src=arq;
-    var o=document.getElementById("obLogo");   if(o) o.src=arq;
+    function por(el,f){
+      if(!el) return;
+      delete el.dataset.reserva;              /* nova tentativa a cada troca de tema */
+      el.onerror=function(){ try{ _logoReserva(el); }catch(e){} };
+      el.src=f;
+    }
+    por(document.getElementById("app-logo"),arq);
+    por(document.getElementById("authLogo"),arq);
+    por(document.getElementById("obLogo"),arq);
     /* A abertura e sempre escura, entao ali vale sempre a versao prateada,
        independente do tema escolhido. */
-    var s=document.getElementById("splash-logo-img"); if(s) s.src=LOGO_ARQ.dark;
+    por(document.getElementById("splash-logo-img"),LOGO_ARQ.dark);
   }catch(e){}
 }
 function setTheme(t){
