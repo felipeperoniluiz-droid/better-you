@@ -4976,9 +4976,14 @@ function _resumoMostrar(texto,quando,animar){
      de qualquer jeito. */
   function _naTela(){
     try{
-      if(!alvo.offsetParent&&getComputedStyle(alvo).position!=="fixed") return false;
-      var r=alvo.getBoundingClientRect();
-      if(r.width<1||r.height<1) return false;
+      /* Medir o proprio alvo era o erro: ele esta VAZIO neste momento, logo tem
+         altura 0, e a checagem de altura reprovava sempre. O portao nunca abria
+         e a digitacao so comecava pelo teto de 3 s, com o cartao em branco no
+         meio tempo. Quem tem tamanho e a caixa que o contem. */
+      var ref=alvo.parentElement||alvo;
+      if(!ref.offsetParent&&getComputedStyle(ref).position!=="fixed") return false;
+      var r=ref.getBoundingClientRect();
+      if(r.width<1) return false;
       return r.top<(window.innerHeight||800)&&r.bottom>0;
     }catch(e){ return true; }
   }
