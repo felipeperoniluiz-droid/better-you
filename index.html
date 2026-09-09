@@ -85,7 +85,9 @@ body{display:flex;justify-content:center;}
 .belPonto:nth-child(2){animation-delay:.16s}.belPonto:nth-child(3){animation-delay:.32s}
 @keyframes belPisca{0%,49%{opacity:1}50%,100%{opacity:0}}
 #belCursor{display:inline-block;width:2px;height:1em;background:var(--goldInk);vertical-align:-2px;margin-left:1px;animation:belPisca 1s step-end infinite}
-@media (prefers-reduced-motion: reduce){.belPonto,#belCursor{animation:none}}
+/* Os pontinhos e o cursor da Bel seguem a mesma decisao da digitacao (09/09/2026):
+   nao consultam mais a preferencia. Pontinho parado nao passa a ideia de que ela
+   esta escrevendo, que e o ponto inteiro do efeito. */
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
 .card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;}
@@ -4906,10 +4908,14 @@ function _resumoMostrar(texto,quando,animar){
   var d=new Date(quando);
   var q=("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2);
   var chave=String(quando)+":"+texto.length;
-  var reduzir=false;
-  try{ reduzir=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches; }catch(e){}
   if(animar===undefined) animar=!_resumoVistos[chave];
-  if(reduzir) animar=false;
+  /* A digitacao NAO consulta mais prefers-reduced-motion. Decisao do Felipe,
+     09/09/2026, com a contrapartida dita: quem liga essa opcao no sistema
+     costuma ter motivo de saude. Fica valendo que (a) um toque revela o texto
+     inteiro na hora, que e a saida exigida pela WCAG 2.2.2 para conteudo que
+     se atualiza sozinho, e (b) o que e movimento no espaco — a respiracao da
+     logo na abertura — continua respeitando a preferencia, porque e esse tipo
+     de animacao que provoca enjoo, nao letra aparecendo. */
 
   el.innerHTML='<div id="resumoTexto" style="font-size:13.5px;line-height:1.6;color:var(--text);white-space:pre-wrap;cursor:'+(animar?"pointer":"default")+'"></div>'
     +'<div id="resumoRodape" style="font-size:11px;color:var(--text2);margin-top:8px;opacity:'+(animar?"0":"1")+';transition:opacity .3s">'+tx("semanaGeradoEm",q)+'</div>';
@@ -4935,7 +4941,10 @@ function _resumoMostrar(texto,quando,animar){
   function digitar(){
     if(_resumoTimer) return;
     _resumoTimer=setInterval(function(){
-      if(!document.getElementById("resumoTexto")){ clearInterval(_resumoTimer); _resumoTimer=null; return; }
+      /* Nao basta o id existir: se o cartao foi remontado, este `alvo` virou um
+         no solto fora da pagina e a digitacao escreveria num elemento que
+         ninguem ve — o texto ficava eternamente vazio na tela. */
+      if(alvo!==document.getElementById("resumoTexto")){ clearInterval(_resumoTimer); _resumoTimer=null; return; }
       i+=salto;
       if(i>=texto.length){ fim(); return; }
       alvo.textContent=texto.slice(0,i);
@@ -4950,7 +4959,7 @@ function _resumoMostrar(texto,quando,animar){
     alvo.innerHTML='<span class="belPonto"></span><span class="belPonto"></span><span class="belPonto"></span>';
     _resumoEspera=setTimeout(function(){
       _resumoEspera=null;
-      if(!document.getElementById("resumoTexto")) return;
+      if(alvo!==document.getElementById("resumoTexto")) return;
       alvo.textContent="";
       digitar();
     },520);
