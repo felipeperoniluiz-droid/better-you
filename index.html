@@ -4895,7 +4895,7 @@ function cardResumoSemana(){
 }
 /* Textos ja revelados nesta sessao. Reanimar o mesmo texto a cada visita
    impediria o cliente de reler o comeco sem esperar. */
-var _resumoVistos={}, _resumoTimer=null;
+var _resumoVistos={}, _resumoTimer=null, _resumoVigia=null, _resumoEspera=null;
 function _resumoPontos(){
   return '<div style="display:flex;align-items:center;gap:6px;padding:5px 0">'+
     '<span class="belPonto"></span><span class="belPonto"></span><span class="belPonto"></span>'+
@@ -4914,27 +4914,73 @@ function _resumoMostrar(texto,quando,animar){
   el.innerHTML='<div id="resumoTexto" style="font-size:13.5px;line-height:1.6;color:var(--text);white-space:pre-wrap;cursor:'+(animar?"pointer":"default")+'"></div>'
     +'<div id="resumoRodape" style="font-size:11px;color:var(--text2);margin-top:8px;opacity:'+(animar?"0":"1")+';transition:opacity .3s">'+tx("semanaGeradoEm",q)+'</div>';
   var alvo=document.getElementById("resumoTexto");
-  _resumoVistos[chave]=1;
   if(_resumoTimer){ clearInterval(_resumoTimer); _resumoTimer=null; }
-  if(!animar){ alvo.textContent=texto; return; }
+  if(_resumoEspera){ clearTimeout(_resumoEspera); _resumoEspera=null; }
+  if(_resumoVigia){ clearTimeout(_resumoVigia); _resumoVigia=null; }
+  if(!animar){ _resumoVistos[chave]=1; alvo.textContent=texto; return; }
 
   /* Tempo fixo de ~3,5 s, seja qual for o tamanho: um texto longo nao pode
      custar meio minuto de espera para ser lido. */
   var passos=140, salto=Math.max(1,Math.ceil(texto.length/passos)), i=0;
   var cur=document.createElement("span"); cur.id="belCursor";
   function fim(){
+    if(_resumoVigia){ clearTimeout(_resumoVigia); _resumoVigia=null; }
+    if(_resumoEspera){ clearTimeout(_resumoEspera); _resumoEspera=null; }
     if(_resumoTimer){ clearInterval(_resumoTimer); _resumoTimer=null; }
     alvo.textContent=texto; alvo.style.cursor="default";
     var r=document.getElementById("resumoRodape"); if(r) r.style.opacity="1";
   }
   alvo.onclick=fim;                      /* um toque revela tudo */
-  _resumoTimer=setInterval(function(){
-    if(!document.getElementById("resumoTexto")){ clearInterval(_resumoTimer); _resumoTimer=null; return; }
-    i+=salto;
-    if(i>=texto.length){ fim(); return; }
-    alvo.textContent=texto.slice(0,i);
-    alvo.appendChild(cur);
-  },25);
+
+  function digitar(){
+    if(_resumoTimer) return;
+    _resumoTimer=setInterval(function(){
+      if(!document.getElementById("resumoTexto")){ clearInterval(_resumoTimer); _resumoTimer=null; return; }
+      i+=salto;
+      if(i>=texto.length){ fim(); return; }
+      alvo.textContent=texto.slice(0,i);
+      alvo.appendChild(cur);
+    },25);
+  }
+  function comecar(){
+    if(_resumoTimer||_resumoEspera) return;
+    _resumoVistos[chave]=1;              /* so conta como visto quando roda de fato */
+    /* Meio segundo de pontinhos antes das letras: e o que faz parecer que ela
+       esta escrevendo agora, e nao que o texto ja estava pronto esperando. */
+    alvo.innerHTML='<span class="belPonto"></span><span class="belPonto"></span><span class="belPonto"></span>';
+    _resumoEspera=setTimeout(function(){
+      _resumoEspera=null;
+      if(!document.getElementById("resumoTexto")) return;
+      alvo.textContent="";
+      digitar();
+    },520);
+  }
+
+  /* So comeca quando o cartao esta mesmo na tela. Antes ele animava na hora de
+     montar a aba: quando o cliente chegava ali, a digitacao ja tinha acabado e
+     ele so via o texto pronto. Era o que estava acontecendo.
+
+     Cheguei a usar IntersectionObserver aqui e voltei atras: nao consegui
+     confirmar que ele dispara, e se falhar o texto fica EM BRANCO — falha pior
+     do que a que eu estava consertando. Uma verificacao a cada 200 ms e burra,
+     mas eu sei exatamente o que ela faz, e depois de 3 s ela desiste e escreve
+     de qualquer jeito. */
+  function _naTela(){
+    try{
+      if(!alvo.offsetParent&&getComputedStyle(alvo).position!=="fixed") return false;
+      var r=alvo.getBoundingClientRect();
+      if(r.width<1||r.height<1) return false;
+      return r.top<(window.innerHeight||800)&&r.bottom>0;
+    }catch(e){ return true; }
+  }
+  var _tent=0;
+  (function vigiar(){
+    _resumoVigia=null;
+    if(_resumoTimer||_resumoEspera) return;
+    if(alvo!==document.getElementById("resumoTexto")) return;   /* foi refeito */
+    if(_naTela()||_tent>=15){ comecar(); return; }              /* teto de ~3 s */
+    _tent++; _resumoVigia=setTimeout(vigiar,200);
+  })();
 }
 function gerarResumoSemana(forcar){
   var el=document.getElementById("resumoSemanaBox"); if(!el) return;
