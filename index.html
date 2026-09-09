@@ -2577,9 +2577,9 @@ function belRecado(){
     /* 4. agua bem abaixo, no fim do dia */
     var ag=state.waterMl||0, metaAg=state.waterGoal||0;
     if(hora>=17&&metaAg&&ag<metaAg*0.5) return {id:"agua",txt:R.agua.replace("{0}",ag).replace("{1}",metaAg)};
-    /* 5. resumo semanal, se houver */
-    var r=state.resumoSemana;
-    if(r&&r.texto) return {id:"semana"+(r.em||0),txt:r.texto};
+    /* 5. o resumo semanal saiu daqui: agora tem cartao proprio na aba da Bel,
+       com ponto de luz. Aparecer nos dois lugares era a mesma mensagem duas
+       vezes, e a segunda perde a forca. */
     if(itens>0) return {id:"ok",txt:R.tudoCerto};
     return null;
   }catch(e){ return null; }
@@ -4663,6 +4663,27 @@ var TX={
  semanaSemChave:{pt:'Configure sua chave de API no Perfil para a Bel analisar sua semana.',en:'Set your API key in Profile so Bel can analyse your week.',es:'Configura tu clave de API en Perfil para que Bel analice tu semana.'},
  semanaErro:{pt:'Não consegui gerar agora. Tente novamente.',en:'Could not generate right now. Try again.',es:'No pude generarlo ahora. Inténtalo de nuevo.'},
  semanaGeradoEm:{pt:'Análise de {0}',en:'Analysis from {0}',es:'Análisis del {0}'},
+ /* Avisos: o texto sai da tela de entrada e vira cartao. O amarelo so existe
+    quando a Bel tem algo especifico a dizer — belRecado() devolve null quando
+    nao tem, e nesse caso o cartao nao e desenhado. */
+ avisoRecadoTit:{pt:'Nova mensagem da Bel',en:'New message from Bel',es:'Nuevo mensaje de Bel',
+   it:'Nuovo messaggio da Bel',fr:'Nouveau message de Bel',de:'Neue Nachricht von Bel'},
+ avisoRecadoSub:{pt:'Sua nutricionista enviou uma mensagem para você.',en:'Your nutritionist sent you a message.',
+   es:'Tu nutricionista te envió un mensaje.',it:'La tua nutrizionista ti ha inviato un messaggio.',
+   fr:'Votre nutritionniste vous a envoyé un message.',de:'Deine Ernährungsberaterin hat dir geschrieben.'},
+ avisoRecadoBtn:{pt:'Ler mensagem',en:'Read message',es:'Leer mensaje',
+   it:'Leggi il messaggio',fr:'Lire le message',de:'Nachricht lesen'},
+ avisoSemanaTit:{pt:'Sua análise da semana está pronta!',en:'Your week in review is ready!',
+   es:'¡Tu análisis de la semana está listo!',it:'La tua analisi della settimana è pronta!',
+   fr:'Votre bilan de la semaine est prêt !',de:'Deine Wochenanalyse ist fertig!'},
+ avisoSemanaSub:{pt:'Veja como foi sua consistência e seus resultados desta semana.',
+   en:'See how consistent you were and what changed this week.',
+   es:'Mira tu constancia y tus resultados de esta semana.',
+   it:'Guarda la tua costanza e i risultati di questa settimana.',
+   fr:'Voyez votre régularité et vos résultats cette semaine.',
+   de:'Sieh dir deine Konstanz und deine Ergebnisse dieser Woche an.'},
+ avisoSemanaNova:{pt:'Ver a análise da sua semana',en:'See your week in review',es:'Ver el análisis de tu semana',
+   it:'Vedi l analisi della tua settimana',fr:'Voir le bilan de votre semaine',de:'Deine Wochenanalyse ansehen'},
  metaTitulo:{pt:'Como chego na minha meta?',en:'How do I reach my goal?',es:'¿Cómo llego a mi meta?'},
  metaPesoAlvo:{pt:'Peso desejado (kg)',en:'Target weight (kg)',es:'Peso deseado (kg)'},
  metaData:{pt:'Até quando',en:'By when',es:'Hasta cuándo'},
@@ -4872,28 +4893,104 @@ function _projSvg(pr){
 function montarResumoSemana(){
   var alvo=document.getElementById("nutriContext")||document.getElementById("tab-dieta");
   if(!alvo) return;
-  /* O card so era montado quando ainda nao existia, entao ficava congelado no idioma
-     em que foi criado. Agora ele guarda o idioma e e refeito quando o usuario troca. */
-  var box=document.getElementById("resumoSemanaBox");
-  var cartao=box?box.closest(".card"):null;
-  if(cartao&&cartao.getAttribute("data-lang")!==currentLang){ cartao.remove(); box=null; }
-  if(!document.getElementById("resumoSemanaBox")){
-    var wrap=document.createElement("div");
-    wrap.innerHTML=cardResumoSemana();
-    var novo=wrap.firstChild;
-    try{ novo.setAttribute("data-lang",currentLang); }catch(e){}
-    if(alvo.id==="tab-dieta"){ alvo.insertBefore(novo, alvo.firstChild); }
-    else { alvo.parentNode.insertBefore(novo, alvo); }
-  }
-  gerarResumoSemana(false);
+  /* Redesenha sempre: assim o idioma nunca congela e o ponto de luz reflete o
+     estado do momento. Sao dois cartoes curtos, custa nada refazer.
+     E NAO gera mais analise ao abrir a aba — gerar custa um credito do cliente
+     e uma chamada de API. Agora so gera quando ele pede para ler. */
+  ["avisoRecado","avisoSemana"].forEach(function(id){
+    var v=document.getElementById(id); if(v) v.remove();
+  });
+  var wrap=document.createElement("div");
+  wrap.innerHTML=cardRecadoBel()+cardResumoSemana();
+  var pai = (alvo.id==="tab-dieta") ? alvo : alvo.parentNode;
+  var ref = (alvo.id==="tab-dieta") ? alvo.firstChild : alvo;
+  while(wrap.firstChild) pai.insertBefore(wrap.firstChild, ref);
+}
+/* ---- Avisos ----
+   O resumo deixou de ser despejado na tela de entrada. Agora e um cartao curto
+   com um ponto de luz quando ha coisa nova; o texto so aparece quando o cliente
+   toca, e e ali que a Bel escreve. Chegar numa tela e levar 800 caracteres na
+   cara e o oposto de uma mensagem. */
+function _pontoLuz(cor){
+  /* classe propria: apagar o ponto por posicao ("span span") pegaria o titulo
+     quando o ponto nao existisse, e o cartao ficava sem titulo. */
+  return '<span class="pontoLuz" style="position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-radius:50%;'
+    +'background:'+cor+';box-shadow:0 0 0 2px var(--surface),0 0 8px '+cor+'"></span>';
+}
+function _recadoParaAviso(){
+  /* Filtra o que NAO merece bater na porta do cliente:
+     - "ok" e o "seu dia esta redondo": preencher silencio nao e ter o que dizer
+     - "semana...": o resumo tem cartao proprio, apareceria duas vezes */
+  try{
+    var r=belRecado();
+    if(!r||r.id==="ok"||String(r.id).indexOf("semana")===0) return null;
+    if(!belNaoLido()) return null;
+    return r;
+  }catch(e){ return null; }
+}
+function cardRecadoBel(){
+  var r=_recadoParaAviso(); if(!r) return "";
+  return '<div class="card" id="avisoRecado" style="margin-bottom:12px;padding:14px;'
+    +'background:linear-gradient(100deg,rgba(245,194,67,.16),rgba(239,139,60,.10));'
+    +'border:1px solid rgba(240,180,41,.35);display:flex;align-items:center;gap:12px">'
+    +'<span style="position:relative;flex-shrink:0;width:42px;height:42px;border-radius:50%;'
+      +'background:rgba(240,180,41,.18);display:flex;align-items:center;justify-content:center">'
+      +'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--goldInk)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'
+      +'<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>'
+      +_pontoLuz("var(--goldInk)")+'</span>'
+    +'<span style="flex:1;min-width:0">'
+      +'<span style="display:block;font-weight:700;font-size:14.5px;color:var(--text)">'+tx("avisoRecadoTit")+'</span>'
+      +'<span style="display:block;font-size:12.5px;color:var(--text2);line-height:1.4;margin-top:2px">'+tx("avisoRecadoSub")+'</span>'
+    +'</span>'
+    +'<button class="btn" style="padding:9px 14px;font-size:12.5px;flex-shrink:0" onclick="belAbrirRecado()">'+tx("avisoRecadoBtn")+'</button>'
+    +'</div>';
+}
+function belAbrirRecado(){
+  var r=_recadoParaAviso(); if(!r) return;
+  try{ state.belLidos=state.belLidos||{}; state.belLidos[r.id]=Date.now(); save(); }catch(e){}
+  document.getElementById("sheetTitle").textContent=tx("avisoRecadoTit");
+  document.getElementById("sheetBody").innerHTML=
+    '<div style="font-size:14px;line-height:1.6;color:var(--text);padding:4px 2px 10px">'+_esc(r.txt)+'</div>';
+  document.getElementById("sheetOv").classList.add("show");
+  var el=document.getElementById("avisoRecado"); if(el) el.remove();
+}
+function _esc(s){ var d=document.createElement("div"); d.textContent=String(s==null?"":s); return d.innerHTML; }
+function _semanaNaoLida(){
+  try{ var r=state.resumoSemana; return !!(r&&r.texto&&state.resumoLido!==r.em); }catch(e){ return false; }
 }
 function cardResumoSemana(){
-  var h='<div class="card" style="margin-bottom:14px;">';
-  h+='<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">';
-  h+='<div class="card-title" style="margin:0;">'+tx("semanaTitulo")+'</div>';
-  h+='<button class="btn" style="padding:6px 12px;font-size:12px;" onclick="gerarResumoSemana(true)">'+tx("semanaAtualizar")+'</button>';
-  h+='</div><div id="resumoSemanaBox" style="margin-top:10px;"></div></div>';
+  var temTexto=false; try{ temTexto=!!(state.resumoSemana&&state.resumoSemana.texto); }catch(e){}
+  var nova=_semanaNaoLida();
+  var h='<div class="card" id="avisoSemana" style="margin-bottom:14px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer" onclick="abrirResumoSemana()">';
+  h+='<span style="position:relative;flex-shrink:0;width:42px;height:42px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center">'
+    +'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--goldInk)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'
+    +'<path d="M4 19V10"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M21 19H3"/></svg>'
+    +(nova?_pontoLuz("var(--goldInk)"):"")+'</span>';
+  h+='<span style="flex:1;min-width:0">'
+    +'<span style="display:block;font-weight:700;font-size:14.5px;color:var(--text)">'+(temTexto?tx("avisoSemanaTit"):tx("avisoSemanaNova"))+'</span>'
+    +'<span style="display:block;font-size:12.5px;color:var(--text2);line-height:1.4;margin-top:2px">'+tx("avisoSemanaSub")+'</span>'
+    +'</span>';
+  h+='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>';
+  h+='</div>';
   return h;
+}
+function abrirResumoSemana(){
+  document.getElementById("sheetTitle").textContent=tx("semanaTitulo");
+  document.getElementById("sheetBody").innerHTML=
+    '<div style="display:flex;justify-content:flex-end;margin-bottom:8px">'
+    +'<button class="btn" style="padding:6px 12px;font-size:12px" onclick="gerarResumoSemana(true)">'+tx("semanaAtualizar")+'</button></div>'
+    +'<div id="resumoSemanaBox" style="padding-bottom:10px"></div>';
+  document.getElementById("sheetOv").classList.add("show");
+  /* A digitacao acontece aqui, na folha aberta — que e onde o cliente esta
+     olhando. Era isso que faltava: ela corria numa tela que ninguem via. */
+  gerarResumoSemana(false);
+  /* marca como lida e apaga o ponto de luz do cartao, sem mexer na folha */
+  try{
+    var r=state.resumoSemana;
+    if(r&&r.em&&state.resumoLido!==r.em){ state.resumoLido=r.em; save(); }
+    var c=document.getElementById("avisoSemana");
+    if(c){ var p=c.querySelector(".pontoLuz"); if(p) p.remove(); }
+  }catch(e){}
 }
 /* Textos ja revelados nesta sessao. Reanimar o mesmo texto a cada visita
    impediria o cliente de reler o comeco sem esperar. */
