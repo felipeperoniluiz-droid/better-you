@@ -634,7 +634,8 @@ if(_al){
       if(window._LOGO_EMB) img.src=window._LOGO_EMB;
     }catch(e){}
   };
-  var _por=function(el){ if(!el) return; el.onerror=function(){ _logoReserva(el); }; el.src="logo-dark.png"; };
+  var _ARQ="Nova%20Logo%20Better%20You%20-%20Branca.png";
+  var _por=function(el){ if(!el) return; el.onerror=function(){ _logoReserva(el); }; el.src=_ARQ; };
   _por(_al);
   _por(document.getElementById("authLogo"));
   _por(document.getElementById("splash-logo-img"));
@@ -1514,7 +1515,14 @@ function aplicarTema(){
    que parecia adesivo. Com duas artes, o quadrado deixa de ser necessario.
    Sao arquivos e nao data URI porque o ambiente que fazia a conversao estava
    fora do ar; o custo e um pedido de rede, e eles ficam em cache. */
-var LOGO_ARQ={dark:"logo-dark.png",light:"logo-light.png"};
+/* Os nomes de arquivo sao os que estao mesmo no repositorio, com espacos
+   codificados. Eu tinha pedido para renomear e isso so criou um passo a mais
+   para errar — melhor o codigo se adaptar ao que existe. Os espacos viram %20;
+   o restante o servidor entrega igual. */
+var LOGO_ARQ={
+  dark :"Nova%20Logo%20Better%20You%20-%20Branca.png",
+  light:"Nova%20Logo%20Better%20You%20-%20Preta.png"
+};
 function aplicarLogo(tema){
   try{
     var arq=LOGO_ARQ[tema==="light"?"light":"dark"];
