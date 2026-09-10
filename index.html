@@ -608,10 +608,161 @@ html[data-theme="light"] #tab-hoje .macro-row{background:rgb(255 255 255 / 88%)}
    Sem isto, sobra um retangulo escuro cobrindo o modelo. */
 #tab-hoje .h-hero .card{background:none!important;border:0!important;box-shadow:none!important;
   padding:0!important;margin-bottom:0!important}
+/* ---- cartoes de resumo: bolha, texto, seta ---- */
+.h-cartao{display:flex;gap:14px;align-items:center;width:100%;text-align:left;
+  background:linear-gradient(180deg,#2a2415 0%,#221c11 55%,#1c1710 100%);
+  border:1px solid var(--h-line);border-radius:16px;padding:16px;margin-bottom:12px;
+  color:inherit;font:inherit;cursor:pointer;
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 10%),inset 0 -1px 0 rgb(0 0 0 / 55%),
+             0 3px 8px rgb(0 0 0 / 45%),0 0 0 1px rgb(245 187 22 / 6%);}
+.h-cartao:active{background:linear-gradient(180deg,#221c11 0%,#1c1710 100%);
+  box-shadow:inset 0 2px 4px rgb(0 0 0 / 55%);transform:translateY(1px)}
+html[data-theme="light"] .h-cartao{background:#fff;box-shadow:var(--shadow)}
+.h-cartao h2{font-size:15px;font-weight:600;margin:0 0 3px}
+.h-cartao p{font-size:13px;color:var(--h-muted);margin:0}
+.h-cartao .h-seta{margin-left:auto;color:var(--h-muted);flex-shrink:0;width:22px;height:22px}
+/* A bolha e uma peca em relevo: cupula clara em cima, escura embaixo,
+   mais o brilho da propria cor por fora. */
+.h-bolha{flex-shrink:0;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid var(--h-line)}
+.h-bolha-azul{background:radial-gradient(120% 120% at 50% 18%,rgb(96 165 250 / 30%) 0%,rgb(96 165 250 / 8%) 70%);
+  color:#60a5fa;border-color:rgb(96 165 250 / 38%);
+  box-shadow:inset 0 1px 0 rgb(190 220 255 / 32%),inset 0 -2px 3px rgb(0 0 0 / 40%),0 0 16px rgb(96 165 250 / 26%)}
+.h-bolha-ouro{background:radial-gradient(120% 120% at 50% 18%,rgb(245 187 22 / 30%) 0%,rgb(245 187 22 / 7%) 70%);
+  color:var(--h-goldT);border-color:rgb(245 187 22 / 40%);
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 34%),inset 0 -2px 3px rgb(0 0 0 / 42%),0 0 16px rgb(245 187 22 / 24%)}
+.h-bolha .h-ico{width:24px;height:24px}
+.h-forte{font-weight:700}
+
+/* ---- refeicoes ---- */
+#tab-hoje .meal-header,#tab-hoje .meal-title{font-family:'Syne',sans-serif}
+.h-vazio{display:flex;align-items:center;justify-content:center;gap:12px;
+  border:1px dashed var(--h-line);border-radius:16px;padding:22px 16px;
+  color:var(--h-muted);font-size:14px}
+.h-vazio .h-ico{width:26px;height:26px}
+
 @media (max-width:350px){
   .h-gauge{width:160px;height:160px}
   .h-gauge .calorie-num{font-size:46px}
   #tab-hoje .macro-row>div{padding-inline:7px}
+}
+
+/* ================================================================
+   ALTO-RELEVO EM TODO O APP  (10/09/2026)
+   Pedido do Felipe: "todas as opcoes serao em alto relevo".
+
+   Uma receita so, repetida em toda superficie:
+     degrade claro em cima e escuro embaixo
+     fio de luz por dentro no topo
+     fio escuro por dentro na base
+     sombra projetada por fora
+   E a combinacao desses quatro que faz a peca parecer levantada da
+   tela em vez de desenhada nela.
+
+   Duas coisas explicam a cara deste bloco:
+
+   1. O !important. Existe uma parede de regras `body.pro-mode X{...
+      !important}` mais acima. Sem !important aqui, o relevo funciona
+      para quem e gratuito e some justamente para quem paga.
+
+   2. O html:not([data-theme="light"]). No tema claro, relevo escuro
+      vira sujeira cinza no meio do branco. La embaixo o tema claro
+      tem a versao dele: sombra suave, sem degrade escuro.
+   ================================================================ */
+html:not([data-theme="light"]) body{
+  --rel-cima:#2a2415; --rel-meio:#221c11; --rel-baixo:#1c1710;
+  --rel-luz:rgb(255 236 178 / 10%); --rel-sombra:rgb(0 0 0 / 55%);
+}
+/* --- superficies grandes: cartoes, paineis, caixas de resultado --- */
+html:not([data-theme="light"]) .card,
+html:not([data-theme="light"]) .modal,
+html:not([data-theme="light"]) .premade-card,
+html:not([data-theme="light"]) .meal-item,
+html:not([data-theme="light"]) .history-day,
+html:not([data-theme="light"]) .diet-card,
+html:not([data-theme="light"]) .cup,
+html:not([data-theme="light"]) .goal-toggle,
+html:not([data-theme="light"]) .subtab-row,
+html:not([data-theme="light"]) .search-results,
+html:not([data-theme="light"]) .ai-result,
+html:not([data-theme="light"]) .tdee-box,
+html:not([data-theme="light"]) .calc-result,
+html:not([data-theme="light"]) .weekly-notice,
+html:not([data-theme="light"]) .nutri-quick{
+  background:linear-gradient(180deg,var(--rel-cima) 0%,var(--rel-meio) 55%,var(--rel-baixo) 100%)!important;
+  box-shadow:inset 0 1px 0 var(--rel-luz),
+             inset 0 -1px 0 var(--rel-sombra),
+             0 3px 8px rgb(0 0 0 / 45%)!important;
+}
+/* --- pecas pequenas: botoes de icone, fichas, campos --- */
+html:not([data-theme="light"]) .icon-btn,
+html:not([data-theme="light"]) .chip,
+html:not([data-theme="light"]) .lang-btn,
+html:not([data-theme="light"]) .theme-btn,
+html:not([data-theme="light"]) .goal-btn,
+html:not([data-theme="light"]) .quick-btn,
+html:not([data-theme="light"]) .compare-tag,
+html:not([data-theme="light"]) .score-check-icon{
+  background:linear-gradient(180deg,#2e2718 0%,#221c11 100%)!important;
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 12%),0 2px 5px rgb(0 0 0 / 45%)!important;
+}
+/* Campos de texto sao o contrario de tudo o resto: eles AFUNDAM.
+   Um campo em alto-relevo parece botao, e a pessoa tenta clicar em vez
+   de escrever. Baixo-relevo e o que diz "aqui se digita". */
+html:not([data-theme="light"]) .input,
+html:not([data-theme="light"]) input.input,
+html:not([data-theme="light"]) select.input,
+html:not([data-theme="light"]) textarea.input{
+  background:linear-gradient(180deg,#16130c 0%,#1b1710 100%)!important;
+  box-shadow:inset 0 2px 4px rgb(0 0 0 / 60%),inset 0 -1px 0 rgb(255 236 178 / 6%)!important;
+}
+/* --- barras de progresso: sulco fundo, liquido com brilho no topo --- */
+html:not([data-theme="light"]) .macro-bar-bg,
+html:not([data-theme="light"]) .water-progress,
+html:not([data-theme="light"]) .progress-bg,
+html:not([data-theme="light"]) .track{
+  box-shadow:inset 0 1px 3px rgb(0 0 0 / 65%)!important;
+}
+html:not([data-theme="light"]) .macro-bar-fill,
+html:not([data-theme="light"]) .water-fill,
+html:not([data-theme="light"]) .progress-fill,
+html:not([data-theme="light"]) .track-fill{
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / 30%)!important;
+}
+/* --- tudo que e tocavel afunda ao ser tocado. Sem isto o relevo vira
+       enfeite: o toque nao devolve nada e a peca parece morta. --- */
+.card:active,.premade-card:active,.meal-item:active,.history-day:active,
+.diet-card:active,.cup:active,.icon-btn:active,.chip:active,.lang-btn:active,
+.theme-btn:active,.goal-btn:active,.quick-btn:active,.weekly-notice:active,
+.nutri-quick:active,.h-cartao:active{
+  box-shadow:inset 0 2px 4px rgb(0 0 0 / 55%)!important;transform:translateY(1px);
+}
+/* --- o anel do Score, mesma peca do anel de calorias, menor --- */
+.score-ring-wrap{position:relative}
+#scoreAro{position:absolute;inset:-5px;border-radius:50%;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle at 50% 12%,rgb(255 236 178 / 13%) 0%,transparent 42%),
+    radial-gradient(circle,#16120a 0%,#1b160d 52%,#332b1a 60%,#3d331e 68%,#241d11 78%,#14100a 100%);
+  box-shadow:inset 0 3px 6px rgb(0 0 0 / 70%),inset 0 -2px 4px rgb(255 236 178 / 7%),
+             0 6px 16px rgb(0 0 0 / 55%),0 1px 0 rgb(255 236 178 / 10%);}
+#scoreRingFill{filter:drop-shadow(0 0 6px rgb(52 211 153 / 45%)) drop-shadow(0 1px 1px rgb(0 0 0 / 55%))}
+.score-num{text-shadow:0 1px 0 rgb(0 0 0 / 60%),0 0 18px rgb(255 255 255 / 18%)}
+
+/* --- TEMA CLARO: o mesmo volume, com a luz do outro lado ---
+   Degrade escuro no branco vira mancha cinza. Aqui o relevo vem de
+   sombra suave por fora e um fio branco no topo. */
+html[data-theme="light"] .card,
+html[data-theme="light"] .premade-card,
+html[data-theme="light"] .meal-item,
+html[data-theme="light"] .diet-card,
+html[data-theme="light"] .h-cartao,
+html[data-theme="light"] .weekly-notice,
+html[data-theme="light"] .nutri-quick{
+  background:linear-gradient(180deg,#ffffff 0%,#f7f5f0 100%)!important;
+  box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgb(0 0 0 / 6%),0 2px 6px rgb(0 0 0 / 10%)!important;
+}
+html[data-theme="light"] .input{
+  box-shadow:inset 0 2px 4px rgb(0 0 0 / 8%)!important;
 }
 </style>
 </head>
@@ -906,7 +1057,12 @@ if(_al){
     <div class="card-title" data-i18n="scoreDia">Score do Dia</div>
     <div class="score-ring-wrap">
       <div style="position:relative;width:90px;height:90px;flex-shrink:0;">
-        <svg width="90" height="90" style="transform:rotate(-90deg)">
+        <!-- O aro em relevo e um elemento de verdade, nao um ::before.
+             Um ::before aqui teria que ser alcancado por um seletor de
+             posicao (>div:first-child), e foi exatamente esse tipo de
+             seletor que jogou o numero de calorias para fora do anel. -->
+        <div id="scoreAro"></div>
+        <svg width="90" height="90" style="position:relative;z-index:1;transform:rotate(-90deg)">
           <circle cx="45" cy="45" r="38" fill="none" stroke="var(--surface3)" stroke-width="8"/>
           <circle cx="45" cy="45" r="38" fill="none" stroke="url(#scoreGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="239" id="scoreRingFill" stroke-dashoffset="239" style="transition:stroke-dashoffset .6s ease;"/>
           <defs><linearGradient id="scoreGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient></defs>
@@ -1348,7 +1504,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260910_hoje_layout_b";
+var APP_VERSION="20260910_relevo_geral";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2380,7 +2536,9 @@ function renderMeals(){
     var items=state.meals[key]||[];
     var mKcal=items.reduce(function(a,b){return a+(b.kcal||0);},0);
     html+="<div class='meal-section'><div class='meal-header'><div class='meal-name'>"+labels[key]+"</div><div class='meal-kcal'>"+Math.round(mKcal)+" kcal</div></div>";
-    if(!items.length)html+="<div style='font-size:12px;color:var(--text3);padding:5px 0;'>"+T[currentLang].nenhumAlimento+"</div>";
+    /* Caixa tracejada com a tigela, como no desenho do Felipe. O tracejado
+       diz "aqui cabe alguma coisa" — a linha de texto solta nao dizia. */
+    if(!items.length)html+="<div class='h-vazio'><svg class='h-ico' aria-hidden='true'><use href='#i-tigela'/></svg>"+T[currentLang].nenhumAlimento+"</div>";
     else items.forEach(function(item,i){
       var timeTag=item.time?"<span style=\"color:#5a9a72;font-size:10px;margin-left:6px;\">"+item.time+"</span>":"";
       var iconHtml=(item.photo&&item.photo.length>500)?"<img src=\""+item.photo+"\" onclick=\"openFoodPhoto('"+key+"',"+ i +");\" style=\"width:38px;height:38px;border-radius:7px;object-fit:cover;flex-shrink:0;cursor:pointer;\" />":"<div class=\"meal-item-icon\"></div>";
@@ -5031,6 +5189,18 @@ massa:{fmt:'texto',
 var TX={
  /* Tela Hoje — layout novo (10/09/2026) */
  kcalConsumidas:{pt:'kcal consumidas',en:'kcal eaten',es:'kcal consumidas',it:'kcal consumate',fr:'kcal consommées',de:'kcal gegessen'},
+ hidratacao:{pt:'Hidratação',en:'Hydration',es:'Hidratación',it:'Idratazione',fr:'Hydratation',de:'Flüssigkeit'},
+ deAgua:{pt:'de água',en:'of water',es:'de agua',it:'di acqua',fr:'d\'eau',de:'Wasser'},
+ faltamN:{pt:'Faltam {0}',en:'{0} to go',es:'Faltan {0}',it:'Mancano {0}',fr:'Encore {0}',de:'Noch {0}'},
+ proteinaLbl:{pt:'Proteína',en:'Protein',es:'Proteína',it:'Proteine',fr:'Protéines',de:'Protein'},
+ deN:{pt:'de {0}',en:'of {0}',es:'de {0}',it:'di {0}',fr:'sur {0}',de:'von {0}'},
+ /* O frango e um exemplo concreto de quanto falta, nao uma receita: 31 g de
+    proteina por 100 g de peito. Traduzido como exemplo em todos os idiomas. */
+ faltamFrango:{pt:'Faltam {0}g — cerca de {1}g de frango fecha a meta.',en:'{0}g to go — about {1}g of chicken closes the gap.',es:'Faltan {0}g — unos {1}g de pollo cierran la meta.',it:'Mancano {0}g — circa {1}g di pollo chiudono il traguardo.',fr:'Encore {0}g — environ {1}g de poulet suffisent.',de:'Noch {0}g — etwa {1}g Hähnchen schließen die Lücke.'},
+ metaAtingidaLbl:{pt:'Meta atingida.',en:'Goal reached.',es:'Meta alcanzada.',it:'Obiettivo raggiunto.',fr:'Objectif atteint.',de:'Ziel erreicht.'},
+ semAlimento:{pt:'Nenhum alimento',en:'Nothing logged',es:'Ningún alimento',it:'Nessun alimento',fr:'Aucun aliment',de:'Nichts eingetragen'},
+ scoreRefSim:{pt:'Registradas',en:'Logged',es:'Registradas',it:'Registrati',fr:'Enregistrés',de:'Eingetragen'},
+ scoreRefNao:{pt:'Nenhuma',en:'None',es:'Ninguna',it:'Nessuno',fr:'Aucun',de:'Keine'},
  /* As frases laterais sao lema, nao instrucao: traduzidas pelo sentido, nao
     ao pe da letra, senao em alemao viram um paragrafo e estouram os 78 px. */
  hojeFraseEsq:{pt:'Disciplina hoje, resultados sempre.',en:'Discipline today, results always.',es:'Disciplina hoy, resultados siempre.',it:'Disciplina oggi, risultati sempre.',fr:'Discipline aujourd\'hui, résultats toujours.',de:'Heute Disziplin, immer Ergebnisse.'},
@@ -5263,36 +5433,77 @@ function getPreventiveAlerts(){
   var t={kcal:0,prot:0}, g={prot:0};
   try{ t=calcTotals(); }catch(e){}
   try{ g=getMacroGoals()||{prot:0}; }catch(e){}
-  var wGoal=+state.waterGoal||2500, w=+state.waterMl||0;
-  if(h>=15 && w < wGoal*0.5){
-    out.push({icon:"",text:tx('alertAgua',w,Math.max(0,wGoal-w))});
-  }
-  if(h>=19 && g.prot>0 && t.prot < g.prot*0.7){
-    var falta=Math.max(0,Math.round(g.prot-t.prot));
-    var frango=Math.round(falta/0.31/10)*10;
-    out.push({icon:"",text:tx('alertProt',Math.round(t.prot),Math.round(g.prot),falta,frango)});
-  }
+  /* Agua, proteina e calorias SAIRAM daqui: viraram os tres cartoes fixos
+     do renderAlerts(), visiveis o dia todo. Deixa-los aqui tambem faria a
+     mesma informacao aparecer duas vezes seguidas depois das 20h.
+     Sobra o que so faz sentido em certa hora: noite curta. */
   var sh2=+state.sleepH||0;
   if(sh2>0 && sh2<6 && h>=9 && h<=20){
     out.push({icon:"",text:tx('alertSono',sh2)});
   }
-  if(h>=20 && +state.calGoal>0){
-    var d=Math.round(state.calGoal-t.kcal);
-    if(d>250) out.push({icon:"",text:tx('alertFaltaKcal',d)});
-    else if(d<-250) out.push({icon:"",text:tx('alertAcimaKcal',Math.abs(d))});
-  }
   return out;
+}
+/* ---------- CARTOES DE RESUMO DA TELA HOJE (10/09/2026) ----------
+   Antes, esta caixa so aparecia em certos horarios: agua depois das 15h,
+   proteina depois das 19h, calorias depois das 20h. Era um alerta que
+   cutucava a pessoa no fim do dia, quando ja nao da mais para agir.
+
+   No layout que o Felipe desenhou, os tres cartoes estao SEMPRE la: sao um
+   resumo tocavel, nao uma cobranca. Passei a mostra-los o dia inteiro e
+   cada um leva para o lugar de resolver. Os avisos que continuam
+   dependendo da hora (sono curto, acima da meta) entram embaixo, porque
+   esses sim so fazem sentido em certa hora do dia. */
+function _hEsc(s){ return String(s).replace(/[&<>"]/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function _hCartao(o){
+  return '<button class="h-cartao" type="button" onclick="'+o.acao+'">'
+    +'<span class="h-bolha h-bolha-'+o.cor+'"><svg class="h-ico" aria-hidden="true"><use href="#'+o.ico+'"/></svg></span>'
+    +'<span style="min-width:0">'
+    +(o.tit?'<h2>'+_hEsc(o.tit)+'</h2>':'')
+    +'<p>'+o.corpo+'</p>'
+    +(o.extra?'<p style="margin-top:2px">'+o.extra+'</p>':'')
+    +'</span>'
+    +'<svg class="h-ico h-seta" aria-hidden="true"><use href="#i-seta"/></svg>'
+    +'</button>';
 }
 function renderAlerts(){
   var box=document.getElementById("alertsBox"); if(!box) return;
-  var list=[]; try{ list=getPreventiveAlerts(); }catch(e){ list=[]; }
-  if(!list.length){ box.style.display="none"; box.innerHTML=""; return; }
-  box.style.display="block";
-  box.innerHTML=list.map(function(a){
-    return '<div style="display:flex;gap:10px;align-items:flex-start;background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.22);border-radius:12px;padding:10px 12px;margin-bottom:8px;">'
-      +'<div style="font-size:17px;line-height:1.2;">'+a.icon+'</div>'
-      +'<div style="font-size:13px;color:var(--text);line-height:1.45;">'+a.text+'</div></div>';
-  }).join("");
+  var html="";
+  try{
+    var t=calcTotals(), g=getMacroGoals()||{prot:0};
+    var wGoal=+state.waterGoal||2500, w=+state.waterMl||0;
+    var faltaAgua=Math.max(0,wGoal-w);
+
+    html+=_hCartao({ico:'i-drop',cor:'azul',acao:"switchTab('agua')",tit:tx('hidratacao'),
+      corpo:'<span class="h-forte" style="color:#60a5fa">'+w+' ml</span> '+tx('deAgua')
+            +' &middot; '+tx('faltamN',faltaAgua+' ml')});
+
+    var pAtual=Math.round(t.prot||0), pMeta=Math.round(g.prot||0);
+    var faltaP=Math.max(0,pMeta-pAtual);
+    var frango=Math.round(faltaP/0.31/10)*10;
+    html+=_hCartao({ico:'i-coxa',cor:'ouro',acao:'openAddFood()',tit:tx('proteinaLbl'),
+      corpo:'<span class="h-forte" style="color:#e8834a">'+pAtual+'g</span> '+tx('deN',pMeta+'g'),
+      extra: faltaP>0 ? tx('faltamFrango',faltaP,frango) : tx('metaAtingidaLbl')});
+
+    var d=Math.round((+state.calGoal||0)-(t.kcal||0));
+    html+=_hCartao({ico:'i-flame',cor:'ouro',acao:'openAddFood()',
+      corpo: d>0 ? tx('alertFaltaKcal',d)
+           : d<0 ? tx('alertAcimaKcal',Math.abs(d))
+                 : tx('metaAtingidaLbl')});
+  }catch(e){}
+
+  /* Os que continuam presos ao relogio: so aparecem quando cabem. */
+  try{
+    var extras=getPreventiveAlerts();
+    html+=extras.map(function(a){
+      return '<div class="h-cartao" style="cursor:default">'
+        +'<span class="h-bolha h-bolha-ouro"><svg class="h-ico" aria-hidden="true"><use href="#i-moon"/></svg></span>'
+        +'<span style="min-width:0"><p style="color:var(--text)">'+a.text+'</p></span></div>';
+    }).join("");
+  }catch(e){}
+
+  box.style.display=html?"block":"none";
+  box.innerHTML=html;
 }
 /* ===== D) PROJECAO ===== */
 function _linTrend(pts){
@@ -7576,7 +7787,9 @@ function calcDayScore(histData){
   // Ao menos uma refeição = 10 pts
   var mealOk=totals.kcal>0;
   score+=mealOk?10:0;
-  checks.push({label:tx('scoreRef'),ok:mealOk,val:mealOk?'Registradas':'Nenhuma'});
+  /* Estes dois estavam cravados em portugues. Num app em ingles saia
+     "Meals / Nenhuma" — rotulo traduzido, valor nao. */
+  checks.push({label:tx('scoreRef'),ok:mealOk,val:mealOk?tx('scoreRefSim'):tx('scoreRefNao')});
   return{score:Math.min(100,score),checks:checks};
 }
 
