@@ -487,15 +487,23 @@ html[data-theme="light"] .card{box-shadow:var(--shadow)}
 .macro-bar-bg{box-shadow:inset 0 1px 3px rgb(0 0 0 / 65%)}
 .macro-bar-fill{box-shadow:inset 0 1px 0 rgb(255 255 255 / 30%)}
 
-/* ---- botoes dourados ---- */
-.add-food-btn,.btn-primary,.navfab{
+/* ---- botoes dourados ----
+   So .btn-primary e .navfab. O .add-food-btn NAO entra aqui: ele e um
+   botao de contorno tracejado, com o texto na propria cor dourada. Encher
+   o fundo de dourado apaga o texto (dourado sobre dourado) e ainda faz um
+   botao secundario gritar mais alto que o FAB. Ele tem o relevo dele logo
+   abaixo, discreto, que e o papel que ele foi desenhado para ter. */
+.btn-primary,.navfab{
   background:linear-gradient(180deg,#ffd766 0%,#f0b429 48%,#d99a08 100%)!important;
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 55%),
     inset 0 -2px 0 rgb(150 96 4 / 60%),
     0 4px 12px rgb(240 180 41 / 26%),
     0 2px 4px rgb(0 0 0 / 45%);
-  text-shadow:0 1px 0 rgb(255 236 178 / 40%);
+}
+.add-food-btn{
+  background:linear-gradient(180deg,rgb(240 180 41 / 13%) 0%,rgb(240 180 41 / 5%) 100%)!important;
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 12%),0 1px 3px rgb(0 0 0 / 35%);
 }
 .add-food-btn:active,.btn-primary:active,.navfab:active{
   box-shadow:inset 0 2px 5px rgb(120 76 2 / 60%);transform:translateY(1px);

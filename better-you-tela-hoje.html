@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#191609">
+<title>Better You — Tela Hoje (prévia)</title>
+<style>
+/* ============================================================
+   TELA HOJE — prévia para aprovação. NÃO é o app.
+   Base: a implementação de referência do Felipe.
+   Alterado: paleta aplicada às fórmulas do Score, ícones que
+   faltavam, textos por objetivo, e um painel de teste no topo
+   que some na integração.
+   ============================================================ */
+:root{
+  color-scheme: dark;
+  --page:#191609; --panel:#201b10; --line:#383018;
+  --gold:#f5bb16; --gold-text:#f8d778;
+  --text:#f7f3e8; --muted:#c2baa8;
+  --blue:#60a5fa; --orange:#e8834a; --green:#34d399;
+  --error:#ffaaa3;
+  --radius:18px; --space:20px;
+  --font:'DM Sans',Inter,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font-family:var(--font);line-height:1.5}
+button,input,select{font:inherit}
+button{cursor:pointer;color:inherit;-webkit-tap-highlight-color:transparent}
+button:focus-visible,select:focus-visible{outline:2px solid var(--gold-text);outline-offset:4px}
+h1,h2,h3,p{margin:0}
+.app{max-width:520px;margin-inline:auto;min-height:100vh;padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+.icon{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.muted{color:var(--muted)} .gold{color:var(--gold-text)}
+.blue{color:var(--blue)} .orange{color:var(--orange)} .green{color:var(--green)}
+.numbers{font-variant-numeric:tabular-nums}
+.label{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.section{margin-inline:var(--space);padding-block:24px;border-bottom:1px solid var(--line)}
+
+/* ---- PAINEL DE TESTE — sai na integração ---- */
+.demo{background:#12100a;border-bottom:1px solid var(--line);padding:12px var(--space);
+  display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px}
+.demo b{color:var(--gold-text);letter-spacing:.08em;text-transform:uppercase;font-size:11px}
+.demo select,.demo input{background:#201b10;color:var(--text);border:1px solid var(--line);
+  border-radius:8px;padding:6px 8px}
+
+/* ---- TOPO ---- */
+.hero{position:relative;isolation:isolate;overflow:hidden;padding:28px var(--space) 24px;background:var(--page)}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:-2}
+.hero::after{content:"";position:absolute;inset:0;background:rgb(25 22 9 / 48%);z-index:-1;pointer-events:none}
+.date-button{display:flex;align-items:center;gap:10px;background:transparent;padding:0;border:0;
+  font-size:28px;font-weight:700;min-height:44px}
+.pro{padding:6px 15px;border-radius:var(--radius);color:#191609;font-size:12px;font-weight:700;
+  background:linear-gradient(180deg,#ffd766 0%,#f5bb16 50%,#e09a08 100%);
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / 55%),inset 0 -1px 0 rgb(150 96 4 / 55%),
+             0 2px 8px rgb(245 187 22 / 30%);
+  text-shadow:0 1px 0 rgb(255 236 178 / 40%)}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-block:24px;text-align:center}
+.day{display:grid;justify-items:center;gap:8px;color:var(--muted);font-size:12px}
+.day-marker{width:24px;height:24px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center}
+.day.futuro .day-marker{border-style:dashed}
+.day.active{color:var(--gold-text);font-weight:700}
+.day.active .day-marker{border-color:var(--gold);border-style:solid}
+.day.active .day-marker::after{content:"";width:6px;height:6px;background:var(--gold);border-radius:50%}
+.sleep{display:inline-flex;align-items:center;gap:8px;color:var(--gold-text);
+  background:linear-gradient(180deg,rgb(46 39 22 / 95%) 0%,rgb(28 23 14 / 95%) 100%);
+  border:1px solid rgb(245 187 22 / 34%);border-radius:var(--radius);padding:8px 13px;font-size:12px;
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 16%),0 3px 8px rgb(0 0 0 / 45%)}
+.sleep .icon{filter:drop-shadow(0 1px 0 rgb(0 0 0 / 45%))}
+
+/* Barras e marcadores tambem ganham profundidade */
+.track{box-shadow:inset 0 1px 3px rgb(0 0 0 / 65%)}
+.track-fill{box-shadow:inset 0 1px 0 rgb(255 255 255 / 30%)}
+.day-marker{box-shadow:inset 0 1px 2px rgb(0 0 0 / 50%)}
+.day.active .day-marker{box-shadow:inset 0 1px 0 rgb(255 236 178 / 22%),0 0 10px rgb(245 187 22 / 45%)}
+.day.active .day-marker::after{box-shadow:0 0 8px rgb(245 187 22 / 90%)}
+.macro strong{text-shadow:0 1px 0 rgb(0 0 0 / 55%)}
+.macro .icon{filter:drop-shadow(0 1px 0 rgb(0 0 0 / 50%))}
+.add-floating{box-shadow:inset 0 1px 0 rgb(255 255 255 / 55%),inset 0 -2px 0 rgb(150 96 4 / 60%),
+  0 4px 14px rgb(245 187 22 / 30%),0 2px 5px rgb(0 0 0 / 50%);
+  background:linear-gradient(180deg,#ffd766 0%,#f5bb16 48%,#e09a08 100%)}
+.add-floating:active{transform:translateY(1px);box-shadow:inset 0 2px 5px rgb(120 76 2 / 60%)}
+.nav{box-shadow:inset 0 1px 0 rgb(255 236 178 / 8%),0 4px 14px rgb(0 0 0 / 50%);
+  background:linear-gradient(180deg,#2b2517 0%,#211c11 100%)}
+
+/* ---- FRASES VERTICAIS (decisão: manter) ---- */
+.frase{position:absolute;top:46%;font-size:8px;letter-spacing:.34em;line-height:2;
+  color:rgb(248 215 120 / 55%);text-transform:uppercase;pointer-events:none;z-index:0;max-width:78px}
+.frase-esq{left:12px;text-align:left}
+.frase-dir{right:12px;text-align:right}
+.frase::after{content:"";display:block;width:22px;height:1px;background:currentColor;margin-top:10px}
+.frase-dir::after{margin-left:auto}
+
+/* ---- ANÉIS ---- */
+.gauge{position:relative;width:min(72%,248px);aspect-ratio:1;margin:16px auto}
+.gauge svg{display:block;width:100%;height:100%;transform:rotate(-90deg);overflow:visible}
+.gauge-track,.gauge-progress{fill:none;stroke-width:7}
+/* ---- O ANEL EM ALTO-RELEVO ----
+   Tres camadas empilhadas, e a ordem importa:
+   1. ::before  — o aro elevado e o miolo rebaixado, pintado ANTES do SVG
+   2. os fios finos claro e escuro, que dao a quina do sulco
+   3. o arco dourado, por cima de tudo, com brilho proprio
+   Se o ::before viesse depois do SVG, ele cobriria o arco. */
+.gauge::before{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;
+  background:
+    /* luz batendo de cima no aro */
+    radial-gradient(circle at 50% 12%,rgb(255 236 178 / 13%) 0%,transparent 42%),
+    /* aro claro por fora, miolo escuro por dentro */
+    radial-gradient(circle,
+      #16120a 0%, #1b160d 52%,
+      #332b1a 60%, #3d331e 68%,
+      #241d11 78%, #14100a 100%);
+  box-shadow:
+    inset 0 4px 8px rgb(0 0 0 / 70%),          /* miolo afunda */
+    inset 0 -3px 6px rgb(255 236 178 / 7%),    /* borda inferior devolve luz */
+    0 10px 24px rgb(0 0 0 / 55%),              /* peca projeta sombra na tela */
+    0 1px 0 rgb(255 236 178 / 10%);            /* quina de cima acesa */
+}
+/* fios que desenham a quina do sulco onde o arco corre */
+.gauge-rim-out{fill:none;stroke:rgb(255 236 178 / 13%);stroke-width:1}
+.gauge-rim-in {fill:none;stroke:rgb(0 0 0 / 55%);stroke-width:1}
+.gauge-track{stroke:#2a2314;filter:drop-shadow(0 1px 1px rgb(0 0 0 / 60%))}
+.gauge-progress{stroke:var(--gold);stroke-linecap:round;
+  filter:drop-shadow(0 0 7px rgb(245 187 22 / 60%)) drop-shadow(0 1px 1px rgb(0 0 0 / 55%))}
+.gauge-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;pointer-events:none;text-align:center}
+.gauge-number{font-size:clamp(44px,12vw,64px);font-weight:700;line-height:1.1;letter-spacing:-.05em;
+  font-variant-numeric:tabular-nums;
+  text-shadow:0 1px 0 rgb(0 0 0 / 60%),0 0 22px rgb(255 236 178 / 22%)}
+.gauge-caption{color:var(--muted);font-size:12px;margin-top:6px}
+.remaining{text-align:center;color:var(--muted);font-size:14px;position:relative;z-index:1}
+
+/* ---- MACROS ---- */
+.macros{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:24px;padding:18px 0;
+  background:rgb(25 22 9 / 88%);border-block:1px solid var(--line);position:relative;z-index:1}
+.macro{padding-inline:12px}
+.macro+.macro{border-left:1px solid var(--line)}
+.macro-top{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.macro span.nome{font-size:12px;color:var(--muted)}
+.macro strong{font-size:20px;font-variant-numeric:tabular-nums}
+.track{height:4px;background:#393020;overflow:hidden;border-radius:4px;margin-top:12px}
+.track-fill{display:block;height:100%;width:0}
+
+/* ---- CARTAO — a forma que se repete no mockup do Felipe ----
+   A implementacao de referencia achatava tudo em linhas separadas por fio.
+   O desenho dele usa cartao com borda, canto de 16 px e um brilho dourado
+   discreto. Esta e a forma base; avisos, refeicoes e paineis usam ela. */
+/* ALTO-RELEVO — pedido do Felipe.
+   A receita e sempre a mesma: um degrade claro em cima e escuro embaixo, uma
+   linha de luz no topo por dentro, uma linha escura na base por dentro, e uma
+   sombra por fora. E isso que faz a superficie parecer levantada da tela em vez
+   de desenhada nela. */
+.cartao{
+  background:linear-gradient(180deg,#2a2415 0%,#221c11 55%,#1c1710 100%);
+  border:1px solid var(--line);border-radius:16px;padding:16px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 236 178 / 10%),      /* luz no topo */
+    inset 0 -1px 0 rgb(0 0 0 / 55%),           /* sombra na base */
+    0 3px 8px rgb(0 0 0 / 45%),                /* sombra projetada */
+    0 0 0 1px rgb(245 187 22 / 6%);            /* halo dourado tenue */
+}
+.cartao+.cartao{margin-top:12px}
+.cartao:active{
+  background:linear-gradient(180deg,#221c11 0%,#1c1710 100%);
+  box-shadow:inset 0 2px 4px rgb(0 0 0 / 55%);   /* afunda ao tocar */
+}
+
+/* ---- AVISOS ---- */
+.insight{display:flex;gap:14px;align-items:center}
+.insight h2{font-size:15px;font-weight:600;margin-bottom:3px}
+.insight p{font-size:13px;color:var(--muted)}
+.insight .seta{margin-left:auto;color:var(--muted);flex-shrink:0}
+/* A bolha do icone tambem e uma peca em relevo: cupula clara em cima,
+   escura embaixo, mais o brilho da cor propria por fora. */
+.bolha{flex-shrink:0;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid var(--line)}
+.bolha-azul{
+  background:radial-gradient(120% 120% at 50% 18%,rgb(96 165 250 / 30%) 0%,rgb(96 165 250 / 8%) 70%);
+  color:var(--blue);border-color:rgb(96 165 250 / 38%);
+  box-shadow:inset 0 1px 0 rgb(190 220 255 / 32%),inset 0 -2px 3px rgb(0 0 0 / 40%),
+             0 0 16px rgb(96 165 250 / 26%);
+}
+.bolha-ouro{
+  background:radial-gradient(120% 120% at 50% 18%,rgb(245 187 22 / 30%) 0%,rgb(245 187 22 / 7%) 70%);
+  color:var(--gold-text);border-color:rgb(245 187 22 / 40%);
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 34%),inset 0 -2px 3px rgb(0 0 0 / 42%),
+             0 0 16px rgb(245 187 22 / 24%);
+}
+.bolha .icon{filter:drop-shadow(0 1px 0 rgb(0 0 0 / 45%))}
+.notice{font-size:14px;color:var(--text)}
+.notice b{color:var(--gold-text)}
+
+/* ---- REFEIÇÕES ---- */
+.meal{display:flex;align-items:center;gap:14px}
+.meal-name h2{font-size:16px;font-weight:600;font-family:'Syne',var(--font)}
+.meal-name p{font-size:13px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:7px}
+.meal .kcal{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap}
+.meal .seta{color:var(--gold-text);flex-shrink:0}
+
+/* ---- PAINEL com titulo e filete, como no mockup ---- */
+.painel{
+  background:linear-gradient(180deg,#26200f 0%,#1e1910 60%,#191509 100%);
+  border:1px solid var(--line);border-radius:16px;padding:18px;
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 9%),inset 0 -1px 0 rgb(0 0 0 / 55%),
+             0 4px 12px rgb(0 0 0 / 45%);
+}
+.painel-tit{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.painel-tit::after{content:"";flex:1;height:1px;background:var(--line)}
+/* Botao dourado com volume: claro em cima, saturado embaixo, luz na borda
+   superior e sombra projetada. Ao tocar, afunda. */
+.primary{width:100%;min-height:52px;border:0;border-radius:var(--radius);
+  background:linear-gradient(180deg,#ffd766 0%,#f5bb16 48%,#e09a08 100%);
+  color:#191609;font-weight:700;margin-top:20px;
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / 55%),inset 0 -2px 0 rgb(150 96 4 / 60%),
+             0 4px 12px rgb(245 187 22 / 26%),0 2px 4px rgb(0 0 0 / 45%);
+  text-shadow:0 1px 0 rgb(255 236 178 / 45%)}
+.primary:hover{background:linear-gradient(180deg,#ffe085 0%,#ffc734 48%,#eaa50c 100%)}
+.primary:active{background:linear-gradient(180deg,#e09a08 0%,#f5bb16 100%);
+  box-shadow:inset 0 2px 5px rgb(120 76 2 / 60%);transform:translateY(1px)}
+
+.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.quick{display:flex;gap:12px;text-align:left;align-items:center;padding:16px 12px;min-height:86px;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:linear-gradient(180deg,#2a2415 0%,#221c11 55%,#1c1710 100%);
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 10%),inset 0 -1px 0 rgb(0 0 0 / 55%),
+             0 3px 8px rgb(0 0 0 / 42%)}
+.quick:hover{border-color:var(--gold)}
+.quick:active{box-shadow:inset 0 2px 4px rgb(0 0 0 / 55%);transform:translateY(1px)}
+.quick .icon{filter:drop-shadow(0 1px 0 rgb(0 0 0 / 45%))}
+.quick strong{display:block;font-size:13px}
+.quick small{display:block;color:var(--muted);margin-top:5px}
+
+/* ---- ÁGUA ---- */
+.water-total{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-top:16px}
+.water-total strong{font-size:42px;line-height:1;font-variant-numeric:tabular-nums;color:var(--blue)}
+.water-total span{color:var(--muted);font-size:13px}
+.water .track-fill{background:var(--blue)}
+
+/* ---- SCORE ---- */
+.score{margin:24px var(--space) 0;padding:24px 20px;
+  background:linear-gradient(180deg,#26200f 0%,#1e1910 60%,#191509 100%);
+  border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 9%),inset 0 -1px 0 rgb(0 0 0 / 55%),
+             0 4px 12px rgb(0 0 0 / 45%)}
+.score-i{box-shadow:inset 0 1px 0 rgb(255 236 178 / 12%),0 2px 5px rgb(0 0 0 / 45%)}
+.score .gauge{width:min(76%,220px);margin-block:24px}
+.score .gauge-number{font-size:62px}
+.score-list{margin:0;padding:0;list-style:none}
+.score-row{display:grid;grid-template-columns:22px minmax(0,1fr) auto 16px;gap:10px;align-items:center;
+  padding-block:14px;border-top:1px solid var(--line);font-size:13px}
+.score-value{font-variant-numeric:tabular-nums;text-align:right;color:var(--muted)}
+.status{text-align:center;color:var(--error);font-size:16px}
+.status.ok{color:var(--green)}
+.score-i{background:transparent;border:1px solid var(--line);border-radius:50%;width:22px;height:22px;
+  color:var(--muted);font-size:12px;font-weight:700;line-height:1}
+
+/* ---- NAVEGAÇÃO ---- */
+.bottom{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+  width:min(calc(100% - 32px),480px);display:flex;gap:10px;z-index:5}
+.nav{display:flex;flex:1;background:#242013;border:1px solid var(--line);border-radius:var(--radius)}
+.nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:3px;
+  background:transparent;border:0;min-height:64px;font-size:11px;color:var(--muted)}
+.nav button.active{color:var(--gold-text)}
+.add-floating{width:64px;min-height:64px;border:0;background:var(--gold);color:#191609;
+  border-radius:var(--radius);font-size:30px}
+
+dialog{width:min(calc(100% - 32px),420px);padding:24px;color:var(--text);background:var(--panel);
+  border:1px solid var(--line);border-radius:var(--radius)}
+dialog::backdrop{background:rgb(0 0 0 / 70%)}
+dialog h2{font-size:20px;margin-bottom:12px}
+dialog p{color:var(--muted);font-size:14px;white-space:pre-line}
+
+@media (max-width:350px){
+  :root{--space:14px}
+  .quick-grid{grid-template-columns:1fr}
+  .score{padding-inline:14px}
+  .score-row{gap:6px;font-size:12px}
+  .macro{padding-inline:8px}
+  .frase{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  button{transition:background-color 150ms,border-color 150ms}
+}
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M13 3c1 5-4 5-3 9 1-1 2-2 2-3 4 3 6 5 6 8a6 6 0 0 1-12 0c0-5 5-7 7-14Z"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3S5 11 5 16a7 7 0 0 0 14 0c0-5-7-13-7-13Z"/></symbol>
+  <symbol id="i-meal" viewBox="0 0 24 24"><circle cx="13" cy="12" r="6"/><path d="M3 3v6m3-6v6M3 7h3M4.5 9v12M22 3v18"/></symbol>
+  <symbol id="i-cup" viewBox="0 0 24 24"><path d="M4 8h12v7a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5Zm12 1h2a3 3 0 0 1 0 6h-2M4 23h14M8 2v3m5-3v3"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15A9 9 0 0 1 9 4 9 9 0 1 0 20 15Z"/></symbol>
+  <symbol id="i-power" viewBox="0 0 24 24"><path d="m14 2-9 12h7l-2 8 9-12h-7Z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+  <!-- Os quatro que a referência não tinha, no mesmo traço -->
+  <symbol id="i-biceps" viewBox="0 0 24 24"><path d="M4 20v-6a5 5 0 0 1 5-5h3.5a3.5 3.5 0 0 0 0-7H6"/><path d="M12.5 9c3.5 0 6.5 2.2 6.5 5.5S16.5 20 13 20H4"/><path d="M9 14.5c1.6-1 3.4-1 5 0"/></symbol>
+  <symbol id="i-espiga" viewBox="0 0 24 24"><path d="M12 21V8"/><path d="M12 8c0-2.2 1.4-4 3-5 .6 2.2-.3 4.2-3 5Z"/><path d="M12 8c0-2.2-1.4-4-3-5-.6 2.2.3 4.2 3 5Z"/><path d="M12 13c0-2 1.3-3.6 2.8-4.5.5 2-.3 3.8-2.8 4.5Z"/><path d="M12 13c0-2-1.3-3.6-2.8-4.5-.5 2 .3 3.8 2.8 4.5Z"/><path d="M12 18c0-2 1.3-3.6 2.8-4.5.5 2-.3 3.8-2.8 4.5Z"/><path d="M12 18c0-2-1.3-3.6-2.8-4.5-.5 2 .3 3.8 2.8 4.5Z"/></symbol>
+  <symbol id="i-coxa" viewBox="0 0 24 24"><path d="M15.5 3.2a5.3 5.3 0 0 0-5.2 6.4c.2 1-.1 2-.9 2.8l-1.6 1.6a3.4 3.4 0 1 0 2.2 2.2l1.6-1.6c.8-.8 1.8-1.1 2.8-.9A5.3 5.3 0 0 0 15.5 3.2Z"/><path d="m7.4 16.6-3 3"/><path d="m5.6 14.8-2.2 2.2"/></symbol>
+  <symbol id="i-cerebro" viewBox="0 0 24 24"><path d="M12 4.5a2.5 2.5 0 0 0-4.6-1.3A2.6 2.6 0 0 0 4.7 6a2.7 2.7 0 0 0-.8 4.2A2.8 2.8 0 0 0 5 15a2.6 2.6 0 0 0 3.4 3.4A2.5 2.5 0 0 0 12 19.5Z"/><path d="M12 4.5a2.5 2.5 0 0 1 4.6-1.3A2.6 2.6 0 0 1 19.3 6a2.7 2.7 0 0 1 .8 4.2A2.8 2.8 0 0 1 19 15a2.6 2.6 0 0 1-3.4 3.4A2.5 2.5 0 0 1 12 19.5Z"/><path d="M12 4.5v15"/></symbol>
+  <symbol id="i-tigela" viewBox="0 0 24 24"><path d="M3 11h18a9 9 0 0 1-18 0Z"/><path d="M2 21h20"/><path d="M9 8c0-1.5 1-2 1-3.2S9 3 9 3M14 8c0-1.5 1-2 1-3.2S14 3 14 3"/></symbol>
+  <symbol id="i-seta" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+</defs></svg>
+
+<!-- ================= PAINEL DE TESTE — sai na integração ================= -->
+<div class="demo">
+  <b>Prévia</b>
+  <label>Sexo
+    <select id="c-sexo"><option value="f">Mulher</option><option value="m">Homem</option></select>
+  </label>
+  <label>Objetivo
+    <select id="c-obj">
+      <option value="mass">Ganhar massa</option>
+      <option value="cut">Emagrecer</option>
+      <option value="maint">Manter</option>
+    </select>
+  </label>
+  <label>Consumido
+    <input id="c-kcal" type="number" min="0" step="50" value="0" style="width:88px">
+  </label>
+  <button class="score-i" id="c-cheio" title="Preencher um dia típico" style="width:auto;padding:6px 10px;border-radius:8px">dia típico</button>
+</div>
+
+<main class="app">
+  <section class="hero" aria-label="Resumo de hoje">
+    <img id="foto-fundo" class="hero-photo" src="download (8).png" alt="" fetchpriority="high">
+
+    <div class="frase frase-esq">Disciplina hoje, resultados sempre.</div>
+    <div class="frase frase-dir">Saúde foco equilíbrio conquistas</div>
+
+    <header class="row">
+      <button class="date-button" data-action="selecionar-data">Hoje <span class="gold" aria-hidden="true">⌄</span></button>
+      <span class="pro">PRO</span>
+    </header>
+
+    <div class="week" id="semana" aria-label="Semana"></div>
+
+    <span class="sleep">
+      <svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>
+      Sono ok · 7h
+    </span>
+
+    <div class="gauge" id="calorie-gauge" role="img">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="gauge-rim-out" cx="60" cy="60" r="54"/>
+        <circle class="gauge-track" cx="60" cy="60" r="50"/>
+        <circle class="gauge-rim-in" cx="60" cy="60" r="46"/>
+        <circle id="calorie-arc" class="gauge-progress" cx="60" cy="60" r="50" pathLength="100" stroke-dasharray="0 100"/>
+        <circle cx="110" cy="60" r="2.6" fill="#F5BB16" style="filter:drop-shadow(0 0 6px #F5BB16)"/>
+      </svg>
+      <div class="gauge-center">
+        <strong class="gauge-number" data-bind="calorias">0</strong>
+        <span class="gauge-caption">kcal consumidas</span>
+      </div>
+    </div>
+
+    <p class="remaining"><span id="rotulo-kcal">Faltam</span> <strong class="gold" data-bind="restamCalorias">0</strong> kcal</p>
+
+    <div class="macros">
+      <div class="macro">
+        <div class="macro-top"><svg class="icon blue" aria-hidden="true"><use href="#i-biceps"/></svg><span class="nome">Proteína</span></div>
+        <strong class="blue"><span data-bind="proteina">0</span>g</strong>
+        <div class="track"><span class="track-fill" id="barra-prot" style="background:var(--blue)"></span></div>
+      </div>
+      <div class="macro">
+        <div class="macro-top"><svg class="icon orange" aria-hidden="true"><use href="#i-espiga"/></svg><span class="nome">Carbo</span></div>
+        <strong class="orange"><span data-bind="carbo">0</span>g</strong>
+        <div class="track"><span class="track-fill" id="barra-carb" style="background:var(--orange)"></span></div>
+      </div>
+      <div class="macro">
+        <div class="macro-top"><svg class="icon green" aria-hidden="true"><use href="#i-drop"/></svg><span class="nome">Gordura</span></div>
+        <strong class="green"><span data-bind="gordura">0</span>g</strong>
+        <div class="track"><span class="track-fill" id="barra-gord" style="background:var(--green)"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Resumo das metas">
+    <article class="cartao insight" data-action="abrir-agua">
+      <span class="bolha bolha-azul"><svg class="icon" aria-hidden="true"><use href="#i-drop"/></svg></span>
+      <div>
+        <h2>Hidratação</h2>
+        <p><span class="blue"><b data-bind="agua">0</b> ml</span> de água · Faltam <span data-bind="faltamAgua">0</span> ml</p>
+      </div>
+      <svg class="icon seta" aria-hidden="true"><use href="#i-seta"/></svg>
+    </article>
+    <article class="cartao insight" data-action="abrir-proteina">
+      <span class="bolha bolha-ouro"><svg class="icon" aria-hidden="true"><use href="#i-coxa"/></svg></span>
+      <div>
+        <h2>Proteína</h2>
+        <p><span class="orange"><b data-bind="proteina">0</b>g</span> de <span data-bind="metaProteina">0</span>g</p>
+        <p id="protein-copy" style="margin-top:2px"></p>
+      </div>
+      <svg class="icon seta" aria-hidden="true"><use href="#i-seta"/></svg>
+    </article>
+    <article class="cartao insight" data-action="abrir-calorias">
+      <span class="bolha bolha-ouro"><svg class="icon" aria-hidden="true"><use href="#i-flame"/></svg></span>
+      <p class="notice"><span id="rotulo-kcal2">Faltam</span> <b data-bind="restamCalorias">0</b> kcal para fechar sua meta de hoje.</p>
+      <svg class="icon seta" aria-hidden="true"><use href="#i-seta"/></svg>
+    </article>
+  </section>
+
+  <section class="section" aria-label="Refeições de hoje">
+    <div id="meal-list"></div>
+    <button class="primary" data-action="adicionar-alimento">+ Adicionar Alimento</button>
+  </section>
+
+  <section class="section">
+    <div class="painel" aria-labelledby="quick-title">
+      <h2 class="label painel-tit" id="quick-title">Refeições rápidas</h2>
+      <div class="quick-grid" id="quick-list"></div>
+    </div>
+  </section>
+
+  <section class="section water">
+    <div class="painel" aria-labelledby="water-title">
+      <h2 class="label painel-tit" id="water-title">Água hoje</h2>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span class="bolha bolha-azul" style="width:58px;height:58px"><svg class="icon" style="width:26px;height:26px" aria-hidden="true"><use href="#i-drop"/></svg></span>
+        <p class="water-total" style="margin:0"><strong data-bind="agua">0</strong><span>ml de <span data-bind="metaAgua">0</span> ml</span></p>
+      </div>
+      <div id="water-progress" class="track" role="progressbar" aria-label="Meta de água"><span class="track-fill" id="water-fill"></span></div>
+    </div>
+  </section>
+
+  <section class="score" aria-labelledby="score-title">
+    <div class="painel-tit">
+      <h2 class="label" id="score-title" style="margin:0">Score do dia</h2>
+      <button class="score-i" data-action="explicar-score" aria-label="Como o Score é calculado">i</button>
+    </div>
+    <div class="gauge" id="score-gauge" role="img">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="gauge-rim-out" cx="60" cy="60" r="54"/>
+        <circle class="gauge-track" cx="60" cy="60" r="50"/>
+        <circle class="gauge-rim-in" cx="60" cy="60" r="46"/>
+        <circle id="score-arc" class="gauge-progress" cx="60" cy="60" r="50" pathLength="100" stroke-dasharray="0 100"/>
+      </svg>
+      <div class="gauge-center">
+        <strong class="gauge-number" data-bind="score">0</strong>
+        <span class="gauge-caption">/100</span>
+      </div>
+    </div>
+    <ul class="score-list" id="score-list"></ul>
+  </section>
+</main>
+
+<div class="bottom">
+  <nav class="nav" aria-label="Navegação principal">
+    <button class="active" data-action="inicio" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg>Hoje</button>
+    <button data-action="nutricionista"><svg class="icon" aria-hidden="true"><use href="#i-cerebro"/></svg>Nut · IA</button>
+    <button data-action="mais"><svg class="icon" aria-hidden="true"><use href="#i-more"/></svg>Mais</button>
+  </nav>
+  <button class="add-floating" data-action="adicionar-alimento" aria-label="Adicionar alimento">+</button>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlg-t"><h2 id="dlg-t">Aviso</h2><p id="dlg-c"></p>
+  <form method="dialog"><button class="primary">Fechar</button></form></dialog>
+
+<script>
+/* ============================================================
+   FÓRMULA DO SCORE — faixa assimétrica por objetivo.
+   Decisão do Felipe em 10/09. Onde MAIS é melhor (água,
+   proteína) segue a proporção simples do app. Onde mais NÃO é
+   melhor (calorias, gordura), a nota cheia fica numa faixa e
+   cai dos dois lados — senão quem come o dobro tira 100.
+   ============================================================ */
+var FAIXA={
+  cut  :{okBaixo:0.85, okAlto:1.00, zeroAlto:1.30},
+  mass :{okBaixo:1.00, okAlto:1.15, zeroAlto:1.45},
+  maint:{okBaixo:0.90, okAlto:1.10, zeroAlto:1.40}
+};
+function scoreFaixa(atual,meta,objetivo){
+  if(!(meta>0)) return 0;
+  var f=FAIXA[objetivo]||FAIXA.maint, r=atual/meta;
+  if(r<=0) return 0;                                   /* dia vazio nao ganha nota */
+  if(r>=f.okBaixo && r<=f.okAlto) return 100;
+  if(r<f.okBaixo)  return Math.round(100*(r/f.okBaixo));
+  if(r>=f.zeroAlto) return 0;
+  return Math.round(100*(f.zeroAlto-r)/(f.zeroAlto-f.okAlto));
+}
+function scoreCrescente(atual,meta){                    /* agua, proteina: mais e melhor */
+  if(!(meta>0)) return 0;
+  return Math.round(Math.min(1,Math.max(0,atual/meta))*100);
+}
+
+var estado={
+  sexo:"f", objetivo:"mass",
+  calorias:0, metaCalorias:3295,
+  proteina:0, metaProteina:186,
+  carbo:0,    metaCarbo:380,
+  gordura:0,  metaGordura:92,
+  agua:0,     metaAgua:3255,
+  refeicoes:[
+    {nome:"Café da manhã",icone:"cup",  alimentos:[],kcal:0},
+    {nome:"Almoço",       icone:"meal", alimentos:[],kcal:0},
+    {nome:"Lanche",       icone:"coxa", alimentos:[],kcal:0},
+    {nome:"Jantar",       icone:"tigela",alimentos:[],kcal:0}
+  ]
+};
+var atalhos=[
+  {nome:"Café Manhã",kcal:445,icone:"cup"},
+  {nome:"Pré-treino",kcal:354,icone:"power"},
+  {nome:"Pós-treino",kcal:482,icone:"coxa"},
+  {nome:"Jantar Leve",kcal:370,icone:"tigela"}
+];
+var FOTO={f:"download (8).png", m:"download (9).png"};
+
+var fmt=new Intl.NumberFormat("pt-BR",{useGrouping:false,maximumFractionDigits:1});
+var num=function(v){ return fmt.format(v); };
+function esc(v){ var d=document.createElement("div"); d.textContent=String(v==null?"":v); return d.innerHTML; }
+function ico(n,c){ return '<svg class="icon '+(c||"")+'" aria-hidden="true"><use href="#i-'+n+'"/></svg>'; }
+function pct(a,m){ return m>0?Math.min(100,Math.max(0,a/m*100)):0; }
+function arco(id,v){
+  var a=document.getElementById(id);
+  a.setAttribute("stroke-dasharray",v+" 100");
+  a.style.visibility=v>0?"visible":"hidden";   /* ponta arredondada nao finge progresso */
+}
+
+function montarSemana(){
+  var nomes=["D","S","T","Q","Q","S","S"], hoje=new Date().getDay();
+  document.getElementById("semana").innerHTML=nomes.map(function(n,i){
+    var cls = i===hoje ? "day active" : (i>hoje ? "day futuro" : "day");
+    return '<div class="'+cls+'"><span>'+n+'</span><span class="day-marker"></span></div>';
+  }).join("");
+}
+
+function render(){
+  var e=estado;
+  var restaKcal=Math.max(0,e.metaCalorias-e.calorias);
+  var v={calorias:e.calorias, proteina:e.proteina, carbo:e.carbo, gordura:e.gordura,
+         agua:e.agua, metaProteina:e.metaProteina, metaAgua:e.metaAgua,
+         restamCalorias:restaKcal, faltamAgua:Math.max(0,e.metaAgua-e.agua)};
+
+  document.querySelectorAll("[data-bind]").forEach(function(el){
+    if(el.dataset.bind in v) el.textContent=num(v[el.dataset.bind]);
+  });
+
+  /* Decisao 4: o verbo muda com o objetivo. Para quem corta, "faltam"
+     soaria como ordem de comer mais. */
+  var rot = e.objetivo==="cut" ? "Restam" : "Faltam";
+  document.getElementById("rotulo-kcal").textContent=rot;
+  document.getElementById("rotulo-kcal2").textContent=rot;
+
+  var faltaProt=Math.max(0,e.metaProteina-e.proteina);
+  document.getElementById("protein-copy").textContent = faltaProt>0
+    ? "Faltam "+num(faltaProt)+"g — cerca de "+num(Math.round(faltaProt*3.2))+"g de frango fecha a meta."
+    : "Meta de proteína fechada.";
+
+  arco("calorie-arc",pct(e.calorias,e.metaCalorias));
+  document.getElementById("calorie-gauge").setAttribute("aria-label",
+    num(e.calorias)+" de "+num(e.metaCalorias)+" quilocalorias");
+
+  document.getElementById("barra-prot").style.width=pct(e.proteina,e.metaProteina)+"%";
+  document.getElementById("barra-carb").style.width=pct(e.carbo,e.metaCarbo)+"%";
+  document.getElementById("barra-gord").style.width=pct(e.gordura,e.metaGordura)+"%";
+
+  var pa=pct(e.agua,e.metaAgua);
+  document.getElementById("water-fill").style.width=pa+"%";
+  var b=document.getElementById("water-progress");
+  b.setAttribute("aria-valuemin","0"); b.setAttribute("aria-valuemax","100");
+  b.setAttribute("aria-valuenow",pa.toFixed(1));
+  b.setAttribute("aria-valuetext",num(e.agua)+" ml de "+num(e.metaAgua)+" ml");
+
+  document.getElementById("meal-list").innerHTML=e.refeicoes.map(function(r){
+    var d=r.alimentos.length?esc(r.alimentos.join(", ")):ico("tigela","muted")+"Nenhum alimento";
+    return '<article class="cartao meal" data-action="abrir-refeicao">'
+      +'<span class="bolha bolha-ouro">'+ico(r.icone)+'</span>'
+      +'<div class="meal-name"><h2>'+esc(r.nome)+'</h2><p>'+d+'</p></div>'
+      +'<span class="kcal numbers">'+num(r.kcal)+' kcal</span>'
+      +'<svg class="icon seta" aria-hidden="true"><use href="#i-seta"/></svg>'
+      +'</article>';
+  }).join("");
+
+  document.getElementById("quick-list").innerHTML=atalhos.map(function(a,i){
+    return '<button class="quick" data-action="refeicao-rapida" data-index="'+i+'">'+ico(a.icone,"gold")+
+      "<span><strong>"+esc(a.nome)+"</strong><small>~"+num(a.kcal)+" kcal</small></span></button>";
+  }).join("");
+
+  /* ---- Score: os 5 criterios que o Felipe escolheu ---- */
+  var nReg=e.refeicoes.filter(function(r){return r.alimentos.length>0;}).length;
+  var criterios=[
+    {ic:"flame", nome:"Calorias",  s:scoreFaixa(e.calorias,e.metaCalorias,e.objetivo), val:num(e.calorias)+"/"+num(e.metaCalorias)+" kcal"},
+    {ic:"drop",  nome:"Água",      s:scoreCrescente(e.agua,e.metaAgua),                val:num(e.agua)+"/"+num(e.metaAgua)+" ml"},
+    {ic:"biceps",nome:"Proteína",  s:scoreCrescente(e.proteina,e.metaProteina),        val:num(e.proteina)+"g/"+num(e.metaProteina)+"g"},
+    {ic:"drop",  nome:"Gordura",   s:scoreFaixa(e.gordura,e.metaGordura,e.objetivo),   val:num(e.gordura)+"g/"+num(e.metaGordura)+"g"},
+    {ic:"meal",  nome:"Refeições", s:Math.round(nReg/4*100),                           val:nReg?nReg+" registradas":"Nenhuma"}
+  ];
+  var geral=Math.round(criterios.reduce(function(a,c){return a+c.s;},0)/criterios.length);
+  document.querySelector('[data-bind="score"]').textContent=num(geral);
+  arco("score-arc",geral);
+  document.getElementById("score-gauge").setAttribute("aria-label","Score do dia: "+num(geral)+" de 100");
+
+  document.getElementById("score-list").innerHTML=criterios.map(function(c){
+    var ok=c.s>=80;
+    return '<li class="score-row">'+ico(c.ic,"gold")+"<span>"+c.nome+
+      '</span><span class="score-value">'+esc(c.val)+'</span><span class="status '+(ok?"ok":"")+
+      '" aria-label="'+(ok?"na meta":"pendente")+'">'+(ok?"●":"×")+"</span></li>";
+  }).join("");
+
+  document.getElementById("foto-fundo").src=FOTO[e.sexo];
+}
+
+/* ---- controles da prévia ---- */
+document.getElementById("c-sexo").onchange=function(){ estado.sexo=this.value; render(); };
+document.getElementById("c-obj").onchange=function(){ estado.objetivo=this.value; render(); };
+document.getElementById("c-kcal").oninput=function(){
+  var k=Math.max(0,+this.value||0);
+  estado.calorias=k;
+  estado.proteina=Math.round(k*0.056);
+  estado.carbo=Math.round(k*0.115);
+  estado.gordura=Math.round(k*0.028);
+  render();
+};
+document.getElementById("c-cheio").onclick=function(){
+  estado.calorias=3200; estado.proteina=180; estado.carbo=370; estado.gordura=90;
+  estado.agua=2800;
+  estado.refeicoes[0].alimentos=["Ovos, pão, café"]; estado.refeicoes[0].kcal=520;
+  estado.refeicoes[1].alimentos=["Arroz, frango, salada"]; estado.refeicoes[1].kcal=980;
+  estado.refeicoes[2].alimentos=["Iogurte, banana"]; estado.refeicoes[2].kcal=300;
+  estado.refeicoes[3].alimentos=["Sopa, pão"]; estado.refeicoes[3].kcal=1400;
+  document.getElementById("c-kcal").value=3200;
+  render();
+};
+
+document.addEventListener("click",function(ev){
+  var b=ev.target.closest("[data-action]"); if(!b) return;
+  var a=b.dataset.action;
+  if(a==="inicio"){ window.scrollTo({top:0,behavior:"smooth"}); return; }
+  var msgs={
+    "selecionar-data":"Aqui abre o calendário do app.",
+    "adicionar-alimento":"Aqui abre a busca de alimentos. Nada foi registrado.",
+    "nutricionista":"Aqui abre a tela da Bel.",
+    "mais":"Aqui abre o menu Mais.",
+    "refeicao-rapida":"Aqui abre a receita cadastrada para conferir e ajustar.\n\nO atalho NÃO registra sozinho — o número seria um chute, e a Bel analisaria dado inventado.",
+    "explicar-score":"O Score é a média de 5 critérios.\n\nÁgua e proteína: quanto mais perto da meta, maior a nota.\n\nCalorias e gordura são diferentes, porque comer demais não é melhor. A nota cheia fica numa faixa em volta da meta e cai dos dois lados:\n\n• Emagrecer: cheia entre 85% e 100% da meta\n• Ganhar massa: entre 100% e 115%\n• Manter: entre 90% e 110%\n\nDia sem registro nenhum dá zero."
+  };
+  document.getElementById("dlg-c").textContent=msgs[a]||"Ação do app.";
+  document.getElementById("dlg").showModal();
+});
+
+/* Antes eu escondia a foto em silencio quando ela falhava. Isso torna
+   impossivel distinguir "nao tem foto" de "a foto quebrou" — e foi
+   exatamente a duvida que apareceu. Agora avisa. */
+document.getElementById("foto-fundo").addEventListener("error",function(ev){
+  var img=ev.currentTarget;
+  img.hidden=true;
+  var av=document.getElementById("aviso-foto");
+  if(!av){
+    av=document.createElement("div"); av.id="aviso-foto";
+    av.style.cssText="position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:9;"
+      +"background:#3a1010;border:1px solid #ffaaa3;color:#ffaaa3;font-size:11px;"
+      +"padding:6px 10px;border-radius:8px;max-width:92%;text-align:center";
+    img.parentNode.appendChild(av);
+  }
+  av.textContent='Foto nao encontrada: "'+img.getAttribute("src")
+    +'" — precisa estar na mesma pasta deste arquivo.';
+});
+
+montarSemana();
+render();
+</script>
+</body>
+</html>
