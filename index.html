@@ -464,21 +464,20 @@ html:not([data-theme="light"]) body.pro-mode .card{
 }
 html[data-theme="light"] .card{box-shadow:var(--shadow)}
 
-/* ---- o anel de calorias ---- */
-.calorie-ring-wrap{position:relative}
-.calorie-ring-wrap>div:first-child::before{
-  content:"";position:absolute;inset:-6px;border-radius:50%;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(circle at 50% 12%,rgb(255 236 178 / 13%) 0%,transparent 42%),
-    radial-gradient(circle,#16120a 0%,#1b160d 52%,#332b1a 60%,#3d331e 68%,#241d11 78%,#14100a 100%);
-  box-shadow:
-    inset 0 4px 8px rgb(0 0 0 / 70%),
-    inset 0 -3px 6px rgb(255 236 178 / 7%),
-    0 10px 24px rgb(0 0 0 / 55%),
-    0 1px 0 rgb(255 236 178 / 10%);
-}
-.calorie-ring-wrap>div:first-child>svg,
-.calorie-ring-wrap>div:first-child>div{position:relative;z-index:1}
+/* ---- o anel de calorias ----
+   O relevo do anel MUDOU DE LUGAR: agora mora em .h-gauge, no bloco do
+   layout novo, mais abaixo. As regras que existiam aqui foram removidas
+   de proposito, nao por descuido:
+
+     .calorie-ring-wrap>div:first-child::before   pintava um segundo
+       relevo por cima do novo — dois discos escuros empilhados
+     .calorie-ring-wrap>div:first-child>div       dava position:relative
+       ao miolo do anel. Como esse seletor e mais especifico que
+       .h-gauge-centro, ele vencia, e o numero de calorias caia PARA
+       FORA do anel, em cima do "Faltam ... kcal".
+
+   Se algum dia a marcacao do anel voltar a ser <div><svg></div>, o
+   relevo tem que voltar por .h-gauge, nao por aqui. */
 #calRingFill{filter:drop-shadow(0 0 7px rgb(240 180 41 / 55%)) drop-shadow(0 1px 1px rgb(0 0 0 / 55%))}
 .calorie-num{text-shadow:0 1px 0 rgb(0 0 0 / 60%),0 0 22px rgb(255 236 178 / 22%)}
 
@@ -1349,7 +1348,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260910_hoje_layout";
+var APP_VERSION="20260910_hoje_layout_b";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
