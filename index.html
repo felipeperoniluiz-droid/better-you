@@ -520,6 +520,100 @@ html[data-theme="light"] .card{box-shadow:var(--shadow)}
 /* ---- barra inferior e faixa da semana ---- */
 .nav3{box-shadow:inset 0 1px 0 rgb(255 236 178 / 8%),0 4px 14px rgb(0 0 0 / 50%)}
 #semanaFaixa .dia-bolha,#semanaFaixa .cal-cell{box-shadow:inset 0 1px 2px rgb(0 0 0 / 50%)}
+
+/* ================================================================
+   TELA HOJE — LAYOUT NOVO  (10/09/2026)
+   Porte da criacao do Felipe (better-you-tela-hoje.html) para dentro
+   do app. Diferenca do bloco anterior: aquele era so tinta sobre a
+   marcacao velha; este traz a ESTRUTURA — foto de fundo, anel de tres
+   aros, macros com icone, frases laterais.
+
+   Todo nome de classe leva o prefixo h- ("hoje"). Nao e enfeite: o app
+   ja tem .track, .day, .week, .primary e .macro com outro significado,
+   e colidir com eles quebraria telas que nao tem nada a ver com esta.
+
+   As ancoras do tour (.calorie-ring-wrap, .macro-row, #sleepCard,
+   #mealsContainer) e TODOS os id que o renderToday() escreve continuam
+   exatamente onde estavam. Por isso este porte nao mexe em uma linha
+   de JavaScript.
+   ================================================================ */
+#tab-hoje{--h-line:#383018;--h-gold:#f5bb16;--h-goldT:#f8d778;--h-muted:#c2baa8;}
+
+/* ---- o topo com a foto ---- */
+.h-hero{position:relative;isolation:isolate;overflow:hidden;
+  margin:0 -16px;padding:14px 16px 0;}
+.h-hero-foto{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center top;z-index:-2;}
+/* O veu escuro nao e estetica: sem ele o texto branco cai em cima da
+   parte clara da foto e some. 48% foi o menor valor que ainda deixa
+   "Faltam 3295 kcal" legivel sobre o ombro iluminado do modelo. */
+.h-hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgb(25 22 9 / 34%) 0%,rgb(25 22 9 / 52%) 55%,rgb(25 22 9 / 88%) 100%);}
+html[data-theme="light"] .h-hero::after{
+  background:linear-gradient(180deg,rgb(255 255 255 / 40%) 0%,rgb(255 255 255 / 78%) 100%);}
+html[data-theme="light"] .h-hero-foto{opacity:.5}
+
+/* ---- frases verticais ---- */
+.h-frase{position:absolute;top:44%;font-size:8px;letter-spacing:.34em;line-height:2;
+  color:rgb(248 215 120 / 55%);text-transform:uppercase;pointer-events:none;z-index:0;max-width:78px}
+.h-frase-esq{left:4px;text-align:left}
+.h-frase-dir{right:4px;text-align:right}
+.h-frase::after{content:"";display:block;width:22px;height:1px;background:currentColor;margin-top:10px}
+.h-frase-dir::after{margin-left:auto}
+@media (max-width:350px){.h-frase{display:none}}
+
+/* ---- o anel de tres aros ----
+   Tres camadas, e a ordem importa:
+   1. ::before — aro elevado e miolo rebaixado, pintado ANTES do SVG
+   2. os fios claro e escuro, que dao a quina do sulco
+   3. o arco dourado por cima, com brilho proprio
+   Se o ::before viesse depois do SVG, cobriria o arco. */
+.h-gauge{position:relative;width:190px;height:190px;margin:8px auto 0}
+.h-gauge svg{display:block;width:100%;height:100%;overflow:visible}
+.h-gauge::before{content:"";position:absolute;inset:6px;border-radius:50%;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 12%,rgb(255 236 178 / 13%) 0%,transparent 42%),
+    radial-gradient(circle,#16120a 0%,#1b160d 52%,#332b1a 60%,#3d331e 68%,#241d11 78%,#14100a 100%);
+  box-shadow:
+    inset 0 4px 8px rgb(0 0 0 / 70%),
+    inset 0 -3px 6px rgb(255 236 178 / 7%),
+    0 10px 24px rgb(0 0 0 / 55%),
+    0 1px 0 rgb(255 236 178 / 10%);
+}
+.h-rim-out{fill:none;stroke:rgb(255 236 178 / 13%);stroke-width:1}
+.h-rim-in{fill:none;stroke:rgb(0 0 0 / 55%);stroke-width:1}
+.h-track{fill:none;stroke:#2a2314;stroke-width:11;filter:drop-shadow(0 1px 1px rgb(0 0 0 / 60%))}
+.h-gauge-centro{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;pointer-events:none;text-align:center}
+.h-gauge .calorie-num{font-size:56px;font-weight:700;line-height:1.1;letter-spacing:-.05em;
+  font-variant-numeric:tabular-nums;
+  text-shadow:0 1px 0 rgb(0 0 0 / 60%),0 0 22px rgb(255 236 178 / 22%)}
+.h-gauge .calorie-label{color:var(--h-muted);font-size:12px;margin-top:6px}
+.calorie-ring-wrap .calorie-remaining{font-size:15px;margin-top:14px;position:relative;z-index:1}
+
+/* ---- macros com icone e divisoria ---- */
+#tab-hoje .macro-row{margin-top:22px;padding:18px 0;
+  background:rgb(25 22 9 / 88%);border-top:1px solid var(--h-line);border-bottom:1px solid var(--h-line);
+  position:relative;z-index:1;gap:0}
+html[data-theme="light"] #tab-hoje .macro-row{background:rgb(255 255 255 / 88%)}
+#tab-hoje .macro-row>div{padding-inline:12px}
+#tab-hoje .macro-row>div+div{border-left:1px solid var(--h-line)}
+.h-macro-top{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.h-macro-top .macro-label{margin:0}
+#tab-hoje .macro-val{font-size:20px;text-shadow:0 1px 0 rgb(0 0 0 / 55%)}
+.h-ico{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;
+  filter:drop-shadow(0 1px 0 rgb(0 0 0 / 50%))}
+
+/* O cartao do topo perde fundo e borda: quem faz o fundo agora e a foto.
+   Sem isto, sobra um retangulo escuro cobrindo o modelo. */
+#tab-hoje .h-hero .card{background:none!important;border:0!important;box-shadow:none!important;
+  padding:0!important;margin-bottom:0!important}
+@media (max-width:350px){
+  .h-gauge{width:160px;height:160px}
+  .h-gauge .calorie-num{font-size:46px}
+  #tab-hoje .macro-row>div{padding-inline:7px}
+}
 </style>
 </head>
 <body>
@@ -729,31 +823,56 @@ if(_al){
 <div class="content" id="content">
 
 <!-- TAB HOJE -->
+<!-- Simbolos da tela Hoje. Ficam aqui, e nao num arquivo separado, porque o
+     app inteiro e um HTML so. O traco e o mesmo dos outros icones: 1.7 px,
+     ponta e junta arredondadas, sem preenchimento. -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs>
+  <symbol id="i-biceps" viewBox="0 0 24 24"><path d="M4 20v-6a5 5 0 0 1 5-5h3.5a3.5 3.5 0 0 0 0-7H6"/><path d="M12.5 9c3.5 0 6.5 2.2 6.5 5.5S16.5 20 13 20H4"/><path d="M9 14.5c1.6-1 3.4-1 5 0"/></symbol>
+  <symbol id="i-espiga" viewBox="0 0 24 24"><path d="M12 21V8"/><path d="M12 8c0-2.2 1.4-4 3-5 .6 2.2-.3 4.2-3 5Z"/><path d="M12 8c0-2.2-1.4-4-3-5-.6 2.2.3 4.2 3 5Z"/><path d="M12 13c0-2 1.3-3.6 2.8-4.5.5 2-.3 3.8-2.8 4.5Z"/><path d="M12 13c0-2-1.3-3.6-2.8-4.5-.5 2 .3 3.8 2.8 4.5Z"/><path d="M12 18c0-2 1.3-3.6 2.8-4.5.5 2-.3 3.8-2.8 4.5Z"/><path d="M12 18c0-2-1.3-3.6-2.8-4.5-.5 2 .3 3.8 2.8 4.5Z"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3S5 11 5 16a7 7 0 0 0 14 0c0-5-7-13-7-13Z"/></symbol>
+  <symbol id="i-coxa" viewBox="0 0 24 24"><path d="M15.5 3.2a5.3 5.3 0 0 0-5.2 6.4c.2 1-.1 2-.9 2.8l-1.6 1.6a3.4 3.4 0 1 0 2.2 2.2l1.6-1.6c.8-.8 1.8-1.1 2.8-.9A5.3 5.3 0 0 0 15.5 3.2Z"/><path d="m7.4 16.6-3 3"/><path d="m5.6 14.8-2.2 2.2"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M13 3c1 5-4 5-3 9 1-1 2-2 2-3 4 3 6 5 6 8a6 6 0 0 1-12 0c0-5 5-7 7-14Z"/></symbol>
+  <symbol id="i-tigela" viewBox="0 0 24 24"><path d="M3 11h18a9 9 0 0 1-18 0Z"/><path d="M2 21h20"/><path d="M9 8c0-1.5 1-2 1-3.2S9 3 9 3M14 8c0-1.5 1-2 1-3.2S14 3 14 3"/></symbol>
+  <symbol id="i-seta" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15A9 9 0 0 1 9 4 9 9 0 1 0 20 15Z"/></symbol>
+</defs></svg>
+
 <div class="tab active" id="tab-hoje">
-  <!-- Saudação com foto do perfil -->
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 0 2px"><div onclick="calAbrir()" style="display:flex;align-items:center;gap:7px;cursor:pointer"><span data-i18n="calhojeBtn" style="font-size:26px;font-weight:800;color:var(--text)">Hoje</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--goldInk)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"/></svg></div><span id="hojePro"></span></div><div id="semanaFaixa" style="padding:12px 0 6px"></div>
-  
-  <div class="card">
-    <div id="sinaisDia" style="display:none"></div>
-    <div class="calorie-ring-wrap">
-      <div style="position:relative;width:170px;height:170px;">
-        <svg width="170" height="170" style="transform:rotate(-90deg)">
-          <circle cx="85" cy="85" r="74" fill="none" stroke="var(--surface3)" stroke-width="11"/>
-          <circle cx="85" cy="85" r="74" fill="none" stroke="url(#rg)" stroke-width="11" stroke-linecap="round" stroke-dasharray="465" id="calRingFill" stroke-dashoffset="465" style="transition:stroke-dashoffset .6s ease;"/>
-          <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f0b429"/><stop offset="100%" stop-color="#e8834a"/></linearGradient></defs>
-        </svg>
-        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-          <div class="calorie-num" id="calConsumed">0</div>
-          <div class="calorie-label">kcal</div>
+  <div class="h-hero">
+    <img class="h-hero-foto" id="hojeFoto" alt="" aria-hidden="true" src="" style="display:none">
+    <span class="h-frase h-frase-esq" id="hojeFraseEsq"></span>
+    <span class="h-frase h-frase-dir" id="hojeFraseDir"></span>
+
+    <!-- Saudação com foto do perfil -->
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 0 2px"><div onclick="calAbrir()" style="display:flex;align-items:center;gap:7px;cursor:pointer"><span data-i18n="calhojeBtn" style="font-size:26px;font-weight:800;color:var(--text)">Hoje</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--goldInk)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"/></svg></div><span id="hojePro"></span></div><div id="semanaFaixa" style="padding:12px 0 6px"></div>
+
+    <div class="card">
+      <div id="sinaisDia" style="display:none"></div>
+      <div class="calorie-ring-wrap">
+        <div class="h-gauge">
+          <!-- r=74 e stroke-dasharray=465 sao obrigatorios: o renderToday()
+               calcula 2*PI*74 para mover o arco. Mudar o raio aqui quebraria
+               o preenchimento sem dar erro nenhum. -->
+          <svg viewBox="0 0 190 190" style="transform:rotate(-90deg)">
+            <circle class="h-rim-out" cx="95" cy="95" r="80"/>
+            <circle class="h-track" cx="95" cy="95" r="74"/>
+            <circle class="h-rim-in" cx="95" cy="95" r="68"/>
+            <circle cx="95" cy="95" r="74" fill="none" stroke="url(#rg)" stroke-width="11" stroke-linecap="round" stroke-dasharray="465" id="calRingFill" stroke-dashoffset="465" style="transition:stroke-dashoffset .6s ease;"/>
+            <circle cx="169" cy="95" r="2.6" fill="#f5bb16" style="filter:drop-shadow(0 0 6px #f5bb16)"/>
+            <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f0b429"/><stop offset="100%" stop-color="#e8834a"/></linearGradient></defs>
+          </svg>
+          <div class="h-gauge-centro">
+            <div class="calorie-num" id="calConsumed">0</div>
+            <div class="calorie-label" data-i18n="kcalConsumidas">kcal consumidas</div>
+          </div>
         </div>
+        <div class="calorie-remaining" id="calStatus">Meta: <b id="calGoalText" style="color:#f0b429;">3000</b> kcal</div>
       </div>
-      <div class="calorie-remaining" id="calStatus">Meta: <b id="calGoalText" style="color:#f0b429;">3000</b> kcal</div>
-    </div>
-    <div class="divider"></div>
-    <div class="macro-row">
-      <div><div class="macro-label" id="macro-prot-label">Proteina</div><div class="macro-val" style="color:#60a5fa" id="macroProtVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#60a5fa;width:0%" id="macroProtBar"></div></div></div>
-      <div><div class="macro-label" id="macro-carb-label">Carbo</div><div class="macro-val" style="color:#e8834a" id="macroCarbVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#e8834a;width:0%" id="macroCarbBar"></div></div></div>
-      <div><div class="macro-label" id="macro-fat-label">Gordura</div><div class="macro-val" style="color:#34d399" id="macroFatVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#34d399;width:0%" id="macroFatBar"></div></div></div>
+      <div class="macro-row">
+        <div><div class="h-macro-top"><svg class="h-ico" style="color:#60a5fa" aria-hidden="true"><use href="#i-biceps"/></svg><div class="macro-label" id="macro-prot-label">Proteina</div></div><div class="macro-val" style="color:#60a5fa" id="macroProtVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#60a5fa;width:0%" id="macroProtBar"></div></div></div>
+        <div><div class="h-macro-top"><svg class="h-ico" style="color:#e8834a" aria-hidden="true"><use href="#i-espiga"/></svg><div class="macro-label" id="macro-carb-label">Carbo</div></div><div class="macro-val" style="color:#e8834a" id="macroCarbVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#e8834a;width:0%" id="macroCarbBar"></div></div></div>
+        <div><div class="h-macro-top"><svg class="h-ico" style="color:#34d399" aria-hidden="true"><use href="#i-drop"/></svg><div class="macro-label" id="macro-fat-label">Gordura</div></div><div class="macro-val" style="color:#34d399" id="macroFatVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#34d399;width:0%" id="macroFatBar"></div></div></div>
+      </div>
     </div>
   </div>
   <div id="alertsBox" style="display:none;margin-bottom:12px;"></div>
@@ -1230,7 +1349,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260910_alto_relevo";
+var APP_VERSION="20260910_hoje_layout";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2193,7 +2312,34 @@ function jejumHistHtml(){
 function jejumRender(){
   try{ sinaisDiaRender(); }catch(e){} var el=document.getElementById("jejumBox"); if(el) el.innerHTML=jejumHtml(); }
 (function(){ setInterval(function(){ try{ var s=jejumStatus(); if(s.fase==="jejum") jejumRender(); }catch(e){} },30000); })();
+/* ---------- TELA HOJE: foto de fundo e frases laterais (10/09/2026) ----------
+   A foto sai do sexo declarado no cadastro (state.profile.sex: "m" ou "f") —
+   o mesmo campo que ja alimenta o calculo de TDEE. Nao ha escolha nova a
+   fazer, nem tela nova: quem preencheu o cadastro ja respondeu isso.
+
+   Se o arquivo nao existir no servidor, a foto some sozinha e a tela volta
+   ao fundo escuro. Isso e proposital: no dia em que a logo apontou para um
+   arquivo inexistente, ela sumiu de quatro telas do app publicado. Uma
+   imagem quebrada num fundo e pior que fundo nenhum. */
+var HOJE_FOTO={ m:"fundo-hoje-homem.jpg", f:"fundo-hoje-mulher.jpg" };
+function hojeFundoAplicar(){
+  try{
+    var img=document.getElementById("hojeFoto"); if(!img) return;
+    var sx=((state.profile&&state.profile.sex)||"m").toLowerCase()==="f"?"f":"m";
+    var arq=HOJE_FOTO[sx];
+    if(img.dataset.sexo!==sx){
+      img.dataset.sexo=sx;
+      img.onerror=function(){ img.style.display="none"; };
+      img.onload =function(){ img.style.display=""; };
+      img.src=arq;
+    }
+    var e=document.getElementById("hojeFraseEsq"), d=document.getElementById("hojeFraseDir");
+    if(e) e.textContent=tx("hojeFraseEsq");
+    if(d) d.textContent=tx("hojeFraseDir");
+  }catch(err){}
+}
 function renderToday(){
+  try{ hojeFundoAplicar(); }catch(e){}
   renderHomeGreeting();
   var t=calcTotals(),g=getMacroGoals();
   var pct=Math.min(t.kcal/state.calGoal,1);
@@ -4884,6 +5030,12 @@ massa:{fmt:'texto',
    de:{k:'Fang an, wo es geht',t:'Der Körper reagiert auf das, was du wiederholst.',s:'Kein Studio und keine feste Uhrzeit nötig. Bel zählt, was du ohnehin tust, und hilft daraus Beständigkeit zu machen.'}}
 };
 var TX={
+ /* Tela Hoje — layout novo (10/09/2026) */
+ kcalConsumidas:{pt:'kcal consumidas',en:'kcal eaten',es:'kcal consumidas',it:'kcal consumate',fr:'kcal consommées',de:'kcal gegessen'},
+ /* As frases laterais sao lema, nao instrucao: traduzidas pelo sentido, nao
+    ao pe da letra, senao em alemao viram um paragrafo e estouram os 78 px. */
+ hojeFraseEsq:{pt:'Disciplina hoje, resultados sempre.',en:'Discipline today, results always.',es:'Disciplina hoy, resultados siempre.',it:'Disciplina oggi, risultati sempre.',fr:'Discipline aujourd\'hui, résultats toujours.',de:'Heute Disziplin, immer Ergebnisse.'},
+ hojeFraseDir:{pt:'Saúde foco equilíbrio conquistas',en:'Health focus balance wins',es:'Salud foco equilibrio logros',it:'Salute focus equilibrio traguardi',fr:'Santé focus équilibre victoires',de:'Gesundheit Fokus Balance Erfolge'},
  authSenha:{pt:'Senha',en:'Password',es:'Contraseña',it:'Password',fr:'Mot de passe',de:'Passwort'},
  authConfSenha:{pt:'Confirmar senha',en:'Confirm password',es:'Confirmar contraseña',it:'Conferma password',fr:'Confirmer le mot de passe',de:'Passwort bestätigen'},
  authEsqueci:{pt:'Esqueci minha senha',en:'I forgot my password',es:'Olvidé mi contraseña',it:'Ho dimenticato la password',fr:'J\'ai oublié mon mot de passe',de:'Passwort vergessen'},
