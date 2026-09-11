@@ -955,11 +955,21 @@ html[data-theme="light"] .sheet-sub{color:#6b6b6b}
    object-fit:contain e object-position preservam a proporcao e o
    enquadramento do rosto. Com cover, em tela estreita a cabeca dela
    sairia do quadro. */
-.bel-hero{position:relative;display:grid;grid-template-columns:1fr 1fr;align-items:end;
-  min-height:250px;background:#191609}
-.bel-hero-img{position:absolute;left:0;bottom:0;width:52%;height:100%;
-  object-fit:contain;object-position:left bottom;}
-.bel-id{position:relative;z-index:1;grid-column:2;min-width:0;padding:24px 18px 24px 6px}
+/* A foto cobre o cabecalho INTEIRO, nao uma coluna. Ela ja traz o proprio
+   fundo escuro com a luz lateral: e esse fundo que fica atras do nome, do
+   lado direito. Tratando a foto como meia coluna, como eu fiz na primeira
+   versao, ela vira uma caixinha colada num retangulo vazio.
+   object-position em 18% puxa o enquadramento para cima: com "center" o
+   corte de 250 px de altura comia o alto da cabeca dela. */
+.bel-hero{position:relative;display:grid;grid-template-columns:44% 1fr;align-items:center;
+  min-height:260px;background:#191609}
+.bel-hero-img{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:left 18%;}
+/* Veu suave so do lado do texto, para o nome nao competir com a luz dourada
+   da foto. Para no meio para nao apagar o rosto dela. */
+.bel-hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent 38%,rgb(25 22 9 / 55%) 62%,rgb(25 22 9 / 80%) 100%)}
+.bel-id{position:relative;z-index:1;grid-column:2;min-width:0;padding:20px 18px 20px 4px}
 .bel-nome{margin:0;font-size:30px;font-weight:600;line-height:1.15;color:var(--bel-txt)}
 .bel-cargo{margin:8px 0;color:var(--bel-ouroC);font-size:15px;font-weight:500}
 .bel-desc{margin:0;color:var(--bel-mudo);font-size:13px;overflow-wrap:anywhere}
@@ -990,6 +1000,14 @@ html[data-theme="light"] .sheet-sub{color:#6b6b6b}
   border:1px solid rgb(245 187 22 / 45%)}
 .bel-balao{flex:1;min-width:0;padding:18px;border-radius:18px;background:var(--bel-ctrl);
   box-shadow:inset 0 1px 0 rgb(255 236 178 / 8%)}
+/* Sem conversa ainda, o balao encolhe no texto de boas-vindas em vez de
+   abrir um buraco de 170 px. O #chatMessages:empty resolve sozinho, sem
+   nenhuma das funcoes que escrevem mensagens precisar saber disso. */
+#tab-dieta #chatMessages:empty{min-height:0;margin:0}
+#tab-dieta #chatVazio{padding:0;text-align:left}
+#tab-dieta #chatVazio svg{display:none}
+#tab-dieta .chatVazio__tit{font-size:22px;font-weight:600;line-height:1.3;color:var(--bel-txt);margin:0}
+#tab-dieta .chatVazio__sub{font-size:14px;color:var(--bel-mudo);margin-top:8px}
 .bel-balao-tit{margin:0;font-size:22px;font-weight:600;line-height:1.3;color:var(--bel-txt)}
 .bel-balao-txt{margin:8px 0 0;color:var(--bel-mudo);font-size:14px}
 
@@ -1793,7 +1811,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260911_tela_bel_b";
+var APP_VERSION="20260911_tela_bel_c";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -1854,7 +1872,9 @@ pt:{'navNut':'Nut','conexoesTitulo':'Dispositivos','temaTitulo':'Tema','temaClar
   calendario:'Calendário',registrosDiarios:'Registros diários',
   excellenteLegend:'● Excelente (80+)',bomLegend:'● Bom (50–79)',ruimLegend:'● Ruim (<50)',
   planoAlimentar:'Plano Alimentar',planoAlimentarSub:'Selecione seu estilo de dieta atual',
-  onlineAgora:'Online agora — responde em segundos',
+  /* "Responde em segundos" e nao "Online agora": a especificacao do Felipe
+     pede para nao simular presenca, e a Bel e uma IA. */
+  onlineAgora:'Responde em segundos',belRole:'Nutricionista IA',
   alimSelecionado:'Alimento selecionado',quantidadeG:'Quantidade (g)',caloriasLabel:'Calorias',
   cadastrarNovo:'+ Cadastrar alimento novo',cadastrarAlimento:'Cadastrar Alimento',nomeLabel:'Nome',
   cal100g:'Calorias /100g',prot100g:'Proteína /100g',carb100g:'Carbo /100g',gord100g:'Gordura /100g',salvarAlimento:'Salvar Alimento',
@@ -1908,7 +1928,7 @@ en:{'navNut':'Nut','conexoesTitulo':'Devices','temaTitulo':'Theme','temaClaro':'
   calendario:'Calendar',registrosDiarios:'Daily records',
   excellenteLegend:'● Excellent (80+)',bomLegend:'● Good (50–79)',ruimLegend:'● Poor (<50)',
   planoAlimentar:'Meal Plan',planoAlimentarSub:'Select your current diet style',
-  onlineAgora:'Online now — answers in seconds',
+  onlineAgora:'Answers in seconds',belRole:'AI Nutritionist',
   alimSelecionado:'Selected food',quantidadeG:'Amount (g)',caloriasLabel:'Calories',
   cadastrarNovo:'+ Add new food',cadastrarAlimento:'Add Food',nomeLabel:'Name',
   cal100g:'Calories /100g',prot100g:'Protein /100g',carb100g:'Carbs /100g',gord100g:'Fat /100g',salvarAlimento:'Save Food',
@@ -1962,7 +1982,7 @@ es:{'navNut':'Nut','conexoesTitulo':'Dispositivos','temaTitulo':'Tema','temaClar
   calendario:'Calendario',registrosDiarios:'Registros diarios',
   excellenteLegend:'● Excelente (80+)',bomLegend:'● Bueno (50–79)',ruimLegend:'● Malo (<50)',
   planoAlimentar:'Plan Alimentario',planoAlimentarSub:'Selecciona tu estilo de dieta actual',
-  onlineAgora:'En línea ahora — responde en segundos',
+  onlineAgora:'Responde en segundos',belRole:'Nutricionista IA',
   alimSelecionado:'Alimento seleccionado',quantidadeG:'Cantidad (g)',caloriasLabel:'Calorías',
   cadastrarNovo:'+ Agregar nuevo alimento',cadastrarAlimento:'Agregar Alimento',nomeLabel:'Nombre',
   cal100g:'Calorías /100g',prot100g:'Proteína /100g',carb100g:'Carbos /100g',gord100g:'Grasa /100g',salvarAlimento:'Guardar Alimento',
@@ -2016,7 +2036,7 @@ it:{'navNut':'Nut','conexoesTitulo':'Dispositivi','temaTitulo':'Tema','temaClaro
   calendario:'Calendario',registrosDiarios:'Registrazioni giornaliere',
   excellenteLegend:'● Eccellente (80+)',bomLegend:'● Buono (50–79)',ruimLegend:'● Scarso (<50)',
   planoAlimentar:'Piano Alimentare',planoAlimentarSub:'Seleziona il tuo stile di dieta attuale',
-  onlineAgora:'Online ora — risponde in secondi',
+  onlineAgora:'Risponde in pochi secondi',belRole:'Nutrizionista IA',
   alimSelecionado:'Alimento selezionato',quantidadeG:'Quantità (g)',caloriasLabel:'Calorie',
   cadastrarNovo:'+ Aggiungi nuovo alimento',cadastrarAlimento:'Aggiungi Alimento',nomeLabel:'Nome',
   cal100g:'Calorie /100g',prot100g:'Proteina /100g',carb100g:'Carboidrati /100g',gord100g:'Grassi /100g',salvarAlimento:'Salva Alimento',
@@ -2070,7 +2090,7 @@ fr:{'navNut':'Nut','conexoesTitulo':'Appareils','temaTitulo':'Thème','temaClaro
   calendario:'Calendrier',registrosDiarios:'Enregistrements quotidiens',
   excellenteLegend:'● Excellent (80+)',bomLegend:'● Bien (50–79)',ruimLegend:'● Mauvais (<50)',
   planoAlimentar:'Plan Alimentaire',planoAlimentarSub:'Sélectionnez votre style de régime actuel',
-  onlineAgora:'En ligne maintenant — répond en secondes',
+  onlineAgora:'Répond en quelques secondes',belRole:'Nutritionniste IA',
   alimSelecionado:'Aliment sélectionné',quantidadeG:'Quantité (g)',caloriasLabel:'Calories',
   cadastrarNovo:'+ Ajouter nouvel aliment',cadastrarAlimento:'Ajouter Aliment',nomeLabel:'Nom',
   cal100g:'Calories /100g',prot100g:'Protéines /100g',carb100g:'Glucides /100g',gord100g:'Lipides /100g',salvarAlimento:'Sauvegarder Aliment',
@@ -2124,7 +2144,7 @@ de:{'navNut':'Nut','conexoesTitulo':'Geräte','temaTitulo':'Design','temaClaro':
   calendario:'Kalender',registrosDiarios:'Tägliche Einträge',
   excellenteLegend:'● Ausgezeichnet (80+)',bomLegend:'● Gut (50–79)',ruimLegend:'● Schlecht (<50)',
   planoAlimentar:'Ernährungsplan',planoAlimentarSub:'Wählen Sie Ihren aktuellen Ernährungsstil',
-  onlineAgora:'Jetzt online — antwortet in Sekunden',
+  onlineAgora:'Antwortet in Sekunden',belRole:'KI-Ernährungsberaterin',
   alimSelecionado:'Ausgewähltes Lebensmittel',quantidadeG:'Menge (g)',caloriasLabel:'Kalorien',
   cadastrarNovo:'+ Neues Lebensmittel hinzufügen',cadastrarAlimento:'Lebensmittel hinzufügen',nomeLabel:'Name',
   cal100g:'Kalorien /100g',prot100g:'Protein /100g',carb100g:'Kohlenhydrate /100g',gord100g:'Fett /100g',salvarAlimento:'Lebensmittel speichern',
