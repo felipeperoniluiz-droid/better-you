@@ -982,15 +982,25 @@ html[data-theme="light"] #belParede{display:none}
    versao, ela vira uma caixinha colada num retangulo vazio.
    object-position em 18% puxa o enquadramento para cima: com "center" o
    corte de 250 px de altura comia o alto da cabeca dela. */
-.bel-hero{position:relative;display:grid;grid-template-columns:44% 1fr;align-items:center;
-  min-height:260px;background:#191609}
-.bel-hero-img{position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:left 18%;}
-/* Veu suave so do lado do texto, para o nome nao competir com a luz dourada
-   da foto. Para no meio para nao apagar o rosto dela. */
-.bel-hero::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(90deg,transparent 38%,rgb(25 22 9 / 55%) 62%,rgb(25 22 9 / 80%) 100%)}
-.bel-id{position:relative;z-index:1;grid-column:2;min-width:0;padding:20px 18px 20px 4px}
+.bel-hero{position:relative;background:#191609}
+.bel-hero-img{display:block;width:100%}
+.bel-id{position:relative;z-index:1;min-width:0;padding:20px 18px}
+
+/* --- imagem LARGA: ela na esquerda, texto na direita, como no modelo --- */
+.bel-hero--largo{display:grid;grid-template-columns:44% 1fr;align-items:center;min-height:260px}
+.bel-hero--largo .bel-hero-img{position:absolute;inset:0;height:100%;
+  object-fit:cover;object-position:left 18%}
+.bel-hero--largo .bel-id{grid-column:2;padding-left:4px}
+/* Veu so do lado do texto. Para antes do meio para nao apagar o rosto. */
+.bel-hero--largo::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent 38%,rgb(25 22 9 / 60%) 62%,rgb(25 22 9 / 85%) 100%)}
+
+/* --- imagem QUADRADA (a reserva embutida, 420x420, rosto no centro):
+       empilhado. Sobrepor texto num retrato centrado poe a escrita em cima
+       da cara — foi o que aconteceu quando o arquivo novo faltou. --- */
+.bel-hero--quadrado .bel-hero-img{max-height:240px;object-fit:cover;object-position:center 22%}
+.bel-hero--quadrado .bel-id{text-align:center}
+.bel-hero--quadrado .bel-desc{max-width:36ch;margin-inline:auto}
 .bel-nome{margin:0;font-size:30px;font-weight:600;line-height:1.15;color:var(--bel-txt)}
 .bel-cargo{margin:8px 0;color:var(--bel-ouroC);font-size:15px;font-weight:500}
 .bel-desc{margin:0;color:var(--bel-mudo);font-size:13px;overflow-wrap:anywhere}
@@ -1058,9 +1068,11 @@ html[data-theme="light"] #belParede{display:none}
 @media (max-width:380px){
   .bel-atalhos{grid-template-columns:1fr}
   .bel-corpo{padding:16px}
-  .bel-hero{display:block;min-height:0}
-  .bel-hero-img{position:static;width:100%;height:auto;max-height:230px;object-position:center top}
-  .bel-id{padding:16px}
+  /* Em tela estreita nem a foto larga cabe ao lado do texto: empilha. */
+  .bel-hero--largo{display:block;min-height:0}
+  .bel-hero--largo .bel-hero-img{position:static;height:auto;max-height:230px;object-position:center 18%}
+  .bel-hero--largo::after{display:none}
+  .bel-hero--largo .bel-id{padding:16px}
 }
 html[data-theme="light"] #tab-dieta{--bel-painel:#fff;--bel-ctrl:#f4f1ea;--bel-borda:#e3d9c2;
   --bel-txt:#1a1a1a;--bel-mudo:#6b6b6b}
@@ -1844,7 +1856,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260911_imagens_leves";
+var APP_VERSION="20260911_imagens_cascata";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2855,9 +2867,23 @@ function jejumRender(){
    Se um dia esses arquivos forem trocados por versoes comprimidas, e so
    mudar estes dois valores — o resto do codigo nao sabe o nome de nada. */
 var HOJE_FOTO={
-  m:"hoje-homem.jpg",    /* homem  */
-  f:"hoje-mulher.jpg"    /* mulher */
+  m:["hoje-homem.jpg","download%20%289%29.png"],
+  f:["hoje-mulher.jpg","download%20%288%29.png"]
 };
+/* Tenta os enderecos em ordem ate um carregar. Se nenhum carregar, chama
+   aoFalhar() — e a tela decide o que fazer, em vez de ficar com imagem
+   quebrada. */
+function _imgTentar(el,lista,aoOk,aoFalhar){
+  var i=0;
+  function proximo(){
+    if(i>=lista.length){ if(aoFalhar) aoFalhar(); return; }
+    var url=lista[i++];
+    el.onerror=proximo;
+    el.onload=function(){ el.style.display=""; if(aoOk) aoOk(el); };
+    el.src=url;
+  }
+  proximo();
+}
 function hojeFundoAplicar(){
   try{
     var img=document.getElementById("hojeFoto"); if(!img) return;
@@ -2874,12 +2900,9 @@ function hojeFundoAplicar(){
          dados ou nao gosta do modelo, nao quer a tela pelada. */
     }else{
       var sx=((state.profile&&state.profile.sex)||"m").toLowerCase()==="f"?"f":"m";
-      var arq=HOJE_FOTO[sx];
       if(img.dataset.sexo!==sx){
         img.dataset.sexo=sx;
-        img.onerror=function(){ img.style.display="none"; };
-        img.onload =function(){ img.style.display=""; };
-        img.src=arq;
+        _imgTentar(img,HOJE_FOTO[sx],null,function(){ img.style.display="none"; });
       }
     }
 
@@ -9010,10 +9033,16 @@ function renderNutriContext(){
    Quase 5 MB por abertura desta tela, num app vendido para gente que abre
    o celular na rua. Os arquivos antigos podem sair do repositorio depois
    que esta tela for conferida. */
+/* LISTA de candidatos, em ordem de preferencia: o comprimido primeiro, o
+   original depois. Eu troquei os nomes no codigo antes de os arquivos novos
+   existirem no servidor, e a tela Hoje ficou sem fundo nenhum — um arquivo
+   que some nao pode derrubar uma tela que funcionava.
+   Quando os .jpg subirem, eles ganham sozinhos. Quando os antigos forem
+   apagados do repositorio, some so a segunda opcao e nada quebra. */
 var BEL_FOTO={
-  grande:"bel-hero.jpg",    /* retrato do cabecalho */
-  mini:"bel-avatar.jpg",    /* avatar redondo do balao */
-  parede:"bel-fundo.jpg"    /* papel de parede, so nesta tela */
+  grande:["bel-hero.jpg","download%20%2818%29.png"],
+  mini  :["bel-avatar.jpg","download%20%2819%29.png"],
+  parede:["bel-fundo.jpg","download%20%2820%29.png"]
 };
 /* O papel de parede segue o mesmo botao "Capa" das configuracoes. Motivo:
    quem desligou a capa fez isso para economizar dados ou por nao gostar de
@@ -9030,14 +9059,13 @@ function belParedeAplicar(){
     }
     if(cx.firstChild) return;              /* ja montado */
     var img=new Image();
-    img.decoding="async";
-    img.alt="";
-    img.onload =function(){ if(aba) aba.classList.add("com-parede"); };
-    /* Falhou? A tela fica com o fundo escuro liso e o painel volta a ser
-       opaco. Nunca sobra imagem quebrada nem painel desbotado sobre nada. */
-    img.onerror=function(){ cx.innerHTML=""; if(aba) aba.classList.remove("com-parede"); };
-    img.src=BEL_FOTO.parede;
+    img.decoding="async"; img.alt="";
     cx.appendChild(img);
+    /* Falhou tudo? A tela fica com o fundo escuro liso e o painel volta a
+       ser opaco. Nunca sobra imagem quebrada nem painel desbotado. */
+    _imgTentar(img,BEL_FOTO.parede,
+      function(){ if(aba) aba.classList.add("com-parede"); },
+      function(){ cx.innerHTML=""; if(aba) aba.classList.remove("com-parede"); });
   }catch(e){}
 }
 function _belReserva(){
@@ -9050,14 +9078,27 @@ function belFotosAplicar(){
     [["belFoto",BEL_FOTO.grande],["belMini",BEL_FOTO.mini]].forEach(function(par){
       var el=document.getElementById(par[0]); if(!el||el.dataset.pronto) return;
       el.dataset.pronto="1";
-      el.onload=function(){ el.style.display=""; };
-      el.onerror=function(){
-        if(res && el.getAttribute("src")!==res){ el.src=res; }
-        else{ el.style.display="none"; }
-      };
-      el.src=par[1];
+      /* A reserva embutida entra no fim da fila, como ultimo recurso. */
+      var fila=par[1].slice(); if(res) fila.push(res);
+      _imgTentar(el,fila,
+        par[0]==="belFoto"?_belEnquadrar:null,
+        function(){ el.style.display="none"; });
     });
     belParedeAplicar();
+  }catch(e){}
+}
+/* O retrato do cabecalho so pode dividir a faixa com o texto se for LARGO —
+   a Bel fica na esquerda e sobra fundo escuro para o nome.
+   A reserva embutida e QUADRADA (420x420), com o rosto no centro: nessa
+   proporcao o texto cai em cima da cara dela, que foi exatamente o que
+   aconteceu. Entao a decisao vem da imagem que carregou de verdade, nao de
+   uma suposicao minha sobre qual arquivo estaria la. */
+function _belEnquadrar(el){
+  try{
+    var hero=el.closest(".bel-hero"); if(!hero) return;
+    var largo=(el.naturalWidth/el.naturalHeight)>=1.35;
+    hero.classList.toggle("bel-hero--largo",largo);
+    hero.classList.toggle("bel-hero--quadrado",!largo);
   }catch(e){}
 }
 </script>
