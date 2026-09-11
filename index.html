@@ -1655,6 +1655,14 @@ if(_al){
           <button class="theme-btn" id="theme-auto" onclick="setTheme('auto')" data-i18n="temaAuto">Automático</button>
         </div>
       </div>
+            <div style="margin-bottom:12px;">
+        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;" data-i18n="capaTitulo">Capa da tela Hoje</div>
+        <div class="theme-row">
+          <button class="theme-btn" id="capa-on" onclick="setCapa(true)" data-i18n="capaMostrar">Mostrar</button>
+          <button class="theme-btn" id="capa-off" onclick="setCapa(false)" data-i18n="capaOcultar">Ocultar</button>
+        </div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.55;margin-top:7px" data-i18n="capaNota">Sem a capa o app abre mais rápido e gasta menos dados.</div>
+      </div>
             <button class="btn btn-ghost" onclick="belEsquecerConfirm()" style="width:100%;margin-bottom:8px;color:var(--text2);border-color:rgba(139,149,163,.3);" data-i18n="esquecerMemoria">Apagar memória da Bel</button>
       
           <div style="margin-top:14px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--text2);line-height:1.6" data-i18n="avisoMedico">O Better You é uma ferramenta de acompanhamento e não substitui consulta com médico ou nutricionista. Procure um profissional antes de mudanças importantes na alimentação, e sempre em caso de gravidez, doença crônica ou uso de medicamentos.</div><div id="legalPerfil" style="font-size:11px;text-align:center;margin-top:12px;line-height:1.9"><a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkPriv">Política de Privacidade</a><span style="color:var(--text2);margin:0 8px">&middot;</span><a href="termos.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkTermos">Termos de Uso</a></div>
@@ -1671,7 +1679,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260911_mais_e_log_b";
+var APP_VERSION="20260911_capa_ajuste";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2073,6 +2081,34 @@ function setTheme(t){
   try{ save(); }catch(e){}
   try{ if(typeof saveToFirestore==="function") saveToFirestore(); }catch(e){}
   aplicarTema();
+}
+/* ---------- CAPA DA TELA HOJE (11/09/2026) ----------
+   state.capaHoje !== false  =>  mostra. O padrao e MOSTRAR, e o teste e
+   "!== false" de proposito: quem ja usa o app tem esse campo indefinido, e
+   com "=== true" a capa sumiria da tela de todo mundo na proxima abertura.
+
+   Vale mais do que gosto: a capa e um PNG de 1152x2048 sem compressao,
+   baixado a cada abertura. Para quem esta com dados contados, desligar e
+   economia de verdade — por isso a nota embaixo dos botoes diz isso, em vez
+   de tratar a escolha como puro capricho visual. */
+function capaLigada(){
+  try{ return !(state&&state.capaHoje===false); }catch(e){ return true; }
+}
+function setCapa(lig){
+  if(typeof state==="undefined"||!state) return;
+  state.capaHoje=!!lig;
+  try{ save(); }catch(e){}
+  try{ if(typeof saveToFirestore==="function") saveToFirestore(); }catch(e){}
+  capaBotoesSync();
+  try{ hojeFundoAplicar(); }catch(e){}
+}
+function capaBotoesSync(){
+  try{
+    var on=capaLigada();
+    var a=document.getElementById("capa-on"), b=document.getElementById("capa-off");
+    if(a) a.classList.toggle("active",on);
+    if(b) b.classList.toggle("active",!on);
+  }catch(e){}
 }
 try{
   var _mq=window.matchMedia("(prefers-color-scheme: light)");
@@ -2657,14 +2693,28 @@ var HOJE_FOTO={
 function hojeFundoAplicar(){
   try{
     var img=document.getElementById("hojeFoto"); if(!img) return;
-    var sx=((state.profile&&state.profile.sex)||"m").toLowerCase()==="f"?"f":"m";
-    var arq=HOJE_FOTO[sx];
-    if(img.dataset.sexo!==sx){
-      img.dataset.sexo=sx;
-      img.onerror=function(){ img.style.display="none"; };
-      img.onload =function(){ img.style.display=""; };
-      img.src=arq;
+
+    /* Desligada: some a foto E o pedido de rede. Limpar o src e o que evita
+       o download; so esconder com display:none baixaria o arquivo do mesmo
+       jeito, e a economia de dados — o motivo principal do ajuste — nao
+       aconteceria. */
+    if(!capaLigada()){
+      img.style.display="none";
+      if(img.getAttribute("src")){ img.removeAttribute("src"); img.dataset.sexo=""; }
+      /* As frases continuam. Elas sao texto, nao custam rede, e sao parte do
+         desenho da tela — nao da foto. Quem desliga a capa quer economizar
+         dados ou nao gosta do modelo, nao quer a tela pelada. */
+    }else{
+      var sx=((state.profile&&state.profile.sex)||"m").toLowerCase()==="f"?"f":"m";
+      var arq=HOJE_FOTO[sx];
+      if(img.dataset.sexo!==sx){
+        img.dataset.sexo=sx;
+        img.onerror=function(){ img.style.display="none"; };
+        img.onload =function(){ img.style.display=""; };
+        img.src=arq;
+      }
     }
+
     var e=document.getElementById("hojeFraseEsq"), d=document.getElementById("hojeFraseDir");
     if(e) e.textContent=tx("hojeFraseEsq");
     if(d) d.textContent=tx("hojeFraseDir");
@@ -3223,6 +3273,7 @@ function setProfGoal(g){
 // ── PERFIL ────────────────────────────────────────────────────
 function openProfile(){
   try{ gdprRender(); }catch(e){}
+  try{ capaBotoesSync(); }catch(e){}
   try{ _histSincronizar(); }catch(e){}
   setTimeout(function(){ try{ renderConexoes(); }catch(e){} try{ renderMeuPlano(); }catch(e){} try{ algRender(); }catch(e){} },60);
   var p=state.profile||{};
@@ -5447,6 +5498,10 @@ massa:{fmt:'texto',
 var TX={
  /* Tela Hoje — layout novo (10/09/2026) */
  kcalConsumidas:{pt:'kcal consumidas',en:'kcal eaten',es:'kcal consumidas',it:'kcal consumate',fr:'kcal consommées',de:'kcal gegessen'},
+ capaTitulo:{pt:'Capa da tela Hoje',en:'Today screen cover',es:'Portada de la pantalla Hoy',it:'Copertina della schermata Oggi',fr:'Image de la page Aujourd\'hui',de:'Titelbild der Heute-Seite'},
+ capaMostrar:{pt:'Mostrar',en:'Show',es:'Mostrar',it:'Mostra',fr:'Afficher',de:'Anzeigen'},
+ capaOcultar:{pt:'Ocultar',en:'Hide',es:'Ocultar',it:'Nascondi',fr:'Masquer',de:'Ausblenden'},
+ capaNota:{pt:'Sem a capa o app abre mais rápido e gasta menos dados.',en:'Without the cover the app opens faster and uses less data.',es:'Sin la portada la app abre más rápido y gasta menos datos.',it:'Senza la copertina l\'app si apre più in fretta e consuma meno dati.',fr:'Sans l\'image, l\'application s\'ouvre plus vite et consomme moins de données.',de:'Ohne Titelbild startet die App schneller und braucht weniger Daten.'},
  hidratacao:{pt:'Hidratação',en:'Hydration',es:'Hidratación',it:'Idratazione',fr:'Hydratation',de:'Flüssigkeit'},
  deAgua:{pt:'de água',en:'of water',es:'de agua',it:'di acqua',fr:'d\'eau',de:'Wasser'},
  faltamN:{pt:'Faltam {0}',en:'{0} to go',es:'Faltan {0}',it:'Mancano {0}',fr:'Encore {0}',de:'Noch {0}'},
