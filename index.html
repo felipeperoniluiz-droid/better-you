@@ -764,6 +764,168 @@ html[data-theme="light"] .nutri-quick{
 html[data-theme="light"] .input{
   box-shadow:inset 0 2px 4px rgb(0 0 0 / 8%)!important;
 }
+
+/* ================================================================
+   TELA MAIS  (11/09/2026)
+   Especificacao do Felipe. Medidas dele, na unidade dele.
+
+   Uma troca declarada: a especificacao pede Inter. O app ja carrega
+   DM Sans e Syne. Inter seria uma TERCEIRA fonte baixada em toda
+   abertura, para um desenho praticamente igual ao do DM Sans, que e
+   da mesma familia geometrica. Fiquei no DM Sans. Se voce quiser
+   Inter mesmo assim, e trocar --m-fonte aqui embaixo.
+   ================================================================ */
+#tab-mais{
+  --m-fundo:#191609; --m-sup:#201B10;
+  --m-ouro:#F5BB16; --m-ouroTxt:#F8D778;
+  --m-txt:#F7F3E8; --m-txt2:#C2BAA8;
+  --m-bronze:#514021; --m-azul:#9BCAFF;
+  --m-fonte:'DM Sans',Inter,system-ui,sans-serif;
+  --m-raio:18px;
+  max-width:520px;margin-inline:auto;font-family:var(--m-fonte);line-height:1.5;
+  /* 112 px de folga embaixo: a barra de navegacao flutua sobre a pagina.
+     Comecei com 88 e peguei 112 da sua referencia — ela esta certa: a barra
+     tem 60 px, mais 12 de respiro embaixo, mais a sombra. Com 88 a
+     Calculadora encostava. */
+  padding-bottom:calc(112px + env(safe-area-inset-bottom));
+}
+/* Foco visivel: quem navega por teclado precisa ver onde esta. Veio da
+   referencia e eu nao tinha. */
+#tab-mais :is(button,a):focus-visible{outline:2px solid var(--m-ouroTxt);outline-offset:4px}
+
+/* --- foto e nome --- */
+.m-foto{width:88px;height:88px;border-radius:50%;object-fit:cover;flex-shrink:0;
+  border:2px solid var(--m-ouro);
+  box-shadow:0 0 0 4px rgb(245 187 22 / 12%),0 4px 14px rgb(0 0 0 / 55%);}
+/* text-wrap:balance veio da referencia. Num nome de tres palavras ele evita
+   a segunda linha com uma palavra so, orfa no meio da tela. */
+.m-nome{text-align:center;font-size:24px;font-weight:600;color:var(--m-txt);
+  margin:14px 0 24px;line-height:1.25;letter-spacing:-.025em;
+  text-wrap:balance;overflow-wrap:anywhere;}
+
+/* --- faixa das duas estatisticas --- */
+.m-faixa{display:flex;align-items:center;gap:12px;padding:10px 0 4px}
+.m-stat{flex:1;text-align:center;min-width:0}
+.m-stat-rot{font-size:12px;font-weight:500;color:var(--m-txt2)}
+.m-stat-num{font-size:28px;font-weight:700;color:var(--m-txt);line-height:1.2;
+  font-variant-numeric:tabular-nums;text-shadow:0 1px 0 rgb(0 0 0 / 55%);
+  overflow-wrap:anywhere;}
+.m-stat-sub{font-size:12px;font-weight:500;color:var(--m-txt2)}
+.m-stat+.m-foto-wrap{border-left:1px solid var(--m-bronze);border-right:1px solid var(--m-bronze);
+  padding-inline:16px}
+
+/* --- itens do menu --- */
+.m-item{display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+  min-height:64px;margin-bottom:10px;padding:12px 16px;border-radius:var(--m-raio);
+  background:linear-gradient(180deg,rgb(42 36 21 / 92%) 0%,rgb(32 27 16 / 92%) 55%,rgb(25 22 9 / 92%) 100%);
+  border:1px solid var(--m-bronze);color:var(--m-txt);font:inherit;cursor:pointer;
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 10%),inset 0 -1px 0 rgb(0 0 0 / 55%),
+             0 3px 8px rgb(0 0 0 / 45%);}
+.m-item:active{background:linear-gradient(180deg,rgb(32 27 16 / 95%),rgb(25 22 9 / 95%));
+  box-shadow:inset 0 2px 4px rgb(0 0 0 / 55%);transform:translateY(1px)}
+/* O medalhao: cupula clara em cima, escura embaixo, halo da propria cor. */
+.m-med{flex-shrink:0;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  color:var(--m-ouroTxt);border:1px solid rgb(245 187 22 / 40%);
+  background:radial-gradient(120% 120% at 50% 18%,rgb(245 187 22 / 28%) 0%,rgb(245 187 22 / 6%) 70%);
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 32%),inset 0 -2px 3px rgb(0 0 0 / 42%),
+             0 0 14px rgb(245 187 22 / 22%);}
+.m-med svg{width:22px;height:22px;filter:drop-shadow(0 1px 0 rgb(0 0 0 / 45%))}
+.m-med-azul{color:var(--m-azul);border-color:rgb(155 202 255 / 40%);
+  background:radial-gradient(120% 120% at 50% 18%,rgb(155 202 255 / 28%) 0%,rgb(155 202 255 / 6%) 70%);
+  box-shadow:inset 0 1px 0 rgb(200 226 255 / 34%),inset 0 -2px 3px rgb(0 0 0 / 42%),
+             0 0 14px rgb(155 202 255 / 24%);}
+/* Rotulo longo quebra linha em vez de encolher ou cortar — em alemao
+   "Meu relatorio semanal" nao cabe numa linha so. */
+.m-rot{flex:1;min-width:0;font-size:15px;font-weight:500;line-height:1.35;overflow-wrap:anywhere}
+.m-seta{flex-shrink:0;width:16px;height:16px;color:var(--m-ouroTxt)}
+
+/* Os dois guardas vieram da referencia, e os dois valem:
+   hover:hover — sem isto, no celular o item fica "aceso" depois do toque,
+     porque o dedo deixa um hover grudado que nada tira.
+   reduced-motion — a transicao so existe para quem nao pediu menos
+     movimento. O Windows do Felipe pede; e a mesma preferencia que
+     escondeu a digitacao da Bel por dias. */
+@media (hover:hover){
+  #tab-mais .m-item:hover{border-color:var(--m-ouro);background:#2b2415}
+}
+@media (prefers-reduced-motion:no-preference){
+  #tab-mais .m-item{transition:background-color 160ms ease,border-color 160ms ease}
+}
+@media (max-width:350px){
+  #tab-mais{padding-inline:14px}
+  .m-item{gap:10px;padding-inline:12px}
+  .m-nome{font-size:22px}
+}
+html[data-theme="light"] #tab-mais{--m-txt:#1a1a1a;--m-txt2:#6b6b6b;--m-bronze:#e3d9c2}
+html[data-theme="light"] .m-item{
+  background:linear-gradient(180deg,#fff 0%,#f7f5f0 100%);
+  box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgb(0 0 0 / 6%),0 2px 6px rgb(0 0 0 / 10%);}
+
+/* ================================================================
+   PAINEL "REGISTRAR" (Log)  — 11/09/2026
+   Especificacao e cartela de icones do Felipe.
+
+   O endereco da cartela e do PROPRIO repositorio. A especificacao veio
+   apontando para cdn.abacus.ai; trocar isso nao foi capricho:
+     - cada cliente entregaria IP e referencia a um terceiro em toda
+       abertura do app, transferencia que a politica de privacidade dele
+       nao declara, na UE, com o nome dele no documento;
+     - e no dia em que aquele arquivo mudar de lugar, os icones somem do
+       app publicado — foi assim que a logo sumiu de quatro telas.
+
+   Os medalhoes JA FAZEM PARTE do PNG. Por isso nao ha fundo, borda nem
+   sombra em CSS atras deles: dobraria o circulo.
+   ================================================================ */
+/* O nome e o que o arquivo ja tem. Nao pedi para renomear: renomear e um
+   passo a mais onde da para errar, e ja perdemos a logo por nome que nao
+   batia. Se um dia virar "icones-log.png", muda so esta linha. */
+.log-ico{display:block;flex:0 0 48px;width:48px;height:48px;
+  background-image:url("bc7fd8f7-2f78-45e4-9af5-0e77a335a8ab.png");
+  background-repeat:no-repeat;
+  /* cartela de 3 colunas por 2 linhas */
+  background-size:300% 200%;}
+.log-ico--camera {background-position:0% 0%}
+.log-ico--barras {background-position:50% 0%}
+.log-ico--corpo  {background-position:100% 0%}
+.log-ico--add    {background-position:0% 100%}
+.log-ico--agua   {background-position:50% 100%}
+.log-ico--sono   {background-position:100% 100%}
+
+#sheetOv .sheet{max-width:520px;margin-inline:auto;border-radius:28px 28px 0 0;
+  max-height:90dvh;overflow-y:auto;padding-inline:20px;
+  padding-bottom:calc(20px + env(safe-area-inset-bottom));
+  background:#191609;border-top:1px solid #514021}
+#sheetTitle{font-size:28px;font-weight:600;color:#F7F3E8;letter-spacing:-.02em}
+#sheetBody .sheet-item{display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+  min-height:88px;margin-bottom:12px;padding:14px;border-radius:18px;
+  background:linear-gradient(180deg,rgb(42 36 21 / 92%) 0%,rgb(32 27 16 / 92%) 55%,rgb(25 22 9 / 92%) 100%);
+  border:1px solid #514021;color:#F7F3E8;font:inherit;cursor:pointer;
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 10%),inset 0 -1px 0 rgb(0 0 0 / 55%),
+             0 3px 8px rgb(0 0 0 / 45%);}
+#sheetBody .sheet-item:active{box-shadow:inset 0 2px 4px rgb(0 0 0 / 55%);transform:translateY(1px)}
+#sheetBody .sheet-item-tx{font-size:16px;font-weight:600;line-height:1.3}
+.sheet-sub{font-size:13px;font-weight:400;line-height:1.45;color:#C2BAA8;overflow-wrap:anywhere}
+.sheet-seta{flex-shrink:0;width:16px;height:16px;color:#F8D778;margin-left:auto}
+/* touch-action:none e obrigatorio: sem ele o navegador rola a pagina
+   durante o arraste e o gesto nunca chega ao meu codigo.
+   A area de toque real e maior que os 40x4 visiveis — 4 px de alvo seria
+   impossivel de acertar com o dedo. */
+#sheetOv .sheet-alca{width:40px;height:4px;border-radius:99px;background:#514021;
+  margin:10px auto 14px;touch-action:none;cursor:grab;
+  border-top:14px solid transparent;border-bottom:14px solid transparent;
+  background-clip:padding-box;box-sizing:content-box}
+#sheetOv .sheet-alca:active{cursor:grabbing}
+#sheetOv :is(button,[role="button"]):focus-visible{outline:2px solid #F8D778;outline-offset:3px}
+@media (hover:hover){ #sheetBody .sheet-item:hover{border-color:#F5BB16;background:#2b2415} }
+@media (prefers-reduced-motion:no-preference){
+  #sheetBody .sheet-item{transition:background-color 160ms ease,border-color 160ms ease}
+}
+html[data-theme="light"] #sheetOv .sheet{background:#fff}
+html[data-theme="light"] #sheetTitle{color:#1a1a1a}
+html[data-theme="light"] #sheetBody .sheet-item{
+  background:linear-gradient(180deg,#fff 0%,#f7f5f0 100%);border-color:#e3d9c2;color:#1a1a1a;
+  box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgb(0 0 0 / 6%),0 2px 6px rgb(0 0 0 / 10%);}
+html[data-theme="light"] .sheet-sub{color:#6b6b6b}
 </style>
 </head>
 <body>
@@ -989,7 +1151,12 @@ if(_al){
 
 <div class="tab active" id="tab-hoje">
   <div class="h-hero">
-    <img class="h-hero-foto" id="hojeFoto" alt="" aria-hidden="true" src="" style="display:none">
+    <!-- decoding + fetchpriority: a foto e enfeite, nao conteudo. Assim ela
+         desce em segundo plano e nao segura a pintura dos numeros, que e o
+         que a pessoa abriu o app para ver. Importa porque o arquivo e um
+         PNG grande, sem compressao. -->
+    <img class="h-hero-foto" id="hojeFoto" alt="" aria-hidden="true" src=""
+         decoding="async" fetchpriority="low" style="display:none">
     <span class="h-frase h-frase-esq" id="hojeFraseEsq"></span>
     <span class="h-frase h-frase-dir" id="hojeFraseDir"></span>
 
@@ -1346,7 +1513,7 @@ if(_al){
 <button class="navfab" onclick="openSheet('add')" aria-label="+"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5v13M5.5 12h13"/></svg></button>
 </div>
 <div class="sheet-ov" id="sheetOv" onclick="if(event.target===this)closeSheet()">
-  <div class="sheet"><div class="sheet-grip"></div><div class="sheet-title" id="sheetTitle"></div><div id="sheetBody"></div></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle"><div class="sheet-grip sheet-alca" id="sheetAlca"></div><div class="sheet-title" id="sheetTitle"></div><div id="sheetBody"></div></div>
 </div>
 </div>
 
@@ -1504,7 +1671,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260910_relevo_geral";
+var APP_VERSION="20260911_mais_e_log_b";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2476,7 +2643,17 @@ function jejumRender(){
    ao fundo escuro. Isso e proposital: no dia em que a logo apontou para um
    arquivo inexistente, ela sumiu de quatro telas do app publicado. Uma
    imagem quebrada num fundo e pior que fundo nenhum. */
-var HOJE_FOTO={ m:"fundo-hoje-homem.jpg", f:"fundo-hoje-mulher.jpg" };
+/* Os nomes sao os que os arquivos ja tem na pasta do Felipe. Nao pedi para
+   ele renomear de proposito: renomear e um passo a mais onde da para errar,
+   e ja perdemos a logo uma vez por causa de nome que nao batia.
+   O %20 e o espaco, e os parenteses vao escapados porque URL nao aceita
+   espaco cru e alguns servidores tropecam em parentese.
+   Se um dia esses arquivos forem trocados por versoes comprimidas, e so
+   mudar estes dois valores — o resto do codigo nao sabe o nome de nada. */
+var HOJE_FOTO={
+  m:"download%20%289%29.png",   /* homem  */
+  f:"download%20%288%29.png"    /* mulher */
+};
 function hojeFundoAplicar(){
   try{
     var img=document.getElementById("hojeFoto"); if(!img) return;
@@ -3112,7 +3289,9 @@ window._NAVIC={barras:'<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"current
 var _NAVGRUPO={hoje:"hoje",dieta:"bel",peso:"mais",hist:"mais",relatorios:"mais",agua:"mais",calc:"mais",jejum:"mais",sono:"mais",mais:"mais",foto:null};
 var _SHEETS={
   mais:{t:"navMais",itens:[{tab:"peso",k:"peso",ic:"peso",d:"sdPeso"},{tab:"hist",k:"hist",ic:"hist",d:"sdHist"},{tab:"relatorios",k:"navRelat",ic:"prog",d:"sdRelat"},{tab:"agua",k:"agua",ic:"agua",d:"sdAgua"},{tab:"jejum",k:"jejumNav",ic:"jejum",d:"sdJejum"},{tab:"calc",k:"calcular",ic:"calc",d:"sdCalc"},{fn:"openProfile",k:"profTitle",ic:"perfil",d:"sdPerfil"},{fn:"doSignOut",k:"sairConta",ic:"sair",d:"sdSair"}]},
-  add:{t:"navRegistrar",itens:[{tab:"foto",k:"fotoIA",ic:"foto",d:"sdFoto"},{fn:"bcAbrir",k:"bcItem",ic:"barras",d:"sdBarras"},{fn:"irFotoCorpo",k:"subtabCorpo",ic:"corpo",d:"sdCorpo"},{fn:"irAdicionarAlimento",k:"addAlimento",ic:"add",d:"sdAdd"},{tab:"agua",k:"agua",ic:"agua",d:"sdAgua"},{fn:"sonoEditar",k:"calsonoItem",ic:"sono",d:"sdSono"}]}
+  /* png: qual quadro da cartela de icones esta linha usa. Quando presente,
+     entra a imagem do Felipe no lugar do desenho em SVG. */
+  add:{t:"navRegistrar",itens:[{tab:"foto",k:"fotoIA",ic:"foto",d:"sdFoto",png:"camera"},{fn:"bcAbrir",k:"bcItem",ic:"barras",d:"sdBarras",png:"barras"},{fn:"irFotoCorpo",k:"subtabCorpo",ic:"corpo",d:"sdCorpo",png:"corpo"},{fn:"irAdicionarAlimento",k:"addAlimento",ic:"add",d:"sdAdd",png:"add"},{tab:"agua",k:"agua",ic:"agua",d:"sdAgua",png:"agua"},{fn:"sonoEditar",k:"calsonoItem",ic:"sono",d:"sdSono",png:"sono"}]}
 };
 function _navIcone(n){ return (window._NAVIC&&window._NAVIC[n])||""; }
 function irFotoCorpo(){
@@ -3136,16 +3315,76 @@ function openSheet(k){ setTimeout(_histSincronizar,30);
     /* A explicacao fica visivel, sem exigir toque: e no momento de escolher
        que a duvida existe, e um menu com 6 nomes soltos nao ensina nada. */
     var sub=it.d?tx(it.d):"";
-    return "<div class=\"sheet-item\" onclick=\"closeSheet();"+acao+"\">"+_navIcone(it.ic)+
-      "<span style=\"display:flex;flex-direction:column;gap:2px;min-width:0\">"+
+    /* <button> e nao <div>: quem usa teclado ou leitor de tela so alcanca a
+       linha se ela for um controle de verdade. Os 88 px de altura ja cobrem
+       com folga a area de toque de 44 px. */
+    var ico=it.png
+      ? "<span class=\"log-ico log-ico--"+it.png+"\" aria-hidden=\"true\"></span>"
+      : _navIcone(it.ic);
+    return "<button type=\"button\" class=\"sheet-item\" onclick=\"closeSheet();"+acao+"\">"+ico+
+      "<span style=\"display:flex;flex-direction:column;gap:3px;min-width:0\">"+
       "<span class=\"sheet-item-tx\">"+rot+"</span>"+
-      (sub?"<span style=\"font-size:11.5px;color:var(--text3);line-height:1.35;font-weight:500\">"+sub+"</span>":"")+
-      "</span></div>";
+      (sub?"<span class=\"sheet-sub\">"+sub+"</span>":"")+
+      "</span>"+
+      "<svg class=\"sheet-seta\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 6 6 6-6 6\"/></svg>"+
+      "</button>";
   }).join("");
   document.getElementById("sheetOv").classList.add("show");
+  _sheetQuemAbriu=document.activeElement;
+  try{ var _p=document.querySelector("#sheetBody .sheet-item"); if(_p) _p.focus(); }catch(e){}
   try{ tourFolhaAbriu(); }catch(e){}
 }
-function closeSheet(){ var o=document.getElementById("sheetOv"); if(o)o.classList.remove("show"); }
+/* Quem abriu o painel. Ao fechar, o foco volta para la — senao ele cai no
+   inicio da pagina e quem usa teclado perde o lugar. */
+var _sheetQuemAbriu=null;
+function closeSheet(){
+  var o=document.getElementById("sheetOv"); if(o)o.classList.remove("show");
+  try{ if(_sheetQuemAbriu&&_sheetQuemAbriu.focus) _sheetQuemAbriu.focus(); }catch(e){}
+  _sheetQuemAbriu=null;
+}
+/* Escape fecha. Pedido da especificacao e esperado por qualquer um que use
+   teclado — sem isto o painel so sai com o mouse. */
+document.addEventListener("keydown",function(ev){
+  if(ev.key!=="Escape") return;
+  var o=document.getElementById("sheetOv");
+  if(o&&o.classList.contains("show")){ ev.preventDefault(); closeSheet(); }
+});
+/* Arrastar para baixo fecha, de verdade.
+   A especificacao e explicita: a alca sozinha nao implementa o gesto. Uma
+   alca que parece arrastavel e nao arrasta e pior que alca nenhuma — ela
+   promete uma coisa que nao acontece. 90 px ou um puxao rapido fecham;
+   abaixo disso o painel volta para o lugar. */
+(function(){
+  var alca=null,y0=0,dy=0,arrastando=false,t0=0,folha=null;
+  function inicio(e){
+    alca=document.getElementById("sheetAlca"); if(!alca) return;
+    folha=alca.closest(".sheet"); if(!folha) return;
+    arrastando=true; y0=e.touches?e.touches[0].clientY:e.clientY; dy=0; t0=Date.now();
+    folha.style.transition="none";
+  }
+  function move(e){
+    if(!arrastando||!folha) return;
+    var y=e.touches?e.touches[0].clientY:e.clientY;
+    dy=Math.max(0,y-y0);                 /* so para baixo */
+    folha.style.transform="translateY("+dy+"px)";
+    if(e.cancelable) e.preventDefault();
+  }
+  function fim(){
+    if(!arrastando||!folha) return;
+    arrastando=false;
+    var rapido=(Date.now()-t0)<300&&dy>40;
+    folha.style.transition="transform 180ms ease";
+    if(dy>90||rapido){ folha.style.transform="translateY(100%)";
+      setTimeout(function(){ closeSheet(); folha.style.transform=""; folha.style.transition=""; },180);
+    }else{ folha.style.transform=""; }
+  }
+  document.addEventListener("pointerdown",function(e){
+    if(e.target&&e.target.id==="sheetAlca") inicio(e);
+  });
+  document.addEventListener("pointermove",move,{passive:false});
+  document.addEventListener("pointerup",fim);
+  document.addEventListener("pointercancel",fim);
+})();
 /* A Bel flutuante acompanha todas as telas. Clicando, abre o recado dela. */
 var BREC_TXT={
 pt:{jFecha:'Sua janela fecha em {0} e ainda faltam {1}g de proteína. Dá tempo de resolver.',
@@ -3326,17 +3565,29 @@ function maisSeq(){
     return n;
   }catch(e){ return 0; }
 }
+/* Devolve null quando NAO HA BASE para calcular, e nao 0.
+   A diferenca importa: "0 kg / estavel" afirma que a pessoa foi medida e
+   nao mudou. Quem nunca se pesou duas vezes nao tem peso estavel — nao
+   tem medida nenhuma. Era o unico numero do app que declarava um
+   resultado sem ter apurado, e a especificacao do Felipe e explicita:
+   nao calcular progresso sem peso inicial, peso atual e periodo. */
 function maisProgresso(){
   try{ var w=(state.weights||[]).slice().sort(function(a,b){ return String(a.date).localeCompare(String(b.date)); });
-    if(w.length<2) return 0;
+    if(w.length<2) return null;
+    if(!(+w[0].val>0) || !(+w[w.length-1].val>0)) return null;
+    if(String(w[0].date)===String(w[w.length-1].date)) return null;
     return Math.round((w[0].val-w[w.length-1].val)*10)/10;
-  }catch(e){ return 0; }
+  }catch(e){ return null; }
 }
-function _maisItem(icone,rotulo,acao){
-  return '<div onclick="'+acao+'" style="display:flex;align-items:center;gap:14px;padding:16px 4px;border-bottom:1px solid var(--border);cursor:pointer">'+
-   '<span style="width:24px;height:24px;flex-shrink:0;color:var(--text2);display:flex;align-items:center;justify-content:center">'+icone+'</span>'+
-   '<span style="flex:1;font-size:15px;color:var(--text)">'+rotulo+'</span>'+
-   '<span style="color:var(--text3);font-size:18px;line-height:1">&#8250;</span></div>';
+/* <button> e nao <div>: teclado e leitor de tela so alcancam o item se ele
+   for um controle de verdade. Com div, quem navega por Tab nunca chega ate
+   aqui. Os 64 px de altura minima ja cobrem a area de toque de 44 px. */
+function _maisItem(icone,rotulo,acao,azul){
+  return '<button type="button" class="m-item" onclick="'+acao+'">'+
+   '<span class="m-med'+(azul?' m-med-azul':'')+'">'+icone+'</span>'+
+   '<span class="m-rot">'+rotulo+'</span>'+
+   '<svg class="m-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>'+
+   '</button>';
 }
 /* Faixa da semana: mostra de cara em que dias a pessoa registrou. */
 var _calMes=null;
@@ -3478,19 +3729,24 @@ function maisRender(){
   var seq=maisSeq(), prog=maisProgresso();
   var nome=((state.profile&&state.profile.name)||"").trim();
   var foto=(state.profile&&state.profile.photo)||"";
-  var progTxt=prog>0?(prog+" kg"):(prog<0?(Math.abs(prog)+" kg"):"0 kg");
-  var progLbl=prog>0?M.perdidos:(prog<0?M.ganhos:M.estavel);
-  var h='<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0 18px">'+
-   '<div style="flex:1;text-align:center"><div style="font-size:11px;color:var(--text2)">'+M.consec+'</div>'+
-    '<div style="font-size:24px;font-weight:800;color:var(--text);line-height:1.2">'+seq+'</div>'+
-    '<div style="font-size:11px;color:var(--text3)">'+(seq===1?M.dia:M.dias)+'</div></div>'+
-   '<div style="flex-shrink:0;text-align:center">'+
-    (foto?'<img src="'+foto+'" alt="" style="width:74px;height:74px;border-radius:50%;object-fit:cover;border:2px solid var(--gold)">':'<div style="width:74px;height:74px;border-radius:50%;background:var(--surface2);border:2px solid var(--gold)"></div>')+
+  /* prog===null significa "nunca foi medido", nao "nao mudou". Nesse caso
+     entra um traco e o convite a se pesar, em vez de um "0 kg" que parece
+     resultado. */
+  var semBase=(prog===null);
+  var progTxt=semBase?"&mdash;":(prog>0?(prog+" kg"):(prog<0?(Math.abs(prog)+" kg"):"0 kg"));
+  var progLbl=semBase?M.semPeso:(prog>0?M.perdidos:(prog<0?M.ganhos:M.estavel));
+  var h='<div class="m-faixa">'+
+   '<div class="m-stat"><div class="m-stat-rot">'+M.consec+'</div>'+
+    '<div class="m-stat-num">'+seq+'</div>'+
+    '<div class="m-stat-sub">'+(seq===1?M.dia:M.dias)+'</div></div>'+
+   '<div class="m-foto-wrap" style="flex-shrink:0">'+
+    (foto?'<img class="m-foto" src="'+foto+'" alt="">':'<div class="m-foto" style="background:var(--m-sup)"></div>')+
     '</div>'+
-   '<div style="flex:1;text-align:center"><div style="font-size:11px;color:var(--text2)">'+M.prog+'</div>'+
-    '<div style="font-size:24px;font-weight:800;color:var(--text);line-height:1.2">'+progTxt+'</div>'+
-    '<div style="font-size:11px;color:var(--text3)">'+progLbl+'</div></div></div>';
-  if(nome) h+='<div style="text-align:center;font-size:19px;font-weight:800;color:var(--text);margin:-6px 0 18px">'+nome+'</div>';
+   '<div class="m-stat"><div class="m-stat-rot">'+M.prog+'</div>'+
+    '<div class="m-stat-num">'+progTxt+'</div>'+
+    '<div class="m-stat-sub">'+progLbl+'</div></div></div>';
+  if(nome) h+='<div class="m-nome">'+nome+'</div>';
+  else h+='<div style="height:18px"></div>';
   if(typeof isPro==="undefined"||!isPro){
     h+='<div onclick="try{subscribePro()}catch(e){}" style="display:flex;align-items:center;gap:13px;padding:15px;margin-bottom:14px;border-radius:14px;cursor:pointer;background:var(--goldBg2);border:1px solid var(--gold)">'+
      '<span style="color:var(--goldInk);flex-shrink:0"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 8l4.5 3.5L12 5l4.5 6.5L21 8l-1.8 10H4.8L3 8Z"/></svg></span>'+
@@ -3498,13 +3754,15 @@ function maisRender(){
       '<span style="display:block;font-size:12px;color:var(--text2);margin-top:2px;line-height:1.45">'+M.proS+'</span></span>'+
      '<span style="color:var(--goldInk);font-size:18px">&#8250;</span></div>';
   }
+  /* Ordem travada pela especificacao. Cada acao ja existia no app — nao
+     inventei caminho nenhum, so troquei a roupa do item. */
   h+=_maisItem(ic.perfil||"",M.perfil,"openProfile()");
   h+=_maisItem(ic.jejum||"",M.jejum,"navGo(\'jejum\')");
   h+=_maisItem(ic.peso||"",M.peso,"navGo(\'peso\')");
   h+=_maisItem(ic.hist||"",M.hist,"navGo(\'hist\')");
   h+=_maisItem(ic.prog||"",M.relat,"navGo(\'relatorios\')");
-  h+=_maisItem("<svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z\"/></svg>",M.sono,"sonoEditar()");
-  h+=_maisItem(ic.agua||"",M.agua,"navGo(\'agua\')");
+  h+=_maisItem(ic.sono||"",M.sono,"sonoEditar()");
+  h+=_maisItem(ic.agua||"",M.agua,"navGo(\'agua\')",true);  /* unico medalhao azul */
   h+=_maisItem(ic.calc||"",M.calc,"navGo(\'calc\')");
   el.innerHTML=h;
 }
@@ -4924,27 +5182,27 @@ var MAIS_TXT={
 pt:{consec:'Consecutivos',dia:'dia',dias:'dias',prog:'Progresso',perdidos:'kg perdidos',ganhos:'kg ganhos',estavel:'estável',
  proT:'Experimente o Better You PRO',proS:'Foto IA sem limite, jejum, relatórios e a Bel acompanhando',
  perfil:'Meu perfil',jejum:'Jejum intermitente',peso:'Peso e medidas',hist:'Histórico',relat:'Meu relatório semanal',
- sono:'Sono',agua:'Água',calc:'Calculadora',lembretes:'Lembretes',disp:'Dispositivos'},
+ sono:'Sono',agua:'Água',calc:'Calculadora',lembretes:'Lembretes',disp:'Dispositivos',semPeso:'pese-se para medir'},
 en:{consec:'Streak',dia:'day',dias:'days',prog:'Progress',perdidos:'kg lost',ganhos:'kg gained',estavel:'steady',
  proT:'Try Better You PRO',proS:'Unlimited AI Photo, fasting, reports and Bel following along',
  perfil:'My profile',jejum:'Intermittent fasting',peso:'Weight and measurements',hist:'History',relat:'My weekly report',
- sono:'Sleep',agua:'Water',calc:'Calculator',lembretes:'Reminders',disp:'Devices'},
+ sono:'Sleep',agua:'Water',calc:'Calculator',lembretes:'Reminders',disp:'Devices',semPeso:'weigh in to measure'},
 es:{consec:'Consecutivos',dia:'día',dias:'días',prog:'Progreso',perdidos:'kg perdidos',ganhos:'kg ganados',estavel:'estable',
  proT:'Prueba Better You PRO',proS:'Foto IA sin límite, ayuno, informes y Bel acompañándote',
  perfil:'Mi perfil',jejum:'Ayuno intermitente',peso:'Peso y medidas',hist:'Historial',relat:'Mi informe semanal',
- sono:'Sueño',agua:'Agua',calc:'Calculadora',lembretes:'Recordatorios',disp:'Dispositivos'},
+ sono:'Sueño',agua:'Agua',calc:'Calculadora',lembretes:'Recordatorios',disp:'Dispositivos',semPeso:'pésate para medir'},
 it:{consec:'Consecutivi',dia:'giorno',dias:'giorni',prog:'Progresso',perdidos:'kg persi',ganhos:'kg presi',estavel:'stabile',
  proT:'Prova Better You PRO',proS:'Foto IA senza limiti, digiuno, report e Bel che ti segue',
  perfil:'Il mio profilo',jejum:'Digiuno intermittente',peso:'Peso e misure',hist:'Storico',relat:'Il mio report settimanale',
- sono:'Sonno',agua:'Acqua',calc:'Calcolatrice',lembretes:'Promemoria',disp:'Dispositivi'},
+ sono:'Sonno',agua:'Acqua',calc:'Calcolatrice',lembretes:'Promemoria',disp:'Dispositivi',semPeso:'pesati per misurare'},
 fr:{consec:'Consecutifs',dia:'jour',dias:'jours',prog:'Progres',perdidos:'kg perdus',ganhos:'kg pris',estavel:'stable',
  proT:'Essayez Better You PRO',proS:'Photo IA illimitee, jeune, rapports et Bel qui vous suit',
  perfil:'Mon profil',jejum:'Jeune intermittent',peso:'Poids et mesures',hist:'Historique',relat:'Mon rapport hebdomadaire',
- sono:'Sommeil',agua:'Eau',calc:'Calculatrice',lembretes:'Rappels',disp:'Appareils'},
+ sono:'Sommeil',agua:'Eau',calc:'Calculatrice',lembretes:'Rappels',disp:'Appareils',semPeso:'pesez-vous pour mesurer'},
 de:{consec:'In Folge',dia:'Tag',dias:'Tage',prog:'Fortschritt',perdidos:'kg verloren',ganhos:'kg zugelegt',estavel:'stabil',
  proT:'Better You PRO testen',proS:'KI-Foto ohne Limit, Fasten, Berichte und Bel an deiner Seite',
  perfil:'Mein Profil',jejum:'Intervallfasten',peso:'Gewicht und Maße',hist:'Verlauf',relat:'Mein Wochenbericht',
- sono:'Schlaf',agua:'Wasser',calc:'Rechner',lembretes:'Erinnerungen',disp:'Geräte'}
+ sono:'Schlaf',agua:'Wasser',calc:'Rechner',lembretes:'Erinnerungen',disp:'Geräte',semPeso:'wiegen zum Messen'}
 };
 var JINFO_TXT={
 pt:{t:'O que o jejum faz — e para quem não serve',ab:'Pode ajudar quando',ac:'Evite ou fale com o médico antes se',fim:'Se o jejum te faz passar mal, não é falta de disciplina. É sinal de que esse protocolo não é para você — e existem outros caminhos.',fechar:'Entendi',
