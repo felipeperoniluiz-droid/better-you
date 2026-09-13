@@ -181,6 +181,63 @@ body.pro-mode .chat-input-row .input:focus{border-color:#F5BB16;outline:none}
 html[data-theme="light"] .chat-input-row .input{
   background:#fff;border-color:#e3d9c2;color:#1a1a1a;
   box-shadow:inset 0 2px 4px rgb(0 0 0 / 8%)}
+
+/* ================================================================
+   TELA DE ENTRADA — 13/09/2026
+   Era a unica tela que ficou fora da reforma: fundo chapado, campos
+   cinza genericos, abas sem volume. E a PRIMEIRA coisa que um cliente
+   novo ve — vinha prometendo menos do que o app entrega.
+   Mesma receita de todo o resto: papel de parede com veu, painel
+   translucido de borda bronze, campos afundados, botao dourado.
+   ================================================================ */
+#authScreen{--a-borda:#514021;--a-ouro:#F5BB16;--a-ouroC:#F8D778;
+  --a-txt:#F7F3E8;--a-mudo:#C2BAA8;
+  background:#0f0d06!important}
+#authParede{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#authParede img{width:100%;height:100%;object-fit:cover}
+#authParede::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgb(15 13 6 / 72%) 0%,rgb(15 13 6 / 82%) 50%,rgb(15 13 6 / 92%) 100%)}
+/* Tudo o que e conteudo sobe acima do papel de parede. */
+#authScreen>*:not(#authParede){position:relative;z-index:1}
+
+/* O painel que abraca abas, campos e botao — antes eram tres blocos
+   soltos flutuando no vazio. */
+.auth-painel{width:100%;max-width:360px;padding:22px;border-radius:24px;
+  border:1px solid rgb(245 187 22 / 26%);background:rgb(32 27 16 / 88%);
+  box-shadow:inset 0 1px 0 rgb(255 236 178 / 12%),inset 0 -1px 0 rgb(0 0 0 / 55%),
+             0 0 0 1px rgb(245 187 22 / 7%),0 10px 30px rgb(0 0 0 / 55%)}
+.auth-abas{display:flex;gap:4px;padding:4px;margin-bottom:20px;border-radius:14px;
+  background:linear-gradient(180deg,#16130c 0%,#1b1710 100%);border:1px solid var(--a-borda);
+  box-shadow:inset 0 2px 4px rgb(0 0 0 / 55%)}
+.auth-aba{flex:1;min-height:44px;padding:10px;border:0;border-radius:11px;cursor:pointer;
+  background:transparent;color:var(--a-mudo);font-family:'DM Sans',sans-serif;
+  font-size:13px;font-weight:600;transition:color 160ms ease}
+.auth-aba.ativa{color:#191609;font-weight:700;
+  background:linear-gradient(180deg,#ffd766 0%,#f5bb16 48%,#e09a08 100%);
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / 50%),inset 0 -2px 0 rgb(150 96 4 / 55%),
+             0 2px 6px rgb(0 0 0 / 40%)}
+#authScreen .input{background:linear-gradient(180deg,#16130c 0%,#1b1710 100%);
+  border:1px solid var(--a-borda);border-radius:14px;min-height:48px;padding:13px 14px;
+  color:var(--a-txt);box-shadow:inset 0 2px 4px rgb(0 0 0 / 55%)}
+#authScreen .input::placeholder{color:#8d8674}
+#authScreen .input:focus{border-color:var(--a-ouro);outline:none}
+#authScreen .btn-primary{min-height:52px;border-radius:16px;
+  background:linear-gradient(180deg,#ffd766 0%,#f5bb16 48%,#e09a08 100%)!important;
+  color:#191609!important;font-weight:700;border:0!important;
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / 55%),inset 0 -2px 0 rgb(150 96 4 / 60%),
+             0 4px 14px rgb(245 187 22 / 26%),0 2px 4px rgb(0 0 0 / 45%)!important}
+#authScreen .btn-primary:active{box-shadow:inset 0 2px 5px rgb(120 76 2 / 60%)!important;
+  transform:translateY(1px)}
+#authScreen :is(button,input):focus-visible{outline:2px solid var(--a-ouroC);outline-offset:3px}
+#authLogo{filter:drop-shadow(0 0 26px rgb(245 187 22 / 38%))}
+
+html[data-theme="light"] #authScreen{background:#fff!important}
+html[data-theme="light"] #authParede{display:none}
+html[data-theme="light"] .auth-painel{background:#fff;border-color:#e3d9c2;
+  box-shadow:0 6px 22px rgb(0 0 0 / 10%)}
+html[data-theme="light"] .auth-abas{background:#f4f1ea;border-color:#e3d9c2}
+html[data-theme="light"] #authScreen .input{background:#fff;border-color:#e3d9c2;color:#1a1a1a;
+  box-shadow:inset 0 2px 4px rgb(0 0 0 / 8%)}
 .chat-input-row{gap:8px;align-items:center}
 @media (prefers-reduced-motion:reduce){.chat-enviar{transition:none}}
 /* Estado vazio do chat. `:empty` so casa quando NAO ha nenhum no dentro —
@@ -1251,16 +1308,19 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
 
 <!-- ── AUTH SCREEN ─────────────────────────────────────────────── -->
 <div id="authScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:center;padding:28px;overflow-y:auto;">
-  <div style="text-align:center;margin-bottom:32px;">
+  <!-- Papel de parede. O JS so pede a imagem se a capa estiver ligada. -->
+  <div id="authParede" aria-hidden="true"></div>
+  <div style="text-align:center;margin-bottom:28px;">
     <img id="authLogo" src="" alt="Better You" style="height:150px;width:auto;object-fit:contain;display:block;margin:0 auto 16px;filter:drop-shadow(0 0 22px rgba(240,180,41,.3))" onerror="this.style.display='none';var t=document.getElementById('authLogoTexto');if(t)t.style.display=''">
     <div id="authLogoTexto" style="display:none;font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#f0b429;">Better You</div>
     <div style="font-size:13px;color:var(--text2);margin-top:2px;">Seus dados salvos na nuvem</div>
   </div>
-  <div style="display:flex;background:var(--surface2);border-radius:12px;padding:3px;margin-bottom:20px;width:100%;max-width:320px;">
-    <button id="authTabLogin" onclick="switchAuthTab('login')" style="flex:1;padding:9px;border-radius:9px;border:none;background:#f0b429;color:#000;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;">Entrar</button>
-    <button id="authTabRegister" onclick="switchAuthTab('register')" style="flex:1;padding:9px;border-radius:9px;border:none;background:transparent;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;">Criar conta</button>
+  <div class="auth-painel">
+  <div class="auth-abas">
+    <button id="authTabLogin" class="auth-aba ativa" onclick="switchAuthTab('login')">Entrar</button>
+    <button id="authTabRegister" class="auth-aba" onclick="switchAuthTab('register')">Criar conta</button>
   </div>
-  <div style="width:100%;max-width:320px;">
+  <div>
     <div style="margin-bottom:12px;">
       <div style="font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:500;">E-mail</div>
       <input type="email" id="authEmail" class="input" placeholder="seu@email.com" style="width:100%;">
@@ -1275,8 +1335,9 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
     </div>
     <div id="authError" style="font-size:12px;margin-bottom:10px;text-align:center;display:none;padding:8px;border-radius:8px;background:rgba(248,113,113,.1);color:#f87171;"></div>
     <button id="authBtn" class="btn btn-primary" onclick="doAuth()" style="width:100%;margin-bottom:10px;">Entrar</button>
-    <button id="authForgotBtn" onclick="doForgotPassword()" style="background:none;border:none;color:var(--text2);font-size:12px;cursor:pointer;width:100%;text-align:center;display:block;padding:4px;" data-i18n="authEsqueci">Esqueci minha senha</button>
+    <button id="authForgotBtn" onclick="doForgotPassword()" style="background:none;border:none;color:var(--text2);font-size:12px;cursor:pointer;width:100%;text-align:center;display:block;padding:10px;min-height:44px;" data-i18n="authEsqueci">Esqueci minha senha</button>
   </div>
+  </div><!-- /auth-painel -->
 </div>
 
 <div id="app">
@@ -1885,7 +1946,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260911_chat_cresce";
+var APP_VERSION="20260913_tela_entrada";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -9210,6 +9271,23 @@ function authLogoMontar(){
     var img=document.getElementById("authLogo");
     if(img && !img.getAttribute("src")) img.src="icon-512.png";
   }catch(e){}
+  authParedeMontar();
+}
+/* O papel de parede da tela de entrada. Roda ANTES do login, quando o
+   state ainda pode nem existir — por isso capaLigada() tem try/catch e
+   devolve true por padrao. Usa a mesma fila de nomes da tela da Bel:
+   comprimido primeiro, original depois. */
+function authParedeMontar(){
+  try{
+    var cx=document.getElementById("authParede"); if(!cx||cx.firstChild) return;
+    var lig=true; try{ lig=capaLigada(); }catch(e){}
+    if(!lig) return;
+    var img=new Image(); img.decoding="async"; img.alt="";
+    cx.appendChild(img);
+    /* Falhou? Fica o fundo escuro liso. Nunca imagem quebrada na primeira
+       tela que um cliente novo ve. */
+    _imgTentar(img,BEL_FOTO.parede,null,function(){ cx.innerHTML=""; });
+  }catch(e){}
 }
 try{
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",authLogoMontar);
@@ -9220,12 +9298,13 @@ function switchAuthTab(tab){
   window._authTab=tab;
   var btnL=document.getElementById('authTabLogin');
   var btnR=document.getElementById('authTabRegister');
-  btnL.style.background=isLogin?'#f0b429':'transparent';
-  btnL.style.color=isLogin?'#000':'var(--text2)';
-  btnL.style.fontWeight=isLogin?'700':'500';
-  btnR.style.background=isLogin?'transparent':'#f0b429';
-  btnR.style.color=isLogin?'var(--text2)':'#000';
-  btnR.style.fontWeight=isLogin?'500':'700';
+  /* Estilo por CLASSE, nao por style inline. O inline era mais forte que
+     qualquer regra de CSS e teria vencido o desenho novo — aba ativa
+     continuaria chapada, sem o relevo do resto do app. */
+  btnL.classList.toggle('ativa',isLogin);
+  btnR.classList.toggle('ativa',!isLogin);
+  btnL.setAttribute('aria-selected',isLogin?'true':'false');
+  btnR.setAttribute('aria-selected',isLogin?'false':'true');
   document.getElementById('authConfirmWrap').style.display=isLogin?'none':'';
   document.getElementById('authBtn').textContent=isLogin?'Entrar':'Criar Conta';
   document.getElementById('authForgotBtn').style.display=isLogin?'block':'none';
