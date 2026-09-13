@@ -520,11 +520,35 @@ html[data-theme="light"] .h-hero{
    a mascara fazia. Nas escuras o personagem fica a esquerda; por isso o
    enquadramento e diferente por tema, nao so o arquivo.
    Sem mascara aqui: aplicar uma por cima cortaria o ombro dele. */
+/* A caixa muda, nao so a posicao. No tema escuro a foto e um FUNDO:
+   inset:0, 100% x 100%, cover. As claras sao recortes de 320x320 — dentro
+   daquela caixa elas sao ampliadas e cortadas, o personagem fica gigante e
+   o texto cai em cima dele. Aqui ela vira um ELEMENTO no canto: metade da
+   largura, encostada no topo direito, `contain` para nao cortar ninguem. */
+/* A foto SANGRA ate a borda da tela — encosta no topo e na direita, como
+   na criacao do Felipe. O -20px cancela a margem lateral da aba; sem ele
+   ela para no meio do caminho e perde a forca. */
 html[data-theme="light"] .h-hero-foto{
   opacity:1;
+  inset:-20px -20px auto auto!important;
+  width:56%!important;height:auto!important;
+  max-height:none!important;
+  object-fit:contain!important;
   object-position:right top!important;
   -webkit-mask-image:none;mask-image:none;
+  z-index:0;
 }
+/* O cabecalho e a semana ficam ACIMA da foto, nao por baixo dela.
+   As frases ficam de FORA desta regra: elas sao position:absolute com
+   top:44%, e forcar `relative` nelas as joga para o topo, deitadas — foi
+   o que aconteceu quando escrevi isto sem excecao. Aqui elas so sobem no
+   empilhamento, sem perder o posicionamento. */
+html[data-theme="light"] .h-hero>*:not(.h-hero-foto):not(.h-frase){
+  position:relative;z-index:1}
+html[data-theme="light"] .h-frase{position:absolute!important;top:44%!important;z-index:1;
+  width:auto!important;max-width:78px!important}
+html[data-theme="light"] .h-frase-esq{left:4px!important;right:auto!important}
+html[data-theme="light"] .h-frase-dir{right:4px!important;left:auto!important}
 html[data-theme="light"] .h-hero::after{background:none!important}
 
 /* --- Inter, como a especificacao pede duas vezes. Eu nao tinha carregado:
@@ -579,9 +603,16 @@ html[data-theme="light"] :is(.sheet-sub,.bel-desc,.m-stat-sub,.h-cartao p){
 html[data-theme="light"] .h-frase{color:var(--wt-txt2)!important;opacity:1}
 html[data-theme="light"] .h-frase::after{background:var(--wt-titanio)!important}
 /* Pontos da semana: circulo branco em relevo; o ativo, dourado cheio. */
-html[data-theme="light"] #semanaFaixa svg circle{stroke:var(--wt-titanio)!important}
+/* Pontos da semana: circulo BRANCO em relevo, nao tracejado fraco.
+   O tracejado sumia sobre o fundo claro; na criacao eles sao pecas
+   solidas, com a mesma aresta de titanio dos botoes. */
+html[data-theme="light"] #semanaFaixa svg circle{
+  stroke:var(--wt-titanio)!important;fill:#ffffff!important;stroke-dasharray:none!important}
 html[data-theme="light"] #semanaFaixa span[style*="background:var(--gold)"]{
   background:var(--wt-ouro)!important}
+html[data-theme="light"] #semanaFaixa .dia-bolha,
+html[data-theme="light"] #semanaFaixa svg{
+  filter:drop-shadow(0 2px 0 var(--wt-titanio)) drop-shadow(0 4px 5px rgb(32 36 42 / 10%))}
 html[data-theme="light"] .calorie-remaining{color:var(--wt-txt2)!important}
 html[data-theme="light"] .calorie-remaining b,
 html[data-theme="light"] .calorie-remaining strong{color:var(--wt-ouroTxt)!important}
@@ -2310,7 +2341,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260913_white_titanium_j";
+var APP_VERSION="20260913_white_titanium_l";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
