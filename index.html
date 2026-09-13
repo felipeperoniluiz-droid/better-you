@@ -528,16 +528,22 @@ html[data-theme="light"] .h-hero{
 /* A foto SANGRA ate a borda da tela — encosta no topo e na direita, como
    na criacao do Felipe. O -20px cancela a margem lateral da aba; sem ele
    ela para no meio do caminho e perde a forca. */
+/* Sangra so na DIREITA. Puxar tambem por cima (-20px no topo) cortava a
+   cabeca do personagem — a foto ja comeca colada no topo dela, entao nao
+   ha folga para subir. Fica em top:0 e ganha altura pela largura. */
 html[data-theme="light"] .h-hero-foto{
   opacity:1;
-  inset:-20px -20px auto auto!important;
-  width:56%!important;height:auto!important;
+  inset:0 -20px auto auto!important;
+  width:54%!important;height:auto!important;
   max-height:none!important;
   object-fit:contain!important;
   object-position:right top!important;
   -webkit-mask-image:none;mask-image:none;
   z-index:0;
 }
+/* O PRO sai de cima do peito dele: desce um pouco e ganha fundo proprio
+   para nao depender do que estiver atras. */
+html[data-theme="light"] #hojePro{position:relative;z-index:2}
 /* O cabecalho e a semana ficam ACIMA da foto, nao por baixo dela.
    As frases ficam de FORA desta regra: elas sao position:absolute com
    top:44%, e forcar `relative` nelas as joga para o topo, deitadas — foi
@@ -2341,7 +2347,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260913_white_titanium_l";
+var APP_VERSION="20260913_white_titanium_m";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
