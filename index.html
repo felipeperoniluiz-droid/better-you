@@ -238,6 +238,200 @@ html[data-theme="light"] .auth-painel{background:#fff;border-color:#e3d9c2;
 html[data-theme="light"] .auth-abas{background:#f4f1ea;border-color:#e3d9c2}
 html[data-theme="light"] #authScreen .input{background:#fff;border-color:#e3d9c2;color:#1a1a1a;
   box-shadow:inset 0 2px 4px rgb(0 0 0 / 8%)}
+
+/* ================================================================
+   TEMA CLARO — "WHITE TITANIUM"  (13/09/2026)
+   Desenho do Felipe, folha "04 — WHITE TITANIUM".
+
+   Nao e o tema escuro com as cores trocadas. E outra receita:
+
+     escuro  = degrade de cima para baixo + fio de luz no topo,
+               a peca PARECE levantada porque reflete luz
+     claro   = duas sombras opostas — escura embaixo-direita,
+               BRANCA em cima-esquerda. A peca parece esculpida no
+               mesmo material do fundo, nao pousada sobre ele.
+
+   Por isso um `background:#fff` simples nunca ia funcionar aqui: sem a
+   sombra branca nao ha volume, so um retangulo mais claro.
+
+   Este bloco vem depois de todas as outras regras de tema claro de
+   proposito — ele reescreve o que veio antes.
+   ================================================================ */
+/* Tokens exatos da especificacao do Felipe. Minhas estimativas anteriores
+   (#ECEAE6, #C9922B) foram descartadas: a primeira tinha tom amarelado, a
+   segunda dava 2,5:1 e reprovava ate para icone. */
+html[data-theme="light"]{
+  --wt-fundo:#F3F4F5;
+  --wt-sup:#FFFFFF;
+  --wt-sup2:#F8F9FA;
+  --wt-borda:#E0E3E7;
+  --wt-titanio:#D3D8DE;     /* a lateral das pecas */
+  --wt-titanioM:#9BA3AD;
+  --wt-txt:#20242A;
+  --wt-txt2:#555E69;
+  --wt-ouro:#F5BB16;        /* marca: fundo de acao principal, nunca texto */
+  --wt-ouroTxt:#805A08;     /* icone e texto dourado: 5,5:1 sobre branco */
+  --wt-azul:#246FA8;
+  --wt-verde:#24754F;
+  --wt-vermelho:#B63E46;
+  /* A receita do BOTAO, do CSS de referencia do Felipe. A parte que eu
+     tinha errado e a terceira linha: `0 3px 0` e uma ARESTA DURA em
+     titanio, nao sombra difusa. E ela que da a sensacao de tecla — a peca
+     tem espessura, nao so uma sombra por baixo. Trocar por blur perde
+     exatamente o que o desenho tem de bom. */
+  --wt-relevo:
+    inset 0 1px 0 #ffffff,
+    inset 0 -2px 0 rgb(155 163 173 / 20%),
+    0 3px 0 var(--wt-titanio),
+    0 7px 12px rgb(32 36 42 / 12%);
+  /* Painel informativo: relevo discreto, so a sombra de ambiente. */
+  --wt-relevoSuave:0 5px 16px rgb(32 36 42 / 6%);
+  --wt-pressionado:
+    inset 0 1px 2px rgb(32 36 42 / 8%),
+    0 1px 0 var(--wt-titanio),
+    0 3px 5px rgb(32 36 42 / 10%);
+}
+html[data-theme="light"] body,
+html[data-theme="light"] #app{background:var(--wt-fundo)!important;color:var(--wt-txt)}
+
+/* --- BOTOES: alto-relevo, como a especificacao pede para todos ---
+   face branca fosca · bisel claro no topo · lateral titanio · sombra
+   curta na base · ambiente difusa. */
+html[data-theme="light"] :is(.m-item,#sheetBody .sheet-item,.bel-atalho,
+  .premade-card,.diet-card,.weekly-notice,.nutri-quick,.icon-btn,.chip,
+  .lang-btn,.theme-btn,.goal-btn,.quick-btn,.auth-aba,.subtab-btn){
+  background:var(--wt-sup)!important;
+  border:1px solid var(--wt-borda)!important;
+  border-top-color:#ffffff!important;
+  box-shadow:var(--wt-relevo)!important;
+  color:var(--wt-txt)!important;
+}
+/* Pressionado: desce 2 px e a aresta encolhe de 3 para 1 px — e a aresta
+   sumindo que o olho le como "afundou", nao a sombra. */
+html[data-theme="light"] :is(.m-item,#sheetBody .sheet-item,.bel-atalho,
+  .premade-card,.diet-card,.weekly-notice,.nutri-quick,.icon-btn,.chip,
+  .lang-btn,.theme-btn,.goal-btn,.quick-btn,.auth-aba,.subtab-btn):active{
+  transform:translateY(2px);
+  box-shadow:var(--wt-pressionado)!important;
+}
+@media (hover:hover){
+  html[data-theme="light"] :is(.m-item,.bel-atalho,#sheetBody .sheet-item,
+    .weekly-notice,.premade-card):hover{border-color:var(--wt-titanioM)!important}
+}
+@media (prefers-reduced-motion:reduce){
+  html[data-theme="light"] :is(.m-item,.bel-atalho,#sheetBody .sheet-item):active{
+    transform:none}
+}
+/* --- PAINEIS informativos: relevo mais discreto, como pedido --- */
+html[data-theme="light"] :is(.card,.bel-painel,.auth-painel,.bel-ctx-caixa,
+  .bel-balao,.meal-item,.cup,.tdee-box,.calc-result,.ai-result,.search-results){
+  background:var(--wt-sup)!important;
+  border:1px solid var(--wt-borda)!important;
+  box-shadow:var(--wt-relevoSuave)!important;
+  color:var(--wt-txt)!important;
+}
+html[data-theme="light"] :is(.bel-ctx-caixa,.bel-balao){background:var(--wt-sup2)!important}
+/* Foco de teclado: 2 px dourado escuro, afastado 3 px. */
+html[data-theme="light"] :is(button,a,input,select):focus-visible{
+  outline:2px solid var(--wt-ouroTxt)!important;outline-offset:3px!important}
+html[data-theme="light"] :is(button,.m-item,.bel-atalho)[disabled]{
+  box-shadow:none!important;opacity:.55}
+
+/* --- geometria da especificacao --- */
+html[data-theme="light"] :is(.card,.bel-painel,.auth-painel){border-radius:24px!important}
+html[data-theme="light"] :is(.m-item,.bel-atalho,#sheetBody .sheet-item,
+  .weekly-notice,.premade-card){border-radius:18px!important}
+
+/* --- medalhao: 44 px, aro dourado escuro, miolo branco --- */
+/* Borda TITANIO, icone dourado escuro — nao o contrario. Eu tinha posto a
+   borda dourada, o que somava a "excesso de dourado" que a especificacao
+   manda evitar. */
+html[data-theme="light"] :is(.med,.m-med){
+  width:44px;height:44px;flex:0 0 44px;
+  background:var(--wt-sup2)!important;
+  border:1px solid var(--wt-titanio)!important;
+  color:var(--wt-ouroTxt)!important;
+  box-shadow:inset 0 1px 0 #ffffff,0 2px 3px rgb(32 36 42 / 10%)!important;
+}
+html[data-theme="light"] :is(.med,.m-med) svg{width:24px;height:24px;filter:none!important}
+html[data-theme="light"] :is(.med-azul,.m-med-azul){
+  border-color:var(--wt-azul)!important;color:var(--wt-azul)!important}
+html[data-theme="light"] .med-vermelho{border-color:var(--wt-vermelho)!important;color:var(--wt-vermelho)!important}
+html[data-theme="light"] .med-verde{border-color:var(--wt-verde)!important;color:var(--wt-verde)!important}
+
+/* --- o anel de calorias: rosca clara, nao o disco escuro ---
+   Esta e a peca que estava mais errada: o ::before do tema escuro
+   continuava pintando um disco marrom no meio da tela branca. */
+html[data-theme="light"] .h-gauge::before{
+  background:var(--wt-sup)!important;
+  box-shadow:inset 0 1px 0 #ffffff,
+             0 3px 0 var(--wt-titanio),
+             0 8px 18px rgb(32 36 42 / 12%)!important;
+}
+html[data-theme="light"] .h-track{stroke:#DAD6CF!important;filter:none!important}
+html[data-theme="light"] .h-rim-out{stroke:rgb(255 255 255 / 90%)!important}
+html[data-theme="light"] .h-rim-in{stroke:rgb(163 156 145 / 28%)!important}
+html[data-theme="light"] #calRingFill{
+  filter:drop-shadow(0 1px 2px rgb(163 156 145 / 45%))!important}
+html[data-theme="light"] .h-gauge .calorie-num{color:var(--wt-txt)!important;text-shadow:none!important}
+html[data-theme="light"] .h-gauge .calorie-label{color:var(--wt-txt2)!important}
+html[data-theme="light"] #scoreAro{
+  background:var(--wt-sup)!important;
+  box-shadow:inset 0 1px 0 #ffffff,0 2px 0 var(--wt-titanio),
+             0 6px 12px rgb(32 36 42 / 10%)!important}
+
+/* --- acao principal: grafite sobre dourado, com a mesma aresta dura --- */
+html[data-theme="light"] :is(.navfab,.chat-enviar,.btn-primary,.auth-aba.ativa,
+  #authScreen .btn-primary,.subtab-btn.active){
+  background:var(--wt-ouro)!important;
+  border:1px solid #ca9811!important;border-top-color:#ffe397!important;
+  color:var(--wt-txt)!important;
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / 65%),
+             0 3px 0 #bd8a0c,
+             0 7px 12px rgb(128 90 8 / 18%)!important;
+}
+html[data-theme="light"] :is(.navfab,.chat-enviar,.btn-primary,#authScreen .btn-primary):active{
+  transform:translateY(2px);
+  box-shadow:inset 0 1px 2px rgb(32 36 42 / 12%),0 1px 0 #bd8a0c!important}
+html[data-theme="light"] .add-food-btn{
+  background:var(--wt-sup)!important;
+  border:1px dashed var(--wt-ouroTxt)!important;color:var(--wt-ouroTxt)!important;
+  box-shadow:var(--wt-relevoSuave)!important}
+
+/* --- campos: afundados --- */
+html[data-theme="light"] :is(.input,.chat-input-row .input,#authScreen .input,
+  .auth-abas,.macro-bar-bg,.water-progress,.track){
+  background:var(--wt-sup2)!important;border:1px solid var(--wt-borda)!important;
+  color:var(--wt-txt)!important;
+  box-shadow:inset 0 2px 4px rgb(32 36 42 / 8%)!important}
+
+/* --- barra de navegacao --- */
+html[data-theme="light"] :is(.nav,.nav3,.bottom .nav){
+  background:var(--wt-sup)!important;border:1px solid var(--wt-borda)!important;
+  box-shadow:0 3px 0 var(--wt-titanio),0 7px 14px rgb(32 36 42 / 10%)!important}
+
+/* --- texto e contraste ---
+   O dourado #F5BB16 sobre branco da 1,8:1. Tudo que for TEXTO dourado
+   passa para o --wt-ouro, que da 3,9:1. Icone continua podendo usar o
+   claro, porque grafico exige 3:1, nao 4,5:1. */
+html[data-theme="light"] :is(.h-frase,.bel-cargo,.m-stat-rot,.m-stat-sub,
+  .bel-ctx-tit,.sheet-sub,.bel-desc,.calorie-remaining){color:var(--wt-txt2)!important}
+html[data-theme="light"] :is(.gold,.goldInk,[style*="color:#f0b429"],
+  [style*="color: rgb(240, 180, 41)"]){color:var(--wt-ouro)!important}
+/* O selo "IA" era branco sobre creme — 1,0:1, literalmente invisivel. */
+html[data-theme="light"] .nav .ia-badge,
+html[data-theme="light"] [class*="ia-badge"]{
+  background:#2E5FB8!important;color:#fff!important}
+
+/* --- a foto de fundo no claro ---
+   Ela FICA, como no desenho: mas dissolvida no branco pela direita, para
+   que os cartoes nao lutem com ela. O veu escuro do tema escuro seria
+   uma mancha cinza aqui. */
+html[data-theme="light"] .h-hero-foto{opacity:1}
+html[data-theme="light"] .h-hero::after{
+  background:linear-gradient(180deg,rgb(236 234 230 / 30%) 0%,
+             rgb(236 234 230 / 72%) 55%,var(--wt-fundo) 100%)!important}
+html[data-theme="light"] .h-frase{color:rgb(201 146 43 / 75%)!important}
 .chat-input-row{gap:8px;align-items:center}
 @media (prefers-reduced-motion:reduce){.chat-enviar{transition:none}}
 /* Estado vazio do chat. `:empty` so casa quando NAO ha nenhum no dentro —
@@ -1946,7 +2140,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260913_tela_entrada";
+var APP_VERSION="20260913_white_titanium";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
