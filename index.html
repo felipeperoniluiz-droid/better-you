@@ -28,8 +28,8 @@
 <!-- Carregada sem bloquear a pintura: media="print" faz o navegador tratar como
      nao urgente, e o onload devolve para "all" quando ela chega. Antes ela
      travava a primeira pintura da tela inteira ate a resposta do Google. -->
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all';this.onload=null">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all';this.onload=null">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{--bg:#0a0c0f;--surface:#111418;--surface2:#181c22;--surface3:#1e2229;--border:#45485f;--gold:#f0b429;--orange:#e8834a;--green:#34d399;--red:#f87171;--blue:#60a5fa;--water:#38bdf8;--text:#f0f2f5;--text2:#8b95a3;--text3:#5a6270;--goldInk:#f0b429;--goldBg:#1a160a;--goldBg2:#2d2710;--proBg:#191609;--proSurface:#201B10;--proSurface2:#211C10;--proBorder:#383018;--blueBg:#0d1020;--shadow:0 6px 20px rgba(0,0,0,.4);--radius:16px;--radius-sm:10px;}
 html[data-theme="light"]{--bg:#ffffff;--surface:#ffffff;--surface2:#f5f6f8;--surface3:#eceef2;--border:#e6e9ee;--text:#0f1419;--text2:#4a5563;--text3:#6b7684;--goldInk:#a8730a;--goldBg:#ffffff;--goldBg2:#fdf6e3;--proBg:#fffdf7;--proSurface:#ffffff;--proSurface2:#fdfaf1;--proBorder:#efe4c9;--blueBg:#f4f7fd;--shadow:0 1px 3px rgba(15,20,25,.08),0 1px 2px rgba(15,20,25,.04);}
@@ -334,8 +334,46 @@ html[data-theme="light"] :is(.bel-ctx-caixa,.bel-balao){background:var(--wt-sup2
 /* Foco de teclado: 2 px dourado escuro, afastado 3 px. */
 html[data-theme="light"] :is(button,a,input,select):focus-visible{
   outline:2px solid var(--wt-ouroTxt)!important;outline-offset:3px!important}
+/* Desabilitado: a especificacao pede remover a elevacao E indicar a
+   indisponibilidade. So baixar a opacidade faz as duas coisas mal — o
+   texto perde contraste e continua parecendo clicavel. Fundo cinza
+   proprio, como no seu CSS de referencia. */
+html[data-theme="light"] :is(button,.m-item,.bel-atalho):disabled,
 html[data-theme="light"] :is(button,.m-item,.bel-atalho)[disabled]{
-  box-shadow:none!important;opacity:.55}
+  background:#E9ECEF!important;color:var(--wt-txt2)!important;
+  box-shadow:none!important;cursor:not-allowed;transform:none!important;opacity:1}
+html[data-theme="light"] :is(button,.m-item,.bel-atalho):disabled .med{
+  color:var(--wt-txt2)!important;box-shadow:none!important}
+
+/* Botao so de icone: 56x56, sem preenchimento lateral. */
+html[data-theme="light"] :is(.icon-btn,.chat-enviar){
+  width:56px!important;height:56px!important;padding:0!important;
+  display:grid;place-items:center}
+
+/* A notificacao da semana leva um filete dourado de 3 px no inicio — e o
+   unico lugar onde o dourado da marca aparece como contorno. */
+html[data-theme="light"] .weekly-notice{
+  border-inline-start:3px solid var(--wt-ouro)!important}
+
+/* Avatar: 56 px com aro titanio. */
+html[data-theme="light"] :is(.m-foto,.bel-mini,#homeAvatar img){
+  border:2px solid var(--wt-titanio)!important;box-shadow:none!important}
+html[data-theme="light"] .bel-mini{width:56px;height:56px;flex:0 0 56px}
+
+/* Setas das listas: 18 px, cor secundaria. */
+html[data-theme="light"] :is(.m-seta,.sheet-seta,.h-cartao .h-seta){
+  width:18px!important;height:18px!important;color:var(--wt-txt2)!important}
+
+/* Icones: traco de 1,8 px em grade de 24, como especificado. */
+html[data-theme="light"] :is(.med,.m-med) svg{stroke-width:1.8!important}
+
+/* Texto de corpo: 15 px, entrelinha 1,5. */
+html[data-theme="light"] body{font-size:15px;line-height:1.5}
+
+/* "Nao cortar rotulos longos: permitir quebra e aumentar a altura." */
+html[data-theme="light"] :is(.m-rot,.sheet-item-tx,.bel-atalho,.h-cartao h2,
+  .sheet-sub,.m-stat-num){white-space:normal!important;overflow:visible!important;
+  text-overflow:clip!important;overflow-wrap:anywhere}
 
 /* --- geometria da especificacao --- */
 html[data-theme="light"] :is(.card,.bel-painel,.auth-painel){border-radius:24px!important}
@@ -427,11 +465,102 @@ html[data-theme="light"] [class*="ia-badge"]{
    Ela FICA, como no desenho: mas dissolvida no branco pela direita, para
    que os cartoes nao lutem com ela. O veu escuro do tema escuro seria
    uma mancha cinza aqui. */
-html[data-theme="light"] .h-hero-foto{opacity:1}
-html[data-theme="light"] .h-hero::after{
-  background:linear-gradient(180deg,rgb(236 234 230 / 30%) 0%,
-             rgb(236 234 230 / 72%) 55%,var(--wt-fundo) 100%)!important}
-html[data-theme="light"] .h-frase{color:rgb(201 146 43 / 75%)!important}
+/* --- a foto no tema claro ---
+   Na prancha, o personagem ocupa so o canto superior DIREITO e dissolve no
+   branco. Aqui ele cobria a tela inteira, e um veu claro sobre foto escura
+   nao da "foto clara": da sepia sujo. Era isso que apagava as frases, os
+   aneis da semana e o "Faltam ... kcal".
+
+   Duas mascaras em serie confinam a foto ao canto:
+     horizontal — some da metade para a esquerda, onde moram "Hoje", a
+                  semana e a frase da esquerda
+     vertical   — dissolve no fundo antes de encostar nos macros
+
+   ISTO E PALIATIVO. O resultado da prancha precisa do personagem com
+   fundo transparente ou claro; o asset que temos e o de fundo escuro. */
+/* O topo da Hoje e um PAINEL, nao um fundo sangrado. Na prancha ele tem
+   24 px de raio, face branca, e a foto vive DENTRO dele, no canto
+   superior direito. Eu vinha mantendo a foto cobrindo a pagina e tentando
+   mascarar — por isso nunca chegava no desenho. */
+html[data-theme="light"] .h-hero{
+  margin:0!important;border-radius:24px!important;overflow:hidden;
+  background:var(--wt-sup)!important;border:1px solid var(--wt-borda)!important;
+  box-shadow:var(--wt-relevoSuave)!important;
+  padding:20px!important;
+}
+html[data-theme="light"] .h-hero-foto{
+  opacity:.9;
+  /* canto superior direito, dissolvendo para dentro do painel */
+  -webkit-mask-image:
+    linear-gradient(90deg,transparent 0%,transparent 38%,#000 76%,#000 100%),
+    linear-gradient(180deg,#000 0%,#000 46%,transparent 86%);
+  mask-image:
+    linear-gradient(90deg,transparent 0%,transparent 38%,#000 76%,#000 100%),
+    linear-gradient(180deg,#000 0%,#000 46%,transparent 86%);
+  -webkit-mask-composite:source-in;mask-composite:intersect;
+}
+html[data-theme="light"] .h-hero::after{background:none!important}
+
+/* --- Inter, como a especificacao pede duas vezes. Eu nao tinha carregado:
+       o app so tinha Syne e DM Sans. Vale no tema claro; o escuro fica
+       com DM Sans para nao mexer no que ja esta aprovado. --- */
+html[data-theme="light"] body,
+html[data-theme="light"] :is(button,input,select,textarea){
+  font-family:Inter,Arial,sans-serif!important}
+
+/* --- medidas da especificacao: 480 px, margem 20, secoes 24 ---
+   NAO tocar em `display` aqui. O app usa .tab{display:none} e
+   .tab.active{display:block} para trocar de tela. Minha primeira versao
+   punha display:flex em `html[data-theme="light"] .tab`, que tem
+   especificidade 0,2,1 e vence o .tab.active (0,2,0) — TODAS as telas
+   apareceriam empilhadas de uma vez. So no tema claro, o que faria o
+   defeito parecer coisa de tema e nao de seletor. */
+html[data-theme="light"] .tab{max-width:480px;margin-inline:auto;
+  padding-inline:20px;
+  padding-bottom:calc(112px + env(safe-area-inset-bottom))}
+html[data-theme="light"] .tab.active>*+*{margin-top:24px}
+/* --- botoes: altura minima 56, linha de menu 64, preenchimento 14/16,
+       12 px entre icone e texto, 12 px entre botoes --- */
+html[data-theme="light"] :is(.bel-atalho,.btn,.btn-primary,#authScreen .btn-primary,
+  .add-food-btn,.auth-aba){min-height:56px!important;padding:14px 16px!important;gap:12px!important}
+html[data-theme="light"] :is(.m-item,#sheetBody .sheet-item){
+  min-height:64px!important;padding:14px 16px!important;gap:12px!important}
+html[data-theme="light"] :is(.bel-atalhos,.m-lista,.auth-abas){gap:12px!important}
+html[data-theme="light"] :is(.card,.bel-painel,.auth-painel,.bel-ctx-caixa){padding:20px!important}
+/* --- movimento: 160 ms, so para toque, selecao e abertura --- */
+@media (prefers-reduced-motion:no-preference){
+  html[data-theme="light"] :is(.m-item,.bel-atalho,#sheetBody .sheet-item,.btn,
+    .btn-primary,.auth-aba,.weekly-notice,.premade-card,.icon-btn){
+    transition:transform 160ms ease,box-shadow 160ms ease,border-color 160ms ease!important}
+}
+/* --- tipografia da especificacao --- */
+html[data-theme="light"] .h-gauge .calorie-num{
+  font-size:48px!important;font-weight:700!important;letter-spacing:-.04em;
+  font-variant-numeric:tabular-nums}
+html[data-theme="light"] :is(.card-title,.plano-tit,.m-nome,.bel-nome){
+  font-size:18px!important;font-weight:700!important}
+html[data-theme="light"] [data-i18n="calhojeBtn"]{
+  font-size:28px!important;font-weight:700!important;letter-spacing:-.03em}
+html[data-theme="light"] :is(.m-rot,.sheet-item-tx,.bel-atalho){
+  font-size:16px!important;font-weight:600!important}
+html[data-theme="light"] :is(.sheet-sub,.bel-desc,.m-stat-sub,.h-cartao p){
+  font-size:13px!important;font-weight:500!important;line-height:1.45}
+
+/* Os elementos do topo voltam a ter contraste porque agora estao sobre o
+   fundo claro, nao sobre a foto. */
+html[data-theme="light"] .h-frase{color:var(--wt-ouroTxt)!important;opacity:.85}
+html[data-theme="light"] .calorie-remaining{color:var(--wt-txt2)!important}
+html[data-theme="light"] .calorie-remaining b,
+html[data-theme="light"] .calorie-remaining strong{color:var(--wt-ouroTxt)!important}
+/* Aneis da semana: tracinho branco sobre branco era invisivel. */
+html[data-theme="light"] #semanaFaixa .dia-bolha,
+html[data-theme="light"] #semanaFaixa circle[stroke*="surface3"]{
+  box-shadow:inset 0 1px 2px rgb(32 36 42 / 12%)!important}
+html[data-theme="light"] #semanaFaixa svg circle[stroke="var(--surface3)"]{
+  stroke:var(--wt-titanio)!important}
+html[data-theme="light"] #tab-hoje .macro-row{
+  background:var(--wt-sup)!important;border-color:var(--wt-borda)!important}
+html[data-theme="light"] .h-gauge .calorie-label{color:var(--wt-txt2)!important}
 .chat-input-row{gap:8px;align-items:center}
 @media (prefers-reduced-motion:reduce){.chat-enviar{transition:none}}
 /* Estado vazio do chat. `:empty` so casa quando NAO ha nenhum no dentro —
@@ -2140,7 +2269,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260913_white_titanium";
+var APP_VERSION="20260913_white_titanium_e";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
