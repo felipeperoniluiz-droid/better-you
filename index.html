@@ -323,7 +323,7 @@ html[data-theme="light"] :is(.m-item,#sheetBody .sheet-item,.bel-atalho,
     transform:none}
 }
 /* --- PAINEIS informativos: relevo mais discreto, como pedido --- */
-html[data-theme="light"] :is(.card,.bel-painel,.auth-painel,.bel-ctx-caixa,
+html[data-theme="light"] :is(.card,.h-cartao,.bel-painel,.auth-painel,.bel-ctx-caixa,
   .bel-balao,.meal-item,.cup,.tdee-box,.calc-result,.ai-result,.search-results){
   background:var(--wt-sup)!important;
   border:1px solid var(--wt-borda)!important;
@@ -378,7 +378,30 @@ html[data-theme="light"] :is(.m-rot,.sheet-item-tx,.bel-atalho,.h-cartao h2,
 /* --- geometria da especificacao --- */
 html[data-theme="light"] :is(.card,.bel-painel,.auth-painel){border-radius:24px!important}
 html[data-theme="light"] :is(.m-item,.bel-atalho,#sheetBody .sheet-item,
-  .weekly-notice,.premade-card){border-radius:18px!important}
+  .weekly-notice,.premade-card,.h-cartao){border-radius:18px!important}
+
+/* --- DOIS cartoes, nao um bloco de 579 px ---
+   Na prancha o anel e os macros sao pecas separadas, com ar entre elas.
+   No app a marcacao e .h-hero > .card > (anel + macros): um so bloco
+   alto, que e o que deixa a tela pesada.
+   Sem mexer na marcacao — o tema escuro depende dela — eu apago o cartao
+   intermediario e devolvo a aparencia de cartao para os macros. */
+html[data-theme="light"] .h-hero>.card{
+  background:none!important;border:0!important;box-shadow:none!important;
+  padding:0!important;margin:0!important}
+/* No tema ESCURO os macros tambem sairam do cartao. Devolvo a faixa que
+   eles tinham la dentro para o desenho aprovado nao mudar. */
+html:not([data-theme="light"]) #tab-hoje .macro-row{
+  margin-top:0;border-radius:0}
+html[data-theme="light"] #tab-hoje .macro-row{
+  margin-top:24px!important;padding:20px 12px!important;
+  border:1px solid var(--wt-borda)!important;border-radius:24px!important;
+  box-shadow:var(--wt-relevoSuave)!important;
+  background:var(--wt-sup)!important}
+html[data-theme="light"] #tab-hoje .macro-row>div+div{
+  border-left:1px solid var(--wt-borda)!important}
+/* O hero encolhe: fica so o cabecalho, a semana, o anel e o "Faltam". */
+html[data-theme="light"] .h-hero{padding-bottom:24px!important}
 
 /* --- medalhao: 44 px, aro dourado escuro, miolo branco --- */
 /* Borda TITANIO, icone dourado escuro — nao o contrario. Eu tinha posto a
@@ -482,22 +505,25 @@ html[data-theme="light"] [class*="ia-badge"]{
    24 px de raio, face branca, e a foto vive DENTRO dele, no canto
    superior direito. Eu vinha mantendo a foto cobrindo a pagina e tentando
    mascarar — por isso nunca chegava no desenho. */
+/* O topo NAO e painel. Na criacao do Felipe o cabecalho, a semana, o
+   anel e as frases ficam direto sobre o fundo da pagina — so os macros e
+   os cartoes abaixo tem face branca. Eu tinha envolvido tudo num cartao
+   de 24 px, e era isso que deixava a tela pesada: um bloco branco enorme
+   onde o desenho tem ar. */
 html[data-theme="light"] .h-hero{
-  margin:0!important;border-radius:24px!important;overflow:hidden;
-  background:var(--wt-sup)!important;border:1px solid var(--wt-borda)!important;
-  box-shadow:var(--wt-relevoSuave)!important;
-  padding:20px!important;
+  margin:0!important;padding:0 0 8px!important;
+  background:none!important;border:0!important;box-shadow:none!important;
+  border-radius:0!important;overflow:visible;
 }
+/* As fotos claras ja vem recortadas, com o personagem a DIREITA e o fundo
+   claro dissolvendo para a esquerda — o proprio arquivo faz o trabalho que
+   a mascara fazia. Nas escuras o personagem fica a esquerda; por isso o
+   enquadramento e diferente por tema, nao so o arquivo.
+   Sem mascara aqui: aplicar uma por cima cortaria o ombro dele. */
 html[data-theme="light"] .h-hero-foto{
-  opacity:.9;
-  /* canto superior direito, dissolvendo para dentro do painel */
-  -webkit-mask-image:
-    linear-gradient(90deg,transparent 0%,transparent 38%,#000 76%,#000 100%),
-    linear-gradient(180deg,#000 0%,#000 46%,transparent 86%);
-  mask-image:
-    linear-gradient(90deg,transparent 0%,transparent 38%,#000 76%,#000 100%),
-    linear-gradient(180deg,#000 0%,#000 46%,transparent 86%);
-  -webkit-mask-composite:source-in;mask-composite:intersect;
+  opacity:1;
+  object-position:right top!important;
+  -webkit-mask-image:none;mask-image:none;
 }
 html[data-theme="light"] .h-hero::after{background:none!important}
 
@@ -548,7 +574,14 @@ html[data-theme="light"] :is(.sheet-sub,.bel-desc,.m-stat-sub,.h-cartao p){
 
 /* Os elementos do topo voltam a ter contraste porque agora estao sobre o
    fundo claro, nao sobre a foto. */
-html[data-theme="light"] .h-frase{color:var(--wt-ouroTxt)!important;opacity:.85}
+/* Cinza, nao dourado. Na criacao do Felipe as frases sao discretas — ouro
+   aqui soma ao "excesso de dourado" e ainda perde contraste. */
+html[data-theme="light"] .h-frase{color:var(--wt-txt2)!important;opacity:1}
+html[data-theme="light"] .h-frase::after{background:var(--wt-titanio)!important}
+/* Pontos da semana: circulo branco em relevo; o ativo, dourado cheio. */
+html[data-theme="light"] #semanaFaixa svg circle{stroke:var(--wt-titanio)!important}
+html[data-theme="light"] #semanaFaixa span[style*="background:var(--gold)"]{
+  background:var(--wt-ouro)!important}
 html[data-theme="light"] .calorie-remaining{color:var(--wt-txt2)!important}
 html[data-theme="light"] .calorie-remaining b,
 html[data-theme="light"] .calorie-remaining strong{color:var(--wt-ouroTxt)!important}
@@ -1749,13 +1782,21 @@ if(_al){
         </div>
         <div class="calorie-remaining" id="calStatus">Meta: <b id="calGoalText" style="color:#f0b429;">3000</b> kcal</div>
       </div>
+    </div>
+  </div>
+
+  <!-- Os macros SAIRAM de dentro do cartao do anel (13/09/2026).
+       Na prancha White Titanium eles sao um cartao proprio, com ar entre
+       eles e o anel. Enquanto estavam aninhados, dava para pinta-los de
+       cartao mas nao para separa-los: cartao branco dentro de cartao
+       branco. Fora, os dois temas ganham — o escuro ja tratava a faixa
+       como bloco proprio, com fio em cima e embaixo. -->
       <div class="macro-row">
         <div><div class="h-macro-top"><svg class="h-ico" style="color:#60a5fa" aria-hidden="true"><use href="#i-biceps"/></svg><div class="macro-label" id="macro-prot-label">Proteina</div></div><div class="macro-val" style="color:#60a5fa" id="macroProtVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#60a5fa;width:0%" id="macroProtBar"></div></div></div>
         <div><div class="h-macro-top"><svg class="h-ico" style="color:#e8834a" aria-hidden="true"><use href="#i-espiga"/></svg><div class="macro-label" id="macro-carb-label">Carbo</div></div><div class="macro-val" style="color:#e8834a" id="macroCarbVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#e8834a;width:0%" id="macroCarbBar"></div></div></div>
         <div><div class="h-macro-top"><svg class="h-ico" style="color:#34d399" aria-hidden="true"><use href="#i-drop"/></svg><div class="macro-label" id="macro-fat-label">Gordura</div></div><div class="macro-val" style="color:#34d399" id="macroFatVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#34d399;width:0%" id="macroFatBar"></div></div></div>
       </div>
-    </div>
-  </div>
+
   <div id="alertsBox" style="display:none;margin-bottom:12px;"></div>
   <div class="card" id="sleepCard" style="margin-bottom:12px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
@@ -2269,7 +2310,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260913_white_titanium_e";
+var APP_VERSION="20260913_white_titanium_j";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2636,6 +2677,11 @@ function aplicarTema(){
     if(b) b.classList.toggle("active", pref===k);
   });
   try{ aplicarLogo(efetivo); }catch(e){}
+  /* A foto de fundo muda com o tema, entao precisa ser reavaliada aqui.
+     Sem isto, quem troca de tema com o app aberto fica com a foto do tema
+     anterior ate recarregar. */
+  try{ hojeFundoAplicar(); }catch(e){}
+  try{ belParedeAplicar(); }catch(e){}
 }
 /* Duas logos, uma por tema. A prateada some no branco e a grafite some no
    escuro — por isso existia aquele quadrado preto atras dela no tema claro,
@@ -3279,10 +3325,28 @@ function jejumRender(){
    espaco cru e alguns servidores tropecam em parentese.
    Se um dia esses arquivos forem trocados por versoes comprimidas, e so
    mudar estes dois valores — o resto do codigo nao sabe o nome de nada. */
+/* Duas listas por sexo: uma para cada tema.
+   No CLARO a lista so tem o arquivo claro. Se ele nao existir, NAO ha
+   segunda opcao — a tela fica sem foto, de proposito.
+   Motivo: a foto que temos tem fundo de academia escura. Sobre a
+   interface White Titanium ela vira um borrao sepia, e foi isso que
+   deixou a tela "longe do que eu criei". Tela limpa e mais perto da
+   prancha do que tela suja. Quando o recorte existir, ele entra sozinho. */
 var HOJE_FOTO={
   m:["hoje-homem.jpg","download%20%289%29.png"],
   f:["hoje-mulher.jpg","download%20%288%29.png"]
 };
+/* 33 = homem, 34 = mulher. Nomes reais dos arquivos, sem renomear.
+   Personagem recortado a DIREITA sobre fundo claro — por isso o
+   enquadramento no tema claro e `right top`, e nao `left` como no escuro. */
+var HOJE_FOTO_CLARA={
+  m:["hoje-homem-claro.jpg","33.png"],
+  f:["hoje-mulher-claro.jpg","34.png"]
+};
+function _temaClaro(){
+  try{ return document.documentElement.getAttribute("data-theme")==="light"; }
+  catch(e){ return false; }
+}
 /* Tenta os enderecos em ordem ate um carregar. Se nenhum carregar, chama
    aoFalhar() — e a tela decide o que fazer, em vez de ficar com imagem
    quebrada. */
@@ -3313,9 +3377,12 @@ function hojeFundoAplicar(){
          dados ou nao gosta do modelo, nao quer a tela pelada. */
     }else{
       var sx=((state.profile&&state.profile.sex)||"m").toLowerCase()==="f"?"f":"m";
-      if(img.dataset.sexo!==sx){
-        img.dataset.sexo=sx;
-        _imgTentar(img,HOJE_FOTO[sx],null,function(){ img.style.display="none"; });
+      var claro=_temaClaro();
+      var chave=sx+(claro?"c":"e");   /* muda ao trocar de tema, e recarrega */
+      if(img.dataset.sexo!==chave){
+        img.dataset.sexo=chave;
+        _imgTentar(img,(claro?HOJE_FOTO_CLARA:HOJE_FOTO)[sx],null,
+          function(){ img.style.display="none"; img.removeAttribute("src"); });
       }
     }
 
