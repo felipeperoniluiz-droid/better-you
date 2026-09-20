@@ -260,36 +260,62 @@ html[data-theme="light"] #authScreen .input{background:#fff;border-color:#e3d9c2
 /* Tokens exatos da especificacao do Felipe. Minhas estimativas anteriores
    (#ECEAE6, #C9922B) foram descartadas: a primeira tinha tom amarelado, a
    segunda dava 2,5:1 e reprovava ate para icone. */
+/* ==================================================================
+   PALETA DA FOLHA DE DESIGN DO FELIPE (20/09/2026)
+   Os NOMES das variaveis sao os mesmos de antes de proposito: centenas
+   de regras neste arquivo ja apontam para eles. Trocar so os VALORES
+   reveste o app inteiro sem tocar em cada regra.
+
+   Regra que vale para as cores de acento: a variavel "crua"
+   (--wt-azul, --wt-verde, --wt-vermelho, --wt-ouroTxt) guarda sempre o
+   tom TEXTO-SEGURO, porque o codigo antigo usa esses nomes em texto e
+   eu nao consigo revisar todos os pontos de uso. O tom exato do mockup
+   mora nas variaveis terminadas em "Ic", so para preenchimento de
+   icone, anel, barra e pilula. Assim nenhum texto regride de contraste
+   por engano.
+   ================================================================== */
 html[data-theme="light"]{
-  --wt-fundo:#F3F4F5;
-  --wt-sup:#FFFFFF;
-  --wt-sup2:#F8F9FA;
-  --wt-borda:#E0E3E7;
-  --wt-titanio:#D3D8DE;     /* a lateral das pecas */
-  --wt-titanioM:#9BA3AD;
-  --wt-txt:#20242A;
-  --wt-txt2:#555E69;
-  --wt-ouro:#F5BB16;        /* marca: fundo de acao principal, nunca texto */
-  --wt-ouroTxt:#805A08;     /* icone e texto dourado: 5,5:1 sobre branco */
-  --wt-azul:#246FA8;
-  --wt-verde:#24754F;
-  --wt-vermelho:#B63E46;
-  /* A receita do BOTAO, do CSS de referencia do Felipe. A parte que eu
-     tinha errado e a terceira linha: `0 3px 0` e uma ARESTA DURA em
-     titanio, nao sombra difusa. E ela que da a sensacao de tecla — a peca
-     tem espessura, nao so uma sombra por baixo. Trocar por blur perde
-     exatamente o que o desenho tem de bom. */
-  --wt-relevo:
-    inset 0 1px 0 #ffffff,
-    inset 0 -2px 0 rgb(155 163 173 / 20%),
-    0 3px 0 var(--wt-titanio),
-    0 7px 12px rgb(32 36 42 / 12%);
-  /* Painel informativo: relevo discreto, so a sombra de ambiente. */
-  --wt-relevoSuave:0 5px 16px rgb(32 36 42 / 6%);
-  --wt-pressionado:
-    inset 0 1px 2px rgb(32 36 42 / 8%),
-    0 1px 0 var(--wt-titanio),
-    0 3px 5px rgb(32 36 42 / 10%);
+  --wt-fundo:#FAFAF8;       /* folha: Fundo */
+  --wt-sup:#FFFFFF;         /* folha: Cards */
+  --wt-sup2:#F5F5F2;
+  --wt-borda:#EDEDE9;
+  --wt-titanio:#E8E8E4;     /* nao e mais aresta de tecla, so borda sutil */
+  --wt-titanioM:#94A3B8;
+  --wt-txt:#0F172A;         /* folha: Texto principal — 17,85:1 */
+  --wt-txt2:#64748B;        /* folha: Texto secundario — 4,76:1 */
+  --wt-txt3:#94A3B8;        /* legenda; so em texto grande ou nao essencial */
+
+  /* --- dourado --- */
+  --wt-ouro:#F59E0B;        /* folha: Primaria. PREENCHIMENTO, nunca texto */
+  --wt-ouroIc:#F59E0B;
+  --wt-ouroForte:#FBBF24;   /* folha: Destaque */
+  --wt-ouroTxt:#B45309;     /* dourado quando precisa ser TEXTO — 5,02:1 */
+
+  /* --- acentos: tom de TEXTO (seguro) --- */
+  --wt-azul:#1D4ED8;        /* 6,70:1 */
+  --wt-verde:#0B7A57;       /* 5,34:1 */
+  --wt-laranja:#C2410C;     /* 5,18:1 */
+  --wt-vermelho:#DC2626;    /* 4,83:1 */
+
+  /* --- acentos: tom EXATO da folha, so para icone/anel/barra/pilula --- */
+  --wt-azulIc:#3B82F6;      /* folha: Proteina */
+  --wt-laranjaIc:#F97316;   /* folha: Carbo */
+  --wt-verdeIc:#10B981;     /* folha: Gordura */
+  --wt-vermelhoIc:#EF4444;  /* folha: Alerta */
+
+  /* --- raios e sombras da folha --- */
+  --wt-r-sm:8px; --wt-r-md:12px; --wt-r-lg:16px; --wt-r-xl:20px; --wt-r-2xl:24px;
+  --wt-sombraSm:0 2px 6px rgb(0 0 0/5%);
+  --wt-sombraMd:0 4px 12px rgb(0 0 0/8%);
+  --wt-sombraLg:0 8px 24px rgb(0 0 0/12%);
+  /* A TECLA DE TITANIO SAIU. Ela era o desenho anterior: aresta dura de
+     3 px que dava espessura de peca. O layout novo do Felipe nao tem
+     aresta — tem card branco chapado com sombra suave, as tres da folha.
+     Como --wt-relevo e usado no app inteiro, trocar so o valor aqui
+     reveste tudo de uma vez, sem mexer em cada regra. */
+  --wt-relevo:var(--wt-sombraMd);
+  --wt-relevoSuave:var(--wt-sombraSm);
+  --wt-pressionado:inset 0 2px 6px rgb(15 23 42/10%);
 }
 html[data-theme="light"] body,
 html[data-theme="light"] #app{background:var(--wt-fundo)!important;color:var(--wt-txt)}
@@ -425,9 +451,8 @@ html[data-theme="light"] .med-verde{border-color:var(--wt-verde)!important;color
    continuava pintando um disco marrom no meio da tela branca. */
 html[data-theme="light"] .h-gauge::before{
   background:var(--wt-sup)!important;
-  box-shadow:inset 0 1px 0 #ffffff,
-             0 3px 0 var(--wt-titanio),
-             0 8px 18px rgb(32 36 42 / 12%)!important;
+  /* aresta de tecla trocada pela sombra-lg da folha (20/09) */
+  box-shadow:var(--wt-sombraLg)!important;
 }
 html[data-theme="light"] .h-track{stroke:#DAD6CF!important;filter:none!important}
 html[data-theme="light"] .h-rim-out{stroke:rgb(255 255 255 / 90%)!important}
@@ -438,8 +463,7 @@ html[data-theme="light"] .h-gauge .calorie-num{color:var(--wt-txt)!important;tex
 html[data-theme="light"] .h-gauge .calorie-label{color:var(--wt-txt2)!important}
 html[data-theme="light"] #scoreAro{
   background:var(--wt-sup)!important;
-  box-shadow:inset 0 1px 0 #ffffff,0 2px 0 var(--wt-titanio),
-             0 6px 12px rgb(32 36 42 / 10%)!important}
+  box-shadow:var(--wt-sombraMd)!important}
 
 /* --- acao principal: grafite sobre dourado, com a mesma aresta dura --- */
 html[data-theme="light"] :is(.navfab,.chat-enviar,.btn-primary,.auth-aba.ativa,
@@ -469,7 +493,7 @@ html[data-theme="light"] :is(.input,.chat-input-row .input,#authScreen .input,
 /* --- barra de navegacao --- */
 html[data-theme="light"] :is(.nav,.nav3,.bottom .nav){
   background:var(--wt-sup)!important;border:1px solid var(--wt-borda)!important;
-  box-shadow:0 3px 0 var(--wt-titanio),0 7px 14px rgb(32 36 42 / 10%)!important}
+  box-shadow:var(--wt-sombraLg)!important}
 
 /* --- texto e contraste ---
    O dourado #F5BB16 sobre branco da 1,8:1. Tudo que for TEXTO dourado
@@ -622,7 +646,7 @@ html[data-theme="light"] #semanaFaixa span[style*="background:var(--gold)"]{
   background:var(--wt-ouro)!important}
 html[data-theme="light"] #semanaFaixa .dia-bolha,
 html[data-theme="light"] #semanaFaixa svg{
-  filter:drop-shadow(0 2px 0 var(--wt-titanio)) drop-shadow(0 4px 5px rgb(32 36 42 / 10%))}
+  filter:drop-shadow(0 2px 6px rgb(0 0 0/8%))}
 html[data-theme="light"] .calorie-remaining{color:var(--wt-txt2)!important}
 html[data-theme="light"] .calorie-remaining b,
 html[data-theme="light"] .calorie-remaining strong{color:var(--wt-ouroTxt)!important}
@@ -1743,10 +1767,7 @@ html[data-theme="light"] #belFab{
   border:2px solid var(--wt-titanio)!important;
   background:var(--wt-sup)!important;
   color:var(--goldInk)!important;
-  box-shadow:inset 0 1px 0 #ffffff,
-             inset 0 -2px 0 rgb(155 163 173/20%),
-             0 3px 0 var(--wt-titanio),
-             0 7px 12px rgb(32 36 42/12%)!important;}
+  box-shadow:var(--wt-sombraMd)!important;}
 /* No claro vale a mesma regra: so o circulo. O degrau titanio ficava bonito
    como tecla, mas com a foto ele virava justamente a "marca" que o Felipe
    pediu para tirar. A tecla continua valendo quando NAO ha foto. */
@@ -1755,6 +1776,61 @@ html[data-theme="light"] #belFab.com-foto{
   box-shadow:none!important;}
 /* #f87171 sobre branco fica lavado: no claro o alerta usa o vermelho fechado */
 html[data-theme="light"] #belFab .bel-fab-alerta{background:#dc2626;border-color:#fff;}
+
+/* ==================================================================
+   TELA HOJE — layout novo do Felipe (20/09/2026)
+   Fica no FIM da folha do head de proposito: ordem de origem decide
+   entre regras de mesma especificidade, e varias regras acima tambem
+   miram os mesmos elementos com !important.
+   ================================================================== */
+
+/* --- cartoes: branco chapado, raio 20, sombra media da folha --- */
+html[data-theme="light"] #tab-hoje .card{
+  background:var(--wt-sup)!important;
+  border:1px solid var(--wt-borda)!important;
+  border-radius:var(--wt-r-xl)!important;
+  box-shadow:var(--wt-sombraMd)!important;}
+
+/* --- o anel --- */
+/* O arco usa <linearGradient id="rg"> escrito no SVG com as paradas do
+   tema escuro (#f0b429 -> #e8834a, que puxa para laranja). No claro as
+   duas paradas viram o dourado da folha. Mexer na parada e mais seguro
+   do que trocar o stroke: o renderToday() calcula o arco em cima dessa
+   mesma url(#rg). */
+html[data-theme="light"] #rg stop:first-child{stop-color:#FBBF24!important}
+html[data-theme="light"] #rg stop:last-child {stop-color:#F59E0B!important}
+html[data-theme="light"] .h-track{stroke:#F1EFEA!important;filter:none!important}
+html[data-theme="light"] .h-rim-out{stroke:#FFFFFF!important}
+html[data-theme="light"] .h-rim-in{stroke:rgb(15 23 42/6%)!important}
+/* A bolinha do topo: no mockup ela e uma esfera dourada bem maior que o
+   ponto de 2,6 do tema escuro. Em SVG2 o raio e propriedade de CSS. */
+html[data-theme="light"] .h-gauge svg>circle[r="2.6"]{
+  r:5.5px; fill:var(--wt-ouro)!important;
+  filter:drop-shadow(0 2px 3px rgb(180 83 9/45%))!important}
+html[data-theme="light"] .calorie-num{color:var(--wt-txt)!important;font-weight:800!important}
+html[data-theme="light"] .calorie-label{color:var(--wt-txt2)!important}
+
+/* --- macros ---
+   Os icones e as barras carregam cor inline do tema escuro (#60a5fa,
+   #e8834a, #34d399). Aqui entram os tons EXATOS da folha.
+   Ja o NUMERO usa o tom escuro: #F97316 da 2,80:1 e #10B981 da 2,54:1
+   sobre branco — reprovam como texto. O escolhido pelo Felipe foi
+   manter a cor certa no icone e escurecer so o que e lido. */
+html[data-theme="light"] #macroProtVal{color:var(--wt-azul)!important}      /* 6,70:1 */
+html[data-theme="light"] #macroCarbVal{color:var(--wt-laranja)!important}   /* 5,18:1 */
+html[data-theme="light"] #macroFatVal {color:var(--wt-verde)!important}     /* 5,34:1 */
+html[data-theme="light"] #macroProtBar{background:var(--wt-azulIc)!important}
+html[data-theme="light"] #macroCarbBar{background:var(--wt-laranjaIc)!important}
+html[data-theme="light"] #macroFatBar {background:var(--wt-verdeIc)!important}
+html[data-theme="light"] .macro-row>div:nth-child(1) .h-ico{color:var(--wt-azulIc)!important}
+html[data-theme="light"] .macro-row>div:nth-child(2) .h-ico{color:var(--wt-laranjaIc)!important}
+html[data-theme="light"] .macro-row>div:nth-child(3) .h-ico{color:var(--wt-verdeIc)!important}
+html[data-theme="light"] .macro-label{color:var(--wt-txt)!important;font-weight:600!important}
+html[data-theme="light"] .macro-bar-bg{background:#F1EFEA!important}
+
+/* --- tipografia da folha: 34/40 titulo, 24/32 subtitulo, 17/24 texto --- */
+html[data-theme="light"] #tab-hoje .card-title{
+  color:var(--wt-txt)!important;font-size:17px!important;font-weight:600!important}
 
 </style>
 </head>
@@ -2422,7 +2498,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260920_css_no_head";
+var APP_VERSION="20260920_layout_branco_1";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
