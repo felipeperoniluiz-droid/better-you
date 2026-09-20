@@ -1700,6 +1700,39 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.08)"] *,html[data-theme="dark"
 /* contraste: elemento com fundo dourado E texto dourado no mesmo style */
 html[data-theme="light"] [style*="rgba(240,180,41,.06)"],html[data-theme="light"] [style*="rgba(240,180,41,.08)"],html[data-theme="light"] [style*="rgba(240,180,41,.1)"],html[data-theme="light"] [style*="rgba(240,180,41,.12)"],html[data-theme="light"] [style*="rgba(240,180,41,.15)"],html[data-theme="light"] [style*="rgba(240,180,41,.2)"]{color:var(--goldInk)!important;background:#fff!important;border-color:#e6d9b8!important;}
 html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] [style*="rgba(240,180,41,.08)"],html[data-theme="dark"] [style*="rgba(240,180,41,.1)"],html[data-theme="dark"] [style*="rgba(240,180,41,.12)"],html[data-theme="dark"] [style*="rgba(240,180,41,.15)"],html[data-theme="dark"] [style*="rgba(240,180,41,.2)"]{color:#f7cf6b!important;}
+
+/* ================= BEL FLUTUANTE =================
+   A arte da Bel (download (19)) ja traz o aro dourado DESENHADO dentro do
+   arquivo. A borda de 2px que o elemento tem no style inline punha um segundo
+   aro em volta do primeiro — dois aros concentricos, que e exatamente o
+   defeito que aparecia. Por isso a borda sai quando a foto carrega (.com-foto)
+   e fica so a sombra que descola o botao da tela.
+   Sem foto, o botao continua com a borda: ali ela e a unica moldura. */
+/* overflow visivel de proposito: o ponto de nao-lido fica na borda e seria
+   cortado por overflow:hidden. Quem arredonda a foto e o border-radius da
+   propria <img>. */
+#belFab{overflow:visible;padding:0;}
+#belFab.com-foto{border-color:transparent!important;background:transparent!important;
+  box-shadow:0 6px 18px rgb(0 0 0/38%)!important;}
+#belFab .bel-fab-alerta{position:absolute;top:-2px;right:-2px;width:14px;height:14px;
+  border-radius:50%;background:var(--red);border:2px solid var(--bg);display:none;}
+
+/* White Titanium: sem foto o botao e uma tecla — lateral titanio dura.
+   Com a foto, a tecla sumiria atras da arte, entao fica so o degrau. */
+html[data-theme="light"] #belFab{
+  border:2px solid var(--wt-titanio)!important;
+  background:var(--wt-sup)!important;
+  color:var(--goldInk)!important;
+  box-shadow:inset 0 1px 0 #ffffff,
+             inset 0 -2px 0 rgb(155 163 173/20%),
+             0 3px 0 var(--wt-titanio),
+             0 7px 12px rgb(32 36 42/12%)!important;}
+html[data-theme="light"] #belFab.com-foto{
+  border-color:transparent!important;background:transparent!important;
+  box-shadow:0 3px 0 rgb(155 163 173/30%),
+             0 8px 14px rgb(32 36 42/16%)!important;}
+/* #f87171 sobre branco fica lavado: no claro o alerta usa o vermelho fechado */
+html[data-theme="light"] #belFab .bel-fab-alerta{background:#dc2626;border-color:#fff;}
 </style>
   <!-- Anéis pulsantes -->
   <div class="sp-ring" style="width:200px;height:200px;"></div>
@@ -2361,7 +2394,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260920_hoje_clara";
+var APP_VERSION="20260920_bel_flutuante";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -3404,10 +3437,16 @@ var HOJE_FOTO={
 /* 33 = homem, 34 = mulher. Nomes reais dos arquivos, sem renomear.
    Personagem recortado a DIREITA sobre fundo claro — por isso o
    enquadramento no tema claro e `right top`, e nao `left` como no escuro. */
-var HOJE_FOTO_CLARA={
-  m:["hoje-homem-claro.jpg","33.png"],
-  f:["hoje-mulher-claro.jpg","34.png"]
-};
+/* VAZIO de proposito (20/09). O tema claro NAO mostra personagem.
+   Motivo: os recortes (33/34.png) encostam nas duas bordas da imagem — o
+   personagem comeca em y=0 e termina em y=319 de 320, entao cabeca e
+   pernas ja vem cortadas no arquivo. Sobre o White Titanium ele disputava
+   com as bolinhas da semana e com o selo PRO, e o Felipe decidiu tirar.
+
+   Lista vazia faz o _imgTentar chamar aoFalhar na hora: a imagem nunca e
+   pedida, nao ha download nem elemento visivel. Para trazer de volta e so
+   repor os nomes aqui — o resto do caminho continua montado. */
+var HOJE_FOTO_CLARA={ m:[], f:[] };
 function _temaClaro(){
   try{ return document.documentElement.getAttribute("data-theme")==="light"; }
   catch(e){ return false; }
@@ -4313,8 +4352,59 @@ function _belArrastar(){
   window.addEventListener("resize",_belAplicarPos);
 }
 function belFabClique(){ if(_belDrag.moveu){ _belDrag.moveu=false; return; } belFabAbrir(); }
-function belFabFoto(){ var b=document.querySelector('img[alt="Nutricionista"]'); return b?b.src:""; }
-
+/* A foto do icone flutuante vinha copiada do src de uma <img alt="Nutricionista">
+   da tela. Essa imagem so existe na aba da Bel — e o icone flutuante justamente
+   NAO aparece ali. Em toda tela onde ele aparece a busca voltava vazia e ele
+   ficava com a palavra "Bel" escrita. Agora ele usa a mesma cascata de arquivos
+   da tela da Bel (BEL_FOTO.mini), montada uma unica vez. */
+function belFabFoto(){
+  try{
+    var i=document.querySelector("#belFab img");
+    if(i&&i.src&&i.naturalWidth) return i.src;
+    var b=document.querySelector('img[alt="Nutricionista"]');
+    return (b&&b.src)||"";
+  }catch(e){ return ""; }
+}
+function belFabMontar(f){
+  if(f.dataset.montado) return;
+  f.dataset.montado="1";
+  var img=document.createElement("img");
+  img.alt="Bel";
+  img.style.cssText="width:100%;height:100%;border-radius:50%;object-fit:cover;display:none";
+  f.insertBefore(img,f.firstChild);
+  var fila=[];
+  try{ fila=(BEL_FOTO&&BEL_FOTO.mini||[]).slice(); }catch(e){}
+  try{ var r=_belReserva(); if(r) fila.push(r); }catch(e){}
+  /* Cascata propria em vez de _imgTentar: a reserva embutida do app decodifica
+     como 0x0 (medido em 20/09 — era ela que o icone estava exibindo, um
+     quadrado vazio). onload sozinho aceitaria esse arquivo morto; aqui o
+     candidato so vale se tiver largura de verdade. */
+  var i=0;
+  (function proximo(){
+    if(i>=fila.length){ falhou(); return; }
+    var url=fila[i++];
+    img.onerror=proximo;
+    img.onload=function(){
+      if(!img.naturalWidth||img.naturalWidth<8){ proximo(); return; }
+      img.style.display=""; f.classList.add("com-foto");
+    };
+    img.src=url;
+  })();
+  function falhou(){
+    /* Nenhum arquivo respondeu: mostra a inicial, nunca fica vazio.
+       A trava "montado" FICA de pe. Se eu a soltasse aqui, as chamadas
+       seguintes de belFabRender() (boot e cada troca de aba) refariam a
+       cascata inteira e pediriam de novo arquivos que ja sabemos que nao
+       existem — varios 404 por sessao, sem ganho nenhum. */
+    try{ img.remove(); }catch(e){}
+    f.classList.remove("com-foto");
+    if(!f.querySelector(".bel-fab-txt")){
+      var s=document.createElement("span");
+      s.className="bel-fab-txt"; s.textContent="Bel";
+      f.insertBefore(s,f.firstChild);
+    }
+  }
+}
 function belFabRender(){
   var f=document.getElementById("belFab"); if(!f) return;
   var esconder=false;
@@ -4324,9 +4414,12 @@ function belFabRender(){
     var el=document.getElementById(id); if(el&&getComputedStyle(el).display!=="none") esconder=true; });
   f.style.display=esconder?"none":"flex";
   try{ _belArrastar(); _belAplicarPos(); }catch(e){}
-  var foto=belFabFoto();
-  f.innerHTML=(foto?'<img src="'+foto+'" alt="Bel" style="width:100%;height:100%;border-radius:50%;object-fit:cover">':"Bel")+
-   (belNaoLido()?'<span style="position:absolute;top:-2px;right:-2px;width:14px;height:14px;border-radius:50%;background:var(--red);border:2px solid var(--bg)"></span>':"");
+  belFabMontar(f);
+  /* O ponto de nao-lido e um elemento fixo: remontar o innerHTML a cada
+     chamada descartava a <img> e pedia o arquivo de novo. */
+  var p=f.querySelector(".bel-fab-alerta");
+  if(!p){ p=document.createElement("span"); p.className="bel-fab-alerta"; f.appendChild(p); }
+  p.style.display=belNaoLido()?"block":"none";
 }
 function belFabAbrir(){ setTimeout(_histSincronizar,30);
   var s=document.getElementById("belSheet"); if(!s) return;
@@ -9678,6 +9771,17 @@ function initFirebase(){
       document.getElementById('authScreen').style.display='none';
       var info=document.getElementById('authUserInfo');
       if(info) info.textContent=''+user.email;
+      /* O icone flutuante da Bel so era desenhado por switchTab(). Quem abre o
+         app e fica na Hoje — o caminho normal — nunca trocava de aba, entao ele
+         ficava no display:none inicial para sempre. Medido em 20/09: logado,
+         nenhuma tela bloqueando, e ainda assim invisivel.
+         Nao uso um setTimeout unico: um numero fixo e um palpite sobre quanto
+         demora o splash + loadFromFirestore, e se errar o icone some outra vez.
+         Aqui a funcao e chamada algumas vezes ate o app estar de pe. Ela e
+         idempotente — belFabMontar tem trava e so baixa a foto uma vez. */
+      [300,900,1800,3200].forEach(function(ms){
+        setTimeout(function(){ try{ belFabRender(); }catch(e){} },ms);
+      });
       loadFromFirestore(user.uid);
       // Checar isPro no Firestore e sincronizar subscriptionId com localStorage
       _fbDb.collection('users').doc(user.uid).get().then(function(doc){
