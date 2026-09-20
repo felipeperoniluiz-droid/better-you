@@ -1712,13 +1712,25 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
    cortado por overflow:hidden. Quem arredonda a foto e o border-radius da
    propria <img>. */
 #belFab{overflow:visible;padding:0;}
+/* Com a foto, o botao NAO tem caixa: nem fundo, nem borda, nem sombra.
+   Medido em 20/09 na versao publicada: fundo rgb(32,27,16) e borda
+   rgb(240,180,41) apareciam numa faixa em volta da arte, porque o PNG so
+   ocupa 86% do proprio arquivo (conteudo de 71 a 951 de 1024) — sobrava 7%
+   de margem transparente de cada lado, e era por ali que a caixa vazava.
+   Resultado: um quadrado marrom e um segundo aro dourado em volta do aro
+   que a arte ja traz. O Felipe pediu "apenas um circulo". */
 #belFab.com-foto{border-color:transparent!important;background:transparent!important;
-  box-shadow:0 6px 18px rgb(0 0 0/38%)!important;}
+  box-shadow:none!important;}
+/* E a arte cresce 1,162x (1024/881) para o aro dourado encostar na borda dos
+   56 px. Sem isso o circulo visivel teria 48 px e o botao pareceria menor do
+   que a area que responde ao toque. */
+#belFab.com-foto img{transform:scale(1.162);}
 #belFab .bel-fab-alerta{position:absolute;top:-2px;right:-2px;width:14px;height:14px;
   border-radius:50%;background:var(--red);border:2px solid var(--bg);display:none;}
 
-/* White Titanium: sem foto o botao e uma tecla — lateral titanio dura.
-   Com a foto, a tecla sumiria atras da arte, entao fica so o degrau. */
+/* White Titanium: SEM foto o botao e uma tecla — lateral titanio dura.
+   Esse caso so acontece se a imagem da Bel nao carregar. Com foto, a regra
+   logo abaixo apaga tudo isso. */
 html[data-theme="light"] #belFab{
   border:2px solid var(--wt-titanio)!important;
   background:var(--wt-sup)!important;
@@ -1727,10 +1739,12 @@ html[data-theme="light"] #belFab{
              inset 0 -2px 0 rgb(155 163 173/20%),
              0 3px 0 var(--wt-titanio),
              0 7px 12px rgb(32 36 42/12%)!important;}
+/* No claro vale a mesma regra: so o circulo. O degrau titanio ficava bonito
+   como tecla, mas com a foto ele virava justamente a "marca" que o Felipe
+   pediu para tirar. A tecla continua valendo quando NAO ha foto. */
 html[data-theme="light"] #belFab.com-foto{
   border-color:transparent!important;background:transparent!important;
-  box-shadow:0 3px 0 rgb(155 163 173/30%),
-             0 8px 14px rgb(32 36 42/16%)!important;}
+  box-shadow:none!important;}
 /* #f87171 sobre branco fica lavado: no claro o alerta usa o vermelho fechado */
 html[data-theme="light"] #belFab .bel-fab-alerta{background:#dc2626;border-color:#fff;}
 </style>
