@@ -554,7 +554,11 @@ html[data-theme="light"] .h-hero>*:not(.h-hero-foto):not(.h-frase){
 html[data-theme="light"] .h-frase{position:absolute!important;top:44%!important;z-index:1;
   width:auto!important;max-width:78px!important}
 html[data-theme="light"] .h-frase-esq{left:4px!important;right:auto!important}
-html[data-theme="light"] .h-frase-dir{right:4px!important;left:auto!important}
+/* A frase da direita desce para a base do topo: no tema claro o
+   personagem ocupa justamente o canto superior direito, e a 44% da
+   altura ela ficava impressa em cima do corpo dele. */
+html[data-theme="light"] .h-frase-dir{right:4px!important;left:auto!important;
+  top:auto!important;bottom:12px!important}
 html[data-theme="light"] .h-hero::after{background:none!important}
 
 /* --- Inter, como a especificacao pede duas vezes. Eu nao tinha carregado:
@@ -1017,9 +1021,19 @@ html[data-theme="light"] .card{box-shadow:var(--shadow)}
    "Faltam 3295 kcal" legivel sobre o ombro iluminado do modelo. */
 .h-hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:linear-gradient(180deg,rgb(25 22 9 / 34%) 0%,rgb(25 22 9 / 52%) 55%,rgb(25 22 9 / 88%) 100%);}
-html[data-theme="light"] .h-hero::after{
-  background:linear-gradient(180deg,rgb(255 255 255 / 40%) 0%,rgb(255 255 255 / 78%) 100%);}
-html[data-theme="light"] .h-hero-foto{opacity:.5}
+/* As duas regras de tema claro que ficavam AQUI foram removidas em
+   20/09. Elas sao de quando o tema claro ainda usava a FOTO ESCURA:
+   um veu branco por cima e opacity .5 na imagem, para a academia nao
+   dominar a tela.
+
+   Hoje o tema claro usa 33.png / 34.png — recorte com fundo
+   transparente. Meia opacidade transforma o preto do personagem em
+   cinza e ele vira um retangulo lavado; o veu branco piora.
+
+   Estavam vencendo as regras do White Titanium so por virem DEPOIS no
+   arquivo, com a mesma especificidade. Foi isso que deixou a Hoje clara
+   feia, e nenhuma leitura do bloco novo mostrava — o defeito estava a
+   700 linhas dali. */
 
 /* ---- frases verticais ---- */
 .h-frase{position:absolute;top:44%;font-size:8px;letter-spacing:.34em;line-height:2;
@@ -2347,7 +2361,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260913_white_titanium_m";
+var APP_VERSION="20260920_hoje_clara";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2740,6 +2754,20 @@ function aplicarLogo(tema){
       if(!el) return;
       delete el.dataset.reserva;              /* nova tentativa a cada troca de tema */
       el.onerror=function(){ try{ _logoReserva(el); }catch(e){} };
+      /* onload DESFAZ o que o onerror fez.
+         Sem isto a logo carrega e fica escondida: o src e trocado duas
+         vezes na abertura (um script inline poe a versao branca, o tema
+         depois poe a preta), e trocar o src no meio do carregamento ABORTA
+         o primeiro e dispara o onerror — que esconde a imagem e mostra o
+         texto de reserva. A segunda carrega certinho e ninguem reverte.
+         Era por isso que aparecia "Better You" escrito em vez da arte. */
+      el.onload=function(){
+        try{
+          el.style.display="";
+          var t=document.getElementById("authLogoTexto");
+          if(t && el.id==="authLogo") t.style.display="none";
+        }catch(e){}
+      };
       el.src=f;
     }
     por(document.getElementById("app-logo"),arq);
