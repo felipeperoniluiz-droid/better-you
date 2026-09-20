@@ -1570,13 +1570,18 @@ html[data-theme="light"] #belParede{display:none}
 html[data-theme="light"] #tab-dieta{--bel-painel:#fff;--bel-ctrl:#f4f1ea;--bel-borda:#e3d9c2;
   --bel-txt:#1a1a1a;--bel-mudo:#6b6b6b}
 html[data-theme="light"] .bel-hero{background:#f7f5f0}
-</style>
-</head>
-<body>
 
-<!-- ── SPLASH SCREEN (CSS Animation) ─────────────────────────── -->
-<div id="splash" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9999;overflow:hidden;display:flex;align-items:center;justify-content:center;">
-  <style>
+/* ================================================================
+   MOVIDO PARA CA EM 20/09. Este bloco estava dentro de
+   a div do splash, no body. O splash e REMOVIDO do DOM depois da
+   abertura, e uma folha de estilo removida do DOM para de valer: os
+   17 KB de CSS morriam junto com ele. Medido no app publicado — o bloco
+   inteiro nao existia no navegador, nem como CSS nem como texto.
+   Era por isso que as regras do tema claro e as do #belFab nao
+   faziam efeito nenhum, por mais !important que levassem.
+   NUNCA devolver este bloco para dentro do splash.
+   ================================================================ */
+
     @keyframes sp-logo-in{0%{opacity:0;transform:scale(.6)}60%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
     @keyframes sp-text-in{0%{opacity:0;letter-spacing:10px}100%{opacity:1;letter-spacing:4px}}
     @keyframes sp-glow{0%,100%{opacity:.4}50%{opacity:1}}
@@ -1750,7 +1755,13 @@ html[data-theme="light"] #belFab.com-foto{
   box-shadow:none!important;}
 /* #f87171 sobre branco fica lavado: no claro o alerta usa o vermelho fechado */
 html[data-theme="light"] #belFab .bel-fab-alerta{background:#dc2626;border-color:#fff;}
+
 </style>
+</head>
+<body>
+
+<!-- ── SPLASH SCREEN (CSS Animation) ─────────────────────────── -->
+<div id="splash" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9999;overflow:hidden;display:flex;align-items:center;justify-content:center;">
   <!-- Anéis pulsantes -->
   <div class="sp-ring" style="width:200px;height:200px;"></div>
   <div class="sp-ring" style="width:200px;height:200px;"></div>
@@ -2411,7 +2422,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260920_bel_clara";
+var APP_VERSION="20260920_css_no_head";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
