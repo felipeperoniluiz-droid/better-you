@@ -1832,6 +1832,48 @@ html[data-theme="light"] .macro-bar-bg{background:#F1EFEA!important}
 html[data-theme="light"] #tab-hoje .card-title{
   color:var(--wt-txt)!important;font-size:17px!important;font-weight:600!important}
 
+/* ==================================================================
+   MEDALHOES — UM PADRAO SO (20/09/2026)
+   O que estava errado: .med-azul, .med-verde e .med-vermelho trocavam
+   a variavel --med-cor, e essa variavel pinta o CIRCULO INTEIRO (borda,
+   fundo e halo). Resultado: cada linha da lista virava uma cor de
+   medalhao diferente, e o "Registrar" ficava com cinco circulos cinzas
+   e um azul do nada. Nao era padrao, era acaso.
+
+   O padrao agora vem do mockup do Felipe, medido no arquivo: miolo
+   creme, aro dourado #F6B24A de 2 px, brilho quente por fora, icone
+   ambar escuro. Todos iguais.
+   A COR PASSA A VIVER SO NO ICONE — que e onde ela informa alguma
+   coisa. Agua azul, como ele pediu. Vermelho fica em sair e apagar
+   conta porque ali a cor e aviso de acao destrutiva, nao enfeite; se
+   ele preferir, e uma linha para tirar. Verde marca estado ligado.
+   ================================================================== */
+html[data-theme="light"] :is(.med,.m-med){
+  background:radial-gradient(120% 120% at 50% 18%,#FFFDF7 0%,#FEF3DC 72%)!important;
+  border:2px solid #F6B24A!important;
+  box-shadow:0 0 0 4px rgb(245 158 11/7%),
+             0 2px 6px rgb(15 23 42/6%)!important;
+  color:var(--wt-ouroTxt)!important;}          /* #B45309 — 5,02:1 */
+/* A sombra escura do icone vinha do tema escuro e sobre creme vira sujeira. */
+html[data-theme="light"] :is(.med,.m-med) svg{filter:none!important}
+
+/* As variantes param de repintar o circulo: so trocam a cor do icone. */
+html[data-theme="light"] :is(.med-azul,.m-med-azul)    {color:#2563EB!important} /* agua */
+html[data-theme="light"] :is(.med-verde)               {color:var(--wt-verde)!important}
+html[data-theme="light"] :is(.med-vermelho)            {color:var(--wt-vermelho)!important}
+
+/* --- botao redondo de acao: dourado chapado, sem a aresta antiga --- */
+html[data-theme="light"] .navfab{
+  background:linear-gradient(180deg,#FBBF24 0%,#F59E0B 100%)!important;
+  border:none!important;
+  color:#0F172A!important;
+  box-shadow:0 4px 12px rgb(180 83 9/28%),
+             0 1px 0 rgb(255 255 255/45%) inset!important;}
+html[data-theme="light"] .navfab:active{
+  box-shadow:0 2px 6px rgb(180 83 9/30%),
+             inset 0 2px 6px rgb(120 53 15/20%)!important;
+  transform:translateY(1px)}
+
 </style>
 </head>
 <body>
@@ -2498,7 +2540,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260920_layout_branco_1";
+var APP_VERSION="20260920_medalhoes";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
