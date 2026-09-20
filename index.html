@@ -1725,6 +1725,9 @@ html[data-theme="dark"] [style*="rgba(240,180,41,.06)"],html[data-theme="dark"] 
    56 px. Sem isso o circulo visivel teria 48 px e o botao pareceria menor do
    que a area que responde ao toque. */
 #belFab.com-foto img{transform:scale(1.162);}
+/* A arte clara tem margem vazia menor (88,0% de conteudo contra 86,0%), entao
+   precisa crescer menos. Usar 1,162 nela faria o aro dourado transbordar. */
+#belFab.com-foto.foto-clara img{transform:scale(1.136);}
 #belFab .bel-fab-alerta{position:absolute;top:-2px;right:-2px;width:14px;height:14px;
   border-radius:50%;background:var(--red);border:2px solid var(--bg);display:none;}
 
@@ -2408,7 +2411,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260920_bel_flutuante";
+var APP_VERSION="20260920_bel_clara";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2780,6 +2783,8 @@ function aplicarTema(){
      anterior ate recarregar. */
   try{ hojeFundoAplicar(); }catch(e){}
   try{ belParedeAplicar(); }catch(e){}
+  /* Mesmo motivo: o icone flutuante da Bel tem uma arte por tema. */
+  try{ if(typeof belFabRender==="function") belFabRender(); }catch(e){}
 }
 /* Duas logos, uma por tema. A prateada some no branco e a grafite some no
    escuro — por isso existia aquele quadrado preto atras dela no tema claro,
@@ -4380,14 +4385,24 @@ function belFabFoto(){
   }catch(e){ return ""; }
 }
 function belFabMontar(f){
-  if(f.dataset.montado) return;
-  f.dataset.montado="1";
+  /* A trava guarda o TEMA, nao um "1". Quem troca de tema com o app aberto
+     precisa receber a outra arte; com trava booleana ficava com a do tema
+     anterior ate recarregar — o mesmo defeito que hojeFundoAplicar ja teve. */
+  var chave="escuro";
+  try{ if(_temaClaro()) chave="claro"; }catch(e){}
+  if(f.dataset.montado===chave) return;
+  f.dataset.montado=chave;
+  f.classList.remove("com-foto","foto-clara");
+  try{ var velha=f.querySelector("img"); if(velha) velha.remove(); }catch(e){}
   var img=document.createElement("img");
   img.alt="Bel";
   img.style.cssText="width:100%;height:100%;border-radius:50%;object-fit:cover;display:none";
   f.insertBefore(img,f.firstChild);
   var fila=[];
-  try{ fila=(BEL_FOTO&&BEL_FOTO.mini||[]).slice(); }catch(e){}
+  /* No claro a arte clara vem primeiro; a escura fica como rede de seguranca
+     no fim da fila, para o botao nunca ficar sem foto se o arquivo faltar. */
+  if(chave==="claro"){ try{ fila=fila.concat(BEL_FOTO_CLARA.mini||[]); }catch(e){} }
+  try{ fila=fila.concat((BEL_FOTO&&BEL_FOTO.mini)||[]); }catch(e){}
   try{ var r=_belReserva(); if(r) fila.push(r); }catch(e){}
   /* Cascata propria em vez de _imgTentar: a reserva embutida do app decodifica
      como 0x0 (medido em 20/09 — era ela que o icone estava exibindo, um
@@ -4401,6 +4416,11 @@ function belFabMontar(f){
     img.onload=function(){
       if(!img.naturalWidth||img.naturalWidth<8){ proximo(); return; }
       img.style.display=""; f.classList.add("com-foto");
+      /* A escala depende do ARQUIVO que carregou, nao do tema: no claro a
+         cascata pode cair na arte escura, e ai vale a escala dela.
+         Margem vazia medida em cada um — escura 86,0% de conteudo (escala
+         1,162), clara 88,0% (escala 1,136). */
+      f.classList.toggle("foto-clara", /IMG_8915/.test(url));
     };
     img.src=url;
   })();
@@ -9695,6 +9715,17 @@ var BEL_FOTO={
   grande:["bel-hero.jpg","download%20%2818%29.png"],
   mini  :["bel-avatar.jpg","download%20%2819%29.png"],
   parede:["bel-fundo.jpg","download%20%2820%29.png"]
+};
+/* Versao CLARA do avatar (20/09). O miolo do download (19) e escuro: sobre o
+   White Titanium ele vira um buraco preto dentro do aro. Medido no arquivo
+   novo: 500x500, cantos rgba(0,0,0,0), miolo (253,253,253).
+   Continua PNG e nao JPEG de proposito — o JPEG nao tem canal alfa, e sem
+   alfa os cantos transparentes virariam um quadrado, que e exatamente a
+   "marca" que acabamos de tirar.
+   Se a lista ficar vazia ou o arquivo faltar, a cascata cai na arte escura:
+   feia no claro, mas nunca um botao vazio. */
+var BEL_FOTO_CLARA={
+  mini:["IMG_8915-removebg-preview.png"]
 };
 /* O papel de parede segue o mesmo botao "Capa" das configuracoes. Motivo:
    quem desligou a capa fez isso para economizar dados ou por nao gostar de
