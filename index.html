@@ -1962,6 +1962,10 @@ html[data-theme="light"] .navfab:active{
    Sem veu, sem sobreposicao. Vale para os dois enquadramentos, porque o
    arranjo lado a lado nao depende da proporcao do arquivo.
    ================================================================== */
+/* A foto SANGRA na coluna da esquerda, de cima a baixo, como no desenho do
+   Felipe. Por isso padding 0 e gap 0 no cartao: quem afasta o texto da borda
+   e o padding do .bel-id, nao o do cartao. align-items:stretch faz a imagem
+   ocupar a altura inteira em vez de flutuar centralizada. */
 html[data-theme="light"] .bel-hero{
   background:var(--wt-sup)!important;
   border:1px solid var(--wt-borda);
@@ -1969,30 +1973,21 @@ html[data-theme="light"] .bel-hero{
   box-shadow:var(--wt-sombraMd);
   overflow:hidden;
   display:grid!important;
-  /* 38%, nao 42%: medido em viewport de 375 px, "Nutricionista IA" a
-     17 px quebrava em duas linhas com 42%. Com 38% sobra largura para
-     o cargo caber numa linha so nos celulares estreitos. */
-  grid-template-columns:38% 1fr;
-  align-items:center;
-  gap:14px;
+  grid-template-columns:44% 1fr;
+  align-items:stretch;
+  gap:0;
   min-height:0!important;
-  padding:14px;}
+  padding:0!important;}
 /* o veu era a muleta do tema escuro; aqui ele so sujaria o branco */
 html[data-theme="light"] .bel-hero::after{display:none!important}
 html[data-theme="light"] .bel-hero .bel-hero-img{
   position:static!important;inset:auto!important;
-  width:100%!important;height:auto!important;max-height:none!important;
-  aspect-ratio:1/1;object-fit:cover;object-position:center 16%;
-  border-radius:var(--wt-r-lg);}
-/* A arte clara ja e um retrato redondo com aro dourado desenhado. Aqui ela
-   nao pode ser recortada: `contain` mostra o circulo inteiro, e o raio do
-   cartao sai porque a moldura e a propria arte. Mesmo raciocinio do icone
-   flutuante — quem carrega a moldura e o arquivo, nao o CSS. */
-html[data-theme="light"] .bel-hero .bel-hero-img.bel-arte-clara{
-  object-fit:contain!important;object-position:center!important;
-  border-radius:0!important;background:transparent!important}
+  width:100%!important;height:100%!important;max-height:none!important;
+  min-height:230px;object-fit:cover;object-position:center 18%;
+  border-radius:0!important;}
 html[data-theme="light"] .bel-hero .bel-id{
-  grid-column:2!important;padding:0!important;text-align:left!important}
+  grid-column:2!important;align-self:center;
+  padding:18px 16px!important;text-align:left!important}
 html[data-theme="light"] .bel-desc{
   max-width:none!important;margin-inline:0!important}
 
@@ -2791,7 +2786,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260921_bel_completa";
+var APP_VERSION="20260921_bel_luz";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -3864,6 +3859,28 @@ function _imgTentar(el,lista,aoOk,aoFalhar){
     el.src=url;
   }
   proximo();
+}
+/* Sonda uma fila de URLs SEM tocar no elemento visivel, e devolve a primeira
+   que carregar de verdade. Existe porque `_imgTentar` usa o proprio elemento
+   da tela: se algo reatribuir o src dele no meio (troca de tema, por
+   exemplo), o carregamento em curso e ABORTADO e o abort chega como `error`
+   — a cascata entende que o arquivo falhou, pula o bom e desce ate a
+   reserva. Com um Image() por sondagem isso nao acontece.
+   Valida largura tambem: a reserva embutida do app decodifica pequena e um
+   `onload` cru a aceitaria. */
+function _belSondar(fila, aoOk, aoFalhar){
+  var i=0;
+  (function proximo(){
+    if(i>=fila.length){ if(aoFalhar) aoFalhar(); return; }
+    var url=fila[i++];
+    var p=new Image();
+    p.onerror=proximo;
+    p.onload=function(){
+      if(!p.naturalWidth || p.naturalWidth<8){ proximo(); return; }
+      if(aoOk) aoOk(url, p);
+    };
+    p.src=url;
+  })();
 }
 function hojeFundoAplicar(){
   try{
@@ -10131,13 +10148,22 @@ var BEL_FOTO={
    feia no claro, mas nunca um botao vazio. */
 var BEL_FOTO_CLARA={
   mini  :["IMG_8915-removebg-preview.png"],
-  /* O retrato do cabecalho no tema claro usa a MESMA arte do avatar. Motivo:
-     a foto grande (download (18)) tem fundo escuro e, num cartao branco,
-     vira um carimbo preto. Medido em 21/09 no navegador: 96x96 de fundo
-     #191609 no meio do branco. Ate existir uma foto grande com fundo claro,
-     o retrato redondo com aro dourado e a melhor peca que temos — e e a
-     mesma que ja aparece no icone flutuante, entao a tela ganha coerencia. */
-  grande:["IMG_8915-removebg-preview.png"]
+  /* RETRATO GRANDE DO CABECALHO — tema claro.
+     Eu tinha posto aqui a arte redonda do avatar como paliativo, porque a
+     foto grande atual (download (18)) tem fundo escuro e num cartao branco
+     vira um carimbo preto. O Felipe rejeitou o circulo em 21/09: o desenho
+     dele tem a Bel de corpo, retangular, ocupando a metade esquerda do
+     cartao, com fundo claro.
+     O arquivo abaixo foi composto a partir do PNG original que o Felipe
+     entregou ("Material - Better You (1).png", 2565x3206, fundo
+     transparente): a Bel recortada sobre um fundo quase branco com luz
+     quente atras dos ombros, como no desenho dele. 460x600, JPEG 86,
+     37 KB. A proporcao foi escolhida para casar com a caixa real medida
+     na tela (173x230): o `object-fit:cover` descarta 0 px na vertical e
+     3 px na horizontal, entao quase nada do arquivo e baixado a toa.
+     Se o arquivo faltar, a cascata cai na arte escura: feia no claro, mas
+     nunca um espaco vazio. */
+  grande:["bel-hero-clara.jpg"]
 };
 /* O papel de parede segue o mesmo botao "Capa" das configuracoes. Motivo:
    quem desligou a capa fez isso para economizar dados ou por nao gostar de
@@ -10186,15 +10212,23 @@ function belFotosAplicar(){
       try{ fila=fila.concat(BEL_FOTO[par[1]]||[]); }catch(e){}
       if(res) fila.push(res);
       el.classList.remove("bel-arte-clara");
-      _imgTentar(el,fila,
-        function(x){
-          /* A classe segue o ARQUIVO que carregou, nao o tema: no claro a
-             cascata pode cair na arte escura, e ai o enquadramento e o dela. */
-          var clara=/IMG_8915/.test(String(x.currentSrc||x.src||""));
-          x.classList.toggle("bel-arte-clara", clara);
-          if(par[0]==="belFoto" && !clara){ try{ _belEnquadrar(x); }catch(e){} }
-        },
-        function(){ el.style.display="none"; });
+      /* A SONDAGEM ACONTECE NUM ELEMENTO SEPARADO, nao neste.
+         Motivo, medido em 21/09: no boot a cascata comeca com o tema escuro;
+         quando aplicarTema() roda e remonta para o claro, atribuir src de
+         novo no MESMO elemento ABORTA o carregamento anterior — e o abort
+         dispara `error`. O onerror novo interpreta isso como "este arquivo
+         falhou", pula a IMG_8915 e desce a fila inteira ate a reserva
+         embutida de 420x420. Foi exatamente assim que o retrato virou um
+         quadrado morto. E o mesmo defeito que a logo teve em 13/09.
+         Com um Image() proprio por montagem, abortar a sondagem antiga nao
+         contamina a nova, e o elemento visivel so recebe src UMA vez. */
+      _belSondar(fila, function(url){
+        if(el.dataset.pronto!==chave) return;   /* trocou de tema no meio */
+        var clara=/IMG_8915/.test(url);
+        el.classList.toggle("bel-arte-clara", clara);
+        el.src=url; el.style.display="";
+        if(par[0]==="belFoto" && !clara){ try{ _belEnquadrar(el); }catch(e){} }
+      }, function(){ el.style.display="none"; });
     });
     belParedeAplicar();
   }catch(e){}
