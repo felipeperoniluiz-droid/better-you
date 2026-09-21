@@ -396,10 +396,21 @@ html[data-theme="light"] :is(.med,.m-med) svg{stroke-width:1.8!important}
 /* Texto de corpo: 15 px, entrelinha 1,5. */
 html[data-theme="light"] body{font-size:15px;line-height:1.5}
 
-/* "Nao cortar rotulos longos: permitir quebra e aumentar a altura." */
+/* "Nao cortar rotulos longos: permitir quebra e aumentar a altura."
+
+   CORRIGIDO EM 21/09: aqui estava `overflow-wrap:anywhere`, e foi o que
+   transformou "Analisar meu dia" em "Anali / sar / meu / dia".
+   Duas coisas que `anywhere` faz e `break-word` nao faz:
+   1. quebra a palavra em QUALQUER caractere, nao so quando ela nao cabe;
+   2. faz o navegador calcular a largura MINIMA do bloco como uma letra
+      unica — e e por isso que a coluna do texto encolheu ate sumir dentro
+      do cartao. O `anywhere` nao so permitia a quebra feia: ele a causava,
+      ao deixar o grid espremer a coluna.
+   `break-word` permite a quebra de palavra gigante sem mentir sobre a
+   largura minima. */
 html[data-theme="light"] :is(.m-rot,.sheet-item-tx,.bel-atalho,.h-cartao h2,
   .sheet-sub,.m-stat-num){white-space:normal!important;overflow:visible!important;
-  text-overflow:clip!important;overflow-wrap:anywhere}
+  text-overflow:clip!important;overflow-wrap:break-word;hyphens:auto}
 
 /* --- geometria da especificacao --- */
 html[data-theme="light"] :is(.card,.bel-painel,.auth-painel){border-radius:24px!important}
@@ -1308,7 +1319,7 @@ html[data-theme="light"] .input{
    a segunda linha com uma palavra so, orfa no meio da tela. */
 .m-nome{text-align:center;font-size:24px;font-weight:600;color:var(--m-txt);
   margin:14px 0 24px;line-height:1.25;letter-spacing:-.025em;
-  text-wrap:balance;overflow-wrap:anywhere;}
+  text-wrap:balance;overflow-wrap:break-word;}
 
 /* --- faixa das duas estatisticas --- */
 .m-faixa{display:flex;align-items:center;gap:12px;padding:10px 0 4px}
@@ -1316,7 +1327,7 @@ html[data-theme="light"] .input{
 .m-stat-rot{font-size:12px;font-weight:500;color:var(--m-txt2)}
 .m-stat-num{font-size:28px;font-weight:700;color:var(--m-txt);line-height:1.2;
   font-variant-numeric:tabular-nums;text-shadow:0 1px 0 rgb(0 0 0 / 55%);
-  overflow-wrap:anywhere;}
+  overflow-wrap:break-word;}
 .m-stat-sub{font-size:12px;font-weight:500;color:var(--m-txt2)}
 .m-stat+.m-foto-wrap{border-left:1px solid var(--m-bronze);border-right:1px solid var(--m-bronze);
   padding-inline:16px}
@@ -1351,7 +1362,7 @@ html[data-theme="light"] :is(.med,.m-med){
   box-shadow:inset 0 1px 0 #fff,0 2px 5px rgb(0 0 0 / 12%);color:#8a6a00}
 /* Rotulo longo quebra linha em vez de encolher ou cortar — em alemao
    "Meu relatorio semanal" nao cabe numa linha so. */
-.m-rot{flex:1;min-width:0;font-size:15px;font-weight:500;line-height:1.35;overflow-wrap:anywhere}
+.m-rot{flex:1;min-width:0;font-size:15px;font-weight:500;line-height:1.35;overflow-wrap:break-word}
 .m-seta{flex-shrink:0;width:16px;height:16px;color:var(--m-ouroTxt)}
 
 /* Os dois guardas vieram da referencia, e os dois valem:
@@ -1408,7 +1419,7 @@ html[data-theme="light"] .m-item{
              0 3px 8px rgb(0 0 0 / 45%);}
 #sheetBody .sheet-item:active{box-shadow:inset 0 2px 4px rgb(0 0 0 / 55%);transform:translateY(1px)}
 #sheetBody .sheet-item-tx{font-size:16px;font-weight:600;line-height:1.3}
-.sheet-sub{font-size:13px;font-weight:400;line-height:1.45;color:#C2BAA8;overflow-wrap:anywhere}
+.sheet-sub{font-size:13px;font-weight:400;line-height:1.45;color:#C2BAA8;overflow-wrap:break-word}
 .sheet-seta{flex-shrink:0;width:16px;height:16px;color:#F8D778;margin-left:auto}
 /* touch-action:none e obrigatorio: sem ele o navegador rola a pagina
    durante o arraste e o gesto nunca chega ao meu codigo.
@@ -1510,7 +1521,7 @@ html[data-theme="light"] #belParede{display:none}
 .bel-hero--quadrado .bel-desc{max-width:36ch;margin-inline:auto}
 .bel-nome{margin:0;font-size:30px;font-weight:600;line-height:1.15;color:var(--bel-txt)}
 .bel-cargo{margin:8px 0;color:var(--bel-ouroC);font-size:15px;font-weight:500}
-.bel-desc{margin:0;color:var(--bel-mudo);font-size:13px;overflow-wrap:anywhere}
+.bel-desc{margin:0;color:var(--bel-mudo);font-size:13px;overflow-wrap:break-word}
 
 .bel-corpo{padding:20px}
 .bel-status{display:flex;align-items:center;gap:8px;margin:0 0 20px;
@@ -1570,7 +1581,10 @@ html[data-theme="light"] #belParede{display:none}
 .bel-atalho{display:flex;align-items:center;gap:10px;min-width:0;min-height:64px;padding:12px;
   border:1px solid var(--bel-borda);border-radius:16px;background:var(--bel-ctrl);
   color:var(--bel-txt);text-align:left;font:inherit;font-size:14px;font-weight:500;
-  overflow-wrap:anywhere;cursor:pointer;
+  /* break-word, nao anywhere: `anywhere` faz o navegador tratar a largura
+     minima do botao como uma letra, o grid espreme a coluna e "Analisar meu
+     dia" sai como "Anali/sar/meu/dia". Medido em 21/09. */
+  overflow-wrap:break-word;cursor:pointer;
   box-shadow:inset 0 1px 0 rgb(255 236 178 / 8%),0 2px 6px rgb(0 0 0 / 35%)}
 .bel-atalho:active{box-shadow:inset 0 2px 4px rgb(0 0 0 / 55%);transform:translateY(1px)}
 .bel-atalho .med{flex:0 0 40px}
@@ -1832,6 +1846,62 @@ html[data-theme="light"] .macro-bar-bg{background:#F1EFEA!important}
 html[data-theme="light"] #tab-hoje .card-title{
   color:var(--wt-txt)!important;font-size:17px!important;font-weight:600!important}
 
+/* --- cartoes laterais do anel (21/09) ---
+   Existem so no tema claro. No escuro a informacao continua na linha
+   #calStatus embaixo do anel, que e o desenho de la. */
+.h-lado{display:none}
+html[data-theme="light"] .calorie-ring-wrap{
+  display:grid!important;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:10px;
+  /* o anel fica na coluna do meio; a linha de status ocupa a largura toda
+     logo abaixo, e no claro ela some porque os cartoes ja dizem o mesmo */
+  grid-template-areas:"esq anel dir" "st st st";}
+html[data-theme="light"] .calorie-ring-wrap>.h-gauge{grid-area:anel}
+html[data-theme="light"] .h-lado-esq{grid-area:esq}
+html[data-theme="light"] .h-lado-dir{grid-area:dir}
+/* A linha de status NAO some com display:none. Os dois cartoes laterais sao
+   aria-hidden (sao enfeite visual, e ler "Meta diaria 3295 kcal Faltam 3295
+   kcal" em cartoes soltos confunde). Se eu escondesse a linha com
+   display:none, ela sairia tambem da arvore de acessibilidade e o tema claro
+   ficaria sem NENHUMA leitura de quanto falta. Some do olho, fica no leitor. */
+html[data-theme="light"] .calorie-remaining{
+  grid-area:st;
+  position:absolute!important;width:1px!important;height:1px!important;
+  padding:0!important;margin:-1px!important;overflow:hidden!important;
+  clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
+html[data-theme="light"] .h-lado{
+  display:flex!important;flex-direction:column;align-items:center;gap:2px;
+  padding:14px 8px;border-radius:var(--wt-r-lg);
+  background:var(--wt-sup);border:1px solid var(--wt-borda);
+  box-shadow:var(--wt-sombraSm);}
+html[data-theme="light"] .h-lado .med{
+  width:34px;height:34px;flex:0 0 34px;margin-bottom:4px}
+html[data-theme="light"] .h-lado .med svg{width:18px;height:18px}
+html[data-theme="light"] .h-lado-rot{
+  font-size:13px;line-height:1.25;color:var(--wt-txt2);text-align:center}
+html[data-theme="light"] .h-lado-num{
+  font-size:22px;font-weight:800;color:var(--wt-txt);line-height:1.15}
+html[data-theme="light"] .h-lado-un{font-size:12px;color:var(--wt-txt3)}
+/* Passou da meta: o numero vira alerta. #DC2626 da 4,83:1 sobre branco. */
+html[data-theme="light"] .h-lado-acima .h-lado-num{color:var(--wt-vermelho)}
+/* O cartao do anel deixa de ser cartao: no desenho o anel fica solto sobre
+   o fundo da pagina, com os dois cartoes ao lado. */
+html[data-theme="light"] #tab-hoje .h-hero>.card{
+  background:transparent!important;border:none!important;box-shadow:none!important;
+  padding-left:0!important;padding-right:0!important}
+
+/* --- legenda de meta sob cada barra de macro --- */
+.macro-meta{font-size:12px;color:var(--text3);margin-top:5px}
+html[data-theme="light"] .macro-meta{color:var(--wt-txt2)!important}  /* 4,76:1 */
+
+/* --- anel mais grosso, com bisel branco elevado --- */
+html[data-theme="light"] .h-track{stroke-width:13!important}
+html[data-theme="light"] #calRingFill{stroke-width:13!important}
+html[data-theme="light"] .h-rim-out{stroke-width:9!important}
+html[data-theme="light"] .h-rim-in{stroke-width:4!important}
+
 /* ==================================================================
    MEDALHOES — UM PADRAO SO (20/09/2026)
    O que estava errado: .med-azul, .med-verde e .med-vermelho trocavam
@@ -1848,14 +1918,18 @@ html[data-theme="light"] #tab-hoje .card-title{
    conta porque ali a cor e aviso de acao destrutiva, nao enfeite; se
    ele preferir, e uma linha para tirar. Verde marca estado ligado.
    ================================================================== */
-html[data-theme="light"] :is(.med,.m-med){
+/* O icone dos avisos (.weekly-notice__icon) entra AQUI, na mesma regra, e
+   nao numa copia: ele tinha background:#303344 e color:#aaa6ff fixos do tema
+   escuro, e por isso aparecia lilas no meio da tela clara. Na mesma regra,
+   ele nao tem como sair de sincronia com o resto depois. */
+html[data-theme="light"] :is(.med,.m-med,.weekly-notice__icon){
   background:radial-gradient(120% 120% at 50% 18%,#FFFDF7 0%,#FEF3DC 72%)!important;
   border:2px solid #F6B24A!important;
   box-shadow:0 0 0 4px rgb(245 158 11/7%),
              0 2px 6px rgb(15 23 42/6%)!important;
   color:var(--wt-ouroTxt)!important;}          /* #B45309 — 5,02:1 */
 /* A sombra escura do icone vinha do tema escuro e sobre creme vira sujeira. */
-html[data-theme="light"] :is(.med,.m-med) svg{filter:none!important}
+html[data-theme="light"] :is(.med,.m-med,.weekly-notice__icon) svg{filter:none!important}
 
 /* As variantes param de repintar o circulo: so trocam a cor do icone. */
 html[data-theme="light"] :is(.med-azul,.m-med-azul)    {color:#2563EB!important} /* agua */
@@ -1873,6 +1947,161 @@ html[data-theme="light"] .navfab:active{
   box-shadow:0 2px 6px rgb(180 83 9/30%),
              inset 0 2px 6px rgb(120 53 15/20%)!important;
   transform:translateY(1px)}
+
+/* ==================================================================
+   TELA DA BEL — tema claro (21/09/2026)
+
+   O DEFEITO: no enquadramento `--largo` a foto e
+   `position:absolute; inset:0` e cobre o bloco inteiro, e a leitura do
+   texto dependia de um veu escuro (`::after`) que so faz sentido no tema
+   escuro. No claro o texto ficou grafite EM CIMA da foto escura, e a
+   linha "Responde em segundos" caiu para fora do cartao.
+
+   A CORRECAO: no claro a foto volta para o fluxo, ocupa a coluna da
+   esquerda com cantos proprios, e o texto fica na direita sobre o branco.
+   Sem veu, sem sobreposicao. Vale para os dois enquadramentos, porque o
+   arranjo lado a lado nao depende da proporcao do arquivo.
+   ================================================================== */
+html[data-theme="light"] .bel-hero{
+  background:var(--wt-sup)!important;
+  border:1px solid var(--wt-borda);
+  border-radius:var(--wt-r-xl);
+  box-shadow:var(--wt-sombraMd);
+  overflow:hidden;
+  display:grid!important;
+  /* 38%, nao 42%: medido em viewport de 375 px, "Nutricionista IA" a
+     17 px quebrava em duas linhas com 42%. Com 38% sobra largura para
+     o cargo caber numa linha so nos celulares estreitos. */
+  grid-template-columns:38% 1fr;
+  align-items:center;
+  gap:14px;
+  min-height:0!important;
+  padding:14px;}
+/* o veu era a muleta do tema escuro; aqui ele so sujaria o branco */
+html[data-theme="light"] .bel-hero::after{display:none!important}
+html[data-theme="light"] .bel-hero .bel-hero-img{
+  position:static!important;inset:auto!important;
+  width:100%!important;height:auto!important;max-height:none!important;
+  aspect-ratio:1/1;object-fit:cover;object-position:center 16%;
+  border-radius:var(--wt-r-lg);}
+/* A arte clara ja e um retrato redondo com aro dourado desenhado. Aqui ela
+   nao pode ser recortada: `contain` mostra o circulo inteiro, e o raio do
+   cartao sai porque a moldura e a propria arte. Mesmo raciocinio do icone
+   flutuante — quem carrega a moldura e o arquivo, nao o CSS. */
+html[data-theme="light"] .bel-hero .bel-hero-img.bel-arte-clara{
+  object-fit:contain!important;object-position:center!important;
+  border-radius:0!important;background:transparent!important}
+html[data-theme="light"] .bel-hero .bel-id{
+  grid-column:2!important;padding:0!important;text-align:left!important}
+html[data-theme="light"] .bel-desc{
+  max-width:none!important;margin-inline:0!important}
+
+html[data-theme="light"] .bel-nome{
+  color:var(--wt-txt)!important;font-size:28px;font-weight:700}
+html[data-theme="light"] .bel-cargo{
+  color:var(--wt-txt2)!important;font-size:17px;font-weight:500;margin:2px 0 8px}
+html[data-theme="light"] .bel-desc{
+  color:var(--wt-txt2)!important;font-size:14px;line-height:1.4}
+/* "Responde em segundos" nao e um paragrafo solto: encosta no retrato, com
+   fio em cima, e le como rodape do mesmo bloco. */
+html[data-theme="light"] .bel-status{
+  color:var(--wt-verde)!important;font-size:13px;
+  margin:10px 0 18px!important;padding-top:12px;
+  border-top:1px solid var(--wt-borda)}
+html[data-theme="light"] .bel-status-ponto{box-shadow:none!important}
+
+/* --- avisos do topo (analise da semana e recado da Bel) --- */
+html[data-theme="light"] .weekly-notice{
+  background:var(--wt-sup)!important;
+  border:1px solid var(--wt-borda)!important;
+  border-radius:var(--wt-r-xl)!important;
+  box-shadow:var(--wt-sombraMd)!important;
+  max-width:none!important;}
+html[data-theme="light"] .weekly-notice__title{color:var(--wt-txt)!important}
+html[data-theme="light"] :is(.weekly-notice__description,.weekly-notice__arrow){
+  color:var(--wt-txt2)!important}
+/* o ponto de nao-lido era lilas #9995ff; vira o alerta da folha */
+html[data-theme="light"] .weekly-notice__dot{
+  background:var(--wt-vermelhoIc)!important;border-color:#fff!important}
+html[data-theme="light"] .weekly-notice__cta{
+  background:linear-gradient(180deg,#FBBF24 0%,#F59E0B 100%)!important;
+  color:#0F172A!important;box-shadow:var(--wt-sombraSm)}
+html[data-theme="light"] .weekly-notice--bel{
+  background:var(--wt-sup)!important;border-color:var(--wt-borda)!important}
+/* Os estados tambem eram do tema escuro: hover #2c2e3d, foco #9995ff.
+   Sem estes, o cartao ficaria sem nenhuma resposta ao toque no claro —
+   minha regra base, por ser mais especifica, engoliria o hover original. */
+@media (hover:hover){
+  html[data-theme="light"] .weekly-notice:hover{
+    background:var(--wt-sup2)!important;border-color:#F6B24A!important;
+    box-shadow:var(--wt-sombraLg)!important}
+}
+html[data-theme="light"] .weekly-notice:active{
+  background:var(--wt-sup2)!important;box-shadow:var(--wt-pressionado)!important;
+  transform:translateY(1px)}
+html[data-theme="light"] .weekly-notice:focus-visible{
+  outline:2px solid var(--wt-ouroTxt)!important;outline-offset:3px}
+
+/* --- PADDING TRIPLICADO NO PAINEL DA BEL (medido em 21/09) ---
+   Quatro conteineres aninhados somavam 154 px de recuo horizontal:
+     #content 16/16 · #tab-dieta 20/20 · .bel-painel 20/20 · .bel-corpo 20/20
+   Num aparelho de 424 px isso deixava a grade dos atalhos com 268 px, cada
+   cartao com 128, e SOBRAVAM 29 px para o texto — menos que a largura de
+   uma unica palavra ("personalizadas" mede 111 px). Era por isso que o
+   rotulo quebrava letra a letra: nao era so o overflow-wrap, era nao haver
+   espaco. Aqui fica UM nivel de respiro; os demais zeram no horizontal e
+   mantem o vertical. */
+html[data-theme="light"] #tab-dieta{padding-left:0!important;padding-right:0!important}
+html[data-theme="light"] .bel-corpo{padding-left:0!important;padding-right:0!important}
+/* O painel perde recuo, borda e fundo proprios: no desenho do Felipe os
+   cartoes flutuam sobre o fundo da pagina, nao dentro de uma caixa. E e
+   isso que devolve os 19 px por cartao que faltavam para o rotulo caber
+   em duas linhas — medido: cartao de 176 para 189 px. */
+html[data-theme="light"] .bel-painel{
+  padding-left:0!important;padding-right:0!important;
+  border-left:none!important;border-right:none!important;
+  background:transparent!important;box-shadow:none!important}
+
+/* --- atalhos da Bel: medalhao · rotulo em duas linhas · seta dourada ---
+   O rotulo ganha flex:1 e min-width:0 para ocupar o que sobra sem empurrar
+   a seta para fora. A seta e ::after: nao existe no HTML e nao vale mexer
+   no JS que monta os botoes so para desenhar um chevron. */
+html[data-theme="light"] .bel-atalhos{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;
+  /* fileiras de altura igual: sem isto a segunda linha fica mais baixa que a
+     primeira quando os rotulos tem tamanhos diferentes */
+  grid-auto-rows:1fr!important}
+html[data-theme="light"] .bel-atalho{
+  background:var(--wt-sup)!important;
+  border:1px solid var(--wt-borda)!important;
+  border-radius:var(--wt-r-lg)!important;
+  box-shadow:var(--wt-sombraSm)!important;
+  color:var(--wt-txt)!important;
+  display:flex!important;align-items:center;gap:8px;
+  padding:12px 8px 12px 10px!important;min-height:64px;
+  font-size:15px!important;font-weight:600!important;line-height:1.3!important;}
+html[data-theme="light"] .bel-atalho .med{
+  flex:0 0 38px!important;width:38px!important;height:38px!important}
+html[data-theme="light"] .bel-atalho .med svg{width:19px;height:19px}
+/* a seta: quadrado com duas bordas, girado — nao precisa de arquivo nem de
+   fonte de icones, e acompanha a cor do texto dourado. */
+html[data-theme="light"] .bel-atalho::after{
+  content:"";flex:0 0 auto;margin-left:auto;
+  width:7px;height:7px;border-right:2px solid;border-top:2px solid;
+  border-color:var(--wt-ouroTxt);transform:rotate(45deg)}
+
+/* --- campo de pergunta e botao de enviar --- */
+html[data-theme="light"] .bel-linha-envio input,
+html[data-theme="light"] #nutriInput{
+  background:var(--wt-sup2)!important;border:1px solid var(--wt-borda)!important;
+  color:var(--wt-txt)!important;border-radius:var(--wt-r-xl)!important}
+html[data-theme="light"] :is(.bel-linha-envio input,#nutriInput)::placeholder{
+  color:var(--wt-txt2)!important}
+
+/* --- titulo de secao, como "PLANO ALIMENTAR" --- */
+html[data-theme="light"] :is(.bel-ctx-tit,.bel-sec-tit){
+  color:var(--wt-txt2)!important;font-size:13px!important;font-weight:600!important;
+  letter-spacing:.08em!important}
 
 </style>
 </head>
@@ -2011,6 +2240,28 @@ if(_al){
           </div>
         </div>
         <div class="calorie-remaining" id="calStatus">Meta: <b id="calGoalText" style="color:#f0b429;">3000</b> kcal</div>
+        <!-- Cards laterais do anel (21/09). No desenho do Felipe a meta e o
+             que falta sao dois cartoes que ladeiam o anel, nao uma linha de
+             texto embaixo. A linha #calStatus continua existindo e sendo
+             preenchida: ela e a versao do tema escuro e o texto que o leitor
+             de tela anuncia. No claro ela some e estes dois aparecem. -->
+        <div class="h-lado h-lado-esq" aria-hidden="true">
+          <span class="med"><svg viewBox="0 0 24 24" width="20" height="20"><use href="#i-flame"/></svg></span>
+          <span class="h-lado-rot" id="hojeMetaRot">Meta diária</span>
+          <span class="h-lado-num" id="hojeMetaNum">0</span>
+          <span class="h-lado-un">kcal</span>
+        </div>
+        <div class="h-lado h-lado-dir" aria-hidden="true">
+          <!-- barras desenhadas aqui mesmo: o app so tem 8 simbolos e nenhum
+               e de grafico. Apontar para um #i-barras inexistente daria um
+               quadrado vazio, sem erro nenhum no console. -->
+          <span class="med"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"
+            stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <path d="M6 18V13"/><path d="M12 18V7"/><path d="M18 18v-8"/></svg></span>
+          <span class="h-lado-rot" id="hojeFaltamRot">Faltam</span>
+          <span class="h-lado-num" id="hojeFaltamNum">0</span>
+          <span class="h-lado-un">kcal</span>
+        </div>
       </div>
     </div>
   </div>
@@ -2022,9 +2273,9 @@ if(_al){
        branco. Fora, os dois temas ganham — o escuro ja tratava a faixa
        como bloco proprio, com fio em cima e embaixo. -->
       <div class="macro-row">
-        <div><div class="h-macro-top"><svg class="h-ico" style="color:#60a5fa" aria-hidden="true"><use href="#i-biceps"/></svg><div class="macro-label" id="macro-prot-label">Proteina</div></div><div class="macro-val" style="color:#60a5fa" id="macroProtVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#60a5fa;width:0%" id="macroProtBar"></div></div></div>
-        <div><div class="h-macro-top"><svg class="h-ico" style="color:#e8834a" aria-hidden="true"><use href="#i-espiga"/></svg><div class="macro-label" id="macro-carb-label">Carbo</div></div><div class="macro-val" style="color:#e8834a" id="macroCarbVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#e8834a;width:0%" id="macroCarbBar"></div></div></div>
-        <div><div class="h-macro-top"><svg class="h-ico" style="color:#34d399" aria-hidden="true"><use href="#i-drop"/></svg><div class="macro-label" id="macro-fat-label">Gordura</div></div><div class="macro-val" style="color:#34d399" id="macroFatVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#34d399;width:0%" id="macroFatBar"></div></div></div>
+        <div><div class="h-macro-top"><svg class="h-ico" style="color:#60a5fa" aria-hidden="true"><use href="#i-biceps"/></svg><div class="macro-label" id="macro-prot-label">Proteina</div></div><div class="macro-val" style="color:#60a5fa" id="macroProtVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#60a5fa;width:0%" id="macroProtBar"></div></div><div class="macro-meta" id="macroProtMeta"></div></div>
+        <div><div class="h-macro-top"><svg class="h-ico" style="color:#e8834a" aria-hidden="true"><use href="#i-espiga"/></svg><div class="macro-label" id="macro-carb-label">Carbo</div></div><div class="macro-val" style="color:#e8834a" id="macroCarbVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#e8834a;width:0%" id="macroCarbBar"></div></div><div class="macro-meta" id="macroCarbMeta"></div></div>
+        <div><div class="h-macro-top"><svg class="h-ico" style="color:#34d399" aria-hidden="true"><use href="#i-drop"/></svg><div class="macro-label" id="macro-fat-label">Gordura</div></div><div class="macro-val" style="color:#34d399" id="macroFatVal">0g</div><div class="macro-bar-bg"><div class="macro-bar-fill" style="background:#34d399;width:0%" id="macroFatBar"></div></div><div class="macro-meta" id="macroFatMeta"></div></div>
       </div>
 
   <div id="alertsBox" style="display:none;margin-bottom:12px;"></div>
@@ -2540,7 +2791,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260920_medalhoes";
+var APP_VERSION="20260921_bel_completa";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -2572,7 +2823,7 @@ pt:{'navNut':'Nut','conexoesTitulo':'Dispositivos','temaTitulo':'Tema','temaClar
   cafeManha:'Café da manhã',almoco:'Almoço',lanche:'Lanche',jantar:'Jantar',
   nenhumAlimento:'Nenhum alimento',addFood:'+ Adicionar Alimento',
   refRapidas:'REFEIÇÕES RÁPIDAS',aguaHoje:'ÁGUA HOJE',
-  faltam:'Faltam',acimaMeta:'acima da meta',metaAtingida:'Meta atingida!',
+  faltam:'Faltam',metaCurta:'Meta',acimaCurta:'Acima',acimaMeta:'acima da meta',metaAtingida:'Meta atingida!',
   meta:'Meta',buscar:'Buscar alimento...',gramas:'Gramas (g)',adicionar:'Adicionar',
   aplicarMeta:'Aplicar esta meta',removido:'Removido',
   pesoRegistrado:'Peso registrado!',pesoInvalido:'Peso invalido',
@@ -2628,7 +2879,7 @@ en:{'navNut':'Nut','conexoesTitulo':'Devices','temaTitulo':'Theme','temaClaro':'
   cafeManha:'Breakfast',almoco:'Lunch',lanche:'Snack',jantar:'Dinner',
   nenhumAlimento:'No food logged',addFood:'+ Add Food',
   refRapidas:'QUICK MEALS',aguaHoje:'WATER TODAY',
-  faltam:'Remaining',acimaMeta:'above goal',metaAtingida:'Goal reached!',
+  faltam:'Remaining',metaCurta:'Goal',acimaCurta:'Over',acimaMeta:'above goal',metaAtingida:'Goal reached!',
   meta:'Goal',buscar:'Search food...',gramas:'Grams (g)',adicionar:'Add',
   aplicarMeta:'Apply this goal',removido:'Removed',
   pesoRegistrado:'Weight logged!',pesoInvalido:'Invalid weight',
@@ -2682,7 +2933,7 @@ es:{'navNut':'Nut','conexoesTitulo':'Dispositivos','temaTitulo':'Tema','temaClar
   cafeManha:'Desayuno',almoco:'Almuerzo',lanche:'Merienda',jantar:'Cena',
   nenhumAlimento:'Sin alimentos',addFood:'+ Agregar Alimento',
   refRapidas:'COMIDAS RÁPIDAS',aguaHoje:'AGUA HOY',
-  faltam:'Faltan',acimaMeta:'sobre la meta',metaAtingida:'Meta alcanzada!',
+  faltam:'Faltan',metaCurta:'Meta',acimaCurta:'Por encima',acimaMeta:'sobre la meta',metaAtingida:'Meta alcanzada!',
   meta:'Meta',buscar:'Buscar alimento...',gramas:'Gramos (g)',adicionar:'Agregar',
   aplicarMeta:'Aplicar esta meta',removido:'Eliminado',
   pesoRegistrado:'Peso registrado!',pesoInvalido:'Peso inválido',
@@ -2736,7 +2987,7 @@ it:{'navNut':'Nut','conexoesTitulo':'Dispositivi','temaTitulo':'Tema','temaClaro
   cafeManha:'Colazione',almoco:'Pranzo',lanche:'Spuntino',jantar:'Cena',
   nenhumAlimento:'Nessun alimento',addFood:'+ Aggiungi Alimento',
   refRapidas:'PASTI VELOCI',aguaHoje:'ACQUA OGGI',
-  faltam:'Mancano',acimaMeta:'sopra l\'obiettivo',metaAtingida:'Obiettivo raggiunto!',
+  faltam:'Mancano',metaCurta:'Obiettivo',acimaCurta:'Sopra',acimaMeta:'sopra l\'obiettivo',metaAtingida:'Obiettivo raggiunto!',
   meta:'Obiettivo',buscar:'Cerca alimento...',gramas:'Grammi (g)',adicionar:'Aggiungi',
   aplicarMeta:'Applica questo obiettivo',removido:'Rimosso',
   pesoRegistrado:'Peso registrato!',pesoInvalido:'Peso non valido',
@@ -2790,7 +3041,7 @@ fr:{'navNut':'Nut','conexoesTitulo':'Appareils','temaTitulo':'Thème','temaClaro
   cafeManha:'Petit-déjeuner',almoco:'Déjeuner',lanche:'Collation',jantar:'Dîner',
   nenhumAlimento:'Aucun aliment',addFood:'+ Ajouter Aliment',
   refRapidas:'REPAS RAPIDES',aguaHoje:'EAU AUJOURD\'HUI',
-  faltam:'Il manque',acimaMeta:'au-dessus de l\'objectif',metaAtingida:'Objectif atteint!',
+  faltam:'Il manque',metaCurta:'Objectif',acimaCurta:'Au-dessus',acimaMeta:'au-dessus de l\'objectif',metaAtingida:'Objectif atteint!',
   meta:'Objectif',buscar:'Rechercher aliment...',gramas:'Grammes (g)',adicionar:'Ajouter',
   aplicarMeta:'Appliquer cet objectif',removido:'Supprimé',
   pesoRegistrado:'Poids enregistré!',pesoInvalido:'Poids invalide',
@@ -2844,7 +3095,7 @@ de:{'navNut':'Nut','conexoesTitulo':'Geräte','temaTitulo':'Design','temaClaro':
   cafeManha:'Frühstück',almoco:'Mittagessen',lanche:'Snack',jantar:'Abendessen',
   nenhumAlimento:'Kein Lebensmittel',addFood:'+ Lebensmittel hinzufügen',
   refRapidas:'SCHNELLE MAHLZEITEN',aguaHoje:'WASSER HEUTE',
-  faltam:'Fehlen noch',acimaMeta:'über dem Ziel',metaAtingida:'Ziel erreicht!',
+  faltam:'Fehlen noch',metaCurta:'Ziel',acimaCurta:'Darüber',acimaMeta:'über dem Ziel',metaAtingida:'Ziel erreicht!',
   meta:'Ziel',buscar:'Lebensmittel suchen...',gramas:'Gramm (g)',adicionar:'Hinzufügen',
   aplicarMeta:'Dieses Ziel anwenden',removido:'Entfernt',
   pesoRegistrado:'Gewicht gespeichert!',pesoInvalido:'Ungültiges Gewicht',
@@ -2912,8 +3163,9 @@ function aplicarTema(){
      anterior ate recarregar. */
   try{ hojeFundoAplicar(); }catch(e){}
   try{ belParedeAplicar(); }catch(e){}
-  /* Mesmo motivo: o icone flutuante da Bel tem uma arte por tema. */
+  /* Mesmo motivo: o icone flutuante e o retrato da Bel tem arte por tema. */
   try{ if(typeof belFabRender==="function") belFabRender(); }catch(e){}
+  try{ if(typeof belFotosAplicar==="function") belFotosAplicar(); }catch(e){}
 }
 /* Duas logos, uma por tema. A prateada some no branco e a grafite some no
    escuro — por isso existia aquele quadrado preto atras dela no tema claro,
@@ -3663,6 +3915,30 @@ function renderToday(){
   document.getElementById("macroProtBar").style.width=Math.min(100,t.prot/g.prot*100)+"%";
   document.getElementById("macroCarbBar").style.width=Math.min(100,t.carb/g.carb*100)+"%";
   document.getElementById("macroFatBar").style.width=Math.min(100,t.fat/g.fat*100)+"%";
+  /* Legendas de meta e cartoes laterais do anel (21/09).
+     Tudo dentro de try: sao enfeites da tela nova, e um id que falte por
+     qualquer motivo nao pode derrubar o resto do renderToday() — o que vem
+     depois daqui e refeicoes, agua e score, que sao o conteudo de verdade. */
+  try{
+    var _mt=(T[currentLang]&&T[currentLang].metaCurta)||"Meta";
+    var _pm=document.getElementById("macroProtMeta"); if(_pm) _pm.textContent=_mt+" "+g.prot+"g";
+    var _cm=document.getElementById("macroCarbMeta"); if(_cm) _cm.textContent=_mt+" "+g.carb+"g";
+    var _fm=document.getElementById("macroFatMeta");  if(_fm) _fm.textContent=_mt+" "+g.fat+"g";
+
+    var _mn=document.getElementById("hojeMetaNum");   if(_mn) _mn.textContent=state.calGoal;
+    var _fn=document.getElementById("hojeFaltamNum");
+    /* Passou da meta: o cartao passa a dizer "Acima" e mostra quanto, em vez
+       de um numero negativo solto que nao se explica. */
+    if(_fn) _fn.textContent=(rem>0?rem:Math.abs(rem));
+    var _fr=document.getElementById("hojeFaltamRot");
+    if(_fr) _fr.textContent=(rem>=0
+      ? ((T[currentLang]&&T[currentLang].faltam)||"Faltam")
+      : ((T[currentLang]&&T[currentLang].acimaCurta)||"Acima"));
+    var _mr=document.getElementById("hojeMetaRot");
+    if(_mr) _mr.textContent=(T[currentLang]&&T[currentLang].metaDiaria)||"Meta diária";
+    var _ld=document.querySelector(".h-lado-dir");
+    if(_ld) _ld.classList.toggle("h-lado-acima", rem<0);
+  }catch(e){}
   renderMeals();
   var wp=Math.min(100,state.waterMl/state.waterGoal*100);
   document.getElementById("waterSummaryVal").textContent=state.waterMl;
@@ -9854,7 +10130,14 @@ var BEL_FOTO={
    Se a lista ficar vazia ou o arquivo faltar, a cascata cai na arte escura:
    feia no claro, mas nunca um botao vazio. */
 var BEL_FOTO_CLARA={
-  mini:["IMG_8915-removebg-preview.png"]
+  mini  :["IMG_8915-removebg-preview.png"],
+  /* O retrato do cabecalho no tema claro usa a MESMA arte do avatar. Motivo:
+     a foto grande (download (18)) tem fundo escuro e, num cartao branco,
+     vira um carimbo preto. Medido em 21/09 no navegador: 96x96 de fundo
+     #191609 no meio do branco. Ate existir uma foto grande com fundo claro,
+     o retrato redondo com aro dourado e a melhor peca que temos — e e a
+     mesma que ja aparece no icone flutuante, entao a tela ganha coerencia. */
+  grande:["IMG_8915-removebg-preview.png"]
 };
 /* O papel de parede segue o mesmo botao "Capa" das configuracoes. Motivo:
    quem desligou a capa fez isso para economizar dados ou por nao gostar de
@@ -9887,13 +10170,30 @@ function _belReserva(){
 function belFotosAplicar(){
   try{
     var res=_belReserva();
-    [["belFoto",BEL_FOTO.grande],["belMini",BEL_FOTO.mini]].forEach(function(par){
-      var el=document.getElementById(par[0]); if(!el||el.dataset.pronto) return;
-      el.dataset.pronto="1";
-      /* A reserva embutida entra no fim da fila, como ultimo recurso. */
-      var fila=par[1].slice(); if(res) fila.push(res);
+    /* A trava guarda o TEMA, nao um "1" — mesma correcao do icone flutuante.
+       Com booleano, quem trocasse de tema com o app aberto ficaria com a arte
+       do tema anterior ate recarregar. */
+    var chave="escuro";
+    try{ if(_temaClaro()) chave="claro"; }catch(e){}
+    [["belFoto","grande"],["belMini","mini"]].forEach(function(par){
+      var el=document.getElementById(par[0]); if(!el) return;
+      if(el.dataset.pronto===chave) return;
+      el.dataset.pronto=chave;
+      var fila=[];
+      /* No claro a arte clara vem primeiro. A escura fica no fim como rede de
+         seguranca: se o arquivo faltar, fica feio, nunca vazio. */
+      if(chave==="claro"){ try{ fila=fila.concat(BEL_FOTO_CLARA[par[1]]||[]); }catch(e){} }
+      try{ fila=fila.concat(BEL_FOTO[par[1]]||[]); }catch(e){}
+      if(res) fila.push(res);
+      el.classList.remove("bel-arte-clara");
       _imgTentar(el,fila,
-        par[0]==="belFoto"?_belEnquadrar:null,
+        function(x){
+          /* A classe segue o ARQUIVO que carregou, nao o tema: no claro a
+             cascata pode cair na arte escura, e ai o enquadramento e o dela. */
+          var clara=/IMG_8915/.test(String(x.currentSrc||x.src||""));
+          x.classList.toggle("bel-arte-clara", clara);
+          if(par[0]==="belFoto" && !clara){ try{ _belEnquadrar(x); }catch(e){} }
+        },
         function(){ el.style.display="none"; });
     });
     belParedeAplicar();
