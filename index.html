@@ -2786,7 +2786,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260921_bel_ordem";
+var APP_VERSION="20260921_bel_luz3";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -10163,7 +10163,10 @@ var BEL_FOTO_CLARA={
      3 px na horizontal, entao quase nada do arquivo e baixado a toa.
      Se o arquivo faltar, a cascata cai na arte escura: feia no claro, mas
      nunca um espaco vazio. */
-  grande:["bel-hero-clara.jpg"]
+  /* O ?v= nao e enfeite: o arquivo manteve o nome entre versoes, e sem
+     isso o service worker e o CDN entregariam a imagem antiga. Subir
+     foto nova com nome velho sem trocar este numero = ninguem ve. */
+  grande:["bel-hero-clara.jpg?v=2"]
 };
 /* As listas acabaram de existir. O aplicarTema() ja tentou la no boot e saiu
    pela guarda de ordem, entao esta e a chamada que de fato monta as fotos. */
