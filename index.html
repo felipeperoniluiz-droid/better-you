@@ -2786,7 +2786,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260921_bel_luz2";
+var APP_VERSION="20260921_bel_ordem";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
@@ -10165,6 +10165,9 @@ var BEL_FOTO_CLARA={
      nunca um espaco vazio. */
   grande:["bel-hero-clara.jpg"]
 };
+/* As listas acabaram de existir. O aplicarTema() ja tentou la no boot e saiu
+   pela guarda de ordem, entao esta e a chamada que de fato monta as fotos. */
+try{ belFotosAplicar(); }catch(e){}
 /* O papel de parede segue o mesmo botao "Capa" das configuracoes. Motivo:
    quem desligou a capa fez isso para economizar dados ou por nao gostar de
    foto atras do conteudo — receber outra imagem grande em outra tela seria
@@ -10195,6 +10198,16 @@ function _belReserva(){
 }
 function belFotosAplicar(){
   try{
+    /* GUARDA DE ORDEM (21/09). As listas BEL_FOTO e BEL_FOTO_CLARA sao `var`
+       atribuidas ~7 mil linhas ABAIXO desta funcao. O aplicarTema() chama
+       isto no boot, e nesse instante as duas ainda valem `undefined`: os
+       try/catch abaixo engoliam o erro, a fila ficava so com a reserva
+       embutida, e como a trava `dataset.pronto` ja tinha sido marcada o
+       retrato ficava presa no quadrado morto de 420x420 PARA SEMPRE.
+       Sair aqui, sem marcar trava, deixa a proxima chamada resolver.
+       Medido no app publicado: boot falhava sempre, chamada manual depois
+       do boot funcionava sempre — a diferenca era so o instante. */
+    if(typeof BEL_FOTO==="undefined" || !BEL_FOTO || !BEL_FOTO.grande) return;
     var res=_belReserva();
     /* A trava guarda o TEMA, nao um "1" — mesma correcao do icone flutuante.
        Com booleano, quem trocasse de tema com o app aberto ficaria com a arte
@@ -10204,13 +10217,18 @@ function belFotosAplicar(){
     [["belFoto","grande"],["belMini","mini"]].forEach(function(par){
       var el=document.getElementById(par[0]); if(!el) return;
       if(el.dataset.pronto===chave) return;
-      el.dataset.pronto=chave;
       var fila=[];
       /* No claro a arte clara vem primeiro. A escura fica no fim como rede de
          seguranca: se o arquivo faltar, fica feio, nunca vazio. */
       if(chave==="claro"){ try{ fila=fila.concat(BEL_FOTO_CLARA[par[1]]||[]); }catch(e){} }
       try{ fila=fila.concat(BEL_FOTO[par[1]]||[]); }catch(e){}
       if(res) fila.push(res);
+      /* A trava so e marcada agora, com a fila montada. Marcar antes era o
+         que tornava uma falha temporaria permanente. E se a unica coisa na
+         fila for a reserva embutida, nao vale montar: melhor sair e deixar
+         a proxima chamada tentar com os arquivos de verdade. */
+      if(!fila.length || (fila.length===1 && res && fila[0]===res)) return;
+      el.dataset.pronto=chave;
       el.classList.remove("bel-arte-clara");
       /* A SONDAGEM ACONTECE NUM ELEMENTO SEPARADO, nao neste.
          Motivo, medido em 21/09: no boot a cascata comeca com o tema escuro;
