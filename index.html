@@ -2085,6 +2085,55 @@ html[data-theme="light"] .bel-atalho::after{
   width:7px;height:7px;border-right:2px solid;border-top:2px solid;
   border-color:var(--wt-ouroTxt);transform:rotate(45deg)}
 
+/* --- "Como posso ajudar hoje?": LINHA, nao balao (21/09) ---
+   No tema escuro isto e um balao de conversa e faz sentido: o avatar fica no
+   alto, o texto ao lado, e a conversa cresce por baixo. No desenho claro do
+   Felipe e um cartao de UMA linha — avatar, titulo, subtitulo e seta na mesma
+   altura, como as outras linhas da tela.
+   O seletor mira `:has(.bel-balao-tit)` porque so a saudacao tem titulo: as
+   mensagens reais da conversa nao tem, e essas devem continuar como balao. */
+/* A saudacao NAO usa .bel-balao-tit — eu tinha mirado nessa classe e ela nao
+   existe aqui. A estrutura real, medida no navegador:
+       .bel-linha > img#belMini + .bel-balao > #chatVazio
+       #chatVazio: flex COLUNA centralizada, com um <svg> de 46 px no topo,
+                   .chatVazio__tit e .chatVazio__sub
+   Os 46 px do icone mais a centralizacao eram os 160 px de altura. O avatar
+   ao lado ja cumpre o papel do icone, entao ele sai. */
+html[data-theme="light"] .bel-linha{align-items:center!important}
+html[data-theme="light"] .bel-linha:has(#chatVazio){
+  background:var(--wt-sup);border:1px solid var(--wt-borda);
+  border-radius:var(--wt-r-xl);box-shadow:var(--wt-sombraMd);
+  padding:14px 12px;gap:12px}
+html[data-theme="light"] .bel-linha:has(#chatVazio) .bel-balao{
+  background:transparent!important;box-shadow:none!important;
+  padding:0!important;flex:1;min-width:0}
+html[data-theme="light"] .bel-linha:has(#chatVazio)::after{
+  content:"";flex:0 0 auto;width:8px;height:8px;
+  border-right:2px solid;border-top:2px solid;border-color:var(--wt-txt2);
+  transform:rotate(45deg)}
+html[data-theme="light"] #chatVazio{
+  align-items:flex-start!important;text-align:left!important;
+  padding:0!important;gap:0!important;min-height:0!important}
+/* o icone de balao de 46 px sai: quem carrega a imagem e o avatar ao lado */
+html[data-theme="light"] #chatVazio>svg{display:none!important}
+html[data-theme="light"] .chatVazio__tit{
+  font-size:19px!important;font-weight:700!important;
+  color:var(--wt-txt)!important;text-align:left!important;line-height:1.25!important}
+html[data-theme="light"] .chatVazio__sub{
+  margin:2px 0 0!important;color:var(--wt-txt2)!important;
+  font-size:14px!important;text-align:left!important}
+html[data-theme="light"] .bel-mini{
+  flex:0 0 48px!important;width:48px!important;height:48px!important;
+  border:2px solid #F6B24A!important}
+
+/* --- respiro entre os blocos ---
+   Estava tudo espalhado: 24 px depois do contexto, mais 20 px de margem do
+   status, mais 20 px acima dos atalhos. Juntos davam a sensacao de itens
+   soltos em vez de uma tela so. */
+html[data-theme="light"] .bel-conversa{margin-top:14px!important}
+html[data-theme="light"] .bel-atalhos{margin-top:12px!important}
+html[data-theme="light"] .bel-ctx-caixa{margin-bottom:14px!important}
+
 /* --- campo de pergunta e botao de enviar --- */
 html[data-theme="light"] .bel-linha-envio input,
 html[data-theme="light"] #nutriInput{
@@ -2786,7 +2835,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260921_bel_luz3";
+var APP_VERSION="20260921_bel_linha";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
