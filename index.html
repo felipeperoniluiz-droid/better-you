@@ -2177,7 +2177,12 @@ html[data-theme="light"] .bel-status{margin:12px 0 15px!important}
 /* margem lateral do mockup: 21 esquerda, 20 direita */
 html[data-theme="light"] #content{padding-left:20px!important;padding-right:20px!important}
 
-/* --- campo de pergunta e botao de enviar --- */
+/* --- campo de pergunta e botao de enviar ---
+   O campo tinha margin-top de 20 px e ficava solto, longe dos atalhos. Nesta
+   tela ele pertence ao bloco da Bel: 10 px o encosta sem grudar. */
+html[data-theme="light"] .chat-input-row{margin-top:10px!important}
+/* e o respiro depois da conversa, antes do proximo cartao */
+html[data-theme="light"] .bel-corpo{padding-bottom:8px!important}
 html[data-theme="light"] .bel-linha-envio input,
 html[data-theme="light"] #nutriInput{
   background:var(--wt-sup2)!important;border:1px solid var(--wt-borda)!important;
@@ -2878,7 +2883,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260923_hoje_limpa";
+var APP_VERSION="20260923_chat_perto";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
