@@ -1983,7 +1983,8 @@ html[data-theme="light"] .bel-hero::after{display:none!important}
 html[data-theme="light"] .bel-hero .bel-hero-img{
   position:static!important;inset:auto!important;
   width:100%!important;height:100%!important;max-height:none!important;
-  min-height:230px;object-fit:cover;object-position:center 18%;
+  /* 254 px: altura do cartao medida no mockup do Felipe (pt de 430) */
+  min-height:254px;object-fit:cover;object-position:center 18%;
   border-radius:0!important;}
 html[data-theme="light"] .bel-hero .bel-id{
   grid-column:2!important;align-self:center;
@@ -2061,26 +2062,39 @@ html[data-theme="light"] .bel-painel{
    O rotulo ganha flex:1 e min-width:0 para ocupar o que sobra sem empurrar
    a seta para fora. A seta e ::after: nao existe no HTML e nao vale mexer
    no JS que monta os botoes so para desenhar um chevron. */
-html[data-theme="light"] .bel-atalhos{
+html[data-theme="light"] #tab-dieta .bel-atalhos{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;
   /* fileiras de altura igual: sem isto a segunda linha fica mais baixa que a
      primeira quando os rotulos tem tamanhos diferentes */
   grid-auto-rows:1fr!important}
-html[data-theme="light"] .bel-atalho{
+html[data-theme="light"] #tab-dieta .bel-atalho{
   background:var(--wt-sup)!important;
   border:1px solid var(--wt-borda)!important;
   border-radius:var(--wt-r-lg)!important;
   box-shadow:var(--wt-sombraSm)!important;
   color:var(--wt-txt)!important;
   display:flex!important;align-items:center;gap:8px;
-  padding:12px 8px 12px 10px!important;min-height:64px;
-  font-size:15px!important;font-weight:600!important;line-height:1.3!important;}
-html[data-theme="light"] .bel-atalho .med{
-  flex:0 0 38px!important;width:38px!important;height:38px!important}
-html[data-theme="light"] .bel-atalho .med svg{width:19px;height:19px}
+  /* Os rotulos ja trazem <br> fixo no codigo ("O que<br>comer agora?"), ou
+     seja, DUAS linhas por desenho. A terceira linha aparecia porque
+     "comer agora?" mede 100 px num espaco de exatamente 100 — transbordava
+     por nada. Aqui a conta fecha com folga:
+       187 (cartao) - 16 (recuo) - 34 (medalhao) - 8 (gap) - 13 (seta) = 116
+     Duas linhas de 18,3 mais 14 de recuo dao 51 px, que e o 52 do modelo. */
+  padding:7px 8px!important;gap:8px!important;min-height:52px;box-sizing:border-box;
+  font-size:15px!important;font-weight:600!important;line-height:1.22!important;}
+/* O <span> do rotulo nao tinha flex: encolhia ate a largura da PALAVRA mais
+   longa ("Analisar" = 59 px) em vez de ocupar o que sobra no cartao. Medido:
+   cartao 187 = 17 de recuo + 36 do medalhao + 12 de gap + 13 da seta + 59 de
+   texto — sobravam 50 px sem uso, e por isso o rotulo quebrava em 3 linhas.
+   Com flex:1 o texto passa a ter 109 px, e "O que comer" (93 px) cabe. */
+html[data-theme="light"] #tab-dieta .bel-atalho>span:not(.med){
+  flex:1;min-width:0}
+html[data-theme="light"] #tab-dieta .bel-atalho .med{
+  flex:0 0 34px!important;width:34px!important;height:34px!important}
+html[data-theme="light"] #tab-dieta .bel-atalho .med svg{width:19px;height:19px}
 /* a seta: quadrado com duas bordas, girado — nao precisa de arquivo nem de
    fonte de icones, e acompanha a cor do texto dourado. */
-html[data-theme="light"] .bel-atalho::after{
+html[data-theme="light"] #tab-dieta .bel-atalho::after{
   content:"";flex:0 0 auto;margin-left:auto;
   width:7px;height:7px;border-right:2px solid;border-top:2px solid;
   border-color:var(--wt-ouroTxt);transform:rotate(45deg)}
@@ -2103,7 +2117,8 @@ html[data-theme="light"] .bel-linha{align-items:center!important}
 html[data-theme="light"] .bel-linha:has(#chatVazio){
   background:var(--wt-sup);border:1px solid var(--wt-borda);
   border-radius:var(--wt-r-xl);box-shadow:var(--wt-sombraMd);
-  padding:14px 12px;gap:12px}
+  /* 58 px de altura no mockup: avatar 44 + 7 de recuo em cima e embaixo */
+  padding:7px 12px;gap:12px;min-height:58px;box-sizing:border-box}
 html[data-theme="light"] .bel-linha:has(#chatVazio) .bel-balao{
   background:transparent!important;box-shadow:none!important;
   padding:0!important;flex:1;min-width:0}
@@ -2123,16 +2138,29 @@ html[data-theme="light"] .chatVazio__sub{
   margin:2px 0 0!important;color:var(--wt-txt2)!important;
   font-size:14px!important;text-align:left!important}
 html[data-theme="light"] .bel-mini{
-  flex:0 0 48px!important;width:48px!important;height:48px!important;
+  flex:0 0 44px!important;width:44px!important;height:44px!important;
   border:2px solid #F6B24A!important}
 
 /* --- respiro entre os blocos ---
    Estava tudo espalhado: 24 px depois do contexto, mais 20 px de margem do
    status, mais 20 px acima dos atalhos. Juntos davam a sensacao de itens
    soltos em vez de uma tela so. */
-html[data-theme="light"] .bel-conversa{margin-top:14px!important}
-html[data-theme="light"] .bel-atalhos{margin-top:12px!important}
-html[data-theme="light"] .bel-ctx-caixa{margin-bottom:14px!important}
+/* Vaos do mockup: 16 · 17 · 17 · 15 · 14. Uso 15 em tudo — a variacao de
+   1 a 2 px no desenho e ruido de render, nao intencao. */
+html[data-theme="light"] .bel-conversa{margin-top:15px!important}
+html[data-theme="light"] #tab-dieta .bel-atalhos{margin-top:15px!important;gap:14px!important;grid-auto-rows:auto!important}
+/* contexto de hoje: 101 px no modelo, 146 no app. O recuo de 20 e os
+   medalhoes grandes eram a diferenca. */
+html[data-theme="light"] .bel-ctx-caixa{margin-bottom:15px!important;padding:12px 12px 10px!important}
+html[data-theme="light"] .bel-ctx-tit{margin:0 0 8px!important}
+html[data-theme="light"] .bel-ctx .med{flex:0 0 36px!important;width:36px!important;height:36px!important}
+/* a lista dos tres numeros vinha com entrelinha de texto corrido (22,5 px);
+   aqui ela e rotulo + numero + unidade, e 1,25 e o suficiente */
+html[data-theme="light"] .bel-ctx{line-height:1.25!important}
+html[data-theme="light"] .bel-ctx dd,html[data-theme="light"] .bel-ctx dt{margin:0!important}
+html[data-theme="light"] .bel-status{margin:12px 0 15px!important}
+/* margem lateral do mockup: 21 esquerda, 20 direita */
+html[data-theme="light"] #content{padding-left:20px!important;padding-right:20px!important}
 
 /* --- campo de pergunta e botao de enviar --- */
 html[data-theme="light"] .bel-linha-envio input,
@@ -2835,7 +2863,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260921_bel_linha";
+var APP_VERSION="20260923_bel_final";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
