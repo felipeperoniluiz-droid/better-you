@@ -1886,6 +1886,21 @@ html[data-theme="light"] .h-lado-num{
 html[data-theme="light"] .h-lado-un{font-size:12px;color:var(--wt-txt3)}
 /* Passou da meta: o numero vira alerta. #DC2626 da 4,83:1 sobre branco. */
 html[data-theme="light"] .h-lado-acima .h-lado-num{color:var(--wt-vermelho)}
+/* AS FRASES DO HERO SAO DO TEMA ESCURO. La elas ficam sobre a foto de fundo,
+   em absoluto, e fazem sentido. No claro nao ha foto (hojeFoto fica
+   display:none) e elas caem EM CIMA dos cartoes laterais — foi o que o
+   Felipe viu: "letras atras, informes na frente". Aqui elas somem. */
+html[data-theme="light"] .h-frase{display:none!important}
+
+/* Os dois cartoes com a mesma altura. Sem isto cada um se ajusta ao proprio
+   texto e um fica mais alto que o outro: medido 149 contra 133. */
+/* 150, nao 128: "Meta diaria" quebra em duas linhas e "Faltam" fica em uma,
+   entao os cartoes mediam 149 e 133. O min-height so cresce, nunca encolhe —
+   128 nao mudava nada. Com 150 os dois batem, e em alemao ou frances, se o
+   rotulo crescer, os dois crescem juntos porque estao na mesma fileira. */
+html[data-theme="light"] .h-lado{align-self:center;justify-content:center;
+  min-height:150px;box-sizing:border-box}
+
 /* O cartao do anel deixa de ser cartao: no desenho o anel fica solto sobre
    o fundo da pagina, com os dois cartoes ao lado. */
 html[data-theme="light"] #tab-hoje .h-hero>.card{
@@ -2863,7 +2878,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260923_bel_final";
+var APP_VERSION="20260923_hoje_limpa";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
