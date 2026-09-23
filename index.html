@@ -2177,11 +2177,24 @@ html[data-theme="light"] .bel-status{margin:12px 0 15px!important}
 /* margem lateral do mockup: 21 esquerda, 20 direita */
 html[data-theme="light"] #content{padding-left:20px!important;padding-right:20px!important}
 
+/* --- ORDEM DO BLOCO DA BEL (23/09) ---
+   No HTML a ordem e: saudacao, atalhos, campo de pergunta. O Felipe quer o
+   campo logo ABAIXO de "Como posso ajudar hoje?", antes dos atalhos — faz
+   sentido: a pergunta e a resposta direta ao convite, e os atalhos sao
+   sugestoes para quem nao sabe o que perguntar.
+   Nao mexo no HTML: `.bel-conversa` vira flex-column e a ordem se resolve
+   com `order`. Assim o tema escuro, que e um chat de verdade e cresce de
+   cima para baixo, fica intacto. */
+html[data-theme="light"] .bel-conversa{display:flex!important;flex-direction:column}
+html[data-theme="light"] .bel-conversa>.bel-linha     {order:1}
+html[data-theme="light"] .bel-conversa>.chat-input-row{order:2}
+html[data-theme="light"] .bel-conversa>.bel-atalhos   {order:3}
+
 /* --- campo de pergunta e botao de enviar ---
-   O campo tinha margin-top de 20 px e ficava solto, longe dos atalhos. Nesta
-   tela ele pertence ao bloco da Bel: 10 px o encosta sem grudar. */
+   10 px o encosta na saudacao sem grudar. */
 html[data-theme="light"] .chat-input-row{margin-top:10px!important}
-/* e o respiro depois da conversa, antes do proximo cartao */
+/* os atalhos passam a vir DEPOIS do campo, entao o respiro vai para eles */
+html[data-theme="light"] #tab-dieta .bel-atalhos{margin-top:12px!important}
 html[data-theme="light"] .bel-corpo{padding-bottom:8px!important}
 html[data-theme="light"] .bel-linha-envio input,
 html[data-theme="light"] #nutriInput{
@@ -2883,7 +2896,7 @@ if(_al){
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
    publicadas nao apareciam na tela. */
-var APP_VERSION="20260923_chat_perto";
+var APP_VERSION="20260923_chat_ordem";
 function checkForUpdate(){
   fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
   .then(function(r){return r.text();})
