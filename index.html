@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261003_perfil";
+var APP_VERSION="20261003_abertura";
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="google" content="notranslate">
@@ -9590,7 +9590,10 @@ function init(){
     setTimeout(function(){renderProfileAvatar(state.profile.photo);},50);
   }
 }
-init();
+/* init() protegido (03/10): um erro aqui impedia o codigo abaixo de rodar,
+   e o splash ficava na tela para sempre. Com o try, o erro vai para o
+   console e o app abre mesmo assim. */
+try{ init(); }catch(e){ try{ console.error("init falhou:", e); }catch(_){} }
 
 // ── SPLASH SCREEN (CSS Animation) ─────────────────────────────────
 (function(){
@@ -9674,12 +9677,16 @@ function agendarLembretes() {
 setTimeout(initNotifications, 1500);
 
 // ── SCORE DIÁRIO ─────────────────────────────────────────────
-var FAIXA={
-  cut  :{okBaixo:0.85, okAlto:1.00, zeroAlto:1.30},
-  mass :{okBaixo:1.00, okAlto:1.15, zeroAlto:1.45},
-  maint:{okBaixo:0.90, okAlto:1.10, zeroAlto:1.40}
-};
 function scoreFaixa(atual,meta,objetivo){
+  /* A tabela fica DENTRO da funcao de proposito (03/10). Como "var FAIXA" no
+     nivel de fora, ela so recebia valor DEPOIS do init() — e o init() ja
+     calcula o score. FAIXA vinha undefined, o init() quebrava e o splash
+     nunca saia: o app ficou travado na abertura para todo mundo. */
+  var FAIXA={
+    cut  :{okBaixo:0.85, okAlto:1.00, zeroAlto:1.30},
+    mass :{okBaixo:1.00, okAlto:1.15, zeroAlto:1.45},
+    maint:{okBaixo:0.90, okAlto:1.10, zeroAlto:1.40}
+  };
   if(!(meta>0)) return 0;
   var f=FAIXA[objetivo]||FAIXA.maint, r=atual/meta;
   if(!(r>0)) return 0;                                 /* dia vazio nao ganha nota */
