@@ -14,6 +14,10 @@
   .voltar{display:inline-block;color:var(--text2);text-decoration:none;font-size:13px;
           margin-bottom:22px;border:1px solid var(--border);border-radius:8px;padding:7px 13px}
   .voltar:hover{color:var(--text);border-color:var(--text2)}
+  .idi{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 22px}
+  .idi button{background:none;border:1px solid var(--border);color:var(--text2);border-radius:8px;
+          padding:6px 11px;font:600 12.5px system-ui,sans-serif;cursor:pointer}
+  .idi button.on{background:var(--ouro);border-color:var(--ouro);color:#111}
   h1{font-size:26px;line-height:1.3;margin:0 0 18px}
   h2{font-size:17px;margin:34px 0 10px;color:var(--ouro)}
   p{margin:0 0 14px}
@@ -34,9 +38,11 @@
 </head>
 <body>
 <div class="folha">
+<div class="idi"><button type="button" data-l="pt" onclick="mostrarIdioma('pt')" class="on">PT</button><button type="button" data-l="en" onclick="mostrarIdioma('en')">EN</button><button type="button" data-l="es" onclick="mostrarIdioma('es')">ES</button><button type="button" data-l="it" onclick="mostrarIdioma('it')">IT</button><button type="button" data-l="fr" onclick="mostrarIdioma('fr')">FR</button><button type="button" data-l="de" onclick="mostrarIdioma('de')">DE</button></div>
+<section class="ver" data-lang="pt" lang="pt">
 <a class="voltar" href="./">&#8592; Voltar ao Better You</a>
 <h1>Termos de Uso — Better You</h1>
-<p><strong>Última atualização:</strong> 27 de agosto de 2026 <strong>Fornecedor:</strong> Felipe Gambogi Luiz — Synnot Place, Dublin 7, D07 A9K4, Irlanda — felipeperoniluiz@gmail.com</p>
+<p><strong>Última atualização:</strong> 3 de outubro de 2026 &nbsp;·&nbsp; <strong>Fornecedor:</strong> Felipe Gambogi Luiz — Synnot Place, Dublin 7, D07 A9K4, Irlanda — felipeperoniluiz@gmail.com</p>
 <p><em>(Sole trader, pessoa física, estabelecido na Irlanda.)</em></p>
 <hr>
 <h2>1. O que é o Better You</h2>
@@ -51,8 +57,8 @@
 <p>Você precisa ter <strong>16 anos ou mais</strong>. Você é responsável por manter a sua senha segura e pelo que acontece na sua conta.</p>
 <p>Os dados que você informa — peso, altura, idade — alimentam os cálculos. Informação errada gera meta errada.</p>
 <h2>4. Assinatura e pagamento</h2>
-<p>A versão gratuita dá acesso às funções básicas. A versão PRO custa <strong>€8,99/mês</strong>, cobrado pela Stripe. O preço inclui o IVA aplicável ao seu país de residência.</p>
-<p><strong>Teste gratuito:</strong> a assinatura começa com <strong>2 dias sem custo</strong>. Se você cancelar dentro desses 2 dias, não há cobrança nenhuma. Passado esse prazo, a primeira mensalidade é cobrada e a renovação passa a ser automática.</p>
+<p>A versão gratuita dá acesso às funções básicas. A versão PRO custa <strong>€8,99/mês</strong> ou <strong>€91,99/ano</strong>, cobrado pela Stripe. O preço inclui o IVA aplicável ao seu país de residência.</p>
+<p><strong>Teste gratuito:</strong> a assinatura começa com <strong>7 dias sem custo</strong>. Se você cancelar dentro desses 7 dias, não há cobrança nenhuma. Passado esse prazo, o primeiro pagamento é cobrado e a renovação passa a ser automática.</p>
 <ul>
 <li>A assinatura <strong>renova automaticamente</strong> até você cancelar</li>
 <li>Você cancela quando quiser, direto no aplicativo, e mantém o acesso até o fim do período pago</li>
@@ -84,7 +90,289 @@
 <p>Você pode apagar a sua conta quando quiser. Podemos encerrar contas que violem estes termos, com aviso quando possível.</p>
 <h2>12. Lei aplicável</h2>
 <p>Estes termos são regidos pela lei da <strong>Irlanda</strong>. Disputas de consumidor podem ser levadas aos tribunais do seu país de residência na União Europeia.</p>
-<div class="rodape">Better You &middot; Felipe Gambogi Luiz &middot; Synnot Place, Dublin 7, D07 A9K4, Irlanda &middot; felipeperoniluiz@gmail.com</div>
+</section>
+<section class="ver" data-lang="en" lang="en" hidden>
+<a class="voltar" href="./">&#8592; Back to Better You</a>
+<h1>Terms of Use — Better You</h1>
+<p><strong>Last updated:</strong> 3 October 2026 &nbsp;·&nbsp; <strong>Provider:</strong> Felipe Gambogi Luiz — Synnot Place, Dublin 7, D07 A9K4, Ireland — felipeperoniluiz@gmail.com</p>
+<p><em>(Sole trader, natural person, established in Ireland.)</em></p>
+<hr>
+<h2>1. What Better You is</h2>
+<p>A nutrition tracking app that recognises food from photos, calculates calorie targets and offers daily guidance through Bel, an assistant based on artificial intelligence.</p>
+<p>By creating an account, you accept these terms.</p>
+<h2>2. What Better You is not</h2>
+<p><strong>Better You is not a medical service.</strong> It does not diagnose, treat or replace a consultation with a doctor, dietitian or any other health professional.</p>
+<p>Bel is an artificial intelligence assistant. She can make mistakes, and her answers are for information only — they are not a prescription.</p>
+<p>Talk to a professional before making major changes to your diet, and always in case of pregnancy, chronic illness, eating disorder or medication use.</p>
+<p><strong>If you have or have had an eating disorder</strong>, talk to your health professional before using a calorie-counting app.</p>
+<h2>3. Your account</h2>
+<p>You must be <strong>16 or older</strong>. You are responsible for keeping your password safe and for what happens in your account.</p>
+<p>The data you enter — weight, height, age — feeds the calculations. Wrong information leads to a wrong target.</p>
+<h2>4. Subscription and payment</h2>
+<p>The free version gives access to the basic features. The PRO version costs <strong>€8.99/month</strong> or <strong>€91.99/year</strong>, charged by Stripe. The price includes the VAT applicable in your country of residence.</p>
+<p><strong>Free trial:</strong> the subscription starts with <strong>7 days at no cost</strong>. If you cancel within those 7 days, you are not charged anything. After that period, the first payment is charged and renewal becomes automatic.</p>
+<ul>
+<li>The subscription <strong>renews automatically</strong> until you cancel</li>
+<li>You can cancel whenever you want, directly in the app, and keep access until the end of the paid period</li>
+<li><strong>Right of withdrawal:</strong> consumers in the European Union have 14 days to withdraw. If you start using the service during that period, you may be charged proportionally for what you used</li>
+<li>Prices may change, with 30 days' prior notice</li>
+</ul>
+<h2>5. Accuracy of photo recognition</h2>
+<p>Food recognition is an estimate. Portions, preparation and hidden ingredients affect the result, and the app shows the confidence level of each analysis.</p>
+<p>Use it as guidance, not as an exact measurement. If you need precision, weigh your food.</p>
+<h2>6. Artificial intelligence features</h2>
+<p>Photo food recognition and Bel's guidance are provided by us as part of the service. You do not need to purchase anything separately or provide access keys.</p>
+<p>To keep the service sustainable, we may set reasonable usage limits on these features. If that happens, we will notify you in advance and the limit will be clearly shown in the app.</p>
+<h2>7. What you may not do</h2>
+<ul>
+<li>Use the app for illegal purposes</li>
+<li>Try to access other people's accounts</li>
+<li>Copy, resell or redistribute the app</li>
+<li>Use automation to extract data in bulk</li>
+<li>Use the service to advise third parties as if it were your own professional advice</li>
+</ul>
+<h2>8. Content you create</h2>
+<p>Your photos and records are yours. You give us permission to process them only to operate the service — nothing more.</p>
+<h2>9. Availability</h2>
+<p>We do our best to keep the app running, but we do not guarantee uninterrupted operation. There may be maintenance, third-party failures or interruptions.</p>
+<h2>10. Limitation of liability</h2>
+<p>To the extent permitted by law, our liability is limited to the amount you paid in the last 12 months.</p>
+<p>Nothing in these terms affects your rights as a consumer under European law.</p>
+<h2>11. Termination</h2>
+<p>You can delete your account whenever you want. We may close accounts that violate these terms, with notice where possible.</p>
+<h2>12. Governing law</h2>
+<p>These terms are governed by the law of <strong>Ireland</strong>. Consumer disputes may be brought before the courts of your country of residence in the European Union.</p>
+</section>
+<section class="ver" data-lang="es" lang="es" hidden>
+<a class="voltar" href="./">&#8592; Volver a Better You</a>
+<h1>Términos de Uso — Better You</h1>
+<p><strong>Última actualización:</strong> 3 de octubre de 2026 &nbsp;·&nbsp; <strong>Proveedor:</strong> Felipe Gambogi Luiz — Synnot Place, Dublín 7, D07 A9K4, Irlanda — felipeperoniluiz@gmail.com</p>
+<p><em>(Empresario individual, persona física, establecido en Irlanda.)</em></p>
+<hr>
+<h2>1. Qué es Better You</h2>
+<p>Una aplicación de seguimiento nutricional que reconoce alimentos por foto, calcula metas calóricas y ofrece acompañamiento diario a través de Bel, una asistente basada en inteligencia artificial.</p>
+<p>Al crear una cuenta, aceptas estos términos.</p>
+<h2>2. Lo que Better You no es</h2>
+<p><strong>Better You no es un servicio médico.</strong> No diagnostica, no trata y no sustituye la consulta con un médico, nutricionista o cualquier profesional de la salud.</p>
+<p>Bel es una asistente de inteligencia artificial. Puede equivocarse, y sus respuestas son informativas — no son una prescripción.</p>
+<p>Consulta a un profesional antes de hacer cambios importantes en tu alimentación, y siempre en caso de embarazo, enfermedad crónica, trastorno alimentario o uso de medicamentos.</p>
+<p><strong>Si tienes o has tenido un trastorno alimentario</strong>, habla con tu profesional de la salud antes de usar una aplicación de conteo de calorías.</p>
+<h2>3. Tu cuenta</h2>
+<p>Debes tener <strong>16 años o más</strong>. Eres responsable de mantener segura tu contraseña y de lo que ocurra en tu cuenta.</p>
+<p>Los datos que introduces — peso, altura, edad — alimentan los cálculos. Una información errónea genera una meta errónea.</p>
+<h2>4. Suscripción y pago</h2>
+<p>La versión gratuita da acceso a las funciones básicas. La versión PRO cuesta <strong>8,99 €/mes</strong> o <strong>91,99 €/año</strong>, cobrados por Stripe. El precio incluye el IVA aplicable en tu país de residencia.</p>
+<p><strong>Prueba gratuita:</strong> la suscripción empieza con <strong>7 días sin coste</strong>. Si cancelas dentro de esos 7 días, no se te cobra nada. Pasado ese plazo, se realiza el primer cobro y la renovación pasa a ser automática.</p>
+<ul>
+<li>La suscripción <strong>se renueva automáticamente</strong> hasta que la canceles</li>
+<li>Puedes cancelar cuando quieras, directamente en la aplicación, y mantienes el acceso hasta el final del periodo pagado</li>
+<li><strong>Derecho de desistimiento:</strong> los consumidores de la Unión Europea disponen de 14 días para desistir. Si empiezas a usar el servicio en ese periodo, se te puede cobrar proporcionalmente por lo que hayas usado</li>
+<li>Los precios pueden cambiar, con un preaviso de 30 días</li>
+</ul>
+<h2>5. Precisión del reconocimiento por foto</h2>
+<p>El reconocimiento de alimentos es una estimación. Las porciones, la preparación y los ingredientes ocultos afectan al resultado, y la aplicación muestra el nivel de confianza de cada análisis.</p>
+<p>Úsalo como orientación, no como medida exacta. Si necesitas precisión, pesa los alimentos.</p>
+<h2>6. Funciones con inteligencia artificial</h2>
+<p>El reconocimiento de alimentos por foto y el acompañamiento de Bel los proporcionamos nosotros como parte del servicio. No necesitas contratar nada por separado ni facilitar claves de acceso.</p>
+<p>Para mantener el servicio sostenible, podemos establecer límites razonables de uso de estas funciones. Si eso ocurre, te avisaremos con antelación y el límite se indicará claramente en la aplicación.</p>
+<h2>7. Lo que no puedes hacer</h2>
+<ul>
+<li>Usar la aplicación con fines ilegales</li>
+<li>Intentar acceder a cuentas de otras personas</li>
+<li>Copiar, revender o redistribuir la aplicación</li>
+<li>Usar automatización para extraer datos de forma masiva</li>
+<li>Usar el servicio para orientar a terceros como si fuera tu propio asesoramiento profesional</li>
+</ul>
+<h2>8. Contenido que creas</h2>
+<p>Tus fotos y registros son tuyos. Nos das permiso para tratarlos solo para operar el servicio — nada más.</p>
+<h2>9. Disponibilidad</h2>
+<p>Hacemos lo posible por mantener la aplicación en funcionamiento, pero no garantizamos un funcionamiento ininterrumpido. Puede haber mantenimiento, fallos de terceros o interrupciones.</p>
+<h2>10. Limitación de responsabilidad</h2>
+<p>En la medida permitida por la ley, nuestra responsabilidad se limita al importe que hayas pagado en los últimos 12 meses.</p>
+<p>Nada de lo dispuesto en estos términos afecta a tus derechos como consumidor según la legislación europea.</p>
+<h2>11. Terminación</h2>
+<p>Puedes eliminar tu cuenta cuando quieras. Podemos cerrar cuentas que infrinjan estos términos, avisando cuando sea posible.</p>
+<h2>12. Ley aplicable</h2>
+<p>Estos términos se rigen por la ley de <strong>Irlanda</strong>. Las disputas de consumo pueden presentarse ante los tribunales de tu país de residencia en la Unión Europea.</p>
+</section>
+<section class="ver" data-lang="it" lang="it" hidden>
+<a class="voltar" href="./">&#8592; Torna a Better You</a>
+<h1>Termini di utilizzo — Better You</h1>
+<p><strong>Ultimo aggiornamento:</strong> 3 ottobre 2026 &nbsp;·&nbsp; <strong>Fornitore:</strong> Felipe Gambogi Luiz — Synnot Place, Dublino 7, D07 A9K4, Irlanda — felipeperoniluiz@gmail.com</p>
+<p><em>(Ditta individuale, persona fisica, stabilita in Irlanda.)</em></p>
+<hr>
+<h2>1. Che cos'è Better You</h2>
+<p>Un'app di monitoraggio nutrizionale che riconosce gli alimenti dalle foto, calcola gli obiettivi calorici e offre un accompagnamento quotidiano tramite Bel, un'assistente basata sull'intelligenza artificiale.</p>
+<p>Creando un account, accetti questi termini.</p>
+<h2>2. Che cosa Better You non è</h2>
+<p><strong>Better You non è un servizio medico.</strong> Non diagnostica, non cura e non sostituisce il consulto con un medico, un nutrizionista o qualsiasi professionista sanitario.</p>
+<p>Bel è un'assistente di intelligenza artificiale. Può sbagliare, e le sue risposte sono informative — non sono una prescrizione.</p>
+<p>Rivolgiti a un professionista prima di cambiamenti importanti nell'alimentazione, e sempre in caso di gravidanza, malattia cronica, disturbo alimentare o uso di farmaci.</p>
+<p><strong>Se hai o hai avuto un disturbo alimentare</strong>, parlane con il tuo professionista sanitario prima di usare un'app di conteggio delle calorie.</p>
+<h2>3. Il tuo account</h2>
+<p>Devi avere <strong>almeno 16 anni</strong>. Sei responsabile della sicurezza della tua password e di ciò che accade nel tuo account.</p>
+<p>I dati che inserisci — peso, altezza, età — alimentano i calcoli. Informazioni errate generano obiettivi errati.</p>
+<h2>4. Abbonamento e pagamento</h2>
+<p>La versione gratuita dà accesso alle funzioni di base. La versione PRO costa <strong>8,99 €/mese</strong> o <strong>91,99 €/anno</strong>, addebitati tramite Stripe. Il prezzo include l'IVA applicabile nel tuo paese di residenza.</p>
+<p><strong>Prova gratuita:</strong> l'abbonamento inizia con <strong>7 giorni senza costi</strong>. Se annulli entro questi 7 giorni, non ti viene addebitato nulla. Trascorso questo periodo, viene effettuato il primo addebito e il rinnovo diventa automatico.</p>
+<ul>
+<li>L'abbonamento <strong>si rinnova automaticamente</strong> finché non lo annulli</li>
+<li>Puoi annullare quando vuoi, direttamente nell'app, e mantieni l'accesso fino alla fine del periodo pagato</li>
+<li><strong>Diritto di recesso:</strong> i consumatori nell'Unione europea hanno 14 giorni per recedere. Se inizi a usare il servizio in questo periodo, potresti dover pagare in proporzione a quanto hai usato</li>
+<li>I prezzi possono cambiare, con un preavviso di 30 giorni</li>
+</ul>
+<h2>5. Precisione del riconoscimento tramite foto</h2>
+<p>Il riconoscimento degli alimenti è una stima. Porzioni, preparazione e ingredienti nascosti influiscono sul risultato, e l'app mostra il livello di affidabilità di ogni analisi.</p>
+<p>Usalo come orientamento, non come misura esatta. Se hai bisogno di precisione, pesa gli alimenti.</p>
+<h2>6. Funzioni con intelligenza artificiale</h2>
+<p>Il riconoscimento degli alimenti tramite foto e l'accompagnamento di Bel sono forniti da noi come parte del servizio. Non devi acquistare nulla separatamente né fornire chiavi di accesso.</p>
+<p>Per mantenere il servizio sostenibile, possiamo stabilire limiti di utilizzo ragionevoli per queste funzioni. In tal caso, ti avviseremo in anticipo e il limite sarà indicato chiaramente nell'app.</p>
+<h2>7. Cosa non puoi fare</h2>
+<ul>
+<li>Usare l'app per scopi illeciti</li>
+<li>Tentare di accedere agli account di altre persone</li>
+<li>Copiare, rivendere o ridistribuire l'app</li>
+<li>Usare sistemi automatici per estrarre dati in massa</li>
+<li>Usare il servizio per consigliare terzi come se si trattasse di una tua consulenza professionale</li>
+</ul>
+<h2>8. Contenuti che crei</h2>
+<p>Le tue foto e le tue registrazioni sono tue. Ci autorizzi a trattarle solo per far funzionare il servizio — nient'altro.</p>
+<h2>9. Disponibilità</h2>
+<p>Facciamo il possibile per mantenere l'app attiva, ma non garantiamo un funzionamento ininterrotto. Possono verificarsi manutenzioni, guasti di terzi o interruzioni.</p>
+<h2>10. Limitazione di responsabilità</h2>
+<p>Nei limiti consentiti dalla legge, la nostra responsabilità è limitata all'importo che hai pagato negli ultimi 12 mesi.</p>
+<p>Nulla in questi termini pregiudica i tuoi diritti di consumatore ai sensi della normativa europea.</p>
+<h2>11. Cessazione</h2>
+<p>Puoi eliminare il tuo account quando vuoi. Possiamo chiudere gli account che violano questi termini, con preavviso quando possibile.</p>
+<h2>12. Legge applicabile</h2>
+<p>Questi termini sono regolati dalla legge <strong>irlandese</strong>. Le controversie dei consumatori possono essere portate davanti ai tribunali del tuo paese di residenza nell'Unione europea.</p>
+</section>
+<section class="ver" data-lang="fr" lang="fr" hidden>
+<a class="voltar" href="./">&#8592; Retour à Better You</a>
+<h1>Conditions d'utilisation — Better You</h1>
+<p><strong>Dernière mise à jour :</strong> 3 octobre 2026 &nbsp;·&nbsp; <strong>Prestataire :</strong> Felipe Gambogi Luiz — Synnot Place, Dublin 7, D07 A9K4, Irlande — felipeperoniluiz@gmail.com</p>
+<p><em>(Entrepreneur individuel, personne physique, établi en Irlande.)</em></p>
+<hr>
+<h2>1. Ce qu'est Better You</h2>
+<p>Une application de suivi nutritionnel qui reconnaît les aliments en photo, calcule des objectifs caloriques et propose un accompagnement quotidien grâce à Bel, une assistante fondée sur l'intelligence artificielle.</p>
+<p>En créant un compte, vous acceptez ces conditions.</p>
+<h2>2. Ce que Better You n'est pas</h2>
+<p><strong>Better You n'est pas un service médical.</strong> Il ne diagnostique pas, ne soigne pas et ne remplace pas une consultation avec un médecin, un nutritionniste ou tout autre professionnel de santé.</p>
+<p>Bel est une assistante d'intelligence artificielle. Elle peut se tromper, et ses réponses sont informatives — ce ne sont pas des prescriptions.</p>
+<p>Consultez un professionnel avant tout changement important de votre alimentation, et toujours en cas de grossesse, de maladie chronique, de trouble alimentaire ou de prise de médicaments.</p>
+<p><strong>Si vous souffrez ou avez souffert d'un trouble alimentaire</strong>, parlez-en à votre professionnel de santé avant d'utiliser une application de comptage des calories.</p>
+<h2>3. Votre compte</h2>
+<p>Vous devez avoir <strong>16 ans ou plus</strong>. Vous êtes responsable de la sécurité de votre mot de passe et de ce qui se passe sur votre compte.</p>
+<p>Les données que vous saisissez — poids, taille, âge — alimentent les calculs. Une information erronée donne un objectif erroné.</p>
+<h2>4. Abonnement et paiement</h2>
+<p>La version gratuite donne accès aux fonctions de base. La version PRO coûte <strong>8,99 €/mois</strong> ou <strong>91,99 €/an</strong>, facturés par Stripe. Le prix inclut la TVA applicable dans votre pays de résidence.</p>
+<p><strong>Essai gratuit :</strong> l'abonnement commence par <strong>7 jours sans frais</strong>. Si vous résiliez pendant ces 7 jours, rien ne vous est facturé. Passé ce délai, le premier paiement est prélevé et le renouvellement devient automatique.</p>
+<ul>
+<li>L'abonnement <strong>se renouvelle automatiquement</strong> jusqu'à ce que vous le résiliiez</li>
+<li>Vous pouvez résilier quand vous voulez, directement dans l'application, et vous gardez l'accès jusqu'à la fin de la période payée</li>
+<li><strong>Droit de rétractation :</strong> les consommateurs de l'Union européenne disposent de 14 jours pour se rétracter. Si vous commencez à utiliser le service pendant cette période, un montant proportionnel à votre utilisation peut vous être facturé</li>
+<li>Les prix peuvent changer, avec un préavis de 30 jours</li>
+</ul>
+<h2>5. Précision de la reconnaissance par photo</h2>
+<p>La reconnaissance des aliments est une estimation. Les portions, la préparation et les ingrédients cachés influencent le résultat, et l'application indique le niveau de confiance de chaque analyse.</p>
+<p>Utilisez-la comme repère, pas comme une mesure exacte. Si vous avez besoin de précision, pesez vos aliments.</p>
+<h2>6. Fonctions d'intelligence artificielle</h2>
+<p>La reconnaissance des aliments par photo et l'accompagnement de Bel sont fournis par nous dans le cadre du service. Vous n'avez rien à souscrire séparément ni de clé d'accès à fournir.</p>
+<p>Pour que le service reste viable, nous pouvons fixer des limites d'utilisation raisonnables pour ces fonctions. Le cas échéant, nous vous préviendrons à l'avance et la limite sera indiquée clairement dans l'application.</p>
+<h2>7. Ce que vous ne pouvez pas faire</h2>
+<ul>
+<li>Utiliser l'application à des fins illégales</li>
+<li>Tenter d'accéder aux comptes d'autres personnes</li>
+<li>Copier, revendre ou redistribuer l'application</li>
+<li>Utiliser des moyens automatisés pour extraire des données en masse</li>
+<li>Utiliser le service pour conseiller des tiers comme s'il s'agissait de votre propre avis professionnel</li>
+</ul>
+<h2>8. Contenu que vous créez</h2>
+<p>Vos photos et vos enregistrements vous appartiennent. Vous nous autorisez à les traiter uniquement pour faire fonctionner le service — rien de plus.</p>
+<h2>9. Disponibilité</h2>
+<p>Nous faisons notre possible pour maintenir l'application en ligne, mais nous ne garantissons pas un fonctionnement ininterrompu. Des maintenances, des défaillances de tiers ou des interruptions peuvent survenir.</p>
+<h2>10. Limitation de responsabilité</h2>
+<p>Dans la mesure permise par la loi, notre responsabilité est limitée au montant que vous avez payé au cours des 12 derniers mois.</p>
+<p>Rien dans ces conditions ne porte atteinte à vos droits de consommateur au titre du droit européen.</p>
+<h2>11. Résiliation</h2>
+<p>Vous pouvez supprimer votre compte quand vous le souhaitez. Nous pouvons fermer les comptes qui enfreignent ces conditions, avec un préavis lorsque c'est possible.</p>
+<h2>12. Droit applicable</h2>
+<p>Ces conditions sont régies par le droit <strong>irlandais</strong>. Les litiges de consommation peuvent être portés devant les tribunaux de votre pays de résidence dans l'Union européenne.</p>
+</section>
+<section class="ver" data-lang="de" lang="de" hidden>
+<a class="voltar" href="./">&#8592; Zurück zu Better You</a>
+<h1>Nutzungsbedingungen — Better You</h1>
+<p><strong>Zuletzt aktualisiert:</strong> 3. Oktober 2026 &nbsp;·&nbsp; <strong>Anbieter:</strong> Felipe Gambogi Luiz — Synnot Place, Dublin 7, D07 A9K4, Irland — felipeperoniluiz@gmail.com</p>
+<p><em>(Einzelunternehmer, natürliche Person, niedergelassen in Irland.)</em></p>
+<hr>
+<h2>1. Was Better You ist</h2>
+<p>Eine App zur Ernährungsbegleitung, die Lebensmittel auf Fotos erkennt, Kalorienziele berechnet und durch Bel, eine auf künstlicher Intelligenz basierende Assistentin, tägliche Begleitung bietet.</p>
+<p>Mit der Erstellung eines Kontos akzeptieren Sie diese Bedingungen.</p>
+<h2>2. Was Better You nicht ist</h2>
+<p><strong>Better You ist kein medizinischer Dienst.</strong> Die App stellt keine Diagnosen, behandelt nicht und ersetzt keine Beratung durch Ärzte, Ernährungsfachkräfte oder andere Gesundheitsfachleute.</p>
+<p>Bel ist eine KI-Assistentin. Sie kann sich irren, und ihre Antworten dienen der Information — sie sind keine Verordnung.</p>
+<p>Wenden Sie sich vor größeren Ernährungsumstellungen an eine Fachperson, und immer bei Schwangerschaft, chronischer Erkrankung, Essstörung oder Medikamenteneinnahme.</p>
+<p><strong>Wenn Sie eine Essstörung haben oder hatten</strong>, sprechen Sie mit Ihrer Gesundheitsfachperson, bevor Sie eine App zum Kalorienzählen verwenden.</p>
+<h2>3. Ihr Konto</h2>
+<p>Sie müssen <strong>mindestens 16 Jahre</strong> alt sein. Sie sind dafür verantwortlich, Ihr Passwort sicher aufzubewahren, und für alles, was in Ihrem Konto geschieht.</p>
+<p>Die Daten, die Sie angeben — Gewicht, Größe, Alter — fließen in die Berechnungen ein. Falsche Angaben führen zu falschen Zielen.</p>
+<h2>4. Abonnement und Zahlung</h2>
+<p>Die kostenlose Version bietet Zugang zu den Grundfunktionen. Die PRO-Version kostet <strong>8,99 €/Monat</strong> oder <strong>91,99 €/Jahr</strong> und wird über Stripe abgerechnet. Der Preis enthält die in Ihrem Wohnsitzland geltende Mehrwertsteuer.</p>
+<p><strong>Kostenloser Test:</strong> Das Abonnement beginnt mit <strong>7 kostenlosen Tagen</strong>. Wenn Sie innerhalb dieser 7 Tage kündigen, wird nichts berechnet. Nach Ablauf dieser Frist wird die erste Zahlung fällig und das Abonnement verlängert sich automatisch.</p>
+<ul>
+<li>Das Abonnement <strong>verlängert sich automatisch</strong>, bis Sie es kündigen</li>
+<li>Sie können jederzeit direkt in der App kündigen und behalten den Zugang bis zum Ende des bezahlten Zeitraums</li>
+<li><strong>Widerrufsrecht:</strong> Verbraucher in der Europäischen Union haben 14 Tage Zeit für einen Widerruf. Wenn Sie den Dienst in diesem Zeitraum nutzen, kann Ihnen die Nutzung anteilig berechnet werden</li>
+<li>Preise können sich mit einer Vorankündigung von 30 Tagen ändern</li>
+</ul>
+<h2>5. Genauigkeit der Fotoerkennung</h2>
+<p>Die Lebensmittelerkennung ist eine Schätzung. Portionen, Zubereitung und versteckte Zutaten beeinflussen das Ergebnis, und die App zeigt für jede Analyse die Zuverlässigkeit an.</p>
+<p>Nutzen Sie sie als Orientierung, nicht als exakte Messung. Wenn Sie Genauigkeit brauchen, wiegen Sie die Lebensmittel.</p>
+<h2>6. KI-Funktionen</h2>
+<p>Die Lebensmittelerkennung per Foto und die Begleitung durch Bel stellen wir als Teil des Dienstes bereit. Sie müssen nichts separat abschließen und keine Zugangsschlüssel angeben.</p>
+<p>Damit der Dienst tragfähig bleibt, können wir angemessene Nutzungsgrenzen für diese Funktionen festlegen. In diesem Fall informieren wir Sie vorab, und die Grenze wird in der App klar angezeigt.</p>
+<h2>7. Was Sie nicht tun dürfen</h2>
+<ul>
+<li>Die App für rechtswidrige Zwecke nutzen</li>
+<li>Versuchen, auf Konten anderer Personen zuzugreifen</li>
+<li>Die App kopieren, weiterverkaufen oder weiterverbreiten</li>
+<li>Automatisierte Mittel nutzen, um Daten massenhaft auszulesen</li>
+<li>Den Dienst nutzen, um Dritte so zu beraten, als handle es sich um Ihre eigene fachliche Beratung</li>
+</ul>
+<h2>8. Von Ihnen erstellte Inhalte</h2>
+<p>Ihre Fotos und Einträge gehören Ihnen. Sie erlauben uns, sie ausschließlich zum Betrieb des Dienstes zu verarbeiten — zu nichts anderem.</p>
+<h2>9. Verfügbarkeit</h2>
+<p>Wir tun unser Bestes, um die App verfügbar zu halten, garantieren aber keinen unterbrechungsfreien Betrieb. Es kann zu Wartungen, Ausfällen bei Dritten oder Unterbrechungen kommen.</p>
+<h2>10. Haftungsbeschränkung</h2>
+<p>Soweit gesetzlich zulässig, ist unsere Haftung auf den Betrag begrenzt, den Sie in den letzten 12 Monaten bezahlt haben.</p>
+<p>Nichts in diesen Bedingungen schränkt Ihre Rechte als Verbraucher nach europäischem Recht ein.</p>
+<h2>11. Beendigung</h2>
+<p>Sie können Ihr Konto jederzeit löschen. Wir können Konten schließen, die gegen diese Bedingungen verstoßen, nach Möglichkeit mit vorheriger Mitteilung.</p>
+<h2>12. Anwendbares Recht</h2>
+<p>Diese Bedingungen unterliegen <strong>irischem</strong> Recht. Verbraucherstreitigkeiten können vor den Gerichten Ihres Wohnsitzlandes in der Europäischen Union geltend gemacht werden.</p>
+</section>
+<div class="rodape">Better You &middot; Felipe Gambogi Luiz &middot; Synnot Place, Dublin 7, D07 A9K4 &middot; felipeperoniluiz@gmail.com</div>
 </div>
+<script>
+/* Abre no idioma pedido pelo app (?lang=xx), senao no idioma do aparelho,
+   senao em ingles. Sem JavaScript, a versao em portugues fica visivel. */
+(function(){
+  var L=["pt","en","es","it","fr","de"];
+  function escolher(){
+    try{ var m=location.search.match(/[?&]lang=([a-z]{2})/i); if(m&&L.indexOf(m[1].toLowerCase())>=0) return m[1].toLowerCase(); }catch(e){}
+    try{ var n=((navigator.languages&&navigator.languages[0])||navigator.language||"").slice(0,2).toLowerCase(); if(L.indexOf(n)>=0) return n; }catch(e){}
+    return "en";
+  }
+  window.mostrarIdioma=function(l){
+    var vs=document.querySelectorAll(".ver");
+    for(var i=0;i<vs.length;i++) vs[i].hidden=(vs[i].getAttribute("data-lang")!==l);
+    var bs=document.querySelectorAll(".idi button");
+    for(var j=0;j<bs.length;j++) bs[j].className=(bs[j].getAttribute("data-l")===l?"on":"");
+    document.documentElement.lang=l;
+    var h=document.querySelector('.ver[data-lang="'+l+'"] h1'); if(h) document.title=h.textContent;
+  };
+  mostrarIdioma(escolher());
+})();
+</script>
 </body>
 </html>

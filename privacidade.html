@@ -14,6 +14,10 @@
   .voltar{display:inline-block;color:var(--text2);text-decoration:none;font-size:13px;
           margin-bottom:22px;border:1px solid var(--border);border-radius:8px;padding:7px 13px}
   .voltar:hover{color:var(--text);border-color:var(--text2)}
+  .idi{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 22px}
+  .idi button{background:none;border:1px solid var(--border);color:var(--text2);border-radius:8px;
+          padding:6px 11px;font:600 12.5px system-ui,sans-serif;cursor:pointer}
+  .idi button.on{background:var(--ouro);border-color:var(--ouro);color:#111}
   h1{font-size:26px;line-height:1.3;margin:0 0 18px}
   h2{font-size:17px;margin:34px 0 10px;color:var(--ouro)}
   p{margin:0 0 14px}
@@ -34,10 +38,11 @@
 </head>
 <body>
 <div class="folha">
+<div class="idi"><button type="button" data-l="pt" onclick="mostrarIdioma('pt')" class="on">PT</button><button type="button" data-l="en" onclick="mostrarIdioma('en')">EN</button><button type="button" data-l="es" onclick="mostrarIdioma('es')">ES</button><button type="button" data-l="it" onclick="mostrarIdioma('it')">IT</button><button type="button" data-l="fr" onclick="mostrarIdioma('fr')">FR</button><button type="button" data-l="de" onclick="mostrarIdioma('de')">DE</button></div>
+<section class="ver" data-lang="pt" lang="pt">
 <a class="voltar" href="./">&#8592; Voltar ao Better You</a>
 <h1>Política de Privacidade — Better You</h1>
-<p><strong>Última atualização:</strong> 27 de agosto de 2026 <strong>Responsável pelo tratamento (controlador):</strong> Felipe Gambogi Luiz — Synnot Place, Dublin 7, D07 A9K4, Irlanda — felipeperoniluiz@gmail.com</p>
-<p><em>(Felipe atua como sole trader, pessoa física. Ao registar-se na Revenue, confirmar se usa nome próprio ou nome comercial.)</em></p>
+<p><strong>Última atualização:</strong> 27 de agosto de 2026 &nbsp;·&nbsp; <strong>Responsável pelo tratamento (controlador):</strong> Felipe Gambogi Luiz — Synnot Place, Dublin 7, D07 A9K4, Irlanda — felipeperoniluiz@gmail.com</p>
 <hr>
 <h2>1. O que esta política cobre</h2>
 <p>O Better You é um aplicativo de acompanhamento nutricional. Para funcionar, ele precisa tratar informações sobre a sua alimentação, o seu corpo e a sua rotina.</p>
@@ -73,7 +78,7 @@
 <tr><td><strong>Cloudflare</strong></td><td>Tráfego intermediado entre o app e os serviços acima</td><td>Rede global</td></tr>
 <tr><td><strong>Stripe</strong></td><td>E-mail e dados de pagamento, se você assinar</td><td>União Europeia e Estados Unidos</td></tr>
 </tbody></table>
-<p><strong>Sobre a Anthropic:</strong> as fotos e conversas são enviadas para gerar a resposta e <strong>não são usadas para treinar modelos</strong>. Confirme os termos vigentes antes de publicar.</p>
+<p><strong>Sobre a Anthropic:</strong> as fotos e conversas são enviadas para gerar a resposta e <strong>não são usadas para treinar modelos</strong>.</p>
 <p><strong>Registro de uso:</strong> guardamos, por conta, quantas vezes as funções de inteligência artificial foram usadas no mês e o custo correspondente. Isso serve para dimensionar o serviço e detectar abuso. Não guardamos o conteúdo das análises nesse registro — apenas contagens.</p>
 <p><strong>Sobre os Estados Unidos:</strong> a legislação americana oferece proteções diferentes das europeias. É por isso que pedimos o seu consentimento separado para essa transferência no cadastro.</p>
 <h2>5. Onde os seus dados ficam guardados</h2>
@@ -88,7 +93,7 @@
 <li><strong>Exportar</strong> os seus dados num arquivo legível</li>
 <li><strong>Corrigir</strong> informação errada</li>
 <li><strong>Apagar</strong> a sua conta e tudo o que está nela</li>
-<li><strong>Retirar o consentimento</strong> para o tratamento de dados de saúde — o app deixa de funcionar plenamente, mas você deixa de ser tratado</li>
+<li><strong>Retirar o consentimento</strong> para o tratamento de dados de saúde — o app deixa de funcionar plenamente, mas os seus dados deixam de ser tratados</li>
 <li><strong>Reclamar</strong> à autoridade de proteção de dados do seu país</li>
 </ul>
 <p>Para exercer qualquer um deles, escreva para <strong>felipeperoniluiz@gmail.com</strong>. Respondemos em até 30 dias.</p>
@@ -96,7 +101,344 @@
 <p>O Better You não se destina a menores de 16 anos. Se soubermos que criamos uma conta para alguém abaixo dessa idade, apagamos.</p>
 <h2>9. Alterações</h2>
 <p>Se mudarmos algo relevante, avisamos no aplicativo antes de a mudança valer.</p>
-<div class="rodape">Better You &middot; Felipe Gambogi Luiz &middot; Synnot Place, Dublin 7, D07 A9K4, Irlanda &middot; felipeperoniluiz@gmail.com</div>
+</section>
+<section class="ver" data-lang="en" lang="en" hidden>
+<a class="voltar" href="./">&#8592; Back to Better You</a>
+<h1>Privacy Policy — Better You</h1>
+<p><strong>Last updated:</strong> 27 August 2026 &nbsp;·&nbsp; <strong>Data controller:</strong> Felipe Gambogi Luiz — Synnot Place, Dublin 7, D07 A9K4, Ireland — felipeperoniluiz@gmail.com</p>
+<hr>
+<h2>1. What this policy covers</h2>
+<p>Better You is a nutrition tracking app. To work, it needs to process information about your diet, your body and your routine.</p>
+<p>Some of this data is a <strong>special category</strong> under the GDPR (data concerning health). That is why we ask for your <strong>explicit consent</strong> when you sign up, and you can withdraw it at any time.</p>
+<h2>2. What data we collect</h2>
+<p><strong>What you give us:</strong></p>
+<table><thead><tr><th>Data</th><th>Why</th></tr></thead><tbody>
+<tr><td>Name and email</td><td>Identify your account and contact you</td></tr>
+<tr><td>Biological sex, age, height, weight</td><td>Calculate your calorie needs</td></tr>
+<tr><td>Country</td><td>Set units (kg/lb) and language</td></tr>
+<tr><td>Goals, habits and routine</td><td>Personalise your targets and Bel's answers</td></tr>
+<tr><td>Logged foods and meal photos</td><td>Calculate your day and build your history</td></tr>
+<tr><td>Body measurements and progress photos</td><td>Track your progress</td></tr>
+<tr><td>Hours of sleep and water intake</td><td>Build the daily indicators</td></tr>
+<tr><td>Conversations with Bel</td><td>Answer you and remember what matters</td></tr>
+</tbody></table>
+<p><strong>Generated automatically:</strong> date and time of entries, chosen language and theme, app version.</p>
+<p><strong>Optional, if you connect it:</strong> weight and body composition from your Withings scale.</p>
+<p><strong>We do not collect</strong> precise location, contacts, browsing history or third-party data.</p>
+<h2>3. Why we process each item</h2>
+<table><thead><tr><th>Purpose</th><th>Legal basis (GDPR)</th></tr></thead><tbody>
+<tr><td>Provide the service you signed up for</td><td>Performance of a contract — Art. 6(1)(b)</td></tr>
+<tr><td>Process health data (diet, weight, sleep)</td><td><strong>Explicit consent — Art. 9(2)(a)</strong></td></tr>
+<tr><td>Transfer data outside the European Economic Area</td><td><strong>Explicit consent — Art. 49(1)(a)</strong></td></tr>
+<tr><td>Subscription billing</td><td>Performance of a contract — Art. 6(1)(b)</td></tr>
+<tr><td>Security and fraud prevention</td><td>Legitimate interest — Art. 6(1)(f)</td></tr>
+</tbody></table>
+<h2>4. Who we share it with</h2>
+<p>We do not sell your data. We do not use it for advertising.</p>
+<table><thead><tr><th>Who</th><th>What they receive</th><th>Where</th></tr></thead><tbody>
+<tr><td><strong>Google Firebase</strong> (Google Ireland Ltd.)</td><td>Your account and all app data</td><td><strong>European Union</strong> — <code>europe-west1</code>, Belgium. Your data does not leave EU territory.</td></tr>
+<tr><td><strong>Anthropic</strong></td><td>Food photos and the text of your conversations with Bel</td><td>United States</td></tr>
+<tr><td><strong>Cloudflare</strong></td><td>Traffic relayed between the app and the services above</td><td>Global network</td></tr>
+<tr><td><strong>Stripe</strong></td><td>Email and payment details, if you subscribe</td><td>European Union and United States</td></tr>
+</tbody></table>
+<p><strong>About Anthropic:</strong> photos and conversations are sent to generate the answer and <strong>are not used to train models</strong>.</p>
+<p><strong>Usage log:</strong> for each account, we keep how many times the artificial intelligence features were used in the month and the corresponding cost. This helps us size the service and detect abuse. We do not keep the content of the analyses in this log — only counts.</p>
+<p><strong>About the United States:</strong> US law offers different protections from European law. That is why we ask for your separate consent to this transfer when you sign up.</p>
+<h2>5. Where your data is stored</h2>
+<p>Your information stays in your account, protected by rules that prevent any other user from accessing it. Photos are kept in a separate area, linked only to your identifier.</p>
+<p>Traffic is encrypted in transit. The service's sensitive credentials stay on the server, never in the app.</p>
+<h2>6. How long we keep it</h2>
+<p>For as long as your account exists. If you delete your account, we delete your data within <strong>30 days</strong>, except what tax law requires us to keep (payment records, <strong>6 years</strong>, as required by the Irish Revenue).</p>
+<h2>7. Your rights</h2>
+<p>You can, at any time:</p>
+<ul>
+<li><strong>Access</strong> everything we hold about you</li>
+<li><strong>Export</strong> your data in a readable file</li>
+<li><strong>Correct</strong> wrong information</li>
+<li><strong>Delete</strong> your account and everything in it</li>
+<li><strong>Withdraw your consent</strong> to the processing of health data — the app will no longer work fully, but your data will no longer be processed</li>
+<li><strong>Complain</strong> to the data protection authority in your country</li>
+</ul>
+<p>To exercise any of them, write to <strong>felipeperoniluiz@gmail.com</strong>. We reply within 30 days.</p>
+<h2>8. Minors</h2>
+<p>Better You is not intended for anyone under 16. If we learn that an account was created for someone below that age, we delete it.</p>
+<h2>9. Changes</h2>
+<p>If we change anything relevant, we will let you know in the app before the change takes effect.</p>
+</section>
+<section class="ver" data-lang="es" lang="es" hidden>
+<a class="voltar" href="./">&#8592; Volver a Better You</a>
+<h1>Política de Privacidad — Better You</h1>
+<p><strong>Última actualización:</strong> 27 de agosto de 2026 &nbsp;·&nbsp; <strong>Responsable del tratamiento:</strong> Felipe Gambogi Luiz — Synnot Place, Dublín 7, D07 A9K4, Irlanda — felipeperoniluiz@gmail.com</p>
+<hr>
+<h2>1. Qué cubre esta política</h2>
+<p>Better You es una aplicación de seguimiento nutricional. Para funcionar, necesita tratar información sobre tu alimentación, tu cuerpo y tu rutina.</p>
+<p>Parte de estos datos es una <strong>categoría especial</strong> según el RGPD (datos relativos a la salud). Por eso te pedimos tu <strong>consentimiento explícito</strong> al registrarte, y puedes retirarlo en cualquier momento.</p>
+<h2>2. Qué datos recogemos</h2>
+<p><strong>Los que nos facilitas:</strong></p>
+<table><thead><tr><th>Dato</th><th>Para qué</th></tr></thead><tbody>
+<tr><td>Nombre y correo electrónico</td><td>Identificar tu cuenta y comunicarnos contigo</td></tr>
+<tr><td>Sexo biológico, edad, altura, peso</td><td>Calcular tu necesidad calórica</td></tr>
+<tr><td>País</td><td>Definir unidades (kg/lb) e idioma</td></tr>
+<tr><td>Objetivos, hábitos y rutina</td><td>Personalizar las metas y las respuestas de Bel</td></tr>
+<tr><td>Alimentos registrados y fotos de las comidas</td><td>Calcular tu día y alimentar el historial</td></tr>
+<tr><td>Medidas corporales y fotos de progreso</td><td>Seguir tu evolución</td></tr>
+<tr><td>Horas de sueño y consumo de agua</td><td>Componer los indicadores diarios</td></tr>
+<tr><td>Conversaciones con Bel</td><td>Responderte y recordar lo que importa</td></tr>
+</tbody></table>
+<p><strong>Generados automáticamente:</strong> fecha y hora de los registros, idioma y tema elegidos, versión de la aplicación.</p>
+<p><strong>Opcional, si lo conectas:</strong> peso y composición corporal de tu báscula Withings.</p>
+<p><strong>No recogemos</strong> ubicación precisa, contactos, historial de navegación ni datos de terceros.</p>
+<h2>3. Por qué tratamos cada dato</h2>
+<table><thead><tr><th>Finalidad</th><th>Base jurídica (RGPD)</th></tr></thead><tbody>
+<tr><td>Prestar el servicio que has contratado</td><td>Ejecución de un contrato — Art. 6(1)(b)</td></tr>
+<tr><td>Tratar datos de salud (alimentación, peso, sueño)</td><td><strong>Consentimiento explícito — Art. 9(2)(a)</strong></td></tr>
+<tr><td>Transferir datos fuera del Espacio Económico Europeo</td><td><strong>Consentimiento explícito — Art. 49(1)(a)</strong></td></tr>
+<tr><td>Cobro de la suscripción</td><td>Ejecución de un contrato — Art. 6(1)(b)</td></tr>
+<tr><td>Seguridad y prevención del fraude</td><td>Interés legítimo — Art. 6(1)(f)</td></tr>
+</tbody></table>
+<h2>4. Con quién compartimos</h2>
+<p>No vendemos tus datos. No los usamos para publicidad.</p>
+<table><thead><tr><th>Quién</th><th>Qué recibe</th><th>Dónde está</th></tr></thead><tbody>
+<tr><td><strong>Google Firebase</strong> (Google Ireland Ltd.)</td><td>Tu cuenta y todos los datos de la aplicación</td><td><strong>Unión Europea</strong> — <code>europe-west1</code>, Bélgica. Tus datos no salen del territorio de la UE.</td></tr>
+<tr><td><strong>Anthropic</strong></td><td>Fotos de los alimentos y el texto de las conversaciones con Bel</td><td>Estados Unidos</td></tr>
+<tr><td><strong>Cloudflare</strong></td><td>Tráfico intermediado entre la aplicación y los servicios anteriores</td><td>Red global</td></tr>
+<tr><td><strong>Stripe</strong></td><td>Correo electrónico y datos de pago, si te suscribes</td><td>Unión Europea y Estados Unidos</td></tr>
+</tbody></table>
+<p><strong>Sobre Anthropic:</strong> las fotos y conversaciones se envían para generar la respuesta y <strong>no se usan para entrenar modelos</strong>.</p>
+<p><strong>Registro de uso:</strong> guardamos, por cuenta, cuántas veces se usaron en el mes las funciones de inteligencia artificial y el coste correspondiente. Sirve para dimensionar el servicio y detectar abusos. No guardamos el contenido de los análisis en ese registro — solo recuentos.</p>
+<p><strong>Sobre Estados Unidos:</strong> la legislación estadounidense ofrece protecciones distintas de las europeas. Por eso te pedimos un consentimiento aparte para esta transferencia al registrarte.</p>
+<h2>5. Dónde se guardan tus datos</h2>
+<p>Tu información se guarda en tu cuenta, protegida por reglas que impiden que cualquier otro usuario acceda a ella. Las fotos se guardan en un área separada, vinculada solo a tu identificador.</p>
+<p>El tráfico está cifrado en tránsito. Las credenciales sensibles del servicio están en el servidor, nunca en la aplicación.</p>
+<h2>6. Cuánto tiempo los guardamos</h2>
+<p>Mientras exista tu cuenta. Si eliminas tu cuenta, borramos tus datos en un plazo de <strong>30 días</strong>, salvo lo que la ley fiscal obligue a conservar (registros de pago, <strong>6 años</strong>, según exige la Revenue irlandesa).</p>
+<h2>7. Tus derechos</h2>
+<p>Puedes, en cualquier momento:</p>
+<ul>
+<li><strong>Acceder</strong> a todo lo que guardamos sobre ti</li>
+<li><strong>Exportar</strong> tus datos en un archivo legible</li>
+<li><strong>Corregir</strong> información errónea</li>
+<li><strong>Eliminar</strong> tu cuenta y todo lo que contiene</li>
+<li><strong>Retirar el consentimiento</strong> para el tratamiento de datos de salud — la aplicación deja de funcionar plenamente, pero tus datos dejan de tratarse</li>
+<li><strong>Reclamar</strong> ante la autoridad de protección de datos de tu país</li>
+</ul>
+<p>Para ejercer cualquiera de ellos, escribe a <strong>felipeperoniluiz@gmail.com</strong>. Respondemos en un plazo de 30 días.</p>
+<h2>8. Menores de edad</h2>
+<p>Better You no está destinado a menores de 16 años. Si sabemos que se ha creado una cuenta para alguien por debajo de esa edad, la eliminamos.</p>
+<h2>9. Cambios</h2>
+<p>Si cambiamos algo relevante, te avisaremos en la aplicación antes de que el cambio entre en vigor.</p>
+</section>
+<section class="ver" data-lang="it" lang="it" hidden>
+<a class="voltar" href="./">&#8592; Torna a Better You</a>
+<h1>Informativa sulla privacy — Better You</h1>
+<p><strong>Ultimo aggiornamento:</strong> 27 agosto 2026 &nbsp;·&nbsp; <strong>Titolare del trattamento:</strong> Felipe Gambogi Luiz — Synnot Place, Dublino 7, D07 A9K4, Irlanda — felipeperoniluiz@gmail.com</p>
+<hr>
+<h2>1. Cosa copre questa informativa</h2>
+<p>Better You è un'app di monitoraggio nutrizionale. Per funzionare deve trattare informazioni sulla tua alimentazione, sul tuo corpo e sulla tua routine.</p>
+<p>Una parte di questi dati rientra nelle <strong>categorie particolari</strong> secondo il GDPR (dati relativi alla salute). Per questo ti chiediamo il <strong>consenso esplicito</strong> al momento della registrazione, e puoi revocarlo in qualsiasi momento.</p>
+<h2>2. Quali dati raccogliamo</h2>
+<p><strong>Quelli che ci fornisci:</strong></p>
+<table><thead><tr><th>Dato</th><th>Per cosa</th></tr></thead><tbody>
+<tr><td>Nome ed e-mail</td><td>Identificare il tuo account e comunicare con te</td></tr>
+<tr><td>Sesso biologico, età, altezza, peso</td><td>Calcolare il tuo fabbisogno calorico</td></tr>
+<tr><td>Paese</td><td>Impostare unità di misura (kg/lb) e lingua</td></tr>
+<tr><td>Obiettivi, abitudini e routine</td><td>Personalizzare gli obiettivi e le risposte di Bel</td></tr>
+<tr><td>Alimenti registrati e foto dei pasti</td><td>Calcolare la tua giornata e alimentare lo storico</td></tr>
+<tr><td>Misure corporee e foto dei progressi</td><td>Seguire la tua evoluzione</td></tr>
+<tr><td>Ore di sonno e consumo d'acqua</td><td>Comporre gli indicatori giornalieri</td></tr>
+<tr><td>Conversazioni con Bel</td><td>Risponderti e ricordare ciò che conta</td></tr>
+</tbody></table>
+<p><strong>Generati automaticamente:</strong> data e ora delle registrazioni, lingua e tema scelti, versione dell'app.</p>
+<p><strong>Facoltativo, se la colleghi:</strong> peso e composizione corporea dalla tua bilancia Withings.</p>
+<p><strong>Non raccogliamo</strong> posizione precisa, contatti, cronologia di navigazione né dati di terzi.</p>
+<h2>3. Perché trattiamo ogni dato</h2>
+<table><thead><tr><th>Finalità</th><th>Base giuridica (GDPR)</th></tr></thead><tbody>
+<tr><td>Fornire il servizio che hai sottoscritto</td><td>Esecuzione di un contratto — Art. 6(1)(b)</td></tr>
+<tr><td>Trattare dati sanitari (alimentazione, peso, sonno)</td><td><strong>Consenso esplicito — Art. 9(2)(a)</strong></td></tr>
+<tr><td>Trasferire dati al di fuori dello Spazio economico europeo</td><td><strong>Consenso esplicito — Art. 49(1)(a)</strong></td></tr>
+<tr><td>Addebito dell'abbonamento</td><td>Esecuzione di un contratto — Art. 6(1)(b)</td></tr>
+<tr><td>Sicurezza e prevenzione delle frodi</td><td>Legittimo interesse — Art. 6(1)(f)</td></tr>
+</tbody></table>
+<h2>4. Con chi condividiamo</h2>
+<p>Non vendiamo i tuoi dati. Non li usiamo per pubblicità.</p>
+<table><thead><tr><th>Chi</th><th>Cosa riceve</th><th>Dove si trova</th></tr></thead><tbody>
+<tr><td><strong>Google Firebase</strong> (Google Ireland Ltd.)</td><td>Il tuo account e tutti i dati dell'app</td><td><strong>Unione europea</strong> — <code>europe-west1</code>, Belgio. I tuoi dati non lasciano il territorio dell'UE.</td></tr>
+<tr><td><strong>Anthropic</strong></td><td>Foto degli alimenti e testo delle conversazioni con Bel</td><td>Stati Uniti</td></tr>
+<tr><td><strong>Cloudflare</strong></td><td>Traffico intermediato tra l'app e i servizi sopra indicati</td><td>Rete globale</td></tr>
+<tr><td><strong>Stripe</strong></td><td>E-mail e dati di pagamento, se ti abboni</td><td>Unione europea e Stati Uniti</td></tr>
+</tbody></table>
+<p><strong>Su Anthropic:</strong> le foto e le conversazioni vengono inviate per generare la risposta e <strong>non vengono usate per addestrare modelli</strong>.</p>
+<p><strong>Registro di utilizzo:</strong> conserviamo, per ogni account, quante volte nel mese sono state usate le funzioni di intelligenza artificiale e il relativo costo. Serve a dimensionare il servizio e a rilevare abusi. In questo registro non conserviamo il contenuto delle analisi — solo i conteggi.</p>
+<p><strong>Sugli Stati Uniti:</strong> la legge statunitense offre tutele diverse da quelle europee. Per questo ti chiediamo un consenso separato per questo trasferimento al momento della registrazione.</p>
+<h2>5. Dove vengono conservati i tuoi dati</h2>
+<p>Le tue informazioni restano nel tuo account, protette da regole che impediscono a qualsiasi altro utente di accedervi. Le foto sono conservate in un'area separata, collegata solo al tuo identificativo.</p>
+<p>Il traffico è cifrato in transito. Le credenziali sensibili del servizio restano sul server, mai nell'app.</p>
+<h2>6. Per quanto tempo li conserviamo</h2>
+<p>Finché esiste il tuo account. Se elimini l'account, cancelliamo i tuoi dati entro <strong>30 giorni</strong>, salvo ciò che la legge fiscale ci obbliga a conservare (registri dei pagamenti, <strong>6 anni</strong>, come richiesto dalla Revenue irlandese).</p>
+<h2>7. I tuoi diritti</h2>
+<p>Puoi, in qualsiasi momento:</p>
+<ul>
+<li><strong>Accedere</strong> a tutto ciò che conserviamo su di te</li>
+<li><strong>Esportare</strong> i tuoi dati in un file leggibile</li>
+<li><strong>Correggere</strong> informazioni errate</li>
+<li><strong>Eliminare</strong> il tuo account e tutto ciò che contiene</li>
+<li><strong>Revocare il consenso</strong> al trattamento dei dati sanitari — l'app smette di funzionare pienamente, ma i tuoi dati non vengono più trattati</li>
+<li><strong>Presentare reclamo</strong> all'autorità per la protezione dei dati del tuo paese</li>
+</ul>
+<p>Per esercitarne uno qualsiasi, scrivi a <strong>felipeperoniluiz@gmail.com</strong>. Rispondiamo entro 30 giorni.</p>
+<h2>8. Minori</h2>
+<p>Better You non è destinato a persone sotto i 16 anni. Se veniamo a sapere che è stato creato un account per qualcuno al di sotto di questa età, lo eliminiamo.</p>
+<h2>9. Modifiche</h2>
+<p>Se cambiamo qualcosa di rilevante, ti avvisiamo nell'app prima che la modifica entri in vigore.</p>
+</section>
+<section class="ver" data-lang="fr" lang="fr" hidden>
+<a class="voltar" href="./">&#8592; Retour à Better You</a>
+<h1>Politique de confidentialité — Better You</h1>
+<p><strong>Dernière mise à jour :</strong> 27 août 2026 &nbsp;·&nbsp; <strong>Responsable du traitement :</strong> Felipe Gambogi Luiz — Synnot Place, Dublin 7, D07 A9K4, Irlande — felipeperoniluiz@gmail.com</p>
+<hr>
+<h2>1. Ce que couvre cette politique</h2>
+<p>Better You est une application de suivi nutritionnel. Pour fonctionner, elle doit traiter des informations sur votre alimentation, votre corps et votre routine.</p>
+<p>Une partie de ces données relève d'une <strong>catégorie particulière</strong> au sens du RGPD (données concernant la santé). C'est pourquoi nous vous demandons votre <strong>consentement explicite</strong> lors de l'inscription, et vous pouvez le retirer à tout moment.</p>
+<h2>2. Les données que nous collectons</h2>
+<p><strong>Celles que vous nous fournissez :</strong></p>
+<table><thead><tr><th>Donnée</th><th>Pour quoi faire</th></tr></thead><tbody>
+<tr><td>Nom et adresse e-mail</td><td>Identifier votre compte et vous contacter</td></tr>
+<tr><td>Sexe biologique, âge, taille, poids</td><td>Calculer vos besoins caloriques</td></tr>
+<tr><td>Pays</td><td>Définir les unités (kg/lb) et la langue</td></tr>
+<tr><td>Objectifs, habitudes et routine</td><td>Personnaliser vos objectifs et les réponses de Bel</td></tr>
+<tr><td>Aliments enregistrés et photos des repas</td><td>Calculer votre journée et alimenter l'historique</td></tr>
+<tr><td>Mensurations et photos de progression</td><td>Suivre votre évolution</td></tr>
+<tr><td>Heures de sommeil et consommation d'eau</td><td>Composer les indicateurs quotidiens</td></tr>
+<tr><td>Conversations avec Bel</td><td>Vous répondre et retenir ce qui compte</td></tr>
+</tbody></table>
+<p><strong>Générées automatiquement :</strong> date et heure des enregistrements, langue et thème choisis, version de l'application.</p>
+<p><strong>Facultatif, si vous la connectez :</strong> poids et composition corporelle provenant de votre balance Withings.</p>
+<p><strong>Nous ne collectons pas</strong> la localisation précise, les contacts, l'historique de navigation ni les données de tiers.</p>
+<h2>3. Pourquoi nous traitons chaque donnée</h2>
+<table><thead><tr><th>Finalité</th><th>Base juridique (RGPD)</th></tr></thead><tbody>
+<tr><td>Fournir le service auquel vous avez souscrit</td><td>Exécution d'un contrat — Art. 6(1)(b)</td></tr>
+<tr><td>Traiter des données de santé (alimentation, poids, sommeil)</td><td><strong>Consentement explicite — Art. 9(2)(a)</strong></td></tr>
+<tr><td>Transférer des données hors de l'Espace économique européen</td><td><strong>Consentement explicite — Art. 49(1)(a)</strong></td></tr>
+<tr><td>Facturation de l'abonnement</td><td>Exécution d'un contrat — Art. 6(1)(b)</td></tr>
+<tr><td>Sécurité et prévention de la fraude</td><td>Intérêt légitime — Art. 6(1)(f)</td></tr>
+</tbody></table>
+<h2>4. Avec qui nous partageons</h2>
+<p>Nous ne vendons pas vos données. Nous ne les utilisons pas à des fins publicitaires.</p>
+<table><thead><tr><th>Qui</th><th>Ce qu'il reçoit</th><th>Où</th></tr></thead><tbody>
+<tr><td><strong>Google Firebase</strong> (Google Ireland Ltd.)</td><td>Votre compte et toutes les données de l'application</td><td><strong>Union européenne</strong> — <code>europe-west1</code>, Belgique. Vos données ne quittent pas le territoire de l'UE.</td></tr>
+<tr><td><strong>Anthropic</strong></td><td>Photos des aliments et texte des conversations avec Bel</td><td>États-Unis</td></tr>
+<tr><td><strong>Cloudflare</strong></td><td>Trafic relayé entre l'application et les services ci-dessus</td><td>Réseau mondial</td></tr>
+<tr><td><strong>Stripe</strong></td><td>E-mail et données de paiement, si vous vous abonnez</td><td>Union européenne et États-Unis</td></tr>
+</tbody></table>
+<p><strong>À propos d'Anthropic :</strong> les photos et les conversations sont envoyées pour générer la réponse et <strong>ne sont pas utilisées pour entraîner des modèles</strong>.</p>
+<p><strong>Journal d'utilisation :</strong> nous conservons, pour chaque compte, le nombre d'utilisations des fonctions d'intelligence artificielle dans le mois et le coût correspondant. Cela nous permet de dimensionner le service et de détecter les abus. Nous ne conservons pas le contenu des analyses dans ce journal — uniquement des décomptes.</p>
+<p><strong>À propos des États-Unis :</strong> le droit américain offre des protections différentes de celles du droit européen. C'est pourquoi nous vous demandons un consentement distinct pour ce transfert lors de l'inscription.</p>
+<h2>5. Où vos données sont conservées</h2>
+<p>Vos informations restent dans votre compte, protégées par des règles qui empêchent tout autre utilisateur d'y accéder. Les photos sont conservées dans une zone séparée, liée uniquement à votre identifiant.</p>
+<p>Le trafic est chiffré en transit. Les identifiants sensibles du service restent sur le serveur, jamais dans l'application.</p>
+<h2>6. Durée de conservation</h2>
+<p>Tant que votre compte existe. Si vous supprimez votre compte, nous supprimons vos données sous <strong>30 jours</strong>, sauf ce que la loi fiscale nous oblige à conserver (registres de paiement, <strong>6 ans</strong>, conformément aux exigences de la Revenue irlandaise).</p>
+<h2>7. Vos droits</h2>
+<p>Vous pouvez, à tout moment :</p>
+<ul>
+<li><strong>Accéder</strong> à tout ce que nous détenons à votre sujet</li>
+<li><strong>Exporter</strong> vos données dans un fichier lisible</li>
+<li><strong>Rectifier</strong> une information erronée</li>
+<li><strong>Supprimer</strong> votre compte et tout ce qu'il contient</li>
+<li><strong>Retirer votre consentement</strong> au traitement des données de santé — l'application ne fonctionne alors plus pleinement, mais vos données ne sont plus traitées</li>
+<li><strong>Introduire une réclamation</strong> auprès de l'autorité de protection des données de votre pays</li>
+</ul>
+<p>Pour exercer l'un de ces droits, écrivez à <strong>felipeperoniluiz@gmail.com</strong>. Nous répondons sous 30 jours.</p>
+<h2>8. Mineurs</h2>
+<p>Better You n'est pas destiné aux personnes de moins de 16 ans. Si nous apprenons qu'un compte a été créé pour une personne en dessous de cet âge, nous le supprimons.</p>
+<h2>9. Modifications</h2>
+<p>Si nous modifions quelque chose d'important, nous vous en informons dans l'application avant que la modification ne prenne effet.</p>
+</section>
+<section class="ver" data-lang="de" lang="de" hidden>
+<a class="voltar" href="./">&#8592; Zurück zu Better You</a>
+<h1>Datenschutzerklärung — Better You</h1>
+<p><strong>Zuletzt aktualisiert:</strong> 27. August 2026 &nbsp;·&nbsp; <strong>Verantwortlicher:</strong> Felipe Gambogi Luiz — Synnot Place, Dublin 7, D07 A9K4, Irland — felipeperoniluiz@gmail.com</p>
+<hr>
+<h2>1. Geltungsbereich</h2>
+<p>Better You ist eine App zur Ernährungsbegleitung. Um zu funktionieren, muss sie Informationen über Ihre Ernährung, Ihren Körper und Ihren Alltag verarbeiten.</p>
+<p>Ein Teil dieser Daten gehört nach der DSGVO zu den <strong>besonderen Kategorien</strong> (Gesundheitsdaten). Deshalb bitten wir bei der Registrierung um Ihre <strong>ausdrückliche Einwilligung</strong>, die Sie jederzeit widerrufen können.</p>
+<h2>2. Welche Daten wir erheben</h2>
+<p><strong>Von Ihnen bereitgestellt:</strong></p>
+<table><thead><tr><th>Daten</th><th>Zweck</th></tr></thead><tbody>
+<tr><td>Name und E-Mail-Adresse</td><td>Ihr Konto identifizieren und mit Ihnen kommunizieren</td></tr>
+<tr><td>Biologisches Geschlecht, Alter, Größe, Gewicht</td><td>Ihren Kalorienbedarf berechnen</td></tr>
+<tr><td>Land</td><td>Einheiten (kg/lb) und Sprache festlegen</td></tr>
+<tr><td>Ziele, Gewohnheiten und Alltag</td><td>Ziele und die Antworten von Bel personalisieren</td></tr>
+<tr><td>Erfasste Lebensmittel und Fotos der Mahlzeiten</td><td>Ihren Tag berechnen und den Verlauf aufbauen</td></tr>
+<tr><td>Körpermaße und Fortschrittsfotos</td><td>Ihre Entwicklung verfolgen</td></tr>
+<tr><td>Schlafstunden und Wasserkonsum</td><td>Die täglichen Kennzahlen bilden</td></tr>
+<tr><td>Gespräche mit Bel</td><td>Ihnen antworten und sich merken, was wichtig ist</td></tr>
+</tbody></table>
+<p><strong>Automatisch erzeugt:</strong> Datum und Uhrzeit der Einträge, gewählte Sprache und gewähltes Design, App-Version.</p>
+<p><strong>Optional, wenn Sie sie verbinden:</strong> Gewicht und Körperzusammensetzung von Ihrer Withings-Waage.</p>
+<p><strong>Wir erheben keinen</strong> genauen Standort, keine Kontakte, keinen Browserverlauf und keine Daten Dritter.</p>
+<h2>3. Warum wir die Daten verarbeiten</h2>
+<table><thead><tr><th>Zweck</th><th>Rechtsgrundlage (DSGVO)</th></tr></thead><tbody>
+<tr><td>Bereitstellung des von Ihnen abgeschlossenen Dienstes</td><td>Vertragserfüllung — Art. 6(1)(b)</td></tr>
+<tr><td>Verarbeitung von Gesundheitsdaten (Ernährung, Gewicht, Schlaf)</td><td><strong>Ausdrückliche Einwilligung — Art. 9(2)(a)</strong></td></tr>
+<tr><td>Übermittlung von Daten außerhalb des Europäischen Wirtschaftsraums</td><td><strong>Ausdrückliche Einwilligung — Art. 49(1)(a)</strong></td></tr>
+<tr><td>Abrechnung des Abonnements</td><td>Vertragserfüllung — Art. 6(1)(b)</td></tr>
+<tr><td>Sicherheit und Betrugsprävention</td><td>Berechtigtes Interesse — Art. 6(1)(f)</td></tr>
+</tbody></table>
+<h2>4. An wen wir Daten weitergeben</h2>
+<p>Wir verkaufen Ihre Daten nicht. Wir verwenden sie nicht für Werbung.</p>
+<table><thead><tr><th>Wer</th><th>Was</th><th>Wo</th></tr></thead><tbody>
+<tr><td><strong>Google Firebase</strong> (Google Ireland Ltd.)</td><td>Ihr Konto und alle Daten der App</td><td><strong>Europäische Union</strong> — <code>europe-west1</code>, Belgien. Ihre Daten verlassen das Gebiet der EU nicht.</td></tr>
+<tr><td><strong>Anthropic</strong></td><td>Fotos der Lebensmittel und der Text der Gespräche mit Bel</td><td>Vereinigte Staaten</td></tr>
+<tr><td><strong>Cloudflare</strong></td><td>Datenverkehr zwischen der App und den oben genannten Diensten</td><td>Weltweites Netz</td></tr>
+<tr><td><strong>Stripe</strong></td><td>E-Mail-Adresse und Zahlungsdaten, wenn Sie ein Abo abschließen</td><td>Europäische Union und Vereinigte Staaten</td></tr>
+</tbody></table>
+<p><strong>Zu Anthropic:</strong> Fotos und Gespräche werden übermittelt, um die Antwort zu erzeugen, und <strong>werden nicht zum Training von Modellen verwendet</strong>.</p>
+<p><strong>Nutzungsprotokoll:</strong> Wir speichern pro Konto, wie oft die KI-Funktionen im Monat genutzt wurden, und die entsprechenden Kosten. Das dient der Dimensionierung des Dienstes und der Erkennung von Missbrauch. Den Inhalt der Analysen speichern wir in diesem Protokoll nicht — nur Zählwerte.</p>
+<p><strong>Zu den Vereinigten Staaten:</strong> Das US-Recht bietet andere Schutzmaßnahmen als das europäische Recht. Deshalb bitten wir bei der Registrierung um Ihre gesonderte Einwilligung zu dieser Übermittlung.</p>
+<h2>5. Wo Ihre Daten gespeichert werden</h2>
+<p>Ihre Informationen bleiben in Ihrem Konto, geschützt durch Regeln, die jedem anderen Nutzer den Zugriff verwehren. Fotos werden in einem getrennten Bereich gespeichert, der nur mit Ihrer Kennung verknüpft ist.</p>
+<p>Der Datenverkehr wird bei der Übertragung verschlüsselt. Sensible Zugangsdaten des Dienstes liegen auf dem Server, niemals in der App.</p>
+<h2>6. Wie lange wir Daten speichern</h2>
+<p>Solange Ihr Konto besteht. Wenn Sie Ihr Konto löschen, löschen wir Ihre Daten innerhalb von <strong>30 Tagen</strong>, außer dem, was das Steuerrecht aufzubewahren verlangt (Zahlungsbelege, <strong>6 Jahre</strong>, gemäß den Vorgaben der irischen Revenue).</p>
+<h2>7. Ihre Rechte</h2>
+<p>Sie können jederzeit:</p>
+<ul>
+<li><strong>Auskunft</strong> über alle Daten erhalten, die wir über Sie speichern</li>
+<li>Ihre Daten in einer lesbaren Datei <strong>exportieren</strong></li>
+<li>Falsche Angaben <strong>berichtigen</strong></li>
+<li>Ihr Konto mit allen Inhalten <strong>löschen</strong></li>
+<li>Ihre <strong>Einwilligung</strong> zur Verarbeitung von Gesundheitsdaten <strong>widerrufen</strong> — die App funktioniert dann nicht mehr vollständig, aber Ihre Daten werden nicht mehr verarbeitet</li>
+<li><strong>Beschwerde</strong> bei der Datenschutzbehörde Ihres Landes einlegen</li>
+</ul>
+<p>Um eines dieser Rechte auszuüben, schreiben Sie an <strong>felipeperoniluiz@gmail.com</strong>. Wir antworten innerhalb von 30 Tagen.</p>
+<h2>8. Minderjährige</h2>
+<p>Better You ist nicht für Personen unter 16 Jahren bestimmt. Wenn wir erfahren, dass ein Konto für eine jüngere Person erstellt wurde, löschen wir es.</p>
+<h2>9. Änderungen</h2>
+<p>Wenn wir etwas Wesentliches ändern, informieren wir Sie in der App, bevor die Änderung wirksam wird.</p>
+</section>
+<div class="rodape">Better You &middot; Felipe Gambogi Luiz &middot; Synnot Place, Dublin 7, D07 A9K4 &middot; felipeperoniluiz@gmail.com</div>
 </div>
+<script>
+/* Abre no idioma pedido pelo app (?lang=xx), senao no idioma do aparelho,
+   senao em ingles. Sem JavaScript, a versao em portugues fica visivel. */
+(function(){
+  var L=["pt","en","es","it","fr","de"];
+  function escolher(){
+    try{ var m=location.search.match(/[?&]lang=([a-z]{2})/i); if(m&&L.indexOf(m[1].toLowerCase())>=0) return m[1].toLowerCase(); }catch(e){}
+    try{ var n=((navigator.languages&&navigator.languages[0])||navigator.language||"").slice(0,2).toLowerCase(); if(L.indexOf(n)>=0) return n; }catch(e){}
+    return "en";
+  }
+  window.mostrarIdioma=function(l){
+    var vs=document.querySelectorAll(".ver");
+    for(var i=0;i<vs.length;i++) vs[i].hidden=(vs[i].getAttribute("data-lang")!==l);
+    var bs=document.querySelectorAll(".idi button");
+    for(var j=0;j<bs.length;j++) bs[j].className=(bs[j].getAttribute("data-l")===l?"on":"");
+    document.documentElement.lang=l;
+    var h=document.querySelector('.ver[data-lang="'+l+'"] h1'); if(h) document.title=h.textContent;
+  };
+  mostrarIdioma(escolher());
+})();
+</script>
 </body>
 </html>

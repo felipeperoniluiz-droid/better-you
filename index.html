@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261003_abertura";
+var APP_VERSION="20261003_legais";
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="google" content="notranslate">
@@ -2271,6 +2271,63 @@ html[data-theme="light"] #modalProfile :is(#tmbVal,#tdeeVal){color:var(--wt-ouro
 html[data-theme="light"] #modalProfile #goalKcalVal{color:var(--wt-verde)!important}
 html[data-theme="light"] #modalProfile #goalWaterVal{color:var(--wt-azul)!important}
 html[data-theme="light"] #modalProfile [data-i18n="atletaAvancadoLabel"]{color:#B91C1C!important}
+
+/* ===== CONTRASTE DO TEMA CLARO — VARREDURA DE 03/10 =====
+   Medido tela por tela (Hoje, Foto IA, Bel, Jejum, Peso, Historico, Relatorio,
+   Agua) em 393 px: 89 textos abaixo do minimo WCAG (4,5:1; 3:1 se grande).
+   Quase todos eram poucas cores do tema ESCURO escritas no style="" ou
+   aplicadas por JavaScript. Cada uma troca pelo tom escuro equivalente da
+   paleta clara, medido contra os 4 fundos do app (#FFF, #FDFAF1, #F5F5F2,
+   #FDF6E3) — o numero entre parenteses e o PIOR dos quatro.
+   Os seletores pegam "color:" no comeco do style ou depois de ";", para nao
+   confundir com background-color ou border-color. */
+
+/* variaveis: dourado de texto 3,75 -> 4,60 ; cinza secundario 4,36 -> 5,43 */
+html[data-theme="light"]{--goldInk:#B45309;--wt-txt2:#56657A}
+
+/* vermelho (37 textos: % da meta, score, metricas da Bel) */
+html[data-theme="light"] :is([style^="color:#f87171" i],[style*=";color:#f87171" i],[style*="; color:#f87171" i],[style^="color: #f87171" i],[style*=";color: #f87171" i],[style*="; color: #f87171" i],[style^="color: rgb(248, 113, 113)"],[style*=";color: rgb(248, 113, 113)"],[style*="; color: rgb(248, 113, 113)"],[style^="color:rgb(248,113,113)"],[style*=";color:rgb(248,113,113)"],[style*="; color:rgb(248,113,113)"]){color:#B91C1C!important}
+
+/* verde (jejum, legenda Excelente) */
+html[data-theme="light"] :is([style^="color:#34d399" i],[style*=";color:#34d399" i],[style*="; color:#34d399" i],[style^="color: #34d399" i],[style*=";color: #34d399" i],[style*="; color: #34d399" i],[style^="color: rgb(52, 211, 153)"],[style*=";color: rgb(52, 211, 153)"],[style*="; color: rgb(52, 211, 153)"],[style^="color:rgb(52,211,153)"],[style*=";color:rgb(52,211,153)"],[style*="; color:rgb(52,211,153)"]){color:var(--wt-verde)!important}
+
+/* verde por variavel */
+html[data-theme="light"] :is([style^="color:var(--green)" i],[style*=";color:var(--green)" i],[style*="; color:var(--green)" i],[style^="color: var(--green)" i],[style*=";color: var(--green)" i],[style*="; color: var(--green)" i]){color:var(--wt-verde)!important}
+
+/* verde-musgo (horario das refeicoes) */
+html[data-theme="light"] :is([style^="color:#5a9a72" i],[style*=";color:#5a9a72" i],[style*="; color:#5a9a72" i],[style^="color: #5a9a72" i],[style*=";color: #5a9a72" i],[style*="; color: #5a9a72" i]){color:var(--wt-verde)!important}
+
+/* azul-ceu (agua) */
+html[data-theme="light"] :is([style^="color:#38bdf8" i],[style*=";color:#38bdf8" i],[style*="; color:#38bdf8" i],[style^="color: #38bdf8" i],[style*=";color: #38bdf8" i],[style*="; color: #38bdf8" i],[style^="color: rgb(56, 189, 248)"],[style*=";color: rgb(56, 189, 248)"],[style*="; color: rgb(56, 189, 248)"],[style^="color:rgb(56,189,248)"],[style*=";color:rgb(56,189,248)"],[style*="; color:rgb(56,189,248)"]){color:var(--wt-azul)!important}
+
+/* azul (agua na Hoje, Dica da Semana) */
+html[data-theme="light"] :is([style^="color:#60a5fa" i],[style*=";color:#60a5fa" i],[style*="; color:#60a5fa" i],[style^="color: #60a5fa" i],[style*=";color: #60a5fa" i],[style*="; color: #60a5fa" i],[style^="color: rgb(96, 165, 250)"],[style*=";color: rgb(96, 165, 250)"],[style*="; color: rgb(96, 165, 250)"],[style^="color:rgb(96,165,250)"],[style*=";color:rgb(96,165,250)"],[style*="; color:rgb(96,165,250)"]){color:var(--wt-azul)!important}
+
+/* ambar (legenda Bom) */
+html[data-theme="light"] :is([style^="color:#fbbf24" i],[style*=";color:#fbbf24" i],[style*="; color:#fbbf24" i],[style^="color: #fbbf24" i],[style*=";color: #fbbf24" i],[style*="; color: #fbbf24" i],[style^="color: rgb(251, 191, 36)"],[style*=";color: rgb(251, 191, 36)"],[style*="; color: rgb(251, 191, 36)"],[style^="color:rgb(251,191,36)"],[style*=";color:rgb(251,191,36)"],[style*="; color:rgb(251,191,36)"]){color:var(--wt-ouroTxt)!important}
+
+/* laranja (proteina, +kg) */
+html[data-theme="light"] :is([style^="color:#e8834a" i],[style*=";color:#e8834a" i],[style*="; color:#e8834a" i],[style^="color: #e8834a" i],[style*=";color: #e8834a" i],[style*="; color: #e8834a" i],[style^="color: rgb(232, 131, 74)"],[style*=";color: rgb(232, 131, 74)"],[style*="; color: rgb(232, 131, 74)"],[style^="color:rgb(232,131,74)"],[style*=";color:rgb(232,131,74)"],[style*="; color:rgb(232,131,74)"]){color:var(--wt-laranja)!important}
+
+/* cinza da Foto IA */
+html[data-theme="light"] :is([style^="color:#6b7685" i],[style*=";color:#6b7685" i],[style*="; color:#6b7685" i],[style^="color: #6b7685" i],[style*=";color: #6b7685" i],[style*="; color: #6b7685" i]){color:var(--wt-txt2)!important}
+
+/* numeros do calendario do Historico: color:var(--border) = 1,21:1 (quase invisivel) */
+html[data-theme="light"] #tab-hist [style*="color:var(--border)"]{color:var(--wt-txt2)!important}
+/* classes com cor do escuro */
+html[data-theme="light"] .cup-ml{color:var(--wt-azul)!important}
+html[data-theme="light"] .h-lado-un{color:var(--wt-txt2)!important}
+/* selo "AI" na foto da Foto IA: o circulo continua escuro sobre a foto, mas uma
+   regra antiga pintava o texto de preto -> preto sobre preto (1,07:1) */
+html[data-theme="light"] #tab-foto [style*="background:rgba(10,10,15,0.9)"]{color:#FBBF24!important}
+
+/* ===== CABECALHO DO CALENDARIO (03/10) =====
+   "CALENDARIO" em fonte larga ocupa 199 px e o seletor "< Out 2026 >" precisa
+   de 152 px numa linha de 269 px (393 px de tela): o botao do proximo mes ia
+   para 384-412 px, fora do cartao e da tela. Agora o cabecalho quebra linha
+   quando nao cabe e o seletor fica a direita. Vale para os 2 temas. */
+#tab-hist div:has(> .card-title):has(> div > button){flex-wrap:wrap!important;row-gap:8px}
+#tab-hist div:has(> .card-title):has(> div > button) > div:has(> button){margin-left:auto}
 </style>
 </head>
 <body>
@@ -3484,6 +3541,10 @@ function setLang(lang){_syncHtmlLang(lang);
     if(t[k]!==undefined){el.innerHTML=t[k];return;}
     try{ if(typeof tx==="function"&&typeof TX!=="undefined"&&TX[k]){ var _v=tx(k); if(_v&&_v!==k) el.innerHTML=_v; } }catch(e){}
   });
+  /* Privacidade e Termos existem nos 6 idiomas (03/10): o link leva o idioma
+     escolhido no app, que pode ser diferente do idioma do celular. */
+  try{ document.querySelectorAll('a[href^="privacidade.html"],a[href^="termos.html"]').forEach(function(a){
+    a.setAttribute("href", a.getAttribute("href").split("?")[0]+"?lang="+lang); }); }catch(e){}
   // Update select options — activity level
   var actLevels=[
     {v:'1.2',label:t.actSed||'Sedentario'},
