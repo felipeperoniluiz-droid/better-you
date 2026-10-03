@@ -5,6 +5,13 @@
 <html lang="pt-BR" translate="no" class="notranslate" style="background:#0a0c0f">
 <head>
 <meta charset="UTF-8">
+<script>
+/* ATENCAO: este numero PRECISA subir a cada publicacao. Ele e o unico
+   aviso que o cliente com o app aberto recebe de que existe versao nova.
+   Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
+   atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
+var APP_VERSION="20261003_perfil";
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="google" content="notranslate">
   <meta name="theme-color" content="#0a0c0f">
@@ -2252,6 +2259,18 @@ html[data-theme="light"] .h-lado-rot{
   html[data-theme="light"] .calorie-ring-wrap>.h-gauge{width:190px!important;max-width:100%}
   html[data-theme="light"] .h-lado{min-height:0!important;padding:12px 8px!important}
 }
+
+/* ===== MEU PERFIL NO TEMA CLARO (03/10) =====
+   Os numeros do quadro TMB/TDEE/Meta e o titulo "Atleta Avancado" tem a cor
+   cravada no style="" com os tons do tema ESCURO. Sobre branco ficavam
+   ilegiveis: meta de calorias #34d399 = 1,92:1, meta de agua #38bdf8 = 2,14:1,
+   TMB/TDEE #f0b429 = 4,10:1, atleta #ff3e64 = 3,43:1 (minimo WCAG 4,5:1).
+   Mesma cor de cada um, no tom escuro da paleta clara: 5,02 / 5,02 / 5,34 /
+   6,70 / 6,47. O !important e para vencer o style="" do HTML. */
+html[data-theme="light"] #modalProfile :is(#tmbVal,#tdeeVal){color:var(--wt-ouroTxt)!important}
+html[data-theme="light"] #modalProfile #goalKcalVal{color:var(--wt-verde)!important}
+html[data-theme="light"] #modalProfile #goalWaterVal{color:var(--wt-azul)!important}
+html[data-theme="light"] #modalProfile [data-i18n="atletaAvancadoLabel"]{color:#B91C1C!important}
 </style>
 </head>
 <body>
@@ -2630,6 +2649,8 @@ if(_al){
       <button type="button" class="bel-atalho" id="nutri-btn-2" onclick="askNutritionist(getNutriPrompt('whatToEat'))"><span class="med" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v8a2.5 2.5 0 0 0 5 0V3"/><path d="M9.5 11v10"/><path d="M17 3c-1.5 1.5-2 3.5-2 5.5V13h3.5V3Z"/><path d="M16.8 13v8"/></svg></span><span id="nutri-lbl-2">O que comer agora?</span></button>
       <button type="button" class="bel-atalho" id="nutri-btn-3" onclick="askNutritionist(getNutriPrompt('proteinGoal'))"><span class="med" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-6a5 5 0 0 1 5-5h3.5a3.5 3.5 0 0 0 0-7H6"/><path d="M12.5 9c3.5 0 6.5 2.2 6.5 5.5S16.5 20 13 20H4"/><path d="M9 14.5c1.6-1 3.4-1 5 0"/></svg></span><span id="nutri-lbl-3">Meta de proteína</span></button>
       <button type="button" class="bel-atalho" id="nutri-btn-4" onclick="askNutritionist(getNutriPrompt('motivation'))"><span class="med" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3c1 5-4 5-3 9 1-1 2-2 2-3 4 3 6 5 6 8a6 6 0 0 1-12 0c0-5 5-7 7-14Z"/></svg></span><span id="nutri-lbl-4">Motivação do dia</span></button>
+      <button type="button" class="bel-atalho" id="nutri-btn-5" onclick="askNutritionist(getNutriPrompt('recipes'))"><span class="med" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v1.5A6.5 6.5 0 0 1 13.5 20h-3A6.5 6.5 0 0 1 4 13.5V12Z"/><path d="M2.5 12h19"/><path d="M9 8.5c0-1.2 1.2-1.6 1.2-2.8M13 8.5c0-1.2 1.2-1.6 1.2-2.8"/></svg></span><span id="nutri-lbl-5">Receitas sob medida</span></button>
+      <button type="button" class="bel-atalho" id="nutri-btn-6" onclick="askNutritionist(getNutriPrompt('tips'))"><span class="med" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-13c-4 0-6.5.5-8 2Z"/><path d="M12 6.5v13"/></svg></span><span id="nutri-lbl-6">Conteúdos e dicas</span></button>
     </div>
 
     <!-- O campo de perguntar FICOU, contra a linha da especificacao que
@@ -2936,18 +2957,17 @@ if(_al){
 <div class="toast" id="toast"></div>
 
 <script>
-/* ATENCAO: este numero PRECISA subir a cada publicacao. Ele e o unico
-   aviso que o cliente com o app aberto recebe de que existe versao nova.
-   Ficou parado em 24/08 enquanto o app andou — por isso as mudancas
-   publicadas nao apareciam na tela. */
-var APP_VERSION="20261003_hoje_alinhado";
+/* APP_VERSION agora fica no TOPO do arquivo, logo depois do <meta charset>.
+   Motivo: a checagem de atualizacao pede so os primeiros 4 KB do arquivo. */
 function checkForUpdate(){
-  fetch(location.href.split('?')[0]+'?_v='+Date.now(),{cache:'no-store'})
-  .then(function(r){return r.text();})
-  .then(function(html){
-    var m=html.match(/APP_VERSION="([^"]+)"/);
-    if(m&&m[1]&&m[1]!==APP_VERSION){
-      var bar=document.getElementById('updateBar');
+  /* Antes baixava o index.html INTEIRO (562 KB) a cada 5 minutos so para ler
+     um numero. Agora pede os primeiros 4 KB (Range), onde fica APP_VERSION:
+     o GitHub Pages responde 206 com ~4 KB (medido em 03/10). Se o servidor
+     ignorar o Range ou a versao nao estiver no pedaco, busca o arquivo
+     inteiro como antes — nunca fica pior que o comportamento antigo. */
+  var url=location.href.split('?')[0]+'?_v='+Date.now();
+  function mostrarBarra(){
+    var bar=document.getElementById('updateBar');
       if(!bar){
         bar=document.createElement('div');
         bar.id='updateBar';
@@ -2956,6 +2976,18 @@ function checkForUpdate(){
         bar.onclick=function(){ try{ if(navigator.serviceWorker) navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});}); if(window.caches) caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});}); }catch(e){} setTimeout(function(){ location.replace(location.pathname+"?v="+Date.now()); },400); };
         document.body.appendChild(bar);
       }
+  }
+  function avaliar(html){
+    var m=String(html||"").match(/APP_VERSION="([^"]+)"/);
+    if(!m||!m[1]) return false;
+    if(m[1]!==APP_VERSION) mostrarBarra();
+    return true;
+  }
+  fetch(url,{cache:'no-store',headers:{'Range':'bytes=0-4095'}})
+  .then(function(r){return r.text();})
+  .then(function(html){
+    if(!avaliar(html)){
+      return fetch(url,{cache:'no-store'}).then(function(r){return r.text();}).then(avaliar);
     }
   }).catch(function(){});
 }
@@ -5527,7 +5559,7 @@ var TOUR_TXT={
 var TOUR_PASSOS=[
  {sel:".calorie-ring-wrap"},
  {sel:".macro-row"},
- {sel:"#sleepCard"},
+ {sel:"#sleepCard", alt:"#sinaisDia"},  /* sono ja registrado: o cartao recolhe e vira o "Sono ok" */
  {sel:"#mealsContainer"},
  {sel:".navfab", toque:true},
  {sel:"#sheetBody", naFolha:true},
@@ -5538,7 +5570,17 @@ var TOUR_PASSOS=[
 var TOUR_ALVOS=TOUR_PASSOS.map(function(x){ return x.sel; });
 var _tourI=0;
 function _tourT(){ return TOUR_TXT[currentLang]||TOUR_TXT.pt; }
-function _tourEl(i){ try{ return document.querySelector(TOUR_PASSOS[i].sel); }catch(e){ return null; } }
+function _tourEl(i){ try{
+  /* 03/10: elemento que existe mas tem tamanho zero (cartao de sono recolhido)
+     fazia o destaque cair no canto da tela, em -8,-8. Agora tenta o "alt" e,
+     se nada estiver visivel, devolve null e o passo e pulado. */
+  var p=TOUR_PASSOS[i], el=document.querySelector(p.sel);
+  if(p.naFolha) return el;                      /* a folha tem regra propria */
+  var vis=function(e){ if(!e) return false; var r=e.getBoundingClientRect(); return r.width>0&&r.height>0; };
+  if(vis(el)) return el;
+  if(p.alt){ var a=document.querySelector(p.alt); if(vis(a)) return a; }
+  return null;
+}catch(e){ return null; } }
 function tourFechar(){
   var ov=document.getElementById("tourOv"); if(ov) ov.style.display="none";
   try{ state.tourVisto=true; state.dicaAdd=true; save(); }catch(e){}
@@ -5582,10 +5624,21 @@ function tourPasso(){
       '<span onclick="tourFechar()" style="flex:1;text-align:center;padding:12px;border-radius:14px;color:var(--text3);font-size:13px;font-weight:700;cursor:pointer;pointer-events:auto">'+T.pular+'</span>'+
       acao+
     '</div>';
-  /* o cartao vai para o lado que tiver mais espaco, para nao cobrir o alvo */
+  /* o cartao vai para o lado que tiver mais espaco, para nao cobrir o alvo.
+     03/10: com a lista de refeicoes cheia (634 px) o cartao ia para 709-919 px
+     numa tela de 852 — fora da tela, sem o botao de avancar. Agora mede a
+     altura REAL do cartao; se nao couber do lado escolhido, tenta o outro; se
+     nao couber em nenhum, fica fixo no pe da tela, por cima do destaque. */
+  ov.style.display="block";
+  cx.style.top="auto"; cx.style.bottom="auto";
+  var ch=cx.offsetHeight||230, mg=12;
+  var cabeBaixo=(r.bottom+16+ch)<=(vh-mg), cabeCima=(r.top-16-ch)>=mg;
   var embaixo = (r.top+r.height/2) < vh/2;
-  cx.style.top = embaixo ? Math.min(vh-20, r.bottom+16)+"px" : "auto";
-  cx.style.bottom = embaixo ? "auto" : Math.min(vh-20, vh-r.top+16)+"px";
+  if(embaixo && !cabeBaixo && cabeCima) embaixo=false;
+  else if(!embaixo && !cabeCima && cabeBaixo) embaixo=true;
+  if(embaixo && cabeBaixo)       cx.style.top=(r.bottom+16)+"px";
+  else if(!embaixo && cabeCima)  cx.style.bottom=(vh-r.top+16)+"px";
+  else                           cx.style.bottom=mg+"px";
   /* No passo do toque a camada precisa deixar o dedo passar ate o botao;
      nos outros ela bloqueia, para um toque perdido nao levar o cliente embora. */
   ov.style.pointerEvents = cfg.toque ? "none" : "auto";
@@ -9621,6 +9674,24 @@ function agendarLembretes() {
 setTimeout(initNotifications, 1500);
 
 // ── SCORE DIÁRIO ─────────────────────────────────────────────
+var FAIXA={
+  cut  :{okBaixo:0.85, okAlto:1.00, zeroAlto:1.30},
+  mass :{okBaixo:1.00, okAlto:1.15, zeroAlto:1.45},
+  maint:{okBaixo:0.90, okAlto:1.10, zeroAlto:1.40}
+};
+function scoreFaixa(atual,meta,objetivo){
+  if(!(meta>0)) return 0;
+  var f=FAIXA[objetivo]||FAIXA.maint, r=atual/meta;
+  if(!(r>0)) return 0;                                 /* dia vazio nao ganha nota */
+  if(r>=f.okBaixo && r<=f.okAlto) return 100;
+  if(r<f.okBaixo)  return Math.round(100*(r/f.okBaixo));
+  if(r>=f.zeroAlto) return 0;
+  return Math.round(100*(f.zeroAlto-r)/(f.zeroAlto-f.okAlto));
+}
+function scoreCrescente(atual,meta){                    /* agua, proteina: mais e melhor */
+  if(!(meta>0)) return 0;
+  return Math.round(Math.min(1,Math.max(0,(atual||0)/meta))*100);
+}
 function calcDayScore(histData){
   var totals,waterMl,calGoal,protGoal,fatGoal;
   if(!histData){
@@ -9638,32 +9709,33 @@ function calcDayScore(histData){
     protGoal=p.weight?Math.round(p.weight*2):Math.round(calGoal*0.30/4);
     fatGoal=Math.round(calGoal*0.25/9);
   }
-  var score=0;
-  var checks=[];
-  // Calorias 80–115% = 30 pts
-  var calPct=calGoal>0?totals.kcal/calGoal:0;
-  var calOk=calPct>=0.8&&calPct<=1.15;
-  score+=calOk?30:(calPct>=0.6?15:0);
-  checks.push({label:tx('scoreCal'),ok:calOk,val:Math.round(totals.kcal)+'/'+calGoal+' kcal'});
-  // Água >= 80% = 20 pts
-  var waterPct=state.waterGoal>0?waterMl/state.waterGoal:0;
-  var waterOk=waterPct>=0.8;
-  score+=waterOk?20:(waterPct>=0.5?10:0);
-  checks.push({label:tx('scoreAgua'),ok:waterOk,val:waterMl+'/'+(state.waterGoal)+' ml'});
-  // Proteína >= 80% = 25 pts
-  var protOk=protGoal>0&&totals.prot>=protGoal*0.8;
-  score+=protOk?25:(protGoal>0&&totals.prot>=protGoal*0.5?12:0);
-  checks.push({label:tx('scoreProt'),ok:protOk,val:Math.round(totals.prot)+'g/'+protGoal+'g'});
-  // Gordura <= 120% = 15 pts
-  var fatOk=fatGoal>0&&totals.fat<=fatGoal*1.2;
-  score+=fatOk?15:0;
-  checks.push({label:tx('scoreGord'),ok:fatOk,val:Math.round(totals.fat)+'g/'+fatGoal+'g'});
-  // Ao menos uma refeição = 10 pts
-  var mealOk=totals.kcal>0;
-  score+=mealOk?10:0;
-  /* Estes dois estavam cravados em portugues. Num app em ingles saia
-     "Meals / Nenhuma" — rotulo traduzido, valor nao. */
-  checks.push({label:tx('scoreRef'),ok:mealOk,val:mealOk?tx('scoreRefSim'):tx('scoreRefNao')});
+  /* Score com faixa assimetrica (aprovado na previa de 10/09, portado em 03/10).
+     Cada criterio vale 0-100 e o score do dia e a media dos 5.
+     - Agua e proteina: mais e melhor (proporcional, teto 100).
+     - Calorias e gordura: nota cheia numa FAIXA que depende do objetivo e
+       cai dos dois lados. Antes, quem comia o dobro tirava nota cheia, e um
+       dia VAZIO ganhava os pontos de gordura (0 g e "<= 120%").
+     - Refeicoes: quantas das 4 (cafe, almoco, lanche, jantar) tem registro.
+       Dias antigos do historico sem as refeicoes salvas: comeu algo = 100,
+       que era a regra anterior — para nao reescrever o passado. */
+  var obj=state.goal||'maint';
+  var sCal =scoreFaixa(totals.kcal,calGoal,obj);
+  var sAgua=scoreCrescente(waterMl,state.waterGoal);
+  var sProt=scoreCrescente(totals.prot,protGoal);
+  var sGord=scoreFaixa(totals.fat,fatGoal,obj);
+  var refs=histData?histData.meals:state.meals, nReg=-1;
+  if(refs&&typeof refs==='object'){
+    nReg=0; ['cafe','almoco','lanche','jantar'].forEach(function(k){ if(refs[k]&&refs[k].length) nReg++; });
+  }
+  var sRef=nReg>=0?Math.round(nReg/4*100):(totals.kcal>0?100:0);
+  var checks=[
+    {label:tx('scoreCal'), s:sCal, ok:sCal>=80, val:Math.round(totals.kcal)+'/'+calGoal+' kcal'},
+    {label:tx('scoreAgua'),s:sAgua,ok:sAgua>=80,val:waterMl+'/'+(state.waterGoal)+' ml'},
+    {label:tx('scoreProt'),s:sProt,ok:sProt>=80,val:Math.round(totals.prot)+'g/'+protGoal+'g'},
+    {label:tx('scoreGord'),s:sGord,ok:sGord>=80,val:Math.round(totals.fat)+'g/'+fatGoal+'g'},
+    {label:tx('scoreRef'), s:sRef, ok:sRef>=80, val:nReg>0?nReg+'/4':(nReg===0||!(totals.kcal>0)?tx('scoreRefNao'):tx('scoreRefSim'))}
+  ];
+  var score=Math.round((sCal+sAgua+sProt+sGord+sRef)/5);
   return{score:Math.min(100,score),checks:checks};
 }
 
@@ -10112,7 +10184,9 @@ function getNutriPrompt(key){
     analyzeDay:{pt:'Analise meu dia de hoje. Como estou em relação às minhas metas de calorias, proteína e água?',en:'Analyze my day so far. How am I doing on my calorie, protein, and water goals?',es:'Analiza mi día de hoy. ¿Cómo voy en relación a mis metas de calorías, proteína y agua?',it:'Analizza la mia giornata. Come sto rispetto ai miei obiettivi di calorie, proteine e acqua?',fr:'Analyse ma journée. Comment je me débrouille par rapport à mes objectifs calories, protéines et eau?',de:'Analysiere meinen heutigen Tag. Wie liege ich bei meinen Kalorien-, Protein- und Wasserzielen?'},
     whatToEat:{pt:'O que eu poderia comer agora para bater minhas metas do dia sem ultrapassar as calorias?',en:'What should I eat now to hit my daily goals without exceeding my calorie limit?',es:'¿Qué podría comer ahora para alcanzar mis metas del día sin superar las calorías?',it:'Cosa potrei mangiare adesso per raggiungere i miei obiettivi giornalieri senza superare le calorie?',fr:'Que pourrais-je manger maintenant pour atteindre mes objectifs sans dépasser mon quota calorique?',de:'Was sollte ich jetzt essen, um meine Tagesziele zu erreichen ohne die Kalorien zu überschreiten?'},
     proteinGoal:{pt:'Estou dentro da minha meta de proteína? Me dê uma dica prática sobre as melhores fontes de proteína para o meu objetivo.',en:'Am I on track with my protein goal? Give me a practical tip on the best protein sources for my goal.',es:'¿Estoy dentro de mi meta de proteína? Dame un consejo práctico sobre las mejores fuentes de proteína para mi objetivo.',it:'Sono in linea con il mio obiettivo proteico? Dammi un consiglio pratico sulle migliori fonti di proteine per il mio obiettivo.',fr:'Suis-je dans ma cible de protéines? Donne-moi un conseil pratique sur les meilleures sources de protéines pour mon objectif.',de:'Erreiche ich mein Proteinziel? Gib mir einen praktischen Tipp zu den besten Proteinquellen für mein Ziel.'},
-    motivation:{pt:'Me dê uma dica motivacional personalizada para hoje, baseada no meu objetivo e no que já consumi hoje.',en:"Give me a personalized motivational tip for today, based on my goal and what I've already consumed.",es:'Dame un consejo motivacional personalizado para hoy, basado en mi objetivo y lo que ya he consumido.',it:"Dammi un consiglio motivazionale personalizzato per oggi, basato sul mio obiettivo e su cosa ho già consumato.",fr:"Donne-moi un conseil motivationnel personnalisé pour aujourd'hui, basé sur mon objectif et ce que j'ai déjà consommé.",de:'Gib mir heute einen personalisierten Motivationstipp, basierend auf meinem Ziel und was ich bereits konsumiert habe.'}
+    motivation:{pt:'Me dê uma dica motivacional personalizada para hoje, baseada no meu objetivo e no que já consumi hoje.',en:"Give me a personalized motivational tip for today, based on my goal and what I've already consumed.",es:'Dame un consejo motivacional personalizado para hoy, basado en mi objetivo y lo que ya he consumido.',it:"Dammi un consiglio motivazionale personalizzato per oggi, basato sul mio obiettivo e su cosa ho già consumato.",fr:"Donne-moi un conseil motivationnel personnalisé pour aujourd'hui, basé sur mon objectif et ce que j'ai déjà consommé.",de:'Gib mir heute einen personalisierten Motivationstipp, basierend auf meinem Ziel und was ich bereits konsumiert habe.'},
+    recipes:{pt:"Sugira uma receita para mim que caiba no que ainda falta das minhas calorias e macros de hoje, respeitando minhas restrições e preferências. Traga os ingredientes com quantidades e o preparo em poucos passos.",en:"Suggest a recipe for me that fits what I still have left of my calories and macros today, respecting my restrictions and preferences. Give me the ingredients with amounts and the method in a few steps.",es:"Sugiéreme una receta que encaje en lo que me falta de calorías y macros hoy, respetando mis restricciones y preferencias. Incluye los ingredientes con cantidades y la preparación en pocos pasos.",it:"Suggeriscimi una ricetta che rientri in quello che mi resta di calorie e macro oggi, rispettando le mie restrizioni e preferenze. Indica gli ingredienti con le quantità e la preparazione in pochi passaggi.",fr:"Propose-moi une recette qui rentre dans ce qu'il me reste de calories et de macros aujourd'hui, en respectant mes restrictions et mes préférences. Donne les ingrédients avec les quantités et la préparation en quelques étapes.",de:"Schlag mir ein Rezept vor, das zu meinen heute noch übrigen Kalorien und Makros passt und meine Einschränkungen und Vorlieben berücksichtigt. Nenne die Zutaten mit Mengen und die Zubereitung in wenigen Schritten."},
+    tips:{pt:"Me ensine algo útil sobre nutrição hoje: uma dica ou conteúdo curto e prático, ligado ao meu objetivo e aos meus hábitos recentes.",en:"Teach me something useful about nutrition today: a short, practical tip or insight connected to my goal and my recent habits.",es:"Enséñame algo útil sobre nutrición hoy: un consejo o contenido breve y práctico, relacionado con mi objetivo y mis hábitos recientes.",it:"Insegnami qualcosa di utile sulla nutrizione oggi: un consiglio o un contenuto breve e pratico, legato al mio obiettivo e alle mie abitudini recenti.",fr:"Apprends-moi quelque chose d'utile sur la nutrition aujourd'hui : un conseil ou un contenu court et pratique, lié à mon objectif et à mes habitudes récentes.",de:"Bring mir heute etwas Nützliches über Ernährung bei: einen kurzen, praktischen Tipp oder Inhalt, passend zu meinem Ziel und meinen letzten Gewohnheiten."}
   };
   var o=p[key];return o?(o[currentLang]||o.en):'';
 }
@@ -10121,9 +10195,11 @@ function updateNutriButtons(){
     1:{pt:'Analisar<br>meu dia',en:'Analyze<br>my day',es:'Analizar<br>mi día',it:'Analizza<br>giornata',fr:'Analyser<br>ma journée',de:'Tag<br>analysieren'},
     2:{pt:'O que<br>comer agora?',en:'What to<br>eat now?',es:'¿Qué<br>comer ahora?',it:'Cosa<br>mangiare?',fr:'Que<br>manger?',de:'Was<br>essen?'},
     3:{pt:'Meta de<br>proteína',en:'Protein<br>goal',es:'Meta de<br>proteína',it:'Obiettivo<br>proteine',fr:'Objectif<br>protéines',de:'Protein-<br>ziel'},
-    4:{pt:'Motivação<br>do dia',en:'Daily<br>motivation',es:'Motivación<br>del día',it:'Motivazione<br>del giorno',fr:'Motivation<br>du jour',de:'Tages-<br>motivation'}
+    4:{pt:'Motivação<br>do dia',en:'Daily<br>motivation',es:'Motivación<br>del día',it:'Motivazione<br>del giorno',fr:'Motivation<br>du jour',de:'Tages-<br>motivation'},
+    5:{pt:"Receitas<br>sob medida",en:"Personal<br>recipes",es:"Recetas<br>a tu medida",it:"Ricette<br>su misura",fr:"Recettes<br>sur mesure",de:"Rezepte<br>für dich"},
+    6:{pt:"Conteúdos<br>e dicas",en:"Tips and<br>insights",es:"Contenidos<br>y consejos",it:"Contenuti<br>e consigli",fr:"Conseils<br>et contenus",de:"Wissen<br>und Tipps"}
   };
-  [1,2,3,4].forEach(function(i){
+  [1,2,3,4,5,6].forEach(function(i){
     var el=document.getElementById('nutri-lbl-'+i);
     if(el){var l=labels[i];el.innerHTML=(l[currentLang]||l.en);}
   });
@@ -10955,7 +11031,7 @@ html[data-theme="light"] #app-logo,html[data-theme="light"] #obLogo{background:#
 /* O fundo escuro que pus no atributo do <html> vale para a primeira pintura;
    depois disso, no tema claro, a pagina volta a ser branca. */
 html[data-theme="light"]{background:#ffffff!important}
-</style><div id="onboardScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9998;display:none;flex-direction:column;align-items:center;overflow:hidden"><div id="obCarousel" style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center"><div style="padding:24px 0 12px;text-align:center;flex-shrink:0"><div data-i18n="obBemVindo" style="color:var(--text2);font-size:13px;font-weight:600">Bem-vindo ao</div><img id="obLogo" src="" alt="Better You" style="height:56px;width:auto;object-fit:contain;margin-top:7px"></div><div id="obTrack" style="flex:1;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;width:100%"><div style="min-width:100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 22px;box-sizing:border-box"><div style="width:100%;max-width:330px;aspect-ratio:860/970;border-radius:20px;overflow:hidden;background:var(--surface2);box-shadow:var(--shadow)"><img src="ob1.jpg" alt="" loading="eager" style="width:100%;height:100%;object-fit:cover;display:block"></div><div data-i18n="obCap1" style="margin-top:22px;font-size:19px;font-weight:800;color:var(--text);text-align:center;line-height:1.35;max-width:330px">Todo corpo que muda começou com uma decisão</div></div><div style="min-width:100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 22px;box-sizing:border-box"><div style="width:100%;max-width:330px;aspect-ratio:860/970;border-radius:20px;overflow:hidden;background:var(--surface2);box-shadow:var(--shadow)"><img src="ob2.jpg" alt="" loading="eager" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"></div><div data-i18n="obCap2" style="margin-top:22px;font-size:19px;font-weight:800;color:var(--text);text-align:center;line-height:1.35;max-width:330px">A Bel acompanha você todos os dias e percebe quando algo muda</div></div><div style="min-width:100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 22px;box-sizing:border-box"><div style="width:100%;max-width:330px;aspect-ratio:860/970;border-radius:20px;overflow:hidden;background:var(--surface2);box-shadow:var(--shadow)"><img src="ob3.jpg" alt="" loading="eager" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"></div><div data-i18n="obCap3" style="margin-top:22px;font-size:19px;font-weight:800;color:var(--text);text-align:center;line-height:1.35;max-width:330px">Uma foto e você sabe tudo: calorias, vitaminas e o que aquele alimento faz por você</div></div><div style="min-width:100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 22px;box-sizing:border-box"><div style="width:100%;max-width:330px;aspect-ratio:860/970;border-radius:20px;overflow:hidden;background:var(--surface2);box-shadow:var(--shadow)"><img src="ob4.jpg?v=2" alt="" loading="eager" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"></div><div data-i18n="obCap4" style="margin-top:22px;font-size:19px;font-weight:800;color:var(--text);text-align:center;line-height:1.35;max-width:330px">Com o Better You fica mais fácil chegar no corpo que você quer</div></div></div><div id="obDots" style="display:flex;gap:8px;justify-content:center;padding:16px 0 12px;flex-shrink:0"></div><div style="width:100%;max-width:420px;padding:0 22px 28px;box-sizing:border-box;flex-shrink:0"><button onclick="obRegistrar()" data-i18n="obRegistrar" style="width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:#1a1206;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(240,180,41,.28)">Registre-se gratuitamente</button><button onclick="obEntrar()" data-i18n="obEntrar" style="width:100%;margin-top:14px;padding:10px;background:none;border:none;color:var(--goldInk);font-size:15px;font-weight:700;cursor:pointer">Entrar</button></div></div><div id="obWelcome" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center"><div style="width:100%;max-width:460px;padding:20px;display:flex;align-items:center;box-sizing:border-box;flex-shrink:0"><button onclick="obVoltar()" style="background:none;border:none;color:var(--text);font-size:26px;line-height:1;cursor:pointer;padding:0 12px 0 0">&#8592;</button><div data-i18n="obRegTitulo" style="flex:1;text-align:center;font-weight:800;font-size:16px;color:var(--text);margin-right:38px">Registre-se</div></div><div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 28px;width:100%;max-width:460px;box-sizing:border-box"><div data-i18n="obTitulo" style="font-size:23px;font-weight:800;color:var(--text);text-align:center;line-height:1.35">Bem-vindo! Vamos personalizar o Better You de acordo com os seus objetivos.</div></div><div style="width:100%;max-width:460px;padding:0 22px 28px;box-sizing:border-box;flex-shrink:0"><button onclick="obContinuar()" data-i18n="obContinuar" style="width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:#1a1206;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(240,180,41,.28)">Continuar</button><div data-i18n="obPriv" style="font-size:11px;color:var(--text3);text-align:center;line-height:1.6;margin-top:18px">Usamos seus dados apenas para personalizar seu acompanhamento. Suas informações ficam na sua conta e você pode apagá-las quando quiser.</div><div id="legalCadastro" style="font-size:11px;text-align:center;margin-top:12px;line-height:1.9"><a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkPriv">Política de Privacidade</a><span style="color:var(--text2);margin:0 8px">&middot;</span><a href="termos.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkTermos">Termos de Uso</a></div></div></div></div><script>function obShow(){var el=document.getElementById("onboardScreen");if(!el)return;try{var l=document.querySelector("#app .header img"),o=document.getElementById("obLogo");if(l&&o&&l.src)o.src=l.src;}catch(e){}document.getElementById("obCarousel").style.display="flex";document.getElementById("obWelcome").style.display="none";el.style.display="flex";var tk=document.getElementById("obTrack");if(tk)tk.scrollLeft=0;obPontos(0);try{ if(typeof setLang==="function") setLang((typeof currentLang!=="undefined"&&currentLang)||"pt"); }catch(e){}}function obFechar(){var el=document.getElementById("onboardScreen");if(el)el.style.display="none";}function obPontos(i){var d=document.getElementById("obDots");if(!d)return;d.innerHTML="";for(var k=0;k<4;k++){(function(n){var b=document.createElement("div");b.style.cssText="width:"+(n===i?"22px":"8px")+";height:8px;border-radius:4px;background:"+(n===i?"var(--gold)":"var(--border)")+";transition:all .25s;cursor:pointer";b.onclick=function(){var t=document.getElementById("obTrack");t.scrollTo({left:t.clientWidth*n,behavior:"smooth"});};d.appendChild(b);})(k);}}function obRegistrar(){document.getElementById("obCarousel").style.display="none";document.getElementById("obWelcome").style.display="flex";}function obVoltar(){document.getElementById("obWelcome").style.display="none";document.getElementById("obCarousel").style.display="flex";}function obIrAuth(tab){try{localStorage.setItem("betteryou_onboard","1");}catch(e){}obFechar();var s=document.getElementById("authScreen");if(s)s.style.display="flex";try{if(typeof switchAuthTab==="function")switchAuthTab(tab);}catch(e){}}function obContinuar(){obIrAuth("register");}function obEntrar(){obIrAuth("login");}(function(){var t=document.getElementById("obTrack");if(t)t.addEventListener("scroll",function(){obPontos(Math.round(t.scrollLeft/(t.clientWidth||1)));});function pronto(){try{if(typeof _fbAuth==="undefined"||!_fbAuth){setTimeout(pronto,400);return;}_fbAuth.onAuthStateChanged(function(u){if(u){obFechar();}else if(!localStorage.getItem("betteryou_onboard")){setTimeout(obShow,250);}});}catch(e){setTimeout(pronto,600);}}pronto();})();</script>
+</style><div id="onboardScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9998;display:none;flex-direction:column;align-items:center;overflow:hidden"><div id="obCarousel" style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center"><div style="padding:24px 0 12px;text-align:center;flex-shrink:0"><div data-i18n="obBemVindo" style="color:var(--text2);font-size:13px;font-weight:600">Bem-vindo ao</div><img id="obLogo" src="" alt="Better You" style="height:56px;width:auto;object-fit:contain;margin-top:7px"></div><div id="obTrack" style="flex:1;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;width:100%"><div style="min-width:100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 22px;box-sizing:border-box"><div style="width:100%;max-width:330px;aspect-ratio:860/970;border-radius:20px;overflow:hidden;background:var(--surface2);box-shadow:var(--shadow)"><img src="ob1.jpg" alt="" loading="lazy" class="ob-foto" style="width:100%;height:100%;object-fit:cover;display:block"></div><div data-i18n="obCap1" style="margin-top:22px;font-size:19px;font-weight:800;color:var(--text);text-align:center;line-height:1.35;max-width:330px">Todo corpo que muda começou com uma decisão</div></div><div style="min-width:100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 22px;box-sizing:border-box"><div style="width:100%;max-width:330px;aspect-ratio:860/970;border-radius:20px;overflow:hidden;background:var(--surface2);box-shadow:var(--shadow)"><img src="ob2.jpg" alt="" loading="lazy" decoding="async" class="ob-foto" style="width:100%;height:100%;object-fit:cover;display:block"></div><div data-i18n="obCap2" style="margin-top:22px;font-size:19px;font-weight:800;color:var(--text);text-align:center;line-height:1.35;max-width:330px">A Bel acompanha você todos os dias e percebe quando algo muda</div></div><div style="min-width:100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 22px;box-sizing:border-box"><div style="width:100%;max-width:330px;aspect-ratio:860/970;border-radius:20px;overflow:hidden;background:var(--surface2);box-shadow:var(--shadow)"><img src="ob3.jpg" alt="" loading="lazy" decoding="async" class="ob-foto" style="width:100%;height:100%;object-fit:cover;display:block"></div><div data-i18n="obCap3" style="margin-top:22px;font-size:19px;font-weight:800;color:var(--text);text-align:center;line-height:1.35;max-width:330px">Uma foto e você sabe tudo: calorias, vitaminas e o que aquele alimento faz por você</div></div><div style="min-width:100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 22px;box-sizing:border-box"><div style="width:100%;max-width:330px;aspect-ratio:860/970;border-radius:20px;overflow:hidden;background:var(--surface2);box-shadow:var(--shadow)"><img src="ob4.jpg?v=2" alt="" loading="lazy" decoding="async" class="ob-foto" style="width:100%;height:100%;object-fit:cover;display:block"></div><div data-i18n="obCap4" style="margin-top:22px;font-size:19px;font-weight:800;color:var(--text);text-align:center;line-height:1.35;max-width:330px">Com o Better You fica mais fácil chegar no corpo que você quer</div></div></div><div id="obDots" style="display:flex;gap:8px;justify-content:center;padding:16px 0 12px;flex-shrink:0"></div><div style="width:100%;max-width:420px;padding:0 22px 28px;box-sizing:border-box;flex-shrink:0"><button onclick="obRegistrar()" data-i18n="obRegistrar" style="width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:#1a1206;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(240,180,41,.28)">Registre-se gratuitamente</button><button onclick="obEntrar()" data-i18n="obEntrar" style="width:100%;margin-top:14px;padding:10px;background:none;border:none;color:var(--goldInk);font-size:15px;font-weight:700;cursor:pointer">Entrar</button></div></div><div id="obWelcome" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center"><div style="width:100%;max-width:460px;padding:20px;display:flex;align-items:center;box-sizing:border-box;flex-shrink:0"><button onclick="obVoltar()" style="background:none;border:none;color:var(--text);font-size:26px;line-height:1;cursor:pointer;padding:0 12px 0 0">&#8592;</button><div data-i18n="obRegTitulo" style="flex:1;text-align:center;font-weight:800;font-size:16px;color:var(--text);margin-right:38px">Registre-se</div></div><div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 28px;width:100%;max-width:460px;box-sizing:border-box"><div data-i18n="obTitulo" style="font-size:23px;font-weight:800;color:var(--text);text-align:center;line-height:1.35">Bem-vindo! Vamos personalizar o Better You de acordo com os seus objetivos.</div></div><div style="width:100%;max-width:460px;padding:0 22px 28px;box-sizing:border-box;flex-shrink:0"><button onclick="obContinuar()" data-i18n="obContinuar" style="width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:#1a1206;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(240,180,41,.28)">Continuar</button><div data-i18n="obPriv" style="font-size:11px;color:var(--text3);text-align:center;line-height:1.6;margin-top:18px">Usamos seus dados apenas para personalizar seu acompanhamento. Suas informações ficam na sua conta e você pode apagá-las quando quiser.</div><div id="legalCadastro" style="font-size:11px;text-align:center;margin-top:12px;line-height:1.9"><a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkPriv">Política de Privacidade</a><span style="color:var(--text2);margin:0 8px">&middot;</span><a href="termos.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkTermos">Termos de Uso</a></div></div></div></div><script>function obShow(){var el=document.getElementById("onboardScreen");if(!el)return;/* As 4 fotos ficam lazy para nao baixarem (414 KB) em toda abertura de quem ja tem conta. Aqui, quando a tela vai aparecer, viram eager e carregam na hora. */try{document.querySelectorAll("#onboardScreen img.ob-foto").forEach(function(i){i.loading="eager";});}catch(e){}try{var l=document.querySelector("#app .header img"),o=document.getElementById("obLogo");if(l&&o&&l.src)o.src=l.src;}catch(e){}document.getElementById("obCarousel").style.display="flex";document.getElementById("obWelcome").style.display="none";el.style.display="flex";var tk=document.getElementById("obTrack");if(tk)tk.scrollLeft=0;obPontos(0);try{ if(typeof setLang==="function") setLang((typeof currentLang!=="undefined"&&currentLang)||"pt"); }catch(e){}}function obFechar(){var el=document.getElementById("onboardScreen");if(el)el.style.display="none";}function obPontos(i){var d=document.getElementById("obDots");if(!d)return;d.innerHTML="";for(var k=0;k<4;k++){(function(n){var b=document.createElement("div");b.style.cssText="width:"+(n===i?"22px":"8px")+";height:8px;border-radius:4px;background:"+(n===i?"var(--gold)":"var(--border)")+";transition:all .25s;cursor:pointer";b.onclick=function(){var t=document.getElementById("obTrack");t.scrollTo({left:t.clientWidth*n,behavior:"smooth"});};d.appendChild(b);})(k);}}function obRegistrar(){document.getElementById("obCarousel").style.display="none";document.getElementById("obWelcome").style.display="flex";}function obVoltar(){document.getElementById("obWelcome").style.display="none";document.getElementById("obCarousel").style.display="flex";}function obIrAuth(tab){try{localStorage.setItem("betteryou_onboard","1");}catch(e){}obFechar();var s=document.getElementById("authScreen");if(s)s.style.display="flex";try{if(typeof switchAuthTab==="function")switchAuthTab(tab);}catch(e){}}function obContinuar(){obIrAuth("register");}function obEntrar(){obIrAuth("login");}(function(){var t=document.getElementById("obTrack");if(t)t.addEventListener("scroll",function(){obPontos(Math.round(t.scrollLeft/(t.clientWidth||1)));});function pronto(){try{if(typeof _fbAuth==="undefined"||!_fbAuth){setTimeout(pronto,400);return;}_fbAuth.onAuthStateChanged(function(u){if(u){obFechar();}else if(!localStorage.getItem("betteryou_onboard")){setTimeout(obShow,250);}});}catch(e){setTimeout(pronto,600);}}pronto();})();</script>
 <div id="questScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9996;display:none;flex-direction:column;align-items:center"><div style="width:100%;max-width:460px;padding:22px 22px 0;box-sizing:border-box;flex-shrink:0"><div id="qCab" style="text-align:center;font-size:13px;color:var(--text2);font-weight:600;margin-bottom:14px"></div><div id="qBarra" style="display:flex;gap:5px"></div></div><div id="qCorpo" style="flex:1;width:100%;max-width:460px;padding:26px 22px 0;box-sizing:border-box;overflow-y:auto"></div><div style="width:100%;max-width:460px;padding:16px 22px 26px;box-sizing:border-box;display:flex;align-items:center;gap:12px;flex-shrink:0"><button id="qVoltar" onclick="qAnterior()" style="width:48px;height:48px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:20px;line-height:1;cursor:pointer;flex-shrink:0">&#8592;</button><button id="qProx" onclick="qProximo()" style="flex:1;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:#1a1206;font-size:15px;font-weight:800;cursor:pointer"></button></div></div><script>var _qPasso=0, _qMetas=[], _qNome="";function _qT(){ return QUEST_TXT[currentLang]||QUEST_TXT.pt; }var _qHabs=[], _qOutro="";
 /* a lista de cima muda conforme as metas escolhidas: a tela parece ja ter entendido a pessoa */
 var _REC={perder:["calorias","consciente"],manter:["equilibrio","calorias"],ganhar:["prot","cozinhar"],
