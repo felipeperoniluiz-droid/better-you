@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261003_legais";
+var APP_VERSION="20261013_planos";
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="google" content="notranslate">
@@ -6150,7 +6150,7 @@ function renderUpgrade(){
      '<div style="display:inline-block;font-size:10.5px;color:#34d399;font-weight:800;letter-spacing:.5px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:20px;padding:5px 14px">'+(t.proTrialBadge||"")+'</div></div>';
   h+='<div id="planoEscolha" style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px"></div>';
 
-  h+='<button onclick="subscribePro()" id="subscribeBtn" class="btn btn-primary" style="font-size:15px;padding:16px" data-i18n="proCtaBtn">'+(t.proCtaBtn||"")+'</button>'+
+  h+='<button onclick="subscribePro(true)" id="subscribeBtn" class="btn btn-primary" style="font-size:15px;padding:16px" data-i18n="proCtaBtn">'+(t.proCtaBtn||"")+'</button>'+
      '<div style="font-size:11px;color:var(--text3);text-align:center;margin-top:9px">'+P.rod+'</div>'+
      '<div style="font-size:11px;text-align:center;margin-top:10px;line-height:1.9">'+
      '<a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline">'+(t.linkPriv||"")+'</a>'+
@@ -10372,8 +10372,14 @@ function setProStatus(val, silent){
   }
 }
 
-async function subscribePro(){
+async function subscribePro(confirmado){
   if(isCreatorAccount()){setProStatus(true);return;}
+  /* 13/10: so o botao de DENTRO da tela de planos (que mostra mensal e anual)
+     vai ao Stripe. Os outros 5 botoes de PRO (cartao de conteudo bloqueado,
+     selo do cabecalho, cartao do Mais, Jejum, Bel) chamavam esta funcao
+     direto e levavam ao checkout ANUAL sem a pessoa ver que existe o mensal.
+     Visto pelo Felipe no teste do caminho do cliente. */
+  if(confirmado!==true){ try{ openModal('upgradeModal'); }catch(e){} return; }
   var btn=document.getElementById('subscribeBtn');
   if(btn){btn.disabled=true;btn.textContent='...';}
   try{
