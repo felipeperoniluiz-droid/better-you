@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261013_planos";
+var APP_VERSION="20261013_tourpro";
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="google" content="notranslate">
@@ -5629,13 +5629,31 @@ var TOUR_PASSOS=[
  {sel:'.n3-item[data-g="mais"]'}
 ];
 var TOUR_ALVOS=TOUR_PASSOS.map(function(x){ return x.sel; });
+/* ── TOUR DO PRO (13/10) ──────────────────────────────────────────────
+   Pedido do Felipe: quem conclui a compra recebe a explicacao do que o PRO
+   liberou, "imitando" o tour de boas-vindas. Usa o MESMO motor (destaque,
+   balao, Pular/Proximo); so trocam a lista e os textos. Os 7 beneficios sao
+   exatamente os da tabela da tela de assinatura (PRO_TXT.cmp) — o tour nao
+   promete nada que a tela de venda nao prometeu. */
+var TOUR_PRO_PASSOS=[
+ {sel:"#hojePro", alt:"#pro-logo-badge"},
+ {sel:".navfab", toque:true},
+ {sel:"#sheetBody .sheet-item[onclick*=\"navGo('foto')\"]", naFolha:true},
+ {sel:"#sheetBody .sheet-item[onclick*=\"bcAbrir\"]", naFolha:true},
+ {sel:"#sheetBody .sheet-item[onclick*=\"irFotoCorpo\"]", naFolha:true},
+ {sel:'.n3-item[data-g="bel"]', fechaFolha:true},
+ {sel:'.n3-item[data-g="mais"]'}
+];
+var TOUR_PRO_TXT={"pt":[["Agora você é PRO","Tudo o que estava trancado agora é seu. Em 30 segundos eu te mostro onde fica cada coisa."],["Comece pelo +","Toque no botão + aqui embaixo. É por ele que você registra tudo — e agora sem limite."],["Foto IA sem limite","Fotografe quantos pratos quiser. A IA identifica os ingredientes e calcula calorias e macros de cada um."],["Ficha completa no mercado","Leia o rótulo antes de comprar: além do alerta de alergia, agora você vê a ficha completa do produto."],["Fotos de progresso","Registre o seu corpo e compare o antes e o depois lado a lado. É aqui que a mudança fica visível."],["A Bel, sempre que quiser","Converse com a sua nutricionista a qualquer hora. E toda semana ela analisa os seus dias e te conta o que mudou."],["Relatórios, projeção e jejum","Aqui ficam os seus relatórios com a projeção até a meta e o jejum intermitente com fases e histórico."]],"en":[["You're PRO now","Everything that was locked is now yours. In 30 seconds I'll show you where everything is."],["Start with the +","Tap the + button down here. It's how you log everything — and now with no limits."],["Unlimited AI Photo","Snap as many plates as you like. The AI identifies the ingredients and works out the calories and macros of each one."],["Full breakdown at the shop","Read the label before you buy: on top of the allergy warning, you now see the product's full breakdown."],["Progress photos","Capture your body and compare before and after side by side. This is where the change becomes visible."],["Bel, whenever you like","Talk to your nutritionist any time. And every week she looks at your days and tells you what changed."],["Reports, projection and fasting","Here you'll find your reports with the projection to your goal, and intermittent fasting with phases and history."]],"es":[["Ya eres PRO","Todo lo que estaba bloqueado ahora es tuyo. En 30 segundos te muestro dónde está cada cosa."],["Empieza por el +","Toca el botón + aquí abajo. Es por donde registras todo — y ahora sin límite."],["Foto IA sin límite","Fotografía todos los platos que quieras. La IA identifica los ingredientes y calcula las calorías y los macros de cada uno."],["Ficha completa en el súper","Lee la etiqueta antes de comprar: además del aviso de alergia, ahora ves la ficha completa del producto."],["Fotos de progreso","Registra tu cuerpo y compara el antes y el después lado a lado. Aquí es donde el cambio se hace visible."],["Bel, siempre que quieras","Habla con tu nutricionista a cualquier hora. Y cada semana analiza tus días y te cuenta qué cambió."],["Informes, proyección y ayuno","Aquí están tus informes con la proyección hasta tu meta y el ayuno intermitente con fases e historial."]],"it":[["Ora sei PRO","Tutto ciò che era bloccato ora è tuo. In 30 secondi ti mostro dove si trova ogni cosa."],["Inizia dal +","Tocca il pulsante + qui sotto. È da lì che registri tutto — e ora senza limiti."],["Foto IA senza limiti","Fotografa tutti i piatti che vuoi. L'IA riconosce gli ingredienti e calcola calorie e macro di ciascuno."],["Scheda completa al supermercato","Leggi l'etichetta prima di comprare: oltre all'avviso allergie, ora vedi la scheda completa del prodotto."],["Foto dei progressi","Registra il tuo corpo e confronta il prima e il dopo fianco a fianco. È qui che il cambiamento diventa visibile."],["Bel, quando vuoi","Parla con la tua nutrizionista in qualsiasi momento. E ogni settimana analizza le tue giornate e ti racconta cosa è cambiato."],["Report, proiezione e digiuno","Qui trovi i tuoi report con la proiezione fino all'obiettivo e il digiuno intermittente con fasi e storico."]],"fr":[["Vous êtes maintenant PRO","Tout ce qui était verrouillé est désormais à vous. En 30 secondes, je vous montre où se trouve chaque chose."],["Commencez par le +","Touchez le bouton + en bas. C'est par là que vous enregistrez tout — et désormais sans limite."],["Photo IA illimitée","Photographiez autant d'assiettes que vous voulez. L'IA identifie les ingrédients et calcule les calories et les macros de chacune."],["Fiche complète au magasin","Lisez l'étiquette avant d'acheter : en plus de l'alerte allergie, vous voyez maintenant la fiche complète du produit."],["Photos de progression","Photographiez votre corps et comparez l'avant et l'après côte à côte. C'est là que le changement devient visible."],["Bel, quand vous voulez","Parlez à votre nutritionniste à tout moment. Et chaque semaine, elle analyse vos journées et vous dit ce qui a changé."],["Rapports, projection et jeûne","Ici se trouvent vos rapports avec la projection jusqu'à votre objectif et le jeûne intermittent avec ses phases et son historique."]],"de":[["Du bist jetzt PRO","Alles, was gesperrt war, gehört jetzt dir. In 30 Sekunden zeige ich dir, wo was ist."],["Fang beim + an","Tippe unten auf den +-Knopf. Darüber erfasst du alles — und jetzt ohne Limit."],["KI-Foto ohne Limit","Fotografiere so viele Teller, wie du willst. Die KI erkennt die Zutaten und berechnet Kalorien und Makros für jeden."],["Vollständige Übersicht im Laden","Lies das Etikett vor dem Kauf: Zusätzlich zur Allergiewarnung siehst du jetzt die vollständige Produktübersicht."],["Fortschrittsfotos","Halte deinen Körper fest und vergleiche Vorher und Nachher nebeneinander. Hier wird die Veränderung sichtbar."],["Bel, wann immer du willst","Sprich jederzeit mit deiner Ernährungsberaterin. Und jede Woche wertet sie deine Tage aus und sagt dir, was sich verändert hat."],["Berichte, Prognose und Fasten","Hier findest du deine Berichte mit der Prognose bis zum Ziel und das Intervallfasten mit Phasen und Verlauf."]]};
+var _tourModo="base", _tourMostrou=0;  /* quantos passos chegaram a aparecer */
+function _tourLista(){ return _tourModo==="pro"?TOUR_PRO_PASSOS:TOUR_PASSOS; }
 var _tourI=0;
-function _tourT(){ return TOUR_TXT[currentLang]||TOUR_TXT.pt; }
+function _tourT(){ var b=TOUR_TXT[currentLang]||TOUR_TXT.pt; if(_tourModo!=="pro") return b; return Object.assign({},b,{p:(TOUR_PRO_TXT[currentLang]||TOUR_PRO_TXT.pt)}); }
 function _tourEl(i){ try{
   /* 03/10: elemento que existe mas tem tamanho zero (cartao de sono recolhido)
      fazia o destaque cair no canto da tela, em -8,-8. Agora tenta o "alt" e,
      se nada estiver visivel, devolve null e o passo e pulado. */
-  var p=TOUR_PASSOS[i], el=document.querySelector(p.sel);
+  var p=_tourLista()[i], el=document.querySelector(p.sel);
   if(p.naFolha) return el;                      /* a folha tem regra propria */
   var vis=function(e){ if(!e) return false; var r=e.getBoundingClientRect(); return r.width>0&&r.height>0; };
   if(vis(el)) return el;
@@ -5644,22 +5662,33 @@ function _tourEl(i){ try{
 }catch(e){ return null; } }
 function tourFechar(){
   var ov=document.getElementById("tourOv"); if(ov) ov.style.display="none";
-  try{ state.tourVisto=true; state.dicaAdd=true; save(); }catch(e){}
+  /* So conta como visto se algum passo apareceu de verdade. Se o tour disparar
+     antes da tela desenhar, todos os alvos medem zero, ele fecha sozinho — e sem
+     isto o cliente nunca mais veria o tour do PRO. */
+  try{ if(_tourModo==="pro"){ if(_tourMostrou>0) state.tourProVisto=true; } else { state.tourVisto=true; state.dicaAdd=true; } save(); }catch(e){}
+  _tourModo="base";
 }
 function tourProx(){ _tourI++; tourPasso(); }
 function tourPasso(){
   var T=_tourT(), ov=document.getElementById("tourOv");
   if(!ov) return;
   /* pula alvos que nao existem nesta conta em vez de apontar para o vazio */
-  while(_tourI<TOUR_PASSOS.length && !_tourEl(_tourI)) _tourI++;
-  if(_tourI>=TOUR_PASSOS.length){ tourFechar(); return; }
-  var cfg=TOUR_PASSOS[_tourI];
+  while(_tourI<_tourLista().length && !_tourEl(_tourI)) _tourI++;
+  if(_tourI>=_tourLista().length){ tourFechar(); return; }
+  var cfg=_tourLista()[_tourI];
 
   /* a folha fica aberta so enquanto o passo dela dura */
   if(cfg.fechaFolha){ try{ closeSheet(); }catch(e){} }
   if(cfg.naFolha){
     var sb=document.getElementById("sheetBody");
-    if(!sb || !sb.offsetHeight){ _tourI++; return tourPasso(); }
+    if(!sb || !sb.offsetHeight){
+      /* 13/10: antes pulava na hora. Se a folha ainda nao tiver aparecido (celular
+         lento, aba em segundo plano), espera ate ~1,2 s antes de desistir do passo. */
+      window._tourEsperaFolha=(window._tourEsperaFolha||0)+1;
+      if(window._tourEsperaFolha<=8){ setTimeout(tourPasso,150); return; }
+      window._tourEsperaFolha=0; _tourI++; return tourPasso();
+    }
+    window._tourEsperaFolha=0;
   }
 
   var el=_tourEl(_tourI);
@@ -5672,13 +5701,13 @@ function tourPasso(){
   foco.style.width=(r.width+pad*2)+"px"; foco.style.height=(r.height+pad*2)+"px";
 
   var p=T.p[_tourI]||["",""];
-  var ultimo=(_tourI>=TOUR_PASSOS.length-1);
+  var ultimo=(_tourI>=_tourLista().length-1);
   var cx=document.getElementById("tourCard");
   var acao = cfg.toque
     ? '<span style="flex:1.6;text-align:center;padding:13px;border-radius:14px;background:var(--goldBg2);border:1px solid rgba(240,180,41,.5);color:var(--goldInk);font-size:13px;font-weight:800">'+T.toque+'</span>'
     : '<span onclick="tourProx()" style="flex:1.6;text-align:center;padding:13px;border-radius:14px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:13.5px;font-weight:800;cursor:pointer">'+(ultimo?T.fim:T.prox)+'</span>';
   cx.innerHTML=
-    '<div style="font-size:11px;color:var(--text3);letter-spacing:.5px;margin-bottom:6px">'+(_tourI+1)+' '+T.de+' '+TOUR_PASSOS.length+'</div>'+
+    '<div style="font-size:11px;color:var(--text3);letter-spacing:.5px;margin-bottom:6px">'+(_tourI+1)+' '+T.de+' '+_tourLista().length+'</div>'+
     '<div style="font-size:16px;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:7px">'+p[0]+'</div>'+
     '<div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:16px">'+p[1]+'</div>'+
     '<div style="display:flex;gap:9px;align-items:center">'+
@@ -5705,17 +5734,31 @@ function tourPasso(){
   ov.style.pointerEvents = cfg.toque ? "none" : "auto";
   cx.style.pointerEvents = "auto";
   ov.style.display="block";
+  _tourMostrou++;
 }
 /* O toque de verdade no "+" e que faz o tour seguir. */
 function tourFolhaAbriu(){
   try{
     var ov=document.getElementById("tourOv");
     if(!ov || ov.style.display!=="block") return;
-    var cfg=TOUR_PASSOS[_tourI];
+    var cfg=_tourLista()[_tourI];
     if(cfg && cfg.toque) setTimeout(function(){ tourProx(); },320);
   }catch(e){}
 }
-function tourComecar(){ _tourI=0; tourPasso(); }
+function tourComecar(){ _tourModo="base"; _tourI=0; tourPasso(); }
+function tourProComecar(){ _tourModo="pro"; _tourMostrou=0; _tourI=0; tourPasso(); }
+/* Mostra o tour do PRO uma unica vez, logo depois que o Stripe confirma a compra. */
+function tourProTalvez(){
+  try{
+    if(state.tourProVisto) return;
+    if(typeof isPro!=="undefined" && !isPro) return;
+    try{ closeModal('upgradeModal'); }catch(e){}
+    try{ closeSheet(); }catch(e){}
+    try{ switchTab('hoje'); }catch(e){}
+    try{ window.scrollTo(0,0); }catch(e){}
+    setTimeout(function(){ try{ tourProComecar(); }catch(e){} },500);
+  }catch(e){}
+}
 function tourTalvez(){
   try{
     if(state.tourVisto) return;
@@ -10422,6 +10465,8 @@ async function verifyStripeSession(sessionId){
          As security rules bloqueiam o cliente de escrever isPro/subscriptionId.
          O app apenas LE esse campo no login. Nao reintroduzir escrita aqui. */
       closeModal('upgradeModal');
+      /* tour do que o PRO liberou (13/10), uma vez so */
+      setTimeout(function(){ try{ tourProTalvez(); }catch(e){} },1200);
     }
   }catch(e){console.warn('Stripe verify error:',e);}
 }
