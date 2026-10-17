@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261017_pro_merge";
+var APP_VERSION="20261017_retorno_stripe";
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="google" content="notranslate">
@@ -10452,8 +10452,9 @@ async function subscribePro(confirmado){
 
 async function verifyStripeSession(sessionId){
   try{
-    var res=await fetch(PROXY_URL+'/verify-session?session_id='+sessionId);
+    var res=await fetch(PROXY_URL+'/verify-session?session_id='+encodeURIComponent(sessionId));
     var data=await res.json();
+    if(data.isPro||data.status==='invalid'){ try{ localStorage.removeItem('by_sessaoPendente'); }catch(e){} }
     if(data.isPro){
       setProStatus(true);
       // Salvar subscriptionId no localStorage para verificação futura
@@ -10482,6 +10483,10 @@ async function verifyLocalSubscription(){
       setProStatus(true, true); // silencioso — usuário já era PRO
       localStorage.setItem('betteryou_pro_verified_at', String(Date.now())); // atualiza cache
     }else{
+      /* 17/10: se enquanto esperava a resposta chegou um numero NOVO (do
+         Firestore ou do retorno do Stripe), esta resposta e de um numero
+         velho e nao pode derrubar o PRO recem-ativado. */
+      if(localStorage.getItem('betteryou_subscriptionId')!==subId) return;
       // Assinatura cancelada ou não encontrada no Stripe
       localStorage.removeItem('betteryou_subscriptionId');
       localStorage.removeItem('betteryou_pro_verified_at');
@@ -10493,18 +10498,33 @@ async function verifyLocalSubscription(){
   }
 }
 
+/* 17/10: o retorno do Stripe NAO pode se perder.
+   Antes, o session_id so era lido depois do login. Se a volta do pagamento
+   abria o app deslogado (Revolut Pay devolve pelo navegador do proprio
+   Revolut, por exemplo), a URL era limpa e a ativacao nunca acontecia:
+   pagou e ficou FREE. Visto pelo Felipe com a conta de teste.
+   Agora: o id fica guardado ate o servidor confirmar, e o Worker ativa o PRO
+   mesmo sem login (ele usa o client_reference_id da sessao, nao o login). */
 function checkUrlProStatus(){
   var params=new URLSearchParams(window.location.search);
   var sessionId=params.get('session_id');
   var cancel=params.get('pro');
   if(sessionId){
-    verifyStripeSession(sessionId);
-    // Limpar URL sem reload
+    try{ localStorage.setItem('by_sessaoPendente', sessionId); }catch(e){}
     window.history.replaceState({},'',window.location.pathname);
   }
   if(cancel==='cancel'){
     showToast(tx('tstCheckoutSaiu'),'');
     window.history.replaceState({},'',window.location.pathname);
+  }
+  var pend=null; try{ pend=localStorage.getItem('by_sessaoPendente'); }catch(e){}
+  if(!pend) return;
+  if(_fbUser){ verifyStripeSession(pend); }
+  else{
+    fetch(PROXY_URL+'/verify-session?session_id='+encodeURIComponent(pend))
+      .then(function(r){ return r.json(); })
+      .then(function(d){ if(d&&d.status==='invalid'){ try{ localStorage.removeItem('by_sessaoPendente'); }catch(e){} } })
+      .catch(function(){});
   }
 }
 
@@ -10745,6 +10765,9 @@ function initFirebase(){
   _fbAuth = firebase.auth();
   _fbDb   = firebase.firestore();
 
+  /* 17/10: le o retorno do Stripe JA, antes de saber se ha login (ver checkUrlProStatus). */
+  try{ checkUrlProStatus(); }catch(e){}
+
   _fbAuth.onAuthStateChanged(function(user){
     _fbUser = user;
     if(user){
@@ -10768,8 +10791,12 @@ function initFirebase(){
       _fbDb.collection('users').doc(user.uid).get().then(function(doc){
         if(doc.exists&&doc.data().isPro){
           var docData=doc.data();
-          // Salvar subscriptionId no localStorage se veio do Firestore
-          if(docData.subscriptionId&&!localStorage.getItem('betteryou_subscriptionId')){
+          /* 17/10: o Firestore (gravado pelo servidor) manda. Antes so copiava
+             se o aparelho estivesse VAZIO; com um numero velho guardado (de uma
+             assinatura cancelada), a nova nunca era lida e o cliente que pagou
+             via GRATIS. Se ha um retorno do Stripe pendente, ele decide. */
+          var _pend=null; try{ _pend=localStorage.getItem('by_sessaoPendente'); }catch(e){}
+          if(docData.subscriptionId&&!_pend&&localStorage.getItem('betteryou_subscriptionId')!==docData.subscriptionId){
             localStorage.setItem('betteryou_subscriptionId', docData.subscriptionId);
             /* 17/10: a verificacao no Stripe la embaixo roda ANTES desta leitura do
                Firestore terminar. Num aparelho novo (ou depois de sair e entrar) o
