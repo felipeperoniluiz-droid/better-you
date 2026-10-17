@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261017_pro_login";
+var APP_VERSION="20261017_pro_merge";
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="google" content="notranslate">
@@ -11077,11 +11077,15 @@ function _fbEnviarAgora(soDoc){
     /* O documento principal (~30 KB, contem as refeicoes) vai PRIMEIRO.
        Antes ele so era gravado depois de subir 1,2 MB de fotos, entao recarregar
        a pagina no meio apagava o registro. Foto nunca mais custa uma refeicao. */
+    /* 17/10: {merge:true} e obrigatorio. Sem ele o set() SUBSTITUIA o documento
+       inteiro e apagava isPro/subscriptionId/stripeCustomerId que o Worker grava
+       aqui depois do pagamento. O cliente pagante aparecia como gratis ao entrar
+       em outro aparelho. Visto pelo Felipe com a conta de teste. */
     return _fbDb.collection('users').doc(_uid).set({
       data:JSON.stringify(_c),
       updatedAt:new Date().toISOString(),
       email:_fbUser.email
-    }).then(function(){
+    }, {merge:true}).then(function(){
       showToast('Nuvem: dados salvos!','success');
       if(!soDoc) _fbEnviarFotos(_uid,_photos);
     }).catch(function(e){ showToast(tx('tstErroEnviar'),'error'); });
