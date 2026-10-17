@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261013_tourpro";
+var APP_VERSION="20261017_pro_login";
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="google" content="notranslate">
@@ -10771,6 +10771,12 @@ function initFirebase(){
           // Salvar subscriptionId no localStorage se veio do Firestore
           if(docData.subscriptionId&&!localStorage.getItem('betteryou_subscriptionId')){
             localStorage.setItem('betteryou_subscriptionId', docData.subscriptionId);
+            /* 17/10: a verificacao no Stripe la embaixo roda ANTES desta leitura do
+               Firestore terminar. Num aparelho novo (ou depois de sair e entrar) o
+               localStorage esta vazio, ela desistia, e o cliente que pagou via o app
+               como GRATIS ate a proxima abertura. Visto pelo Felipe com a conta de
+               teste. Agora, assim que o numero da assinatura chega, verifica de novo. */
+            if(!isCreatorAccount()){ try{ verifyLocalSubscription(); }catch(e){} }
           }
           // Não definir isPro aqui — deixar verifyLocalSubscription decidir com base no Stripe
         }
