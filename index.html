@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261023_tema_fiel";
+var APP_VERSION="20261023_ficou_visivel";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -862,6 +862,12 @@ canvas{width:100%!important;border-radius:10px;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.success{border-color:#34d399;color:#34d399;}
 .toast.error{border-color:#f87171;color:#f87171;}
+/* 23/10: o aviso era uma linha so (nowrap) e no celular a frase longa saia pelas
+   duas bordas; no tema claro o verde claro sobre creme quase nao se lia. */
+.toast{white-space:normal;max-width:calc(100vw - 32px);width:max-content;text-align:center;line-height:1.4;z-index:100000}
+html[data-theme="light"] .toast{background:#ffffff;box-shadow:0 6px 24px rgba(15,20,25,.18)}
+html[data-theme="light"] .toast.success{color:#047857;border-color:#10b981}
+html[data-theme="light"] .toast.error{color:#b91c1c;border-color:#ef4444}
 .empty{text-align:center;padding:24px 16px;color:var(--text3);}
 .empty-icon{font-size:36px;margin-bottom:8px;}
 .empty-text{font-size:13px;}
@@ -5352,8 +5358,20 @@ function _avisoFimHtml(comAgoraNao){
    +(comAgoraNao?'<button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:12.5px;padding:9px;color:var(--text2);" onclick="avisoFimDepois()">'+tx("avisoFimDepois")+'</button>':'')
    +'</div>';
 }
+/* 23/10: depois de tocar em "Quero continuar", o cartao vira uma confirmacao
+   que fica ate a pessoa fechar. So o aviso rodape (toast) passava despercebido. */
+var _avisoFicou=false, _avisoFicouData=0;
+function avisoFicouFechar(){ _avisoFicou=false; avisoFimRender(); }
 function avisoFimRender(){
   var el=document.getElementById("avisoFim"); if(!el) return;
+  if(_avisoFicou){
+    el.innerHTML='<div style="border:1px solid rgba(16,185,129,.5);background:linear-gradient(135deg,rgba(16,185,129,.14),rgba(16,185,129,.05));border-radius:16px;padding:16px;margin:0 0 14px;">'
+     +'<div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px;">'+tx("ficouTit")+'</div>'
+     +'<div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:12px;">'+((_avisoFicouData&&_avisoFicouData>Date.now())?tx("ficouTxt",_planoDataBR(_avisoFicouData)):tx("ficouTxtSemData"))+'</div>'
+     +'<button class="btn btn-ghost" style="width:100%;font-size:12.5px;padding:9px;" onclick="avisoFicouFechar()">'+tx("ficouFechar")+'</button>'
+     +'</div>';
+    el.style.display="block"; return;
+  }
   var hoje=new Date().toISOString().slice(0,10), visto=null;
   try{ visto=localStorage.getItem("by_avisoFimVisto"); }catch(e){}
   if(!_avisoFimAtivo()||visto===hoje){ el.style.display="none"; el.innerHTML=""; return; }
@@ -5379,7 +5397,11 @@ function reativarConfirmar(){
   reativarAssinatura().then(function(d){
     if(d&&d.ok===true&&d.cancelAtPeriodEnd===false){
       try{ localStorage.removeItem("by_cancelado"); localStorage.removeItem("by_acessoAte"); localStorage.removeItem("by_avisoFimVisto"); }catch(e){}
+      _avisoFicou=true; _avisoFicouData=(d.renovaEm?(d.renovaEm<1e12?d.renovaEm*1000:d.renovaEm):0);
       showToast(tx("reativOk"),"success");
+      /* quem tocou em Meu plano tambem precisa ver: leva para a Hoje, onde esta o cartao */
+      try{ if(typeof switchTab==="function") switchTab("hoje"); }catch(e){}
+      setTimeout(function(){ try{ var a=document.getElementById("avisoFim"); if(a) a.scrollIntoView({behavior:"smooth",block:"center"}); }catch(e){} },150);
     }else{
       showToast(tx("reativErro"),"error");
     }
@@ -6584,7 +6606,8 @@ function showToast(msg,type){
   t.textContent=msg;t.className="toast"+(type?" "+type:"");
   clearTimeout(toastTimer);
   setTimeout(function(){t.classList.add("show");},10);
-  toastTimer=setTimeout(function(){t.classList.remove("show");},2600);
+  /* frase longa fica mais tempo na tela (2,6 s a 6 s) */
+  toastTimer=setTimeout(function(){t.classList.remove("show");},Math.min(6000,Math.max(2600,String(msg||"").length*55)));
 }
 function handleFotoIA(input){
   var file=input.files[0]; if(!file) return; input.value="";
@@ -6979,6 +7002,10 @@ var TXX={
 "avisoFimDepois":{it:"Non ora",fr:"Pas maintenant",de:"Jetzt nicht"},
 "reativando":{it:"Un momento...",fr:"Un instant...",de:"Einen Moment..."},
 "reativOk":{it:"Che bello che resti! Il tuo PRO continua e si rinnova normalmente.",fr:"Ravi que vous restiez ! Votre PRO continue et se renouvelle normalement.",de:"Schön, dass du bleibst! Dein PRO läuft weiter und verlängert sich wie gewohnt."},
+"ficouTit":{it:"Che bello che resti!",fr:"Ravi que vous restiez !",de:"Schön, dass du bleibst!"},
+"ficouTxt":{it:"Il tuo PRO continua e l'abbonamento si rinnova normalmente il {0}.",fr:"Votre PRO continue et l'abonnement se renouvelle normalement le {0}.",de:"Dein PRO läuft weiter, und das Abo verlängert sich wie gewohnt am {0}."},
+"ficouTxtSemData":{it:"Il tuo PRO continua e l'abbonamento si rinnova normalmente.",fr:"Votre PRO continue et l'abonnement se renouvelle normalement.",de:"Dein PRO läuft weiter, und das Abo verlängert sich wie gewohnt."},
+"ficouFechar":{it:"Chiudi",fr:"Fermer",de:"Schließen"},
 "reativErro":{it:"Non è stato possibile ora. Riprova tra poco.",fr:"Impossible pour le moment. Réessayez dans un instant.",de:"Das hat gerade nicht geklappt. Bitte versuche es gleich noch einmal."},
 "planoCanceladoLbl":{it:"Abbonamento disdetto · il PRO resta attivo fino alla fine del periodo in corso, senza nuovi addebiti",fr:"Abonnement résilié · le PRO reste actif jusqu'à la fin de la période en cours, sans nouveau prélèvement",de:"Abo gekündigt · PRO bleibt bis zum Ende des laufenden Zeitraums aktiv, ohne weitere Abbuchung"},
 "planoCancelOkSemData":{it:"Abbonamento annullato. Non ci saranno nuovi addebiti.",fr:"Abonnement résilié. Aucun nouveau prélèvement.",de:"Abo gekündigt. Es wird nichts mehr abgebucht."},
@@ -7369,6 +7396,10 @@ var TX={
  avisoFimDepois:{pt:'Agora não',en:'Not now',es:'Ahora no',it:'Non ora',fr:'Pas maintenant',de:'Jetzt nicht'},
  reativando:{pt:'Um momento...',en:'One moment...',es:'Un momento...',it:'Un momento...',fr:'Un instant...',de:'Einen Moment...'},
  reativOk:{pt:'Que bom que você ficou! Seu PRO continua e renova normalmente.',en:'Glad you are staying! Your PRO continues and renews as usual.',es:'¡Qué bien que te quedas! Tu PRO sigue y se renueva con normalidad.',it:'Che bello che resti! Il tuo PRO continua e si rinnova normalmente.',fr:'Ravi que vous restiez ! Votre PRO continue et se renouvelle normalement.',de:'Schön, dass du bleibst! Dein PRO läuft weiter und verlängert sich wie gewohnt.'},
+ ficouTit:{pt:'Que bom que você ficou!',en:'So glad you are staying!',es:'¡Qué bien que te quedas!',it:'Che bello che resti!',fr:'Ravi que vous restiez !',de:'Schön, dass du bleibst!'},
+ ficouTxt:{pt:'Seu PRO continua, e a assinatura renova normalmente em {0}.',en:'Your PRO continues, and your subscription renews as usual on {0}.',es:'Tu PRO sigue, y la suscripción se renueva con normalidad el {0}.',it:'Il tuo PRO continua e l\'abbonamento si rinnova normalmente il {0}.',fr:'Votre PRO continue et l\'abonnement se renouvelle normalement le {0}.',de:'Dein PRO läuft weiter, und das Abo verlängert sich wie gewohnt am {0}.'},
+ ficouTxtSemData:{pt:'Seu PRO continua, e a assinatura renova normalmente.',en:'Your PRO continues, and your subscription renews as usual.',es:'Tu PRO sigue, y la suscripción se renueva con normalidad.',it:'Il tuo PRO continua e l\'abbonamento si rinnova normalmente.',fr:'Votre PRO continue et l\'abonnement se renouvelle normalement.',de:'Dein PRO läuft weiter, und das Abo verlängert sich wie gewohnt.'},
+ ficouFechar:{pt:'Fechar',en:'Close',es:'Cerrar',it:'Chiudi',fr:'Fermer',de:'Schließen'},
  reativErro:{pt:'Não foi possível agora. Tente de novo em instantes.',en:'That did not work right now. Please try again in a moment.',es:'No fue posible ahora. Inténtalo de nuevo en un momento.',it:'Non è stato possibile ora. Riprova tra poco.',fr:'Impossible pour le moment. Réessayez dans un instant.',de:'Das hat gerade nicht geklappt. Bitte versuche es gleich noch einmal.'},
  planoCanceladoLbl:{pt:'Assinatura cancelada · o PRO continua até o fim do período atual, sem nova cobrança',en:'Subscription cancelled · PRO stays active until the end of the current period, with no further charge',es:'Suscripción cancelada · el PRO sigue activo hasta el final del periodo actual, sin nuevo cargo',it:'Abbonamento disdetto · il PRO resta attivo fino alla fine del periodo in corso, senza nuovi addebiti',fr:'Abonnement résilié · le PRO reste actif jusqu\'à la fin de la période en cours, sans nouveau prélèvement',de:'Abo gekündigt · PRO bleibt bis zum Ende des laufenden Zeitraums aktiv, ohne weitere Abbuchung'},
  planoSemAssin:{pt:'Não encontrei uma assinatura ativa para cancelar.',en:'No active subscription found to cancel.',es:'No encontré una suscripción activa para cancelar.',it:'Nessun abbonamento attivo da disdire.',fr:'Aucun abonnement actif à résilier.',de:'Kein aktives Abo zum Kündigen gefunden.'},
