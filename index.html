@@ -10,7 +10,14 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261023_convite_ficar";
+var APP_VERSION="20261023_tema_fiel";
+</script>
+<script>
+/* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
+try{var _t=localStorage.getItem("by_tema");
+if(_t==="auto"){_t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";}
+if(_t==="light"){document.documentElement.setAttribute("data-theme","light");document.documentElement.style.background="#ffffff";}
+else if(_t==="dark"){document.documentElement.setAttribute("data-theme","dark");}}catch(e){}
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="google" content="notranslate">
@@ -3385,8 +3392,14 @@ de:{'navNut':'Nut','conexoesTitulo':'Geräte','temaTitulo':'Design','temaClaro':
   proCtaBtn:'7 Tage gratis starten',proCtaFree:'Mit kostenloser Version fortfahren'}
 };
 /* ---- tema claro / escuro ---- */
+/* 23/10: o tema e do APARELHO (by_tema), nao da conta. Antes ele ia junto com
+   o resto do state para a nuvem, e qualquer salvamento de outro aparelho (ou um
+   salvamento atrasado) trazia o tema antigo de volta: escolhia escuro, recarregava
+   e abria claro. Visto pelo Felipe. A nuvem so serve de ponto de partida num
+   aparelho que nunca escolheu. */
+function _temaAparelho(){ try{ return localStorage.getItem("by_tema"); }catch(e){ return null; } }
 function aplicarTema(){
-  var pref=(typeof state!=="undefined"&&state&&state.theme)||"dark";
+  var pref=_temaAparelho()||(typeof state!=="undefined"&&state&&state.theme)||"dark";
   var efetivo=pref;
   if(pref==="auto"){
     try{ efetivo=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"; }catch(e){ efetivo="dark"; }
@@ -3455,6 +3468,7 @@ function aplicarLogo(tema){
 function setTheme(t){
   if(typeof state==="undefined"||!state) return;
   state.theme=t;
+  try{ localStorage.setItem("by_tema",t); }catch(e){}
   try{ save(); }catch(e){}
   try{ if(typeof saveToFirestore==="function") saveToFirestore(); }catch(e){}
   aplicarTema();
@@ -9767,6 +9781,8 @@ function renderScoresHTML(){
 function init(){
   load();
   try{ checarRetornoWithings(); }catch(e){}
+  /* migracao: quem ja tinha tema salvo passa a te-lo como tema do aparelho */
+  try{ if(!localStorage.getItem("by_tema")&&state&&state.theme) localStorage.setItem("by_tema",state.theme); }catch(e){}
   try{ aplicarTema(); }catch(e){}
   if(state.lang){currentLang=state.lang;setLang(state.lang);}else{renderToday();}
   document.getElementById("goal-mass").className="goal-btn"+(state.goal==="mass"?" active":"");
@@ -11140,8 +11156,11 @@ function loadFromFirestore(uid){
         }
         // ──────────────────────────────────────────────────────────
 
+        /* tema: o do aparelho vence o da nuvem (ver aplicarTema) */
+        try{ var _ta=localStorage.getItem('by_tema')||localState.theme; if(_ta){ merged.theme=_ta; localStorage.setItem('by_tema',_ta); } }catch(e){}
         state=merged;
         localStorage.setItem('betteryou_v1',JSON.stringify(state));
+        try{ aplicarTema(); }catch(e){}
         checkDayReset();
         if(state.lang){currentLang=state.lang;setLang(state.lang);}else{renderToday();}renderMeals();save();
         document.getElementById("goal-mass").className="goal-btn"+(state.goal==="mass"?" active":"");
