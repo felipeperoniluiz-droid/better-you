@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261024_telas_margem";
+var APP_VERSION="20261024_consentimento";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -2374,6 +2374,7 @@ html[data-theme="light"] #tab-foto [style*="background:rgba(10,10,15,0.9)"]{colo
    quando nao cabe e o seletor fica a direita. Vale para os 2 temas. */
 #tab-hist div:has(> .card-title):has(> div > button){flex-wrap:wrap!important;row-gap:8px}
 #tab-hist div:has(> .card-title):has(> div > button) > div:has(> button){margin-left:auto}
+#authConsent a,#consModal a{color:#f0b429;text-decoration:underline;font-weight:600}[data-theme="light"] #authConsent a,[data-theme="light"] #consModal a{color:#a16207}
 </style>
 </head>
 <body>
@@ -2418,6 +2419,12 @@ html[data-theme="light"] #tab-foto [style*="background:rgba(10,10,15,0.9)"]{colo
     <div id="authConfirmWrap" style="margin-bottom:12px;display:none;">
       <div style="font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:500;" data-i18n="authConfSenha">Confirmar senha</div>
       <input type="password" id="authPassword2" class="input" placeholder="••••••••" style="width:100%;">
+    </div>
+    <!-- 24/10: consentimento explicito no cadastro (GDPR Art. 9 dados de saude; Art. 49 envio aos EUA) -->
+    <div id="authConsent" style="display:none;margin-bottom:12px;">
+      <label style="display:flex;gap:9px;align-items:flex-start;font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:9px;cursor:pointer;text-align:left;"><input type="checkbox" id="consSaudeChk" style="margin-top:2px;flex:0 0 auto;width:18px;height:18px;accent-color:#f0b429;"> <span data-i18n="consSaude"></span></label>
+      <label style="display:flex;gap:9px;align-items:flex-start;font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:9px;cursor:pointer;text-align:left;"><input type="checkbox" id="consEuaChk" style="margin-top:2px;flex:0 0 auto;width:18px;height:18px;accent-color:#f0b429;"> <span data-i18n="consEua"></span></label>
+      <div style="font-size:11px;color:var(--text2);line-height:1.5;text-align:left;" data-i18n="consLer"></div>
     </div>
     <div id="authError" style="font-size:12px;margin-bottom:10px;text-align:center;display:none;padding:8px;border-radius:8px;background:rgba(248,113,113,.1);color:#f87171;"></div>
     <button id="authBtn" class="btn btn-primary" onclick="doAuth()" style="width:100%;margin-bottom:10px;">Entrar</button>
@@ -7050,6 +7057,14 @@ var TXX={
 "hojeFraseDir":{it:"Salute focus equilibrio traguardi",fr:"Santé concentration équilibre réussites",de:"Gesundheit Fokus Balance Erfolge"},
 "authSenha":{it:"Password",fr:"Mot de passe",de:"Passwort"},
 "authConfSenha":{it:"Conferma password",fr:"Confirmer le mot de passe",de:"Passwort bestätigen"},
+"consSaude":{it:"Autorizzo Better You a trattare i miei dati sulla salute (alimentazione, peso, misure e sonno) per il mio monitoraggio.",fr:"J’autorise Better You à traiter mes données de santé (alimentation, poids, mensurations et sommeil) pour assurer mon suivi.",de:"Ich erlaube Better You, meine Gesundheitsdaten (Ernährung, Gewicht, Maße und Schlaf) für meine Begleitung zu verarbeiten."},
+"consEua":{it:"Autorizzo l’invio delle foto dei piatti e delle conversazioni con Bel ad Anthropic, negli Stati Uniti, che esegue le analisi con l’IA.",fr:"J’autorise l’envoi des photos de mes plats et de mes conversations avec Bel à Anthropic, aux États-Unis, qui réalise les analyses par IA.",de:"Ich erlaube die Übermittlung meiner Teller-Fotos und Gespräche mit Bel an Anthropic in den USA, die die KI-Analysen durchführt."},
+"consLer":{it:"Dettagli nell’<a href=\"privacidade.html\" target=\"_blank\" rel=\"noopener\">Informativa sulla privacy</a> e nei <a href=\"termos.html\" target=\"_blank\" rel=\"noopener\">Termini d’uso</a>. Puoi revocare il consenso eliminando l’account.",fr:"Détails dans la <a href=\"privacidade.html\" target=\"_blank\" rel=\"noopener\">Politique de confidentialité</a> et les <a href=\"termos.html\" target=\"_blank\" rel=\"noopener\">Conditions d’utilisation</a>. Vous pouvez retirer votre consentement en supprimant votre compte.",de:"Details in der <a href=\"privacidade.html\" target=\"_blank\" rel=\"noopener\">Datenschutzerklärung</a> und den <a href=\"termos.html\" target=\"_blank\" rel=\"noopener\">Nutzungsbedingungen</a>. Sie können die Einwilligung widerrufen, indem Sie Ihr Konto löschen."},
+"consFalta":{it:"Per creare l’account, spunta entrambe le autorizzazioni.",fr:"Pour créer votre compte, cochez les deux autorisations.",de:"Bitte setzen Sie beide Häkchen, um das Konto zu erstellen."},
+"consTit":{it:"Prima di continuare",fr:"Avant de continuer",de:"Bevor Sie fortfahren"},
+"consSub":{it:"Ora chiediamo la tua autorizzazione esplicita per i dati sulla salute. Spunta entrambe le caselle per continuare a usare Better You.",fr:"Nous demandons désormais votre autorisation explicite pour les données de santé. Cochez les deux cases pour continuer à utiliser Better You.",de:"Wir bitten jetzt ausdrücklich um Ihre Einwilligung für Gesundheitsdaten. Setzen Sie beide Häkchen, um Better You weiter zu nutzen."},
+"consAceitar":{it:"Accetta e continua",fr:"Accepter et continuer",de:"Akzeptieren und fortfahren"},
+"consSair":{it:"Esci dall’account",fr:"Se déconnecter",de:"Abmelden"},
 "authTabEntrar":{it:"Accedi",fr:"Se connecter",de:"Anmelden"},
 "authTabCriar":{it:"Crea account",fr:"Créer un compte",de:"Konto erstellen"},
 "authNuvem":{it:"I tuoi dati salvati nel cloud",fr:"Vos données sauvegardées dans le cloud",de:"Ihre Daten sicher in der Cloud"},
@@ -7460,6 +7475,15 @@ var TX={
  hojeFraseDir:{pt:'Saúde foco equilíbrio conquistas',en:'Health focus balance wins',es:'Salud foco equilibrio logros',it:'Salute focus equilibrio traguardi',fr:'Santé focus équilibre victoires',de:'Gesundheit Fokus Balance Erfolge'},
  authSenha:{pt:'Senha',en:'Password',es:'Contraseña',it:'Password',fr:'Mot de passe',de:'Passwort'},
  authConfSenha:{pt:'Confirmar senha',en:'Confirm password',es:'Confirmar contraseña',it:'Conferma password',fr:'Confirmer le mot de passe',de:'Passwort bestätigen'},
+ /* 24/10: consentimento explicito (GDPR Art. 9 e 49) */
+ consSaude:{pt:"Autorizo o Better You a tratar os meus dados de saúde (alimentação, peso, medidas e sono) para fazer o meu acompanhamento.",en:"I allow Better You to process my health data (food, weight, measurements and sleep) to provide my tracking.",es:"Autorizo a Better You a tratar mis datos de salud (alimentación, peso, medidas y sueño) para hacer mi seguimiento.",it:"Autorizzo Better You a trattare i miei dati sulla salute (alimentazione, peso, misure e sonno) per il mio monitoraggio.",fr:"J’autorise Better You à traiter mes données de santé (alimentation, poids, mensurations et sommeil) pour assurer mon suivi.",de:"Ich erlaube Better You, meine Gesundheitsdaten (Ernährung, Gewicht, Maße und Schlaf) für meine Begleitung zu verarbeiten."},
+ consEua:{pt:"Autorizo o envio das fotos dos pratos e das conversas com a Bel para a Anthropic, nos Estados Unidos, que faz as análises com IA.",en:"I allow my meal photos and chats with Bel to be sent to Anthropic in the United States, which runs the AI analysis.",es:"Autorizo el envío de las fotos de mis platos y de las conversaciones con Bel a Anthropic, en Estados Unidos, que hace los análisis con IA.",it:"Autorizzo l’invio delle foto dei piatti e delle conversazioni con Bel ad Anthropic, negli Stati Uniti, che esegue le analisi con l’IA.",fr:"J’autorise l’envoi des photos de mes plats et de mes conversations avec Bel à Anthropic, aux États-Unis, qui réalise les analyses par IA.",de:"Ich erlaube die Übermittlung meiner Teller-Fotos und Gespräche mit Bel an Anthropic in den USA, die die KI-Analysen durchführt."},
+ consLer:{pt:"Detalhes na <a href=\"privacidade.html\" target=\"_blank\" rel=\"noopener\">Política de Privacidade</a> e nos <a href=\"termos.html\" target=\"_blank\" rel=\"noopener\">Termos de Uso</a>. Você pode retirar a autorização apagando a conta.",en:"Details in the <a href=\"privacidade.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"termos.html\" target=\"_blank\" rel=\"noopener\">Terms of Use</a>. You can withdraw consent by deleting your account.",es:"Detalles en la <a href=\"privacidade.html\" target=\"_blank\" rel=\"noopener\">Política de Privacidad</a> y en los <a href=\"termos.html\" target=\"_blank\" rel=\"noopener\">Términos de Uso</a>. Puedes retirar la autorización eliminando la cuenta.",it:"Dettagli nell’<a href=\"privacidade.html\" target=\"_blank\" rel=\"noopener\">Informativa sulla privacy</a> e nei <a href=\"termos.html\" target=\"_blank\" rel=\"noopener\">Termini d’uso</a>. Puoi revocare il consenso eliminando l’account.",fr:"Détails dans la <a href=\"privacidade.html\" target=\"_blank\" rel=\"noopener\">Politique de confidentialité</a> et les <a href=\"termos.html\" target=\"_blank\" rel=\"noopener\">Conditions d’utilisation</a>. Vous pouvez retirer votre consentement en supprimant votre compte.",de:"Details in der <a href=\"privacidade.html\" target=\"_blank\" rel=\"noopener\">Datenschutzerklärung</a> und den <a href=\"termos.html\" target=\"_blank\" rel=\"noopener\">Nutzungsbedingungen</a>. Sie können die Einwilligung widerrufen, indem Sie Ihr Konto löschen."},
+ consFalta:{pt:"Para criar a conta, marque as duas autorizações.",en:"To create your account, tick both permissions.",es:"Para crear la cuenta, marca las dos autorizaciones.",it:"Per creare l’account, spunta entrambe le autorizzazioni.",fr:"Pour créer votre compte, cochez les deux autorisations.",de:"Bitte setzen Sie beide Häkchen, um das Konto zu erstellen."},
+ consTit:{pt:"Antes de continuar",en:"Before you continue",es:"Antes de continuar",it:"Prima di continuare",fr:"Avant de continuer",de:"Bevor Sie fortfahren"},
+ consSub:{pt:"Agora pedimos a sua autorização de forma explícita para os dados de saúde. Marque as duas caixas para continuar usando o Better You.",en:"We now ask for your explicit permission for health data. Tick both boxes to keep using Better You.",es:"Ahora pedimos tu autorización explícita para los datos de salud. Marca las dos casillas para seguir usando Better You.",it:"Ora chiediamo la tua autorizzazione esplicita per i dati sulla salute. Spunta entrambe le caselle per continuare a usare Better You.",fr:"Nous demandons désormais votre autorisation explicite pour les données de santé. Cochez les deux cases pour continuer à utiliser Better You.",de:"Wir bitten jetzt ausdrücklich um Ihre Einwilligung für Gesundheitsdaten. Setzen Sie beide Häkchen, um Better You weiter zu nutzen."},
+ consAceitar:{pt:"Aceitar e continuar",en:"Accept and continue",es:"Aceptar y continuar",it:"Accetta e continua",fr:"Accepter et continuer",de:"Akzeptieren und fortfahren"},
+ consSair:{pt:"Sair da conta",en:"Sign out",es:"Cerrar sesión",it:"Esci dall’account",fr:"Se déconnecter",de:"Abmelden"},
  /* 23/10: tela de entrada inteira traduzida */
  authTabEntrar:{pt:"Entrar",en:"Log in",es:"Entrar",it:"Accedi",fr:"Se connecter",de:"Anmelden"},
  authTabCriar:{pt:"Criar conta",en:"Create account",es:"Crear cuenta",it:"Crea account",fr:"Créer un compte",de:"Konto erstellen"},
@@ -11105,6 +11129,8 @@ function initFirebase(){
       setTimeout(function(){ try{ depoRender(); }catch(e){} },5000);
       // Checar isPro no Firestore e sincronizar subscriptionId com localStorage
       _fbDb.collection('users').doc(user.uid).get().then(function(doc){
+        /* 24/10: conta sem consentimento registrado -> pede (exceto conta recem-criada, que acabou de marcar) */
+        try{ if(!window._consNovo&&!window._consOk&&!(doc.exists&&doc.data().consentimento)) consPedir(); }catch(e){}
         if(doc.exists&&doc.data().isPro){
           var docData=doc.data();
           /* 17/10: o Firestore (gravado pelo servidor) manda. Antes so copiava
@@ -11148,6 +11174,39 @@ function initFirebase(){
 } // fim initFirebase
 
 // ── AUTH FUNCTIONS ────────────────────────────────────────────────
+/* 24/10: consentimento explicito. Gravado em users/{uid}.consentimento com
+   data e versao do texto. Quem ja tinha conta antes disto ve uma janela
+   unica pedindo as mesmas duas autorizacoes; sem elas, so pode sair. */
+var CONS_VERSAO="2026-10-24";
+function consGravar(uid){
+  var agora=new Date().toISOString();
+  window._consOk=true;
+  return _fbDb.collection('users').doc(uid).set({consentimento:{saude:agora,transferenciaEUA:agora,versao:CONS_VERSAO,idioma:currentLang}},{merge:true});
+}
+function consPedir(){
+  if(document.getElementById('consModal')) return;
+  var d=document.createElement('div'); d.id='consModal';
+  d.style.cssText='position:fixed;inset:0;z-index:99990;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:22px;';
+  function chk(id,k){ return '<label style="display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--text2);line-height:1.5;margin-bottom:10px;cursor:pointer;"><input type="checkbox" id="'+id+'" style="margin-top:2px;flex:0 0 auto;width:18px;height:18px;accent-color:#f0b429;"> <span>'+tx(k)+'</span></label>'; }
+  d.innerHTML='<div style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px;max-width:380px;width:100%;">'
+   +'<div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:8px;">'+tx('consTit')+'</div>'
+   +'<div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:14px;">'+tx('consSub')+'</div>'
+   +chk('consSaudeChk2','consSaude')+chk('consEuaChk2','consEua')
+   +'<div style="font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:12px;">'+tx('consLer')+'</div>'
+   +'<div id="consMsg" style="display:none;font-size:12px;color:#f87171;margin-bottom:8px;"></div>'
+   +'<button class="btn btn-primary" style="width:100%;" onclick="consAceitar()">'+tx('consAceitar')+'</button>'
+   +'<button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:12.5px;padding:9px;color:var(--text2);" onclick="consSairConta()">'+tx('consSair')+'</button>'
+   +'</div>';
+  document.body.appendChild(d);
+}
+function consAceitar(){
+  var a=document.getElementById('consSaudeChk2'), b=document.getElementById('consEuaChk2');
+  if(!(a&&a.checked&&b&&b.checked)){ var m=document.getElementById('consMsg'); if(m){ m.textContent=tx('consFalta'); m.style.display='block'; } return; }
+  if(!_fbUser) return;
+  consGravar(_fbUser.uid).then(function(){ var d=document.getElementById('consModal'); if(d) d.remove(); })
+   .catch(function(){ var m=document.getElementById('consMsg'); if(m){ m.textContent=tx('authErroGen'); m.style.display='block'; } });
+}
+function consSairConta(){ var d=document.getElementById('consModal'); if(d) d.remove(); try{ doSignOut(); }catch(e){ try{ _fbAuth.signOut(); }catch(x){} } }
 window._authTab='login';
 
 /* A logo de verdade ja esta no cabecalho do app, em base64. Aqui so lemos o
@@ -11195,6 +11254,7 @@ function switchAuthTab(tab){
   btnL.setAttribute('aria-selected',isLogin?'true':'false');
   btnR.setAttribute('aria-selected',isLogin?'false':'true');
   document.getElementById('authConfirmWrap').style.display=isLogin?'none':'';
+  try{ document.getElementById('authConsent').style.display=isLogin?'none':''; }catch(e){}
   document.getElementById('authBtn').textContent=isLogin?tx('authTabEntrar'):tx('authTabCriar');
   document.getElementById('authForgotBtn').style.display=isLogin?'block':'none';
   var err=document.getElementById('authError');
@@ -11230,7 +11290,11 @@ function doAuth(){
     var pass2=document.getElementById('authPassword2').value;
     if(pass!==pass2){btn.textContent=tx('authTabCriar');btn.disabled=false;showAuthMsg(tx('errSenhasDiferentes'));return;}
     if(pass.length<6){btn.textContent=tx('authTabCriar');btn.disabled=false;showAuthMsg(tx('authSenha6'));return;}
+    var _cS=document.getElementById('consSaudeChk'), _cE=document.getElementById('consEuaChk');
+    if(!(_cS&&_cS.checked&&_cE&&_cE.checked)){btn.textContent=tx('authTabCriar');btn.disabled=false;showAuthMsg(tx('consFalta'));return;}
+    window._consNovo=true;
     _fbAuth.createUserWithEmailAndPassword(email,pass)
+      .then(function(cred){ try{ consGravar(cred.user.uid); }catch(e){} })
       .catch(function(e){
         btn.textContent=tx('authTabCriar');btn.disabled=false;
         var m={'auth/email-already-in-use':tx('errEmailEmUso'),'auth/invalid-email':tx('errEmailInvalido'),'auth/weak-password':tx('errSenhaFraca')};
