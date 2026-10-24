@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261023_idiomas_depo";
+var APP_VERSION="20261024_telas_margem";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -625,7 +625,9 @@ html[data-theme="light"] :is(button,input,select,textarea){
    apareceriam empilhadas de uma vez. So no tema claro, o que faria o
    defeito parecer coisa de tema e nao de seletor. */
 html[data-theme="light"] .tab{max-width:480px;margin-inline:auto;
-  padding-inline:20px;
+  /* 24/10: margem lateral igual a do tema escuro (pedido do Felipe): o claro
+     somava 20 do #content + 20 da .tab = 40 px por lado; o escuro tem 16. */
+  padding-inline:0;
   padding-bottom:calc(112px + env(safe-area-inset-bottom))}
 html[data-theme="light"] .tab.active>*+*{margin-top:24px}
 /* --- botoes: altura minima 56, linha de menu 64, preenchimento 14/16,
@@ -2194,8 +2196,39 @@ html[data-theme="light"] .bel-ctx .med{flex:0 0 36px!important;width:36px!import
 html[data-theme="light"] .bel-ctx{line-height:1.25!important}
 html[data-theme="light"] .bel-ctx dd,html[data-theme="light"] .bel-ctx dt{margin:0!important}
 html[data-theme="light"] .bel-status{margin:12px 0 15px!important}
-/* margem lateral do mockup: 21 esquerda, 20 direita */
-html[data-theme="light"] #content{padding-left:20px!important;padding-right:20px!important}
+/* margem lateral: 16 px, igual ao tema escuro (24/10, pedido do Felipe) */
+html[data-theme="light"] #content{padding-left:16px!important;padding-right:16px!important}
+/* ===== 24/10: PLANO ALIMENTAR (tela da Bel) no estilo da Hoje/Mais (#165) =====
+   Antes: titulos em Syne, icone solto, detalhe com faixa dourada grossa a esquerda.
+   Agora: mesma fonte, mesmo selo de icone e mesmo cartao das listas do Mais. */
+#tab-dieta .diet-grid{gap:12px}
+#tab-dieta .diet-card{border-radius:18px!important;padding:14px!important;gap:8px;min-height:0}
+#tab-dieta .diet-card-icon{width:40px;height:40px;border-radius:50%;display:flex!important;align-items:center;justify-content:center;filter:none!important;margin:0 0 2px!important}
+#tab-dieta .diet-card-icon svg{width:21px!important;height:21px!important}
+#tab-dieta .diet-card-name{font-family:'DM Sans',sans-serif!important;font-size:14.5px!important;font-weight:700!important;letter-spacing:0}
+#tab-dieta .diet-card-desc{font-size:12px!important;line-height:1.35}
+#tab-dieta .diet-detail{border-left:0!important;border-radius:18px!important;padding:18px!important}
+#tab-dieta .diet-detail-nome{font-family:'DM Sans',sans-serif!important;font-size:18px!important;font-weight:800!important}
+#tab-dieta .diet-linha-rot{font-size:14px;font-weight:600}
+/* escuro: igual ao .m-item / .m-med */
+html:not([data-theme="light"]) #tab-dieta .diet-card,html:not([data-theme="light"]) #tab-dieta .diet-detail{
+  background:linear-gradient(rgba(42,36,21,.92) 0%,rgba(32,27,16,.92) 55%,rgba(25,22,9,.92) 100%)!important;
+  border:.8px solid rgb(81,64,33)!important;
+  box-shadow:inset 0 1px 0 rgba(255,236,178,.1),inset 0 -1px 0 rgba(0,0,0,.55),0 3px 8px rgba(0,0,0,.45)!important}
+html:not([data-theme="light"]) #tab-dieta .diet-card.selected{border-color:#F5BB16!important}
+html:not([data-theme="light"]) #tab-dieta .diet-card-icon{
+  background:radial-gradient(120% 120% at 50% 18%,rgba(245,187,22,.28) 0%,rgba(245,187,22,.06) 70%);
+  border:.8px solid rgba(245,187,22,.4);color:#F5BB16;
+  box-shadow:inset 0 1px 0 rgba(255,236,178,.32),inset 0 -2px 3px rgba(0,0,0,.42)}
+/* claro: igual ao .m-item / .m-med */
+html[data-theme="light"] #tab-dieta .diet-card,html[data-theme="light"] #tab-dieta .diet-detail{
+  background:#fff!important;border:1px solid var(--wt-borda,#EDEDE9)!important;box-shadow:0 4px 12px rgba(0,0,0,.08)!important}
+html[data-theme="light"] #tab-dieta .diet-card.selected{border:1.5px solid #F6B24A!important;background:#FFFDF7!important}
+html[data-theme="light"] #tab-dieta .diet-card-icon{
+  background:radial-gradient(120% 120% at 50% 18%,#FFFDF7 0%,#FEF3DC 72%);border:1.6px solid #F6B24A;color:#B45309;
+  box-shadow:0 0 0 4px rgba(245,158,11,.07),0 2px 6px rgba(15,23,42,.06)}
+html[data-theme="light"] #tab-dieta .diet-card-icon svg{stroke:#B45309}
+
 
 /* --- ORDEM DO BLOCO DA BEL (23/09) ---
    No HTML a ordem e: saudacao, atalhos, campo de pergunta. O Felipe quer o
