@@ -1,7 +1,7 @@
 {
-  "name": "Better You",
-  "short_name": "Better You",
-  "description": "Acompanhamento nutricional com reconhecimento de alimentos por foto e acompanhamento diario da Bel.",
+  "name": "Bestward",
+  "short_name": "Bestward",
+  "description": "Acompanhamento nutricional com reconhecimento de alimentos por foto e acompanhamento diário da Bel.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
