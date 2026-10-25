@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261025_bestward";
+var APP_VERSION="20261025_pro_escuro";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -2376,6 +2376,10 @@ html[data-theme="light"] #tab-foto [style*="background:rgba(10,10,15,0.9)"]{colo
 #tab-hist div:has(> .card-title):has(> div > button) > div:has(> button){margin-left:auto}
 /* 24/10 revisao: titulo de card + texto ao lado quebram linha em vez de empurrar a tela (alemao/frances em celular de 320px) */
 div:has(> .card-title){flex-wrap:wrap;row-gap:4px;column-gap:8px}.card-title{min-width:0;overflow-wrap:anywhere}
+/* 25/10: selo PRO da Hoje no tema escuro = fundo escuro, borda e coroa douradas (pedido do Felipe). O claro continua dourado cheio. */
+#hojePro .h-pro-coroa{display:none}
+html:not([data-theme="light"]) #hojePro .h-pro-pill{background:rgba(12,10,6,.72)!important;border:1.5px solid #e8a920;color:#f5c542!important;font-size:13px!important;letter-spacing:.6px!important;padding:7px 16px!important;gap:8px;box-shadow:0 0 16px rgba(240,180,41,.22),inset 0 0 10px rgba(240,180,41,.08)}
+html:not([data-theme="light"]) #hojePro .h-pro-coroa{display:inline-block;color:#f0b429;filter:drop-shadow(0 0 3px rgba(240,180,41,.45))}
 #authConsent a,#consModal a{color:#f0b429;text-decoration:underline;font-weight:600}[data-theme="light"] #authConsent a,[data-theme="light"] #consModal a{color:#a16207}
 </style>
 </head>
@@ -5381,9 +5385,9 @@ function hojeProRender(){
   var el=document.getElementById("hojePro"); if(!el) return;
   var t=(T[currentLang]||T.pt);
   if(typeof isPro!=="undefined"&&isPro){
-    el.innerHTML='<span style="display:inline-flex;align-items:center;padding:5px 13px;border-radius:99px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:11px;font-weight:800;letter-spacing:.4px">PRO</span>';
+    el.innerHTML='<span class="h-pro-pill" style="display:inline-flex;align-items:center;padding:5px 13px;border-radius:99px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:11px;font-weight:800;letter-spacing:.4px"><svg class="h-pro-coroa" viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M3 7.5l4.6 4 4.4-6.5 4.4 6.5 4.6-4-1.9 10.5H4.9z"/><rect x="4.9" y="19.2" width="14.2" height="1.8" rx=".9"/></svg>PRO</span>';
   }else{
-    el.innerHTML='<span onclick="subscribePro()" style="display:inline-flex;align-items:center;padding:6px 14px;border-radius:99px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:12px;font-weight:800;cursor:pointer">'+(t.calsejaPro||"Seja PRO")+'</span>';
+    el.innerHTML='<span class="h-pro-pill" onclick="subscribePro()" style="display:inline-flex;align-items:center;padding:6px 14px;border-radius:99px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:12px;font-weight:800;cursor:pointer"><svg class="h-pro-coroa" viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M3 7.5l4.6 4 4.4-6.5 4.4 6.5 4.6-4-1.9 10.5H4.9z"/><rect x="4.9" y="19.2" width="14.2" height="1.8" rx=".9"/></svg>'+(t.calsejaPro||"Seja PRO")+'</span>';
   }
 }
 /* 23/10: quem cancelou continua PRO ate o fim do periodo. Em vez de sumir em
