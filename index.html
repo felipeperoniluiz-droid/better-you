@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261027_macros_ouro";
+var APP_VERSION="20261027_dominio";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -30,8 +30,8 @@ else if(_t==="dark"){document.documentElement.setAttribute("data-theme","dark");
     <meta property="og:type" content="website">
     <meta property="og:title" content="Bestward">
     <meta property="og:description" content="Fotografe o prato e saiba o que esta comendo. A Bel acompanha voce todos os dias.">
-    <meta property="og:image" content="https://felipeperoniluiz-droid.github.io/better-you/icon-512.png">
-    <meta property="og:url" content="https://felipeperoniluiz-droid.github.io/better-you/">
+    <meta property="og:image" content="https://bestward.app/icon-512.png">
+    <meta property="og:url" content="https://bestward.app/">
     <meta name="twitter:card" content="summary_large_image">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -10060,7 +10060,7 @@ var _swReg = null;
 
 function initNotifications() {
   if (!('serviceWorker' in navigator) || !('Notification' in window)) return;
-  navigator.serviceWorker.register('/better-you/sw.js').then(function(reg) {
+  navigator.serviceWorker.register('./sw.js').then(function(reg) {
     _swReg = reg;
     // Pede permissão se ainda não foi dada
     if (Notification.permission === 'default') {
