@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261025_preto";
+var APP_VERSION="20261027_macros_ouro";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -2380,6 +2380,11 @@ div:has(> .card-title){flex-wrap:wrap;row-gap:4px;column-gap:8px}.card-title{min
 #hojePro .h-pro-coroa{display:none}
 html:not([data-theme="light"]) #hojePro .h-pro-pill{background:rgba(12,10,6,.72)!important;border:1.5px solid #e8a920;color:#f5c542!important;font-size:13px!important;letter-spacing:.6px!important;padding:7px 16px!important;gap:8px;box-shadow:0 0 16px rgba(240,180,41,.22),inset 0 0 10px rgba(240,180,41,.08)}
 html:not([data-theme="light"]) #hojePro .h-pro-coroa{display:inline-block;color:#f0b429;filter:drop-shadow(0 0 3px rgba(240,180,41,.45))}
+/* 27/10: tema escuro da Hoje no dourado do modelo do Felipe — macros, agua e cartoes. Claro intacto. */
+html:not([data-theme="light"]) #tab-hoje .macro-row .h-ico,html:not([data-theme="light"]) #tab-hoje .macro-row .macro-val{color:#f5b820!important}
+html:not([data-theme="light"]) #tab-hoje .macro-row .macro-bar-fill{background:linear-gradient(90deg,#c98a06,#f5c542)!important}
+html:not([data-theme="light"]) #tab-hoje .h-bolha-azul{background:radial-gradient(120% 120% at 50% 18%,rgb(245 187 22 / 30%) 0%,rgb(245 187 22 / 7%) 70%)!important;color:var(--h-goldT)!important;border-color:rgb(245 187 22 / 40%)!important;box-shadow:inset 0 1px 0 rgb(255 236 178 / 34%),inset 0 -2px 3px rgb(0 0 0 / 42%),0 0 16px rgb(245 187 22 / 24%)!important}
+html:not([data-theme="light"]) #tab-hoje .h-cartao .h-forte{color:#f5b820!important}
 #authConsent a,#consModal a{color:#f0b429;text-decoration:underline;font-weight:600}[data-theme="light"] #authConsent a,[data-theme="light"] #consModal a{color:#a16207}
 </style>
 </head>
