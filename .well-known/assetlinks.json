@@ -1,0 +1,1 @@
+[{"relation": ["delegate_permission/common.handle_all_urls"], "target": {"namespace": "android_app", "package_name": "app.bestward", "sha256_cert_fingerprints": ["D1:12:A6:EC:D2:A5:CD:F2:E3:DC:F1:07:D3:3B:EB:2B:5D:1C:40:A9:68:68:04:E1:5B:BC:F0:D6:63:A6:28:7C"]}}]
