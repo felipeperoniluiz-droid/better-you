@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_progresso";
+var APP_VERSION="20261031_progresso2";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -6768,7 +6768,7 @@ function renderProgressPhotos(sortOrder){
   var rangeEl=document.getElementById('progRange');
   if(totEl)totEl.textContent=photos.length;
   if(photos.length===0){
-    grid.innerHTML='<div class="pgr-vazio"><svg viewBox="0 0 48 48"><rect x="6" y="8" width="30" height="26" rx="3.5"/><circle cx="15" cy="17" r="3"/><path d="M7 30.5 17 22l6 5 5-4 8 7"/><circle class="pgr-mais" cx="36" cy="34" r="8"/><path class="pgr-mais-x" d="M36 30v8M32 34h8"/></svg><div class="pgr-vazio-t">'+tx('pgrVazioT')+'</div><div class="pgr-vazio-d">'+tx('pgrVazioD')+'</div></div>';
+    grid.innerHTML='<div class="pgr-vazio"><svg viewBox="0 0 48 48"><rect x="6" y="8" width="30" height="26" rx="3.5"/><circle cx="15" cy="17" r="3"/><path d="M7 30.5 17 22l6 5 5-4 8 7"/><circle class="pgr-mais" cx="36" cy="34" r="8"/><path class="pgr-mais-x" d="M36 30v8M32 34h8"/></svg><div class="pgr-vazio-t" data-i18n="pgrVazioT">'+tx('pgrVazioT')+'</div><div class="pgr-vazio-d" data-i18n="pgrVazioD">'+tx('pgrVazioD')+'</div></div>';
     return;
   }
   var mn=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -6790,7 +6790,7 @@ function renderProgressPhotos(sortOrder){
     var oldest=photos[photos.length-1],newest=photos[0];
     var diff2=Math.round(Math.abs(new Date(newest.date)-new Date(oldest.date))/86400000);
     if(diasEl)diasEl.textContent=diff2;
-    if(rangeEl)rangeEl.textContent=tx('pgrUltDias',diff2);
+    if(rangeEl){ rangeEl.removeAttribute('data-i18n'); rangeEl.textContent=tx('pgrUltDias',diff2); }
     var w1=parseFloat((oldest.label||'').replace(/[^0-9.,]/g,'').replace(',','.'));
     var w2=parseFloat((newest.label||'').replace(/[^0-9.,]/g,'').replace(',','.'));
     var pv=document.getElementById('progPesoVal');
@@ -6799,7 +6799,7 @@ function renderProgressPhotos(sortOrder){
       var wdiff=w2-w1;
       pv.textContent=(wdiff>0?'+':'')+wdiff.toFixed(1).replace('.',',')+' kg';
       pv.style.color=wdiff<0?'#34d399':'#f87171';
-      if(pd3)pd3.textContent=tx('pgrDePara',w1.toFixed(1).replace('.',','),w2.toFixed(1).replace('.',','));
+      if(pd3){ pd3.removeAttribute('data-i18n'); } if(pd3)pd3.textContent=tx('pgrDePara',w1.toFixed(1).replace('.',','),w2.toFixed(1).replace('.',','));
     }
   }
 }
