@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_historico2";
+var APP_VERSION="20261031_historico3";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -2958,6 +2958,7 @@ html[data-theme="light"] #tab-hist{--pz-card:#FFFFFF;--pz-borda:#EFE6D8;--pz-lar
 #tab-hist .hs-l-ponto{width:7px;height:7px;border-radius:50%;background:var(--pz-ouro)}
 #tab-hist .history-day{background:var(--pz-creme)!important;border:1px solid var(--pz-borda)!important;border-radius:14px!important}
 #tab-hist .history-day-date{color:var(--pz-txt)!important;font-weight:600}
+#tab-hist .hs-h:has(.hs-nav) .hs-h-t{flex:1 1 auto;white-space:nowrap}
 @media (max-width:370px){#tab-hist .hs-nav{margin-left:0;width:100%;justify-content:space-between}#tab-hist .hs-dia b{font-size:13.5px}}
 </style>
 </head>
