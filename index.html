@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_sono";
+var APP_VERSION="20261031_sono2";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3210,6 +3210,13 @@ html:not([data-theme="light"]) #tab-sono .sn-r1{color:#4ade80!important}
 #tab-sono .sn-bel p,#tab-sono .sn-txt{margin:6px 0 0;font-size:13.5px;line-height:1.55;color:var(--pz-txt2)}
 #tab-sono .sn-pro{margin-top:10px;min-height:40px;padding:0 16px;border:0;border-radius:12px;background:linear-gradient(180deg,#F8B53A,var(--pz-lar));color:#2B1A05;font:700 13px Inter,sans-serif;cursor:pointer}
 @media (max-width:350px){#tab-sono .sn-res{grid-template-columns:1fr 1fr}#tab-sono .sn-ilus{display:none}}
+/* 31/10 (2): sono — selo e titulo cabendo a 390px */
+#tab-sono .sn-res{grid-template-columns:25% 1fr 35%!important;gap:4px!important}
+#tab-sono .sn-chip{font-size:11px!important;padding:6px 7px!important;gap:4px!important}
+#tab-sono .sn-chip svg{flex-basis:14px!important;width:14px!important;height:14px!important}
+#tab-sono .sn-h-t{font-size:clamp(15px,4vw,20px)!important;white-space:nowrap}
+#tab-sono .sn-pill{font-size:11px!important;padding:5px 8px!important}
+#tab-sono .sn-pill b{font-size:14px!important}
 </style>
 </head>
 <body>
