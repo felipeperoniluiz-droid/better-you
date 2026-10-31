@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_camera";
+var APP_VERSION="20261031_bel_aro";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -11258,7 +11258,7 @@ function renderNutriContext(){
 var BEL_FOTO={
   /* Bel nova (31/10): a foto que o Felipe mandou, sobre fundo escuro. Os arquivos antigos ficam como reserva. */
   grande:["bel-hero-v2.jpg","bel-hero.jpg","download%20%2818%29.png"],
-  mini  :["bel-avatar-v2.png","bel-avatar.jpg","download%20%2819%29.png"],
+  mini  :["bel-avatar-aro.png","bel-avatar.jpg","download%20%2819%29.png"],
   parede:["bel-fundo.jpg","download%20%2820%29.png"]
 };
 /* Versao CLARA do avatar (20/09). O miolo do download (19) e escuro: sobre o
@@ -11270,7 +11270,7 @@ var BEL_FOTO={
    Se a lista ficar vazia ou o arquivo faltar, a cascata cai na arte escura:
    feia no claro, mas nunca um botao vazio. */
 var BEL_FOTO_CLARA={
-  mini  :["bel-avatar-v2.png","IMG_8915-removebg-preview.png"],
+  mini  :["bel-avatar-aro.png","IMG_8915-removebg-preview.png"],
   /* RETRATO GRANDE DO CABECALHO — tema claro.
      Eu tinha posto aqui a arte redonda do avatar como paliativo, porque a
      foto grande atual (download (18)) tem fundo escuro e num cartao branco
@@ -12088,7 +12088,7 @@ function _qPassos(){ return 12+_qMetas.length+((_qResp&&_qResp.plano===0)||(_qRe
 <div id="tourOv" style="position:fixed;inset:0;z-index:9991;display:none;pointer-events:auto"><div id="tourFoco" style="position:fixed;border-radius:16px;border:2px solid #f0b429;box-shadow:0 0 0 9999px rgba(0,0,0,.72);transition:all .25s ease;pointer-events:none"></div><div id="tourCard" style="position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px 18px 18px;box-sizing:border-box;box-shadow:0 18px 44px rgba(0,0,0,.6)"></div></div>
 <div id="fgOverlay" onclick="if(event.target===this)fgFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.72);z-index:9998;display:none;align-items:flex-end;justify-content:center"><div style="width:100%;max-width:430px;background:var(--surface);border-radius:22px 22px 0 0;padding:22px 20px 28px;box-sizing:border-box"><div id="fgCorpo"></div></div></div>
 <div id="expOverlay" onclick="if(event.target===this)expFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.72);z-index:9997;display:none;align-items:flex-end;justify-content:center"><div style="width:100%;max-width:430px;max-height:88vh;overflow:auto;background:var(--surface);border-radius:22px 22px 0 0;padding:18px 20px 28px;box-sizing:border-box"><div style="display:flex;justify-content:flex-end;margin-bottom:4px"><span onclick="expFechar()" style="width:32px;height:32px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);cursor:pointer;font-size:15px">&#10005;</span></div><div id="expCorpo"></div></div></div>
-<div id="bcOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.72);z-index:9995;display:none;align-items:flex-end;justify-content:center"><div style="width:100%;max-width:430px;max-height:92vh;overflow:auto;background:var(--surface);border-radius:22px 22px 0 0;padding:16px 18px 26px;box-sizing:border-box"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><span id="bcTitulo" style="font-size:16px;font-weight:800;color:var(--text)">Codigo de barras</span><span onclick="bcFechar()" style="width:32px;height:32px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);cursor:pointer;font-size:15px">&#10005;</span></div><div id="bcCorpo"></div></div></div>
+<div id="bcOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.72);z-index:9995;display:none;align-items:flex-end;justify-content:center"><div style="width:100%;max-width:430px;max-height:92vh;overflow:auto;background:var(--surface);border-radius:22px 22px 0 0;padding:16px 18px 26px;box-sizing:border-box"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><span id="bcTitulo" style="font-size:16px;font-weight:800;color:var(--text)">Código de barras</span><span onclick="bcFechar()" style="width:32px;height:32px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);cursor:pointer;font-size:15px">&#10005;</span></div><div id="bcCorpo"></div></div></div>
 <div id="gdprDel" onclick="if(event.target===this)apagarContaFechar()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.65);z-index:9996;display:none;align-items:center;justify-content:center;padding:18px;box-sizing:border-box"></div>
 </body>
 </html>
