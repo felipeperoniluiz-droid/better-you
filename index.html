@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_historico3";
+var APP_VERSION="20261031_relatorios";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -2960,6 +2960,61 @@ html[data-theme="light"] #tab-hist{--pz-card:#FFFFFF;--pz-borda:#EFE6D8;--pz-lar
 #tab-hist .history-day-date{color:var(--pz-txt)!important;font-weight:600}
 #tab-hist .hs-h:has(.hs-nav) .hs-h-t{flex:1 1 auto;white-space:nowrap}
 @media (max-width:370px){#tab-hist .hs-nav{margin-left:0;width:100%;justify-content:space-between}#tab-hist .hs-dia b{font-size:13.5px}}
+/* ===== 31/10: RELATORIOS conforme guia (claro e escuro) ===== */
+#tab-relatorios{--pz-card:#141414;--pz-borda:rgba(240,180,41,.16);--pz-ouro:#F5A623;--pz-lar:#E08A1E;--pz-txt:#F4F4F5;--pz-txt2:#A1A1AA;--pz-creme:rgba(245,166,35,.08);--pz-ic:rgba(245,166,35,.12);--pz-sombra:0 6px 18px rgba(0,0,0,.35);font-family:Inter,system-ui,sans-serif}
+html[data-theme="light"] #tab-relatorios{--pz-card:#FFFFFF;--pz-borda:#EFE6D8;--pz-lar:#D97706;--pz-txt:#2B211D;--pz-txt2:#77716D;--pz-creme:#FFF6E6;--pz-ic:#FFF1D6;--pz-sombra:0 4px 14px rgba(120,80,20,.06)}
+#tab-relatorios .pz-cab{display:flex;align-items:flex-start;gap:14px;margin:4px 0 20px}
+#tab-relatorios .pz-cab-t{flex:1;min-width:0}
+#tab-relatorios .rl-tit-l{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#tab-relatorios .pz-tit{font-family:Sora,Inter,sans-serif;font-size:27px;font-weight:700;line-height:1.15;letter-spacing:-.02em;margin:0;color:var(--pz-txt)}
+#tab-relatorios .pz-sub{margin:6px 0 0;font-size:15.5px;line-height:1.45;color:var(--pz-txt2)}
+#tab-relatorios .pz-ic{flex:0 0 48px;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:var(--pz-ic);color:var(--pz-lar)}
+#tab-relatorios .pz-ic svg{width:24px;height:24px;fill:currentColor}
+#tab-relatorios .rl-pro{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:999px;background:linear-gradient(180deg,#F8B53A,var(--pz-ouro));color:#fff;font:700 13px Inter,sans-serif;letter-spacing:.03em}
+#tab-relatorios .rl-pro svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+#tab-relatorios .rl-card{background:var(--pz-card);border:1px solid var(--pz-borda);border-radius:20px;padding:20px 18px;box-shadow:var(--pz-sombra);color:var(--pz-txt)}
+#tab-relatorios .rl-hero{display:grid;grid-template-columns:38% 1fr;gap:16px;align-items:center}
+#tab-relatorios .rl-ilus svg{width:100%;height:auto;display:block}
+#tab-relatorios .rl-i-c{fill:var(--pz-creme)}
+#tab-relatorios .rl-i-f{fill:#FFFBF3;stroke:#F3DDB6;stroke-width:1}
+#tab-relatorios .rl-i-f2{fill:#FCE9C6}
+html:not([data-theme="light"]) #tab-relatorios .rl-i-f{fill:#221b10;stroke:rgba(245,166,35,.35)}
+html:not([data-theme="light"]) #tab-relatorios .rl-i-f2{fill:#2c2214}
+#tab-relatorios .rl-i-l{fill:#F6D9A4}
+#tab-relatorios .rl-i-b1{fill:#F8C25C}
+#tab-relatorios .rl-i-b2{fill:#E8920F}
+#tab-relatorios .rl-i-d{fill:#F5A623}
+#tab-relatorios .rl-i-dc{fill:#FFFBF3}
+#tab-relatorios .rl-hero-c{min-width:0;padding-left:16px;border-left:1px solid var(--pz-borda)}
+#tab-relatorios .rl-h{font-family:Sora,Inter,sans-serif;font-size:20px;font-weight:600;line-height:1.25;letter-spacing:-.01em;margin:0;color:var(--pz-txt)}
+#tab-relatorios .rl-p{margin:10px 0 0;font-size:15px;line-height:1.5;color:var(--pz-txt2)}
+#tab-relatorios .rl-q{margin:8px 0 0;font-size:12.5px;line-height:1.5;color:var(--pz-txt2);opacity:.9}
+#tab-relatorios .rl-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;margin-top:16px;border:0;border-radius:14px;cursor:pointer;
+  background:linear-gradient(180deg,#F8B53A,var(--pz-lar));color:#fff;font:600 16px Inter,sans-serif;box-shadow:0 4px 12px rgba(217,119,6,.28);transition:transform 200ms ease,filter 200ms ease}
+#tab-relatorios .rl-btn svg{width:22px;height:22px;flex:0 0 22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#tab-relatorios .rl-btn:active{transform:scale(.98)}
+@media (hover:hover){#tab-relatorios .rl-btn:hover{filter:brightness(1.05)}}
+#tab-relatorios .rl-sec{font-family:Sora,Inter,sans-serif;font-size:20px;font-weight:600;letter-spacing:-.01em;margin:24px 2px 12px;color:var(--pz-txt)}
+#tab-relatorios .rl-bens{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+#tab-relatorios .rl-ben{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:16px 8px;border-radius:18px;background:var(--pz-card);border:1px solid var(--pz-borda);box-shadow:var(--pz-sombra)}
+#tab-relatorios .rl-ben b{font-size:14px;font-weight:600;line-height:1.3;color:var(--pz-txt)}
+#tab-relatorios .rl-ben small{font-size:12px;line-height:1.35;color:var(--pz-txt2)}
+#tab-relatorios .rl-b-ic{width:42px;height:42px;display:grid;place-items:center;color:var(--pz-lar)}
+#tab-relatorios .rl-b-ic svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#tab-relatorios .rl-pro-faixa{display:flex;align-items:center;gap:12px;margin-top:20px;padding:16px;border-radius:20px;background:var(--pz-creme);border:1px solid var(--pz-borda)}
+#tab-relatorios .rl-pro-ic{flex:0 0 42px;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:var(--pz-ic);color:#C98A0C}
+#tab-relatorios .rl-pro-ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#tab-relatorios .rl-pro-faixa>b{flex:0 0 auto;font-family:Sora,Inter,sans-serif;font-size:16px;font-weight:600;color:var(--pz-lar);padding-right:12px;border-right:1px solid var(--pz-borda)}
+#tab-relatorios .rl-pro-d{flex:1;min-width:0;font-size:13.5px;line-height:1.5;color:var(--pz-txt2)}
+@media (max-width:440px){
+  #tab-relatorios .rl-hero{grid-template-columns:1fr}
+  #tab-relatorios .rl-ilus{width:46%;margin:0 auto}
+  #tab-relatorios .rl-hero-c{padding-left:0;border-left:0;text-align:left}
+  #tab-relatorios .rl-bens{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #tab-relatorios .rl-pro-faixa{flex-wrap:wrap}
+  #tab-relatorios .rl-pro-faixa>b{border-right:0;padding-right:0}
+  #tab-relatorios .rl-pro-d{flex-basis:100%}
+}
 </style>
 </head>
 <body>
@@ -3467,11 +3522,9 @@ if(_al){
 
 <!-- TAB RELATORIOS -->
 <div class="tab" id="tab-relatorios">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
-    <div class="section-title" style="margin-bottom:0;">Relatórios</div>
-    <span class="pro-badge">PRO</span>
-  </div>
-  <div class="section-sub" id="reportSubtitle">Perspectiva personalizada do seu objetivo</div>
+  <div class="pz-cab rl-cab"><span class="pz-ic"><svg viewBox="0 0 24 24"><rect x="4" y="13" width="4" height="7" rx="1.2"/><rect x="10" y="9" width="4" height="11" rx="1.2"/><rect x="16" y="4.5" width="4" height="15.5" rx="1.2"/></svg></span>
+    <div class="pz-cab-t"><div class="rl-tit-l"><h2 class="pz-tit" data-i18n="rlTit">Relatórios</h2><span class="rl-pro"><svg viewBox="0 0 24 24"><path d="M3.5 8.5 8 12l4-6 4 6 4.5-3.5-1.8 9.5H5.3Z"/></svg>PRO</span></div>
+    <p class="pz-sub" id="reportSubtitle"></p></div></div>
   <div id="reportContent"></div>
 </div>
 
@@ -8171,6 +8224,20 @@ var TX={
  hsCom:{pt:'Com refeições registradas',en:'Meals logged',es:'Con comidas registradas',it:'Con pasti registrati',fr:'Repas enregistrés',de:'Mahlzeiten erfasst'},
  hsVazio7:{pt:'Nenhuma refeição registrada nos últimos 7 dias.',en:'No meals logged in the last 7 days.',es:'Ninguna comida registrada en los últimos 7 días.',it:'Nessun pasto registrato negli ultimi 7 giorni.',fr:'Aucun repas enregistré ces 7 derniers jours.',de:'In den letzten 7 Tagen keine Mahlzeiten erfasst.'},
  hsDiarios:{pt:'Registros diários',en:'Daily logs',es:'Registros diarios',it:'Registrazioni giornaliere',fr:'Saisies quotidiennes',de:'Tägliche Einträge'},
+ rlTit:{pt:'Relatórios',en:'Reports',es:'Informes',it:'Report',fr:'Rapports',de:'Berichte'},
+ rlEmDados:{pt:', em dados.',en:', in numbers.',es:', en datos.',it:', in numeri.',fr:', en chiffres.',de:' – in Zahlen.'},
+ rlCardT:{pt:'Acompanhe sua evolução com relatórios completos',en:'Follow your progress with complete reports',es:'Sigue tu evolución con informes completos',it:'Segui i tuoi progressi con report completi',fr:'Suivez votre évolution avec des rapports complets',de:'Verfolgen Sie Ihre Entwicklung mit vollständigen Berichten'},
+ rlCardD:{pt:'Registre sua alimentação por alguns dias para ver seu relatório personalizado.',en:'Log your meals for a few days to see your personalised report.',es:'Registra tu alimentación unos días para ver tu informe personalizado.',it:'Registra i tuoi pasti per qualche giorno per vedere il tuo report personalizzato.',fr:'Enregistrez vos repas pendant quelques jours pour voir votre rapport personnalisé.',de:'Erfassen Sie Ihre Mahlzeiten einige Tage lang, um Ihren persönlichen Bericht zu sehen.'},
+ rlQuando:{pt:'Ele aparece a partir do primeiro dia com refeições registradas e fica mais completo a cada dia.',en:'It appears from your first day with logged meals and gets more complete every day.',es:'Aparece desde el primer día con comidas registradas y se completa cada día más.',it:'Compare dal primo giorno con pasti registrati e diventa più completo ogni giorno.',fr:'Il apparaît dès le premier jour avec des repas saisis et s\'enrichit chaque jour.',de:'Er erscheint ab dem ersten Tag mit erfassten Mahlzeiten und wird jeden Tag vollständiger.'},
+ rlBtn:{pt:'Registrar alimentação',en:'Log a meal',es:'Registrar comida',it:'Registra un pasto',fr:'Enregistrer un repas',de:'Mahlzeit erfassen'},
+ rlVer:{pt:'O que você vai ver no relatório',en:'What your report includes',es:'Qué verás en el informe',it:'Cosa vedrai nel report',fr:'Ce que contient votre rapport',de:'Das zeigt Ihr Bericht'},
+ rlB1:{pt:'Calorias e consumo',en:'Calories and intake',es:'Calorías y consumo',it:'Calorie e consumi',fr:'Calories et apports',de:'Kalorien und Aufnahme'},
+ rlB2:{pt:'Macronutrientes',en:'Macronutrients',es:'Macronutrientes',it:'Macronutrienti',fr:'Macronutriments',de:'Makronährstoffe'},
+ rlB2s:{pt:'proteínas, carboidratos e gorduras',en:'protein, carbs and fat',es:'proteínas, carbohidratos y grasas',it:'proteine, carboidrati e grassi',fr:'protéines, glucides et lipides',de:'Eiweiß, Kohlenhydrate und Fett'},
+ rlB3:{pt:'Evolução do peso',en:'Weight trend',es:'Evolución del peso',it:'Andamento del peso',fr:'Évolution du poids',de:'Gewichtsverlauf'},
+ rlB4:{pt:'Progresso da sua meta',en:'Progress to your goal',es:'Progreso de tu meta',it:'Progressi verso l\'obiettivo',fr:'Progression vers votre objectif',de:'Fortschritt zum Ziel'},
+ rlProT:{pt:'Recurso PRO',en:'PRO feature',es:'Función PRO',it:'Funzione PRO',fr:'Fonction PRO',de:'PRO-Funktion'},
+ rlProD:{pt:'Relatórios completos, análise de tendências e insights personalizados para seus objetivos. Incluído na sua assinatura.',en:'Complete reports, trend analysis and personalised insights for your goals. Included in your subscription.',es:'Informes completos, análisis de tendencias e ideas personalizadas para tus objetivos. Incluido en tu suscripción.',it:'Report completi, analisi delle tendenze e consigli personalizzati per i tuoi obiettivi. Incluso nel tuo abbonamento.',fr:'Rapports complets, analyse des tendances et conseils personnalisés pour vos objectifs. Inclus dans votre abonnement.',de:'Vollständige Berichte, Trendanalysen und persönliche Hinweise für Ihre Ziele. In Ihrem Abo enthalten.'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
  pgrF1D:{pt:'Compare suas fotos e veja mudanças reais.',en:'Compare your photos and see real changes.',es:'Compara tus fotos y ve cambios reales.',it:'Confronta le tue foto e vedi cambiamenti reali.',fr:'Comparez vos photos et voyez de vrais changements.',de:'Vergleichen Sie Ihre Fotos und sehen Sie echte Veränderungen.'},
@@ -11026,6 +11093,29 @@ function renderMeasures(){
 }
 
 // ── RELATÓRIOS AVANÇADOS ──────────────────────────────────────
+/* ===== 31/10: estado vazio dos Relatorios conforme guia do Felipe ===== */
+function _rlVazioHtml(){
+  var ic=function(p){ return '<span class="rl-b-ic"><svg viewBox="0 0 24 24">'+p+'</svg></span>'; };
+  return '<div class="rl-card rl-hero">'+
+    '<div class="rl-ilus" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="46" cy="78" r="36" class="rl-i-c"/>'+
+      '<rect x="30" y="18" width="62" height="82" rx="8" class="rl-i-f2" transform="rotate(-8 61 59)"/>'+
+      '<rect x="34" y="14" width="62" height="82" rx="8" class="rl-i-f" transform="rotate(-8 65 55)"/>'+
+      '<g transform="rotate(-8 65 55)"><rect x="42" y="23" width="30" height="3" rx="1.5" class="rl-i-l"/>'+
+      '<rect x="44" y="48" width="6" height="10" rx="1.5" class="rl-i-b1"/><rect x="53" y="42" width="6" height="16" rx="1.5" class="rl-i-b1"/><rect x="62" y="44" width="6" height="14" rx="1.5" class="rl-i-b1"/><rect x="71" y="36" width="6" height="22" rx="1.5" class="rl-i-b2"/><rect x="80" y="30" width="6" height="28" rx="1.5" class="rl-i-b2"/>'+
+      '<circle cx="54" cy="76" r="9" class="rl-i-d"/><circle cx="54" cy="76" r="4" class="rl-i-dc"/>'+
+      '<rect x="70" y="70" width="16" height="2.6" rx="1.3" class="rl-i-l"/><rect x="70" y="77" width="16" height="2.6" rx="1.3" class="rl-i-l"/><rect x="70" y="84" width="12" height="2.6" rx="1.3" class="rl-i-l"/></g></svg></div>'+
+    '<div class="rl-hero-c"><h3 class="rl-h">'+tx("rlCardT")+'</h3><p class="rl-p">'+tx("rlCardD")+'</p><p class="rl-q">'+tx("rlQuando")+'</p>'+
+    '<button type="button" class="rl-btn" onclick="openSheet(\'add\')"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/><path d="M8.5 14h.01M12 14h.01M15.5 14h.01M8.5 17h.01M12 17h.01"/></svg><span>'+tx("rlBtn")+'</span></button></div></div>'+
+   '<h3 class="rl-sec">'+tx("rlVer")+'</h3>'+
+   '<div class="rl-bens">'+
+    '<div class="rl-ben">'+ic('<path d="M13 3c1 5-4 5-3 9 1-1 2-2 2-3 4 3 6 5 6 8a6 6 0 0 1-12 0c0-5 5-7 7-14Z"/>')+'<b>'+tx("rlB1")+'</b></div>'+
+    '<div class="rl-ben">'+ic('<path d="M21 12A9 9 0 1 1 12 3"/><path d="M12 3v9h9a9 9 0 0 0-9-9Z"/>')+'<b>'+tx("rlB2")+'</b><small>'+tx("rlB2s")+'</small></div>'+
+    '<div class="rl-ben">'+ic('<path d="m3 17 5-5 4 3 5-6"/><circle cx="19.5" cy="7" r="2"/>')+'<b>'+tx("rlB3")+'</b></div>'+
+    '<div class="rl-ben">'+ic('<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6"/><path d="m12 12 7-7M16.5 4.5 19 5l.5 2.5"/>')+'<b>'+tx("rlB4")+'</b></div>'+
+   '</div>'+
+   '<div class="rl-pro-faixa"><span class="rl-pro-ic"><svg viewBox="0 0 24 24"><path d="M3.5 8.5 8 12l4-6 4 6 4.5-3.5-1.8 9.5H5.3Z"/><path d="M5.5 20.5h13"/></svg></span>'+
+    '<b>'+tx("rlProT")+'</b><span class="rl-pro-d">'+tx("rlProD")+'</span></div>';
+}
 function renderReports(){
   var el=document.getElementById('reportContent');
   if(!el)return;
@@ -11033,7 +11123,7 @@ function renderReports(){
   var goal=state.goal||'mass';
   var subEl=document.getElementById('reportSubtitle');
   if(subEl){
-    subEl.textContent=goal==='cut'?tx('relJornadaCut'):goal==='mass'?tx('relJornadaMass'):tx('relJornadaManter');
+    subEl.textContent=(goal==='cut'?tx('relJornadaCut'):goal==='mass'?tx('relJornadaMass'):tx('relJornadaManter'))+tx('rlEmDados');
   }
 
   // Últimos 7 dias (incluindo hoje)
@@ -11049,7 +11139,7 @@ function renderReports(){
 
   var validDays=days.filter(function(d){return d.data&&d.data.kcal>0;});
   if(!validDays.length){
-    el.innerHTML='<div class="card"><div class="empty"><div class="empty-icon"></div><div class="empty-text" style="line-height:1.7;">Registre sua alimentação por alguns dias para ver seu relatório personalizado.</div></div></div>';
+    el.innerHTML=_rlVazioHtml();
     return;
   }
 
