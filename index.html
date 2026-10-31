@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_progresso5";
+var APP_VERSION="20261031_mercado";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -2561,6 +2561,40 @@ html[data-theme="light"] .pgr-hero .fia-ic svg .pgr-tr{stroke:#f5b820}
 .pgr-f .pgr-tag-antes{left:55.9%;top:72.4%;width:15.4%;height:6.2%}
 .pgr-f .pgr-tag-depois{left:76.1%;top:72.4%;width:16%;height:6.2%}
 .pgr-f:before{background:linear-gradient(90deg,#060606 0%,rgba(6,6,6,.75) 10%,rgba(6,6,6,.3) 26%,rgba(6,6,6,0) 40%)}
+/* ── Modo Mercado, layout novo (31/10/2026) ── */
+#bcTitulo{position:relative;font-size:21px!important;letter-spacing:-.3px;padding-bottom:6px}
+#bcTitulo:after{content:"";position:absolute;left:0;bottom:0;width:70px;height:3px;border-radius:3px;background:linear-gradient(90deg,#f5b820,rgba(245,184,32,0));}
+.mcx-barra{display:flex;gap:6px;background:linear-gradient(180deg,#151515,#0b0b0b);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:5px;margin-bottom:14px}
+.mcx-aba{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 6px;border-radius:14px;cursor:pointer;font-size:14px;font-weight:700;color:#b9bdc3;border:1px solid transparent}
+.mcx-aba svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.mcx-aba.on{background:linear-gradient(135deg,#f9cf55,#f0b429 50%,#d99a0e);color:#17110a;border-color:rgba(255,225,140,.6);box-shadow:0 0 18px rgba(240,180,41,.4),inset 0 1px 0 rgba(255,245,200,.55)}
+.mcx-hero{position:relative;overflow:hidden;background:#070605;border:1px solid rgba(240,180,41,.45);border-radius:22px;padding:18px 14px 18px 16px;margin-bottom:14px;box-shadow:0 0 22px rgba(240,180,41,.12)}
+.mcx-img{position:absolute;top:0;right:0;bottom:0}
+.mcx-img img{height:100%;width:auto;max-width:none;display:block}
+.mcx-img:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#070605 0%,rgba(7,6,5,.8) 16%,rgba(7,6,5,.25) 38%,rgba(7,6,5,0) 55%);pointer-events:none}
+.mcx-txt{position:relative;z-index:2;width:58%}
+.mcx-pro{display:inline-block;background:linear-gradient(180deg,#f9cf55,#e8a412);color:#17110a;font-size:11.5px;font-weight:800;letter-spacing:.6px;padding:4px 12px;border-radius:14px;box-shadow:0 0 10px rgba(240,180,41,.4)}
+.mcx-tit{font-size:27px;font-weight:800;line-height:1.02;color:#fff;margin:10px 0 8px;letter-spacing:-.5px;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.mcx-tit span{display:block;color:#f5b820;font-size:31px}
+.mcx-sub{font-size:12px;color:#d2d4d8;line-height:1.45;margin-bottom:14px;text-shadow:0 1px 6px rgba(0,0,0,.85)}
+.mcx-feats{display:flex;flex-direction:column;gap:11px}
+.mcx-feat{display:flex;gap:9px;align-items:center}
+.mcx-ic{flex:0 0 auto;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#2a1f0b,#0c0904 75%);border:1.5px solid rgba(240,180,41,.7);box-shadow:0 0 14px rgba(240,180,41,.4),inset 0 0 10px rgba(240,180,41,.18)}
+.mcx-ic svg{width:20px;height:20px;fill:none;stroke:#f5b820;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 3px rgba(255,200,60,.6))}
+.mcx-ft{font-size:12px;font-weight:700;color:#f5b820;line-height:1.25;text-shadow:0 1px 6px rgba(0,0,0,.9)}
+.mcx-fd{font-size:10.5px;color:#d2d4d8;line-height:1.35;margin-top:2px;text-shadow:0 1px 6px rgba(0,0,0,.9)}
+.mcx-btn{display:flex;align-items:center;justify-content:center;gap:14px;padding:16px 14px;border-radius:20px;cursor:pointer;background:linear-gradient(135deg,#f9cf55 0%,#f0b429 45%,#d99a0e 100%);border:1px solid rgba(255,225,140,.6);color:#17110a;font-size:19px;font-weight:800;box-shadow:0 0 26px rgba(240,180,41,.45),0 6px 22px rgba(240,180,41,.3),inset 0 1px 0 rgba(255,245,200,.6)}
+.mcx-btn svg{width:34px;height:30px;fill:none;stroke:#17110a;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.mcx-btn:active{transform:scale(.98)}
+.mcx-digitar{text-align:center;font-size:12px;color:var(--text3);font-weight:700;margin-top:6px;padding:10px;cursor:pointer}
+.mcx-tarja{display:flex;align-items:center;gap:11px;background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:12px 12px 12px 14px;margin-top:8px;font-size:12px;color:var(--text2);line-height:1.5}
+.mcx-tarja>svg{flex:0 0 auto;width:22px;height:22px;fill:none;stroke:var(--text2);stroke-width:1.8;stroke-linecap:round}
+.mcx-tarja .mcx-txtj{flex:1;min-width:0}
+.mcx-alt{flex:0 0 auto;padding:7px 14px;border-radius:12px;border:1.5px solid #f0b429;color:#f5b820;font-weight:700;font-size:12.5px;cursor:pointer;background:rgba(240,180,41,.06)}
+html[data-theme="light"] .mcx-barra{background:var(--surface2);border-color:var(--border)}
+html[data-theme="light"] .mcx-aba{color:var(--text2)}
+html[data-theme="light"] .mcx-aba.on{color:#17110a}
+html[data-theme="light"] .mcx-alt{color:#8a5a00;border-color:rgba(200,140,20,.6)}
 
 /* ===== CABECALHO DO CALENDARIO (03/10) =====
    "CALENDARIO" em fonte larga ocupa 199 px e o seletor "< Out 2026 >" precisa
@@ -9434,13 +9468,12 @@ function _algT(){
    mercado: "devo levar?" -> ficha do produto com os blocos              */
 function _bcAba(k,rot){
   var on=(_bcModo===k);
-  return '<span onclick="_bcModoSet(\''+k+'\')" style="flex:1;text-align:center;padding:10px 6px;border-radius:11px;cursor:pointer;font-size:12.5px;font-weight:800;'+
-   (on?'background:var(--gold);color:#1a1206':'color:var(--text2)')+'">'+rot+'</span>';
+  var ic=(k==="mercado")?'<svg viewBox="0 0 24 24"><path d="M2.5 4h2.6l2.2 10.6a1.6 1.6 0 0 0 1.6 1.3h8.4a1.6 1.6 0 0 0 1.6-1.2L20.6 8H6.2"/><circle cx="9.5" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/></svg>':'<svg viewBox="0 0 24 24"><path d="M6 3v7.5M4 3v4.5a2 2 0 0 0 4 0V3M6 10.5V21"/><path d="M17 21V3c-2.2.8-3.5 3.6-3.5 7 0 1.8.8 3 2.2 3.3H17"/></svg>';
+  return '<span onclick="_bcModoSet(\''+k+'\')" class="mcx-aba'+(on?' on':'')+'">'+ic+rot+'</span>';
 }
 function _bcBarraModos(){
   var m=_mcT();
-  return '<div style="display:flex;gap:6px;background:var(--surface2);border-radius:14px;padding:4px;margin-bottom:14px">'+
-   _bcAba("consumo",m.consumo)+_bcAba("mercado",m.mercado)+'</div>';
+  return '<div class="mcx-barra">'+_bcAba("consumo",m.consumo)+_bcAba("mercado",m.mercado)+'</div>';
 }
 function _bcCamHtml(){
   var t=_bcT();
@@ -9459,8 +9492,7 @@ function _bcTarjaAlergias(){
   var l=a.leves.map(function(x){ return '<span style="color:var(--goldInk)">'+_algNome(x)+'</span>'; });
   var lista=g.concat(l).join(", ");
   var txt = lista ? (m.suasAlergias+' '+lista+'.') : m.semAlergias;
-  return '<div style="background:var(--surface2);border-radius:14px;padding:11px 12px;margin-top:12px;font-size:11px;color:var(--text3);line-height:1.55">'+
-    txt+' <span onclick="bcFechar();openProfile()" style="color:var(--text2);text-decoration:underline;cursor:pointer">'+m.alterar+'</span></div>';
+  return '<div class="mcx-tarja"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2"/><path d="M12 11v5.5M12 7.6v.1"/></svg><span class="mcx-txtj">'+txt+'</span><span class="mcx-alt" onclick="bcFechar();openProfile()">'+m.alterar+'</span></div>';
 }
 /* Molde unico dos dois cartoes de apresentacao. O que muda entre eles e o
    selo, a cor e a arte — a estrutura e a mesma do cartao da Foto IA. */
@@ -9521,14 +9553,19 @@ function bcMercadoIntro(){
   bcParar();
   var m=_mcT(), t=_bcT();
   try{ var h=document.getElementById("bcTitulo"); if(h) h.textContent=m.vale; }catch(e){}
-  var arte='<img src="'+BC_FOTO_MERCADO+'" alt="" style="width:100%;height:196px;object-fit:cover;border-radius:14px;display:block">';
-  var card=_bcCartao({selo:"PRO",seloBg:"#f0b429",seloInk:"#000",
-    borda:"rgba(240,180,41,.25)",moldura:"rgba(240,180,41,.5)",cor:"var(--goldInk)",
-    titulo:m.titulo,destaque:m.destaque,sub:m.sub,
-    b1t:m.b1t,b1d:m.b1d,b2t:m.b2t,b2d:m.b2d,b3t:m.b3t,b3d:m.b3d,arte:arte});
-  var h2=card+
-   '<div onclick="bcCamera()" style="text-align:center;font-size:14px;font-weight:800;padding:14px;border-radius:15px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;cursor:pointer">'+m.escanear+'</div>'+
-   '<div onclick="bcDigitar()" style="text-align:center;font-size:12px;color:var(--text3);font-weight:700;margin-top:9px;padding:10px;cursor:pointer">'+t.digitar+'</div>'+
+  /* Layout novo (31/10): foto da Bel no mercado a direita, texto vivo por cima
+     (traduz nos 6 idiomas). Se a foto nova faltar, cai na foto embutida. */
+  var tit=m.titulo, d=m.destaque;
+  if(d && tit.indexOf(d)>=0) tit=tit.split(d).join('<span>'+d+'</span>');
+  function ben(svg,a,b){ return '<div class="mcx-feat"><span class="mcx-ic"><svg viewBox="0 0 24 24">'+svg+'</svg></span><div><div class="mcx-ft">'+a+'</div><div class="mcx-fd">'+b+'</div></div></div>'; }
+  var h2='<div class="mcx-hero"><div class="mcx-img"><img src="mercado-bel.jpg?v=1" alt="" decoding="async" onerror="this.onerror=null;this.src=BC_FOTO_MERCADO"></div>'+
+   '<div class="mcx-txt"><span class="mcx-pro">PRO</span><div class="mcx-tit">'+tit+'</div><div class="mcx-sub">'+m.sub+'</div><div class="mcx-feats">'+
+   ben('<path d="M12 2.8 4.8 5.6v5.6c0 4.6 3 8.4 7.2 10 4.2-1.6 7.2-5.4 7.2-10V5.6Z"/><path d="m8.7 12 2.3 2.3 4.4-4.6"/>',m.b1t,m.b1d)+
+   ben('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 12.5h6M9 16h6"/>',m.b2t,m.b2d)+
+   ben('<path d="M2.5 4h2.6l2.2 10.6a1.6 1.6 0 0 0 1.6 1.3h8.4a1.6 1.6 0 0 0 1.6-1.2L20.6 8H6.2"/><circle cx="9.5" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/>',m.b3t,m.b3d)+
+   '</div></div></div>'+
+   '<div class="mcx-btn" onclick="bcCamera()"><svg viewBox="0 0 34 30"><path d="M2 8V4.5A2.5 2.5 0 0 1 4.5 2H8M26 2h3.5A2.5 2.5 0 0 1 32 4.5V8M32 22v3.5a2.5 2.5 0 0 1-2.5 2.5H26M8 28H4.5A2.5 2.5 0 0 1 2 25.5V22"/><path d="M9 8.5v13M13 8.5v13M17 8.5v13M21 8.5v13M25 8.5v13"/></svg>'+m.escanear+'</div>'+
+   '<div class="mcx-digitar" onclick="bcDigitar()">'+t.digitar+'</div>'+
    _bcTarjaAlergias();
   _bcCard(_bcBarraModos()+h2);
 }
@@ -11203,8 +11240,9 @@ function renderNutriContext(){
    Quando os .jpg subirem, eles ganham sozinhos. Quando os antigos forem
    apagados do repositorio, some so a segunda opcao e nada quebra. */
 var BEL_FOTO={
-  grande:["bel-hero.jpg","download%20%2818%29.png"],
-  mini  :["bel-avatar.jpg","download%20%2819%29.png"],
+  /* Bel nova (31/10): a foto que o Felipe mandou, sobre fundo escuro. Os arquivos antigos ficam como reserva. */
+  grande:["bel-hero-v2.jpg","bel-hero.jpg","download%20%2818%29.png"],
+  mini  :["bel-avatar-v2.png","bel-avatar.jpg","download%20%2819%29.png"],
   parede:["bel-fundo.jpg","download%20%2820%29.png"]
 };
 /* Versao CLARA do avatar (20/09). O miolo do download (19) e escuro: sobre o
@@ -11216,7 +11254,7 @@ var BEL_FOTO={
    Se a lista ficar vazia ou o arquivo faltar, a cascata cai na arte escura:
    feia no claro, mas nunca um botao vazio. */
 var BEL_FOTO_CLARA={
-  mini  :["IMG_8915-removebg-preview.png"],
+  mini  :["bel-avatar-v2.png","IMG_8915-removebg-preview.png"],
   /* RETRATO GRANDE DO CABECALHO — tema claro.
      Eu tinha posto aqui a arte redonda do avatar como paliativo, porque a
      foto grande atual (download (18)) tem fundo escuro e num cartao branco
@@ -11235,7 +11273,7 @@ var BEL_FOTO_CLARA={
   /* O ?v= nao e enfeite: o arquivo manteve o nome entre versoes, e sem
      isso o service worker e o CDN entregariam a imagem antiga. Subir
      foto nova com nome velho sem trocar este numero = ninguem ve. */
-  grande:["bel-hero-clara.jpg?v=2"]
+  grande:["bel-retrato-v2.jpg","bel-hero-clara.jpg?v=2"]
 };
 /* As listas acabaram de existir. O aplicarTema() ja tentou la no boot e saiu
    pela guarda de ordem, entao esta e a chamada que de fato monta as fotos. */
