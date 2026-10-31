@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_jejum";
+var APP_VERSION="20261031_corpo";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -2856,6 +2856,66 @@ html[data-theme="light"] #tab-jejum{--jj-card:#FFFFFF;--jj-borda:#EFE6D8;--jj-ou
 #tab-jejum .jj-pill{display:flex;align-items:center;gap:7px;border-radius:999px;padding:8px 14px;cursor:pointer;background:var(--jj-aviso);border:1px solid var(--jj-aviso-b);color:var(--jj-lar);font:600 13px Inter,sans-serif;transition:background 200ms ease}
 #tab-jejum .jj-topo{display:flex;justify-content:flex-end;padding:2px 2px 12px}
 #tab-jejum #jejumRelogio{font-family:Sora,Inter,sans-serif}
+/* ===== 31/10: CORPO & EVOLUCAO conforme guia do Felipe (claro e escuro) ===== */
+#tab-peso{--pz-card:#141414;--pz-borda:rgba(240,180,41,.16);--pz-ouro:#F5A623;--pz-lar:#E08A1E;--pz-txt:#F4F4F5;--pz-txt2:#A1A1AA;
+  --pz-creme:rgba(245,166,35,.08);--pz-ic:rgba(245,166,35,.12);--pz-linha:rgba(255,255,255,.08);--pz-campo:#0e0e0e;--pz-sombra:0 6px 18px rgba(0,0,0,.35);font-family:Inter,system-ui,sans-serif}
+html[data-theme="light"] #tab-peso{--pz-card:#FFFFFF;--pz-borda:#EFE6D8;--pz-ouro:#F5A623;--pz-lar:#D97706;--pz-txt:#2B211D;--pz-txt2:#77716D;
+  --pz-creme:#FFF6E6;--pz-ic:#FFF1D6;--pz-linha:#F1EADF;--pz-campo:#FFFCF6;--pz-sombra:0 4px 14px rgba(120,80,20,.06)}
+#tab-peso .pz-cab{display:flex;align-items:flex-start;gap:14px;margin:4px 0 18px}
+#tab-peso .pz-cab-t{flex:1;min-width:0}
+#tab-peso .pz-tit{font-family:Sora,Inter,sans-serif;font-size:26px;font-weight:700;line-height:1.15;letter-spacing:-.02em;margin:0;color:var(--pz-txt);text-transform:none}
+#tab-peso .pz-sub{margin:6px 0 0;font-size:15px;line-height:1.45;color:var(--pz-txt2)}
+#tab-peso .pz-ic{flex:0 0 48px;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:var(--pz-ic);color:var(--pz-lar)}
+#tab-peso .pz-ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#tab-peso .pz-cab>.pz-ic svg{fill:currentColor;stroke:none}
+#tab-peso .pz-ic-g{flex-basis:60px;width:60px;height:60px;border-radius:18px}
+#tab-peso .pz-ic-g svg{width:30px;height:30px}
+#tab-peso .pz-ic-p{flex-basis:38px;width:38px;height:38px;border-radius:12px}
+#tab-peso .pz-ic-p svg{width:20px;height:20px}
+#tab-peso .pz-seg{display:flex;gap:6px;padding:5px;margin-bottom:16px;border-radius:18px;background:var(--pz-card);border:1px solid var(--pz-borda);box-shadow:var(--pz-sombra)}
+#tab-peso .pz-seg-b{flex:1 1 0!important;display:flex!important;align-items:center;justify-content:center;gap:9px;min-height:50px;margin:0!important;border-radius:14px!important;border:0!important;
+  background:transparent!important;color:var(--pz-txt)!important;font:600 16px Inter,sans-serif!important;cursor:pointer;box-shadow:none!important;transition:background 200ms ease,color 200ms ease}
+#tab-peso .pz-seg-b svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#tab-peso .pz-seg-b.active{background:linear-gradient(180deg,#F8B53A,var(--pz-ouro))!important;color:#2B1A05!important;box-shadow:0 4px 12px rgba(245,166,35,.28)!important}
+#tab-peso .pz-card,#tab-peso #section-medidas .card{background:var(--pz-card)!important;border:1px solid var(--pz-borda)!important;border-radius:20px!important;padding:20px 18px!important;margin-bottom:16px!important;box-shadow:var(--pz-sombra)!important;color:var(--pz-txt)}
+#tab-peso .pz-atual{display:flex;align-items:center;gap:14px}
+#tab-peso .pz-atual-c{flex:1;min-width:0}
+#tab-peso .pz-rot{font-size:14px;font-weight:500;color:var(--pz-txt2)}
+#tab-peso .pz-num{display:flex;align-items:baseline;gap:6px;font-family:Sora,Inter,sans-serif;font-weight:700;color:var(--pz-txt);line-height:1.05;margin-top:2px}
+#tab-peso .pz-num #weightCurrent{font-size:44px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+#tab-peso .pz-num small{font-size:18px;font-weight:600;color:var(--pz-txt)}
+#tab-peso .pz-var{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:5px;text-align:right;padding-left:12px;border-left:1px solid var(--pz-linha);max-width:42%}
+#tab-peso .pz-var:empty{display:none}
+#tab-peso .pz-var-r{font-size:12.5px;font-weight:500;color:var(--pz-txt2)}
+#tab-peso .pz-chip{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:999px;font-size:13px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+#tab-peso .pz-chip svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+#tab-peso .pz-verde{background:rgba(22,163,74,.12);color:#15803D}
+html:not([data-theme="light"]) #tab-peso .pz-verde{color:#4ade80;background:rgba(74,222,128,.12)}
+#tab-peso .pz-neutro{background:var(--pz-linha);color:var(--pz-txt2)}
+#tab-peso .pz-label{display:block;margin:18px 0 8px;font-size:14px;font-weight:600;color:var(--pz-txt)}
+#tab-peso .pz-linha{display:flex;gap:10px}
+#tab-peso .pz-input{flex:1;min-width:0;height:52px;padding:0 16px;border-radius:14px;border:1px solid var(--pz-borda);background:var(--pz-campo);color:var(--pz-txt);font:500 16px Inter,sans-serif;outline:none;transition:border-color 200ms ease,box-shadow 200ms ease}
+#tab-peso .pz-input::placeholder{color:var(--pz-txt2);opacity:.8}
+#tab-peso .pz-input:focus{border-color:var(--pz-ouro);box-shadow:0 0 0 3px rgba(245,166,35,.18)}
+#tab-peso .pz-btn{flex:0 0 auto;display:flex;align-items:center;gap:8px;height:52px;padding:0 20px;border:0;border-radius:14px;cursor:pointer;
+  background:linear-gradient(180deg,#F8B53A,var(--pz-lar));color:#fff;font:600 16px Inter,sans-serif;box-shadow:0 4px 12px rgba(217,119,6,.28);transition:transform 200ms ease,filter 200ms ease}
+#tab-peso .pz-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+#tab-peso .pz-btn:active{transform:scale(.97)}
+@media (hover:hover){#tab-peso .pz-btn:hover{filter:brightness(1.05)}}
+#tab-peso .pz-h,#tab-peso #section-medidas .card-title{display:flex;align-items:center;gap:12px;margin:0 0 14px;font-family:Sora,Inter,sans-serif!important;font-size:20px!important;font-weight:600!important;letter-spacing:-.01em;color:var(--pz-txt)!important;text-transform:none!important}
+#tab-peso .pz-graf{position:relative}
+#tab-peso .pz-graf canvas{display:block;width:100%}
+#tab-peso .pz-vazio{padding:22px 12px;text-align:center;font-size:14px;line-height:1.5;color:var(--pz-txt2);background:var(--pz-creme);border-radius:14px}
+#tab-peso .pz-hl{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:13px 12px;border-bottom:1px solid var(--pz-linha);font-variant-numeric:tabular-nums}
+#tab-peso .pz-hl:last-child{border-bottom:0}
+#tab-peso .pz-hl-novo{background:var(--pz-creme);border-radius:14px;border-bottom-color:transparent}
+#tab-peso .pz-hl-d{font-size:14px;font-weight:500;color:var(--pz-txt)}
+#tab-peso .pz-hl-v{font-size:15px;font-weight:700;color:var(--pz-txt);text-align:center}
+#tab-peso .pz-hl-x{display:flex;justify-content:flex-end}
+#tab-peso .pz-hl-x .pz-chip{font-size:12px;padding:4px 9px}
+#tab-peso .pz-tip{font-size:14px;line-height:1.65;color:var(--pz-txt2)}
+#tab-peso #section-medidas .input-label{color:var(--pz-txt2)}
+@media (max-width:370px){#tab-peso .pz-num #weightCurrent{font-size:38px}#tab-peso .pz-btn{padding:0 14px}#tab-peso .pz-hl{grid-template-columns:auto auto 1fr;gap:10px}}
 </style>
 </head>
 <body>
@@ -3276,34 +3336,36 @@ if(_al){
 
 <!-- TAB PESO -->
 <div class="tab" id="tab-peso">
-  <div class="section-title" data-i18n="corpoEvolucao">Corpo & Evolucao</div>
-  <div class="section-sub" data-i18n="corpoEvolucaoSub">Registre peso e medidas corporais</div>
-  <!-- Sub-tabs -->
-  <div class="subtab-row">
-    <button class="subtab-btn active" id="subtab-peso" onclick="switchSubtab('peso')" data-i18n="subtabPeso">Peso</button>
-    <button class="subtab-btn" id="subtab-medidas" onclick="switchSubtab('medidas')" data-i18n="subtabMedidas">Medidas</button>
+  <div class="pz-cab"><span class="pz-ic"><svg viewBox="0 0 24 24"><rect x="4" y="13" width="4" height="7" rx="1.2"/><rect x="10" y="9" width="4" height="11" rx="1.2"/><rect x="16" y="4.5" width="4" height="15.5" rx="1.2"/></svg></span>
+    <div class="pz-cab-t"><h2 class="pz-tit" data-i18n="pzTit">Corpo & Evolução</h2><p class="pz-sub" data-i18n="pzSub">Acompanhe seu peso e suas medidas ao longo do tempo.</p></div></div>
+  <div class="pz-seg" role="tablist">
+    <button type="button" class="subtab-btn pz-seg-b active" id="subtab-peso" onclick="switchSubtab('peso')" role="tab"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9.5a3 3 0 0 1 6 0"/><path d="M12 9.5 13.2 8"/></svg><span data-i18n="subtabPeso">Peso</span></button>
+    <button type="button" class="subtab-btn pz-seg-b" id="subtab-medidas" onclick="switchSubtab('medidas')" role="tab"><svg viewBox="0 0 24 24"><ellipse cx="11" cy="9" rx="7" ry="3.2"/><path d="M4 9v5c0 1.8 3.1 3.2 7 3.2h9v-3.4h-3"/><path d="M18 9v5"/></svg><span data-i18n="subtabMedidas">Medidas</span></button>
   </div>
   <!-- Seção Peso -->
   <div id="section-peso">
-    <div class="card">
-      <div style="text-align:center;margin-bottom:14px;">
-        <div class="weight-big" id="weightCurrent">--</div>
-        <div style="font-size:16px;color:var(--text2);">kg</div>
-        <div style="font-size:13px;margin-top:3px;" id="weightChange"></div>
+    <div class="pz-card">
+      <div class="pz-atual">
+        <span class="pz-ic pz-ic-g"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9.5a3 3 0 0 1 6 0"/><path d="M12 9.5 13.2 8"/></svg></span>
+        <div class="pz-atual-c"><div class="pz-rot" data-i18n="pzAtual">Seu peso atual</div>
+          <div class="pz-num"><span id="weightCurrent">--</span><small>kg</small></div></div>
+        <div class="pz-var" id="weightChange"></div>
       </div>
-      <div style="display:flex;gap:9px;align-items:flex-end;">
-        <input type="number" class="input" id="weightInput" placeholder="Ex: 78.5" step="0.1" style="flex:1;">
-        <button class="btn btn-primary btn-sm" onclick="addWeight()" style="flex:0;padding:11px 14px;">+</button>
+      <label class="pz-label" for="weightInput" data-i18n="pzNovo">Novo peso (kg)</label>
+      <div class="pz-linha">
+        <input type="text" inputmode="decimal" autocomplete="off" class="pz-input" id="weightInput" placeholder="Ex: 78,5">
+        <button type="button" class="pz-btn" onclick="addWeight()"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="pzRegistrar">Registrar</span></button>
       </div>
     </div>
-    <div class="card"><div class="card-title" data-i18n="grafico">Grafico</div><canvas id="weightChart" height="150"></canvas></div>
-    <div class="card"><div class="card-title" data-i18n="histTitle">Historico</div><div id="weightList"></div></div>
-    <div class="card"><div class="card-title" data-i18n="ritmoIdeal">Ritmo ideal</div><div id="weightTip" style="font-size:13px;color:var(--text2);line-height:1.7;"></div></div>
+    <div class="pz-card"><div class="pz-h"><span class="pz-ic pz-ic-p"><svg viewBox="0 0 24 24"><path d="m4 16 5-5 4 3 7-7"/></svg></span><span data-i18n="pzGraf">Gráfico de evolução</span></div>
+      <div class="pz-graf"><canvas id="weightChart" height="190"></canvas><div class="pz-vazio" id="weightChartVazio" style="display:none"></div></div></div>
+    <div class="pz-card"><div class="pz-h"><span class="pz-ic pz-ic-p"><svg viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3 4v4h4"/><path d="M12 8v4.5l3 2"/></svg></span><span data-i18n="pzHist">Histórico de peso</span></div><div id="weightList"></div></div>
+    <div class="pz-card"><div class="pz-h"><span class="pz-ic pz-ic-p"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span data-i18n="pzRitmo">Ritmo ideal</span></div><div id="weightTip" class="pz-tip"></div></div>
   </div>
   <!-- Seção Medidas -->
   <div id="section-medidas" style="display:none;">
     <div class="card">
-      <div class="card-title" data-i18n="registrarMedidas">Registrar Medidas</div>
+      <div class="card-title" data-i18n="pzMedT">Registrar medidas</div>
       <div style="display:flex;flex-direction:column;gap:0;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
           <div class="input-group" style="margin-bottom:0;"><div class="input-label">Cintura (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCintura',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCintura" placeholder="82" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCintura',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
@@ -3320,7 +3382,7 @@ if(_al){
       </div>
       <button class="btn btn-primary" style="margin-top:14px;height:48px;font-size:15px;" onclick="addMeasure()" data-i18n="salvarMedidas">Salvar Medidas</button>
     </div>
-    <div class="card"><div class="card-title" data-i18n="historicoMedidas">Histórico de Medidas</div><div id="measureList"></div></div>
+    <div class="card"><div class="card-title" data-i18n="pzMedH">Histórico de medidas</div><div id="measureList"></div></div>
   </div>
 </div>
 
@@ -4997,22 +5059,41 @@ function renderDiet(){
 }
 function selectDiet(id){state.selectedDiet=id;save();renderDiet();}
 
+/* ===== 31/10: CORPO & EVOLUCAO (guia do Felipe) =====
+   Virgula decimal fora do ingles, unidade sempre junto, variacao com seta +
+   texto (verde so para reducao), historico em colunas e grafico com eixos. */
+function _pzLoc(){ return {pt:"pt-BR",en:"en-GB",es:"es-ES",it:"it-IT",fr:"fr-FR",de:"de-DE"}[currentLang]||"en-GB"; }
+function _pzKg(v){ return (+v).toLocaleString(_pzLoc(),{minimumFractionDigits:1,maximumFractionDigits:1}); }
+function _pzData(k,curta){ try{ var p=String(k).split("-"); var d=new Date(+p[0],+p[1]-1,+p[2]);
+  return d.toLocaleDateString(_pzLoc(),curta?{day:"2-digit",month:"2-digit"}:{day:"2-digit",month:"2-digit",year:"numeric"}); }catch(e){ return k; } }
+function _pzVar(diff,txt){
+  var d=Math.round(diff*10)/10;
+  if(d===0) return '<span class="pz-chip pz-neutro">— '+tx("pzEstavel")+'</span>'+(txt?'<span class="pz-var-r">'+txt+'</span>':'');
+  var desce=d<0, seta=desce?'<path d="M12 5v14M6 13l6 6 6-6"/>':'<path d="M12 19V5M6 11l6-6 6 6"/>';
+  return '<span class="pz-chip '+(desce?'pz-verde':'pz-neutro')+'"><svg viewBox="0 0 24 24">'+seta+'</svg>'+(desce?'−':'+')+_pzKg(Math.abs(d))+' kg</span>'+(txt?'<span class="pz-var-r">'+txt+'</span>':'');
+}
 function addWeight(){
-  var v=parseFloat(document.getElementById("weightInput").value);
-  if(!v||v<20||v>300){showToast(T[currentLang].pesoInvalido,"error");return;}
+  var el=document.getElementById("weightInput");
+  var v=parseFloat(String(el.value||"").replace(",","."));
+  if(!v||v<20||v>300){showToast(T[currentLang].pesoInvalido,"error");try{el.focus();}catch(e){}return;}
+  v=Math.round(v*10)/10;
   state.weights.unshift({date:todayKey(),val:v});
   if(state.weights.length>90)state.weights.pop();
-  save();renderWeight();document.getElementById("weightInput").value="";
+  save();renderWeight();el.value="";
   showToast(T[currentLang].pesoRegistrado,"success");
 }
 function renderWeight(){
-  var list=state.weights;
-  if(list.length){
-    document.getElementById("weightCurrent").textContent=list[0].val.toFixed(1);
-    if(list.length>1){var diff=(list[0].val-list[1].val).toFixed(1);document.getElementById("weightChange").innerHTML="<span style='color:"+(diff>0?"#e8834a":"#34d399")+"'>"+(diff>0?"+":"")+diff+" kg</span>";}
-  }
-  var html=list.slice(0,10).map(function(e){return "<div class='weight-entry'><div class='weight-entry-date'>"+e.date.slice(5)+"</div><div class='weight-entry-val'>"+e.val.toFixed(1)+" kg</div></div>";}).join("");
-  document.getElementById("weightList").innerHTML=html||"<div class='empty'><div class='empty-icon'></div><div class='empty-text'>"+(T[currentLang].nenhumRegistro||'Nenhum registro ainda')+"</div></div>";
+  var list=state.weights||[];
+  var cur=document.getElementById("weightCurrent"), ch=document.getElementById("weightChange");
+  if(cur) cur.textContent=list.length?_pzKg(list[0].val):"--";
+  if(ch) ch.innerHTML=list.length>1?_pzVar(list[0].val-list[1].val,tx("pzVsUlt")):(list.length?"":'<span class="pz-var-r">'+tx("pzSemPeso")+'</span>');
+  var mostra=list.slice(0,10), html="";
+  mostra.forEach(function(e,i){
+    var ant=list[i+1];
+    var v=ant?_pzVar(e.val-ant.val):'<span class="pz-chip pz-neutro">— '+tx("pzPrimeiro")+'</span>';
+    html+='<div class="pz-hl'+(i===0?' pz-hl-novo':'')+'"><span class="pz-hl-d">'+_pzData(e.date)+'</span><b class="pz-hl-v">'+_pzKg(e.val)+' kg</b><span class="pz-hl-x">'+v+'</span></div>';
+  });
+  document.getElementById("weightList").innerHTML=html||'<div class="pz-vazio" style="display:block">'+tx("pzVazio")+'</div>';
   drawWeightChart();renderWeightTip();
 }
 function renderWeightTip(){
@@ -5021,27 +5102,48 @@ function renderWeightTip(){
 }
 function drawWeightChart(){
   var canvas=document.getElementById("weightChart");if(!canvas)return;
-  var ctx=canvas.getContext("2d");
-  var data=state.weights.slice(0,14).reverse();
-  canvas.width=(canvas.offsetWidth||350)*2;canvas.height=300;
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  if(data.length<2){ctx.fillStyle="var(--text3)";ctx.font="24px DM Sans";ctx.textAlign="center";ctx.fillText(T[currentLang].registreAoMenos2Pesos||"Registre ao menos 2 pesos",canvas.width/2,canvas.height/2);return;}
+  var vazio=document.getElementById("weightChartVazio");
+  var data=(state.weights||[]).slice(0,14).reverse();
+  if(data.length<2){ canvas.style.display="none"; if(vazio){ vazio.style.display="block"; vazio.textContent=tx("pzVazioGraf"); } return; }
+  canvas.style.display="block"; if(vazio) vazio.style.display="none";
+  var claro=document.documentElement.getAttribute("data-theme")==="light";
+  var cTxt=claro?"#77716D":"#A1A1AA", cGrade=claro?"#EFE6D8":"rgba(255,255,255,.08)", cFundo=claro?"#FFFFFF":"#141414";
+  var dpr=2, W=(canvas.offsetWidth||330), H=190;
+  canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.height=H+"px";
+  var ctx=canvas.getContext&&canvas.getContext("2d"); if(!ctx) return; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
   var vals=data.map(function(d){return d.val;});
-  var mn=Math.min.apply(null,vals)-1,mx=Math.max.apply(null,vals)+1;
-  var w=canvas.width,h=canvas.height,p=45;
-  var xf=function(i){return p+(i/(data.length-1))*(w-p*2);};
-  var yf=function(v){return h-p-(v-mn)/(mx-mn)*(h-p*2);};
-  var grad=ctx.createLinearGradient(0,0,0,h);grad.addColorStop(0,"rgba(240,180,41,0.3)");grad.addColorStop(1,"rgba(240,180,41,0)");
-  ctx.beginPath();ctx.moveTo(xf(0),yf(vals[0]));
-  data.forEach(function(_,i){if(i>0)ctx.lineTo(xf(i),yf(vals[i]));});
-  ctx.lineTo(xf(data.length-1),h-p);ctx.lineTo(xf(0),h-p);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
-  ctx.beginPath();ctx.moveTo(xf(0),yf(vals[0]));
-  data.forEach(function(_,i){if(i>0)ctx.lineTo(xf(i),yf(vals[i]));});
-  ctx.strokeStyle="#f0b429";ctx.lineWidth=3;ctx.lineJoin="round";ctx.stroke();
-  data.forEach(function(_,i){ctx.beginPath();ctx.arc(xf(i),yf(vals[i]),5,0,Math.PI*2);ctx.fillStyle="#f0b429";ctx.fill();ctx.strokeStyle="var(--bg)";ctx.lineWidth=2;ctx.stroke();});
-  ctx.fillStyle="var(--text2)";ctx.font="20px DM Sans";ctx.textAlign="center";
-  data.forEach(function(d,i){if(i%(Math.ceil(data.length/5))===0||i===data.length-1)ctx.fillText(d.date.slice(5),xf(i),h-8);});
+  var lo=Math.min.apply(null,vals), hi=Math.max.apply(null,vals);
+  var passo=Math.max(1,Math.ceil((hi-lo+2)/5)); if(passo>2&&passo%2) passo++;
+  var mn=Math.floor((lo-1)/passo)*passo, mx=Math.ceil((hi+1)/passo)*passo; if(mx-mn<passo*2) mx=mn+passo*2;
+  var pl=34, pr=14, pt=30, pb=26;
+  var xf=function(i){return pl+(i/(data.length-1))*(W-pl-pr);};
+  var yf=function(v){return pt+(1-(v-mn)/(mx-mn))*(H-pt-pb);};
+  ctx.font="500 11px Inter,sans-serif"; ctx.textAlign="right"; ctx.textBaseline="middle";
+  for(var g=mn; g<=mx+0.001; g+=passo){
+    var y=yf(g); ctx.strokeStyle=cGrade; ctx.lineWidth=1; ctx.setLineDash([3,4]);
+    ctx.beginPath(); ctx.moveTo(pl,y); ctx.lineTo(W-pr,y); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle=cTxt; ctx.fillText(String(g),pl-8,y);
+  }
+  var grad=ctx.createLinearGradient(0,pt,0,H-pb); grad.addColorStop(0,"rgba(245,166,35,.28)"); grad.addColorStop(1,"rgba(245,166,35,0)");
+  ctx.beginPath(); ctx.moveTo(xf(0),yf(vals[0])); for(var i=1;i<vals.length;i++) ctx.lineTo(xf(i),yf(vals[i]));
+  ctx.lineTo(xf(vals.length-1),H-pb); ctx.lineTo(xf(0),H-pb); ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(xf(0),yf(vals[0])); for(i=1;i<vals.length;i++) ctx.lineTo(xf(i),yf(vals[i]));
+  ctx.strokeStyle="#F5A623"; ctx.lineWidth=2.5; ctx.lineJoin="round"; ctx.lineCap="round"; ctx.stroke();
+  vals.forEach(function(v,i){ ctx.beginPath(); ctx.arc(xf(i),yf(v),i===vals.length-1?5.5:4,0,Math.PI*2); ctx.fillStyle="#F5A623"; ctx.fill(); ctx.lineWidth=2; ctx.strokeStyle=cFundo; ctx.stroke(); });
+  ctx.textAlign="center"; ctx.textBaseline="alphabetic"; ctx.fillStyle=cTxt;
+  var cada=Math.max(1,Math.ceil(data.length/5)), ultX=-99;
+  data.forEach(function(d,i){ if((i%cada===0||i===data.length-1)){ var x=xf(i); if(x-ultX<44 && i!==data.length-1) return; if(i===data.length-1 && x-ultX<44){ /* tira o anterior visualmente: nao desenha sobreposto */ }
+    ctx.fillText(_pzData(d.date,true),Math.min(Math.max(x,pl+14),W-pr-14),H-6); ultX=x; } });
+  /* etiqueta do ultimo ponto */
+  var lx=xf(vals.length-1), ly=yf(vals[vals.length-1]), rot=_pzKg(vals[vals.length-1])+" kg";
+  ctx.font="700 12px Inter,sans-serif"; var tw=ctx.measureText(rot).width+16, th=22;
+  var bx=Math.min(Math.max(lx-tw/2,pl), W-pr-tw), by=Math.max(ly-th-10,2);
+  ctx.fillStyle="#E8920F"; ctx.beginPath();
+  if(ctx.roundRect) ctx.roundRect(bx,by,tw,th,7); else ctx.rect(bx,by,tw,th); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(Math.min(Math.max(lx,bx+8),bx+tw-8)-5,by+th); ctx.lineTo(Math.min(Math.max(lx,bx+8),bx+tw-8)+5,by+th); ctx.lineTo(Math.min(Math.max(lx,bx+8),bx+tw-8),by+th+5); ctx.fill();
+  ctx.fillStyle="#FFFFFF"; ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillText(rot,bx+tw/2,by+th/2+.5);
 }
+
 
 function calcNeeds(){
   var sex=document.getElementById("calcSex").value;
@@ -8020,6 +8122,22 @@ var TX={
  sdCalc:{pt:'Descubra a sua necessidade calórica',en:'Work out how much you need',es:'Descubre tu necesidad calórica',it:'Scopri il tuo fabbisogno calorico',fr:'Calculez vos besoins caloriques',de:'Ermitteln Sie Ihren Kalorienbedarf'},
  sdPerfil:{pt:'Seus dados, metas e alergias',en:'Your details, goals and allergies',es:'Tus datos, metas y alergias',it:'I tuoi dati, obiettivi e allergie',fr:'Vos données, objectifs et allergies',de:'Ihre Daten, Ziele und Allergien'},
  fotoCamSub:{pt:'Tirar foto agora',en:'Take a photo now',es:'Sacar foto ahora',it:'Scatta ora',fr:'Prendre une photo',de:'Jetzt fotografieren'},
+ pzTit:{pt:'Corpo & Evolução',en:'Body & Progress',es:'Cuerpo y evolución',it:'Corpo ed evoluzione',fr:'Corps et évolution',de:'Körper & Entwicklung'},
+ pzSub:{pt:'Acompanhe seu peso e suas medidas ao longo do tempo.',en:'Track your weight and body measurements over time.',es:'Sigue tu peso y tus medidas a lo largo del tiempo.',it:'Segui il tuo peso e le tue misure nel tempo.',fr:'Suivez votre poids et vos mesures au fil du temps.',de:'Verfolgen Sie Ihr Gewicht und Ihre Maße im Zeitverlauf.'},
+ pzAtual:{pt:'Seu peso atual',en:'Your current weight',es:'Tu peso actual',it:'Il tuo peso attuale',fr:'Votre poids actuel',de:'Ihr aktuelles Gewicht'},
+ pzVsUlt:{pt:'vs. último registro',en:'vs. previous entry',es:'vs. registro anterior',it:'vs. registrazione precedente',fr:'vs. saisie précédente',de:'ggü. letztem Eintrag'},
+ pzNovo:{pt:'Novo peso (kg)',en:'New weight (kg)',es:'Nuevo peso (kg)',it:'Nuovo peso (kg)',fr:'Nouveau poids (kg)',de:'Neues Gewicht (kg)'},
+ pzRegistrar:{pt:'Registrar',en:'Save',es:'Registrar',it:'Registra',fr:'Enregistrer',de:'Speichern'},
+ pzGraf:{pt:'Gráfico de evolução',en:'Progress chart',es:'Gráfico de evolución',it:'Grafico dell\'andamento',fr:'Graphique d\'évolution',de:'Verlaufsdiagramm'},
+ pzHist:{pt:'Histórico de peso',en:'Weight history',es:'Historial de peso',it:'Storico del peso',fr:'Historique du poids',de:'Gewichtsverlauf'},
+ pzPrimeiro:{pt:'Primeiro registro',en:'First entry',es:'Primer registro',it:'Prima registrazione',fr:'Première saisie',de:'Erster Eintrag'},
+ pzEstavel:{pt:'Estável',en:'No change',es:'Estable',it:'Stabile',fr:'Stable',de:'Unverändert'},
+ pzVazioGraf:{pt:'Adicione mais um registro para visualizar sua evolução.',en:'Add one more entry to see your progress.',es:'Añade un registro más para ver tu evolución.',it:'Aggiungi un\'altra registrazione per vedere il tuo andamento.',fr:'Ajoutez une saisie de plus pour voir votre évolution.',de:'Fügen Sie einen weiteren Eintrag hinzu, um Ihre Entwicklung zu sehen.'},
+ pzVazio:{pt:'Nenhum peso registrado ainda. Registre o primeiro acima.',en:'No weight logged yet. Add your first one above.',es:'Aún no hay peso registrado. Registra el primero arriba.',it:'Nessun peso registrato. Inserisci il primo qui sopra.',fr:'Aucun poids enregistré. Saisissez le premier ci-dessus.',de:'Noch kein Gewicht erfasst. Tragen Sie oben das erste ein.'},
+ pzSemPeso:{pt:'Sem registro',en:'No entry yet',es:'Sin registro',it:'Nessun dato',fr:'Aucune saisie',de:'Kein Eintrag'},
+ pzRitmo:{pt:'Ritmo ideal',en:'Healthy pace',es:'Ritmo ideal',it:'Ritmo ideale',fr:'Rythme idéal',de:'Gesundes Tempo'},
+ pzMedT:{pt:'Registrar medidas',en:'Log measurements',es:'Registrar medidas',it:'Registra le misure',fr:'Enregistrer les mesures',de:'Maße erfassen'},
+ pzMedH:{pt:'Histórico de medidas',en:'Measurement history',es:'Historial de medidas',it:'Storico delle misure',fr:'Historique des mesures',de:'Maßverlauf'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
  pgrF1D:{pt:'Compare suas fotos e veja mudanças reais.',en:'Compare your photos and see real changes.',es:'Compara tus fotos y ve cambios reales.',it:'Confronta le tue foto e vedi cambiamenti reali.',fr:'Comparez vos photos et voyez de vrais changements.',de:'Vergleichen Sie Ihre Fotos und sehen Sie echte Veränderungen.'},
@@ -10768,8 +10886,9 @@ function renderCalendar(){
 function switchSubtab(tab){
   document.getElementById('section-peso').style.display=tab==='peso'?'':'none';
   document.getElementById('section-medidas').style.display=tab==='medidas'?'':'none';
-  document.getElementById('subtab-peso').className='subtab-btn'+(tab==='peso'?' active':'');
-  document.getElementById('subtab-medidas').className='subtab-btn'+(tab==='medidas'?' active':'');
+  document.getElementById('subtab-peso').classList.toggle('active',tab==='peso');
+  document.getElementById('subtab-medidas').classList.toggle('active',tab==='medidas');
+  if(tab==='peso'){ try{ drawWeightChart(); }catch(e){} }
 }
 
 function parseMeasureVal(str){
