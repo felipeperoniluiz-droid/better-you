@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_sono3";
+var APP_VERSION="20261031_sono4";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3198,8 +3198,8 @@ html:not([data-theme="light"]) #tab-sono .sn-b{background:linear-gradient(180deg
 #tab-sono .sn-rs+.sn-rs{padding-left:12px;border-left:1px solid var(--pz-linha)}
 #tab-sono .sn-rs-ic{flex:0 0 40px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pz-ic);color:#F5A623}
 #tab-sono .sn-rs-ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-#tab-sono .sn-rs span{display:block;font-size:13px;color:var(--pz-txt2)}
-#tab-sono .sn-rs b{font:700 22px Sora,Inter,sans-serif;color:var(--pz-txt)}
+#tab-sono .sn-rs>div>span{display:block;font-size:13px;color:var(--pz-txt2)}
+#tab-sono .sn-rs>div>b{display:block;font:700 22px/1.15 Sora,Inter,sans-serif;color:var(--pz-txt)}
 #tab-sono .sn-reg{display:inline-block;font-size:15px!important;padding:3px 10px;border-radius:10px;margin-top:2px}
 #tab-sono .sn-r1{background:rgba(22,163,74,.12);color:#15803D!important}
 html:not([data-theme="light"]) #tab-sono .sn-r1{color:#4ade80!important}
@@ -3221,6 +3221,25 @@ html:not([data-theme="light"]) #tab-sono .sn-r1{color:#4ade80!important}
 #tab-sono .sn-ilus{position:relative;display:grid;place-items:center}
 #tab-sono .sn-ilus::before{content:"";position:absolute;left:0;top:18%;width:78%;aspect-ratio:1;border-radius:50%;background:var(--pz-creme);z-index:0}
 #tab-sono .sn-ilus img{position:relative;z-index:1;width:100%;height:auto;display:block;filter:drop-shadow(0 6px 10px rgba(217,119,6,.18))}
+/* 31/10 (4): sono — revisao fina de enquadramento (Felipe) */
+#tab-sono .sn-anel{max-width:124px!important}
+#tab-sono .sn-a-v,#tab-sono .sn-a-f{stroke-width:8!important}
+#tab-sono .sn-a-c{padding:0 18%;gap:1px}
+#tab-sono .sn-a-c svg{width:17px!important;height:17px!important;margin:0 0 1px!important}
+#tab-sono .sn-a-c b{font-size:clamp(28px,8vw,34px)!important}
+#tab-sono .sn-a-c span{font-size:10px!important;line-height:1.2;margin-top:3px!important;white-space:nowrap}
+#tab-sono .sn-seta:disabled{background:var(--pz-card)!important;border-color:var(--pz-borda)!important;opacity:.45}
+#tab-sono .sn-est{gap:12px!important}
+#tab-sono .sn-chip{align-self:flex-start}
+#tab-sono .sn-rec b{font-size:16px!important}
+#tab-sono .sn-ilus{align-self:center}
+#tab-sono .pz-sub{font-size:14px!important}
+#tab-sono .sn-resumo{align-items:center}
+#tab-sono .sn-rs{gap:10px!important}
+#tab-sono .sn-op{background:var(--pz-creme)!important;border:1px solid var(--pz-borda)!important;color:var(--pz-lar)!important;box-shadow:none!important;background-image:none!important}
+#tab-sono .sn-op.on{background:linear-gradient(180deg,#F8B53A,var(--pz-lar))!important;border-color:transparent!important;color:#2B1A05!important;box-shadow:0 4px 10px rgba(217,119,6,.28)!important}
+#tab-sono .sn-seta{background:var(--pz-card)!important;border:1px solid var(--pz-borda)!important;color:var(--pz-txt)!important;background-image:none!important}
+#tab-sono .sn-col{background:none!important;border:0!important;box-shadow:none!important}
 </style>
 </head>
 <body>
