@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_historico4";
+var APP_VERSION="20261031_corpo3";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3096,6 +3096,15 @@ html:not([data-theme="light"]) :is(#tab-jejum,#tab-peso,#tab-hist,#tab-relatorio
 #tab-hist #calMonthLabel{min-width:0!important;font-size:14px!important;padding:0 4px;white-space:nowrap}
 #tab-hist .hs-h:has(.hs-nav) .hs-h-t{flex:1 1 auto!important;min-width:0;white-space:nowrap!important}
 #tab-hist .hs-graf{margin-top:-2px}
+/* 31/10 (3): Corpo & Evolucao igual ao modelo — segmentado de uma peca so, sem rotulo acima do campo */
+#tab-peso .pz-label{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#tab-peso .pz-atual{margin-bottom:14px}
+#tab-peso .pz-seg{background:var(--pz-creme)!important;box-shadow:none!important}
+html #tab-peso .pz-seg .pz-seg-b:not(.active),html[data-theme="light"] #tab-peso .pz-seg .pz-seg-b:not(.active){background:transparent!important;background-image:none!important;box-shadow:none!important;border:0!important;color:var(--pz-txt)!important}
+#tab-peso .pz-seg-b.active{box-shadow:0 3px 10px rgba(217,119,6,.28)!important}
+#tab-peso .pz-seg-b svg{color:var(--pz-lar)}
+#tab-peso .pz-seg-b.active svg{color:#2B1A05}
+#tab-peso .pz-input::placeholder{color:var(--pz-txt2)!important;opacity:1}
 </style>
 </head>
 <body>
@@ -5258,7 +5267,7 @@ function addWeight(){
 function renderWeight(){
   var list=state.weights||[];
   var cur=document.getElementById("weightCurrent"), ch=document.getElementById("weightChange");
-  if(cur) cur.textContent=list.length?_pzKg(list[0].val):"--";
+  if(cur) cur.textContent=list.length?_pzKg(list[0].val):"--"; try{ var wi=document.getElementById("weightInput"); if(wi){ wi.placeholder=tx("pzNovo"); wi.setAttribute("aria-label",tx("pzNovo")); } }catch(e){}
   if(ch) ch.innerHTML=list.length>1?_pzVar(list[0].val-list[1].val,tx("pzVsUlt")):(list.length?"":'<span class="pz-var-r">'+tx("pzSemPeso")+'</span>');
   var mostra=list.slice(0,10), html="";
   mostra.forEach(function(e,i){
@@ -5288,7 +5297,7 @@ function drawWeightChart(){
   var lo=Math.min.apply(null,vals), hi=Math.max.apply(null,vals);
   var passo=Math.max(1,Math.ceil((hi-lo+2)/5)); if(passo>2&&passo%2) passo++;
   var mn=Math.floor((lo-1)/passo)*passo, mx=Math.ceil((hi+1)/passo)*passo; if(mx-mn<passo*2) mx=mn+passo*2;
-  var pl=34, pr=14, pt=30, pb=26;
+  var pl=34, pr=12, pt=26, pb=24;
   var xf=function(i){return pl+(i/(data.length-1))*(W-pl-pr);};
   var yf=function(v){return pt+(1-(v-mn)/(mx-mn))*(H-pt-pb);};
   ctx.font="500 11px Inter,sans-serif"; ctx.textAlign="right"; ctx.textBaseline="middle";
