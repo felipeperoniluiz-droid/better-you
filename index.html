@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_historico";
+var APP_VERSION="20261031_historico2";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3451,7 +3451,7 @@ if(_al){
   <div class="hs-card">
     <div class="hs-h"><span class="hs-ic"><svg viewBox="0 0 24 24"><path d="M13 3c1 5-4 5-3 9 1-1 2-2 2-3 4 3 6 5 6 8a6 6 0 0 1-12 0c0-5 5-7 7-14Z"/></svg></span><span class="hs-h-t" data-i18n="hs7">Calorias – últimos 7 dias</span>
       <span class="hs-media" id="hsMedia" style="display:none"><span data-i18n="hsMedia">Média diária</span><b id="hsMediaV"></b></span></div>
-    <div class="hs-graf"><canvas id="histChart" height="210"></canvas><div class="pz-vazio hs-vazio" id="histChartVazio" style="display:none"></div></div>
+    <div class="hs-graf"><canvas id="histChart" height="210" onclick="hsGrafToque(event)" style="cursor:pointer"></canvas><div class="pz-vazio hs-vazio" id="histChartVazio" style="display:none"></div></div>
   </div>
   <div class="hs-card">
     <div class="hs-h"><span class="hs-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span><span class="hs-h-t" data-i18n="hsCal">Calendário</span>
@@ -5871,10 +5871,10 @@ function _calStatus(d){
 }
 function calMudarMes(n){ _calMes=new Date((_calMes||new Date()).getTime()); _calMes.setDate(1); _calMes.setMonth(_calMes.getMonth()+n); calRender(); }
 function calAbrir(){ _calDia=null; setTimeout(_histSincronizar,30); _calMes=new Date(); _calMes.setDate(1); var el=document.getElementById("calBox"); if(!el) return; el.style.display="flex"; calRender(); }
-function calFechar(){ var el=document.getElementById("calBox"); if(el) el.style.display="none"; }
+function calFechar(){ _hsDoHist=false; var el=document.getElementById("calBox"); if(el) el.style.display="none"; }
 var _calDia=null;
 function calIrDia(k){ _calDia=k; calRender(); }
-function calVoltar(){ _calDia=null; calRender(); }
+function calVoltar(){ if(_hsDoHist){ _hsDoHist=false; _calDia=null; calFechar(); return; } _calDia=null; calRender(); }
 function _calNomeRef(mk,NOMES){ var t=(T[currentLang]||T.pt); var mapa={cafe:"cafeManha",almoco:"almoco",lanche:"lanche",jantar:"jantar"};
   var kk=mapa[mk]; if(kk&&t[kk]) return t[kk]; return NOMES[mk]; }
 function _calCap(s){ return s?(s.charAt(0).toUpperCase()+s.slice(1)):s; }
@@ -10913,7 +10913,7 @@ function drawHistChart(){
   ctx.font="500 11px Inter,sans-serif"; ctx.textAlign="right"; ctx.textBaseline="middle";
   for(var g=mn; g<=mx+0.1; g+=passo){ var y=yf(g); ctx.strokeStyle=cGrade; ctx.lineWidth=1; ctx.setLineDash([3,4]); ctx.beginPath(); ctx.moveTo(pl,y); ctx.lineTo(W-pr,y); ctx.stroke(); ctx.setLineDash([]); ctx.fillStyle=cTxt; ctx.fillText(_hsNum(g),pl-8,y); }
   /* segmentos so entre dias consecutivos com registro */
-  var pts=vals.map(function(v,i){ return v===null?null:{x:xf(i),y:yf(v),v:v}; });
+  var pts=vals.map(function(v,i){ return v===null?null:{x:xf(i),y:yf(v),v:v}; }); window._hsPts=pts.map(function(p,i){ return p?{x:p.x,k:_calChave(dias[i])}:null; }).filter(Boolean);
   var grad=ctx.createLinearGradient(0,pt,0,H-pb); grad.addColorStop(0,"rgba(245,166,35,.26)"); grad.addColorStop(1,"rgba(245,166,35,0)");
   var seg=[]; pts.concat([null]).forEach(function(p){ if(p) seg.push(p); else { if(seg.length>1){
       ctx.beginPath(); ctx.moveTo(seg[0].x,H-pb); seg.forEach(function(q){ctx.lineTo(q.x,q.y);}); ctx.lineTo(seg[seg.length-1].x,H-pb); ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
@@ -10933,7 +10933,16 @@ function drawHistChart(){
     ctx.font="500 10.5px Inter,sans-serif"; ctx.fillStyle=cTxt; ctx.fillText(d.toLocaleDateString(_pzLoc(),{day:"2-digit",month:"2-digit"}),x,H-8); });
 }
 var _hsSel=null;
-function hsDia(k){ _hsSel=k; renderCalendar(); try{ openDayDetail(k); }catch(e){} }
+/* Detalhe do dia: usa a folha do calendario (calDiaHtml), que ja e traduzida e
+   diz "Nenhum alimento registrado neste dia" quando vazio. Aberta daqui, o
+   botao de voltar fecha a folha em vez de cair no calendario dela. */
+var _hsDoHist=false;
+function hsDia(k){ _hsSel=k; renderCalendar();
+  try{ var el=document.getElementById("calBox"); if(!el) return; setTimeout(_histSincronizar,30); _hsDoHist=true; _calDia=k; el.style.display="flex"; calRender(); }catch(e){} }
+function hsGrafToque(ev){
+  try{ var c=document.getElementById("histChart"), r=c.getBoundingClientRect(), x=ev.clientX-r.left, melhor=null, dist=1e9;
+    (window._hsPts||[]).forEach(function(p){ var d=Math.abs(p.x-x); if(d<dist){dist=d;melhor=p;} });
+    if(melhor && dist<28) hsDia(melhor.k); }catch(e){} }
 function renderCalendar(){
   var el=document.getElementById('calendarGrid'); var lbl=document.getElementById('calMonthLabel');
   if(!el)return;
