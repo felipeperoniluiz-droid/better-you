@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_relatorios3";
+var APP_VERSION="20261031_relatorios4";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3076,6 +3076,14 @@ html:not([data-theme="light"]) :is(#tab-jejum,#tab-peso,#tab-hist,#tab-relatorio
 #tab-relatorios .rl-pro-faixa>b{font-size:14px!important;padding-right:10px!important;border-right:1px solid var(--pz-borda)!important;white-space:nowrap}
 #tab-relatorios .rl-pro-d{flex:1 1 auto!important;font-size:12px!important;line-height:1.45!important}
 @media (max-width:350px){#tab-relatorios .rl-hero{grid-template-columns:1fr!important}#tab-relatorios .rl-hero-c{padding-left:0!important;border-left:0!important}#tab-relatorios .rl-ilus{width:42%;margin:0 auto}}
+#tab-relatorios .rl-hero{grid-template-columns:33% 1fr!important}
+#tab-relatorios .rl-btn{white-space:nowrap!important;font-size:13.5px!important;gap:6px!important;padding:0 8px!important}
+#tab-relatorios .rl-btn svg{width:18px!important;height:18px!important;flex-basis:18px!important}
+@media (max-width:440px){
+  #tab-relatorios .rl-pro-faixa{flex-wrap:wrap!important;row-gap:6px!important}
+  #tab-relatorios .rl-pro-faixa>b{border-right:0!important;padding-right:0!important}
+  #tab-relatorios .rl-pro-d{flex-basis:100%!important}
+}
 </style>
 </head>
 <body>
