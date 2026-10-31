@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_sono2";
+var APP_VERSION="20261031_sono3";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3217,6 +3217,10 @@ html:not([data-theme="light"]) #tab-sono .sn-r1{color:#4ade80!important}
 #tab-sono .sn-h-t{font-size:clamp(15px,4vw,20px)!important;white-space:nowrap}
 #tab-sono .sn-pill{font-size:11px!important;padding:5px 8px!important}
 #tab-sono .sn-pill b{font-size:14px!important}
+/* 31/10 (3): travesseiro do Felipe no Sono */
+#tab-sono .sn-ilus{position:relative;display:grid;place-items:center}
+#tab-sono .sn-ilus::before{content:"";position:absolute;left:0;top:18%;width:78%;aspect-ratio:1;border-radius:50%;background:var(--pz-creme);z-index:0}
+#tab-sono .sn-ilus img{position:relative;z-index:1;width:100%;height:auto;display:block;filter:drop-shadow(0 6px 10px rgba(217,119,6,.18))}
 </style>
 </head>
 <body>
@@ -9751,10 +9755,7 @@ function sonoTelaRender(){
   /* resumo */
   var r=52, c=2*Math.PI*r, frac=Math.min(1,horas/9), off=c*(1-frac);
   h+='<div class="sn-card"><div class="sn-res">'+
-     '<div class="sn-ilus" aria-hidden="true"><svg viewBox="0 0 120 110"><circle cx="48" cy="62" r="40" class="sn-i-c"/>'+
-       '<path d="M22 58c-2-14 6-20 22-20h34c16 0 22 6 20 20l-2 14c-2 10-8 14-20 14H44c-12 0-18-4-20-14Z" class="sn-i-p"/>'+
-       '<path d="M30 60c8 3 18 4 32 4s26-1 34-4" class="sn-i-l"/>'+
-       '<path d="M70 26h9l-9 10h9M84 12h11L84 24h11" class="sn-i-z"/></svg></div>'+
+     '<div class="sn-ilus" aria-hidden="true"><img src="sono-travesseiro.png?v=1" alt="" decoding="async"></div>'+
      '<div class="sn-anel"><svg viewBox="0 0 124 124"><circle cx="62" cy="62" r="'+r+'" class="sn-a-f"/>'+
        '<circle cx="62" cy="62" r="'+r+'" class="sn-a-v" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'" transform="rotate(-90 62 62)"/></svg>'+
        '<div class="sn-a-c">'+lua+'<b>'+(horas>0?_snFmt(horas):"--")+'</b><span>'+t.total+'</span></div></div>'+
