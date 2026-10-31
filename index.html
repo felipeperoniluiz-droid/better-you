@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_corpo3";
+var APP_VERSION="20261031_camera2";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3105,6 +3105,12 @@ html #tab-peso .pz-seg .pz-seg-b:not(.active),html[data-theme="light"] #tab-peso
 #tab-peso .pz-seg-b svg{color:var(--pz-lar)}
 #tab-peso .pz-seg-b.active svg{color:#2B1A05}
 #tab-peso .pz-input::placeholder{color:var(--pz-txt2)!important;opacity:1}
+/* 31/10: aviso da camera no ESCURO igual ao modelo — sem emenda na foto, aro dourado com brilho, X dourado */
+html:not([data-theme="light"]) #bcOverlay>div{background:linear-gradient(180deg,#121212,#0a0a0a)!important}
+html:not([data-theme="light"]) #bcOverlay span[onclick="bcFechar()"]{border:1.5px solid #f2b52e!important;background:transparent!important;color:#fff!important;width:36px!important;height:36px!important;border-radius:11px!important}
+html:not([data-theme="light"]) .cam-hero{border:1.5px solid rgba(245,184,32,.8)!important;box-shadow:0 0 22px rgba(240,180,41,.22),inset 0 0 0 1px rgba(255,220,120,.06)!important}
+html:not([data-theme="light"]) .cam-hero .mcx-img:before{background:linear-gradient(90deg,#070605 0%,#070605 7%,rgba(7,6,5,.85) 20%,rgba(7,6,5,.35) 34%,rgba(7,6,5,0) 48%)!important}
+html:not([data-theme="light"]) .cam-sec{border-color:rgba(242,181,46,.6)!important}
 </style>
 </head>
 <body>
