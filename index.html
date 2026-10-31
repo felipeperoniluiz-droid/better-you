@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_relatorios4";
+var APP_VERSION="20261031_historico4";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3084,6 +3084,18 @@ html:not([data-theme="light"]) :is(#tab-jejum,#tab-peso,#tab-hist,#tab-relatorio
   #tab-relatorios .rl-pro-faixa>b{border-right:0!important;padding-right:0!important}
   #tab-relatorios .rl-pro-d{flex-basis:100%!important}
 }
+/* 31/10 (3): Historico igual ao modelo — titulo do grafico em 1 linha, navegacao do mes na mesma linha do "Calendario" */
+#tab-hist .hs-h{flex-wrap:nowrap!important;gap:10px!important}
+#tab-hist .hs-h-t{font-size:clamp(14px,3.6vw,18px)!important;white-space:normal!important;line-height:1.2!important}
+#tab-hist .hs-ic{flex-basis:34px!important;width:34px!important;height:34px!important}
+#tab-hist .hs-media{padding:6px 10px!important;border-radius:12px!important;font-size:11px!important}
+#tab-hist .hs-media b{font-size:15px!important;white-space:nowrap}
+#tab-hist .hs-nav{gap:4px!important;margin-left:auto!important;width:auto!important;flex:0 0 auto}
+#tab-hist .hs-seta{width:30px!important;height:30px!important;border-radius:10px!important}
+#tab-hist .hs-seta svg{width:16px!important;height:16px!important}
+#tab-hist #calMonthLabel{min-width:0!important;font-size:14px!important;padding:0 4px;white-space:nowrap}
+#tab-hist .hs-h:has(.hs-nav) .hs-h-t{flex:1 1 auto!important;min-width:0;white-space:nowrap!important}
+#tab-hist .hs-graf{margin-top:-2px}
 </style>
 </head>
 <body>
@@ -11038,13 +11050,13 @@ function drawHistChart(){
   if(med){ med.style.display=""; var mv=document.getElementById("hsMediaV"); if(mv) mv.textContent=_hsNum(Math.round(com.reduce(function(a,b){return a+b;},0)/com.length))+" kcal"; med.title=tx("hsMediaNota"); }
   var claro=document.documentElement.getAttribute("data-theme")==="light";
   var cTxt=claro?"#77716D":"#A1A1AA", cTxt1=claro?"#2B211D":"#F4F4F5", cGrade=claro?"#EFE6D8":"rgba(255,255,255,.08)", cFundo=claro?"#FFFFFF":"#141414", cEtq=claro?"#FFF1D6":"rgba(245,166,35,.16)";
-  var dpr=2, W=(canvas.offsetWidth||330), H=192;
+  var dpr=2, W=(canvas.offsetWidth||330), H=176;
   canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.height=H+"px";
   var ctx=canvas.getContext&&canvas.getContext("2d"); if(!ctx) return; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
   var lo=Math.min.apply(null,com), hi=Math.max.apply(null,com);
   var passo=[100,200,250,500,1000].find(function(p){ return (Math.ceil(hi/p)*p-Math.floor(lo/p)*p)/p<=5; })||1000;
   var mn=Math.max(0,Math.floor(lo/passo)*passo-passo), mx=Math.ceil(hi/passo)*passo+passo;
-  var pl=44, pr=14, pt=30, pb=40;
+  var pl=40, pr=10, pt=24, pb=36;
   var xf=function(i){return pl+12+(i/6)*(W-pl-pr-24);};
   var yf=function(v){return pt+(1-(v-mn)/(mx-mn))*(H-pt-pb);};
   ctx.font="500 11px Inter,sans-serif"; ctx.textAlign="right"; ctx.textBaseline="middle";
