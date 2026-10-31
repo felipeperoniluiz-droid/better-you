@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_bel_semlogo";
+var APP_VERSION="20261031_mercado_claro";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -2718,6 +2718,28 @@ html[data-theme="light"] #tab-dieta .bel-metrica:nth-child(-n+2) .bel-metrica-ro
 html[data-theme="light"] #tab-dieta .bel-id::before{display:none!important}
 html[data-theme="light"] #tab-dieta .bel-nome{border-top:0!important;border-image:none!important;padding-top:0!important}
 html[data-theme="light"] #tab-dieta .bel-hero .bel-id{align-self:center!important;padding:0 2px 30px 0!important}
+/* ===== 31/10: Modo Mercado e aviso da camera no tema CLARO =====
+   Os cartoes eram pretos e o claro pintava o texto de grafite por cima: ficava
+   ilegivel. No claro o cartao vira creme, a foto entra pela direita com um veu
+   creme e o texto fica escuro, com os destaques em dourado escuro. */
+html[data-theme="light"] body .mcx-hero{background:#fffdfa!important;border:1px solid rgba(240,170,60,.32)!important;box-shadow:0 8px 22px rgba(120,80,20,.10)!important}
+html[data-theme="light"] body .mcx-img:before{background:linear-gradient(90deg,#fffdfa 0%,rgba(255,253,250,.85) 14%,rgba(255,253,250,.35) 30%,rgba(255,253,250,0) 44%)!important}
+html[data-theme="light"] body .cam-hero .mcx-img:before{background:linear-gradient(90deg,#fffdfa 0%,rgba(255,253,250,.94) 26%,rgba(255,253,250,.6) 40%,rgba(255,253,250,0) 56%)!important}
+html[data-theme="light"] body .mcx-tit{color:#1a1410!important;text-shadow:none!important}
+html[data-theme="light"] body .mcx-tit span{color:#c98200!important}
+html[data-theme="light"] body .mcx-sub{color:#3b332c!important;text-shadow:none!important;font-size:12.5px!important}
+html[data-theme="light"] body .mcx-ft{color:#a86400!important;text-shadow:none!important}
+html[data-theme="light"] body .mcx-fd{color:#4a423a!important;text-shadow:none!important}
+html[data-theme="light"] body .mcx-ic{background:#fff6e2!important;border:1.5px solid #f2ae2e!important;box-shadow:0 2px 8px rgba(200,130,0,.18)!important}
+html[data-theme="light"] body .mcx-ic svg{stroke:#e08e00!important;filter:none!important}
+html[data-theme="light"] body .mcx-pro{box-shadow:0 2px 6px rgba(200,120,0,.25)!important}
+html[data-theme="light"] body .cam-tit{color:#a86400!important;text-shadow:none!important}
+html[data-theme="light"] body .cam-tit svg{stroke:#e08e00!important;filter:none!important}
+html[data-theme="light"] body .cam-sub{color:#1a1410!important;text-shadow:none!important}
+html[data-theme="light"] body .cam-traco{background:#f2ae2e!important}
+html[data-theme="light"] body .cam-dica{color:#3b332c!important;text-shadow:none!important}
+html[data-theme="light"] body .mcx-barra{background:#fffdfa!important;border-color:rgba(240,170,60,.28)!important}
+html[data-theme="light"] body .cam-txt{width:52%!important}
 </style>
 </head>
 <body>
