@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_progresso4";
+var APP_VERSION="20261031_progresso5";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -6756,7 +6756,7 @@ function pgrSexoAplicar(){
     w.className='pgr-hero-img '+(m?'pgr-m':'pgr-f');
     var k=document.getElementById('pgrKg'); var n=m?'6,3':'5,8'; if(currentLang==='en') n=n.replace(',','.');
     if(k) k.textContent='+ '+n+' kg';
-    var src=m?'progresso-hero-homem.jpg':'progresso-hero.jpg';
+    var src=m?'progresso-hero-homem.jpg':'progresso-hero.jpg?v=4';
     if(img.getAttribute('src')!==src) img.setAttribute('src',src);
   }catch(e){}
 }
