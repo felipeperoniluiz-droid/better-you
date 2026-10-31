@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_relatorios2";
+var APP_VERSION="20261031_onda";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3017,6 +3017,10 @@ html:not([data-theme="light"]) #tab-relatorios .rl-i-f2{fill:#2c2214}
   #tab-relatorios .rl-pro-faixa>b{border-right:0;padding-right:0}
   #tab-relatorios .rl-pro-d{flex-basis:100%}
 }
+/* ===== 31/10: onda dourada no alto das telas redesenhadas (marca dos mockups do Felipe) ===== */
+#tab-jejum,#tab-peso,#tab-hist,#tab-relatorios{position:relative;z-index:0}
+#tab-jejum::before,#tab-peso::before,#tab-hist::before,#tab-relatorios::before{content:"";position:absolute;top:-16px;right:-16px;width:78%;height:120px;z-index:-1;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 130' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='f' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.6' stop-color='%23F8B53A' stop-opacity='.22'/%3E%3Cstop offset='1' stop-color='%23F5A623' stop-opacity='.42'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.35' stop-color='%23F5A623' stop-opacity='.75'/%3E%3Cstop offset='1' stop-color='%23E8920F'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M70 0C180 34 290 58 400 62V0Z' fill='url(%23f)'/%3E%3Cpath d='M70 0C180 34 290 58 400 62' fill='none' stroke='url(%23l)' stroke-width='3'/%3E%3Cpath d='M20 0C170 62 290 98 400 108' fill='none' stroke='url(%23l)' stroke-width='1.6' opacity='.35'/%3E%3C/svg%3E") no-repeat right top/100% 100%}
+html:not([data-theme="light"]) :is(#tab-jejum,#tab-peso,#tab-hist,#tab-relatorios)::before{opacity:.55}
 </style>
 </head>
 <body>
