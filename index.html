@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_botoes";
+var APP_VERSION="20261031_bel_celular";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -1593,7 +1593,9 @@ html[data-theme="light"] #belParede{display:none}
    rolagem na mesma tela e some com o campo de escrever. */
 #tab-dieta #chatMessages{max-height:none;overflow:visible}
 #tab-dieta #chatMessages:empty{min-height:0;margin:0}
-#tab-dieta #chatVazio{padding:0;text-align:left}
+#tab-dieta #chatVazio{padding:0;text-align:left;min-height:0!important;gap:2px;align-items:flex-start}
+/* 31/10: o balao "Como posso ajudar hoje?" ocupava 188 px de altura por causa do min-height de 160 px; agora so o tamanho do texto */
+#tab-dieta .bel-balao:has(#chatMessages:empty){padding:12px 16px}
 #tab-dieta #chatVazio svg{display:none}
 #tab-dieta .chatVazio__tit{font-size:17px;font-weight:600;line-height:1.35;color:var(--bel-txt);margin:0}
 #tab-dieta .chatVazio__sub{font-size:13px;color:var(--bel-mudo);margin-top:4px}
@@ -2565,6 +2567,21 @@ html[data-theme="light"] .pgr-hero .fia-ic svg .pgr-tr{stroke:#f5b820}
 .pgr-f .pgr-tag-antes{left:55.9%;top:72.4%;width:15.4%;height:6.2%}
 .pgr-f .pgr-tag-depois{left:76.1%;top:72.4%;width:16%;height:6.2%}
 .pgr-f:before{background:linear-gradient(90deg,#060606 0%,rgba(6,6,6,.75) 10%,rgba(6,6,6,.3) 26%,rgba(6,6,6,0) 40%)}
+/* 31/10: no iPhone (largura <= 380) o cabecalho da Bel empilhava: foto em cima,
+   texto embaixo, um bloco enorme. Agora fica lado a lado como no modelo, com
+   letra um pouco menor. */
+@media (max-width:380px){
+  .bel-hero--largo{display:grid!important;grid-template-columns:46% 1fr;min-height:220px!important}
+  .bel-hero--largo .bel-hero-img{position:absolute!important;inset:0;height:100%!important;max-height:none!important;object-fit:cover;object-position:left 18%!important}
+  .bel-hero--largo::after{display:block!important}
+  .bel-hero--largo .bel-id{grid-column:2;padding:14px 12px 14px 2px!important}
+  .bel-hero--largo .bel-nome{font-size:26px}
+  .bel-hero--largo .bel-cargo{font-size:13.5px;margin:4px 0}
+  .bel-hero--largo .bel-desc{font-size:12px;line-height:1.4}
+  .bel-atalhos{grid-template-columns:1fr 1fr!important;gap:8px!important}
+  .bel-atalho{padding:10px 8px!important;gap:8px!important;font-size:12.5px!important}
+  .bel-atalho .med{flex:0 0 34px!important;width:34px!important;height:34px!important}
+}
 /* ── Modo Mercado, layout novo (31/10/2026) ── */
 #bcTitulo{position:relative;font-size:21px!important;letter-spacing:-.3px;padding-bottom:6px}
 #bcTitulo:after{content:"";position:absolute;left:0;bottom:0;width:70px;height:3px;border-radius:3px;background:linear-gradient(90deg,#f5b820,rgba(245,184,32,0));}
