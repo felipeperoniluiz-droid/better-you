@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_corpo2";
+var APP_VERSION="20261031_historico";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -2916,6 +2916,49 @@ html:not([data-theme="light"]) #tab-peso .pz-verde{color:#4ade80;background:rgba
 #tab-peso .pz-tip{font-size:14px;line-height:1.65;color:var(--pz-txt2)}
 #tab-peso #section-medidas .input-label{color:var(--pz-txt2)}
 @media (max-width:370px){#tab-peso .pz-num #weightCurrent{font-size:38px}#tab-peso .pz-btn{padding:0 14px}#tab-peso .pz-hl{grid-template-columns:auto auto 1fr;gap:10px}}
+/* ===== 31/10: HISTORICO conforme mockup (claro e escuro) — reaproveita .pz-cab/.pz-tit ===== */
+#tab-hist{--pz-card:#141414;--pz-borda:rgba(240,180,41,.16);--pz-ouro:#F5A623;--pz-lar:#E08A1E;--pz-txt:#F4F4F5;--pz-txt2:#A1A1AA;--pz-creme:rgba(245,166,35,.08);--pz-ic:rgba(245,166,35,.12);--pz-linha:rgba(255,255,255,.08);--pz-sombra:0 6px 18px rgba(0,0,0,.35);font-family:Inter,system-ui,sans-serif}
+html[data-theme="light"] #tab-hist{--pz-card:#FFFFFF;--pz-borda:#EFE6D8;--pz-lar:#D97706;--pz-txt:#2B211D;--pz-txt2:#77716D;--pz-creme:#FFF6E6;--pz-ic:#FFF1D6;--pz-linha:#F1EADF;--pz-sombra:0 4px 14px rgba(120,80,20,.06)}
+#tab-hist .pz-cab{display:flex;align-items:flex-start;gap:14px;margin:4px 0 18px}
+#tab-hist .pz-cab-t{flex:1;min-width:0}
+#tab-hist .pz-tit{font-family:Sora,Inter,sans-serif;font-size:26px;font-weight:700;line-height:1.15;letter-spacing:-.02em;margin:0;color:var(--pz-txt)}
+#tab-hist .pz-sub{margin:6px 0 0;font-size:15px;line-height:1.45;color:var(--pz-txt2)}
+#tab-hist .pz-ic{flex:0 0 48px;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:var(--pz-ic);color:var(--pz-lar)}
+#tab-hist .pz-ic svg{width:24px;height:24px;fill:currentColor}
+#tab-hist .hs-card{background:var(--pz-card);border:1px solid var(--pz-borda);border-radius:20px;padding:18px 16px;margin-bottom:16px;box-shadow:var(--pz-sombra);color:var(--pz-txt)}
+#tab-hist .hs-h{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+#tab-hist .hs-h-t{flex:1;min-width:0;font-family:Sora,Inter,sans-serif;font-size:19px;font-weight:600;letter-spacing:-.01em;color:var(--pz-txt);line-height:1.25}
+#tab-hist .hs-ic{flex:0 0 40px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pz-ic);color:var(--pz-lar)}
+#tab-hist .hs-ic svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#tab-hist .hs-media{flex:0 0 auto;display:flex;flex-direction:column;padding:8px 14px;border-radius:14px;background:var(--pz-creme);font-size:12px;font-weight:500;color:var(--pz-txt2);line-height:1.3}
+#tab-hist .hs-media b{font-family:Sora,Inter,sans-serif;font-size:17px;font-weight:700;color:var(--pz-txt)}
+#tab-hist .hs-graf canvas{display:block;width:100%}
+#tab-hist .pz-vazio{padding:22px 12px;text-align:center;font-size:14px;line-height:1.5;color:var(--pz-txt2);background:var(--pz-creme);border-radius:14px}
+#tab-hist .hs-nav{display:flex;align-items:center;gap:8px;margin-left:auto}
+#tab-hist #calMonthLabel{min-width:118px;text-align:center;font-family:Sora,Inter,sans-serif;font-size:15px;font-weight:600;color:var(--pz-txt)}
+#tab-hist .hs-seta{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;border:1px solid var(--pz-borda);background:var(--pz-creme);color:var(--pz-txt);cursor:pointer;transition:background 200ms ease}
+#tab-hist .hs-seta svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#tab-hist .hs-sem,#tab-hist .hs-grade{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+#tab-hist .hs-sem{margin-bottom:8px}
+#tab-hist .hs-sem span{text-align:center;font-size:12.5px;font-weight:500;color:var(--pz-txt2)}
+#tab-hist .hs-dia{position:relative;aspect-ratio:1/0.82;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:12px;cursor:pointer;
+  border:1px solid var(--pz-borda);background:var(--pz-creme);color:var(--pz-txt);font-family:Inter,sans-serif;padding:0;transition:transform 180ms ease,background 200ms ease}
+#tab-hist .hs-dia b{font-size:15px;font-weight:600;line-height:1}
+#tab-hist .hs-dia i{width:5px;height:5px;border-radius:50%;background:var(--pz-ouro)}
+#tab-hist .hs-dia:not(.tem) i{display:none}
+#tab-hist .hs-dia.hoje{border:2px solid var(--pz-ouro);background:var(--pz-card)}
+#tab-hist .hs-dia.sel{background:linear-gradient(180deg,#F8B53A,var(--pz-lar));border-color:transparent;color:#fff;box-shadow:0 4px 10px rgba(217,119,6,.3)}
+#tab-hist .hs-dia.sel i{background:#fff}
+#tab-hist .hs-dia:active{transform:scale(.95)}
+#tab-hist .hs-leg{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-size:12.5px;color:var(--pz-txt2)}
+#tab-hist .hs-leg>span{display:flex;align-items:center;gap:7px}
+#tab-hist .hs-leg i{display:inline-block;flex:0 0 auto}
+#tab-hist .hs-l-sel{width:16px;height:16px;border-radius:5px;background:linear-gradient(180deg,#F8B53A,var(--pz-lar))}
+#tab-hist .hs-l-hoje{width:16px;height:16px;border-radius:5px;border:2px solid var(--pz-ouro);box-sizing:border-box}
+#tab-hist .hs-l-ponto{width:7px;height:7px;border-radius:50%;background:var(--pz-ouro)}
+#tab-hist .history-day{background:var(--pz-creme)!important;border:1px solid var(--pz-borda)!important;border-radius:14px!important}
+#tab-hist .history-day-date{color:var(--pz-txt)!important;font-weight:600}
+@media (max-width:370px){#tab-hist .hs-nav{margin-left:0;width:100%;justify-content:space-between}#tab-hist .hs-dia b{font-size:13.5px}}
 </style>
 </head>
 <body>
@@ -3403,27 +3446,22 @@ if(_al){
 
 <!-- TAB HISTORICO -->
 <div class="tab" id="tab-hist">
-  <div class="section-title" data-i18n="histTitle">Historico</div>
-  <div class="section-sub" data-i18n="histSub">Toque em cada dia para ver as refeições</div>
-  <div class="card"><div class="card-title" data-i18n="cal7Dias">Calorias — ultimos 7 dias</div><canvas id="histChart" height="130"></canvas></div>
-  <!-- Calendário colorido -->
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <div class="card-title" style="margin-bottom:0;" data-i18n="calendario">Calendário</div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <button onclick="changeCalMonth(-1)" style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;color:var(--text);width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">‹</button>
-        <div id="calMonthLabel" style="font-size:13px;font-weight:700;min-width:80px;text-align:center;"></div>
-        <button onclick="changeCalMonth(1)" style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;color:var(--text);width:28px;height:28px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">›</button>
-      </div>
-    </div>
-    <div id="calendarGrid"></div>
-    <div style="display:flex;gap:12px;margin-top:10px;justify-content:center;">
-      <span style="font-size:10px;color:#34d399;" data-i18n="excellenteLegend">● Excelente (80+)</span>
-      <span style="font-size:10px;color:#fbbf24;" data-i18n="bomLegend">● Bom (50–79)</span>
-      <span style="font-size:10px;color:#f87171;" data-i18n="ruimLegend">● Ruim (&lt;50)</span>
-    </div>
+  <div class="pz-cab hs-cab"><span class="pz-ic"><svg viewBox="0 0 24 24"><rect x="4" y="13" width="4" height="7" rx="1.2"/><rect x="10" y="9" width="4" height="11" rx="1.2"/><rect x="16" y="4.5" width="4" height="15.5" rx="1.2"/></svg></span>
+    <div class="pz-cab-t"><h2 class="pz-tit" data-i18n="hsTit">Histórico</h2><p class="pz-sub" data-i18n="hsSub">Toque em cada dia para ver as refeições.</p></div></div>
+  <div class="hs-card">
+    <div class="hs-h"><span class="hs-ic"><svg viewBox="0 0 24 24"><path d="M13 3c1 5-4 5-3 9 1-1 2-2 2-3 4 3 6 5 6 8a6 6 0 0 1-12 0c0-5 5-7 7-14Z"/></svg></span><span class="hs-h-t" data-i18n="hs7">Calorias – últimos 7 dias</span>
+      <span class="hs-media" id="hsMedia" style="display:none"><span data-i18n="hsMedia">Média diária</span><b id="hsMediaV"></b></span></div>
+    <div class="hs-graf"><canvas id="histChart" height="210"></canvas><div class="pz-vazio hs-vazio" id="histChartVazio" style="display:none"></div></div>
   </div>
-  <div class="card"><div class="card-title" data-i18n="registrosDiarios">Registros diários</div><div id="histList"></div></div>
+  <div class="hs-card">
+    <div class="hs-h"><span class="hs-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span><span class="hs-h-t" data-i18n="hsCal">Calendário</span>
+      <div class="hs-nav"><button type="button" class="hs-seta" onclick="changeCalMonth(-1)" aria-label="‹"><svg viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg></button>
+        <span id="calMonthLabel"></span>
+        <button type="button" class="hs-seta" onclick="changeCalMonth(1)" aria-label="›"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button></div></div>
+    <div id="calendarGrid"></div>
+    <div class="hs-leg"><span><i class="hs-l-sel"></i><span data-i18n="hsSel">Dia selecionado</span></span><span><i class="hs-l-hoje"></i><span data-i18n="hsHoje">Hoje</span></span><span><i class="hs-l-ponto"></i><span data-i18n="hsCom">Com refeições registradas</span></span></div>
+  </div>
+  <div class="hs-card"><div class="hs-h"><span class="hs-ic"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r=".8"/><circle cx="4" cy="12" r=".8"/><circle cx="4" cy="18" r=".8"/></svg></span><span class="hs-h-t" data-i18n="hsDiarios">Registros diários</span></div><div id="histList"></div></div>
 </div>
 
 <!-- TAB RELATORIOS -->
@@ -5226,7 +5264,7 @@ function renderHistory(){
   var keys=Object.keys(state.history||{}).sort().reverse().slice(0,30);
   if(!keys.length){
     document.getElementById("histList").innerHTML="<div class='empty'><div class='empty-icon'></div><div class='empty-text'>"+tx('histVazio')+"<br><span style='font-size:12px;'>"+tx('histVazioSub')+"</span></div></div>";
-    return;
+    try{drawHistChart();}catch(e){} return;
   }
   document.getElementById("histList").innerHTML=keys.map(function(k){
     var d=state.history[k];
@@ -5270,23 +5308,6 @@ function renderHistory(){
   }).join('');
   drawHistChart(keys.slice(0,7).reverse());
 }
-function drawHistChart(keys){
-  var canvas=document.getElementById("histChart");if(!canvas)return;
-  canvas.width=(canvas.offsetWidth||350)*2;canvas.height=260;
-  var ctx=canvas.getContext("2d");ctx.clearRect(0,0,canvas.width,canvas.height);
-  if(!keys.length)return;
-  var data=keys.map(function(k){return state.history[k]?state.history[k].kcal:0;});
-  var mx=Math.max(state.calGoal,Math.max.apply(null,data))*1.1;
-  var w=canvas.width,h=canvas.height,p=38;
-  var bw=(w-p*2)/data.length*0.6,gap=(w-p*2)/data.length;
-  data.forEach(function(v,i){
-    var x=p+i*gap+(gap-bw)/2,bh=(v/mx)*(h-p*2),by=h-p-bh;
-    var gr=ctx.createLinearGradient(0,by,0,h-p);gr.addColorStop(0,"#f0b429");gr.addColorStop(1,"rgba(232,131,74,0.4)");
-    ctx.fillStyle=gr;ctx.beginPath();ctx.rect(x,by,bw,bh);ctx.fill();
-    ctx.fillStyle="var(--text2)";ctx.font="18px DM Sans";ctx.textAlign="center";ctx.fillText(keys[i].slice(5),x+bw/2,h-6);
-  });
-}
-
 // Configurações migradas para o Perfil
 function openSettings(){ openProfile(); }
 function saveSettings(){ saveProfile(); }
@@ -8138,6 +8159,17 @@ var TX={
  pzRitmo:{pt:'Ritmo ideal',en:'Healthy pace',es:'Ritmo ideal',it:'Ritmo ideale',fr:'Rythme idéal',de:'Gesundes Tempo'},
  pzMedT:{pt:'Registrar medidas',en:'Log measurements',es:'Registrar medidas',it:'Registra le misure',fr:'Enregistrer les mesures',de:'Maße erfassen'},
  pzMedH:{pt:'Histórico de medidas',en:'Measurement history',es:'Historial de medidas',it:'Storico delle misure',fr:'Historique des mesures',de:'Maßverlauf'},
+ hsTit:{pt:'Histórico',en:'History',es:'Historial',it:'Storico',fr:'Historique',de:'Verlauf'},
+ hsSub:{pt:'Toque em cada dia para ver as refeições.',en:'Tap a day to see its meals.',es:'Toca cada día para ver las comidas.',it:'Tocca un giorno per vedere i pasti.',fr:'Touchez un jour pour voir les repas.',de:'Tippen Sie auf einen Tag, um die Mahlzeiten zu sehen.'},
+ hs7:{pt:'Calorias – últimos 7 dias',en:'Calories – last 7 days',es:'Calorías – últimos 7 días',it:'Calorie – ultimi 7 giorni',fr:'Calories – 7 derniers jours',de:'Kalorien – letzte 7 Tage'},
+ hsMedia:{pt:'Média diária',en:'Daily average',es:'Media diaria',it:'Media giornaliera',fr:'Moyenne par jour',de:'Tagesschnitt'},
+ hsMediaNota:{pt:'dos dias com registro',en:'of logged days',es:'de los días con registro',it:'dei giorni registrati',fr:'des jours saisis',de:'der erfassten Tage'},
+ hsCal:{pt:'Calendário',en:'Calendar',es:'Calendario',it:'Calendario',fr:'Calendrier',de:'Kalender'},
+ hsSel:{pt:'Dia selecionado',en:'Selected day',es:'Día seleccionado',it:'Giorno selezionato',fr:'Jour sélectionné',de:'Ausgewählter Tag'},
+ hsHoje:{pt:'Hoje',en:'Today',es:'Hoy',it:'Oggi',fr:'Aujourd\'hui',de:'Heute'},
+ hsCom:{pt:'Com refeições registradas',en:'Meals logged',es:'Con comidas registradas',it:'Con pasti registrati',fr:'Repas enregistrés',de:'Mahlzeiten erfasst'},
+ hsVazio7:{pt:'Nenhuma refeição registrada nos últimos 7 dias.',en:'No meals logged in the last 7 days.',es:'Ninguna comida registrada en los últimos 7 días.',it:'Nessun pasto registrato negli ultimi 7 giorni.',fr:'Aucun repas enregistré ces 7 derniers jours.',de:'In den letzten 7 Tagen keine Mahlzeiten erfasst.'},
+ hsDiarios:{pt:'Registros diários',en:'Daily logs',es:'Registros diarios',it:'Registrazioni giornaliere',fr:'Saisies quotidiennes',de:'Tägliche Einträge'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
  pgrF1D:{pt:'Compare suas fotos e veja mudanças reais.',en:'Compare your photos and see real changes.',es:'Compara tus fotos y ve cambios reales.',it:'Confronta le tue foto e vedi cambiamenti reali.',fr:'Comparez vos photos et voyez de vrais changements.',de:'Vergleichen Sie Ihre Fotos und sehen Sie echte Veränderungen.'},
@@ -10849,37 +10881,75 @@ function changeCalMonth(dir){
 
 function openDayDetail(dk){var d=state.history[dk];var pts=dk.split('-');var dObj=new Date(+pts[0],+pts[1]-1,+pts[2]);var dn=_dias('full')[dObj.getDay()];var mn=_dias('full')[+pts[1]-1];var dateDisp=dn+', '+pts[2]+' '+mn+' '+pts[0];var inner='<div style="padding:16px 4px 0;">';if(!d){inner+='<div style="text-align:center;color:var(--text2);padding:40px 0;font-size:14px;">Sem registros para este dia.</div>';}else{var sc=calcDayScore(d).score;var sColor=sc>=80?'#34d399':sc>=50?'#fbb024':'#f87171';var sLabel=sc>=80?'Excelente':sc>=50?'Bom':'Ruim';inner+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><div style="background:'+sColor+'22;color:'+sColor+';font-size:22px;font-weight:800;padding:6px 16px;border-radius:20px;">'+sc+'</div><div style="color:'+sColor+';font-weight:600;">'+sLabel+'</div></div>';var goal=state.profile&&state.profile.tdee?state.profile.tdee:2000;var pct=Math.min(100,Math.round(((d.kcal||0)/goal)*100));inner+='<div style="background:var(--surface3);border-radius:14px;padding:14px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="color:var(--text2);font-size:12px;">CALORIAS</span><span style="color:#f0b429;font-weight:700;font-size:18px;">'+(d.kcal||0)+' kcal</span></div><div style="background:var(--surface3);border-radius:6px;height:6px;margin-bottom:10px;"><div style="background:#f0b429;height:6px;border-radius:6px;width:'+pct+'%;"></div></div><div style="display:flex;gap:14px;font-size:13px;"><span><b style="color:#5b9cf6;">'+(d.prot||0)+'g</b></span><span><b style="color:#f0b429;">'+(d.carb||0)+'g</b></span><span><b style="color:#34d399;">'+(d.fat||0)+'g</b></span></div></div>';inner+='<div style="background:var(--surface3);border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#38bdf8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 3.2s6.4 6.9 6.4 11a6.4 6.4 0 0 1-12.8 0c0-4.1 6.4-11 6.4-11Z"/></svg><span style="color:#60b4d8;font-weight:600;">'+(d.water||0)+' ml</span></div>';var mLabels={cafe:'Caf\u00e9 da Manh\u00e3',almoco:'Almo\u00e7o',lanche:'Lanche',jantar:'Jantar',ceia:'Ceia',pos_treino:'P\u00f3s-Treino'};var meals=d.meals||{};var hasMeals=false;Object.keys(mLabels).forEach(function(mk){var items=meals[mk]||[];if(!items.length)return;hasMeals=true;inner+='<div style="margin-bottom:12px;"><div style="color:#5a9a72;font-size:11px;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;">'+mLabels[mk]+'</div>';items.forEach(function(item){var thumb=(item.photo&&item.photo.length>500)?'<img src="'+item.photo+'" style="width:38px;height:38px;border-radius:8px;object-fit:cover;flex-shrink:0;"/>':'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--text2)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="3.4"/></svg>';inner+='<div style="display:flex;align-items:center;gap:10px;padding:8px;background:#12161c;border-radius:10px;margin-bottom:5px;">'+thumb+'<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:#e8eaf0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.name+'</div><div style="font-size:11px;color:var(--text2);">'+(item.grams||item.ml||0)+'g · P:'+(item.prot||0)+'g C:'+(item.carb||0)+'g G:'+(item.fat||0)+'g'+(item.time?' · <span style="color:#5a9a72;">'+item.time+'</span>':'')+'</div></div><span style="color:#f0b429;font-weight:700;font-size:13px;">'+(item.kcal||0)+'</span></div>';});inner+='</div>';});if(!hasMeals)inner+='<div style="color:#555;font-size:13px;text-align:center;padding:12px 0;">Sem refeições registradas</div>';}var photos=(state.progressPhotos||[]).filter(function(p){return p.date===dk||p.date.startsWith(dk);});if(photos.length){inner+='<div style="margin-top:14px;"><div style="color:var(--text2);font-size:11px;letter-spacing:1px;margin-bottom:8px;">FOTOS DE PROGRESSO</div>';photos.forEach(function(p){inner+='<div style="margin-bottom:10px;"><img src="'+p.dataUrl+'" style="width:100%;border-radius:12px;max-height:320px;object-fit:contain;background:var(--surface3);"/>'+(p.label?'<div style="color:var(--text2);font-size:11px;margin-top:4px;text-align:center;">'+p.label+'</div>':'')+'</div>';});inner+='</div>';}inner+='</div>';var m=document.getElementById('dayDetailModal');if(!m){m=document.createElement('div');m.id='dayDetailModal';m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9100;display:flex;flex-direction:column;';var hdr=document.createElement('div');hdr.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:16px;background:#12161c;border-bottom:1px solid var(--surface3);flex-shrink:0;';var ttl=document.createElement('div');ttl.id='dayDetailTitle';ttl.style.cssText='font-size:16px;font-weight:700;color:#e8eaf0;';var cb=document.createElement('button');cb.textContent='✕';cb.style.cssText='background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer;';cb.onclick=function(){m.style.display='none';};hdr.appendChild(ttl);hdr.appendChild(cb);var bd=document.createElement('div');bd.id='dayDetailContent';bd.style.cssText='flex:1;overflow-y:auto;padding:0 16px 32px;';m.appendChild(hdr);m.appendChild(bd);document.body.appendChild(m);}document.getElementById('dayDetailTitle').textContent=dateDisp;document.getElementById('dayDetailContent').innerHTML=inner;m.style.display='flex';}
 
+/* ===== 31/10: HISTORICO conforme mockup do Felipe =====
+   Ultimos 7 dias corridos (hoje entra pelo calcTotals). Dia sem registro fica
+   sem ponto — nao vira zero inventado. A media e so dos dias com registro. */
+function _hsKcalDia(k){
+  try{ if(k===todayKey()){ var t=calcTotals(); if(t&&t.kcal>0) return Math.round(t.kcal); }
+    var h=state.history&&state.history[k]; return (h&&h.kcal>0)?Math.round(h.kcal):null; }catch(e){ return null; }
+}
+function _hsNum(v){ return (+v).toLocaleString(_pzLoc(),{maximumFractionDigits:0}); }
+function drawHistChart(){
+  var canvas=document.getElementById("histChart");if(!canvas)return;
+  var vazio=document.getElementById("histChartVazio"), med=document.getElementById("hsMedia");
+  var hoje=new Date(); hoje.setHours(0,0,0,0);
+  var dias=[], vals=[];
+  for(var i=6;i>=0;i--){ var d=new Date(hoje.getTime()-i*86400000); var k=_calChave(d); dias.push(d); vals.push(_hsKcalDia(k)); }
+  var com=vals.filter(function(v){return v!==null;});
+  if(!com.length){ canvas.style.display="none"; if(med) med.style.display="none"; if(vazio){ vazio.style.display="block"; vazio.textContent=tx("hsVazio7"); } return; }
+  canvas.style.display="block"; if(vazio) vazio.style.display="none";
+  if(med){ med.style.display=""; var mv=document.getElementById("hsMediaV"); if(mv) mv.textContent=_hsNum(Math.round(com.reduce(function(a,b){return a+b;},0)/com.length))+" kcal"; med.title=tx("hsMediaNota"); }
+  var claro=document.documentElement.getAttribute("data-theme")==="light";
+  var cTxt=claro?"#77716D":"#A1A1AA", cTxt1=claro?"#2B211D":"#F4F4F5", cGrade=claro?"#EFE6D8":"rgba(255,255,255,.08)", cFundo=claro?"#FFFFFF":"#141414", cEtq=claro?"#FFF1D6":"rgba(245,166,35,.16)";
+  var dpr=2, W=(canvas.offsetWidth||330), H=210;
+  canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.height=H+"px";
+  var ctx=canvas.getContext&&canvas.getContext("2d"); if(!ctx) return; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
+  var lo=Math.min.apply(null,com), hi=Math.max.apply(null,com);
+  var passo=[100,200,250,500,1000].find(function(p){ return (Math.ceil(hi/p)*p-Math.floor(lo/p)*p)/p<=5; })||1000;
+  var mn=Math.max(0,Math.floor(lo/passo)*passo-passo), mx=Math.ceil(hi/passo)*passo+passo;
+  var pl=44, pr=14, pt=30, pb=40;
+  var xf=function(i){return pl+12+(i/6)*(W-pl-pr-24);};
+  var yf=function(v){return pt+(1-(v-mn)/(mx-mn))*(H-pt-pb);};
+  ctx.font="500 11px Inter,sans-serif"; ctx.textAlign="right"; ctx.textBaseline="middle";
+  for(var g=mn; g<=mx+0.1; g+=passo){ var y=yf(g); ctx.strokeStyle=cGrade; ctx.lineWidth=1; ctx.setLineDash([3,4]); ctx.beginPath(); ctx.moveTo(pl,y); ctx.lineTo(W-pr,y); ctx.stroke(); ctx.setLineDash([]); ctx.fillStyle=cTxt; ctx.fillText(_hsNum(g),pl-8,y); }
+  /* segmentos so entre dias consecutivos com registro */
+  var pts=vals.map(function(v,i){ return v===null?null:{x:xf(i),y:yf(v),v:v}; });
+  var grad=ctx.createLinearGradient(0,pt,0,H-pb); grad.addColorStop(0,"rgba(245,166,35,.26)"); grad.addColorStop(1,"rgba(245,166,35,0)");
+  var seg=[]; pts.concat([null]).forEach(function(p){ if(p) seg.push(p); else { if(seg.length>1){
+      ctx.beginPath(); ctx.moveTo(seg[0].x,H-pb); seg.forEach(function(q){ctx.lineTo(q.x,q.y);}); ctx.lineTo(seg[seg.length-1].x,H-pb); ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
+      ctx.beginPath(); ctx.moveTo(seg[0].x,seg[0].y); seg.forEach(function(q){ctx.lineTo(q.x,q.y);}); ctx.strokeStyle="#F5A623"; ctx.lineWidth=2.5; ctx.lineJoin="round"; ctx.lineCap="round"; ctx.stroke(); }
+    seg=[]; } });
+  pts.forEach(function(p){ if(!p) return;
+    ctx.strokeStyle=cGrade; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(p.x,p.y+6); ctx.lineTo(p.x,H-pb); ctx.stroke();
+    ctx.beginPath(); ctx.arc(p.x,p.y,4.5,0,Math.PI*2); ctx.fillStyle="#F5A623"; ctx.fill(); ctx.lineWidth=2; ctx.strokeStyle=cFundo; ctx.stroke();
+    var rot=_hsNum(p.v); ctx.font="700 10.5px Inter,sans-serif"; var tw=ctx.measureText(rot).width+12, th=18;
+    var bx=Math.min(Math.max(p.x-tw/2,pl), W-pr-tw), by=p.y-th-8;
+    ctx.fillStyle=cEtq; ctx.beginPath(); if(ctx.roundRect) ctx.roundRect(bx,by,tw,th,6); else ctx.rect(bx,by,tw,th); ctx.fill();
+    ctx.fillStyle=cTxt1; ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillText(rot,bx+tw/2,by+th/2+.5); });
+  var nomes=_dias("full");
+  ctx.textAlign="center"; ctx.textBaseline="alphabetic";
+  dias.forEach(function(d,i){ var x=xf(i);
+    ctx.font="600 11px Inter,sans-serif"; ctx.fillStyle=cTxt1; ctx.fillText(nomes[d.getDay()],x,H-22);
+    ctx.font="500 10.5px Inter,sans-serif"; ctx.fillStyle=cTxt; ctx.fillText(d.toLocaleDateString(_pzLoc(),{day:"2-digit",month:"2-digit"}),x,H-8); });
+}
+var _hsSel=null;
+function hsDia(k){ _hsSel=k; renderCalendar(); try{ openDayDetail(k); }catch(e){} }
 function renderCalendar(){
-  var el=document.getElementById('calendarGrid');
-  var lbl=document.getElementById('calMonthLabel');
+  var el=document.getElementById('calendarGrid'); var lbl=document.getElementById('calMonthLabel');
   if(!el)return;
   var y=calendarCursor.year,m=calendarCursor.month;
-  var monthNames=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-  if(lbl)lbl.textContent=monthNames[m]+' '+y;
-  var firstDay=new Date(y,m,1).getDay();
-  var daysInMonth=new Date(y,m+1,0).getDate();
-  var dayNames=_dias('ini');
-  var html='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px;">';
-  dayNames.forEach(function(n){html+='<div style="text-align:center;font-size:10px;color:var(--text2);padding:2px 0;">'+n+'</div>';});
-  html+='</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;">';
-  for(var i=0;i<firstDay;i++)html+='<div></div>';
-  var todayStr=todayKey();
-  for(var day=1;day<=daysInMonth;day++){
+  if(lbl){ var s=new Date(y,m,1).toLocaleDateString(_pzLoc(),{month:"long",year:"numeric"}); s=s.replace(/ de /," "); lbl.textContent=s.charAt(0).toUpperCase()+s.slice(1); }
+  var nomes=_dias('full'), ordem=[1,2,3,4,5,6,0];
+  var html='<div class="hs-sem">'; ordem.forEach(function(i){ html+='<span>'+nomes[i]+'</span>'; }); html+='</div><div class="hs-grade">';
+  var vazios=(new Date(y,m,1).getDay()+6)%7, n=new Date(y,m+1,0).getDate(), hojeK=todayKey();
+  for(var i=0;i<vazios;i++) html+='<span></span>';
+  for(var day=1;day<=n;day++){
     var key=y+'-'+String(m+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
-    var d=state.history[key];
-    var bg='var(--surface3)',tc='var(--border)',border='transparent';
-    if(d){
-      var sc=calcDayScore(d).score;
-      if(sc>=80){bg='rgba(52,211,153,.2)';tc='#34d399';}
-      else if(sc>=50){bg='rgba(251,191,36,.2)';tc='#fbbf24';}
-      else{bg='rgba(248,113,113,.2)';tc='#f87171';}
-    }
-    var isToday=key===todayStr;
-    if(isToday){border='#f0b429';tc='#f0b429';}
-    html+='<div class="cal-cell" style="background:'+bg+';color:'+tc+';border:1.5px solid '+border+';font-weight:'+(isToday?800:500)+';cursor:pointer;" onclick="openDayDetail(\''+key+'\')">'+day+'</div>';
+    var tem=_hsKcalDia(key)!==null || !!(state.history&&state.history[key]&&state.history[key].meals&&Object.keys(state.history[key].meals).some(function(q){return (state.history[key].meals[q]||[]).length;}));
+    var cls='hs-dia'+(key===hojeK?' hoje':'')+(key===_hsSel?' sel':'')+(tem?' tem':'');
+    html+='<button type="button" class="'+cls+'" onclick="hsDia(\''+key+'\')"><b>'+day+'</b>'+(tem?'<i></i>':'')+'</button>';
   }
-  html+='</div>';
-  el.innerHTML=html;
+  el.innerHTML=html+'</div>';
 }
 
 // ── MEDIDAS CORPORAIS ─────────────────────────────────────────
