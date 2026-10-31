@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_bel_aro";
+var APP_VERSION="20261031_botoes";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -1246,6 +1246,10 @@ html:not([data-theme="light"]) .score-check-icon{
   background:linear-gradient(180deg,#1c1c1c 0%,#101010 100%)!important;
   box-shadow:inset 0 1px 0 rgb(255 236 178 / 12%),0 2px 5px rgb(0 0 0 / 45%)!important;
 }
+/* Botoes de opcao (tema, capa, idioma, objetivo) — 31/10: no escuro o alto-relevo
+   pintava o botao ATIVO de preto com letra preta, e a palavra sumia. Ativo = dourado. */
+html:not([data-theme="light"]) :is(.theme-btn,.lang-btn,.goal-btn){border:1px solid rgba(255,255,255,.1)!important;color:#c9ccd1!important;border-radius:14px!important;padding-top:12px!important;padding-bottom:12px!important;font-size:13.5px!important;font-weight:700!important}
+html:not([data-theme="light"]) :is(.theme-btn,.lang-btn,.goal-btn).active{background:linear-gradient(135deg,#f9cf55 0%,#f0b429 45%,#d99a0e 100%)!important;border-color:rgba(255,225,140,.65)!important;color:#17110a!important;font-weight:800!important;box-shadow:0 0 16px rgba(240,180,41,.4),inset 0 1px 0 rgba(255,245,200,.55)!important}
 /* Campos de texto sao o contrario de tudo o resto: eles AFUNDAM.
    Um campo em alto-relevo parece botao, e a pessoa tenta clicar em vez
    de escrever. Baixo-relevo e o que diz "aqui se digita". */
