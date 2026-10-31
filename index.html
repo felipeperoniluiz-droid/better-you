@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_camera3";
+var APP_VERSION="20261031_sono";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3019,8 +3019,8 @@ html:not([data-theme="light"]) #tab-relatorios .rl-i-f2{fill:#2c2214}
 }
 /* ===== 31/10: onda dourada no alto das telas redesenhadas (marca dos mockups do Felipe) ===== */
 #tab-jejum,#tab-peso,#tab-hist,#tab-relatorios{position:relative;z-index:0}
-#tab-jejum::before,#tab-peso::before,#tab-hist::before,#tab-relatorios::before{content:"";position:absolute;top:-16px;right:-16px;width:78%;height:120px;z-index:-1;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 130' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='f' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.6' stop-color='%23F8B53A' stop-opacity='.22'/%3E%3Cstop offset='1' stop-color='%23F5A623' stop-opacity='.42'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.35' stop-color='%23F5A623' stop-opacity='.75'/%3E%3Cstop offset='1' stop-color='%23E8920F'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M70 0C180 34 290 58 400 62V0Z' fill='url(%23f)'/%3E%3Cpath d='M70 0C180 34 290 58 400 62' fill='none' stroke='url(%23l)' stroke-width='3'/%3E%3Cpath d='M20 0C170 62 290 98 400 108' fill='none' stroke='url(%23l)' stroke-width='1.6' opacity='.35'/%3E%3C/svg%3E") no-repeat right top/100% 100%}
-html:not([data-theme="light"]) :is(#tab-jejum,#tab-peso,#tab-hist,#tab-relatorios)::before{opacity:.55}
+#tab-jejum::before,#tab-peso::before,#tab-hist::before,#tab-relatorios::before,#tab-sono::before{content:"";position:absolute;top:-16px;right:-16px;width:78%;height:120px;z-index:-1;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 130' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='f' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.6' stop-color='%23F8B53A' stop-opacity='.22'/%3E%3Cstop offset='1' stop-color='%23F5A623' stop-opacity='.42'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.35' stop-color='%23F5A623' stop-opacity='.75'/%3E%3Cstop offset='1' stop-color='%23E8920F'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M70 0C180 34 290 58 400 62V0Z' fill='url(%23f)'/%3E%3Cpath d='M70 0C180 34 290 58 400 62' fill='none' stroke='url(%23l)' stroke-width='3'/%3E%3Cpath d='M20 0C170 62 290 98 400 108' fill='none' stroke='url(%23l)' stroke-width='1.6' opacity='.35'/%3E%3C/svg%3E") no-repeat right top/100% 100%}
+html:not([data-theme="light"]) :is(#tab-jejum,#tab-peso,#tab-hist,#tab-relatorios,#tab-sono)::before{opacity:.55}
 /* ===== 31/10: ENQUADRAMENTO MAIS JUSTO (pedido do Felipe: "espacado demais") =====
    Medido a 390 px contra os mockups: as telas novas ficavam ~40% mais altas.
    Menos recuo nos cartoes, menos vao entre blocos, controles mais baixos. */
@@ -3123,6 +3123,93 @@ html:not([data-theme="light"]) .cam-sec{border-color:rgba(242,181,46,.6)!importa
    linear-gradient(#f5b820,#f5b820) left bottom/14px 2.5px no-repeat,linear-gradient(#f5b820,#f5b820) left bottom/2.5px 14px no-repeat,
    linear-gradient(#f5b820,#f5b820) right bottom/14px 2.5px no-repeat,linear-gradient(#f5b820,#f5b820) right bottom/2.5px 14px no-repeat;
   filter:drop-shadow(0 0 4px rgba(255,190,40,.8))}
+/* ===== 31/10: SONO conforme design do Felipe (claro e escuro) ===== */
+#tab-sono{position:relative;z-index:0;--pz-card:#141414;--pz-borda:rgba(240,180,41,.16);--pz-ouro:#F5A623;--pz-lar:#E08A1E;--pz-txt:#F4F4F5;--pz-txt2:#A1A1AA;--pz-creme:rgba(245,166,35,.08);--pz-ic:rgba(245,166,35,.12);--pz-linha:rgba(255,255,255,.08);--pz-sombra:0 6px 18px rgba(0,0,0,.35);font-family:Inter,system-ui,sans-serif}
+html[data-theme="light"] #tab-sono{--pz-card:#FFFFFF;--pz-borda:#EFE6D8;--pz-lar:#D97706;--pz-txt:#2B211D;--pz-txt2:#77716D;--pz-creme:#FFF6E6;--pz-ic:#FFF1D6;--pz-linha:#F1EADF;--pz-sombra:0 4px 14px rgba(120,80,20,.06)}
+#tab-sono .pz-cab{display:flex;align-items:center;gap:12px;margin:0 0 14px}
+#tab-sono .pz-cab-t{flex:1;min-width:0}
+#tab-sono .pz-tit{font-family:Sora,Inter,sans-serif;font-size:26px;font-weight:700;line-height:1.15;letter-spacing:-.02em;margin:0;color:var(--pz-txt)}
+#tab-sono .pz-sub{margin:3px 0 0;font-size:14.5px;line-height:1.4;color:var(--pz-txt2)}
+#tab-sono .pz-ic{flex:0 0 48px;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:var(--pz-ic)}
+#tab-sono .pz-ic svg{width:28px;height:28px}
+#tab-sono .sn-lua{fill:#F5A623}
+#tab-sono .sn-z{fill:none;stroke:var(--pz-lar);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#tab-sono .sn-nav{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+#tab-sono .sn-seta{flex:0 0 44px;height:44px;border-radius:14px;display:grid;place-items:center;border:1px solid var(--pz-borda);background:var(--pz-card);color:var(--pz-txt);cursor:pointer;box-shadow:var(--pz-sombra);transition:opacity 200ms ease}
+#tab-sono .sn-seta svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#tab-sono .sn-seta:disabled{opacity:.4;cursor:default;box-shadow:none}
+#tab-sono .sn-data{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;height:44px;border-radius:14px;background:var(--pz-creme);font:600 16px Sora,Inter,sans-serif;color:var(--pz-txt)}
+#tab-sono .sn-data svg{width:22px;height:22px;fill:none;stroke:var(--pz-lar);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#tab-sono .sn-card{background:var(--pz-card);border:1px solid var(--pz-borda);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:var(--pz-sombra);color:var(--pz-txt)}
+#tab-sono .sn-res{display:grid;grid-template-columns:28% 1fr 32%;align-items:center;gap:6px}
+#tab-sono .sn-ilus{padding-right:6px;border-right:1px solid var(--pz-linha)}
+#tab-sono .sn-ilus svg{width:100%;height:auto;display:block}
+#tab-sono .sn-i-c{fill:var(--pz-creme)}
+#tab-sono .sn-i-p{fill:#FCE7BF;stroke:#F3CF8C;stroke-width:1.2}
+html:not([data-theme="light"]) #tab-sono .sn-i-p{fill:#3a2c14;stroke:rgba(245,166,35,.5)}
+#tab-sono .sn-i-l{fill:none;stroke:#F3CF8C;stroke-width:1.2;opacity:.8}
+#tab-sono .sn-i-z{fill:none;stroke:#F5A623;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+#tab-sono .sn-anel{position:relative;width:100%;max-width:130px;margin:0 auto;aspect-ratio:1}
+#tab-sono .sn-anel svg{width:100%;height:100%;display:block}
+#tab-sono .sn-a-f{fill:none;stroke:var(--pz-creme);stroke-width:9}
+#tab-sono .sn-a-v{fill:none;stroke:#F5A623;stroke-width:9;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+#tab-sono .sn-a-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+#tab-sono .sn-a-c svg{width:22px;height:22px;fill:none;stroke:#F5A623;stroke-width:2;stroke-linejoin:round;margin-bottom:2px}
+#tab-sono .sn-a-c b{font:700 clamp(30px,9vw,40px)/1 Sora,Inter,sans-serif;color:var(--pz-txt);letter-spacing:-.02em}
+#tab-sono .sn-a-c span{font-size:11.5px;color:var(--pz-txt2);margin-top:4px}
+#tab-sono .sn-est{display:flex;flex-direction:column;gap:10px;min-width:0}
+#tab-sono .sn-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:12px;font-size:12px;font-weight:600;line-height:1.25}
+#tab-sono .sn-chip svg{flex:0 0 16px;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#tab-sono .sn-dentro{background:rgba(22,163,74,.12);color:#15803D}
+html:not([data-theme="light"]) #tab-sono .sn-dentro{color:#4ade80}
+#tab-sono .sn-abaixo,#tab-sono .sn-acima{background:var(--pz-creme);color:var(--pz-lar)}
+#tab-sono .sn-sem{background:var(--pz-linha);color:var(--pz-txt2)}
+#tab-sono .sn-rec span{display:block;font-size:12px;color:var(--pz-txt2)}
+#tab-sono .sn-rec b{font:600 17px Sora,Inter,sans-serif;color:var(--pz-txt)}
+#tab-sono .sn-chips{display:flex;gap:6px;margin-top:14px}
+#tab-sono .sn-op{flex:1;min-height:44px;border-radius:12px;border:1px solid var(--pz-borda);background:var(--pz-creme);color:var(--pz-lar);font:600 16px Sora,Inter,sans-serif;cursor:pointer;transition:transform 180ms ease,background 200ms ease}
+#tab-sono .sn-op.on{background:linear-gradient(180deg,#F8B53A,var(--pz-lar));border-color:transparent;color:#2B1A05;box-shadow:0 4px 10px rgba(217,119,6,.28)}
+#tab-sono .sn-op:active{transform:scale(.96)}
+#tab-sono .sn-nota{margin:10px 0 0;font-size:12px;line-height:1.45;color:var(--pz-txt2)}
+#tab-sono .sn-h{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+#tab-sono .sn-hic{flex:0 0 36px;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--pz-ic);color:#F5A623}
+#tab-sono .sn-hic svg{width:20px;height:20px;fill:currentColor}
+#tab-sono .sn-h-t{flex:1;min-width:0;font:600 clamp(16px,4.6vw,20px)/1.2 Sora,Inter,sans-serif;color:var(--pz-txt)}
+#tab-sono .sn-pill{flex:0 0 auto;padding:6px 10px;border-radius:12px;background:var(--pz-creme);font-size:12px;color:var(--pz-txt2);white-space:nowrap}
+#tab-sono .sn-pill b{font:700 15px Sora,Inter,sans-serif;color:var(--pz-lar)}
+#tab-sono .sn-vazio{padding:20px 12px;text-align:center;font-size:14px;color:var(--pz-txt2);background:var(--pz-creme);border-radius:14px}
+#tab-sono .sn-graf{display:flex;height:150px;margin-top:18px}
+#tab-sono .sn-eixo{position:relative;flex:0 0 30px}
+#tab-sono .sn-eixo span{position:absolute;right:6px;transform:translateY(50%);font-size:11.5px;color:var(--pz-txt2)}
+#tab-sono .sn-area{position:relative;flex:1;display:flex;align-items:flex-end;gap:6px;border-left:1px solid var(--pz-linha);border-bottom:1px solid var(--pz-linha);padding:0 4px}
+#tab-sono .sn-grade{position:absolute;left:0;right:0;border-top:1px dashed var(--pz-linha)}
+#tab-sono .sn-col{position:relative;flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;background:none;border:0;padding:0;cursor:pointer;font-family:inherit}
+#tab-sono .sn-b{display:block;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,#FBDDA3,#FCEBC9)}
+html:not([data-theme="light"]) #tab-sono .sn-b{background:linear-gradient(180deg,rgba(245,166,35,.45),rgba(245,166,35,.18))}
+#tab-sono .sn-b0{height:4px;background:var(--pz-linha)!important}
+#tab-sono .sn-col.sel .sn-b{background:linear-gradient(180deg,#F8B53A,var(--pz-lar));box-shadow:0 0 0 2px var(--pz-card),0 0 0 4px #F5A623}
+#tab-sono .sn-v{font:700 12px Inter,sans-serif;color:var(--pz-txt);text-align:center;margin-bottom:4px;white-space:nowrap}
+#tab-sono .sn-dias{display:flex;gap:6px;padding:0 4px;margin-top:6px}
+#tab-sono .sn-dias span{flex:1;text-align:center;font-size:12px;color:var(--pz-txt2)}
+#tab-sono .sn-dias span:first-child{flex:0 0 26px}
+#tab-sono .sn-dias span.sel{color:var(--pz-lar);font-weight:700}
+#tab-sono .sn-resumo{display:grid;grid-template-columns:1fr 1fr;margin-top:16px;border:1px solid var(--pz-borda);border-radius:16px;padding:12px}
+#tab-sono .sn-rs{display:flex;align-items:center;gap:10px;min-width:0}
+#tab-sono .sn-rs+.sn-rs{padding-left:12px;border-left:1px solid var(--pz-linha)}
+#tab-sono .sn-rs-ic{flex:0 0 40px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pz-ic);color:#F5A623}
+#tab-sono .sn-rs-ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#tab-sono .sn-rs span{display:block;font-size:13px;color:var(--pz-txt2)}
+#tab-sono .sn-rs b{font:700 22px Sora,Inter,sans-serif;color:var(--pz-txt)}
+#tab-sono .sn-reg{display:inline-block;font-size:15px!important;padding:3px 10px;border-radius:10px;margin-top:2px}
+#tab-sono .sn-r1{background:rgba(22,163,74,.12);color:#15803D!important}
+html:not([data-theme="light"]) #tab-sono .sn-r1{color:#4ade80!important}
+#tab-sono .sn-r2,#tab-sono .sn-r3{background:var(--pz-creme);color:var(--pz-lar)!important}
+#tab-sono .sn-bel{display:flex;gap:12px;align-items:flex-start;background:var(--pz-creme)}
+#tab-sono .sn-bel img{flex:0 0 52px;width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:top center;border:2px solid #F5A623}
+#tab-sono .sn-bel b{display:block;font:600 15px/1.3 Sora,Inter,sans-serif;color:var(--pz-txt)}
+#tab-sono .sn-bel p,#tab-sono .sn-txt{margin:6px 0 0;font-size:13.5px;line-height:1.55;color:var(--pz-txt2)}
+#tab-sono .sn-pro{margin-top:10px;min-height:40px;padding:0 16px;border:0;border-radius:12px;background:linear-gradient(180deg,#F8B53A,var(--pz-lar));color:#2B1A05;font:700 13px Inter,sans-serif;cursor:pointer}
+@media (max-width:350px){#tab-sono .sn-res{grid-template-columns:1fr 1fr}#tab-sono .sn-ilus{display:none}}
 </style>
 </head>
 <body>
@@ -8346,6 +8433,12 @@ var TX={
  rlB4:{pt:'Progresso da sua meta',en:'Progress to your goal',es:'Progreso de tu meta',it:'Progressi verso l\'obiettivo',fr:'Progression vers votre objectif',de:'Fortschritt zum Ziel'},
  rlProT:{pt:'Recurso PRO',en:'PRO feature',es:'Función PRO',it:'Funzione PRO',fr:'Fonction PRO',de:'PRO-Funktion'},
  rlProD:{pt:'Relatórios completos, análise de tendências e insights personalizados para seus objetivos. Incluído na sua assinatura.',en:'Complete reports, trend analysis and personalised insights for your goals. Included in your subscription.',es:'Informes completos, análisis de tendencias e ideas personalizadas para tus objetivos. Incluido en tu suscripción.',it:'Report completi, analisi delle tendenze e consigli personalizzati per i tuoi obiettivi. Incluso nel tuo abbonamento.',fr:'Rapports complets, analyse des tendances et conseils personnalisés pour vos objectifs. Inclus dans votre abonnement.',de:'Vollständige Berichte, Trendanalysen und persönliche Hinweise für Ihre Ziele. In Ihrem Abo enthalten.'},
+ snSub:{pt:'Acompanhe a sua qualidade e regularidade do sono.',en:'Track the quality and regularity of your sleep.',es:'Sigue la calidad y la regularidad de tu sueño.',it:'Segui la qualità e la regolarità del tuo sonno.',fr:'Suivez la qualité et la régularité de votre sommeil.',de:'Verfolgen Sie Qualität und Regelmäßigkeit Ihres Schlafs.'},
+ snMediaSem:{pt:'Média semanal',en:'Weekly average',es:'Media semanal',it:'Media settimanale',fr:'Moyenne de la semaine',de:'Wochenschnitt'},
+ snRecNota:{pt:'Orientação geral para adultos; varia com a idade e a rotina.',en:'General guidance for adults; it varies with age and routine.',es:'Orientación general para adultos; varía con la edad y la rutina.',it:'Indicazione generale per adulti; varia con età e abitudini.',fr:'Repère général pour les adultes ; varie selon l\'âge et le rythme de vie.',de:'Allgemeine Orientierung für Erwachsene; hängt von Alter und Alltag ab.'},
+ snRegExp:{pt:'Calculada pela diferença entre a noite mais curta e a mais longa: até 1h é constante, até 2h30 é irregular.',en:'Based on the gap between your shortest and longest night: up to 1h is steady, up to 2h30 is irregular.',es:'Según la diferencia entre la noche más corta y la más larga: hasta 1h es constante, hasta 2h30 es irregular.',it:'In base alla differenza tra la notte più corta e la più lunga: fino a 1h è costante, fino a 2h30 è irregolare.',fr:'Selon l\'écart entre la nuit la plus courte et la plus longue : jusqu\'à 1h c\'est constant, jusqu\'à 2h30 irrégulier.',de:'Nach dem Abstand zwischen kürzester und längster Nacht: bis 1 Std. gleichmäßig, bis 2,5 Std. unregelmäßig.'},
+ snVazio7:{pt:'Nenhuma noite registrada nos últimos 7 dias.',en:'No nights logged in the last 7 days.',es:'Ninguna noche registrada en los últimos 7 días.',it:'Nessuna notte registrata negli ultimi 7 giorni.',fr:'Aucune nuit enregistrée ces 7 derniers jours.',de:'In den letzten 7 Tagen keine Nacht erfasst.'},
+ snFonte:{pt:'Registro manual',en:'Logged by you',es:'Registro manual',it:'Registrazione manuale',fr:'Saisie manuelle',de:'Manuell erfasst'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
  pgrF1D:{pt:'Compare suas fotos e veja mudanças reais.',en:'Compare your photos and see real changes.',es:'Compara tus fotos y ve cambios reales.',it:'Confronta le tue foto e vedi cambiamenti reali.',fr:'Comparez vos photos et voyez de vrais changements.',de:'Vergleichen Sie Ihre Fotos und sehen Sie echte Veränderungen.'},
@@ -9597,7 +9690,7 @@ var SONO_TXT={
  es:{t:"Sueño",total:"Sueño total",rec:"Recomendado: 7h a 9h",dentro:"Dentro de lo recomendado",abaixo:"Por debajo de lo recomendado",acima:"Por encima de lo recomendado",sem:"Sin registro este día",pergunta:"¿Cuántas horas dormiste?",sete:"Últimos 7 días",media:"Media",reg:"Regularidad",r1:"Constante",r2:"Irregular",r3:"Muy irregular",fasesT:"¿Y las fases del sueño?",fasesB:"Bestward registra cuántas horas dormiste, no las fases. Medir REM y sueño profundo exige un aparato en la muñeca o en la cama. Preferimos no estimar lo que no medimos.",belT:"Bel cruza tu sueño con lo que comes",belFree:"En PRO, Bel compara tus noches con tus días y señala qué está estorbando tu descanso.",belPoucos:"Registra al menos 5 noches para que Bel encuentre patrones.",belMais:"En las noches de menos de 7h comiste {0} kcal de media — {1} kcal más que en las noches bien dormidas.",belMenos:"En las noches de menos de 7h comiste {0} kcal de media — {1} kcal menos que en las noches bien dormidas.",belIgual:"Hasta ahora tu consumo no cambia de forma relevante entre noches cortas y completas.",noites:"noches"},
  it:{t:"Sonno",total:"Sonno totale",rec:"Consigliato: 7h a 9h",dentro:"Nella fascia consigliata",abaixo:"Sotto la fascia consigliata",acima:"Sopra la fascia consigliata",sem:"Nessun dato in questo giorno",pergunta:"Quante ore hai dormito?",sete:"Ultimi 7 giorni",media:"Media",reg:"Regolarità",r1:"Costante",r2:"Irregolare",r3:"Molto irregolare",fasesT:"E le fasi del sonno?",fasesB:"Bestward registra quante ore hai dormito, non le fasi. Misurare REM e sonno profondo richiede un dispositivo al polso o nel letto. Preferiamo non stimare ciò che non misuriamo.",belT:"Bel collega il tuo sonno a ciò che mangi",belFree:"Con PRO, Bel confronta le tue notti con le tue giornate e indica cosa ostacola il tuo riposo.",belPoucos:"Registra almeno 5 notti perché Bel trovi degli schemi.",belMais:"Nelle notti sotto le 7h hai mangiato in media {0} kcal — {1} kcal in più rispetto alle notti ben dormite.",belMenos:"Nelle notti sotto le 7h hai mangiato in media {0} kcal — {1} kcal in meno rispetto alle notti ben dormite.",belIgual:"Finora il tuo consumo non cambia in modo rilevante tra notti brevi e notti complete.",noites:"notti"},
  fr:{t:"Sommeil",total:"Sommeil total",rec:"Recommandé : 7h à 9h",dentro:"Dans la plage recommandée",abaixo:"Sous la plage recommandée",acima:"Au-dessus de la plage recommandée",sem:"Aucun enregistrement ce jour",pergunta:"Combien d heures avez-vous dormi ?",sete:"7 derniers jours",media:"Moyenne",reg:"Régularité",r1:"Constant",r2:"Irrégulier",r3:"Très irrégulier",fasesT:"Et les phases de sommeil ?",fasesB:"Bestward enregistre combien d heures vous avez dormi, pas les phases. Mesurer le sommeil paradoxal et profond exige un appareil au poignet ou dans le lit. Nous préférons ne pas estimer ce que nous ne mesurons pas.",belT:"Bel relie votre sommeil à ce que vous mangez",belFree:"Avec PRO, Bel compare vos nuits et vos journées et montre ce qui gêne votre repos.",belPoucos:"Enregistrez au moins 5 nuits pour que Bel trouve des tendances.",belMais:"Les nuits de moins de 7h, vous avez mangé {0} kcal en moyenne — {1} kcal de plus que les nuits bien dormies.",belMenos:"Les nuits de moins de 7h, vous avez mangé {0} kcal en moyenne — {1} kcal de moins que les nuits bien dormies.",belIgual:"Jusqu ici votre consommation ne change pas nettement entre nuits courtes et nuits complètes.",noites:"nuits"},
- de:{t:"Schlaf",total:"Gesamtschlaf",rec:"Empfohlen: 7 bis 9 Stunden",dentro:"Im empfohlenen Bereich",abaixo:"Unter dem empfohlenen Bereich",acima:"Über dem empfohlenen Bereich",sem:"An diesem Tag nichts erfasst",pergunta:"Wie viele Stunden hast du geschlafen?",sete:"Letzte 7 Tage",media:"Durchschnitt",reg:"Regelmässigkeit",r1:"Gleichmässig",r2:"Unregelmässig",r3:"Sehr unregelmässig",fasesT:"Und die Schlafphasen?",fasesB:"Bestward erfasst, wie viele Stunden Sie geschlafen haben, nicht die Phasen. REM und Tiefschlaf zu messen erfordert ein Gerät am Handgelenk oder im Bett. Wir schätzen lieber nicht, was wir nicht messen.",belT:"Bel verbindet deinen Schlaf mit dem, was du isst",belFree:"Mit PRO vergleicht Bel deine Nächte mit deinen Tagen und zeigt, was deine Erholung stört.",belPoucos:"Erfasse mindestens 5 Nächte, damit Bel Muster findet.",belMais:"In Nächten unter 7 Stunden hast du im Schnitt {0} kcal gegessen — {1} kcal mehr als in gut geschlafenen Nächten.",belMenos:"In Nächten unter 7 Stunden hast du im Schnitt {0} kcal gegessen — {1} kcal weniger als in gut geschlafenen Nächten.",belIgual:"Bisher ändert sich deine Aufnahme zwischen kurzen und vollen Nächten nicht deutlich.",noites:"Nächte"}
+ de:{t:"Schlaf",total:"Gesamtschlaf",rec:"Empfohlen: 7 bis 9 Stunden",dentro:"Im empfohlenen Bereich",abaixo:"Unter dem empfohlenen Bereich",acima:"Über dem empfohlenen Bereich",sem:"An diesem Tag nichts erfasst",pergunta:"Wie viele Stunden haben Sie geschlafen?",sete:"Letzte 7 Tage",media:"Durchschnitt",reg:"Regelmässigkeit",r1:"Gleichmässig",r2:"Unregelmässig",r3:"Sehr unregelmässig",fasesT:"Und die Schlafphasen?",fasesB:"Bestward erfasst, wie viele Stunden Sie geschlafen haben, nicht die Phasen. REM und Tiefschlaf zu messen erfordert ein Gerät am Handgelenk oder im Bett. Wir schätzen lieber nicht, was wir nicht messen.",belT:"Bel verbindet deinen Schlaf mit dem, was du isst",belFree:"Mit PRO vergleicht Bel deine Nächte mit deinen Tagen und zeigt, was deine Erholung stört.",belPoucos:"Erfasse mindestens 5 Nächte, damit Bel Muster findet.",belMais:"In Nächten unter 7 Stunden hast du im Schnitt {0} kcal gegessen — {1} kcal mehr als in gut geschlafenen Nächten.",belMenos:"In Nächten unter 7 Stunden hast du im Schnitt {0} kcal gegessen — {1} kcal weniger als in gut geschlafenen Nächten.",belIgual:"Bisher ändert sich deine Aufnahme zwischen kurzen und vollen Nächten nicht deutlich.",noites:"Nächte"}
 };
 function _sonoT(){ return SONO_TXT[currentLang]||SONO_TXT.pt; }
 var _sonoDia=null;
@@ -9627,74 +9720,73 @@ function _sonoPadrao(){
   var mc=med(curto), mp=med(pleno), dif=mc-mp;
   return {n:n,curto:mc,pleno:mp,dif:dif,rel:Math.abs(dif)/mp};
 }
+/* ===== 31/10: tela do SONO conforme design e guia do Felipe ===== */
+function _snFmt(h){ h=+h||0; var i=Math.floor(h), m=Math.round((h-i)*60); if(m===60){i++;m=0;} return i+"h"+(m?String(m).padStart(2,"0"):""); }
 function sonoTelaRender(){
   var el=document.getElementById("sonoBox"); if(!el) return;
-  var t=_sonoT(), tt=(T[currentLang]||T.pt);
+  var t=_sonoT();
   var hoje=new Date(); hoje.setHours(0,0,0,0);
   if(!_sonoDia) _sonoDia=new Date(hoje.getTime());
   var d=_sonoDia, eHoje=d.getTime()===hoje.getTime();
   var loc={pt:"pt-BR",en:"en-GB",es:"es-ES",it:"it-IT",fr:"fr-FR",de:"de-DE"}[currentLang]||"en-GB";
   var horas=_sonoHoras(d);
+  var rot=d.toLocaleDateString(loc,{weekday:"short",day:"numeric",month:"short"}); rot=rot.charAt(0).toUpperCase()+rot.slice(1);
+  var recP=String(t.rec).split(/:\s*/), recL=recP.length>1?recP[0]+":":"", recV=recP.length>1?recP.slice(1).join(":"):t.rec;
+  var est=horas<=0?"sem":(horas<7?"abaixo":(horas>9?"acima":"dentro"));
+  var estTxt=horas<=0?t.sem:t[est];
+  var lua='<svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>';
   var h='';
-  /* cabecalho com navegacao de dia */
-  var rot=d.toLocaleDateString(loc,{weekday:"short",day:"numeric",month:"short"});
-  rot=rot.charAt(0).toUpperCase()+rot.slice(1);
-  h+='<div class="section-title">'+t.t+'</div>';
-  h+='<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px">'+
-   '<button onclick="sonoDiaMudar(-1)" style="width:36px;height:36px;border-radius:11px;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-size:17px">&#8249;</button>'+
-   '<span style="flex:1;text-align:center;font-size:14px;font-weight:700;color:var(--text)">'+rot+'</span>'+
-   '<button onclick="sonoDiaMudar(1)"'+(eHoje?' disabled':'')+' style="width:36px;height:36px;border-radius:11px;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:'+(eHoje?"default":"pointer")+';opacity:'+(eHoje?".35":"1")+';font-size:17px">&#8250;</button></div>';
-  /* anel */
-  var alvo=8, pct=Math.min(100,Math.round((horas/alvo)*100));
-  var raio=54, circ=Math.round(2*Math.PI*raio);
-  var off=Math.round(circ-(circ*Math.min(1,horas/alvo)));
-  var faixa=horas<=0?"":(horas<7?t.abaixo:(horas>9?t.acima:t.dentro));
-  var cor=horas<=0?"var(--surface3)":(horas>=7&&horas<=9?"#f0b429":"#e8834a");
-  h+='<div class="card" style="text-align:center">';
-  h+='<div style="position:relative;width:140px;height:140px;margin:2px auto 0">'+
-   '<svg width="140" height="140" style="transform:rotate(-90deg)">'+
-    '<circle cx="70" cy="70" r="'+raio+'" fill="none" stroke="var(--surface3)" stroke-width="10"/>'+
-    '<circle cx="70" cy="70" r="'+raio+'" fill="none" stroke="'+cor+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+off+'" style="transition:stroke-dashoffset .6s ease"/>'+
-   '</svg>'+
-   '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">'+
-    '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="'+cor+'" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:3px"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>'+
-    '<span style="font-family:\'Syne\',sans-serif;font-size:27px;font-weight:800;color:var(--text);line-height:1">'+(horas>0?(horas+"h"):"--")+'</span>'+
-    '<span style="font-size:10px;color:var(--text3);margin-top:3px">'+t.total+'</span>'+
-   '</div></div>';
-  h+='<div style="font-size:12px;font-weight:700;color:'+(horas<=0?"var(--text3)":cor)+';margin-top:10px">'+(horas>0?faixa:t.sem)+'</div>';
-  h+='<div style="font-size:11px;color:var(--text3);margin-top:3px">'+t.rec+'</div>';
+  h+='<div class="pz-cab"><span class="pz-ic sn-ic-lua"><svg viewBox="0 0 24 24"><path class="sn-lua" d="M17.5 15.5A7.5 7.5 0 0 1 8.5 5.6a7.5 7.5 0 1 0 9 9.9Z"/><path class="sn-z" d="M15 4.5h3l-3 3.2h3M19.2 2h2.2l-2.2 2.4h2.2"/></svg></span>'+
+     '<div class="pz-cab-t"><h2 class="pz-tit">'+t.t+'</h2><p class="pz-sub">'+tx("snSub")+'</p></div></div>';
+  h+='<div class="sn-nav"><button type="button" class="sn-seta" onclick="sonoDiaMudar(-1)" aria-label="‹"><svg viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg></button>'+
+     '<div class="sn-data"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></svg><span>'+rot+'</span></div>'+
+     '<button type="button" class="sn-seta" onclick="sonoDiaMudar(1)" aria-label="›"'+(eHoje?' disabled':'')+'><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button></div>';
+  /* resumo */
+  var r=52, c=2*Math.PI*r, frac=Math.min(1,horas/9), off=c*(1-frac);
+  h+='<div class="sn-card"><div class="sn-res">'+
+     '<div class="sn-ilus" aria-hidden="true"><svg viewBox="0 0 120 110"><circle cx="48" cy="62" r="40" class="sn-i-c"/>'+
+       '<path d="M22 58c-2-14 6-20 22-20h34c16 0 22 6 20 20l-2 14c-2 10-8 14-20 14H44c-12 0-18-4-20-14Z" class="sn-i-p"/>'+
+       '<path d="M30 60c8 3 18 4 32 4s26-1 34-4" class="sn-i-l"/>'+
+       '<path d="M70 26h9l-9 10h9M84 12h11L84 24h11" class="sn-i-z"/></svg></div>'+
+     '<div class="sn-anel"><svg viewBox="0 0 124 124"><circle cx="62" cy="62" r="'+r+'" class="sn-a-f"/>'+
+       '<circle cx="62" cy="62" r="'+r+'" class="sn-a-v" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'" transform="rotate(-90 62 62)"/></svg>'+
+       '<div class="sn-a-c">'+lua+'<b>'+(horas>0?_snFmt(horas):"--")+'</b><span>'+t.total+'</span></div></div>'+
+     '<div class="sn-est"><span class="sn-chip sn-'+est+'">'+(est==="dentro"?'<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>':'')+estTxt+'</span>'+
+       '<div class="sn-rec"><span>'+recL+'</span><b>'+recV+'</b></div></div>'+
+     '</div>';
   if(eHoje){
-    h+='<div style="display:flex;gap:6px;margin-top:14px">';
-    [5,6,7,8,9].forEach(function(o){
-      var on=(horas===o);
-      h+='<button onclick="setSleep('+o+');sonoTelaRender()" style="flex:1;padding:9px 0;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid '+(on?"#f0b429;background:#f0b429;color:#000;":"rgba(240,180,41,.35);background:rgba(240,180,41,.08);color:#f0b429;")+'">'+o+'h</button>';
-    });
+    h+='<div class="sn-chips" role="group" aria-label="'+t.pergunta+'">';
+    [5,6,7,8,9].forEach(function(o){ var on=(horas===o);
+      h+='<button type="button" class="sn-op'+(on?' on':'')+'" aria-pressed="'+on+'" onclick="setSleep('+o+');sonoTelaRender()">'+o+'h</button>'; });
     h+='</div>';
   }
-  h+='</div>';
+  h+='<p class="sn-nota">'+tx("snRecNota")+'</p></div>';
   /* 7 dias */
   var serie=_sonoSerie(), reg=serie.filter(function(x){return x.h>0;});
-  h+='<div class="card"><div class="card-title">'+t.sete+'</div>';
-  h+='<div style="display:flex;align-items:flex-end;gap:5px;height:96px">';
-  serie.forEach(function(x){
-    var alt=x.h>0?Math.max(10,Math.round((Math.min(x.h,10)/10)*88)):4;
-    var c=x.h<=0?"var(--surface3)":(x.h>=7&&x.h<=9?"#f0b429":"#e8834a");
-    var sel=x.d.getTime()===d.getTime();
-    h+='<div onclick="_sonoDia=new Date('+x.d.getTime()+');sonoTelaRender()" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;cursor:pointer">'+
-     '<span style="font-size:9px;color:var(--text3);margin-bottom:3px">'+(x.h>0?x.h+"h":"")+'</span>'+
-     '<span style="width:100%;height:'+alt+'px;border-radius:6px;background:'+c+';'+(sel?"outline:2px solid var(--gold);outline-offset:1px;":"")+'"></span></div>';
-  });
-  h+='</div><div style="display:flex;gap:5px;margin-top:5px">';
-  serie.forEach(function(x){ var ini=(typeof _dias==="function")?_dias("ini"):["D","S","T","Q","Q","S","S"];
-    h+='<span style="flex:1;text-align:center;font-size:10px;color:var(--text3);font-weight:700">'+ini[x.d.getDay()]+'</span>'; });
-  h+='</div>';
-  if(reg.length){
-    var soma=0,mn=99,mx=0; reg.forEach(function(x){ soma+=x.h; if(x.h<mn)mn=x.h; if(x.h>mx)mx=x.h; });
-    var med=Math.round((soma/reg.length)*10)/10, amp=mx-mn;
-    var rlab=amp<=1?t.r1:(amp<=2.5?t.r2:t.r3);
-    h+='<div style="display:flex;gap:10px;margin-top:14px;padding-top:13px;border-top:1px solid var(--border)">'+
-     '<div style="flex:1"><div style="font-size:10px;color:var(--text3);font-weight:700">'+t.media+'</div><div style="font-size:16px;font-weight:800;color:var(--text)">'+med+'h</div></div>'+
-     '<div style="flex:1;text-align:right"><div style="font-size:10px;color:var(--text3);font-weight:700">'+t.reg+'</div><div style="font-size:16px;font-weight:800;color:var(--text)">'+rlab+'</div></div></div>';
+  var med=0; if(reg.length){ var so=0; reg.forEach(function(x){so+=x.h;}); med=Math.round((so/reg.length)*4)/4; }
+  h+='<div class="sn-card"><div class="sn-h"><span class="sn-hic"><svg viewBox="0 0 24 24"><rect x="4" y="13" width="4" height="7" rx="1.2"/><rect x="10" y="9" width="4" height="11" rx="1.2"/><rect x="16" y="4.5" width="4" height="15.5" rx="1.2"/></svg></span>'+
+     '<span class="sn-h-t">'+t.sete+'</span>'+(reg.length?'<span class="sn-pill">'+tx("snMediaSem")+': <b>'+_snFmt(med)+'</b></span>':'')+'</div>';
+  if(!reg.length){ h+='<div class="sn-vazio">'+tx("snVazio7")+'</div>'; }
+  else{
+    var nomes=_dias("full"), BASE=4, TOPO=10;
+    h+='<div class="sn-graf"><div class="sn-eixo">';
+    for(var g=TOPO; g>=5; g--) h+='<span style="bottom:'+((g-BASE)/(TOPO-BASE)*100)+'%">'+g+'h</span>';
+    h+='</div><div class="sn-area">';
+    for(var g2=5; g2<=TOPO; g2++) h+='<i class="sn-grade" style="bottom:'+((g2-BASE)/(TOPO-BASE)*100)+'%"></i>';
+    serie.forEach(function(x){
+      var sel=x.d.getTime()===d.getTime();
+      var alt=x.h>0?Math.max(4,(Math.min(x.h,TOPO)-BASE)/(TOPO-BASE)*100):0;
+      h+='<button type="button" class="sn-col'+(sel?' sel':'')+(x.h>0?'':' vazio')+'" onclick="_sonoDia=new Date('+x.d.getTime()+');sonoTelaRender()" aria-label="'+nomes[x.d.getDay()]+' '+(x.h>0?_snFmt(x.h):'—')+'">'+
+        (x.h>0?'<span class="sn-v">'+_snFmt(x.h)+'</span><span class="sn-b" style="height:'+alt.toFixed(1)+'%"></span>':'<span class="sn-b sn-b0"></span>')+'</button>';
+    });
+    h+='</div></div><div class="sn-dias"><span></span>';
+    serie.forEach(function(x){ h+='<span'+(x.d.getTime()===d.getTime()?' class="sel"':'')+'>'+nomes[x.d.getDay()]+'</span>'; });
+    h+='</div>';
+    var mn=99,mx=0; reg.forEach(function(x){ if(x.h<mn)mn=x.h; if(x.h>mx)mx=x.h; });
+    var amp=mx-mn, rk=amp<=1?"r1":(amp<=2.5?"r2":"r3");
+    h+='<div class="sn-resumo"><div class="sn-rs"><span class="sn-rs-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><div><span>'+t.media+'</span><b>'+_snFmt(med)+'</b></div></div>'+
+       '<div class="sn-rs"><span class="sn-rs-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></svg></span><div><span>'+t.reg+'</span><b class="sn-reg sn-'+rk+'">'+t[rk]+'</b></div></div></div>';
+    h+='<p class="sn-nota">'+(reg.length<2?'':tx("snRegExp")+' ')+tx("snFonte")+'.</p>';
   }
   h+='</div>';
   /* Bel: sono x alimentacao */
@@ -9703,17 +9795,10 @@ function sonoTelaRender(){
   else if(!p.curto) txtBel=t.belPoucos;
   else if(p.rel<0.08) txtBel=t.belIgual;
   else txtBel=(p.dif>0?t.belMais:t.belMenos).replace("{0}",p.curto).replace("{1}",Math.abs(p.dif));
-  h+='<div class="card" style="border:1px solid var(--gold);background:linear-gradient(135deg,#141a33 0%,#0d1020 70%)">';
-  h+='<div style="display:flex;gap:12px;align-items:flex-start">';
   var foto=(typeof _dicaBelSrc==="function")?_dicaBelSrc():"";
-  if(foto) h+='<img src="'+foto+'" alt="Bel" style="width:54px;height:54px;border-radius:50%;object-fit:cover;object-position:top center;flex-shrink:0;border:1px solid rgba(240,180,41,.5)">';
-  h+='<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:800;color:#fff;line-height:1.3">'+t.belT+'</div>'+
-   '<div style="font-size:12px;color:rgba(255,255,255,.72);line-height:1.5;margin-top:6px">'+txtBel+'</div>';
-  if(!isPro) h+='<span onclick="subscribePro()" style="display:inline-flex;margin-top:12px;padding:8px 15px;border-radius:99px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;font-size:12px;font-weight:800;cursor:pointer">'+((T[currentLang]||T.pt).calsejaPro||"Seja PRO")+'</span>';
-  h+='</div></div></div>';
-  /* fases do sono: o que nao medimos */
-  h+='<div class="card"><div class="card-title">'+t.fasesT+'</div>'+
-   '<div style="font-size:12px;color:var(--text2);line-height:1.6">'+t.fasesB+'</div></div>';
+  h+='<div class="sn-card sn-bel">'+(foto?'<img src="'+foto+'" alt="Bel">':'')+'<div><b>'+t.belT+'</b><p>'+txtBel+'</p>'+
+     (!isPro?'<button type="button" class="sn-pro" onclick="subscribePro()">'+((T[currentLang]||T.pt).calsejaPro||"Seja PRO")+'</button>':'')+'</div></div>';
+  h+='<div class="sn-card"><div class="sn-h"><span class="sn-h-t">'+t.fasesT+'</span></div><p class="sn-txt">'+t.fasesB+'</p></div>';
   el.innerHTML=h;
 }
 /* Leitor de codigo de barras. Base: Open Food Facts (aberta, europeia, sem chave). */
@@ -9723,7 +9808,7 @@ var BC_TXT={
  es:{dicaCam:"Toca el candado junto a la dirección y permite la cámara. O usa la foto del código, que siempre funciona.",t:"Código de barras",mire:"Apunta al código de barras del envase",buscando:"Buscando el producto...",por100:"por 100 g",por100ml:"por 100 ml",porcao:"Ración",gramas:"Cantidad (g)",ml:"Cantidad (ml)",add:"Añadir",refeicao:"Comida",naoAchou:"No encontramos este producto",naoAchouSub:"La base es colaborativa y no tiene todos los productos. Puedes fotografiar la etiqueta y Bel lee los valores.",foto:"Fotografiar la etiqueta",manual:"Escribir manualmente",semCam:"No pude abrir la cámara. Revisa el permiso del navegador.",semLib:"No pude cargar el lector. Revisa tu conexión.",fonte:"Datos: Open Food Facts",semFibra:"sin dato",cancelar:"Cancelar",incompleto:"A este producto le faltan valores en la base. Revisa antes de guardar.",digitar:"¿No lee? Escribir el número",digiteSub:"Escribe los números impresos debajo del código de barras.",buscar:"Buscar",voltarCam:"Volver a la cámara",tirarFoto:"Sacar foto del código",lendoFoto:"Leyendo la foto...",naoLeu:"No pude leer el código",naoLeuSub:"La imagen debe estar nítida. Acércate hasta que el código ocupe el ancho, mantén firme y espera el enfoque. O escribe los números.",tentar:"Intentar de nuevo"},
  it:{dicaCam:"Tocca il lucchetto accanto all'indirizzo e consenti la fotocamera. Oppure usa la foto del codice, che funziona sempre.",t:"Codice a barre",mire:"Inquadra il codice a barre della confezione",buscando:"Cerco il prodotto...",por100:"per 100 g",por100ml:"per 100 ml",porcao:"Porzione",gramas:"Quantità (g)",ml:"Quantità (ml)",add:"Aggiungi",refeicao:"Pasto",naoAchou:"Non abbiamo trovato questo prodotto",naoAchouSub:"Il database è collaborativo e non contiene ogni prodotto. Puoi fotografare l'etichetta e Bel legge i valori.",foto:"Fotografa l'etichetta",manual:"Inserisci a mano",semCam:"Non sono riuscito ad aprire la fotocamera. Controlla il permesso del browser.",semLib:"Non sono riuscito a caricare il lettore. Controlla la connessione.",fonte:"Dati: Open Food Facts",semFibra:"nessun dato",cancelar:"Annulla",incompleto:"A questo prodotto mancano alcuni valori nel database. Controlla prima di salvare.",digitar:"Non legge? Inserisci il numero",digiteSub:"Digita i numeri stampati sotto il codice a barre.",buscar:"Cerca",voltarCam:"Torna alla fotocamera",tirarFoto:"Scatta una foto del codice",lendoFoto:"Lettura della foto...",naoLeu:"Non sono riuscito a leggere il codice",naoLeuSub:"L'immagine deve essere nitida. Avvicinati finché il codice occupa la larghezza, tieni fermo e aspetta la messa a fuoco. Oppure digita i numeri.",tentar:"Riprova"},
  fr:{dicaCam:"Touchez le cadenas à côté de l'adresse et autorisez la caméra. Ou utilisez la photo du code, qui marche toujours.",t:"Code-barres",mire:"Visez le code-barres de l'emballage",buscando:"Recherche du produit...",por100:"pour 100 g",por100ml:"pour 100 ml",porcao:"Portion",gramas:"Quantité (g)",ml:"Quantité (ml)",add:"Ajouter",refeicao:"Repas",naoAchou:"Produit introuvable",naoAchouSub:"La base est collaborative et ne contient pas tous les produits. Vous pouvez photographier l'étiquette, Bel lira les valeurs.",foto:"Photographier l'étiquette",manual:"Saisir manuellement",semCam:"Je n'ai pas pu ouvrir la caméra. Vérifiez l'autorisation du navigateur.",semLib:"Je n'ai pas pu charger le lecteur. Vérifiez votre connexion.",fonte:"Données : Open Food Facts",semFibra:"pas de donnée",cancelar:"Annuler",incompleto:"Il manque des valeurs pour ce produit dans la base. Vérifiez avant d'enregistrer.",digitar:"Ça ne lit pas ? Saisir le numéro",digiteSub:"Tapez les chiffres imprimés sous le code-barres.",buscar:"Rechercher",voltarCam:"Retour à la caméra",tirarFoto:"Prendre une photo du code",lendoFoto:"Lecture de la photo...",naoLeu:"Je n'ai pas pu lire le code",naoLeuSub:"L'image doit être nette. Approchez jusqu'à ce que le code occupe la largeur, tenez ferme et laissez la mise au point se faire. Ou tapez les chiffres.",tentar:"Réessayer"},
- de:{dicaCam:"Tippe auf das Schloss neben der Adresse und erlaube die Kamera. Oder nutze das Foto vom Code, das immer funktioniert.",t:"Barcode",mire:"Richte die Kamera auf den Barcode der Verpackung",buscando:"Produkt wird gesucht...",por100:"pro 100 g",por100ml:"pro 100 ml",porcao:"Portion",gramas:"Menge (g)",ml:"Menge (ml)",add:"Hinzufügen",refeicao:"Mahlzeit",naoAchou:"Dieses Produkt haben wir nicht gefunden",naoAchouSub:"Die Datenbank wird von der Community gepflegt und enthält nicht jedes Produkt. Du kannst das Etikett fotografieren, Bel liest die Werte.",foto:"Etikett fotografieren",manual:"Manuell eingeben",semCam:"Ich konnte die Kamera nicht öffnen. Prüfe die Browser-Berechtigung.",semLib:"Ich konnte den Scanner nicht laden. Prüfe deine Verbindung.",fonte:"Daten: Open Food Facts",semFibra:"kein Wert",cancelar:"Abbrechen",incompleto:"Bei diesem Produkt fehlen Werte in der Datenbank. Prüfe sie vor dem Speichern.",digitar:"Liest nicht? Nummer eingeben",digiteSub:"Gib die Ziffern unter dem Barcode ein.",buscar:"Suchen",voltarCam:"Zurück zur Kamera",tirarFoto:"Foto vom Barcode machen",lendoFoto:"Foto wird gelesen...",naoLeu:"Ich konnte den Barcode nicht lesen",naoLeuSub:"Das Bild muss scharf sein. Geh so nah heran, dass der Barcode die Breite füllt, halte still und warte auf den Fokus. Oder gib die Ziffern ein.",tentar:"Nochmal versuchen"}
+ de:{dicaCam:"Tippen Sie auf das Schloss neben der Adresse und erlauben Sie die Kamera. Oder nutzen Sie das Foto vom Code, das immer funktioniert.",t:"Barcode",mire:"Richte die Kamera auf den Barcode der Verpackung",buscando:"Produkt wird gesucht...",por100:"pro 100 g",por100ml:"pro 100 ml",porcao:"Portion",gramas:"Menge (g)",ml:"Menge (ml)",add:"Hinzufügen",refeicao:"Mahlzeit",naoAchou:"Dieses Produkt haben wir nicht gefunden",naoAchouSub:"Die Datenbank wird von der Community gepflegt und enthält nicht jedes Produkt. Du kannst das Etikett fotografieren, Bel liest die Werte.",foto:"Etikett fotografieren",manual:"Manuell eingeben",semCam:"Ich konnte die Kamera nicht öffnen. Prüfe die Browser-Berechtigung.",semLib:"Ich konnte den Scanner nicht laden. Prüfe deine Verbindung.",fonte:"Daten: Open Food Facts",semFibra:"kein Wert",cancelar:"Abbrechen",incompleto:"Bei diesem Produkt fehlen Werte in der Datenbank. Prüfe sie vor dem Speichern.",digitar:"Liest nicht? Nummer eingeben",digiteSub:"Gib die Ziffern unter dem Barcode ein.",buscar:"Suchen",voltarCam:"Zurück zur Kamera",tirarFoto:"Foto vom Barcode machen",lendoFoto:"Foto wird gelesen...",naoLeu:"Ich konnte den Barcode nicht lesen",naoLeuSub:"Das Bild muss scharf sein. Geh so nah heran, dass der Barcode die Breite füllt, halte still und warte auf den Fokus. Oder gib die Ziffern ein.",tentar:"Nochmal versuchen"}
 };
 /* Textos do modo Mercado. Um bloco so, nos 6 idiomas, para nao haver
    caminho em que o cliente veja metade da tela na lingua errada. */
