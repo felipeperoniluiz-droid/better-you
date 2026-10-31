@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_bel_clara";
+var APP_VERSION="20261031_bel_semlogo";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -2714,6 +2714,10 @@ html[data-theme="light"] #tab-dieta .bel-metrica:nth-child(-n+2) .bel-metrica-ro
 html[data-theme="light"] #tab-dieta .bel-metrica:nth-child(1) .bel-metrica-rot>span{background-image:url(bel-ico-kcal.png)}
 html[data-theme="light"] #tab-dieta .bel-metrica:nth-child(2) .bel-metrica-rot>span{background-image:url(bel-ico-prot.png)}
 html[data-theme="light"] #tab-dieta .bel-metrica:nth-child(-n+2) .bel-metrica-rot>span svg{visibility:hidden}
+/* 31/10 (2): Felipe pediu para tirar a logo do cartao da Bel; ficam so os dados dela */
+html[data-theme="light"] #tab-dieta .bel-id::before{display:none!important}
+html[data-theme="light"] #tab-dieta .bel-nome{border-top:0!important;border-image:none!important;padding-top:0!important}
+html[data-theme="light"] #tab-dieta .bel-hero .bel-id{align-self:center!important;padding:0 2px 30px 0!important}
 </style>
 </head>
 <body>
