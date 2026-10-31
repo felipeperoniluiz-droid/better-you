@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_onda";
+var APP_VERSION="20261031_aperto";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3021,6 +3021,39 @@ html:not([data-theme="light"]) #tab-relatorios .rl-i-f2{fill:#2c2214}
 #tab-jejum,#tab-peso,#tab-hist,#tab-relatorios{position:relative;z-index:0}
 #tab-jejum::before,#tab-peso::before,#tab-hist::before,#tab-relatorios::before{content:"";position:absolute;top:-16px;right:-16px;width:78%;height:120px;z-index:-1;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 130' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='f' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.6' stop-color='%23F8B53A' stop-opacity='.22'/%3E%3Cstop offset='1' stop-color='%23F5A623' stop-opacity='.42'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.35' stop-color='%23F5A623' stop-opacity='.75'/%3E%3Cstop offset='1' stop-color='%23E8920F'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M70 0C180 34 290 58 400 62V0Z' fill='url(%23f)'/%3E%3Cpath d='M70 0C180 34 290 58 400 62' fill='none' stroke='url(%23l)' stroke-width='3'/%3E%3Cpath d='M20 0C170 62 290 98 400 108' fill='none' stroke='url(%23l)' stroke-width='1.6' opacity='.35'/%3E%3C/svg%3E") no-repeat right top/100% 100%}
 html:not([data-theme="light"]) :is(#tab-jejum,#tab-peso,#tab-hist,#tab-relatorios)::before{opacity:.55}
+/* ===== 31/10: ENQUADRAMENTO MAIS JUSTO (pedido do Felipe: "espacado demais") =====
+   Medido a 390 px contra os mockups: as telas novas ficavam ~40% mais altas.
+   Menos recuo nos cartoes, menos vao entre blocos, controles mais baixos. */
+:is(#tab-jejum,#tab-peso,#tab-hist,#tab-relatorios) .pz-cab{margin:0 0 14px!important;gap:12px!important;align-items:center!important}
+:is(#tab-jejum,#tab-peso,#tab-hist,#tab-relatorios) .pz-ic{flex-basis:44px!important;width:44px!important;height:44px!important;border-radius:14px!important}
+:is(#tab-peso,#tab-hist,#tab-relatorios) .pz-tit{font-size:25px!important}
+:is(#tab-peso,#tab-hist,#tab-relatorios) .pz-sub{margin-top:3px!important;font-size:14.5px!important;line-height:1.4!important}
+#tab-peso .pz-seg{padding:4px!important;margin-bottom:12px!important;border-radius:16px!important}
+#tab-peso .pz-seg-b{min-height:44px!important;border-radius:12px!important;font-size:15px!important}
+#tab-peso .pz-card,#tab-peso #section-medidas .card,#tab-hist .hs-card,#tab-jejum .jj-card,#tab-relatorios .rl-card{padding:16px!important;margin-bottom:12px!important}
+#tab-peso .pz-ic-g{flex-basis:52px!important;width:52px!important;height:52px!important;border-radius:16px!important}
+#tab-peso .pz-ic-g svg{width:26px!important;height:26px!important}
+#tab-peso .pz-num #weightCurrent{font-size:40px!important}
+#tab-peso .pz-label{margin:14px 0 6px!important;font-size:13.5px!important}
+#tab-peso .pz-input,#tab-peso .pz-btn{height:48px!important}
+#tab-peso .pz-h,#tab-hist .hs-h{margin-bottom:10px!important}
+#tab-peso .pz-h,#tab-peso #section-medidas .card-title,#tab-hist .hs-h-t{font-size:18px!important}
+:is(#tab-peso,#tab-hist) .pz-ic-p,#tab-hist .hs-ic{flex-basis:34px!important;width:34px!important;height:34px!important;border-radius:11px!important}
+#tab-peso .pz-hl{padding:10px 10px!important}
+#tab-hist .hs-sem,#tab-hist .hs-grade{gap:5px!important}
+#tab-hist .hs-dia{aspect-ratio:1/0.74!important;border-radius:11px!important}
+#tab-hist .hs-leg{margin-top:10px!important}
+#tab-jejum .jj-tit{font-size:23px!important}
+#tab-jejum .jj-h{font-size:20px!important;margin-bottom:12px!important}
+#tab-jejum .jj-aviso{margin-top:14px!important;padding:12px 14px!important}
+#tab-jejum .jj-btn{min-height:48px!important;margin-top:14px!important}
+#tab-jejum .jj-etapa{padding:10px 0!important}
+#tab-jejum .jj-topo{padding-bottom:6px!important}
+#tab-relatorios .rl-sec{margin:18px 2px 10px!important;font-size:18px!important}
+#tab-relatorios .rl-ben{padding:12px 8px!important}
+#tab-relatorios .rl-pro-faixa{margin-top:14px!important;padding:12px 14px!important}
+#tab-relatorios .rl-btn{min-height:48px!important;margin-top:12px!important}
+#voltarBar{margin-bottom:8px!important}
 </style>
 </head>
 <body>
@@ -5206,7 +5239,7 @@ function drawWeightChart(){
   canvas.style.display="block"; if(vazio) vazio.style.display="none";
   var claro=document.documentElement.getAttribute("data-theme")==="light";
   var cTxt=claro?"#77716D":"#A1A1AA", cGrade=claro?"#EFE6D8":"rgba(255,255,255,.08)", cFundo=claro?"#FFFFFF":"#141414";
-  var dpr=2, W=(canvas.offsetWidth||330), H=190;
+  var dpr=2, W=(canvas.offsetWidth||330), H=170;
   canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.height=H+"px";
   var ctx=canvas.getContext&&canvas.getContext("2d"); if(!ctx) return; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
   var vals=data.map(function(d){return d.val;});
@@ -10975,7 +11008,7 @@ function drawHistChart(){
   if(med){ med.style.display=""; var mv=document.getElementById("hsMediaV"); if(mv) mv.textContent=_hsNum(Math.round(com.reduce(function(a,b){return a+b;},0)/com.length))+" kcal"; med.title=tx("hsMediaNota"); }
   var claro=document.documentElement.getAttribute("data-theme")==="light";
   var cTxt=claro?"#77716D":"#A1A1AA", cTxt1=claro?"#2B211D":"#F4F4F5", cGrade=claro?"#EFE6D8":"rgba(255,255,255,.08)", cFundo=claro?"#FFFFFF":"#141414", cEtq=claro?"#FFF1D6":"rgba(245,166,35,.16)";
-  var dpr=2, W=(canvas.offsetWidth||330), H=210;
+  var dpr=2, W=(canvas.offsetWidth||330), H=192;
   canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.height=H+"px";
   var ctx=canvas.getContext&&canvas.getContext("2d"); if(!ctx) return; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
   var lo=Math.min.apply(null,com), hi=Math.max.apply(null,com);
