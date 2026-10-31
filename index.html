@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_mercado_claro";
+var APP_VERSION="20261031_mais_lista";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -2740,6 +2740,40 @@ html[data-theme="light"] body .cam-traco{background:#f2ae2e!important}
 html[data-theme="light"] body .cam-dica{color:#3b332c!important;text-shadow:none!important}
 html[data-theme="light"] body .mcx-barra{background:#fffdfa!important;border-color:rgba(240,170,60,.28)!important}
 html[data-theme="light"] body .cam-txt{width:52%!important}
+/* ===== 31/10: LISTA DO "MAIS" MODERNA (claro e escuro) =====
+   Selo quadrado arredondado com cor propria, titulo forte + subtitulo,
+   seta dentro de um circulo e cartao mais leve. Agua azul, sono violeta. */
+#tab-mais .m-item.m-item2{--t:245 165 12;--tc:#f5b820;
+  min-height:74px!important;padding:13px 14px!important;gap:14px!important;margin-bottom:10px;
+  border-radius:20px!important;border:1px solid rgba(240,180,41,.16)!important;
+  background:linear-gradient(180deg,#171717 0%,#0e0e0e 100%)!important;
+  box-shadow:0 6px 16px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,236,178,.06)!important}
+#tab-mais .m-item2.m-tom-azul{--t:59 130 246;--tc:#7db3ff}
+#tab-mais .m-item2.m-tom-violeta{--t:139 92 246;--tc:#b9a2ff}
+#tab-mais .m-item2 .m-med{flex:0 0 48px!important;width:48px!important;height:48px!important;border-radius:15px!important;
+  background:linear-gradient(145deg,rgb(var(--t)/.30),rgb(var(--t)/.08))!important;
+  border:1px solid rgb(var(--t)/.45)!important;color:var(--tc)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 4px 12px rgb(var(--t)/.18)!important}
+#tab-mais .m-item2 .m-med svg{width:24px!important;height:24px!important;filter:none!important;stroke-width:1.9!important}
+#tab-mais .m-item2 .m-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+#tab-mais .m-item2 .m-rot{flex:none;font-size:15.5px!important;font-weight:700!important;color:#f4f4f5!important;line-height:1.25}
+#tab-mais .m-item2 .m-sub{font-size:12.5px;font-weight:500;color:#9ca3af;line-height:1.35;overflow-wrap:break-word}
+#tab-mais .m-item2 .m-seta-w{flex:0 0 30px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(240,180,41,.12);color:#f5b820}
+#tab-mais .m-item2 .m-seta{width:15px!important;height:15px!important;color:currentColor!important}
+@media (hover:hover){#tab-mais .m-item.m-item2:hover{border-color:rgba(240,180,41,.45)!important;transform:translateY(-1px)}}
+#tab-mais .m-item.m-item2:active{transform:scale(.985)!important}
+html[data-theme="light"] #tab-mais .m-item.m-item2{--t:245 158 11;--tc:#c27800;
+  background:#ffffff!important;border:1px solid rgba(240,170,60,.20)!important;
+  box-shadow:0 4px 14px rgba(120,80,20,.07)!important}
+html[data-theme="light"] #tab-mais .m-item2.m-tom-azul{--t:59 130 246;--tc:#2563eb}
+html[data-theme="light"] #tab-mais .m-item2.m-tom-violeta{--t:124 58 237;--tc:#7c3aed}
+html[data-theme="light"] #tab-mais .m-item2 .m-med{background:linear-gradient(145deg,rgb(var(--t)/.20),rgb(var(--t)/.06))!important;
+  border:1px solid rgb(var(--t)/.35)!important;box-shadow:0 3px 10px rgb(var(--t)/.14)!important}
+html[data-theme="light"] #tab-mais .m-item2 .m-rot{color:#1a1410!important;font-size:15.5px!important}
+html[data-theme="light"] #tab-mais .m-item2 .m-sub{color:#6b625a}
+html[data-theme="light"] #tab-mais .m-item2 .m-seta-w{background:#fff4dc;color:#c27800}
+@media (hover:hover){html[data-theme="light"] #tab-mais .m-item.m-item2:hover{border-color:rgba(240,170,60,.5)!important;box-shadow:0 8px 20px rgba(120,80,20,.12)!important}}
 </style>
 </head>
 <body>
@@ -5609,11 +5643,23 @@ function maisProgresso(){
 /* <button> e nao <div>: teclado e leitor de tela so alcancam o item se ele
    for um controle de verdade. Com div, quem navega por Tab nunca chega ate
    aqui. Os 64 px de altura minima ja cobrem a area de toque de 44 px. */
-function _maisItem(icone,rotulo,acao,azul){
-  return '<button type="button" class="m-item" onclick="'+acao+'">'+
-   '<span class="m-med'+(azul?' m-med-azul':'')+'">'+icone+'</span>'+
-   '<span class="m-rot">'+rotulo+'</span>'+
-   '<svg class="m-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>'+
+var MAIS_SUB={
+pt:{perfil:'Dados, objetivo e metas',jejum:'Cronômetro e janela de alimentação',peso:'Evolução do peso e das medidas',hist:'Calendário dos seus registros',relat:'Resumo da semana com a Bel',sono:'Horas dormidas por noite',agua:'Meta diária de hidratação',calc:'Calorias e macros por objetivo'},
+en:{perfil:'Details, goal and targets',jejum:'Timer and eating window',peso:'Weight and body measurements over time',hist:'Calendar of your logs',relat:'Your week summed up by Bel',sono:'Hours slept per night',agua:'Daily hydration goal',calc:'Calories and macros for your goal'},
+es:{perfil:'Datos, objetivo y metas',jejum:'Cronómetro y ventana de alimentación',peso:'Evolución del peso y las medidas',hist:'Calendario de tus registros',relat:'Resumen de la semana con Bel',sono:'Horas dormidas por noche',agua:'Meta diaria de hidratación',calc:'Calorías y macros según tu objetivo'},
+it:{perfil:'Dati, obiettivo e traguardi',jejum:'Timer e finestra alimentare',peso:'Andamento di peso e misure',hist:'Calendario delle tue registrazioni',relat:'La tua settimana riassunta da Bel',sono:'Ore dormite per notte',agua:'Obiettivo giornaliero di idratazione',calc:'Calorie e macro per il tuo obiettivo'},
+fr:{perfil:'Données, objectif et cibles',jejum:'Minuteur et fenêtre alimentaire',peso:'Évolution du poids et des mesures',hist:'Calendrier de vos saisies',relat:'Votre semaine résumée par Bel',sono:'Heures dormies par nuit',agua:'Objectif quotidien d\'hydratation',calc:'Calories et macros selon votre objectif'},
+de:{perfil:'Daten, Ziel und Vorgaben',jejum:'Timer und Essensfenster',peso:'Verlauf von Gewicht und Maßen',hist:'Kalender Ihrer Einträge',relat:'Ihre Woche, zusammengefasst von Bel',sono:'Geschlafene Stunden pro Nacht',agua:'Tägliches Trinkziel',calc:'Kalorien und Makros für Ihr Ziel'}
+};
+/* 31/10: item moderno — selo quadrado com cor propria, titulo + subtitulo e
+   seta num circulo. tom: "azul" (agua), "violeta" (sono) ou vazio (dourado). */
+function _maisItem(icone,rotulo,acao,azul,chave){
+  var S=MAIS_SUB[currentLang]||MAIS_SUB.en, sub=chave?(S[chave]||""):"";
+  var tom=azul===true?" m-tom-azul":(azul==="violeta"?" m-tom-violeta":"");
+  return '<button type="button" class="m-item m-item2'+tom+'" onclick="'+acao+'">'+
+   '<span class="m-med'+(azul===true?' m-med-azul':'')+'">'+icone+'</span>'+
+   '<span class="m-txt"><span class="m-rot">'+rotulo+'</span>'+(sub?'<span class="m-sub">'+sub+'</span>':'')+'</span>'+
+   '<span class="m-seta-w"><svg class="m-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></span>'+
    '</button>';
 }
 /* Faixa da semana: mostra de cara em que dias a pessoa registrou. */
@@ -5915,14 +5961,14 @@ function maisRender(){
   }
   /* Ordem travada pela especificacao. Cada acao ja existia no app — nao
      inventei caminho nenhum, so troquei a roupa do item. */
-  h+=_maisItem(ic.perfil||"",M.perfil,"openProfile()");
-  h+=_maisItem(ic.jejum||"",M.jejum,"navGo(\'jejum\')");
-  h+=_maisItem(ic.peso||"",M.peso,"navGo(\'peso\')");
-  h+=_maisItem(ic.hist||"",M.hist,"navGo(\'hist\')");
-  h+=_maisItem(ic.prog||"",M.relat,"navGo(\'relatorios\')");
-  h+=_maisItem(ic.sono||"",M.sono,"sonoEditar()");
-  h+=_maisItem(ic.agua||"",M.agua,"navGo(\'agua\')",true);  /* unico medalhao azul */
-  h+=_maisItem(ic.calc||"",M.calc,"navGo(\'calc\')");
+  h+=_maisItem(ic.perfil||"",M.perfil,"openProfile()",false,"perfil");
+  h+=_maisItem(ic.jejum||"",M.jejum,"navGo(\'jejum\')",false,"jejum");
+  h+=_maisItem(ic.peso||"",M.peso,"navGo(\'peso\')",false,"peso");
+  h+=_maisItem(ic.hist||"",M.hist,"navGo(\'hist\')",false,"hist");
+  h+=_maisItem(ic.prog||"",M.relat,"navGo(\'relatorios\')",false,"relat");
+  h+=_maisItem(ic.sono||"",M.sono,"sonoEditar()","violeta","sono");
+  h+=_maisItem(ic.agua||"",M.agua,"navGo(\'agua\')",true,"agua");  /* unico medalhao azul */
+  h+=_maisItem(ic.calc||"",M.calc,"navGo(\'calc\')",false,"calc");
   el.innerHTML=h;
 }
 /* Voltar: telas secundarias ganham uma barra de volta que respeita o caminho percorrido. */
