@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_camera2";
+var APP_VERSION="20261031_camera3";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3111,6 +3111,18 @@ html:not([data-theme="light"]) #bcOverlay span[onclick="bcFechar()"]{border:1.5p
 html:not([data-theme="light"]) .cam-hero{border:1.5px solid rgba(245,184,32,.8)!important;box-shadow:0 0 22px rgba(240,180,41,.22),inset 0 0 0 1px rgba(255,220,120,.06)!important}
 html:not([data-theme="light"]) .cam-hero .mcx-img:before{background:linear-gradient(90deg,#070605 0%,#070605 7%,rgba(7,6,5,.85) 20%,rgba(7,6,5,.35) 34%,rgba(7,6,5,0) 48%)!important}
 html:not([data-theme="light"]) .cam-sec{border-color:rgba(242,181,46,.6)!important}
+/* 31/10: foto nova do aviso da camera (Felipe) — Bel a direita e o codigo de barras inteiro, com mira dourada */
+.cam-hero{min-height:290px}
+.cam-hero .mcx-img{left:calc(57% - 187px)!important;right:auto!important}
+.cam-hero .mcx-img.cam-velha{left:14%!important}
+.cam-hero .mcx-img.cam-velha .cam-mira{display:none}
+.cam-mira{position:absolute;left:59.6%;top:81.8%;width:11.6%;height:11.4%;pointer-events:none;
+  background:
+   linear-gradient(#f5b820,#f5b820) left top/14px 2.5px no-repeat,linear-gradient(#f5b820,#f5b820) left top/2.5px 14px no-repeat,
+   linear-gradient(#f5b820,#f5b820) right top/14px 2.5px no-repeat,linear-gradient(#f5b820,#f5b820) right top/2.5px 14px no-repeat,
+   linear-gradient(#f5b820,#f5b820) left bottom/14px 2.5px no-repeat,linear-gradient(#f5b820,#f5b820) left bottom/2.5px 14px no-repeat,
+   linear-gradient(#f5b820,#f5b820) right bottom/14px 2.5px no-repeat,linear-gradient(#f5b820,#f5b820) right bottom/2.5px 14px no-repeat;
+  filter:drop-shadow(0 0 4px rgba(255,190,40,.8))}
 </style>
 </head>
 <body>
@@ -10191,7 +10203,7 @@ function bcAviso(msg){
   var m=String(msg||""), k=m.search(/[.!?]\s/), t1=m, t2="";
   if(k>0){ t1=m.slice(0,k+1); t2=m.slice(k+2); }
   _bcCard(_bcBarraModos()+
-   '<div class="mcx-hero cam-hero"><div class="mcx-img"><img src="camera-bel.jpg?v=2" alt="" decoding="async" onerror="this.parentNode.style.display=\'none\'"></div>'+
+   '<div class="mcx-hero cam-hero"><div class="mcx-img"><img src="camera-bel-v3.jpg?v=1" alt="" decoding="async" onerror="if(!this.dataset.r){this.dataset.r=1;this.src=\'camera-bel.jpg?v=2\';this.parentNode.classList.add(\'cam-velha\')}else{this.parentNode.style.display=\'none\'}"><span class="cam-mira" aria-hidden="true"></span></div>'+
    '<div class="mcx-txt cam-txt"><div class="cam-tit"><svg viewBox="0 0 24 24"><path d="M10.3 3.9 2.6 17.3A2 2 0 0 0 4.3 20.3h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9.2v4.6M12 17.2v.1"/></svg><span>'+t1+'</span></div>'+
    (t2?'<div class="cam-sub">'+t2+'</div>':'')+'<div class="cam-traco"></div>'+
    '<div class="cam-dica">'+(t.dicaCam||"")+'</div></div></div>'+
