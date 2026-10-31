@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_sono4";
+var APP_VERSION="20261031_revisao";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3240,6 +3240,38 @@ html:not([data-theme="light"]) #tab-sono .sn-r1{color:#4ade80!important}
 #tab-sono .sn-op.on{background:linear-gradient(180deg,#F8B53A,var(--pz-lar))!important;border-color:transparent!important;color:#2B1A05!important;box-shadow:0 4px 10px rgba(217,119,6,.28)!important}
 #tab-sono .sn-seta{background:var(--pz-card)!important;border:1px solid var(--pz-borda)!important;color:var(--pz-txt)!important;background-image:none!important}
 #tab-sono .sn-col{background:none!important;border:0!important;box-shadow:none!important}
+/* 31/10: Medidas no padrao novo — stepper de uma peca, rotulos traduzidos, historico em chips */
+#tab-peso #section-medidas .input-label{font-size:13px!important;font-weight:500!important;color:var(--pz-txt2)!important;margin-bottom:6px!important}
+#tab-peso #section-medidas .input-group>div[style*="display:flex"]{gap:4px!important;height:46px;padding:4px;box-sizing:border-box;border:1px solid var(--pz-borda);border-radius:12px;background:var(--pz-campo,#FFFCF6)}
+#tab-peso #section-medidas .input-group>div[style*="display:flex"]>button{width:36px!important;height:36px!important;border-radius:10px!important;border:0!important;background:var(--pz-creme)!important;color:var(--pz-lar)!important;font:600 20px/1 Inter,sans-serif!important;box-shadow:none!important;padding:0!important}
+#tab-peso #section-medidas .input-group>div[style*="display:flex"]>input{flex:1;min-width:0;height:36px!important;border:0!important;background:transparent!important;box-shadow:none!important;font:600 16px Inter,sans-serif!important;color:var(--pz-txt)!important;padding:0 4px!important}
+#tab-peso #section-medidas .input-group>div[style*="display:flex"]>input::placeholder{color:var(--pz-txt2)!important;opacity:.7}
+#tab-peso #section-medidas .input-group>div[style*="display:flex"]:focus-within{border-color:var(--pz-ouro);box-shadow:0 0 0 3px rgba(245,166,35,.16)}
+#tab-peso #section-medidas .btn-primary{min-height:48px!important;height:48px!important;border-radius:14px!important;background:linear-gradient(180deg,#F8B53A,var(--pz-lar))!important;color:#fff!important;font:600 16px Inter,sans-serif!important;border:0!important;box-shadow:0 4px 12px rgba(217,119,6,.28)!important}
+#tab-peso .md-linha{padding:12px;border-bottom:1px solid var(--pz-linha)}
+#tab-peso .md-linha:last-child{border-bottom:0}
+#tab-peso .md-novo{background:var(--pz-creme);border-radius:14px;border-bottom-color:transparent}
+#tab-peso .md-data{font-size:13.5px;font-weight:600;color:var(--pz-txt);margin-bottom:8px}
+#tab-peso .md-itens{display:flex;flex-wrap:wrap;gap:6px}
+#tab-peso .md-chip{padding:5px 10px;border-radius:10px;background:var(--pz-card);border:1px solid var(--pz-borda);font-size:12.5px;color:var(--pz-txt2)}
+#tab-peso .md-chip b{color:var(--pz-txt);font-weight:600}
+/* jejum: atalho "Jejum" na mesma linha do Voltar, sem abrir buraco */
+#tab-jejum .jj-topo{position:absolute!important;top:0;right:0;padding:0!important;z-index:2}
+/* 31/10: visor da camera do codigo de barras no padrao novo */
+.bc-visor{position:relative;width:100%;aspect-ratio:4/3;border-radius:20px;overflow:hidden;background:#000;border:1.5px solid rgba(245,184,32,.75);box-shadow:0 0 20px rgba(240,180,41,.18)}
+.bc-visor video{width:100%;height:100%;object-fit:cover;display:block}
+.bc-visor::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 62% 40% at 50% 50%,transparent 70%,rgba(0,0,0,.35) 100%);pointer-events:none}
+.bc-mira{position:absolute;left:8%;right:8%;top:27%;height:46%;z-index:1;pointer-events:none}
+.bc-mira i{position:absolute;width:30px;height:30px;border:3.5px solid #F5B820;filter:drop-shadow(0 0 5px rgba(255,190,40,.8))}
+.bc-mira i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0;border-radius:12px 0 0 0}
+.bc-mira i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0;border-radius:0 12px 0 0}
+.bc-mira i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0;border-radius:0 0 0 12px}
+.bc-mira i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0;border-radius:0 0 12px 0}
+.bc-linha{position:absolute;left:6%;right:6%;top:50%;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#F5B820 20%,#F5B820 80%,transparent);box-shadow:0 0 10px rgba(255,190,40,.9)}
+@media (prefers-reduced-motion:no-preference){.bc-linha{animation:bcVarre 2.2s ease-in-out infinite alternate}}
+@keyframes bcVarre{from{top:12%}to{top:88%}}
+.bc-dica{display:flex;align-items:center;justify-content:center;gap:8px;margin:14px 0 14px;font-size:14px;font-weight:500;color:var(--text2)}
+.bc-dica svg{flex:0 0 22px;width:22px;height:22px;fill:none;stroke:#E8920F;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </head>
 <body>
@@ -3692,16 +3724,16 @@ if(_al){
       <div class="card-title" data-i18n="pzMedT">Registrar medidas</div>
       <div style="display:flex;flex-direction:column;gap:0;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">Cintura (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCintura',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCintura" placeholder="82" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCintura',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">Quadril (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mQuadril',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mQuadril" placeholder="98" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mQuadril',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label"><span data-i18n="mdCintura">Cintura</span> (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCintura',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCintura" placeholder="82" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCintura',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label"><span data-i18n="mdQuadril">Quadril</span> (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mQuadril',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mQuadril" placeholder="98" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mQuadril',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">Peito (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPeito',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mPeito" placeholder="100" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPeito',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">Braço (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mBraco',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mBraco" placeholder="36" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mBraco',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label"><span data-i18n="mdPeito">Peito</span> (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPeito',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mPeito" placeholder="100" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPeito',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label"><span data-i18n="mdBraco">Braço</span> (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mBraco',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mBraco" placeholder="36" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mBraco',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">Coxa (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCoxa',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCoxa" placeholder="58" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCoxa',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
-          <div class="input-group" style="margin-bottom:0;"><div class="input-label">Panturrilha (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPanturrilha',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mPanturrilha" placeholder="38" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPanturrilha',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label"><span data-i18n="mdCoxa">Coxa</span> (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mCoxa',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mCoxa" placeholder="58" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mCoxa',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
+          <div class="input-group" style="margin-bottom:0;"><div class="input-label"><span data-i18n="mdPanturrilha">Panturrilha</span> (cm)</div><div style="display:flex;align-items:center;gap:4px;"><button type="button" onclick="stepMeasure('mPanturrilha',-0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px 0 0 8px;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0;">−</button><input type="text" inputmode="decimal" class="input" id="mPanturrilha" placeholder="38" style="border-radius:0;text-align:center;font-size:16px;height:44px;padding:0 6px;"><button type="button" onclick="stepMeasure('mPanturrilha',0.5)" style="width:32px;height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 0;color:#f0b429;font-size:18px;cursor:pointer;flex-shrink:0;">+</button></div></div>
         </div>
       </div>
       <button class="btn btn-primary" style="margin-top:14px;height:48px;font-size:15px;" onclick="addMeasure()" data-i18n="salvarMedidas">Salvar Medidas</button>
@@ -8469,6 +8501,13 @@ var TX={
  snRegExp:{pt:'Calculada pela diferença entre a noite mais curta e a mais longa: até 1h é constante, até 2h30 é irregular.',en:'Based on the gap between your shortest and longest night: up to 1h is steady, up to 2h30 is irregular.',es:'Según la diferencia entre la noche más corta y la más larga: hasta 1h es constante, hasta 2h30 es irregular.',it:'In base alla differenza tra la notte più corta e la più lunga: fino a 1h è costante, fino a 2h30 è irregolare.',fr:'Selon l\'écart entre la nuit la plus courte et la plus longue : jusqu\'à 1h c\'est constant, jusqu\'à 2h30 irrégulier.',de:'Nach dem Abstand zwischen kürzester und längster Nacht: bis 1 Std. gleichmäßig, bis 2,5 Std. unregelmäßig.'},
  snVazio7:{pt:'Nenhuma noite registrada nos últimos 7 dias.',en:'No nights logged in the last 7 days.',es:'Ninguna noche registrada en los últimos 7 días.',it:'Nessuna notte registrata negli ultimi 7 giorni.',fr:'Aucune nuit enregistrée ces 7 derniers jours.',de:'In den letzten 7 Tagen keine Nacht erfasst.'},
  snFonte:{pt:'Registro manual',en:'Logged by you',es:'Registro manual',it:'Registrazione manuale',fr:'Saisie manuelle',de:'Manuell erfasst'},
+ mdCintura:{pt:'Cintura',en:'Waist',es:'Cintura',it:'Vita',fr:'Taille',de:'Taille'},
+ mdQuadril:{pt:'Quadril',en:'Hips',es:'Cadera',it:'Fianchi',fr:'Hanches',de:'Hüfte'},
+ mdPeito:{pt:'Peito',en:'Chest',es:'Pecho',it:'Petto',fr:'Poitrine',de:'Brust'},
+ mdBraco:{pt:'Braço',en:'Arm',es:'Brazo',it:'Braccio',fr:'Bras',de:'Arm'},
+ mdCoxa:{pt:'Coxa',en:'Thigh',es:'Muslo',it:'Coscia',fr:'Cuisse',de:'Oberschenkel'},
+ mdPanturrilha:{pt:'Panturrilha',en:'Calf',es:'Pantorrilla',it:'Polpaccio',fr:'Mollet',de:'Wade'},
+ mdVazio:{pt:'Nenhuma medida registrada ainda.',en:'No measurements logged yet.',es:'Aún no hay medidas registradas.',it:'Nessuna misura registrata.',fr:'Aucune mesure enregistrée.',de:'Noch keine Maße erfasst.'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
  pgrF1D:{pt:'Compare suas fotos e veja mudanças reais.',en:'Compare your photos and see real changes.',es:'Compara tus fotos y ve cambios reales.',it:'Confronta le tue foto e vedi cambiamenti reali.',fr:'Comparez vos photos et voyez de vrais changements.',de:'Vergleichen Sie Ihre Fotos und sehen Sie echte Veränderungen.'},
@@ -10156,12 +10195,13 @@ function _bcBarraModos(){
 }
 function _bcCamHtml(){
   var t=_bcT();
-  return '<div style="position:relative;width:100%;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#000">'+
-   '<video id="bcVideo" playsinline muted autoplay style="width:100%;height:100%;object-fit:cover"></video>'+
-   '<div style="position:absolute;left:4%;right:4%;top:28%;height:44%;border:2px solid rgba(240,180,41,.9);border-radius:10px"></div></div>'+
-   '<div style="text-align:center;font-size:13px;color:var(--text2);margin-top:14px">'+t.mire+'</div>'+
-   '<div onclick="bcFoto()" style="text-align:center;font-size:14px;font-weight:800;margin-top:14px;padding:13px;border-radius:14px;background:linear-gradient(135deg,#f0b429,#d97706);color:#1a1206;cursor:pointer">'+t.tirarFoto+'</div>'+
-   '<div onclick="bcDigitar()" style="text-align:center;font-size:12px;color:var(--text3);font-weight:700;margin-top:9px;padding:10px;cursor:pointer">'+t.digitar+'</div>';
+  /* 31/10: visor no padrao novo — aro dourado, mira de 4 cantos com linha de
+     leitura, dica com icone e os mesmos botoes do aviso de camera. */
+  return '<div class="bc-visor"><video id="bcVideo" playsinline muted autoplay></video>'+
+   '<div class="bc-mira" aria-hidden="true"><i></i><i></i><i></i><i></i><b class="bc-linha"></b></div></div>'+
+   '<div class="bc-dica"><svg viewBox="0 0 24 24"><path d="M3.5 7V5a1.5 1.5 0 0 1 1.5-1.5h2M17 3.5h2A1.5 1.5 0 0 1 20.5 5v2M20.5 17v2a1.5 1.5 0 0 1-1.5 1.5h-2M7 20.5H5A1.5 1.5 0 0 1 3.5 19v-2"/><path d="M8 8v8M11 8v8M14 8v8M16.5 8v8"/></svg><span>'+t.mire+'</span></div>'+
+   '<div class="mcx-btn cam-btn" onclick="bcFoto()"><svg viewBox="0 0 24 24" style="width:30px;height:28px"><path d="M3.5 8.2h3.1l1.5-2.2h7.8l1.5 2.2h3.1a1.4 1.4 0 0 1 1.4 1.4v8.2a1.4 1.4 0 0 1-1.4 1.4H3.5a1.4 1.4 0 0 1-1.4-1.4V9.6a1.4 1.4 0 0 1 1.4-1.4Z"/><circle cx="12" cy="13.4" r="3.6"/></svg>'+t.tirarFoto+'</div>'+
+   '<div class="cam-sec" onclick="bcDigitar()"><svg viewBox="0 0 24 24"><path d="M15.5 4.5 19.5 8.5 8.5 19.5H4.5V15.5Z"/><path d="m13.5 6.5 4 4"/></svg>'+(t.manual||t.digitar)+'</div>';
 }
 /* Tarja com as alergias marcadas. Quando esta vazia vira convite:
    o cliente precisa saber ANTES de escanear que a Bel nao tem o que comparar. */
@@ -11299,16 +11339,13 @@ function addMeasure(){
 function renderMeasures(){
   var el=document.getElementById('measureList');if(!el)return;
   var list=state.measures||[];
-  if(!list.length){el.innerHTML='<div class="empty"><div class="empty-icon"></div><div class="empty-text">Nenhuma medida registrada</div></div>';return;}
-  var labels={cintura:'Cintura',quadril:'Quadril',peito:'Peito',braco:'Braço',coxa:'Coxa',panturrilha:'Panturrilha'};
-  el.innerHTML=list.slice(0,10).map(function(m){
-    var items=Object.keys(labels).filter(function(k){return m[k];}).map(function(k){
-      return '<span style="font-size:12px;color:var(--text2);">'+labels[k]+': <b style="color:var(--text);">'+m[k]+'cm</b></span>';
-    }).join(' &nbsp;·&nbsp; ');
-    return '<div style="padding:10px 0;border-bottom:1px solid var(--border);">'
-      +'<div style="font-size:12px;color:var(--text2);margin-bottom:5px;">'+m.date.slice(5)+'</div>'
-      +'<div style="line-height:1.8;">'+items+'</div>'
-      +'</div>';
+  if(!list.length){el.innerHTML='<div class="pz-vazio">'+tx('mdVazio')+'</div>';return;}
+  var ks=[['cintura','mdCintura'],['quadril','mdQuadril'],['peito','mdPeito'],['braco','mdBraco'],['coxa','mdCoxa'],['panturrilha','mdPanturrilha']];
+  el.innerHTML=list.slice(0,10).map(function(m,i){
+    var items=ks.filter(function(k){return m[k[0]];}).map(function(k){
+      return '<span class="md-chip">'+tx(k[1])+' <b>'+(+m[k[0]]).toLocaleString(_pzLoc(),{maximumFractionDigits:1})+' cm</b></span>';
+    }).join('');
+    return '<div class="md-linha'+(i===0?' md-novo':'')+'"><div class="md-data">'+_pzData(m.date)+'</div><div class="md-itens">'+items+'</div></div>';
   }).join('');
 }
 
