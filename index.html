@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_mais_lista";
+var APP_VERSION="20261031_jejum";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -42,8 +42,8 @@ else if(_t==="dark"){document.documentElement.setAttribute("data-theme","dark");
 <!-- Carregada sem bloquear a pintura: media="print" faz o navegador tratar como
      nao urgente, e o onload devolve para "all" quando ela chega. Antes ela
      travava a primeira pintura da tela inteira ate a resposta do Google. -->
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all';this.onload=null">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Sora:wght@600;700&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all';this.onload=null">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Sora:wght@600;700&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{--bg:#0a0c0f;--surface:#111418;--surface2:#181c22;--surface3:#1e2229;--border:#45485f;--gold:#f0b429;--orange:#e8834a;--green:#34d399;--red:#f87171;--blue:#60a5fa;--water:#38bdf8;--text:#f0f2f5;--text2:#8b95a3;--text3:#5a6270;--goldInk:#f0b429;--goldBg:#090909;--goldBg2:#2d2710;--proBg:#090909;--proSurface:#0f0f0f;--proSurface2:#101010;--proBorder:#383018;--blueBg:#0d1020;--shadow:0 6px 20px rgba(0,0,0,.4);--radius:16px;--radius-sm:10px;}
 html[data-theme="light"]{--bg:#ffffff;--surface:#ffffff;--surface2:#f5f6f8;--surface3:#eceef2;--border:#e6e9ee;--text:#0f1419;--text2:#4a5563;--text3:#6b7684;--goldInk:#a8730a;--goldBg:#ffffff;--goldBg2:#fdf6e3;--proBg:#fffdf7;--proSurface:#ffffff;--proSurface2:#fdfaf1;--proBorder:#efe4c9;--blueBg:#f4f7fd;--shadow:0 1px 3px rgba(15,20,25,.08),0 1px 2px rgba(15,20,25,.04);}
@@ -2774,6 +2774,88 @@ html[data-theme="light"] #tab-mais .m-item2 .m-rot{color:#1a1410!important;font-
 html[data-theme="light"] #tab-mais .m-item2 .m-sub{color:#6b625a}
 html[data-theme="light"] #tab-mais .m-item2 .m-seta-w{background:#fff4dc;color:#c27800}
 @media (hover:hover){html[data-theme="light"] #tab-mais .m-item.m-item2:hover{border-color:rgba(240,170,60,.5)!important;box-shadow:0 8px 20px rgba(120,80,20,.12)!important}}
+/* ===== 31/10: JEJUM conforme o "Guia de melhorias" do Felipe =====
+   Sora nos titulos, Inter no texto; creme + branco + dourado + laranja;
+   cartoes raio 20, botoes raio 14, borda bege 1px, sombras muito suaves,
+   linha do tempo vertical. Sem caixa alta nos titulos. */
+#tab-jejum{--jj-card:#141414;--jj-borda:rgba(240,180,41,.16);--jj-ouro:#F5A623;--jj-lar:#E08A1E;--jj-txt:#F4F4F5;--jj-txt2:#A1A1AA;
+  --jj-aviso:rgba(245,166,35,.08);--jj-aviso-b:rgba(245,166,35,.28);--jj-ic:rgba(245,166,35,.12);--jj-linha:rgba(255,255,255,.12);
+  --jj-sombra:0 6px 18px rgba(0,0,0,.35);font-family:Inter,system-ui,sans-serif}
+html[data-theme="light"] #tab-jejum{--jj-card:#FFFFFF;--jj-borda:#EFE6D8;--jj-ouro:#F5A623;--jj-lar:#D97706;--jj-txt:#2B211D;--jj-txt2:#77716D;
+  --jj-aviso:#FFF6E6;--jj-aviso-b:#F6DFB5;--jj-ic:#FFF1D6;--jj-linha:#EFE6D8;--jj-sombra:0 4px 14px rgba(120,80,20,.06)}
+#tab-jejum .jj-card{background:var(--jj-card);border:1px solid var(--jj-borda);border-radius:20px;padding:20px 18px;margin-bottom:16px;box-shadow:var(--jj-sombra);color:var(--jj-txt)}
+#tab-jejum .jj-cab{display:flex;align-items:center;gap:14px}
+#tab-jejum .jj-cab-t{flex:1;min-width:0}
+#tab-jejum .jj-ic{flex:0 0 44px;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--jj-ic);color:var(--jj-lar)}
+#tab-jejum .jj-ic svg{width:23px;height:23px}
+#tab-jejum .jj-tit{font-family:Sora,Inter,sans-serif;font-size:24px;font-weight:700;line-height:1.15;letter-spacing:-.02em;margin:0;color:var(--jj-txt);text-transform:none}
+#tab-jejum .jj-sub{font-size:16px;font-weight:500;color:var(--jj-txt2);margin-top:3px}
+#tab-jejum .jj-h{font-family:Sora,Inter,sans-serif;font-size:22px;font-weight:700;line-height:1.2;letter-spacing:-.02em;margin:0 0 16px;color:var(--jj-txt);text-transform:none}
+#tab-jejum .jj-h::after{content:"";display:block;width:40px;height:3px;border-radius:3px;background:var(--jj-ouro);margin-top:10px}
+#tab-jejum .jj-pro{flex:0 0 auto;background:var(--jj-ouro);color:#2B1A05;font-size:11px;font-weight:800;padding:4px 10px;border-radius:8px}
+#tab-jejum .jj-aviso{margin-top:18px;background:var(--jj-aviso);border:1px solid var(--jj-aviso-b);border-radius:16px;padding:14px 16px}
+#tab-jejum .jj-aviso-t{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:var(--jj-lar)}
+#tab-jejum .jj-aviso-t svg{width:20px;height:20px;flex:0 0 20px}
+#tab-jejum .jj-aviso p{margin:8px 0 0;font-size:14.5px;font-weight:400;line-height:1.6;color:var(--jj-txt)}
+#tab-jejum .jj-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;margin-top:16px;border:0;border-radius:14px;cursor:pointer;
+  background:linear-gradient(180deg,#F8B53A,var(--jj-ouro));color:#2B1A05;font:600 16px Inter,sans-serif;box-shadow:0 4px 12px rgba(245,166,35,.28);
+  transition:transform 200ms ease,box-shadow 200ms ease,filter 200ms ease}
+#tab-jejum .jj-btn:active{transform:scale(.98);box-shadow:0 2px 6px rgba(245,166,35,.25)}
+@media (hover:hover){#tab-jejum .jj-btn:hover{filter:brightness(1.04);box-shadow:0 6px 16px rgba(245,166,35,.34)}}
+#tab-jejum .jj-btn:focus-visible{outline:2px solid var(--jj-lar);outline-offset:3px}
+#tab-jejum .jj-btn-sec{background:transparent;color:var(--jj-txt);border:1.5px solid var(--jj-ouro);box-shadow:none}
+#tab-jejum .jj-rot{font-size:13px;font-weight:500;color:var(--jj-txt2);margin:18px 0 10px}
+#tab-jejum .jj-protos{display:flex;gap:8px}
+#tab-jejum .jj-proto{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 6px;border-radius:14px;cursor:pointer;
+  background:transparent;border:1px solid var(--jj-borda);color:var(--jj-txt);font-family:inherit;transition:border-color 200ms ease,background 200ms ease}
+#tab-jejum .jj-proto b{font-family:Sora,Inter,sans-serif;font-size:17px;font-weight:700}
+#tab-jejum .jj-proto span{font-size:12px;color:var(--jj-txt2)}
+#tab-jejum .jj-proto.on{background:var(--jj-aviso);border-color:var(--jj-ouro)}
+#tab-jejum .jj-proto.on b{color:var(--jj-lar)}
+#tab-jejum .jj-agora{display:flex;align-items:center;gap:16px;margin-top:18px}
+#tab-jejum .jj-anel{position:relative;flex-shrink:0}
+#tab-jejum .jj-anel b{position:absolute;inset:0;display:grid;place-items:center;font:700 14px Sora,Inter,sans-serif;color:var(--jj-txt)}
+#tab-jejum .jj-dur{font:700 24px Sora,Inter,sans-serif;color:var(--jj-txt);line-height:1.2}
+#tab-jejum .jj-abre{font-size:13px;font-weight:500;color:var(--jj-lar);margin-top:4px}
+#tab-jejum .jj-ok{flex:0 0 44px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--jj-ic);color:#16a34a}
+#tab-jejum .jj-ok svg{width:22px;height:22px}
+#tab-jejum .jj-linha{position:relative}
+#tab-jejum .jj-linha::before{content:"";position:absolute;left:6px;top:10px;bottom:10px;width:2px;border-radius:2px;background:var(--jj-linha)}
+#tab-jejum .jj-etapa{position:relative;display:flex;gap:14px;padding:12px 0}
+#tab-jejum .jj-etapa+.jj-etapa .jj-etapa-c{border-top:1px solid var(--jj-linha);padding-top:12px;margin-top:-12px}
+#tab-jejum .jj-ponto{position:relative;z-index:1;flex:0 0 14px;width:14px;height:14px;margin-top:3px;border-radius:50%;background:var(--jj-card);border:2px solid #F3C77A}
+#tab-jejum .jj-etapa.feita .jj-ponto{background:#F3C77A}
+#tab-jejum .jj-etapa.on .jj-ponto{background:var(--jj-ouro);border-color:var(--jj-ouro);box-shadow:0 0 0 5px rgba(245,166,35,.18)}
+#tab-jejum .jj-etapa-c{flex:1;min-width:0}
+#tab-jejum .jj-etapa-t{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px}
+#tab-jejum .jj-etapa-t b{font-size:15px;font-weight:600;color:var(--jj-txt)}
+#tab-jejum .jj-etapa.on .jj-etapa-t b{color:var(--jj-lar)}
+#tab-jejum .jj-hora{font-size:13px;font-weight:500;color:var(--jj-txt2);font-variant-numeric:tabular-nums}
+#tab-jejum .jj-etapa p{margin:4px 0 0;font-size:14px;font-weight:400;line-height:1.55;color:var(--jj-txt2)}
+#tab-jejum .jj-nota{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--jj-linha);font-size:13px;line-height:1.55;color:var(--jj-txt2)}
+#tab-jejum .jj-barras{display:flex;gap:6px}
+#tab-jejum .jj-barra-c{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+#tab-jejum .jj-barra-c>span{font-size:12px;font-weight:500;color:var(--jj-txt2)}
+#tab-jejum .jj-barra-w{height:74px;width:100%;display:flex;align-items:flex-end;justify-content:center}
+#tab-jejum .jj-barra{width:62%;border-radius:6px 6px 3px 3px;background:var(--jj-linha)}
+#tab-jejum .jj-barra.ok{background:linear-gradient(180deg,#F8B53A,var(--jj-lar))}
+#tab-jejum .jj-barra.vazia{height:4px;border-radius:2px}
+#tab-jejum .jj-planos{display:flex;flex-direction:column;gap:10px}
+#tab-jejum .jj-plano{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:14px;border-radius:14px;cursor:pointer;
+  background:transparent;border:1px solid var(--jj-borda);font-family:inherit;color:var(--jj-txt);transition:border-color 200ms ease,background 200ms ease}
+#tab-jejum .jj-plano.on{background:var(--jj-aviso);border-color:var(--jj-ouro)}
+#tab-jejum .jj-plano-n{flex:0 0 54px;font:700 17px Sora,Inter,sans-serif;color:var(--jj-txt)}
+#tab-jejum .jj-plano.on .jj-plano-n{color:var(--jj-lar)}
+#tab-jejum .jj-plano-c{flex:1;min-width:0}
+#tab-jejum .jj-plano-c b{display:block;font-size:15px;font-weight:600}
+#tab-jejum .jj-plano-c span{display:block;font-size:13px;color:var(--jj-txt2);line-height:1.5;margin-top:2px}
+#tab-jejum .jj-hist-l{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--jj-linha);font-size:14px;color:var(--jj-txt2)}
+#tab-jejum .jj-hist-l:last-child{border-bottom:0}
+#tab-jejum .jj-hist-l b{font-weight:600;color:var(--jj-txt2)}
+#tab-jejum .jj-hist-l b.ok{color:#16a34a}
+#tab-jejum .jj-pill{display:flex;align-items:center;gap:7px;border-radius:999px;padding:8px 14px;cursor:pointer;background:var(--jj-aviso);border:1px solid var(--jj-aviso-b);color:var(--jj-lar);font:600 13px Inter,sans-serif;transition:background 200ms ease}
+#tab-jejum .jj-topo{display:flex;justify-content:flex-end;padding:2px 2px 12px}
+#tab-jejum #jejumRelogio{font-family:Sora,Inter,sans-serif}
 </style>
 </head>
 <body>
@@ -3056,7 +3138,7 @@ if(_al){
 
 <!-- TAB AGUA -->
 <div class="tab" id="tab-mais"><div id="maisBox"></div></div>
-<div class="tab" id="tab-jejum"><div style="display:flex;justify-content:flex-end;padding:2px 2px 0"><button onclick="jejumInfoAbrir()" aria-label="info" style="display:flex;align-items:center;gap:7px;background:var(--goldBg2);border:1px solid var(--gold);border-radius:20px;padding:7px 13px;cursor:pointer;color:var(--goldInk);font-size:12px;font-weight:700"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 11v5"/><path d="M12 7.6v.6"/></svg><span data-i18n="jejumNav">Jejum</span></button></div><div id="jejumRelogio"></div><div id="jejumBox"></div><div id="jejumFases" style="margin-top:14px"></div><div id="jejumSemana" style="margin-top:14px"></div><div id="jejumPlanos" style="margin-top:14px"></div><div id="jejumHist" style="margin-top:14px"></div></div>
+<div class="tab" id="tab-jejum"><div class="jj-topo"><button type="button" class="jj-pill" onclick="jejumInfoAbrir()" aria-label="info"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 11v5"/><path d="M12 7.6v.6"/></svg><span data-i18n="jejumNav">Jejum</span></button></div><div id="jejumRelogio"></div><div id="jejumBox"></div><div id="jejumFases"></div><div id="jejumSemana"></div><div id="jejumPlanos"></div><div id="jejumHist"></div></div>
 <div class="tab" id="tab-sono"><div id="sonoBox"></div></div>
 <div class="tab" id="tab-agua">
   <div class="section-title" data-i18n="hidratacao">Hidratacao</div>
@@ -4344,49 +4426,45 @@ function _jAnel(pct){
    '<circle cx="40" cy="40" r="'+r+'" fill="none" stroke="var(--surface2)" stroke-width="6"/>'+
    '<circle cx="40" cy="40" r="'+r+'" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+off+'"/></svg>';
 }
+var _JJ_RELOGIO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/><path d="M9.5 2.5h5"/></svg>';
+var _JJ_INFO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M12 11v5"/><path d="M12 7.6v.6"/></svg>';
 function jejumHtml(){
   var J=_jT();
   if(typeof isPro!=="undefined" && !isPro){
-    return '<div class="card" onclick="try{subscribePro()}catch(e){}" style="cursor:pointer;display:flex;align-items:center;gap:14px">'+
-     '<div style="width:44px;height:44px;border-radius:12px;background:var(--goldBg2);display:flex;align-items:center;justify-content:center;color:var(--goldInk)">'+
-     '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/><path d="M9 2h6"/></svg></div>'+
-     '<div style="flex:1"><div style="font-size:15px;font-weight:800;color:var(--text)">'+J.tit+'</div>'+
-     '<div style="font-size:12px;color:var(--text2);margin-top:2px;line-height:1.45">'+J.proSub+'</div></div>'+
-     '<span style="background:var(--gold);color:#1a1206;font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;flex-shrink:0">PRO</span></div>';
+    return '<div class="jj-card jj-intro" onclick="try{subscribePro()}catch(e){}" style="cursor:pointer">'+
+     '<div class="jj-cab"><span class="jj-ic">'+_JJ_RELOGIO+'</span>'+
+     '<div class="jj-cab-t"><h2 class="jj-tit">'+J.tit+'</h2><div class="jj-sub">'+J.proSub+'</div></div>'+
+     '<span class="jj-pro">PRO</span></div></div>';
   }
   var e=_jEstado(), s=jejumStatus(), seq=jejumSeq();
-  var h='<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">'+
-   '<div class="card-title" style="margin:0">'+J.tit+'</div>'+
-   '<div style="font-size:11px;color:var(--text2);font-weight:600">'+(seq>0?J.seq.replace("{0}",seq):J.semSeq)+'</div></div>';
+  var h='<div class="jj-card jj-intro"><div class="jj-cab"><span class="jj-ic">'+_JJ_RELOGIO+'</span>'+
+   '<div class="jj-cab-t"><h2 class="jj-tit">'+J.tit+'</h2><div class="jj-sub">'+(seq>0?J.seq.replace("{0}",seq):J.semSeq)+'</div></div></div>';
   if(!e.aviso){
-    return h+'<div style="font-size:13px;font-weight:800;color:var(--goldInk);margin-bottom:6px">'+J.avT+'</div>'+
-     '<div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:14px">'+J.avS+'</div>'+
-     '<button class="btn" onclick="jejumAceitar()" style="width:100%">'+J.avB+'</button></div>';
+    return h+'<div class="jj-aviso"><div class="jj-aviso-t">'+_JJ_INFO+'<span>'+J.avT+'</span></div>'+
+     '<p>'+J.avS+'</p></div>'+
+     '<button type="button" class="jj-btn" onclick="jejumAceitar()">'+J.avB+'</button></div>';
   }
   if(s.fase==="parado"){
-    h+='<div style="font-size:12px;color:var(--text3);font-weight:600;margin-bottom:10px">'+J.esc+'</div><div style="display:flex;gap:8px;margin-bottom:14px">';
+    h+='<div class="jj-rot">'+J.esc+'</div><div class="jj-protos">';
     [16,18,20].forEach(function(p){ var sel=e.proto===p;
-     h+='<div onclick="jejumProto('+p+')" style="flex:1;text-align:center;padding:12px 6px;border-radius:12px;cursor:pointer;background:'+(sel?"var(--goldBg2)":"var(--surface2)")+';border:1px solid '+(sel?"var(--gold)":"transparent")+'">'+
-      '<div style="font-size:15px;font-weight:800;color:'+(sel?"var(--goldInk)":"var(--text)")+'">'+p+':'+(24-p)+'</div>'+
-      '<div style="font-size:10px;color:var(--text2);margin-top:2px">'+p+'h '+J.jj+'</div></div>'; });
-    h+='</div><button class="btn btn-primary" onclick="jejumIniciar()" style="width:100%">'+J.iniciar+'</button></div>';
+     h+='<button type="button" class="jj-proto'+(sel?' on':'')+'" onclick="jejumProto('+p+')">'+
+      '<b>'+p+':'+(24-p)+'</b><span>'+p+'h '+J.jj+'</span></button>'; });
+    h+='</div><button type="button" class="jj-btn" onclick="jejumIniciar()">'+J.iniciar+'</button></div>';
     return h;
   }
   if(s.fase==="jejum"){
     var pct=s.passado/(s.proto*3600000);
-    h+='<div style="display:flex;align-items:center;gap:16px"><div style="position:relative;flex-shrink:0">'+_jAnel(pct)+
-     '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--text)">'+Math.round(pct*100)+'%</div></div>'+
-     '<div style="flex:1"><div style="font-size:12px;color:var(--text2)">'+J.emJejum+'</div>'+
-     '<div style="font-size:24px;font-weight:800;color:var(--text);line-height:1.2">'+_jDur(s.passado)+'</div>'+
-     '<div style="font-size:12px;color:var(--goldInk);margin-top:4px">'+J.abre.replace("{0}",_jHora(s.abre))+'</div></div></div>'+
-     '<button class="btn" onclick="jejumEncerrar()" style="width:100%;margin-top:14px">'+J.encerrar+'</button></div>';
+    h+='<div class="jj-agora"><div class="jj-anel">'+_jAnel(pct)+'<b>'+Math.round(pct*100)+'%</b></div>'+
+     '<div><div class="jj-rot" style="margin:0">'+J.emJejum+'</div>'+
+     '<div class="jj-dur">'+_jDur(s.passado)+'</div>'+
+     '<div class="jj-abre">'+J.abre.replace("{0}",_jHora(s.abre))+'</div></div></div>'+
+     '<button type="button" class="jj-btn jj-btn-sec" onclick="jejumEncerrar()">'+J.encerrar+'</button></div>';
     return h;
   }
-  h+='<div style="display:flex;align-items:center;gap:14px"><div style="width:44px;height:44px;border-radius:50%;background:var(--goldBg2);display:flex;align-items:center;justify-content:center;color:var(--green)">'+
-   '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>'+
-   '<div style="flex:1"><div style="font-size:16px;font-weight:800;color:var(--text)">'+J.aberta+'</div>'+
-   '<div style="font-size:12px;color:var(--text2);margin-top:2px">'+J.fecha.replace("{0}",_jHora(s.fecha))+'</div></div></div>'+
-   '<button class="btn btn-primary" onclick="jejumEncerrar();jejumIniciar()" style="width:100%;margin-top:14px">'+J.iniciar+'</button></div>';
+  h+='<div class="jj-agora"><span class="jj-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>'+
+   '<div><div class="jj-dur" style="font-size:18px">'+J.aberta+'</div>'+
+   '<div class="jj-abre">'+J.fecha.replace("{0}",_jHora(s.fecha))+'</div></div></div>'+
+   '<button type="button" class="jj-btn" onclick="jejumEncerrar();jejumIniciar()">'+J.iniciar+'</button></div>';
   return h;
 }
 function _jF(){ return JFASE_TXT[currentLang]||JFASE_TXT.pt; }
@@ -4411,24 +4489,20 @@ function jejumRelogioHtml(){
      '<div style="font-size:12px;color:var(--goldInk);font-weight:700;margin-top:2px">'+e.proto+":"+(24-e.proto)+'</div>'+
     '</div></div></div>';
 }
-/* fases: faixas honestas, sem numero inventado */
+/* fases: linha do tempo vertical. Faixas medias, com o aviso de variacao sempre visivel. */
 function jejumFasesHtml(){
   var F=_jF(), s=jejumStatus(), e=_jEstado();
   var h=(s.fase==="parado")?0:s.passado/3600000;
   var at=_jFaseAtual(h);
-  var out='<div class="card"><div class="card-title">'+F.est+'</div><div style="margin-top:12px">';
+  var out='<div class="jj-card"><h3 class="jj-h">'+F.est+'</h3><div class="jj-linha">';
   F.f.forEach(function(f,i){
     var ativo=(s.fase!=="parado")&&i===at, passou=(s.fase!=="parado")&&i<at;
-    var faixa=_JFASES[i][0]+"h" + (i<_JFASES.length-1?(" – "+_JFASES[i][1]+"h"):"+");
-    out+='<div style="display:flex;gap:12px;padding:12px 0;'+(i<F.f.length-1?"border-bottom:1px solid var(--border);":"")+'">'+
-     '<div style="width:10px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding-top:4px">'+
-      '<span style="width:10px;height:10px;border-radius:50%;background:'+(ativo?"var(--gold)":(passou?"var(--green)":"var(--border)"))+'"></span></div>'+
-     '<div style="flex:1"><div style="display:flex;align-items:baseline;gap:8px">'+
-      '<span style="font-size:14px;font-weight:800;color:'+(ativo?"var(--goldInk)":"var(--text)")+'">'+f[0]+'</span>'+
-      '<span style="font-size:11px;color:var(--text3)">'+faixa+'</span></div>'+
-      '<div style="font-size:12.5px;color:var(--text2);line-height:1.55;margin-top:3px">'+f[1]+'</div></div></div>';
+    var faixa=_JFASES[i][0]+"h"+(i<_JFASES.length-1?("–"+_JFASES[i][1]+"h"):"+");
+    out+='<div class="jj-etapa'+(ativo?' on':'')+(passou?' feita':'')+'"><span class="jj-ponto"></span>'+
+     '<div class="jj-etapa-c"><div class="jj-etapa-t"><b>'+f[0]+'</b><span class="jj-hora">'+faixa+'</span></div>'+
+     '<p>'+f[1]+'</p></div></div>';
   });
-  return out+'</div><div style="font-size:11px;color:var(--text3);line-height:1.6;margin-top:10px">'+F.var_+'</div></div>';
+  return out+'</div><p class="jj-nota">'+F.var_+'</p></div>';
 }
 /* semana em barras */
 function jejumSemanaHtml(){
@@ -4445,24 +4519,22 @@ function jejumSemanaHtml(){
   maior=Math.max(maior,e.proto);
   dados.forEach(function(x){
     var alt=Math.round((x.h/maior)*70);
-    barras+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">'+
-     '<div style="height:74px;width:100%;display:flex;align-items:flex-end;justify-content:center">'+
-      (x.h>0?'<div style="width:70%;height:'+Math.max(alt,6)+'px;border-radius:5px 5px 2px 2px;background:'+(x.h>=x.alvo?"var(--gold)":"var(--surface3)")+'"></div>':'<div style="width:70%;height:4px;border-radius:2px;background:var(--border)"></div>')+'</div>'+
-     '<span style="font-size:10px;color:var(--text3)">'+x.dia+'</span></div>';
+    barras+='<div class="jj-barra-c"><div class="jj-barra-w">'+
+      (x.h>0?'<div class="jj-barra'+(x.h>=x.alvo?' ok':'')+'" style="height:'+Math.max(alt,6)+'px"></div>':'<div class="jj-barra vazia"></div>')+'</div>'+
+     '<span>'+x.dia+'</span></div>';
   });
-  return '<div class="card"><div class="card-title">'+F.sem+'</div><div style="display:flex;gap:6px;margin-top:12px">'+barras+'</div></div>';
+  return '<div class="jj-card"><h3 class="jj-h">'+F.sem+'</h3><div class="jj-barras">'+barras+'</div></div>';
 }
 /* planos */
 function jejumPlanoEscolher(p){ var e=_jEstado(); e.proto=p; save(); jejumTelaRender(); }
 function jejumPlanosHtml(){
   var F=_jF(), e=_jEstado();
-  var out='<div class="card"><div class="card-title">'+F.planos+'</div><div style="margin-top:10px">';
+  var out='<div class="jj-card"><h3 class="jj-h">'+F.planos+'</h3><div class="jj-planos">';
   F.p.forEach(function(p,i){
     var horas=parseInt(p[0],10), sel=e.proto===horas;
-    out+='<div onclick="jejumPlanoEscolher('+horas+')" style="display:flex;align-items:center;gap:12px;padding:13px;margin-bottom:8px;border-radius:12px;cursor:pointer;background:'+(sel?"var(--goldBg2)":"var(--surface2)")+';border:1px solid '+(sel?"var(--gold)":"transparent")+'">'+
-     '<span style="font-size:14px;font-weight:800;color:'+(sel?"var(--goldInk)":"var(--text)")+';min-width:46px">'+p[0]+'</span>'+
-     '<span style="flex:1"><span style="display:block;font-size:13px;font-weight:700;color:var(--text)">'+p[1]+'</span>'+
-      '<span style="display:block;font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:2px">'+p[2]+'</span></span></div>';
+    out+='<button type="button" class="jj-plano'+(sel?' on':'')+'" onclick="jejumPlanoEscolher('+horas+')">'+
+     '<b class="jj-plano-n">'+p[0]+'</b>'+
+     '<span class="jj-plano-c"><b>'+p[1]+'</b><span>'+p[2]+'</span></span></button>';
   });
   return out+'</div></div>';
 }
@@ -4505,14 +4577,12 @@ function jejumHistHtml(){
     if(typeof isPro!=="undefined" && !isPro) return "";
     var e=state.jejum; if(!e||!e.hist||!e.hist.length) return "";
     var J=_jT();
-    var h='<div class="card"><div class="card-title">'+J.tit+'</div><div style="margin-top:10px">';
+    var h='<div class="jj-card"><h3 class="jj-h">'+J.tit+'</h3><div class="jj-hist">';
     e.hist.slice(-10).reverse().forEach(function(x){
       var d=new Date(x.fim);
       var data=String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0");
       var cumpriu=x.horas>=x.proto;
-      h+='<div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border)">'+
-       '<span style="font-size:13px;color:var(--text2)">'+data+'</span>'+
-       '<span style="font-size:13px;font-weight:700;color:'+(cumpriu?"var(--green)":"var(--text2)")+'">'+x.horas+'h / '+x.proto+'h</span></div>';
+      h+='<div class="jj-hist-l"><span>'+data+'</span><b class="'+(cumpriu?'ok':'')+'">'+x.horas+'h / '+x.proto+'h</b></div>';
     });
     return h+'</div></div>';
   }catch(e){ return ""; }
