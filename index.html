@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261031_revisao2";
+var APP_VERSION="20261101_fotos";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -12453,7 +12453,19 @@ function doSignOut(){
 }
 
 // ── FIRESTORE SYNC ────────────────────────────────────────────────
-function _refotografar(ms,_pm){ try{ Object.keys(ms||{}).forEach(function(k){ (ms[k]||[]).forEach(function(e,i){ if(e.photo&&e.photo!==true) return; var _k=e.pid||('today_'+k+'_'+i); if(_pm[_k]) e.photo=_pm[_k]; else if(_pm['today_'+k+'_'+i]) e.photo=_pm['today_'+k+'_'+i]; }); }); }catch(e){} }
+/* 01/11: foto errada em outro aparelho (cerveja aparecia como iogurte).
+   Causa: quando a foto do item ainda nao tinha subido, o carregamento caia no
+   identificador POSICIONAL antigo (today_lanche_0) e pegava a foto de outro
+   alimento que um dia ocupou aquela posicao; e item sem foto tambem recebia.
+   Agora: item com dono (pid) so recebe a SUA foto; sem ela, fica o icone ate
+   a foto chegar. Posicional so vale para item antigo sem pid. E a foto da
+   nuvem vence a copia local do mesmo pid, para corrigir quem ja pegou a errada. */
+function _refotografar(ms,_pm){ try{ Object.keys(ms||{}).forEach(function(k){ (ms[k]||[]).forEach(function(e,i){
+  if(!e||!e.photo) return;
+  if(e.pid){ if(_pm[e.pid]) e.photo=_pm[e.pid]; return; }
+  if(e.photo!==true) return;
+  if(_pm['today_'+k+'_'+i]) e.photo=_pm['today_'+k+'_'+i];
+ }); }); }catch(e){} }
 /* O questionario e so para conta nova. Antes ele abria 1,4s apos o login,
    sem esperar a nuvem, e por isso reaparecia para quem ja tinha conta. */
 function _qJaUsa(){
@@ -12490,7 +12502,7 @@ function loadFromFirestore(uid){
       if(doc.exists&&doc.data().data){
         var cloudState=JSON.parse(doc.data().data);
         (function(){
-          function _fill(o,f,id){if(!o||o[f]!==true)return;var _k=o.pid||id;if(_pm[_k]!==undefined)o[f]=_pm[_k];else if(_pm[id]!==undefined)o[f]=_pm[id];}
+          function _fill(o,f,id){if(!o||o[f]!==true)return;if(o.pid){if(_pm[o.pid]!==undefined)o[f]=_pm[o.pid];return;}if(_pm[id]!==undefined)o[f]=_pm[id];}
           if(cloudState.profile)_fill(cloudState.profile,'photo','profile');
           Object.keys(cloudState.meals||{}).forEach(function(k){(cloudState.meals[k]||[]).forEach(function(e,i){_fill(e,'photo','today_'+k+'_'+i);});});
           Object.keys(cloudState.history||{}).forEach(function(d){var h=cloudState.history[d];if(h&&h.meals){Object.keys(h.meals).forEach(function(k){(h.meals[k]||[]).forEach(function(e,i){_fill(e,'photo','hist_'+d+'_'+k+'_'+i);});});}});
