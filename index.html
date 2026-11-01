@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261101_fotos";
+var APP_VERSION="20261101_fotos2";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -12453,6 +12453,28 @@ function doSignOut(){
 }
 
 // ── FIRESTORE SYNC ────────────────────────────────────────────────
+/* 01/11: limpeza das fotos que o erro antigo copiou para o alimento errado.
+   O mesmo arquivo de foto em dois alimentos DIFERENTES nao acontece de verdade
+   (cada foto e tirada para um prato); quando aparece, a copia mais nova e a
+   errada. Mantemos a foto no registro mais antigo e tiramos dos outros. Mesmo
+   nome com a mesma foto (refeicao repetida) fica como esta. */
+function _fotoDedupe(){
+  var visto={}, mudou=false;
+  function chave(f){ return f.length+":"+f.slice(30,140)+":"+f.slice(-120); }
+  function olha(e){
+    if(!e||typeof e.photo!=="string"||e.photo.length<500) return;
+    var k=chave(e.photo), nome=String(e.name||"").trim().toLowerCase();
+    if(!visto[k]){ visto[k]=nome; return; }
+    if(visto[k]===nome) return;
+    delete e.photo; delete e.pid; mudou=true;
+  }
+  try{
+    var dias=Object.keys(state.history||{}).sort();
+    dias.forEach(function(d){ var h=state.history[d]; if(h&&h.meals) Object.keys(h.meals).forEach(function(k){ (h.meals[k]||[]).forEach(olha); }); });
+    ["cafe","almoco","lanche","jantar","ceia","pos_treino"].forEach(function(k){ ((state.meals||{})[k]||[]).forEach(olha); });
+  }catch(e){}
+  return mudou;
+}
 /* 01/11: foto errada em outro aparelho (cerveja aparecia como iogurte).
    Causa: quando a foto do item ainda nao tinha subido, o carregamento caia no
    identificador POSICIONAL antigo (today_lanche_0) e pegava a foto de outro
@@ -12550,6 +12572,7 @@ function loadFromFirestore(uid){
         /* tema: o do aparelho vence o da nuvem (ver aplicarTema) */
         try{ var _ta=localStorage.getItem('by_tema')||localState.theme; if(_ta){ merged.theme=_ta; localStorage.setItem('by_tema',_ta); } }catch(e){}
         state=merged;
+        try{ if(_fotoDedupe()) { try{ renderMeals(); }catch(e){} } }catch(e){}
         /* 24/10 revisao: com muitas fotos o armazenamento do celular enche; antes isso
            interrompia o carregamento inteiro. save() logo abaixo grava a versao enxuta. */
         try{ localStorage.setItem('betteryou_v1',JSON.stringify(state)); }catch(_qe){}
