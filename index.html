@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261101_fotos2";
+var APP_VERSION="20261101_fotos3";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3274,6 +3274,10 @@ html:not([data-theme="light"]) #tab-sono .sn-r1{color:#4ade80!important}
 .bc-dica svg{flex:0 0 22px;width:22px;height:22px;fill:none;stroke:#E8920F;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 html[data-theme="light"] #bcOverlay>div{background:#FFFCF6!important}
 html[data-theme="light"] #bcOverlay span[onclick="bcFechar()"]{background:#fff!important;border:1px solid #EFE6D8!important;width:36px!important;height:36px!important;border-radius:11px!important}
+/* 01/11: alimento sem foto (ex.: lido pelo codigo de barras) ganha um selo com icone em vez de um vazio */
+.meal-item-icon.mi-sem-foto{flex:0 0 38px;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:rgba(245,166,35,.12);color:#E08A1E}
+html[data-theme="light"] .meal-item-icon.mi-sem-foto{background:#FFF1D6;color:#D97706}
+.meal-item-icon.mi-sem-foto svg{width:20px;height:20px}
 </style>
 </head>
 <body>
@@ -5186,7 +5190,7 @@ function renderMeals(){
     if(!items.length)html+="<div class='h-vazio'><svg class='h-ico' aria-hidden='true'><use href='#i-tigela'/></svg>"+T[currentLang].nenhumAlimento+"</div>";
     else items.forEach(function(item,i){
       var timeTag=item.time?"<span style=\"color:#5a9a72;font-size:10px;margin-left:6px;\">"+item.time+"</span>":"";
-      var iconHtml=(item.photo&&item.photo.length>500)?"<img src=\""+item.photo+"\" onclick=\"openFoodPhoto('"+key+"',"+ i +");\" style=\"width:38px;height:38px;border-radius:7px;object-fit:cover;flex-shrink:0;cursor:pointer;\" />":"<div class=\"meal-item-icon\"></div>";
+      var iconHtml=(item.photo&&item.photo.length>500)?"<img src=\""+item.photo+"\" onclick=\"openFoodPhoto('"+key+"',"+ i +");\" style=\"width:38px;height:38px;border-radius:7px;object-fit:cover;flex-shrink:0;cursor:pointer;\" />":"<div class=\"meal-item-icon mi-sem-foto\" aria-hidden=\"true\"><svg class=\"h-ico\"><use href=\"#i-tigela\"/></svg></div>";
       html+="<div class='meal-item'>"+iconHtml+"<div class='meal-item-info'><div class='meal-item-name'>"+nomeAlimento(item.name)+timeTag+"</div><div class='meal-item-detail'>"+item.grams+"g &middot; P:"+Math.round(item.prot)+"g C:"+Math.round(item.carb)+"g G:"+Math.round(item.fat)+"g</div></div><div class='meal-item-kcal'>"+Math.round(item.kcal)+"</div><button class='meal-item-del' onclick='removeFood(\""+key+"\","+i+")'>x</button></div>";
     });
     html+="</div>";
