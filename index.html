@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261102_mais";
+var APP_VERSION="20261102_mais2";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -7039,8 +7039,8 @@ function maisRender(){
      '<div class="mx-eu-d"><b class="mx-nome">'+(nome||tx("pfSemNome"))+'</b>'+(email?'<span class="mx-email">'+email+'</span>':'')+
        '<button type="button" class="mx-plano" onclick="'+(pro?'openProfile();pfIr(\'pro\')':'try{subscribePro()}catch(e){}')+'">'+
          '<span class="mx-pill"><svg viewBox="0 0 24 24"><path d="M3 8l4.5 3.5L12 5l4.5 6.5L21 8l-1.8 10H4.8L3 8Z"/></svg>'+(pro?tx("mxPlanoPro"):tx("mxSejaPro"))+'</span>'+
-         '<span class="mx-pl-t"><small>'+(pro?tx("mxAtiva"):tx("mxDesbloqueie"))+'</small><b>€8,99/'+tx("mxMes")+'</b></span>'+
-         '<svg class="mx-seta" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button></div></div>';
+         (pro?'':'<span class="mx-pl-t"><small>'+tx("mxDesbloqueie")+'</small><b>€8,99/'+tx("mxMes")+'</b></span>'+
+         '<svg class="mx-seta" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>')+'</button></div></div>';
   h+='<div class="mx-stats">'+
      '<div class="mx-st mx-st1">'+stS+'<span><small>'+M.consec+'</small><b>'+seq+'</b><em>'+(seq===1?M.dia:M.dias)+'</em></span></div>'+
      '<div class="mx-st" onclick="navGo(\'peso\')">'+stP+'<span><small>'+tx("calcPeso")+'</small><b>'+kgTxt+(kg?' <i>kg</i>':'')+'</b></span></div>'+
