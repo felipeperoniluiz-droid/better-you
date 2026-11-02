@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261102_barra";
+var APP_VERSION="20261102_belsono";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3469,6 +3469,7 @@ html:not([data-theme="light"]) #tab-sono .sn-r1{background:rgba(74,222,128,.14)!
 #tab-sono .sn-pro{background:linear-gradient(180deg,#9B4DFF,#6A12D8)!important;color:#fff!important}
 #tab-sono .sn-perg{margin:14px 2px -6px;font:600 13.5px Inter,sans-serif;color:var(--pz-txt)}
 #tab-sono .sn-perg span{display:block;font-weight:400;font-size:12px;color:var(--pz-txt2);margin-top:2px}
+#tab-sono .sn-bel img{border:0!important;border-radius:50%;object-fit:contain;flex:0 0 56px!important;width:56px!important;height:56px!important;background:transparent}
 </style>
 </head>
 <body>
@@ -4616,6 +4617,7 @@ function setTheme(t){
   try{ save(); }catch(e){}
   try{ if(typeof saveToFirestore==="function") saveToFirestore(); }catch(e){}
   aplicarTema();
+  try{ var ts=document.getElementById("tab-sono"); if(ts&&ts.classList.contains("active")) sonoTelaRender(); }catch(e){}
 }
 /* ---------- CAPA DA TELA HOJE (11/09/2026) ----------
    state.capaHoje !== false  =>  mostra. O padrao e MOSTRAR, e o teste e
@@ -10203,8 +10205,9 @@ function sonoTelaRender(){
   else if(!p.curto) txtBel=t.belPoucos;
   else if(p.rel<0.08) txtBel=t.belIgual;
   else txtBel=(p.dif>0?t.belMais:t.belMenos).replace("{0}",p.curto).replace("{1}",Math.abs(p.dif));
-  var foto=(typeof _dicaBelSrc==="function")?_dicaBelSrc():"";
-  h+='<div class="sn-card sn-bel">'+(foto?'<img src="'+foto+'" alt="Bel">':'')+'<div><b>'+t.belT+'</b><p>'+txtBel+'</p>'+
+  var claro=document.documentElement.getAttribute("data-theme")==="light";
+  var foto=claro?"bel-avatar-claro-felipe.png":"bel-avatar-escuro-felipe.png";
+  h+='<div class="sn-card sn-bel">'+'<img src="'+foto+'" alt="Bel" onerror="this.style.display=\'none\'">'+'<div><b>'+t.belT+'</b><p>'+txtBel+'</p>'+
      (!isPro?'<button type="button" class="sn-pro" onclick="subscribePro()">'+((T[currentLang]||T.pt).calsejaPro||"Seja PRO")+'</button>':'')+'</div></div>';
   h+='<div class="sn-card"><div class="sn-h"><span class="sn-h-t">'+t.fasesT+'</span></div><p class="sn-txt">'+t.fasesB+'</p></div>';
   el.innerHTML=h;
