@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION = "20261102_agua";
+var APP_VERSION = "20261102_agua2";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3307,7 +3307,7 @@ html:not([data-theme="light"]) #tab-agua::before{opacity:.6}
 #tab-agua .ag-pct{text-align:center;font-size:13px;color:var(--ag-txt2)}
 #tab-agua .ag-meta{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;margin-top:10px;min-height:46px;border-radius:16px;border:1px solid var(--ag-borda-az)!important;background:var(--ag-claro)!important;color:var(--ag-txt)!important;font:500 13.5px Inter,sans-serif;padding:0 10px;box-shadow:none!important;cursor:pointer}
 #tab-agua .ag-meta svg{width:21px;height:21px;color:var(--ag-azul);flex:0 0 21px}
-#tab-agua .ag-meta b{font-family:Sora,Inter,sans-serif;font-weight:700;font-size:17px;color:var(--ag-azul);white-space:nowrap}
+#tab-agua .ag-meta b,#tab-agua .ag-meta b span{font-family:Sora,Inter,sans-serif!important;font-weight:700!important;font-size:17px;color:var(--ag-azul)!important;white-space:nowrap}
 /* adicionar */
 #tab-agua .ag-h{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 #tab-agua .ag-hic{flex:0 0 42px;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:var(--ag-claro);color:var(--ag-azul)}
@@ -3331,7 +3331,7 @@ html:not([data-theme="light"]) #tab-agua::before{opacity:.6}
 #tab-agua .ag-pic{flex:0 0 46px;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--ag-claro);color:var(--ag-azul)}
 #tab-agua .ag-pic svg{width:24px;height:24px;stroke-width:2.4}
 #tab-agua .ag-pd{flex:1;min-width:0}
-#tab-agua .ag-pt{font-family:Sora,Inter,sans-serif;font-weight:600;font-size:14.5px;color:var(--ag-txt);line-height:1.2}
+#tab-agua .ag-pt{font-family:Sora,Inter,sans-serif;font-weight:600;font-size:14px;color:var(--ag-txt);line-height:1.2}
 #tab-agua .ag-pp{font-family:Sora,Inter,sans-serif;font-weight:700;font-size:clamp(24px,7vw,30px);color:var(--ag-azul);line-height:1.1;margin-top:2px}
 #tab-agua .ag-sep{align-self:stretch;width:1px;background:var(--ag-borda-az);margin:4px 0}
 #tab-agua .ag-anel{position:relative;flex:0 0 64px;width:64px;height:64px}
