@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION = "20261102_calc";
+var APP_VERSION = "20261102_calc2";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3394,13 +3394,13 @@ html:not([data-theme="light"]) #tab-calc .cc-sel select{background-image:url("da
 #tab-calc .cc-res-t{font-family:Sora,Inter,sans-serif;font-weight:600;font-size:19px;color:var(--cc-txt)}
 #tab-calc .cc-res-s{font-size:13px;color:var(--cc-txt2);margin-top:2px}
 #tab-calc .cc-res-meta{text-align:center;margin:14px 0 10px;color:var(--cc-txt2);font-size:14px}
-#tab-calc .cc-res-meta b{font-family:Sora,Inter,sans-serif;font-size:40px;font-weight:700;color:var(--cc-lar);letter-spacing:-.02em}
+#tab-calc .cc-res-meta b{font-family:Sora,Inter,sans-serif!important;font-size:40px!important;font-weight:700!important;color:var(--cc-lar)!important;letter-spacing:-.02em}
 #tab-calc .cc-faixas{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
 #tab-calc .cc-faixa{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px;border-radius:14px;border:1px solid var(--cc-campo-b)!important;background:var(--cc-campo)!important;color:var(--cc-txt)!important;box-shadow:none!important;cursor:pointer;font-family:Inter,sans-serif}
 #tab-calc .cc-faixa small{font-size:12px;color:var(--cc-txt2)}
 #tab-calc .cc-faixa b{font-size:15.5px;font-weight:600}
 #tab-calc .cc-faixa.on{border-color:var(--cc-ouro)!important;background:var(--cc-ic)!important;box-shadow:0 0 0 2px rgba(245,166,35,.25)!important}
-#tab-calc .cc-faixa.on b{color:var(--cc-lar)}
+#tab-calc .cc-faixa.on b{color:var(--cc-lar)!important}
 #tab-calc .cc-res-grade,#tab-calc .cc-res-mac{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:8px}
 #tab-calc .cc-res-mac{grid-template-columns:repeat(3,1fr)}
 #tab-calc .cc-res-grade>div,#tab-calc .cc-res-mac>div{padding:10px 12px;border-radius:14px;background:var(--cc-campo);border:1px solid var(--cc-linha)}
@@ -3409,6 +3409,11 @@ html:not([data-theme="light"]) #tab-calc .cc-sel select{background-image:url("da
 #tab-calc .cc-res-aviso{font-size:12.5px;color:var(--cc-lar);background:var(--cc-ic);border-radius:12px;padding:8px 12px;margin:4px 0 8px}
 #tab-calc .cc-res-met{font-size:12.5px;line-height:1.45;color:var(--cc-txt2);margin:6px 2px 0}
 #tab-calc .cc-btn2{display:block;width:100%;min-height:48px;margin-top:10px;border-radius:16px!important;border:1.5px solid var(--cc-ouro)!important;background:transparent!important;color:var(--cc-lar)!important;font:600 15.5px Inter,sans-serif!important;box-shadow:none!important;cursor:pointer}
+#tab-calc .cc-linha:has(#calcActivity) .cc-campo{flex-basis:55%;max-width:55%}
+#tab-calc #calcActivity{font-size:14.5px!important;padding-left:12px!important;padding-right:30px!important;background-position:right 10px center!important;background-size:16px!important}
+#tab-calc .pz-ic{flex-basis:64px;width:64px;height:64px;border-radius:20px}
+#tab-calc .cc-ic-g svg{width:34px;height:34px}
+@media (max-width:360px){#tab-calc .cc-linha:has(#calcActivity) .cc-campo{flex-basis:100%;max-width:100%}}
 @media (max-width:360px){#tab-calc .cc-campo{flex-basis:100%;max-width:100%}#tab-calc .cc-ben{font-size:12.5px}}
 </style>
 </head>
