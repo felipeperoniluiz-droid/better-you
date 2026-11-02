@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION = "20261102_calc2";
+var APP_VERSION = "20261102_sono";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3415,6 +3415,60 @@ html:not([data-theme="light"]) #tab-calc .cc-sel select{background-image:url("da
 #tab-calc .cc-ic-g svg{width:34px;height:34px}
 @media (max-width:360px){#tab-calc .cc-linha:has(#calcActivity) .cc-campo{flex-basis:100%;max-width:100%}}
 @media (max-width:360px){#tab-calc .cc-campo{flex-basis:100%;max-width:100%}#tab-calc .cc-ben{font-size:12.5px}}
+
+/* ===== 02/11: SONO em roxo (modelo do Felipe). Roxo SO nesta tela. ===== */
+#tab-sono{--pz-card:#17131F;--pz-borda:rgba(185,107,255,.2);--pz-ouro:#B96BFF;--pz-lar:#C08BFF;--pz-txt:#F4F1FA;--pz-txt2:#B4ADC4;--pz-creme:rgba(185,107,255,.12);--pz-ic:rgba(185,107,255,.16);--pz-linha:rgba(255,255,255,.08);--sn-roxo:#9B4DFF;--sn-fundo:#35106F}
+html[data-theme="light"] #tab-sono{--pz-card:#FFFFFF;--pz-borda:#E8D8F7;--pz-ouro:#B96BFF;--pz-lar:#7418E8;--pz-txt:#24133F;--pz-txt2:#55516A;--pz-creme:#F3E7FF;--pz-ic:#F3E7FF;--pz-linha:#EEE3F8;--pz-sombra:0 6px 18px rgba(80,30,140,.07);--sn-roxo:#7418E8;--sn-fundo:#35106F}
+#tab-sono::before{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 130' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='f' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23B96BFF' stop-opacity='0'/%3E%3Cstop offset='.55' stop-color='%23B96BFF' stop-opacity='.2'/%3E%3Cstop offset='1' stop-color='%237418E8' stop-opacity='.42'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M40 0C170 40 290 70 400 74V0Z' fill='url(%23f)'/%3E%3Cpath d='M0 0C160 66 290 104 400 112' fill='none' stroke='%23B96BFF' stroke-width='1.4' opacity='.3'/%3E%3C/svg%3E") no-repeat right top/100% 100%!important}
+#tab-sono .pz-ic{width:56px;height:56px;flex-basis:56px;border-radius:18px;background:var(--pz-ic);box-shadow:0 4px 12px rgba(116,24,232,.12)}
+#tab-sono .pz-ic svg{width:32px;height:32px}
+#tab-sono .sn-lua2{fill:none;stroke:var(--sn-roxo);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#tab-sono .pz-tit{font-size:clamp(28px,8vw,32px)!important}
+#tab-sono .sn-seta{flex-basis:50px!important;height:50px!important;border-radius:16px!important;color:var(--pz-txt)!important}
+#tab-sono .sn-data{height:50px;border-radius:16px;background:var(--pz-card);border:1px solid var(--pz-borda);box-shadow:var(--pz-sombra)}
+#tab-sono .sn-data svg{stroke:var(--sn-roxo)}
+#tab-sono .sn-card{border-radius:24px}
+#tab-sono .sn-ilus::before{display:none}
+#tab-sono .sn-ilus img{filter:none}
+#tab-sono .sn-a-f{stroke:var(--pz-creme)!important}
+#tab-sono .sn-a-v{stroke:url(#snGrad);stroke:var(--sn-roxo)}
+#tab-sono .sn-a-c svg{stroke:var(--sn-roxo)!important}
+#tab-sono .sn-a-c b{color:var(--sn-fundo)}
+html:not([data-theme="light"]) #tab-sono .sn-a-c b{color:var(--pz-txt)}
+#tab-sono .sn-dentro{background:#E2F5D2;color:#176B27}
+html:not([data-theme="light"]) #tab-sono .sn-dentro{background:rgba(74,222,128,.14);color:#86efac}
+#tab-sono .sn-dentro svg{background:#2E9B3E;color:#fff;border-radius:50%;padding:2px;box-sizing:border-box;stroke-width:3!important}
+#tab-sono .sn-rec{padding-bottom:8px;border-bottom:1px solid var(--pz-borda)}
+#tab-sono .sn-rec b{color:var(--sn-roxo)!important;font-size:clamp(17px,5vw,22px)!important;font-weight:700!important}
+#tab-sono .sn-op{border-radius:16px!important;background:var(--pz-creme)!important;border:1px solid var(--pz-borda)!important;color:var(--sn-fundo)!important;min-height:46px}
+html:not([data-theme="light"]) #tab-sono .sn-op{color:var(--pz-txt)!important}
+#tab-sono .sn-op.on{background:linear-gradient(180deg,#9B4DFF,#6A12D8)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 6px 14px rgba(116,24,232,.32)!important}
+#tab-sono .sn-hic{width:44px;height:44px;flex-basis:44px;border-radius:14px;color:var(--sn-roxo)}
+#tab-sono .sn-hic svg{width:24px;height:24px}
+#tab-sono .sn-pill{border:1px solid var(--pz-borda);background:var(--pz-card)}
+#tab-sono .sn-pill b{color:var(--sn-roxo)!important}
+#tab-sono .sn-b{background:linear-gradient(180deg,#D7B3FF,#F3E7FF)!important;border-radius:10px 10px 3px 3px}
+html:not([data-theme="light"]) #tab-sono .sn-b{background:linear-gradient(180deg,rgba(185,107,255,.55),rgba(185,107,255,.18))!important}
+#tab-sono .sn-col.hoje:not(.sel) .sn-b{box-shadow:inset 0 0 0 2px var(--sn-roxo)}
+#tab-sono .sn-col.sel .sn-b{background:linear-gradient(180deg,#9B4DFF,#5A0FC8)!important;box-shadow:0 4px 10px rgba(116,24,232,.28)!important}
+#tab-sono .sn-v{color:var(--pz-txt)}
+#tab-sono .sn-dias span.sel{color:var(--sn-roxo)}
+#tab-sono .sn-grade{border-top-color:var(--pz-borda)}
+#tab-sono .sn-resumo{border-radius:20px;background:var(--pz-card);box-shadow:var(--pz-sombra)}
+#tab-sono .sn-rs-ic{width:48px;height:48px;flex-basis:48px;border-radius:15px;color:var(--sn-roxo)}
+#tab-sono .sn-rs-ic svg{width:26px;height:26px}
+#tab-sono .sn-rs>div>b{color:var(--sn-fundo)}
+html:not([data-theme="light"]) #tab-sono .sn-rs>div>b{color:var(--pz-txt)}
+#tab-sono .sn-rs>div>span{font-weight:600;color:var(--sn-fundo)}
+html:not([data-theme="light"]) #tab-sono .sn-rs>div>span{color:var(--pz-txt2)}
+#tab-sono .sn-n{display:block;font-size:11.5px;color:var(--pz-txt2);margin-top:1px}
+#tab-sono .sn-r1{background:#E2F5D2!important;color:#176B27!important}
+html:not([data-theme="light"]) #tab-sono .sn-r1{background:rgba(74,222,128,.14)!important;color:#86efac!important}
+#tab-sono .sn-r2,#tab-sono .sn-r3{background:var(--pz-creme)!important;color:var(--sn-roxo)!important}
+#tab-sono .sn-bel img{border-color:var(--pz-ouro)}
+#tab-sono .sn-pro{background:linear-gradient(180deg,#9B4DFF,#6A12D8)!important;color:#fff!important}
+#tab-sono .sn-perg{margin:14px 2px -6px;font:600 13.5px Inter,sans-serif;color:var(--pz-txt)}
+#tab-sono .sn-perg span{display:block;font-weight:400;font-size:12px;color:var(--pz-txt2);margin-top:2px}
 </style>
 </head>
 <body>
@@ -8792,6 +8846,9 @@ var TX={
  calcFxPerda:{pt:'Perda',en:'Loss',es:'Pérdida',it:'Perdita',fr:'Perte',de:'Abnehmen'},
  calcFxMan:{pt:'Manutenção',en:'Maintenance',es:'Mantenimiento',it:'Mantenimento',fr:'Maintien',de:'Erhaltung'},
  calcFxGanho:{pt:'Ganho',en:'Gain',es:'Ganancia',it:'Aumento',fr:'Prise',de:'Aufbau'},
+ snNoite:{pt:'noite',en:'night',es:'noche',it:'notte',fr:'nuit',de:'Nacht'},
+ snRegistra:{pt:'Toque para registrar a noite.',en:'Tap to log last night.',es:'Toca para registrar la noche.',it:'Tocca per registrare la notte.',fr:'Touchez pour enregistrer la nuit.',de:'Tippen Sie, um die Nacht zu erfassen.'},
+ snCorrigir:{pt:'Toque em outro valor para corrigir ou no marcado para apagar.',en:'Tap another value to correct, or the selected one to delete.',es:'Toca otro valor para corregir o el marcado para borrar.',it:'Tocca un altro valore per correggere o quello selezionato per cancellare.',fr:'Touchez une autre valeur pour corriger, ou celle choisie pour effacer.',de:'Tippen Sie auf einen anderen Wert zum Korrigieren oder auf den gewählten zum Löschen.'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
  pgrF1D:{pt:'Compare suas fotos e veja mudanças reais.',en:'Compare your photos and see real changes.',es:'Compara tus fotos y ve cambios reales.',it:'Confronta le tue foto e vedi cambiamenti reali.',fr:'Comparez vos photos et voyez de vrais changements.',de:'Vergleichen Sie Ihre Fotos und sehen Sie echte Veränderungen.'},
@@ -10089,7 +10146,7 @@ function sonoTelaRender(){
   var estTxt=horas<=0?t.sem:t[est];
   var lua='<svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>';
   var h='';
-  h+='<div class="pz-cab"><span class="pz-ic sn-ic-lua"><svg viewBox="0 0 24 24"><path class="sn-lua" d="M17.5 15.5A7.5 7.5 0 0 1 8.5 5.6a7.5 7.5 0 1 0 9 9.9Z"/><path class="sn-z" d="M15 4.5h3l-3 3.2h3M19.2 2h2.2l-2.2 2.4h2.2"/></svg></span>'+
+  h+='<div class="pz-cab"><span class="pz-ic sn-ic-lua"><svg viewBox="0 0 24 24"><path class="sn-lua2" d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.8 8.8 0 1 0 20.5 15.2Z"/></svg></span>'+
      '<div class="pz-cab-t"><h2 class="pz-tit">'+t.t+'</h2><p class="pz-sub">'+tx("snSub")+'</p></div></div>';
   h+='<div class="sn-nav"><button type="button" class="sn-seta" onclick="sonoDiaMudar(-1)" aria-label="‹"><svg viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg></button>'+
      '<div class="sn-data"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></svg><span>'+rot+'</span></div>'+
@@ -10097,7 +10154,7 @@ function sonoTelaRender(){
   /* resumo */
   var r=52, c=2*Math.PI*r, frac=Math.min(1,horas/9), off=c*(1-frac);
   h+='<div class="sn-card"><div class="sn-res">'+
-     '<div class="sn-ilus" aria-hidden="true"><img src="sono-travesseiro.png?v=1" alt="" decoding="async"></div>'+
+     '<div class="sn-ilus" aria-hidden="true"><img src="sono-travesseiro-roxo.png?v=1" alt="" decoding="async"></div>'+
      '<div class="sn-anel"><svg viewBox="0 0 124 124"><circle cx="62" cy="62" r="'+r+'" class="sn-a-f"/>'+
        '<circle cx="62" cy="62" r="'+r+'" class="sn-a-v" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'" transform="rotate(-90 62 62)"/></svg>'+
        '<div class="sn-a-c">'+lua+'<b>'+(horas>0?_snFmt(horas):"--")+'</b><span>'+t.total+'</span></div></div>'+
@@ -10105,9 +10162,10 @@ function sonoTelaRender(){
        '<div class="sn-rec"><span>'+recL+'</span><b>'+recV+'</b></div></div>'+
      '</div>';
   if(eHoje){
+    h+='<div class="sn-perg">'+t.pergunta+' <span>'+tx(horas>0?'snCorrigir':'snRegistra')+'</span></div>';
     h+='<div class="sn-chips" role="group" aria-label="'+t.pergunta+'">';
     [5,6,7,8,9].forEach(function(o){ var on=(horas===o);
-      h+='<button type="button" class="sn-op'+(on?' on':'')+'" aria-pressed="'+on+'" onclick="setSleep('+o+');sonoTelaRender()">'+o+'h</button>'; });
+      h+='<button type="button" class="sn-op'+(on?' on':'')+'" aria-pressed="'+on+'" onclick="setSleep('+(on?0:o)+');sonoTelaRender()">'+o+'h</button>'; });
     h+='</div>';
   }
   h+='<p class="sn-nota">'+tx("snRecNota")+'</p></div>';
@@ -10126,7 +10184,7 @@ function sonoTelaRender(){
     serie.forEach(function(x){
       var sel=x.d.getTime()===d.getTime();
       var alt=x.h>0?Math.max(4,(Math.min(x.h,TOPO)-BASE)/(TOPO-BASE)*100):0;
-      h+='<button type="button" class="sn-col'+(sel?' sel':'')+(x.h>0?'':' vazio')+'" onclick="_sonoDia=new Date('+x.d.getTime()+');sonoTelaRender()" aria-label="'+nomes[x.d.getDay()]+' '+(x.h>0?_snFmt(x.h):'—')+'">'+
+      h+='<button type="button" class="sn-col'+(sel?' sel':'')+(x.h>0?'':' vazio')+(x.d.getTime()===hoje.getTime()?' hoje':'')+'" onclick="_sonoDia=new Date('+x.d.getTime()+');sonoTelaRender()" aria-label="'+nomes[x.d.getDay()]+' '+(x.h>0?_snFmt(x.h):'—')+'">'+
         (x.h>0?'<span class="sn-v">'+_snFmt(x.h)+'</span><span class="sn-b" style="height:'+alt.toFixed(1)+'%"></span>':'<span class="sn-b sn-b0"></span>')+'</button>';
     });
     h+='</div></div><div class="sn-dias"><span></span>';
@@ -10134,7 +10192,7 @@ function sonoTelaRender(){
     h+='</div>';
     var mn=99,mx=0; reg.forEach(function(x){ if(x.h<mn)mn=x.h; if(x.h>mx)mx=x.h; });
     var amp=mx-mn, rk=amp<=1?"r1":(amp<=2.5?"r2":"r3");
-    h+='<div class="sn-resumo"><div class="sn-rs"><span class="sn-rs-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><div><span>'+t.media+'</span><b>'+_snFmt(med)+'</b></div></div>'+
+    h+='<div class="sn-resumo"><div class="sn-rs"><span class="sn-rs-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><div><span>'+t.media+'</span><b>'+_snFmt(med)+'</b><small class="sn-n">'+reg.length+' '+(reg.length===1?tx('snNoite'):t.noites)+'</small></div></div>'+
        '<div class="sn-rs"><span class="sn-rs-ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></svg></span><div><span>'+t.reg+'</span><b class="sn-reg sn-'+rk+'">'+t[rk]+'</b></div></div></div>';
     h+='<p class="sn-nota">'+(reg.length<2?'':tx("snRegExp")+' ')+tx("snFonte")+'.</p>';
   }
