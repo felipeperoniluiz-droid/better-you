@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261102_porcao";
+var APP_VERSION = "20261102_porcao2";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -7753,11 +7753,13 @@ function _porcNorm(a){
     var n=NaN, l="";
     if(p&&typeof p==="object"){
       var ks=["gramas","g","ml","quantidade","qtd","valor","value","amount","grams","peso","volume"];
-      for(var i=0;i<ks.length;i++){ if(p[ks[i]]!=null&&!isNaN(num(p[ks[i]]))){ n=num(p[ks[i]]); break; } }
+      var u=unit;
+      for(var i=0;i<ks.length;i++){ if(p[ks[i]]!=null&&!isNaN(num(p[ks[i]]))){ n=num(p[ks[i]]); if(ks[i]==="ml"||ks[i]==="volume") u="ml"; else if(ks[i]==="gramas"||ks[i]==="g"||ks[i]==="grams"||ks[i]==="peso") u="g"; break; } }
+      if(p.unidade) u=String(p.unidade);
       var r=p.rotulo||p.label||p.nome||p.descricao||p.name||p.tipo||p.tamanho||p.recipiente||"";
       if(isNaN(n)&&r) n=num(r);
       l=r?String(r):"";
-      if(!isNaN(n)&&!/\d/.test(l)) l=(l?l+" · ":"")+n+unit;
+      if(!isNaN(n)&&!/\d/.test(l)) l=(l?l+" · ":"")+n+u;
     } else { n=num(p); l=(typeof p==="number")?(p+unit):String(p==null?"":p); }
     if(!isNaN(n)&&n>0) out.push({n:n,l:l||(n+unit)});
   });
