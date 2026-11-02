@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION = "20261102_agua2";
+var APP_VERSION = "20261102_calc";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3019,8 +3019,8 @@ html:not([data-theme="light"]) #tab-relatorios .rl-i-f2{fill:#2c2214}
 }
 /* ===== 31/10: onda dourada no alto das telas redesenhadas (marca dos mockups do Felipe) ===== */
 #tab-jejum,#tab-peso,#tab-hist,#tab-relatorios{position:relative;z-index:0}
-#tab-jejum::before,#tab-peso::before,#tab-hist::before,#tab-relatorios::before,#tab-sono::before{content:"";position:absolute;top:-16px;right:-16px;width:78%;height:120px;z-index:-1;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 130' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='f' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.6' stop-color='%23F8B53A' stop-opacity='.22'/%3E%3Cstop offset='1' stop-color='%23F5A623' stop-opacity='.42'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.35' stop-color='%23F5A623' stop-opacity='.75'/%3E%3Cstop offset='1' stop-color='%23E8920F'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M70 0C180 34 290 58 400 62V0Z' fill='url(%23f)'/%3E%3Cpath d='M70 0C180 34 290 58 400 62' fill='none' stroke='url(%23l)' stroke-width='3'/%3E%3Cpath d='M20 0C170 62 290 98 400 108' fill='none' stroke='url(%23l)' stroke-width='1.6' opacity='.35'/%3E%3C/svg%3E") no-repeat right top/100% 100%}
-html:not([data-theme="light"]) :is(#tab-jejum,#tab-peso,#tab-hist,#tab-relatorios,#tab-sono)::before{opacity:.55}
+#tab-jejum::before,#tab-peso::before,#tab-hist::before,#tab-relatorios::before,#tab-sono::before,#tab-calc::before{content:"";position:absolute;top:-16px;right:-16px;width:78%;height:120px;z-index:-1;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 130' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='f' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.6' stop-color='%23F8B53A' stop-opacity='.22'/%3E%3Cstop offset='1' stop-color='%23F5A623' stop-opacity='.42'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.35' stop-color='%23F5A623' stop-opacity='.75'/%3E%3Cstop offset='1' stop-color='%23E8920F'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M70 0C180 34 290 58 400 62V0Z' fill='url(%23f)'/%3E%3Cpath d='M70 0C180 34 290 58 400 62' fill='none' stroke='url(%23l)' stroke-width='3'/%3E%3Cpath d='M20 0C170 62 290 98 400 108' fill='none' stroke='url(%23l)' stroke-width='1.6' opacity='.35'/%3E%3C/svg%3E") no-repeat right top/100% 100%}
+html:not([data-theme="light"]) :is(#tab-jejum,#tab-peso,#tab-hist,#tab-relatorios,#tab-sono,#tab-calc)::before{opacity:.55}
 /* ===== 31/10: ENQUADRAMENTO MAIS JUSTO (pedido do Felipe: "espacado demais") =====
    Medido a 390 px contra os mockups: as telas novas ficavam ~40% mais altas.
    Menos recuo nos cartoes, menos vao entre blocos, controles mais baixos. */
@@ -3345,6 +3345,71 @@ html:not([data-theme="light"]) #tab-agua::before{opacity:.6}
 #tab-agua .ag-tn small{font-size:.65em}
 #tab-agua .ag-tl{font-size:12.5px;color:var(--ag-txt2);margin-top:2px;white-space:nowrap}
 @media (max-width:360px){#tab-agua .ag-rap{font-size:14px;gap:4px}#tab-agua .ag-rap svg{width:19px;height:19px;flex-basis:19px}#tab-agua .ag-copos{grid-template-columns:repeat(3,1fr)}#tab-agua .ag-prog{gap:7px}}
+
+/* ===== 02/11: CALCULADORA no modelo do Felipe (dourado/laranja) ===== */
+#tab-calc{position:relative;z-index:0;--cc-card:#141414;--cc-borda:rgba(240,180,41,.18);--cc-campo:rgba(255,255,255,.04);--cc-campo-b:rgba(240,180,41,.22);--cc-ouro:#F5A623;--cc-lar:#E08A1E;--cc-txt:#F4F4F5;--cc-txt2:#A1A1AA;--cc-ic:rgba(245,166,35,.12);--cc-linha:rgba(255,255,255,.08);--cc-sombra:0 6px 18px rgba(0,0,0,.35);font-family:Inter,system-ui,sans-serif}
+html[data-theme="light"] #tab-calc{--cc-card:#FFFFFF;--cc-borda:#EFE3D3;--cc-campo:#FFFAF3;--cc-campo-b:#EAD8C4;--cc-lar:#D97706;--cc-txt:#29221F;--cc-txt2:#68616A;--cc-ic:#FFF1DD;--cc-linha:#F3EADF;--cc-sombra:0 6px 20px rgba(120,80,20,.07)}
+#tab-calc svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#tab-calc .pz-cab{display:flex;align-items:center;gap:14px;margin:0 0 16px}
+#tab-calc .pz-ic{flex:0 0 58px;width:58px;height:58px;border-radius:18px;display:grid;place-items:center}
+#tab-calc .cc-ic-g{background:linear-gradient(150deg,#F8B53A,#E07F0C);color:#fff;box-shadow:0 8px 18px rgba(217,119,6,.32)}
+#tab-calc .cc-ic-g svg{width:32px;height:32px;stroke-width:1.9}
+#tab-calc .pz-tit{font-family:Sora,Inter,sans-serif;font-size:clamp(26px,7.6vw,30px);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin:0;color:var(--cc-txt)}
+#tab-calc .pz-sub{margin:4px 0 0;font-size:14.5px;line-height:1.4;color:var(--cc-txt2)}
+#tab-calc .cc-card,#tab-calc .cc-res{background:var(--cc-card);border:1px solid var(--cc-borda);border-radius:24px;box-shadow:var(--cc-sombra);padding:8px 16px 18px;margin-bottom:16px}
+#tab-calc .cc-linha{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--cc-linha);flex-wrap:wrap}
+#tab-calc .cc-linha:nth-last-of-type(1){border-bottom:0}
+#tab-calc .cc-ic{flex:0 0 44px;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--cc-ic);color:var(--cc-lar)}
+#tab-calc .cc-ic svg{width:24px;height:24px}
+#tab-calc .cc-rot{flex:1 1 0;min-width:0;font-size:15px;color:var(--cc-txt);line-height:1.25;margin:0;cursor:pointer}
+#tab-calc .cc-rot b{font-weight:600}
+#tab-calc .cc-rot span{font-weight:400}
+#tab-calc .cc-campo{flex:0 0 49%;max-width:49%;position:relative}
+#tab-calc .cc-in{width:100%;height:50px;box-sizing:border-box;border-radius:14px!important;border:1px solid var(--cc-campo-b)!important;background:var(--cc-campo)!important;color:var(--cc-txt)!important;font:500 16px Inter,sans-serif!important;padding:0 14px!important;box-shadow:inset 0 1px 2px rgba(120,80,20,.05)!important;margin:0!important;-moz-appearance:textfield}
+#tab-calc .cc-in::-webkit-outer-spin-button,#tab-calc .cc-in::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+#tab-calc .cc-in::placeholder{color:var(--cc-txt2);opacity:.85}
+#tab-calc .cc-in:focus{outline:none;border-color:var(--cc-ouro)!important;box-shadow:0 0 0 3px rgba(245,166,35,.18)!important}
+#tab-calc .cc-sel select{-webkit-appearance:none;appearance:none;padding-right:38px!important;text-overflow:ellipsis;white-space:nowrap;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232B211D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:right 13px center!important;background-size:18px!important;cursor:pointer}
+html:not([data-theme="light"]) #tab-calc .cc-sel select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F4F4F5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important}
+#tab-calc .cc-err{font-size:12px;color:#DC2626;line-height:1.3;margin-top:4px}
+#tab-calc .cc-err:empty{display:none}
+#tab-calc .cc-ruim .cc-in{border-color:#F2A3A3!important}
+#tab-calc .cc-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;margin-top:14px;border:0!important;border-radius:16px!important;background:linear-gradient(180deg,#F8B53A 0%,#E8890F 60%,#D97706 100%)!important;color:#fff!important;font:600 18px Inter,sans-serif!important;box-shadow:0 8px 18px rgba(217,119,6,.32)!important;cursor:pointer;transition:opacity .15s,transform .1s}
+#tab-calc .cc-btn svg{width:24px;height:24px;stroke-width:1.9}
+#tab-calc .cc-btn:active{transform:scale(.985)}
+#tab-calc .cc-btn:disabled{opacity:.5;box-shadow:none!important;cursor:default}
+#tab-calc .cc-btn.cc-carregando{opacity:.85}
+#tab-calc .cc-btn.cc-carregando svg{animation:ccGira .7s linear infinite}
+@keyframes ccGira{to{transform:rotate(360deg)}}
+#tab-calc .cc-bens{display:grid;grid-template-columns:repeat(3,1fr);margin:4px 0 16px}
+#tab-calc .cc-ben{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;padding:4px 6px;font-size:14px;line-height:1.3;color:var(--cc-txt)}
+#tab-calc .cc-ben+.cc-ben{border-left:1px solid var(--cc-campo-b)}
+#tab-calc .cc-ben svg{width:34px;height:34px;color:var(--cc-lar);stroke-width:2}
+#tab-calc .cc-ben:first-child svg{color:#F08A12}
+#tab-calc .cc-info{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:20px;border:1px solid var(--cc-campo-b);background:var(--cc-campo);font-size:14px;line-height:1.45;color:var(--cc-txt);margin-bottom:12px}
+#tab-calc .cc-info svg{flex:0 0 28px;width:28px;height:28px;color:var(--cc-lar)}
+/* resultado */
+#tab-calc .cc-res{padding:16px}
+#tab-calc .cc-res-h{display:flex;align-items:center;gap:12px}
+#tab-calc .cc-res-t{font-family:Sora,Inter,sans-serif;font-weight:600;font-size:19px;color:var(--cc-txt)}
+#tab-calc .cc-res-s{font-size:13px;color:var(--cc-txt2);margin-top:2px}
+#tab-calc .cc-res-meta{text-align:center;margin:14px 0 10px;color:var(--cc-txt2);font-size:14px}
+#tab-calc .cc-res-meta b{font-family:Sora,Inter,sans-serif;font-size:40px;font-weight:700;color:var(--cc-lar);letter-spacing:-.02em}
+#tab-calc .cc-faixas{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+#tab-calc .cc-faixa{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px;border-radius:14px;border:1px solid var(--cc-campo-b)!important;background:var(--cc-campo)!important;color:var(--cc-txt)!important;box-shadow:none!important;cursor:pointer;font-family:Inter,sans-serif}
+#tab-calc .cc-faixa small{font-size:12px;color:var(--cc-txt2)}
+#tab-calc .cc-faixa b{font-size:15.5px;font-weight:600}
+#tab-calc .cc-faixa.on{border-color:var(--cc-ouro)!important;background:var(--cc-ic)!important;box-shadow:0 0 0 2px rgba(245,166,35,.25)!important}
+#tab-calc .cc-faixa.on b{color:var(--cc-lar)}
+#tab-calc .cc-res-grade,#tab-calc .cc-res-mac{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:8px}
+#tab-calc .cc-res-mac{grid-template-columns:repeat(3,1fr)}
+#tab-calc .cc-res-grade>div,#tab-calc .cc-res-mac>div{padding:10px 12px;border-radius:14px;background:var(--cc-campo);border:1px solid var(--cc-linha)}
+#tab-calc .cc-res-grade small,#tab-calc .cc-res-mac small{display:block;font-size:12px;color:var(--cc-txt2)}
+#tab-calc .cc-res-grade b,#tab-calc .cc-res-mac b{font-size:16px;font-weight:600;color:var(--cc-txt)}
+#tab-calc .cc-res-aviso{font-size:12.5px;color:var(--cc-lar);background:var(--cc-ic);border-radius:12px;padding:8px 12px;margin:4px 0 8px}
+#tab-calc .cc-res-met{font-size:12.5px;line-height:1.45;color:var(--cc-txt2);margin:6px 2px 0}
+#tab-calc .cc-btn2{display:block;width:100%;min-height:48px;margin-top:10px;border-radius:16px!important;border:1.5px solid var(--cc-ouro)!important;background:transparent!important;color:var(--cc-lar)!important;font:600 15.5px Inter,sans-serif!important;box-shadow:none!important;cursor:pointer}
+@media (max-width:360px){#tab-calc .cc-campo{flex-basis:100%;max-width:100%}#tab-calc .cc-ben{font-size:12.5px}}
 </style>
 </head>
 <body>
@@ -3816,17 +3881,23 @@ if(_al){
 
 <!-- TAB CALCULAR -->
 <div class="tab" id="tab-calc">
-  <div class="section-title" data-i18n="calculadora">Calculadora</div>
-  <div class="section-sub" data-i18n="calcSub">Calcule sua necessidade calórica diaria</div>
-  <div class="card">
-    <div class="input-group"><div class="input-label" data-i18n="sexo">Sexo</div><select class="input" id="calcSex"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
-    <div class="input-group"><div class="input-label" data-i18n="idadeAnos">Idade (anos)</div><input type="number" class="input" id="calcAge" placeholder="Ex: 25"></div>
-    <div class="input-group"><div class="input-label" data-i18n="pesoKg">Peso (kg)</div><input type="number" class="input" id="calcWeight" placeholder="Ex: 75" step="0.1"></div>
-    <div class="input-group"><div class="input-label" data-i18n="alturaCm">Altura (cm)</div><input type="number" class="input" id="calcHeight" placeholder="Ex: 175"></div>
-    <div class="input-group"><div class="input-label" data-i18n="nivelAtividadeCalc">Nível de atividade</div><select class="input" id="calcActivity"><option value="1.2">Sedentario</option><option value="1.375">Levemente ativo (1-3x/sem)</option><option value="1.55" selected>Moderado (3-5x/sem)</option><option value="1.725">Muito ativo (6-7x/sem)</option><option value="1.9">Extremamente ativo</option></select></div>
-    <button class="btn btn-primary" onclick="calcNeeds()" data-i18n="calcBtn">Calcular</button>
+  <div class="pz-cab"><span class="pz-ic cc-ic-g"><svg viewBox="0 0 24 24"><rect x="4" y="2.5" width="16" height="19" rx="2.5"/><path d="M7 6h10v4H7z"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg></span>
+    <div><h2 class="pz-tit" data-i18n="calculadora">Calculadora</h2><p class="pz-sub" data-i18n="calcSub2">Calcule sua necessidade calórica diária.</p></div></div>
+  <div class="cc-card">
+<div class="cc-linha"><span class="cc-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.5"/><path d="M4.5 21v-1.4a7.5 7.5 0 0 1 15 0V21"/></svg></span><label class="cc-rot" for="calcSex"><b data-i18n="sexo">Sexo</b></label><div class="cc-campo"><div class="cc-sel"><select class="cc-in" id="calcSex"><option value="m">Masculino</option><option value="f">Feminino</option></select></div><div class="cc-err" id="calcSexErr"></div></div></div>
+<div class="cc-linha"><span class="cc-ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17h.01"/></svg></span><label class="cc-rot" for="calcAge"><b data-i18n="calcIdade">Idade</b> <span data-i18n="calcAnosU">(anos)</span></label><div class="cc-campo"><input type="number" inputmode="numeric" class="cc-in" id="calcAge" placeholder="Ex: 25" min="14" max="100"><div class="cc-err" id="calcAgeErr"></div></div></div>
+<div class="cc-linha"><span class="cc-ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 5a4 4 0 0 1 8 0"/><circle cx="12" cy="12" r="2.2"/></svg></span><label class="cc-rot" for="calcWeight"><b data-i18n="calcPeso">Peso</b> <span>(kg)</span></label><div class="cc-campo"><input type="number" inputmode="decimal" class="cc-in" id="calcWeight" placeholder="Ex: 75" step="0.1" min="30" max="300"><div class="cc-err" id="calcWeightErr"></div></div></div>
+<div class="cc-linha"><span class="cc-ic"><svg viewBox="0 0 24 24"><path d="M7 2.5h10v19H7z"/><path d="M7 6h5M7 10h3M7 14h5M7 18h3"/></svg></span><label class="cc-rot" for="calcHeight"><b data-i18n="calcAltura">Altura</b> <span>(cm)</span></label><div class="cc-campo"><input type="number" inputmode="numeric" class="cc-in" id="calcHeight" placeholder="Ex: 175" min="120" max="230"><div class="cc-err" id="calcHeightErr"></div></div></div>
+<div class="cc-linha"><span class="cc-ic"><svg viewBox="0 0 24 24"><circle cx="15.5" cy="4.5" r="2"/><path d="m12 8-3 4 4 2 2-3 3 2 2 5M9 12l-4 1-2 4M13 14l-2 4-4 3"/></svg></span><label class="cc-rot" for="calcActivity"><b data-i18n="nivelAtividadeCalc">Nível de atividade</b></label><div class="cc-campo"><div class="cc-sel"><select class="cc-in" id="calcActivity"><option value="1.2">Sedentário</option><option value="1.375">Levemente ativo (1-3x/sem)</option><option value="1.55" selected>Moderado (3-5x/sem)</option><option value="1.725">Muito ativo (6-7x/sem)</option><option value="1.9">Extremamente ativo</option></select></div><div class="cc-err" id="calcActivityErr"></div></div></div>
+    <button type="button" class="cc-btn" onclick="calcNeeds()"><svg viewBox="0 0 24 24"><rect x="4" y="2.5" width="16" height="19" rx="2.5"/><path d="M7 6h10v4H7z"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg><span data-i18n="calcBtn">Calcular</span></button>
   </div>
   <div id="calcResult" style="display:none;"></div>
+  <div class="cc-bens">
+    <div class="cc-ben"><svg viewBox="0 0 24 24"><path d="M13 2c1 4-2 5-1 8 1.2-1 2-2 2-3.5 3 2.2 5 5.1 5 8.2a7 7 0 0 1-14 0c0-3.4 2.1-6.4 5.2-8.7-.1 2.2.3 3.5 1.3 4.4C12 8 14 6 13 2Z"/></svg><span data-i18n="calcBen1">Meta calórica diária</span></div>
+    <div class="cc-ben"><svg viewBox="0 0 24 24"><path d="M4 21V12h4v9M10 21V7h4v14M16 21V3h4v18"/></svg><span data-i18n="calcBen2">Baseada no seu perfil</span></div>
+    <div class="cc-ben"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="13.5" r="7.5"/><circle cx="10.5" cy="13.5" r="3.5"/><path d="m10.5 13.5 10-10m-5 0h5v5"/></svg><span data-i18n="calcBen3">Apoia seus objetivos</span></div>
+  </div>
+  <div class="cc-info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01"/></svg><span data-i18n="calcInfo">Seus dados serão usados para estimar sua necessidade calórica diária.</span></div>
 </div>
 
 <!-- TAB HISTORICO -->
@@ -5593,22 +5664,70 @@ function drawWeightChart(){
 }
 
 
-function calcNeeds(){
-  var sex=document.getElementById("calcSex").value;
-  var age=parseFloat(document.getElementById("calcAge").value)||0;
-  var w=parseFloat(document.getElementById("calcWeight").value)||0;
-  var h=parseFloat(document.getElementById("calcHeight").value)||0;
-  var act=parseFloat(document.getElementById("calcActivity").value)||1.55;
-  var tt=T[currentLang];
-  if(!age||!w||!h){showToast(tt.preenchaTodos||"Preencha todos os campos","error");return;}
-  var tmb=sex==="m"?(10*w+6.25*h-5*age+5):(10*w+6.25*h-5*age-161);
-  var tdee=Math.round(tmb*act);
-  var goal=state.goal==="mass"?tdee+350:tdee-500;
-  var prot=Math.round(w*2.2),fat=Math.round(w*1.1);
-  var carb=Math.round((goal-(prot*4)-(fat*9))/4);
-  var el=document.getElementById("calcResult");el.style.display="block";
-  el.innerHTML="<div class='calc-result'><div style='font-family:Syne,sans-serif;font-size:13px;font-weight:700;color:#f0b429;margin-bottom:10px;'>"+(tt.resultados||'Resultados')+"</div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.tmb||'TMB')+"</span><span class='calc-result-val'>"+Math.round(tmb)+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.tdee||'TDEE')+"</span><span class='calc-result-val'>"+tdee+" kcal</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.meta||'Meta')+"</span><span class='calc-result-val' style='color:#f0b429'>"+goal+" kcal</span></div><div style='margin-top:10px;padding-top:10px;border-top:1px solid var(--border);'><div class='calc-result-row'><span class='calc-result-label'>"+(tt.proteinaPura||'Proteina')+"</span><span class='calc-result-val' style='color:#60a5fa'>"+prot+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.gorduraPura||'Gordura')+"</span><span class='calc-result-val' style='color:#34d399'>"+fat+"g</span></div><div class='calc-result-row'><span class='calc-result-label'>"+(tt.carboidratos||'Carboidrato')+"</span><span class='calc-result-val' style='color:#e8834a'>"+carb+"g</span></div></div></div><button class='btn btn-primary' onclick='applyCalcGoal("+goal+")'>"+(tt.aplicarMeta||'Aplicar esta meta')+"</button>";
+function _ccErro(id,msg){
+  var e=document.getElementById(id+"Err"), c=document.getElementById(id);
+  if(e) e.textContent=msg||""; if(c){ var l=c.closest(".cc-linha"); if(l) l.classList.toggle("cc-ruim",!!msg); }
 }
+/* Preenche com o perfil quando os campos estao vazios ("Baseada no seu perfil"). */
+function calcPrefill(){
+  var p=state.profile||{}, $=function(i){return document.getElementById(i);};
+  if(!$("calcAge")) return;
+  if(!$("calcAge").value&&(+p.age||+p.idade)) $("calcAge").value=+p.age||+p.idade;
+  if(!$("calcWeight").value){ var w=+p.weight; try{ var ws=state.weights||[]; if(ws.length&&+ws[ws.length-1].kg) w=+ws[ws.length-1].kg; }catch(e){} if(w) $("calcWeight").value=w; }
+  if(!$("calcHeight").value&&(+p.height||+p.altura)) $("calcHeight").value=+p.height||+p.altura;
+  if(!window._ccSexoTocado&&(p.sex||p.sexo)) $("calcSex").value=(p.sex==="f"||p.sexo==="f"||p.sexo==="feminino")?"f":"m";
+  if(!window._ccAtivTocado&&p.activity) $("calcActivity").value=String(p.activity);
+}
+function calcNeeds(){
+  var $=function(i){return document.getElementById(i);};
+  var sex=$("calcSex").value;
+  var num=function(id){ return parseFloat(String($(id).value||"").replace(",","."))||0; };
+  var age=num("calcAge"), w=num("calcWeight"), hh=num("calcHeight");
+  if(hh>0&&hh<3){ hh=Math.round(hh*100); $("calcHeight").value=hh; }
+  var act=parseFloat($("calcActivity").value)||1.55, ok=true;
+  _ccErro("calcAge", (age>=14&&age<=100)?"":tx('calcErrIdade')); if(!(age>=14&&age<=100)) ok=false;
+  _ccErro("calcWeight", (w>=30&&w<=300)?"":tx('calcErrPeso')); if(!(w>=30&&w<=300)) ok=false;
+  _ccErro("calcHeight", (hh>=120&&hh<=230)?"":tx('calcErrAltura')); if(!(hh>=120&&hh<=230)) ok=false;
+  if(!ok){ var r0=$("calcResult"); r0.style.display="none"; return; }
+  var r=calcTDEE(w,hh,age,sex,act);
+  var piso=Math.max(r.bmr, sex==="f"?1200:1500);
+  var perda=r.tdee-500, limitada=perda<piso; if(limitada) perda=piso;
+  window._ccUlt={tmb:r.bmr,tdee:r.tdee,w:w,piso:piso,limitada:limitada,v:{man:r.tdee,cut:Math.round(perda),mass:r.tdee+300}};
+  var g=state.goal==="cut"?"cut":(state.goal==="mass"?"mass":"man");
+  var btn=document.querySelector("#tab-calc .cc-card .cc-btn");
+  if(btn){ btn.classList.add("cc-carregando"); btn.disabled=true; }
+  setTimeout(function(){ if(btn){ btn.classList.remove("cc-carregando"); _ccValida(); } calcEscolher(g,true); },350);
+}
+function calcEscolher(k,rolar){
+  var u=window._ccUlt; if(!u) return; var $=function(i){return document.getElementById(i);};
+  var meta=u.v[k], tt=T[currentLang]||T.pt;
+  var prot=Math.round(u.w*(k==="cut"?2.0:1.8)), fat=Math.round(u.w*0.9), carb=Math.max(0,Math.round((meta-prot*4-fat*9)/4));
+  var f=function(n){ try{ return Math.round(n).toLocaleString(({pt:'pt-BR',en:'en-GB',es:'es-ES',it:'it-IT',fr:'fr-FR',de:'de-DE'})[currentLang]||'pt-BR'); }catch(e){ return String(Math.round(n)); } };
+  var obj={man:tx('calcObjMan'),cut:tx('calcObjCut'),mass:tx('calcObjMass')}[k];
+  var chip=function(kk,rot){ return '<button type="button" class="cc-faixa'+(kk===k?' on':'')+'" onclick="calcEscolher(\''+kk+'\')"><small>'+rot+'</small><b>'+f(u.v[kk])+'</b></button>'; };
+  var el=$("calcResult"); el.style.display="block";
+  el.innerHTML='<div class="cc-res">'+
+    '<div class="cc-res-h"><span class="cc-ic"><svg viewBox="0 0 24 24"><path d="M13 2c1 4-2 5-1 8 1.2-1 2-2 2-3.5 3 2.2 5 5.1 5 8.2a7 7 0 0 1-14 0c0-3.4 2.1-6.4 5.2-8.7-.1 2.2.3 3.5 1.3 4.4C12 8 14 6 13 2Z"/></svg></span><div><div class="cc-res-t">'+tx('calcResTit')+'</div><div class="cc-res-s">'+obj+'</div></div></div>'+
+    '<div class="cc-res-meta"><b>'+f(meta)+'</b> <span>kcal/'+tx('calcDia')+'</span></div>'+
+    '<div class="cc-faixas">'+chip('cut',tx('calcFxPerda'))+chip('man',tx('calcFxMan'))+chip('mass',tx('calcFxGanho'))+'</div>'+
+    '<div class="cc-res-grade"><div><small>'+tx('calcTmb')+' (BMR)</small><b>'+f(u.tmb)+' kcal</b></div><div><small>'+tx('calcGasto')+' (TDEE)</small><b>'+f(u.tdee)+' kcal</b></div></div>'+
+    '<div class="cc-res-mac"><div><small>'+(tt.proteinaPura||'Proteína')+'</small><b>'+prot+' g</b></div><div><small>'+(tt.carboidratos||'Carboidratos')+'</small><b>'+carb+' g</b></div><div><small>'+(tt.gorduraPura||'Gordura')+'</small><b>'+fat+' g</b></div></div>'+
+    ((u.limitada&&k==="cut")?'<div class="cc-res-aviso">'+tx('calcPiso',f(u.piso))+'</div>':'')+
+    '<div class="cc-res-met">'+tx('calcMetodo')+'</div>'+
+    '<button type="button" class="cc-btn" onclick="applyCalcGoal('+meta+')">'+(tt.aplicarMeta||'Aplicar esta meta')+'</button>'+
+    '<button type="button" class="cc-btn2" onclick="calcRecalc()">'+tx('calcRecalc')+'</button>'+
+  '</div>';
+  if(rolar) setTimeout(function(){ try{ el.scrollIntoView({behavior:"smooth",block:"start"}); }catch(e){} },60);
+}
+/* Botao Calcular so libera com os tres numeros preenchidos; o erro so aparece depois de tentar ou sair do campo. */
+function _ccValida(){
+  var b=document.querySelector("#tab-calc .cc-card .cc-btn"); if(!b||b.classList.contains("cc-carregando")) return;
+  var ok=["calcAge","calcWeight","calcHeight"].every(function(i){ var v=parseFloat(String((document.getElementById(i)||{}).value||"").replace(",",".")); return v>0; });
+  b.disabled=!ok;
+}
+document.addEventListener("input",function(e){ var t=e.target; if(t&&t.closest&&t.closest("#tab-calc .cc-card")){ if(t.id) _ccErro(t.id,""); _ccValida(); if(t.id==="calcSex") window._ccSexoTocado=1; if(t.id==="calcActivity") window._ccAtivTocado=1; } });
+document.addEventListener("change",function(e){ var t=e.target; if(t&&t.id==="calcSex") window._ccSexoTocado=1; if(t&&t.id==="calcActivity") window._ccAtivTocado=1; });
+function calcRecalc(){ var r=document.getElementById("calcResult"); r.style.display="none"; try{ document.getElementById("tab-calc").scrollIntoView({behavior:"smooth",block:"start"}); document.getElementById("calcAge").focus({preventScroll:true}); }catch(e){} }
 function applyCalcGoal(kcal){state.calGoal=kcal;save();renderToday();showToast("Meta: "+kcal+" kcal aplicada!","success");switchTab("hoje",document.querySelector(".nav-item"));}
 
 function triggerCamera(){document.getElementById("cameraInput").click();}
@@ -7439,6 +7558,7 @@ function switchTab(name,navEl){
   document.getElementById("content").scrollTop=0;
   try{ _navMarca(name); }catch(e){}
   if(name==="agua")renderWater();
+  if(name==="calc"){ try{ calcPrefill(); _ccValida(); }catch(e){} }
   if(name==="dieta"){renderDiet();renderNutriContext();try{montarResumoSemana();}catch(e){}}
   if(name==="peso"){renderWeight();renderMeasures();}
   if(name==="hist"){renderHistory();renderCalendar();}
@@ -8642,6 +8762,31 @@ var TX={
  aguaRemoverDica:{pt:'Toque para remover',en:'Tap to remove',es:'Toca para quitar',it:'Tocca per rimuovere',fr:'Touchez pour retirer',de:'Zum Entfernen tippen'},
  aguaRemoverConf:{pt:'Remover este registro de {0} ml?',en:'Remove this {0} ml entry?',es:'¿Quitar este registro de {0} ml?',it:'Rimuovere questa registrazione di {0} ml?',fr:'Retirer cet enregistrement de {0} ml ?',de:'Diesen Eintrag über {0} ml entfernen?'},
  aguaZerarConf:{pt:'Zerar toda a água registrada hoje?',en:'Reset all water logged today?',es:'¿Reiniciar toda el agua registrada hoy?',it:"Azzerare tutta l'acqua registrata oggi?",fr:"Réinitialiser toute l'eau enregistrée aujourd'hui ?",de:'Gesamtes heute erfasstes Wasser zurücksetzen?'},
+ calcSub2:{pt:'Calcule sua necessidade calórica diária.',en:'Calculate your daily calorie needs.',es:'Calcula tu necesidad calórica diaria.',it:'Calcola il tuo fabbisogno calorico giornaliero.',fr:'Calculez vos besoins caloriques quotidiens.',de:'Berechnen Sie Ihren täglichen Kalorienbedarf.'},
+ calcIdade:{pt:'Idade',en:'Age',es:'Edad',it:'Età',fr:'Âge',de:'Alter'},
+ calcAnosU:{pt:'(anos)',en:'(years)',es:'(años)',it:'(anni)',fr:'(ans)',de:'(Jahre)'},
+ calcPeso:{pt:'Peso',en:'Weight',es:'Peso',it:'Peso',fr:'Poids',de:'Gewicht'},
+ calcAltura:{pt:'Altura',en:'Height',es:'Altura',it:'Altezza',fr:'Taille',de:'Größe'},
+ calcBen1:{pt:'Meta calórica diária',en:'Daily calorie goal',es:'Meta calórica diaria',it:'Obiettivo calorico giornaliero',fr:'Objectif calorique quotidien',de:'Tägliches Kalorienziel'},
+ calcBen2:{pt:'Baseada no seu perfil',en:'Based on your profile',es:'Basada en tu perfil',it:'Basato sul tuo profilo',fr:'Basé sur votre profil',de:'Basierend auf Ihrem Profil'},
+ calcBen3:{pt:'Apoia seus objetivos',en:'Supports your goals',es:'Apoya tus objetivos',it:'Supporta i tuoi obiettivi',fr:'Soutient vos objectifs',de:'Unterstützt Ihre Ziele'},
+ calcInfo:{pt:'Seus dados serão usados para estimar sua necessidade calórica diária.',en:'Your data will be used to estimate your daily calorie needs.',es:'Tus datos se usarán para estimar tu necesidad calórica diaria.',it:'I tuoi dati saranno usati per stimare il tuo fabbisogno calorico giornaliero.',fr:'Vos données serviront à estimer vos besoins caloriques quotidiens.',de:'Ihre Daten werden verwendet, um Ihren täglichen Kalorienbedarf zu schätzen.'},
+ calcErrIdade:{pt:'Informe uma idade entre 14 e 100 anos.',en:'Enter an age between 14 and 100.',es:'Indica una edad entre 14 y 100 años.',it:"Inserisci un'età tra 14 e 100 anni.",fr:'Indiquez un âge entre 14 et 100 ans.',de:'Geben Sie ein Alter zwischen 14 und 100 an.'},
+ calcErrPeso:{pt:'Informe um peso entre 30 e 300 kg.',en:'Enter a weight between 30 and 300 kg.',es:'Indica un peso entre 30 y 300 kg.',it:'Inserisci un peso tra 30 e 300 kg.',fr:'Indiquez un poids entre 30 et 300 kg.',de:'Geben Sie ein Gewicht zwischen 30 und 300 kg an.'},
+ calcErrAltura:{pt:'Informe uma altura entre 120 e 230 cm.',en:'Enter a height between 120 and 230 cm.',es:'Indica una altura entre 120 y 230 cm.',it:"Inserisci un'altezza tra 120 e 230 cm.",fr:'Indiquez une taille entre 120 et 230 cm.',de:'Geben Sie eine Größe zwischen 120 und 230 cm an.'},
+ calcResTit:{pt:'Sua estimativa',en:'Your estimate',es:'Tu estimación',it:'La tua stima',fr:'Votre estimation',de:'Ihre Schätzung'},
+ calcDia:{pt:'dia',en:'day',es:'día',it:'giorno',fr:'jour',de:'Tag'},
+ calcTmb:{pt:'Metabolismo basal',en:'Basal metabolism',es:'Metabolismo basal',it:'Metabolismo basale',fr:'Métabolisme de base',de:'Grundumsatz'},
+ calcGasto:{pt:'Gasto diário',en:'Daily expenditure',es:'Gasto diario',it:'Dispendio giornaliero',fr:'Dépense quotidienne',de:'Tagesumsatz'},
+ calcObjMass:{pt:'Ganho de massa: gasto diário + 300 kcal',en:'Muscle gain: daily expenditure + 300 kcal',es:'Ganancia de masa: gasto diario + 300 kcal',it:'Massa: dispendio giornaliero + 300 kcal',fr:'Prise de masse : dépense quotidienne + 300 kcal',de:'Muskelaufbau: Tagesumsatz + 300 kcal'},
+ calcObjCut:{pt:'Emagrecimento: gasto diário − 500 kcal',en:'Weight loss: daily expenditure − 500 kcal',es:'Pérdida de peso: gasto diario − 500 kcal',it:'Dimagrimento: dispendio giornaliero − 500 kcal',fr:'Perte de poids : dépense quotidienne − 500 kcal',de:'Abnehmen: Tagesumsatz − 500 kcal'},
+ calcObjMan:{pt:'Manutenção: igual ao gasto diário',en:'Maintenance: equal to daily expenditure',es:'Mantenimiento: igual al gasto diario',it:'Mantenimento: pari al dispendio giornaliero',fr:'Maintien : égal à la dépense quotidienne',de:'Erhaltung: gleich dem Tagesumsatz'},
+ calcPiso:{pt:'Para sua segurança, a meta não fica abaixo de {0} kcal.',en:'For your safety, the goal does not go below {0} kcal.',es:'Por tu seguridad, la meta no baja de {0} kcal.',it:"Per la tua sicurezza, l'obiettivo non scende sotto {0} kcal.",fr:"Pour votre sécurité, l'objectif ne descend pas sous {0} kcal.",de:'Zu Ihrer Sicherheit liegt das Ziel nicht unter {0} kcal.'},
+ calcMetodo:{pt:'Método: Mifflin-St Jeor × fator de atividade. É uma estimativa — ajuste conforme sua evolução.',en:'Method: Mifflin-St Jeor × activity factor. This is an estimate — adjust as you progress.',es:'Método: Mifflin-St Jeor × factor de actividad. Es una estimación: ajústala según tu evolución.',it:'Metodo: Mifflin-St Jeor × fattore di attività. È una stima: regolala in base ai tuoi progressi.',fr:"Méthode : Mifflin-St Jeor × facteur d'activité. C'est une estimation — ajustez selon votre évolution.",de:'Methode: Mifflin-St Jeor × Aktivitätsfaktor. Dies ist eine Schätzung – passen Sie sie an Ihren Fortschritt an.'},
+ calcRecalc:{pt:'Editar dados e recalcular',en:'Edit data and recalculate',es:'Editar datos y recalcular',it:'Modifica i dati e ricalcola',fr:'Modifier et recalculer',de:'Daten bearbeiten und neu berechnen'},
+ calcFxPerda:{pt:'Perda',en:'Loss',es:'Pérdida',it:'Perdita',fr:'Perte',de:'Abnehmen'},
+ calcFxMan:{pt:'Manutenção',en:'Maintenance',es:'Mantenimiento',it:'Mantenimento',fr:'Maintien',de:'Erhaltung'},
+ calcFxGanho:{pt:'Ganho',en:'Gain',es:'Ganancia',it:'Aumento',fr:'Prise',de:'Aufbau'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
  pgrF1D:{pt:'Compare suas fotos e veja mudanças reais.',en:'Compare your photos and see real changes.',es:'Compara tus fotos y ve cambios reales.',it:'Confronta le tue foto e vedi cambiamenti reali.',fr:'Comparez vos photos et voyez de vrais changements.',de:'Vergleichen Sie Ihre Fotos und sehen Sie echte Veränderungen.'},
