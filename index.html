@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261102_belsono";
+var APP_VERSION="20261102_perfil";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3470,6 +3470,160 @@ html:not([data-theme="light"]) #tab-sono .sn-r1{background:rgba(74,222,128,.14)!
 #tab-sono .sn-perg{margin:14px 2px -6px;font:600 13.5px Inter,sans-serif;color:var(--pz-txt)}
 #tab-sono .sn-perg span{display:block;font-weight:400;font-size:12px;color:var(--pz-txt2);margin-top:2px}
 #tab-sono .sn-bel img{border:0!important;border-radius:50%;object-fit:contain;flex:0 0 56px!important;width:56px!important;height:56px!important;background:transparent}
+
+/* ===== 02/11: PERFIL E CONFIGURACOES (modelo + guia do Felipe) ===== */
+#modalProfile{--pf-bg:#121212;--pf-card:#1A1A1A;--pf-borda:rgba(240,180,41,.18);--pf-ouro:#E9A23B;--pf-lar:#F08A1C;--pf-tit:#F4EDE6;--pf-txt:#EDE7E1;--pf-txt2:#A8A29E;--pf-ic:rgba(240,180,41,.12);--pf-campo:rgba(255,255,255,.04);--pf-linha:rgba(255,255,255,.08);--pf-verm:#F87171;--pf-sombra:0 6px 18px rgba(0,0,0,.35)}
+html[data-theme="light"] #modalProfile{--pf-bg:#FFFBF5;--pf-card:#FFFFFF;--pf-borda:#EEDBC2;--pf-ouro:#D88918;--pf-lar:#E97800;--pf-tit:#5A2C12;--pf-txt:#342014;--pf-txt2:#6B5B50;--pf-ic:#FFF1DD;--pf-campo:#FFFAF3;--pf-linha:#F3E7D8;--pf-verm:#C92323;--pf-sombra:0 4px 14px rgba(120,70,20,.07)}
+#modalProfile{align-items:stretch}
+#modalProfile .pf-modal{background:var(--pf-bg)!important;border-radius:0;max-width:480px;height:100svh;max-height:100svh;padding:0;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;font-family:Inter,system-ui,sans-serif;color:var(--pf-txt)}
+#modalProfile svg.pf-svg,#modalProfile .pf-seta,#modalProfile .pf-cam svg{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#modalProfile .pf-topo{position:sticky;top:0;z-index:3;padding:calc(env(safe-area-inset-top,0px) + 12px) 18px 8px;background:linear-gradient(var(--pf-bg) 70%,transparent)}
+#modalProfile .pf-voltar{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px 0 10px;border-radius:999px;border:1px solid var(--pf-borda)!important;background:var(--pf-card)!important;color:var(--pf-tit)!important;font:600 14.5px Inter,sans-serif;box-shadow:var(--pf-sombra)!important;cursor:pointer}
+#modalProfile .pf-voltar svg{width:20px;height:20px;stroke-width:2.2}
+#modalProfile .pf-corpo{flex:1;padding:0 16px 24px}
+#modalProfile.pf-com-salvar .pf-corpo{padding-bottom:12px}
+#modalProfile .pf-pag{display:none;animation:pfEntra .22s ease}
+#modalProfile .pf-pag.on{display:block}
+@keyframes pfEntra{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+#modalProfile .pf-marca{display:flex;justify-content:center;margin:-4px 0 6px}
+#modalProfile .pf-logo{height:30px;width:auto}
+#modalProfile .pf-logo-e{display:none}
+html:not([data-theme="light"]) #modalProfile .pf-logo-c{display:none}
+html:not([data-theme="light"]) #modalProfile .pf-logo-e{display:block}
+#modalProfile .pf-tit{font:700 clamp(22px,6.4vw,26px)/1.15 Sora,Inter,sans-serif;color:var(--pf-tit);text-align:center;margin:0;letter-spacing:-.02em}
+#modalProfile .pf-sub{text-align:center;font-size:13.5px;color:var(--pf-txt2);margin:5px 0 14px}
+#modalProfile .pf-card{background:var(--pf-card);border:1px solid var(--pf-borda);border-radius:20px;box-shadow:var(--pf-sombra);padding:14px;margin-bottom:12px}
+/* cartao do usuario */
+#modalProfile .pf-eu{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+#modalProfile .pf-av{position:relative;width:76px;height:76px}
+#modalProfile .prof-avatar{width:76px!important;height:76px!important;border:3px solid var(--pf-ouro)!important;box-shadow:0 4px 12px rgba(217,137,24,.25)}
+#modalProfile .pf-cam{position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--pf-card)!important;background:linear-gradient(180deg,#F8B53A,#E07F0C)!important;color:#fff!important;padding:0;cursor:pointer}
+#modalProfile .pf-cam svg{width:15px;height:15px;stroke-width:2}
+#modalProfile .pf-eu-d{min-width:0}
+#modalProfile .pf-eu-l1{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+#modalProfile #pfNome{font:700 17px/1.2 Sora,Inter,sans-serif;color:var(--pf-tit);overflow-wrap:anywhere}
+#modalProfile .pf-editar{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;border-radius:999px;border:1px solid var(--pf-borda)!important;background:var(--pf-ic)!important;color:var(--pf-tit)!important;font:600 12px Inter,sans-serif;cursor:pointer;box-shadow:none!important}
+#modalProfile .pf-editar svg{width:14px;height:14px;color:var(--pf-lar)}
+#modalProfile .pf-email{font-size:12.5px;color:var(--pf-txt2);margin-top:3px;overflow-wrap:anywhere;text-align:left!important;margin-bottom:0!important}
+#modalProfile .pf-stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+#modalProfile .pf-stats>div{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:8px;border-radius:13px;background:var(--pf-campo);border:1px solid var(--pf-linha);min-width:0}
+#modalProfile .pf-stats svg{width:18px;height:18px;color:var(--pf-lar)}
+#modalProfile .pf-stats small{display:block;font-size:10.5px;color:var(--pf-txt2)}
+#modalProfile .pf-stats b{display:block;font-size:13px;font-weight:700;color:var(--pf-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+/* categorias */
+#modalProfile .pf-cats{padding:4px 12px}
+#modalProfile .pf-cat{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:9px 0;border:0!important;border-bottom:1px solid var(--pf-linha)!important;background:transparent!important;box-shadow:none!important;text-align:left;cursor:pointer;font-family:inherit;color:var(--pf-txt)!important;border-radius:0!important}
+#modalProfile .pf-cat:last-child{border-bottom:0!important}
+#modalProfile .pf-cic{flex:0 0 40px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pf-ic);color:var(--pf-lar)}
+#modalProfile .pf-cic svg{width:22px;height:22px}
+#modalProfile .pf-ctx{flex:1;min-width:0}
+#modalProfile .pf-ctx b{display:block;font:600 15px/1.25 Sora,Inter,sans-serif;color:var(--pf-tit)}
+#modalProfile .pf-ctx small{display:block;font-size:12px;line-height:1.35;color:var(--pf-txt2);margin-top:2px}
+#modalProfile .pf-seta{flex:0 0 18px;width:18px;height:18px;color:var(--pf-txt2);stroke-width:2.2}
+#modalProfile .pf-aviso{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:16px;border:1px solid var(--pf-borda);background:var(--pf-ic);font-size:12px;line-height:1.5;color:var(--pf-txt2);font-style:italic;margin-bottom:12px}
+#modalProfile .pf-aviso svg{flex:0 0 20px;width:20px;height:20px;color:var(--pf-lar);margin-top:1px}
+#modalProfile .pf-sair{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;border-radius:14px;border:1px solid var(--pf-borda)!important;background:var(--pf-card)!important;color:var(--pf-verm)!important;font:600 14.5px Inter,sans-serif;cursor:pointer;box-shadow:none!important;margin-bottom:6px}
+#modalProfile .pf-sair svg{width:19px;height:19px}
+/* paginas internas */
+#modalProfile .pf-pcab{display:flex;align-items:center;gap:12px;margin:2px 2px 14px}
+#modalProfile .pf-pcab .pf-cic{flex-basis:46px;width:46px;height:46px;border-radius:14px}
+#modalProfile .pf-pcab .pf-cic svg{width:25px;height:25px}
+#modalProfile .pf-pcab h3{margin:0;font:700 21px/1.2 Sora,Inter,sans-serif;color:var(--pf-tit)}
+#modalProfile .pf-pcab p{margin:3px 0 0;font-size:13px;line-height:1.4;color:var(--pf-txt2)}
+#modalProfile .pf-campo{display:block;margin-bottom:10px}
+#modalProfile .pf-campo small,#modalProfile .pf-ld>small{display:block;font-size:12.5px;font-weight:600;color:var(--pf-txt);margin-bottom:6px}
+#modalProfile .input{height:48px;border-radius:13px!important;border:1px solid var(--pf-borda)!important;background:var(--pf-campo)!important;color:var(--pf-txt)!important;font:500 15px Inter,sans-serif!important;padding:0 12px!important;width:100%;box-sizing:border-box;box-shadow:none!important;margin:0!important}
+#modalProfile .input:focus{outline:none;border-color:var(--pf-ouro)!important;box-shadow:0 0 0 3px rgba(217,137,24,.16)!important}
+#modalProfile select.input{-webkit-appearance:none;appearance:none;padding-right:34px!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E97800' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:right 11px center!important;background-size:17px!important;text-overflow:ellipsis}
+#modalProfile .pf-grade2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#modalProfile .pf-tile{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:14px;border:1px solid var(--pf-linha);background:var(--pf-campo);cursor:text;min-width:0}
+#modalProfile .pf-tic{flex:0 0 30px;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--pf-ic);color:var(--pf-lar)}
+#modalProfile .pf-tic svg{width:18px;height:18px}
+#modalProfile .pf-tt{flex:1;min-width:0}
+#modalProfile .pf-tt small{display:block;font-size:11px;color:var(--pf-txt2)}
+#modalProfile .pf-tile .input{height:28px;border:0!important;background:transparent!important;padding:0!important;font:700 15px Inter,sans-serif!important;box-shadow:none!important}
+#modalProfile .pf-tile select.input{padding-right:22px!important;background-position:right 0 center!important;background-size:15px!important}
+#modalProfile .pf-tile:focus-within{border-color:var(--pf-ouro);box-shadow:0 0 0 3px rgba(217,137,24,.14)}
+#modalProfile .pf-nota{margin:10px 2px 0;font-size:12px;line-height:1.45;color:var(--pf-txt2)}
+#modalProfile .pf-linha{display:flex;align-items:center;gap:12px;padding:6px 0 12px}
+#modalProfile .pf-lic{flex:0 0 26px;width:26px;height:26px;color:var(--pf-lar)}
+#modalProfile .pf-ld{flex:1;min-width:0}
+#modalProfile .pf-ld>b{display:block;font:600 15px Sora,Inter,sans-serif;color:var(--pf-tit)}
+#modalProfile .pf-ld>p{margin:4px 0 0;font-size:12.5px;line-height:1.45;color:var(--pf-txt2)}
+#modalProfile .pf-oculto{display:none!important}
+#modalProfile .pf-atleta{display:flex;align-items:center;gap:10px;margin-top:4px;padding:12px;border-radius:16px;background:rgba(201,35,35,.06);border:1px solid rgba(201,35,35,.18);cursor:pointer}
+#modalProfile .pf-aic{flex:0 0 40px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pf-card);color:var(--pf-verm);box-shadow:var(--pf-sombra)}
+#modalProfile .pf-aic svg{width:24px;height:24px}
+#modalProfile .pf-ad{flex:1;min-width:0}
+#modalProfile .pf-at{display:flex;align-items:center;gap:6px;font:700 14.5px Sora,Inter,sans-serif;color:var(--pf-verm)}
+#modalProfile .pf-i{display:inline-grid;place-items:center;width:20px;height:20px;cursor:pointer}
+#modalProfile .pf-i svg{width:17px;height:17px}
+#modalProfile .pf-ad small{display:block;font-size:11.5px;line-height:1.35;color:var(--pf-txt2);margin-top:2px}
+#modalProfile .pf-sw{-webkit-appearance:none;appearance:none;flex:0 0 46px;width:46px;height:28px;border-radius:999px;background:var(--pf-linha);border:1px solid var(--pf-borda);position:relative;cursor:pointer;transition:background .2s;margin:0}
+#modalProfile .pf-sw::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+#modalProfile .pf-sw:checked{background:var(--pf-verm);border-color:transparent}
+#modalProfile .pf-sw:checked::after{transform:translateX(18px)}
+/* metas */
+#modalProfile .pf-tdee{display:grid!important;grid-template-columns:1fr;gap:12px;background:none!important;border:0!important;padding:0!important;margin:0!important}
+#modalProfile .pf-tdee[style*="none"]{display:none!important}
+#modalProfile .pf-tdee[style*="none"]+.pf-metas-vazio{display:block}
+#modalProfile .pf-metas-vazio{display:none;padding:14px;border-radius:14px;background:var(--pf-ic);font-size:13px;color:var(--pf-txt2);text-align:center}
+#modalProfile .pf-tcol{display:flex;flex-direction:column}
+#modalProfile .pf-macros{padding-top:12px;border-top:1px solid var(--pf-linha)}
+#modalProfile .pf-mt{font:600 14px Sora,Inter,sans-serif;color:var(--pf-tit);margin-bottom:4px}
+#modalProfile .tdee-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--pf-linha);font-size:14px;color:var(--pf-txt)}
+#modalProfile .tdee-row:last-child{border-bottom:0}
+#modalProfile .tdee-row>span:first-of-type{flex:1;min-width:0}
+#modalProfile .tdee-row svg.pf-svg{flex:0 0 20px;width:20px;height:20px;color:var(--pf-lar)}
+#modalProfile .tdee-val{font:700 15.5px Sora,Inter,sans-serif;color:var(--pf-lar)!important;white-space:nowrap}
+#modalProfile .pf-v-verde{color:#2E9B3E!important}
+#modalProfile .pf-v-azul{color:#1765E8!important}
+#modalProfile .pf-v-verm{color:var(--pf-verm)!important}
+#modalProfile .pf-v-ouro{color:var(--pf-ouro)!important}
+#modalProfile .pf-v-roxo{color:#8B3FE0!important}
+html:not([data-theme="light"]) #modalProfile .pf-v-verde{color:#4ade80!important}
+html:not([data-theme="light"]) #modalProfile .pf-v-azul{color:#60a5fa!important}
+html:not([data-theme="light"]) #modalProfile .pf-v-roxo{color:#c084fc!important}
+/* alergias: chips do algRender */
+#modalProfile #algBox>div:nth-child(2){gap:7px!important}
+#modalProfile #algBox span[onclick]{border-radius:999px!important;padding:9px 13px!important;font-size:13px!important;font-weight:600!important;min-height:38px;box-sizing:border-box;display:inline-flex;align-items:center}
+#modalProfile #algBox>div:first-child{font-size:13px!important;color:var(--pf-txt2)!important;margin-bottom:12px!important}
+html[data-theme="light"] #modalProfile #algBox span[onclick][style*="surface2"]{background:#FFF6EA!important;border-color:#EEDBC2!important;color:#5A2C12!important}
+/* preferencias */
+#modalProfile .pf-bloco{padding:4px 0 14px;border-bottom:1px solid var(--pf-linha);margin-bottom:12px}
+#modalProfile .pf-bloco:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+#modalProfile .pf-bt{display:flex;align-items:center;gap:8px;font:600 14.5px Sora,Inter,sans-serif;color:var(--pf-tit);margin-bottom:10px}
+#modalProfile .pf-bt svg{width:21px;height:21px;color:var(--pf-lar)}
+#modalProfile .pf-pills{display:flex;flex-wrap:wrap;gap:7px}
+#modalProfile .lang-btn,#modalProfile .theme-btn{flex:1 1 0;min-width:44px;min-height:42px;margin:0!important;border-radius:999px!important;border:1px solid var(--pf-borda)!important;background:var(--pf-campo)!important;color:var(--pf-txt)!important;font:600 13.5px Inter,sans-serif!important;box-shadow:none!important;padding:0 10px!important}
+#modalProfile .lang-btn.active,#modalProfile .theme-btn.active,#modalProfile .theme-btn.on,#modalProfile .lang-btn.on{background:var(--pf-ic)!important;border-color:var(--pf-ouro)!important;color:var(--pf-tit)!important;box-shadow:0 0 0 2px rgba(217,137,24,.22)!important}
+#modalProfile .theme-row{display:flex;gap:7px}
+/* bel */
+#modalProfile .pf-mem{align-items:flex-start}
+#modalProfile .pf-btn-perigo{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;margin-top:6px;border-radius:14px!important;border:1.5px solid var(--pf-verm)!important;background:rgba(201,35,35,.05)!important;color:var(--pf-verm)!important;font:600 14.5px Inter,sans-serif!important;box-shadow:none!important;cursor:pointer}
+#modalProfile .pf-btn-perigo svg{width:19px;height:19px}
+/* pro */
+#modalProfile .pf-pro-h{display:flex;align-items:center;gap:8px;font:700 16px Sora,Inter,sans-serif;color:var(--pf-tit)}
+#modalProfile .pf-selo{background:linear-gradient(180deg,#F8B53A,#E07F0C);color:#fff;font:800 10.5px Inter,sans-serif;padding:3px 7px;border-radius:6px;letter-spacing:.04em}
+#modalProfile .pf-pro-v{font-size:13.5px;color:var(--pf-txt2);margin:6px 0}
+#modalProfile .pf-pro-v b{color:var(--pf-txt)}
+#modalProfile #planoStatus{font-size:13px;font-weight:600;margin:4px 0 10px}
+/* privacidade */
+#modalProfile .pf-lnk{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:6px 0;border:0!important;border-bottom:1px solid var(--pf-linha)!important;background:transparent!important;color:var(--pf-txt)!important;text-decoration:none;font:600 14.5px Inter,sans-serif;cursor:pointer;box-shadow:none!important;border-radius:0!important;text-align:left}
+#modalProfile .pf-lnk>span{flex:1}
+#modalProfile .pf-lnk>svg.pf-svg{flex:0 0 22px;width:22px;height:22px;color:var(--pf-lar)}
+#modalProfile .pf-lnk-sair{color:var(--pf-verm)!important;border-bottom:0!important}
+#modalProfile .pf-lnk-sair>svg.pf-svg{color:var(--pf-verm)}
+#modalProfile #gdprBox>div:first-child{display:none}
+#modalProfile #gdprBox button{min-height:56px}
+/* rodape salvar */
+#modalProfile .pf-rodape{display:none;position:sticky;bottom:0;z-index:3;padding:10px 16px calc(env(safe-area-inset-bottom,0px) + 12px);background:linear-gradient(transparent,var(--pf-bg) 30%)}
+#modalProfile.pf-com-salvar .pf-rodape{display:block}
+#modalProfile .pf-salvar{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;border:0!important;border-radius:16px!important;background:linear-gradient(180deg,#F8B53A 0%,#E8890F 60%,#D97706 100%)!important;color:#fff!important;font:600 16.5px Inter,sans-serif!important;box-shadow:0 8px 18px rgba(217,119,6,.3)!important;cursor:pointer;transition:opacity .15s}
+#modalProfile .pf-salvar svg{width:22px;height:22px;stroke-width:2.4}
+#modalProfile .pf-salvar:disabled{opacity:.45;box-shadow:none!important;cursor:default}
+#modalProfile .pf-salvar.pf-salvando svg{animation:ccGira .7s linear infinite}
+@media (max-width:360px){#modalProfile .pf-stats{grid-template-columns:repeat(2,1fr)}#modalProfile .pf-grade2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -4056,113 +4210,167 @@ if(_al){
 
 
 <div class="modal-overlay" id="modalProfile">
-  <div class="modal">
-    <div class="modal-handle" onclick="closeModal('modalProfile')"></div>
-    <div class="modal-title" data-i18n="profTitle">Perfil</div>
-    <!-- Avatar -->
-    <div class="prof-avatar-wrap">
-      <div>
-        <div class="prof-avatar" id="profAvatarDisplay" onclick="document.getElementById('profPhotoInput').click()"></div>
-        <div class="prof-avatar-label" data-i18n="toqueAlterarFoto">Toque para alterar foto</div>
-        <input type="file" id="profPhotoInput" accept="image/*" style="display:none" onchange="handleProfilePhoto(this)">
-      </div>
-    </div>
-    <!-- Dados pessoais -->
-    <div class="input-group"><div class="input-label" data-i18n="nomeLabel">Nome</div><input type="text" class="input" id="profName" placeholder="Seu nome"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-      <div class="input-group"><div class="input-label" data-i18n="pesoKg">Peso (kg)</div><input type="number" class="input" id="profWeight" placeholder="75" step="0.1" oninput="updateTDEEPreview()"></div>
-      <div class="input-group"><div class="input-label" data-i18n="alturaCm">Altura (cm)</div><input type="number" class="input" id="profHeight" placeholder="175" oninput="updateTDEEPreview()"></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-      <div class="input-group"><div class="input-label" data-i18n="idadeAnos">Idade</div><input type="number" class="input" id="profAge" placeholder="25" oninput="updateTDEEPreview()"></div>
-      <div class="input-group"><div class="input-label" data-i18n="sexo">Sexo</div><select class="input" id="profSex" onchange="updateTDEEPreview()"><option value="m">Masculino</option><option value="f">Feminino</option></select></div>
-    </div>
-    <!-- Nível de atividade -->
-    <div class="input-group"><div class="input-label" data-i18n="nivelAtividade">Nível de Atividade</div>
-      <select class="input" id="profActivity" onchange="updateTDEEPreview()">
-        <option value="1.2">Sedentário (sem exercício)</option>
-        <option value="1.375">Leve (1-3x por semana)</option>
-        <option value="1.55">Moderado (3-5x por semana)</option>
-        <option value="1.725">Ativo (6-7x por semana)</option>
-        <option value="1.9">Muito Ativo (2x ao dia)</option>
-      </select>
-    </div>
-    <!-- Objetivo -->
-    <div class="input-group">
-      <div class="input-label" data-i18n="objetivo">Objetivo</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:4px;">
-        <button class="goal-btn" id="profGoalMass" onclick="setProfGoal('mass')" data-i18n="massaGoal">Massa</button>
-        <button class="goal-btn" id="profGoalCut" onclick="setProfGoal('cut')">Emagrecer</button>
-        <button class="goal-btn" id="profGoalMaint" onclick="setProfGoal('maint')">Manter</button>
-      </div>
-    </div>
-    <!-- Prévia TDEE -->
-        <!-- Atleta Avancado -->
-    <div class="input-group" style="margin-top:6px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,62,100,.06);border:1px solid rgba(255,62,100,.18);border-radius:12px;padding:12px 14px;cursor:pointer;" onclick="var cb=document.getElementById('profPerformanceMode');cb.checked=!cb.checked;updateTDEEPreview();">
-        <div>
-          <div style="display:flex;align-items:center;gap:6px;"><span data-i18n="atletaAvancadoLabel" style="font-weight:700;font-size:13px;color:#ff3e64;">Atleta Avan&ccedil;ado</span><span onclick="event.stopPropagation();document.getElementById('atletaInfoModal').style.display='flex';" style="width:18px;height:18px;border-radius:50%;background:rgba(255,62,100,.25);color:#ff3e64;font-size:11px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border:1px solid rgba(255,62,100,.4);">i</span></div>
-          <div data-i18n="atletaSubtitle" style="font-size:11px;color:var(--text2);margin-top:3px;">Prote&iacute;na 3g/kg &middot; Calorias elevadas &middot; Metabolismo acelerado</div>
+  <div class="modal pf-modal">
+    <div class="pf-topo"><button type="button" class="pf-voltar" onclick="pfVoltar()"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span data-i18n="navVoltar">Voltar</span></button></div>
+    <div class="pf-corpo">
+    <!-- INICIO: saudacao + categorias -->
+    <section class="pf-pag on" data-pg="home">
+      <div class="pf-marca"><img src="logo-bestward-preta.png" alt="Bestward" class="pf-logo pf-logo-c"><img src="logo-bestward-branca.png" alt="Bestward" class="pf-logo pf-logo-e"></div>
+      <h2 class="pf-tit" data-i18n="pfTit">Perfil e Configurações</h2>
+      <p class="pf-sub" data-i18n="pfSub">Gerencie seus dados, metas, preferências e conta.</p>
+      <div class="pf-card pf-eu">
+        <div class="pf-av">
+          <div class="prof-avatar" id="profAvatarDisplay" onclick="document.getElementById('profPhotoInput').click()"></div>
+          <button type="button" class="pf-cam" onclick="document.getElementById('profPhotoInput').click()" aria-label="foto"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button>
+          <input type="file" id="profPhotoInput" accept="image/*" style="display:none" onchange="handleProfilePhoto(this)">
         </div>
-        <input type="checkbox" id="profPerformanceMode" onclick="event.stopPropagation();updateTDEEPreview();" style="width:20px;height:20px;accent-color:#ff3e64;cursor:pointer;">
-      </div>
-    </div>
-    <div class="tdee-box" id="tdeeBox" style="display:none">
-      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="tmbLabel">Metabolismo Basal (TMB)</span><span id="expTmbBtn"></span><span class="tdee-val" id="tmbVal" style="color:#f0b429;">-</span></div>
-      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="tdeeLabel">Gasto Total (TDEE)</span><span class="tdee-val" id="tdeeVal" style="color:#f0b429;">-</span></div>
-      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="metaCalorias">Meta de Calorias</span><span class="tdee-val" id="goalKcalVal" style="color:#34d399;">-</span></div>
-      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="metaAguaLabel">Meta de Água</span><span class="tdee-val" id="goalWaterVal" style="color:#38bdf8;">-</span></div>
-      <div style="border-top:1px solid #2a2f3a;margin:8px 0 4px;"></div>
-      <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;" data-i18n="macrosEst">Macros estimados</div>
-      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="proteinaPura">Proteina</span><span class="tdee-val" id="prevProtVal" style="color:#f87171;">-</span></div>
-      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="carboidratos">Carboidratos</span><span class="tdee-val" id="prevCarbVal" style="color:#fbbf24;">-</span></div>
-      <div class="tdee-row"><span style="color:var(--text2);" data-i18n="gorduraPura">Gordura</span><span class="tdee-val" id="prevFatVal" style="color:#a78bfa;">-</span></div>
-    </div>
-    <!-- Idioma -->
-    <div class="input-group" style="margin-top:4px;">
-      <div class="input-label"><span data-i18n="idiomaLabel">Idioma / Language</span></div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">
-        <button onclick="setLang('pt')" id="lang-pt" class="lang-btn">PT</button>
-        <button onclick="setLang('en')" id="lang-en" class="lang-btn">EN</button>
-        <button onclick="setLang('es')" id="lang-es" class="lang-btn">ES</button>
-        <button onclick="setLang('it')" id="lang-it" class="lang-btn">IT</button>
-        <button onclick="setLang('fr')" id="lang-fr" class="lang-btn">FR</button>
-        <button onclick="setLang('de')" id="lang-de" class="lang-btn">DE</button>
-      </div>
-    </div>
-    <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:14px 16px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:13px;font-weight:700;color:#f0b429;" data-i18n="meuPlano">Meu Plano</span><span style="background:#f0b429;color:#000;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;">PRO</span></div><div style="font-size:12px;color:#b0b8c1;" data-i18n="planoValor">Plano: <b style="color:var(--text);">€8,99/mês</b></div><div id="planoStatus" style="font-size:11px;color:#34d399;margin-top:4px;"></div><div id="planoAcoes" style="margin-top:9px;"></div></div><div style="margin:6px 0 14px"><div class="input-label" data-i18n="objetivoLabel">Objetivo</div><div class="goal-toggle">
-    <button class="goal-btn active" id="goal-mass" onclick="setGoal('mass')">Ganhar Massa</button>
-    <button class="goal-btn" id="goal-cut" onclick="setGoal('cut')">Emagrecer</button>
-  </div></div><div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:9px" id="algTitulo">Alergias e intolerâncias</div><div id="algBox"></div></div><div style="margin-top:14px"><button class="btn btn-primary" onclick="saveProfile()" style="margin-top:12px;" data-i18n="salvarAplicar">Salvar e Aplicar</button></div>
-    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
-      
-      <div id="authUserInfo" style="font-size:11px;color:var(--text2);text-align:center;margin-bottom:8px;"></div>
-      <div style="margin-bottom:14px;">
-        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;" data-i18n="conexoesTitulo">Dispositivos</div>
-        <div id="conexoesBox"></div>
-      </div>
-            <div style="margin-bottom:12px;">
-        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;" data-i18n="temaTitulo">Tema</div>
-        <div class="theme-row">
-          <button class="theme-btn" id="theme-light" onclick="setTheme('light')" data-i18n="temaClaro">Claro</button>
-          <button class="theme-btn" id="theme-dark" onclick="setTheme('dark')" data-i18n="temaEscuro">Escuro</button>
-          <button class="theme-btn" id="theme-auto" onclick="setTheme('auto')" data-i18n="temaAuto">Automático</button>
+        <div class="pf-eu-d">
+          <div class="pf-eu-l1"><b id="pfNome"></b><button type="button" class="pf-editar" onclick="pfIr('perfil')"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16-.8 4.8L8 20l11-11-4-4L4 16Z"/><path d="m13.5 6.5 4 4"/></svg><span data-i18n="pfEditar">Editar Perfil</span></button></div>
+          <div id="authUserInfo" class="pf-email"></div>
+        </div>
+        <div class="pf-stats">
+          <div><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 5a4 4 0 0 1 8 0"/><circle cx="12" cy="12" r="2"/></svg><span><small data-i18n="calcPeso">Peso</small><b id="pfSPeso">—</b></span></div>
+          <div><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2.5h10v19H7z"/><path d="M7 6h5M7 10h3M7 14h5M7 18h3"/></svg><span><small data-i18n="calcAltura">Altura</small><b id="pfSAltura">—</b></span></div>
+          <div><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M7 3v4M17 3v4M3 10h18"/></svg><span><small data-i18n="calcIdade">Idade</small><b id="pfSIdade">—</b></span></div>
+          <div><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="14" r="5"/><path d="m14 10 6-6m-5 0h5v5"/></svg><span><small data-i18n="sexo">Sexo</small><b id="pfSSexo">—</b></span></div>
         </div>
       </div>
-            <div style="margin-bottom:12px;">
-        <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;" data-i18n="capaTitulo">Capa da tela Hoje</div>
-        <div class="theme-row">
-          <button class="theme-btn" id="capa-on" onclick="setCapa(true)" data-i18n="capaMostrar">Mostrar</button>
-          <button class="theme-btn" id="capa-off" onclick="setCapa(false)" data-i18n="capaOcultar">Ocultar</button>
-        </div>
-        <div style="font-size:11px;color:var(--text2);line-height:1.55;margin-top:7px" data-i18n="capaNota">Sem a capa o app abre mais rápido e gasta menos dados.</div>
+      <div class="pf-card pf-cats">
+        <button type="button" class="pf-cat" onclick="pfIr('perfil')"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21v-1.5a7.5 7.5 0 0 1 15 0V21"/></svg></span><span class="pf-ctx"><b data-i18n="pfCPerfil"></b><small data-i18n="pfCPerfilS"></small></span><svg class="pf-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+        <button type="button" class="pf-cat" onclick="pfIr('plano')"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="14" r="7"/><circle cx="10" cy="14" r="3"/><path d="m10 14 10-10m-5 0h5v5"/></svg></span><span class="pf-ctx"><b data-i18n="pfCPlano"></b><small data-i18n="pfCPlanoS"></small></span><svg class="pf-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+        <button type="button" class="pf-cat" onclick="pfIr('metas')"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2c1 4-2 5-1 8 1.2-1 2-2 2-3.5 3 2.2 5 5.1 5 8.2a7 7 0 0 1-14 0c0-3.4 2.1-6.4 5.2-8.7-.1 2.2.3 3.5 1.3 4.4C12 8 14 6 13 2Z"/></svg></span><span class="pf-ctx"><b data-i18n="pfCMetas"></b><small data-i18n="pfCMetasS"></small></span><svg class="pf-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+        <button type="button" class="pf-cat" onclick="pfIr('alim')"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z"/><path d="M12 9v5M12 17h.01"/></svg></span><span class="pf-ctx"><b data-i18n="pfCAlim"></b><small data-i18n="pfCAlimS"></small></span><svg class="pf-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+        <button type="button" class="pf-cat" onclick="pfIr('pref')"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="18" r="2"/></svg></span><span class="pf-ctx"><b data-i18n="pfCPref"></b><small data-i18n="pfCPrefS"></small></span><svg class="pf-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+        <button type="button" class="pf-cat" onclick="pfIr('bel')"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 13.8 9.2 20 11l-6.2 1.8L12 19l-1.8-6.2L4 11l6.2-1.8L12 3Z"/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg></span><span class="pf-ctx"><b data-i18n="pfCBel"></b><small data-i18n="pfCBelS"></small></span><svg class="pf-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+        <button type="button" class="pf-cat" onclick="pfIr('pro')"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 2.4 6.2L21 11l-6.6 2.8L12 20l-2.4-6.2L3 11l6.6-2.8L12 2Z"/></svg></span><span class="pf-ctx"><b data-i18n="pfCPro"></b><small data-i18n="pfCProS"></small></span><svg class="pf-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+        <button type="button" class="pf-cat" onclick="pfIr('priv')"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 20 5v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5l8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span><span class="pf-ctx"><b data-i18n="pfCPriv"></b><small data-i18n="pfCPrivS"></small></span><svg class="pf-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
       </div>
-            <button class="btn btn-ghost" onclick="belEsquecerConfirm()" style="width:100%;margin-bottom:8px;color:var(--text2);border-color:rgba(139,149,163,.3);" data-i18n="esquecerMemoria">Apagar memória da Bel</button>
-      
-          <div style="margin-top:14px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--text2);line-height:1.6" data-i18n="avisoMedico">O Bestward é uma ferramenta de acompanhamento e não substitui consulta com médico ou nutricionista. Procure um profissional antes de mudanças importantes na alimentação, e sempre em caso de gravidez, doença crônica ou uso de medicamentos.</div><div id="legalPerfil" style="font-size:11px;text-align:center;margin-top:12px;line-height:1.9"><a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkPriv">Política de Privacidade</a><span style="color:var(--text2);margin:0 8px">&middot;</span><a href="termos.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline" data-i18n="linkTermos">Termos de Uso</a></div>
-      <div style="margin-top:18px"></div>
-      <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border)"><div id="gdprBox" style="margin-bottom:16px"></div><div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border)"><button class="btn btn-ghost" onclick="doSignOut()" style="width:100%;color:#f87171;border-color:rgba(248,113,113,.3);" data-i18n="sairConta">Sair da conta</button></div></div>
+      <div class="pf-aviso"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01"/></svg><span data-i18n="avisoMedico">O Bestward é uma ferramenta de acompanhamento e não substitui consulta com médico ou nutricionista. Procure um profissional antes de mudanças importantes na alimentação, e sempre em caso de gravidez, doença crônica ou uso de medicamentos.</span></div>
+      <button type="button" class="pf-sair" onclick="pfSair()"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg><span data-i18n="sairConta">Sair da conta</span></button>
+    </section>
+    <!-- PERFIL -->
+    <section class="pf-pag" data-pg="perfil" data-edita="1">
+      <div class="pf-pcab"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21v-1.5a7.5 7.5 0 0 1 15 0V21"/></svg></span><div><h3 data-i18n="pfCPerfil"></h3><p data-i18n="pfCPerfilS"></p></div></div>
+      <div class="pf-card">
+        <label class="pf-campo"><small data-i18n="nomeLabel">Nome</small><input type="text" class="input" id="profName" placeholder="Seu nome"></label>
+        <div class="pf-grade2">
+          <label class="pf-tile"><span class="pf-tic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 5a4 4 0 0 1 8 0"/><circle cx="12" cy="12" r="2"/></svg></span><span class="pf-tt"><small data-i18n="pfPesoKg"></small><input type="number" inputmode="decimal" class="input" id="profWeight" placeholder="75" step="0.1" oninput="updateTDEEPreview()"></span></label>
+          <label class="pf-tile"><span class="pf-tic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2.5h10v19H7z"/><path d="M7 6h5M7 10h3M7 14h5M7 18h3"/></svg></span><span class="pf-tt"><small data-i18n="pfAlturaCm"></small><input type="number" inputmode="numeric" class="input" id="profHeight" placeholder="175" oninput="updateTDEEPreview()"></span></label>
+          <label class="pf-tile"><span class="pf-tic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M7 3v4M17 3v4M3 10h18"/></svg></span><span class="pf-tt"><small data-i18n="pfIdadeAnos"></small><input type="number" inputmode="numeric" class="input" id="profAge" placeholder="25" oninput="updateTDEEPreview()"></span></label>
+          <label class="pf-tile"><span class="pf-tic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="14" r="5"/><path d="m14 10 6-6m-5 0h5v5"/></svg></span><span class="pf-tt"><small data-i18n="sexo"></small><select class="input" id="profSex" onchange="updateTDEEPreview()"><option value="m">Masculino</option><option value="f">Feminino</option></select></span></label>
+        </div>
+        <p class="pf-nota" data-i18n="pfFotoNota">Toque na foto, na tela inicial, para trocar a imagem.</p>
+      </div>
+    </section>
+    <!-- PLANO E OBJETIVO -->
+    <section class="pf-pag" data-pg="plano" data-edita="1">
+      <div class="pf-pcab"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="14" r="7"/><circle cx="10" cy="14" r="3"/><path d="m10 14 10-10m-5 0h5v5"/></svg></span><div><h3 data-i18n="pfCPlano"></h3><p data-i18n="pfCPlanoS"></p></div></div>
+      <div class="pf-card">
+        <div class="pf-linha"><svg class="pf-svg pf-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="15.5" cy="4.5" r="2"/><path d="m12 8-3 4 4 2 2-3 3 2 2 5M9 12l-4 1-2 4M13 14l-2 4-4 3"/></svg><div class="pf-ld"><small data-i18n="nivelAtividade">Nível de Atividade</small>
+          <select class="input" id="profActivity" onchange="updateTDEEPreview()">
+            <option value="1.2">Sedentário (sem exercício)</option>
+            <option value="1.375">Leve (1-3x por semana)</option>
+            <option value="1.55">Moderado (3-5x por semana)</option>
+            <option value="1.725">Ativo (6-7x por semana)</option>
+            <option value="1.9">Muito Ativo (2x ao dia)</option>
+          </select></div></div>
+        <div class="pf-linha"><svg class="pf-svg pf-lic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="14" r="7"/><circle cx="10" cy="14" r="3"/><path d="m10 14 10-10m-5 0h5v5"/></svg><div class="pf-ld"><small data-i18n="pfObjPrincipal">Objetivo Principal</small>
+          <select class="input" id="pfGoalSel" onchange="setProfGoal(this.value)"><option value="mass" data-i18n="ganharMassa">Ganhar Massa</option><option value="cut" data-i18n="emagrecer">Emagrecer</option><option value="maint" data-i18n="manter">Manter Peso</option></select></div></div>
+        <div class="pf-oculto" aria-hidden="true">
+          <button class="goal-btn" id="profGoalMass" onclick="setProfGoal('mass')" tabindex="-1">Massa</button>
+          <button class="goal-btn" id="profGoalCut" onclick="setProfGoal('cut')" tabindex="-1">Emagrecer</button>
+          <button class="goal-btn" id="profGoalMaint" onclick="setProfGoal('maint')" tabindex="-1">Manter</button>
+          <button class="goal-btn active" id="goal-mass" onclick="setGoal('mass')" tabindex="-1">Ganhar Massa</button>
+          <button class="goal-btn" id="goal-cut" onclick="setGoal('cut')" tabindex="-1">Emagrecer</button>
+        </div>
+        <label class="pf-atleta">
+          <span class="pf-aic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h3v6H3zM18 9h3v6h-3zM6 11h12v2H6zM1 10v4M23 10v4"/></svg></span>
+          <span class="pf-ad"><span class="pf-at"><span data-i18n="atletaAvancadoLabel">Atleta Avançado</span><span class="pf-i" role="button" tabindex="0" onclick="event.preventDefault();event.stopPropagation();document.getElementById('atletaInfoModal').style.display='flex';"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01"/></svg></span></span><small data-i18n="atletaSubtitle">Proteína 3g/kg · Calorias elevadas · Metabolismo acelerado</small></span>
+          <input type="checkbox" id="profPerformanceMode" class="pf-sw" onchange="updateTDEEPreview()">
+        </label>
+        <p class="pf-nota" data-i18n="pfAtletaNota">Muda proteína e calorias. Use só se treina pesado com acompanhamento profissional.</p>
+      </div>
+    </section>
+    <!-- METAS E CALCULOS -->
+    <section class="pf-pag" data-pg="metas">
+      <div class="pf-pcab"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2c1 4-2 5-1 8 1.2-1 2-2 2-3.5 3 2.2 5 5.1 5 8.2a7 7 0 0 1-14 0c0-3.4 2.1-6.4 5.2-8.7-.1 2.2.3 3.5 1.3 4.4C12 8 14 6 13 2Z"/></svg></span><div><h3 data-i18n="pfCMetas"></h3><p data-i18n="pfCMetasS"></p></div></div>
+      <div class="pf-card">
+        <div class="tdee-box pf-tdee" id="tdeeBox" style="display:none">
+          <div class="pf-tcol">
+            <div class="tdee-row"><span data-i18n="tmbLabel">Metabolismo Basal (TMB)</span><span id="expTmbBtn"></span><span class="tdee-val" id="tmbVal">-</span></div>
+            <div class="tdee-row"><span data-i18n="tdeeLabel">Gasto Total (TDEE)</span><span class="tdee-val" id="tdeeVal">-</span></div>
+            <div class="tdee-row"><span data-i18n="metaCalorias">Meta de Calorias</span><span class="tdee-val pf-v-verde" id="goalKcalVal">-</span></div>
+            <div class="tdee-row"><span data-i18n="metaAguaLabel">Meta de Água</span><span class="tdee-val pf-v-azul" id="goalWaterVal">-</span></div>
+          </div>
+          <div class="pf-tcol pf-macros">
+            <div class="pf-mt" data-i18n="macrosEst">Macros estimados</div>
+            <div class="tdee-row"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7c-2 0-3 1.5-3 3.5S5 14 7 14h2l2-2h3l2 2h1c2 0 3-1.5 3-3.5S19 7 17 7h-2l-2 2h-2L9 7H7Z"/><path d="m10 9-2 3m8-3 2 3"/></svg><span data-i18n="proteinaPura">Proteína</span><span class="tdee-val pf-v-verm" id="prevProtVal">-</span></div>
+            <div class="tdee-row"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22V4M12 9c-4 0-6-2-7-5 4 0 6 2 7 5Zm0 5c4 0 6-2 7-5-4 0-6 2-7 5Z"/></svg><span data-i18n="carboidratos">Carboidratos</span><span class="tdee-val pf-v-ouro" id="prevCarbVal">-</span></div>
+            <div class="tdee-row"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5S5.5 10 5.5 14.5a6.5 6.5 0 0 0 13 0C18.5 10 12 2.5 12 2.5Z"/></svg><span data-i18n="gorduraPura">Gordura</span><span class="tdee-val pf-v-roxo" id="prevFatVal">-</span></div>
+          </div>
+        </div>
+        <div class="pf-metas-vazio" data-i18n="pfMetasVazio">Preencha peso, altura e idade em Perfil para ver os cálculos.</div>
+        <p class="pf-nota" data-i18n="pfMetasNota">São estimativas (Mifflin-St Jeor × atividade). A meta de calorias muda com o objetivo; a de água é peso × 35 ml.</p>
+      </div>
+    </section>
+    <!-- ALIMENTACAO -->
+    <section class="pf-pag" data-pg="alim">
+      <div class="pf-pcab"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z"/><path d="M12 9v5M12 17h.01"/></svg></span><div><h3 data-i18n="pfCAlim"></h3><p data-i18n="pfCAlimS"></p></div></div>
+      <div class="pf-card"><div class="pf-oculto" id="algTitulo">Alergias e intolerâncias</div><div id="algBox"></div></div>
+    </section>
+    <!-- PREFERENCIAS -->
+    <section class="pf-pag" data-pg="pref">
+      <div class="pf-pcab"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="18" r="2"/></svg></span><div><h3 data-i18n="pfCPref"></h3><p data-i18n="pfCPrefS"></p></div></div>
+      <div class="pf-card">
+        <div class="pf-bloco"><div class="pf-bt"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg><span data-i18n="idiomaLabel">Idioma</span></div>
+          <div class="pf-pills">
+            <button onclick="setLang('pt')" id="lang-pt" class="lang-btn">PT</button><button onclick="setLang('en')" id="lang-en" class="lang-btn">EN</button><button onclick="setLang('es')" id="lang-es" class="lang-btn">ES</button><button onclick="setLang('it')" id="lang-it" class="lang-btn">IT</button><button onclick="setLang('fr')" id="lang-fr" class="lang-btn">FR</button><button onclick="setLang('de')" id="lang-de" class="lang-btn">DE</button>
+          </div></div>
+        <div class="pf-bloco"><div class="pf-bt"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.8 8.8 0 1 0 20.5 15.2Z"/></svg><span data-i18n="temaTitulo">Tema</span></div>
+          <div class="theme-row pf-pills">
+            <button class="theme-btn" id="theme-light" onclick="setTheme('light')" data-i18n="temaClaro">Claro</button>
+            <button class="theme-btn" id="theme-dark" onclick="setTheme('dark')" data-i18n="temaEscuro">Escuro</button>
+            <button class="theme-btn" id="theme-auto" onclick="setTheme('auto')" data-i18n="temaAuto">Automático</button>
+          </div></div>
+        <div class="pf-bloco"><div class="pf-bt"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/></svg><span data-i18n="capaTitulo">Capa da tela Hoje</span></div>
+          <div class="theme-row pf-pills">
+            <button class="theme-btn" id="capa-on" onclick="setCapa(true)" data-i18n="capaMostrar">Mostrar</button>
+            <button class="theme-btn" id="capa-off" onclick="setCapa(false)" data-i18n="capaOcultar">Ocultar</button>
+          </div>
+          <p class="pf-nota" data-i18n="capaNota">Sem a capa o app abre mais rápido e gasta menos dados.</p></div>
+        <div class="pf-bloco"><div class="pf-bt"><svg class="pf-svg" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg><span data-i18n="conexoesTitulo">Dispositivos</span></div><div id="conexoesBox"></div></div>
+      </div>
+    </section>
+    <!-- BEL -->
+    <section class="pf-pag" data-pg="bel">
+      <div class="pf-pcab"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 13.8 9.2 20 11l-6.2 1.8L12 19l-1.8-6.2L4 11l6.2-1.8L12 3Z"/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></svg></span><div><h3 data-i18n="pfCBel"></h3><p data-i18n="pfCBelS"></p></div></div>
+      <div class="pf-card">
+        <div class="pf-linha pf-mem"><svg class="pf-svg pf-lic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a3 3 0 0 0-5.8 1.1A3.5 3.5 0 0 0 4 11a3.5 3.5 0 0 0 2.2 6.1A3 3 0 0 0 12 19V4Zm0 0a3 3 0 0 1 5.8 1.1A3.5 3.5 0 0 1 20 11a3.5 3.5 0 0 1-2.2 6.1A3 3 0 0 1 12 19V4Z"/></svg><div class="pf-ld"><b data-i18n="pfMemTit">Memória da Bel</b><p data-i18n="pfMemTxt">A Bel guarda suas preferências, restrições e notas das conversas para personalizar as respostas. Apagar não exclui sua conta nem seus registros.</p></div></div>
+        <button type="button" class="pf-btn-perigo" onclick="belEsquecerConfirm()"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 14h10l1-14M9 7V4h6v3"/></svg><span data-i18n="esquecerMemoria">Apagar memória da Bel</span></button>
+      </div>
+    </section>
+    <!-- PLANO PRO -->
+    <section class="pf-pag" data-pg="pro">
+      <div class="pf-pcab"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 2.4 6.2L21 11l-6.6 2.8L12 20l-2.4-6.2L3 11l6.6-2.8L12 2Z"/></svg></span><div><h3 data-i18n="pfCPro"></h3><p data-i18n="pfCProS"></p></div></div>
+      <div class="pf-card pf-pro">
+        <div class="pf-pro-h"><b data-i18n="meuPlano">Meu Plano</b><span class="pf-selo">PRO</span></div>
+        <div class="pf-pro-v" data-i18n="planoValor">Plano: <b>€8,99/mês</b></div>
+        <div id="planoStatus"></div><div id="planoAcoes"></div>
+      </div>
+    </section>
+    <!-- PRIVACIDADE E CONTA -->
+    <section class="pf-pag" data-pg="priv">
+      <div class="pf-pcab"><span class="pf-cic"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 20 5v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5l8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span><div><h3 data-i18n="pfCPriv"></h3><p data-i18n="pfCPrivS"></p></div></div>
+      <div class="pf-card">
+        <a class="pf-lnk" href="privacidade.html" target="_blank" rel="noopener"><svg class="pf-svg" viewBox="0 0 24 24"><path d="M6 2.5h8l4 4v15H6z"/><path d="M14 2.5v4h4M9 12h6M9 16h6"/></svg><span data-i18n="linkPriv">Política de Privacidade</span><svg class="pf-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+        <a class="pf-lnk" href="termos.html" target="_blank" rel="noopener"><svg class="pf-svg" viewBox="0 0 24 24"><path d="M6 2.5h8l4 4v15H6z"/><path d="M14 2.5v4h4M9 12h6M9 16h6"/></svg><span data-i18n="linkTermos">Termos de Uso</span><svg class="pf-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+        <div id="gdprBox"></div>
+        <button type="button" class="pf-lnk pf-lnk-sair" onclick="pfSair()"><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 3v18"/></svg><span data-i18n="sairConta">Sair da conta</span><svg class="pf-seta" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+        <span id="legalPerfil" class="pf-oculto"></span>
+      </div>
+    </section>
     </div>
+    <div class="pf-rodape"><button type="button" class="pf-salvar" id="pfSalvarBtn" onclick="pfSalvar()" disabled><svg class="pf-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span data-i18n="pfSalvar">Salvar Alterações</span></button></div>
   </div>
 </div>
 
@@ -5985,6 +6193,7 @@ function setProfGoal(g){
   // Sincroniza botões da tela principal
   document.getElementById('goal-mass').className='goal-btn'+(g==='mass'?' active':'');
   document.getElementById('goal-cut').className='goal-btn'+(g==='cut'?' active':'');
+  try{ var _gs=document.getElementById('pfGoalSel'); if(_gs) _gs.value=(g==='cut'||g==='maint')?g:'mass'; }catch(e){}
   updateTDEEPreview();
 }
 
@@ -6007,6 +6216,7 @@ function openProfile(){
   renderProfileAvatar(p.photo||null);
   if(document.getElementById('profPerformanceMode'))document.getElementById('profPerformanceMode').checked=!!(p.performanceMode);
   updateTDEEPreview();
+  try{ pfAbrir(); }catch(e){}
   openModal("modalProfile");
 }
 
@@ -6040,11 +6250,54 @@ function saveProfile(){
   document.getElementById('goal-cut').className='goal-btn'+(state.goal==='cut'?' active':'');
   checkApiKeyBanner();
   renderToday();
-  closeModal("modalProfile");
-  var nome=state.profile.name?', '+state.profile.name+'!':'!';
-  showToast("Perfil salvo"+nome,"success");
+  try{ pfAposSalvar(); }catch(e){ closeModal("modalProfile"); }
+  showToast(tx('pfSalvo'),"success");
 }
 
+
+/* ===== 02/11: PERFIL E CONFIGURACOES em paginas curtas (guia do Felipe) =====
+   Inicio = saudacao + categorias. Cada categoria abre uma pagina com Voltar.
+   "Salvar alteracoes" fica fixo no rodape, so nas paginas com formulario, e
+   so liga depois de uma mudanca. Sair com mudanca pendente pede confirmacao. */
+var _pf={pg:"home",sujo:false,goal:null};
+function pfAbrir(){ _pf.goal=state.goal||"mass"; _pfSujo(false); pfIr("home",true); pfResumo(); }
+function _pfSujo(v){ _pf.sujo=!!v; var b=document.getElementById("pfSalvarBtn"); if(b){ b.disabled=!v; b.classList.remove("pf-salvando"); } }
+function pfIr(pg,semRolar){
+  var m=document.getElementById("modalProfile"); if(!m) return;
+  _pf.pg=pg; var edita=false;
+  m.querySelectorAll(".pf-pag").forEach(function(s){ var on=s.getAttribute("data-pg")===pg; s.classList.toggle("on",on); if(on&&s.getAttribute("data-edita")) edita=true; });
+  m.classList.toggle("pf-com-salvar",edita);
+  m.classList.toggle("pf-no-inicio",pg==="home");
+  if(pg==="metas"){ try{ updateTDEEPreview(); }catch(e){} }
+  if(pg==="alim"){ try{ algRender(); }catch(e){} }
+  try{ var c=m.querySelector(".pf-modal"); if(c) c.scrollTop=0; }catch(e){}
+}
+function _pfReverter(){ state.goal=_pf.goal||state.goal; openProfile(); }
+function pfVoltar(){
+  if(_pf.sujo){ if(!confirm(tx("pfDescartar"))) return; _pfReverter(); return; }
+  if(_pf.pg!=="home"){ pfIr("home"); return; }
+  closeModal("modalProfile");
+}
+function pfSalvar(){
+  var b=document.getElementById("pfSalvarBtn"); if(!b||b.disabled) return;
+  b.classList.add("pf-salvando"); b.disabled=true;
+  setTimeout(function(){ try{ saveProfile(); }catch(e){ _pfSujo(true); try{ showToast(tx("tstErro")+": "+e.message,"error"); }catch(_){} } },120);
+}
+function pfAposSalvar(){ _pf.goal=state.goal; _pfSujo(false); pfResumo(); pfIr("home"); }
+function pfSair(){ if(_pf.sujo&&!confirm(tx("pfDescartar"))) return; if(!confirm(tx("pfSairConf"))) return; doSignOut(); }
+function pfResumo(){
+  var p=state.profile||{}, $=function(i){return document.getElementById(i);};
+  if(!$("pfNome")) return;
+  $("pfNome").textContent=p.name||tx("pfSemNome");
+  var ws=state.weights||[], w=+p.weight||0; try{ if(ws.length&&+ws[ws.length-1].kg) w=+ws[ws.length-1].kg; }catch(e){}
+  $("pfSPeso").textContent=w?(String(Math.round(w*10)/10).replace(".",currentLang==="en"?".":",")+" kg"):"—";
+  $("pfSAltura").textContent=+p.height?(+p.height+" cm"):"—";
+  $("pfSIdade").textContent=+p.age?tx("pfAnos",+p.age):"—";
+  var t=T[currentLang]||T.pt;
+  $("pfSSexo").textContent=p.sex==="f"?(t.fem||"Feminino"):(p.sex?(t.masc||"Masculino"):"—");
+}
+document.addEventListener("input",function(e){ var t=e.target; if(t&&t.closest&&t.closest('#modalProfile [data-edita]')) _pfSujo(true); },true);
+document.addEventListener("change",function(e){ var t=e.target; if(t&&t.closest&&t.closest('#modalProfile [data-edita]')) _pfSujo(true); },true);
 function openModal(id){ setTimeout(_histSincronizar,30);
   /* A tela do PRO e montada na hora: usa a logo e o avatar da Bel que ja
      estao no DOM, e a lista de beneficios acompanha o idioma corrente. */
@@ -8851,6 +9104,41 @@ var TX={
  snNoite:{pt:'noite',en:'night',es:'noche',it:'notte',fr:'nuit',de:'Nacht'},
  snRegistra:{pt:'Toque para registrar a noite.',en:'Tap to log last night.',es:'Toca para registrar la noche.',it:'Tocca per registrare la notte.',fr:'Touchez pour enregistrer la nuit.',de:'Tippen Sie, um die Nacht zu erfassen.'},
  snCorrigir:{pt:'Toque em outro valor para corrigir ou no marcado para apagar.',en:'Tap another value to correct, or the selected one to delete.',es:'Toca otro valor para corregir o el marcado para borrar.',it:'Tocca un altro valore per correggere o quello selezionato per cancellare.',fr:'Touchez une autre valeur pour corriger, ou celle choisie pour effacer.',de:'Tippen Sie auf einen anderen Wert zum Korrigieren oder auf den gewählten zum Löschen.'},
+ pfTit:{pt:'Perfil e Configurações',en:'Profile and Settings',es:'Perfil y Ajustes',it:'Profilo e Impostazioni',fr:'Profil et Réglages',de:'Profil und Einstellungen'},
+ pfSub:{pt:'Gerencie seus dados, metas, preferências e conta.',en:'Manage your data, goals, preferences and account.',es:'Gestiona tus datos, metas, preferencias y cuenta.',it:'Gestisci dati, obiettivi, preferenze e account.',fr:'Gérez vos données, objectifs, préférences et compte.',de:'Verwalten Sie Daten, Ziele, Einstellungen und Konto.'},
+ pfEditar:{pt:'Editar Perfil',en:'Edit Profile',es:'Editar perfil',it:'Modifica profilo',fr:'Modifier le profil',de:'Profil bearbeiten'},
+ pfSemNome:{pt:'Seu nome',en:'Your name',es:'Tu nombre',it:'Il tuo nome',fr:'Votre nom',de:'Ihr Name'},
+ pfAnos:{pt:'{0} anos',en:'{0} yrs',es:'{0} años',it:'{0} anni',fr:'{0} ans',de:'{0} J.'},
+ pfCPerfil:{pt:'Perfil',en:'Profile',es:'Perfil',it:'Profilo',fr:'Profil',de:'Profil'},
+ pfCPerfilS:{pt:'Nome, peso, altura, idade e sexo.',en:'Name, weight, height, age and sex.',es:'Nombre, peso, altura, edad y sexo.',it:'Nome, peso, altezza, età e sesso.',fr:'Nom, poids, taille, âge et sexe.',de:'Name, Gewicht, Größe, Alter und Geschlecht.'},
+ pfCPlano:{pt:'Plano e Objetivo',en:'Plan and Goal',es:'Plan y Objetivo',it:'Piano e Obiettivo',fr:'Plan et Objectif',de:'Plan und Ziel'},
+ pfCPlanoS:{pt:'Nível de atividade e objetivo principal.',en:'Activity level and main goal.',es:'Nivel de actividad y objetivo principal.',it:'Livello di attività e obiettivo principale.',fr:"Niveau d'activité et objectif principal.",de:'Aktivitätslevel und Hauptziel.'},
+ pfCMetas:{pt:'Metas e Cálculos',en:'Goals and Calculations',es:'Metas y Cálculos',it:'Obiettivi e Calcoli',fr:'Objectifs et Calculs',de:'Ziele und Berechnungen'},
+ pfCMetasS:{pt:'Seus principais cálculos e metas diárias.',en:'Your main calculations and daily goals.',es:'Tus cálculos principales y metas diarias.',it:'I tuoi calcoli e obiettivi giornalieri.',fr:'Vos principaux calculs et objectifs quotidiens.',de:'Ihre wichtigsten Berechnungen und Tagesziele.'},
+ pfCAlim:{pt:'Alergias e Intolerâncias',en:'Allergies and Intolerances',es:'Alergias e Intolerancias',it:'Allergie e Intolleranze',fr:'Allergies et Intolérances',de:'Allergien und Unverträglichkeiten'},
+ pfCAlimS:{pt:'O que você não pode comer. A Bel avisa antes.',en:'What you cannot eat. Bel warns you first.',es:'Lo que no puedes comer. Bel te avisa antes.',it:'Ciò che non puoi mangiare. Bel ti avvisa prima.',fr:'Ce que vous ne pouvez pas manger. Bel vous prévient.',de:'Was Sie nicht essen dürfen. Bel warnt Sie vorher.'},
+ pfCPref:{pt:'Preferências',en:'Preferences',es:'Preferencias',it:'Preferenze',fr:'Préférences',de:'Einstellungen'},
+ pfCPrefS:{pt:'Idioma, tema, capa e dispositivos.',en:'Language, theme, cover and devices.',es:'Idioma, tema, portada y dispositivos.',it:'Lingua, tema, copertina e dispositivi.',fr:'Langue, thème, couverture et appareils.',de:'Sprache, Design, Titelbild und Geräte.'},
+ pfCBel:{pt:'Bel (IA)',en:'Bel (AI)',es:'Bel (IA)',it:'Bel (IA)',fr:'Bel (IA)',de:'Bel (KI)'},
+ pfCBelS:{pt:'Memória e personalização da sua assistente.',en:'Memory and personalization of your assistant.',es:'Memoria y personalización de tu asistente.',it:'Memoria e personalizzazione della tua assistente.',fr:'Mémoire et personnalisation de votre assistante.',de:'Gedächtnis und Personalisierung Ihrer Assistentin.'},
+ pfCPro:{pt:'Plano PRO',en:'PRO Plan',es:'Plan PRO',it:'Piano PRO',fr:'Offre PRO',de:'PRO-Tarif'},
+ pfCProS:{pt:'Estado da assinatura e cobrança.',en:'Subscription status and billing.',es:'Estado de la suscripción y cobro.',it:"Stato dell'abbonamento e addebiti.",fr:"État de l'abonnement et facturation.",de:'Abostatus und Abrechnung.'},
+ pfCPriv:{pt:'Privacidade e Conta',en:'Privacy and Account',es:'Privacidad y Cuenta',it:'Privacy e Account',fr:'Confidentialité et Compte',de:'Datenschutz und Konto'},
+ pfCPrivS:{pt:'Política, termos, seus dados e a conta.',en:'Policy, terms, your data and account.',es:'Política, términos, tus datos y la cuenta.',it:"Informativa, termini, i tuoi dati e l'account.",fr:'Politique, conditions, vos données et le compte.',de:'Richtlinie, Bedingungen, Ihre Daten und Konto.'},
+ pfPesoKg:{pt:'Peso (kg)',en:'Weight (kg)',es:'Peso (kg)',it:'Peso (kg)',fr:'Poids (kg)',de:'Gewicht (kg)'},
+ pfAlturaCm:{pt:'Altura (cm)',en:'Height (cm)',es:'Altura (cm)',it:'Altezza (cm)',fr:'Taille (cm)',de:'Größe (cm)'},
+ pfIdadeAnos:{pt:'Idade (anos)',en:'Age (years)',es:'Edad (años)',it:'Età (anni)',fr:'Âge (ans)',de:'Alter (Jahre)'},
+ pfFotoNota:{pt:'Para trocar a foto, toque nela na tela inicial do Perfil.',en:'To change your photo, tap it on the Profile home.',es:'Para cambiar la foto, tócala en el inicio del Perfil.',it:'Per cambiare la foto, toccala nella home del Profilo.',fr:"Pour changer la photo, touchez-la sur l'accueil du Profil.",de:'Um das Foto zu ändern, tippen Sie es auf der Profil-Startseite an.'},
+ pfObjPrincipal:{pt:'Objetivo Principal',en:'Main Goal',es:'Objetivo Principal',it:'Obiettivo Principale',fr:'Objectif Principal',de:'Hauptziel'},
+ pfAtletaNota:{pt:'Aumenta proteína e calorias. Use só se treina pesado, de preferência com acompanhamento profissional.',en:'Raises protein and calories. Use only if you train hard, ideally with professional guidance.',es:'Aumenta proteína y calorías. Úsalo solo si entrenas fuerte, idealmente con un profesional.',it:'Aumenta proteine e calorie. Usalo solo se ti alleni duramente, meglio se seguito da un professionista.',fr:"Augmente protéines et calories. À utiliser seulement si vous vous entraînez dur, idéalement avec un professionnel.",de:'Erhöht Protein und Kalorien. Nur nutzen, wenn Sie hart trainieren, idealerweise mit fachlicher Begleitung.'},
+ pfMetasVazio:{pt:'Preencha peso, altura e idade em Perfil para ver os cálculos.',en:'Fill in weight, height and age in Profile to see the calculations.',es:'Completa peso, altura y edad en Perfil para ver los cálculos.',it:'Compila peso, altezza ed età in Profilo per vedere i calcoli.',fr:'Renseignez poids, taille et âge dans Profil pour voir les calculs.',de:'Tragen Sie Gewicht, Größe und Alter im Profil ein, um die Berechnungen zu sehen.'},
+ pfMetasNota:{pt:'São estimativas (Mifflin-St Jeor × nível de atividade). A meta de calorias muda com o objetivo; a de água é peso × 35 ml.',en:'These are estimates (Mifflin-St Jeor × activity level). The calorie goal follows your goal; water is weight × 35 ml.',es:'Son estimaciones (Mifflin-St Jeor × nivel de actividad). La meta calórica sigue tu objetivo; el agua es peso × 35 ml.',it:"Sono stime (Mifflin-St Jeor × livello di attività). L'obiettivo calorico segue il tuo obiettivo; l'acqua è peso × 35 ml.",fr:"Ce sont des estimations (Mifflin-St Jeor × niveau d'activité). L'objectif calorique suit votre objectif ; l'eau = poids × 35 ml.",de:'Dies sind Schätzungen (Mifflin-St Jeor × Aktivitätslevel). Das Kalorienziel folgt Ihrem Ziel; Wasser = Gewicht × 35 ml.'},
+ pfMemTit:{pt:'Memória da Bel',en:"Bel's memory",es:'Memoria de Bel',it:'Memoria di Bel',fr:'Mémoire de Bel',de:'Bels Gedächtnis'},
+ pfMemTxt:{pt:'A Bel guarda suas preferências, restrições e notas das conversas para personalizar as respostas. Apagar a memória não exclui sua conta nem seus registros.',en:'Bel keeps your preferences, restrictions and chat notes to personalize answers. Erasing her memory does not delete your account or your logs.',es:'Bel guarda tus preferencias, restricciones y notas de las conversaciones para personalizar las respuestas. Borrar la memoria no elimina tu cuenta ni tus registros.',it:"Bel conserva preferenze, restrizioni e note delle conversazioni per personalizzare le risposte. Cancellare la memoria non elimina l'account né i registri.",fr:"Bel garde vos préférences, restrictions et notes de conversation pour personnaliser ses réponses. Effacer sa mémoire ne supprime ni votre compte ni vos données.",de:'Bel speichert Vorlieben, Einschränkungen und Gesprächsnotizen, um Antworten anzupassen. Das Löschen des Gedächtnisses löscht weder Konto noch Einträge.'},
+ pfSalvar:{pt:'Salvar Alterações',en:'Save Changes',es:'Guardar cambios',it:'Salva modifiche',fr:'Enregistrer',de:'Änderungen speichern'},
+ pfSalvo:{pt:'Alterações salvas.',en:'Changes saved.',es:'Cambios guardados.',it:'Modifiche salvate.',fr:'Modifications enregistrées.',de:'Änderungen gespeichert.'},
+ pfDescartar:{pt:'Você tem alterações não salvas. Descartar e sair?',en:'You have unsaved changes. Discard and leave?',es:'Tienes cambios sin guardar. ¿Descartar y salir?',it:'Hai modifiche non salvate. Scartarle e uscire?',fr:'Vous avez des modifications non enregistrées. Les abandonner ?',de:'Sie haben ungespeicherte Änderungen. Verwerfen und verlassen?'},
+ pfSairConf:{pt:'Sair da conta neste aparelho? Seus dados continuam salvos na nuvem.',en:'Sign out on this device? Your data stays saved in the cloud.',es:'¿Cerrar sesión en este dispositivo? Tus datos siguen guardados en la nube.',it:'Uscire da questo dispositivo? I tuoi dati restano salvati nel cloud.',fr:'Se déconnecter sur cet appareil ? Vos données restent enregistrées dans le cloud.',de:'Auf diesem Gerät abmelden? Ihre Daten bleiben in der Cloud gespeichert.'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
  pgrF1D:{pt:'Compare suas fotos e veja mudanças reais.',en:'Compare your photos and see real changes.',es:'Compara tus fotos y ve cambios reales.',it:'Confronta le tue foto e vedi cambiamenti reali.',fr:'Comparez vos photos et voyez de vrais changements.',de:'Vergleichen Sie Ihre Fotos und sehen Sie echte Veränderungen.'},
