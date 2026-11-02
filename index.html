@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261102_perfil2";
+var APP_VERSION="20261102_mais";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3626,6 +3626,54 @@ html #modalProfile.modal-overlay .pf-salvar.pf-salvando svg{animation:ccGira .7s
 @media (max-width:360px){#modalProfile .pf-stats{grid-template-columns:repeat(2,1fr)}#modalProfile .pf-grade2{grid-template-columns:1fr}}
 html #modalProfile.modal-overlay .pf-bloco:has(#conexoesBox:empty){display:none}
 html #modalProfile.modal-overlay .pf-bloco:has(+ .pf-bloco:has(#conexoesBox:empty)){border-bottom:0;margin-bottom:0;padding-bottom:0}
+
+/* ===== 02/11: tela MAIS no modelo novo do Felipe ===== */
+#tab-mais{--mx-card:#1A1A1A;--mx-borda:rgba(240,180,41,.18);--mx-ouro:#E9A23B;--mx-lar:#F08A1C;--mx-tit:#F4EDE6;--mx-txt2:#A8A29E;--mx-ic:rgba(240,180,41,.12);--mx-sombra:0 6px 18px rgba(0,0,0,.35)}
+html[data-theme="light"] #tab-mais{--mx-card:#FFFDF9;--mx-borda:#F0E2CF;--mx-ouro:#D88918;--mx-lar:#C8740C;--mx-tit:#2A1A10;--mx-txt2:#6B5B50;--mx-ic:#FCEFDD;--mx-sombra:0 4px 14px rgba(120,70,20,.07)}
+#tab-mais svg{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#tab-mais .mx-marca{display:flex;justify-content:center;margin:-46px 0 14px;pointer-events:none}
+#tab-mais .mx-marca img{height:40px;width:auto}
+#tab-mais .mx-logo-e{display:none}
+html:not([data-theme="light"]) #tab-mais .mx-logo-c{display:none}
+html:not([data-theme="light"]) #tab-mais .mx-logo-e{display:block}
+#tab-mais .mx-eu{display:flex;align-items:center;gap:14px;padding:16px;border-radius:22px;background:var(--mx-card);border:1px solid var(--mx-borda);box-shadow:var(--mx-sombra);margin-bottom:12px}
+#tab-mais .mx-av{position:relative;flex:0 0 92px;width:92px;height:92px;border-radius:50%;padding:0;border:3px solid var(--mx-ouro)!important;background:var(--mx-ic)!important;box-shadow:0 4px 14px rgba(217,137,24,.22)!important;cursor:pointer}
+#tab-mais .mx-av img,#tab-mais .mx-av-v{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+#tab-mais .mx-cam{position:absolute;right:-3px;bottom:-1px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#F2A93B,#C8740C);border:2px solid var(--mx-card);color:#fff}
+#tab-mais .mx-cam svg{width:15px;height:15px;stroke-width:2}
+#tab-mais .mx-eu-d{flex:1;min-width:0}
+#tab-mais .mx-nome{display:block;font:700 clamp(17px,4.8vw,20px)/1.2 Sora,Inter,sans-serif;color:var(--mx-tit);overflow-wrap:anywhere}
+#tab-mais .mx-email{display:block;font-size:13px;color:var(--mx-txt2);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#tab-mais .mx-plano{display:flex;align-items:center;gap:8px;width:100%;margin-top:10px;padding:0;border:0!important;background:none!important;box-shadow:none!important;cursor:pointer;text-align:left;font-family:inherit}
+#tab-mais .mx-pill{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 13px;border-radius:999px;background:linear-gradient(180deg,#E9A23B,#C8740C);color:#fff;font:600 13.5px Inter,sans-serif;box-shadow:0 4px 10px rgba(200,116,12,.28);white-space:nowrap}
+#tab-mais .mx-pill svg{width:16px;height:16px;fill:#FFE6A8;stroke:#FFE6A8;stroke-width:1.2}
+#tab-mais .mx-pl-t{flex:1;min-width:0;line-height:1.25}
+#tab-mais .mx-pl-t small{display:block;font-size:11.5px;color:var(--mx-txt2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tab-mais .mx-pl-t b{display:block;font-size:13.5px;font-weight:600;color:var(--mx-tit)}
+#tab-mais .mx-seta{flex:0 0 18px;width:18px;height:18px;color:var(--mx-txt2);stroke-width:2.2}
+#tab-mais .mx-stats{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:8px;margin-bottom:14px}
+#tab-mais .mx-st{display:flex;align-items:center;gap:8px;padding:12px 10px;border-radius:18px;background:var(--mx-card);border:1px solid var(--mx-borda);box-shadow:var(--mx-sombra);min-width:0;cursor:pointer}
+#tab-mais .mx-st1{cursor:default}
+#tab-mais .mx-st>svg{flex:0 0 26px;width:26px;height:26px;color:var(--mx-lar)}
+#tab-mais .mx-st>span{min-width:0}
+#tab-mais .mx-st small{display:block;font-size:11.5px;color:var(--mx-txt2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tab-mais .mx-st b{display:block;font:700 clamp(16px,4.6vw,20px)/1.15 Sora,Inter,sans-serif;color:var(--mx-tit);white-space:nowrap;margin-top:2px}
+#tab-mais .mx-st b i{font-style:normal;font-size:.75em;font-weight:600}
+#tab-mais .mx-st em{display:block;font-style:normal;font-size:11.5px;color:var(--mx-txt2)}
+/* itens como cartoes separados */
+#tab-mais .m-item2{display:flex!important;align-items:center;gap:14px;width:100%;min-height:76px;padding:12px 16px!important;margin:0 0 10px!important;border-radius:20px!important;background:var(--mx-card)!important;border:1px solid var(--mx-borda)!important;box-shadow:var(--mx-sombra)!important}
+#tab-mais .m-item2 .m-med{flex:0 0 52px!important;width:52px!important;height:52px!important;border-radius:50%!important;background:var(--mx-ic)!important;color:var(--mx-lar)!important;box-shadow:inset 0 0 0 1px var(--mx-borda)!important}
+#tab-mais .m-item2 .m-med svg{width:26px!important;height:26px!important}
+#tab-mais .m-item2.m-tom-violeta .m-med{background:#F1E6FF!important;color:#7418E8!important;box-shadow:inset 0 0 0 1px #E2CCFB!important}
+#tab-mais .m-item2.m-tom-azul .m-med{background:#EAF3FF!important;color:#1765E8!important;box-shadow:inset 0 0 0 1px #C7DEFF!important}
+html:not([data-theme="light"]) #tab-mais .m-item2.m-tom-violeta .m-med{background:rgba(155,77,255,.16)!important;color:#C08BFF!important}
+html:not([data-theme="light"]) #tab-mais .m-item2.m-tom-azul .m-med{background:rgba(23,101,232,.18)!important;color:#7FB2FF!important}
+#tab-mais .m-item2 .m-rot{font:700 16.5px/1.25 Sora,Inter,sans-serif!important;color:var(--mx-tit)!important}
+#tab-mais .m-item2 .m-sub{font-size:13px!important;color:var(--mx-txt2)!important;margin-top:3px!important}
+#tab-mais .m-item2 .m-seta-w{background:none!important;border:0!important;box-shadow:none!important;width:22px!important;height:22px!important}
+#tab-mais .m-item2 .m-seta{color:var(--mx-txt2)!important;width:20px!important;height:20px!important}
+#tab-mais .m-faixa,#tab-mais .m-nome{display:none!important}
+@media (max-width:360px){#tab-mais .mx-av{flex-basis:76px;width:76px;height:76px}#tab-mais .mx-stats{grid-template-columns:1fr 1fr 1fr;gap:6px}#tab-mais .mx-st{flex-direction:column;align-items:flex-start;gap:4px}}
 </style>
 </head>
 <body>
@@ -6975,28 +7023,28 @@ function maisRender(){
   /* prog===null significa "nunca foi medido", nao "nao mudou". Nesse caso
      entra um traco e o convite a se pesar, em vez de um "0 kg" que parece
      resultado. */
-  var semBase=(prog===null);
-  var progTxt=semBase?"&mdash;":(prog>0?(prog+" kg"):(prog<0?(Math.abs(prog)+" kg"):"0 kg"));
-  var progLbl=semBase?M.semPeso:(prog>0?M.perdidos:(prog<0?M.ganhos:M.estavel));
-  var h='<div class="m-faixa">'+
-   '<div class="m-stat"><div class="m-stat-rot">'+M.consec+'</div>'+
-    '<div class="m-stat-num">'+seq+'</div>'+
-    '<div class="m-stat-sub">'+(seq===1?M.dia:M.dias)+'</div></div>'+
-   '<div class="m-foto-wrap" style="flex-shrink:0">'+
-    (foto?'<img class="m-foto" src="'+foto+'" alt="">':'<div class="m-foto" style="background:var(--m-sup)"></div>')+
-    '</div>'+
-   '<div class="m-stat"><div class="m-stat-rot">'+M.prog+'</div>'+
-    '<div class="m-stat-num">'+progTxt+'</div>'+
-    '<div class="m-stat-sub">'+progLbl+'</div></div></div>';
-  if(nome) h+='<div class="m-nome">'+nome+'</div>';
-  else h+='<div style="height:18px"></div>';
-  if(typeof isPro==="undefined"||!isPro){
-    h+='<div onclick="try{subscribePro()}catch(e){}" style="display:flex;align-items:center;gap:13px;padding:15px;margin-bottom:14px;border-radius:14px;cursor:pointer;background:var(--goldBg2);border:1px solid var(--gold)">'+
-     '<span style="color:var(--goldInk);flex-shrink:0"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 8l4.5 3.5L12 5l4.5 6.5L21 8l-1.8 10H4.8L3 8Z"/></svg></span>'+
-     '<span style="flex:1"><span style="display:block;font-size:15px;font-weight:800;color:var(--goldInk)">'+M.proT+'</span>'+
-      '<span style="display:block;font-size:12px;color:var(--text2);margin-top:2px;line-height:1.45">'+M.proS+'</span></span>'+
-     '<span style="color:var(--goldInk);font-size:18px">&#8250;</span></div>';
-  }
+  /* 02/11: cabecalho no modelo novo do Felipe — logo, cartao com foto, nome,
+     e-mail e o selo do plano; abaixo, Consecutivos / Peso / Altura. */
+  var p=state.profile||{}, email=""; try{ email=(_fbUser&&_fbUser.email)||""; }catch(e){}
+  var ws=state.weights||[], kg=+p.weight||0; try{ if(ws.length&&+ws[ws.length-1].kg) kg=+ws[ws.length-1].kg; }catch(e){}
+  var kgTxt=kg?String(Math.round(kg*10)/10).replace(".",currentLang==="en"?".":","):"—";
+  var pro=(typeof isPro!=="undefined"&&isPro);
+  var stS='<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M7 3v4M17 3v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></svg>';
+  var stP='<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 5a4 4 0 0 1 8 0"/><circle cx="12" cy="12" r="2.2"/></svg>';
+  var stA='<svg viewBox="0 0 24 24"><path d="m3 15.5 12.5-12.5 5.5 5.5L8.5 21z"/><path d="m7 11.5 2 2M10 8.5l1.5 1.5M13 5.5l2 2"/></svg>';
+  var h='<div class="mx-marca"><img src="logo-bestward-preta.png" alt="Bestward" class="mx-logo-c"><img src="logo-bestward-branca.png" alt="Bestward" class="mx-logo-e"></div>';
+  h+='<div class="mx-eu">'+
+     '<button type="button" class="mx-av" onclick="openProfile()" aria-label="'+(M.perfil||"Perfil")+'">'+(foto?'<img src="'+foto+'" alt="">':'<span class="mx-av-v"></span>')+
+       '<span class="mx-cam"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span></button>'+
+     '<div class="mx-eu-d"><b class="mx-nome">'+(nome||tx("pfSemNome"))+'</b>'+(email?'<span class="mx-email">'+email+'</span>':'')+
+       '<button type="button" class="mx-plano" onclick="'+(pro?'openProfile();pfIr(\'pro\')':'try{subscribePro()}catch(e){}')+'">'+
+         '<span class="mx-pill"><svg viewBox="0 0 24 24"><path d="M3 8l4.5 3.5L12 5l4.5 6.5L21 8l-1.8 10H4.8L3 8Z"/></svg>'+(pro?tx("mxPlanoPro"):tx("mxSejaPro"))+'</span>'+
+         '<span class="mx-pl-t"><small>'+(pro?tx("mxAtiva"):tx("mxDesbloqueie"))+'</small><b>€8,99/'+tx("mxMes")+'</b></span>'+
+         '<svg class="mx-seta" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button></div></div>';
+  h+='<div class="mx-stats">'+
+     '<div class="mx-st mx-st1">'+stS+'<span><small>'+M.consec+'</small><b>'+seq+'</b><em>'+(seq===1?M.dia:M.dias)+'</em></span></div>'+
+     '<div class="mx-st" onclick="navGo(\'peso\')">'+stP+'<span><small>'+tx("calcPeso")+'</small><b>'+kgTxt+(kg?' <i>kg</i>':'')+'</b></span></div>'+
+     '<div class="mx-st" onclick="openProfile();pfIr(\'perfil\')">'+stA+'<span><small>'+tx("calcAltura")+'</small><b>'+(+p.height?(+p.height)+' <i>cm</i>':'—')+'</b></span></div></div>';
   /* Ordem travada pela especificacao. Cada acao ja existia no app — nao
      inventei caminho nenhum, so troquei a roupa do item. */
   h+=_maisItem(ic.perfil||"",M.perfil,"openProfile()",false,"perfil");
@@ -9141,6 +9189,11 @@ var TX={
  pfSalvo:{pt:'Alterações salvas.',en:'Changes saved.',es:'Cambios guardados.',it:'Modifiche salvate.',fr:'Modifications enregistrées.',de:'Änderungen gespeichert.'},
  pfDescartar:{pt:'Você tem alterações não salvas. Descartar e sair?',en:'You have unsaved changes. Discard and leave?',es:'Tienes cambios sin guardar. ¿Descartar y salir?',it:'Hai modifiche non salvate. Scartarle e uscire?',fr:'Vous avez des modifications non enregistrées. Les abandonner ?',de:'Sie haben ungespeicherte Änderungen. Verwerfen und verlassen?'},
  pfSairConf:{pt:'Sair da conta neste aparelho? Seus dados continuam salvos na nuvem.',en:'Sign out on this device? Your data stays saved in the cloud.',es:'¿Cerrar sesión en este dispositivo? Tus datos siguen guardados en la nube.',it:'Uscire da questo dispositivo? I tuoi dati restano salvati nel cloud.',fr:'Se déconnecter sur cet appareil ? Vos données restent enregistrées dans le cloud.',de:'Auf diesem Gerät abmelden? Ihre Daten bleiben in der Cloud gespeichert.'},
+ mxPlanoPro:{pt:'Plano PRO',en:'PRO Plan',es:'Plan PRO',it:'Piano PRO',fr:'Offre PRO',de:'PRO-Tarif'},
+ mxSejaPro:{pt:'Seja PRO',en:'Go PRO',es:'Hazte PRO',it:'Passa a PRO',fr:'Passer PRO',de:'PRO werden'},
+ mxAtiva:{pt:'Assinatura ativa',en:'Active subscription',es:'Suscripción activa',it:'Abbonamento attivo',fr:'Abonnement actif',de:'Abo aktiv'},
+ mxDesbloqueie:{pt:'Desbloqueie tudo',en:'Unlock everything',es:'Desbloquea todo',it:'Sblocca tutto',fr:'Tout débloquer',de:'Alles freischalten'},
+ mxMes:{pt:'mês',en:'month',es:'mes',it:'mese',fr:'mois',de:'Monat'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
  pgrF1D:{pt:'Compare suas fotos e veja mudanças reais.',en:'Compare your photos and see real changes.',es:'Compara tus fotos y ve cambios reales.',it:'Confronta le tue foto e vedi cambiamenti reali.',fr:'Comparez vos photos et voyez de vrais changements.',de:'Vergleichen Sie Ihre Fotos und sehen Sie echte Veränderungen.'},
