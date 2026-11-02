@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261101_fotos3";
+var APP_VERSION="20261102_porcao";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -7738,10 +7738,31 @@ function _selPort(idx,grams,bk,bg,bp,bc,bf){
   var m=document.getElementById("fmacro_"+idx);
   if(m) m.innerHTML='<span style="color:#f0b429;font-weight:700;">'+sel[idx].kcal+'</span> kcal &nbsp;&middot;&nbsp; P:'+sel[idx].prot+'g C:'+sel[idx].carb+'g G:'+sel[idx].fat+'g';
   var a=(window._fotoIAItems||[])[idx]; if(!a) return;
-  (a.opcoes_porcao||[a.gramas]).forEach(function(p,pi){var pN=typeof p==='number'?p:parseInt(String(p));
+  _porcNorm(a).forEach(function(p,pi){var pN=p.n;
     var b=document.getElementById("fport_"+idx+"_"+pi);
     if(b) b.style.cssText=(pN===grams?"background:#f0b429;color:#000;":"background:rgba(240,180,41,.12);color:#f0b429;")+"border:1px solid rgba(240,180,41,.4);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;margin:2px;";
   });
+}
+/* 02/11: a IA as vezes devolve as porcoes como objeto ({"rotulo":"Copo","ml":330})
+   e o botao mostrava "[object Object]". Aqui toda porcao vira {n: numero, l: rotulo},
+   aceitando numero, texto ("330 ml") ou objeto com os nomes de campo que a IA usa. */
+function _porcNorm(a){
+  var unit=(a&&a.unidade)||"g", lista=(a&&a.opcoes_porcao&&a.opcoes_porcao.length)?a.opcoes_porcao:[a&&a.gramas], out=[];
+  function num(v){ if(typeof v==="number") return v; var m=String(v==null?"":v).replace(",",".").match(/\d+(\.\d+)?/); return m?Math.round(parseFloat(m[0])):NaN; }
+  lista.forEach(function(p){
+    var n=NaN, l="";
+    if(p&&typeof p==="object"){
+      var ks=["gramas","g","ml","quantidade","qtd","valor","value","amount","grams","peso","volume"];
+      for(var i=0;i<ks.length;i++){ if(p[ks[i]]!=null&&!isNaN(num(p[ks[i]]))){ n=num(p[ks[i]]); break; } }
+      var r=p.rotulo||p.label||p.nome||p.descricao||p.name||p.tipo||p.tamanho||p.recipiente||"";
+      if(isNaN(n)&&r) n=num(r);
+      l=r?String(r):"";
+      if(!isNaN(n)&&!/\d/.test(l)) l=(l?l+" · ":"")+n+unit;
+    } else { n=num(p); l=(typeof p==="number")?(p+unit):String(p==null?"":p); }
+    if(!isNaN(n)&&n>0) out.push({n:n,l:l||(n+unit)});
+  });
+  if(!out.length&&a&&+a.gramas>0) out.push({n:+a.gramas,l:a.gramas+unit});
+  return out;
 }
 function _selEggs(idx,n,bk,bg,bp,bc,bf){
   n=parseFloat(n); if(!isFinite(n)||n<0)n=0;
@@ -7781,15 +7802,15 @@ function renderFotoIAResult(result){
     var _conf=(a.confianca===undefined||a.confianca===null)?100:(+a.confianca||0);
     var _incerto=(_conf<90 && names.length>1);
     var unit=a.unidade||"g";
-    var porcoes=a.opcoes_porcao&&a.opcoes_porcao.length?a.opcoes_porcao:[a.gramas];
+    var porcoes=_porcNorm(a);
     html+='<div style="background:rgba(255,255,255,.04);border-radius:14px;padding:14px;margin-bottom:12px;">';
     if(names.length>1) html+='<div style="color:'+(_incerto?'#f0b429':'#aaa')+';font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center">'+(_incerto?tx('fotoConfirmeQual'):tx('fotoQualDestes'))+expBotao('conf')+'</div>';
     html+='<div style="margin-bottom:10px;">';
     names.forEach(function(n,ni){html+='<button id="fname_'+i+'_'+ni+'" onclick="_selName('+i+','+ni+')" style="'+( ni===0?"background:#f0b429;color:#000;":"background:rgba(240,180,41,.12);color:#f0b429;")+'border:1px solid #f0b429;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;margin:2px;">'+_capFirst(n)+'</button>';});
     html+='</div>';
-    if(porcoes.length>1) html+='<div style="color:var(--text2);font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;">Qual a porcao?</div>';
+    if(porcoes.length>1) html+='<div style="color:var(--text2);font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;">'+tx('fotoQualPorcao')+'</div>';
     html+='<div style="margin-bottom:10px;">';
-    porcoes.forEach(function(p,pi){var pNum=typeof p==='number'?p:parseInt(String(p));var pLabel=typeof p==='number'?p+unit:String(p);html+='<button id="fport_'+i+'_'+pi+'" onclick="_selPort('+i+','+pNum+','+a.kcal+','+a.gramas+','+a.prot+','+a.carb+','+a.fat+')" style="'+( pNum===a.gramas?"background:#f0b429;color:#000;":"background:rgba(240,180,41,.12);color:#f0b429;")+'border:1px solid rgba(240,180,41,.4);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;margin:2px;">'+pLabel+'</button>';});
+    porcoes.forEach(function(p,pi){var pNum=p.n;var pLabel=p.l;html+='<button id="fport_'+i+'_'+pi+'" onclick="_selPort('+i+','+pNum+','+a.kcal+','+a.gramas+','+a.prot+','+a.carb+','+a.fat+')" style="'+( pNum===a.gramas?"background:#f0b429;color:#000;":"background:rgba(240,180,41,.12);color:#f0b429;")+'border:1px solid rgba(240,180,41,.4);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;margin:2px;">'+pLabel+'</button>';});
     html+='</div>';
     var _isEgg=/^\s*(ovos?\b|omelet|clara[s]?\s+de\s+ovo|gema[s]?\s+de\s+ovo)/i.test(String(a.nome||''));
     if(_isEgg){
@@ -8514,6 +8535,7 @@ var TX={
  mdCoxa:{pt:'Coxa',en:'Thigh',es:'Muslo',it:'Coscia',fr:'Cuisse',de:'Oberschenkel'},
  mdPanturrilha:{pt:'Panturrilha',en:'Calf',es:'Pantorrilla',it:'Polpaccio',fr:'Mollet',de:'Wade'},
  mdVazio:{pt:'Nenhuma medida registrada ainda.',en:'No measurements logged yet.',es:'Aún no hay medidas registradas.',it:'Nessuna misura registrata.',fr:'Aucune mesure enregistrée.',de:'Noch keine Maße erfasst.'},
+ fotoQualPorcao:{pt:'Qual a porção?',en:'Which portion?',es:'¿Qué porción?',it:'Quale porzione?',fr:'Quelle portion ?',de:'Welche Portion?'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
  pgrF1D:{pt:'Compare suas fotos e veja mudanças reais.',en:'Compare your photos and see real changes.',es:'Compara tus fotos y ve cambios reales.',it:'Confronta le tue foto e vedi cambiamenti reali.',fr:'Comparez vos photos et voyez de vrais changements.',de:'Vergleichen Sie Ihre Fotos und sehen Sie echte Veränderungen.'},
