@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261102_perfil";
+var APP_VERSION="20261102_perfil2";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3472,158 +3472,160 @@ html:not([data-theme="light"]) #tab-sono .sn-r1{background:rgba(74,222,128,.14)!
 #tab-sono .sn-bel img{border:0!important;border-radius:50%;object-fit:contain;flex:0 0 56px!important;width:56px!important;height:56px!important;background:transparent}
 
 /* ===== 02/11: PERFIL E CONFIGURACOES (modelo + guia do Felipe) ===== */
-#modalProfile{--pf-bg:#121212;--pf-card:#1A1A1A;--pf-borda:rgba(240,180,41,.18);--pf-ouro:#E9A23B;--pf-lar:#F08A1C;--pf-tit:#F4EDE6;--pf-txt:#EDE7E1;--pf-txt2:#A8A29E;--pf-ic:rgba(240,180,41,.12);--pf-campo:rgba(255,255,255,.04);--pf-linha:rgba(255,255,255,.08);--pf-verm:#F87171;--pf-sombra:0 6px 18px rgba(0,0,0,.35)}
+html #modalProfile.modal-overlay{--pf-bg:#121212;--pf-card:#1A1A1A;--pf-borda:rgba(240,180,41,.18);--pf-ouro:#E9A23B;--pf-lar:#F08A1C;--pf-tit:#F4EDE6;--pf-txt:#EDE7E1;--pf-txt2:#A8A29E;--pf-ic:rgba(240,180,41,.12);--pf-campo:rgba(255,255,255,.04);--pf-linha:rgba(255,255,255,.08);--pf-verm:#F87171;--pf-sombra:0 6px 18px rgba(0,0,0,.35)}
 html[data-theme="light"] #modalProfile{--pf-bg:#FFFBF5;--pf-card:#FFFFFF;--pf-borda:#EEDBC2;--pf-ouro:#D88918;--pf-lar:#E97800;--pf-tit:#5A2C12;--pf-txt:#342014;--pf-txt2:#6B5B50;--pf-ic:#FFF1DD;--pf-campo:#FFFAF3;--pf-linha:#F3E7D8;--pf-verm:#C92323;--pf-sombra:0 4px 14px rgba(120,70,20,.07)}
-#modalProfile{align-items:stretch}
-#modalProfile .pf-modal{background:var(--pf-bg)!important;border-radius:0;max-width:480px;height:100svh;max-height:100svh;padding:0;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;font-family:Inter,system-ui,sans-serif;color:var(--pf-txt)}
-#modalProfile svg.pf-svg,#modalProfile .pf-seta,#modalProfile .pf-cam svg{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-#modalProfile .pf-topo{position:sticky;top:0;z-index:3;padding:calc(env(safe-area-inset-top,0px) + 12px) 18px 8px;background:linear-gradient(var(--pf-bg) 70%,transparent)}
-#modalProfile .pf-voltar{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px 0 10px;border-radius:999px;border:1px solid var(--pf-borda)!important;background:var(--pf-card)!important;color:var(--pf-tit)!important;font:600 14.5px Inter,sans-serif;box-shadow:var(--pf-sombra)!important;cursor:pointer}
-#modalProfile .pf-voltar svg{width:20px;height:20px;stroke-width:2.2}
-#modalProfile .pf-corpo{flex:1;padding:0 16px 24px}
-#modalProfile.pf-com-salvar .pf-corpo{padding-bottom:12px}
-#modalProfile .pf-pag{display:none;animation:pfEntra .22s ease}
-#modalProfile .pf-pag.on{display:block}
+html #modalProfile.modal-overlay{align-items:stretch}
+html #modalProfile.modal-overlay .pf-modal{background:var(--pf-bg)!important;border-radius:0;max-width:480px;height:100svh;max-height:100svh;padding:0;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;font-family:Inter,system-ui,sans-serif;color:var(--pf-txt)}
+html #modalProfile.modal-overlay svg.pf-svg,html #modalProfile.modal-overlay .pf-seta,html #modalProfile.modal-overlay .pf-cam svg{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+html #modalProfile.modal-overlay .pf-topo{position:sticky;top:0;z-index:3;padding:calc(env(safe-area-inset-top,0px) + 12px) 18px 8px;background:linear-gradient(var(--pf-bg) 70%,transparent)}
+html #modalProfile.modal-overlay .pf-voltar{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px 0 10px;border-radius:999px;border:1px solid var(--pf-borda)!important;background:var(--pf-card)!important;color:var(--pf-tit)!important;font:600 14.5px Inter,sans-serif;box-shadow:var(--pf-sombra)!important;cursor:pointer}
+html #modalProfile.modal-overlay .pf-voltar svg{width:20px;height:20px;stroke-width:2.2}
+html #modalProfile.modal-overlay .pf-corpo{flex:1;padding:0 16px 24px}
+html #modalProfile.modal-overlay.pf-com-salvar .pf-corpo{padding-bottom:12px}
+html #modalProfile.modal-overlay .pf-pag{display:none;animation:pfEntra .22s ease}
+html #modalProfile.modal-overlay .pf-pag.on{display:block}
 @keyframes pfEntra{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
-#modalProfile .pf-marca{display:flex;justify-content:center;margin:-4px 0 6px}
-#modalProfile .pf-logo{height:30px;width:auto}
-#modalProfile .pf-logo-e{display:none}
+html #modalProfile.modal-overlay .pf-marca{display:flex;justify-content:center;margin:-4px 0 6px}
+html #modalProfile.modal-overlay .pf-logo{height:30px;width:auto}
+html #modalProfile.modal-overlay .pf-logo-e{display:none}
 html:not([data-theme="light"]) #modalProfile .pf-logo-c{display:none}
 html:not([data-theme="light"]) #modalProfile .pf-logo-e{display:block}
-#modalProfile .pf-tit{font:700 clamp(22px,6.4vw,26px)/1.15 Sora,Inter,sans-serif;color:var(--pf-tit);text-align:center;margin:0;letter-spacing:-.02em}
-#modalProfile .pf-sub{text-align:center;font-size:13.5px;color:var(--pf-txt2);margin:5px 0 14px}
-#modalProfile .pf-card{background:var(--pf-card);border:1px solid var(--pf-borda);border-radius:20px;box-shadow:var(--pf-sombra);padding:14px;margin-bottom:12px}
+html #modalProfile.modal-overlay .pf-tit{font:700 clamp(22px,6.4vw,26px)/1.15 Sora,Inter,sans-serif;color:var(--pf-tit);text-align:center;margin:0;letter-spacing:-.02em}
+html #modalProfile.modal-overlay .pf-sub{text-align:center;font-size:13.5px;color:var(--pf-txt2);margin:5px 0 14px}
+html #modalProfile.modal-overlay .pf-card{background:var(--pf-card);border:1px solid var(--pf-borda);border-radius:20px;box-shadow:var(--pf-sombra);padding:14px;margin-bottom:12px}
 /* cartao do usuario */
-#modalProfile .pf-eu{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
-#modalProfile .pf-av{position:relative;width:76px;height:76px}
-#modalProfile .prof-avatar{width:76px!important;height:76px!important;border:3px solid var(--pf-ouro)!important;box-shadow:0 4px 12px rgba(217,137,24,.25)}
-#modalProfile .pf-cam{position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--pf-card)!important;background:linear-gradient(180deg,#F8B53A,#E07F0C)!important;color:#fff!important;padding:0;cursor:pointer}
-#modalProfile .pf-cam svg{width:15px;height:15px;stroke-width:2}
-#modalProfile .pf-eu-d{min-width:0}
-#modalProfile .pf-eu-l1{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-#modalProfile #pfNome{font:700 17px/1.2 Sora,Inter,sans-serif;color:var(--pf-tit);overflow-wrap:anywhere}
-#modalProfile .pf-editar{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;border-radius:999px;border:1px solid var(--pf-borda)!important;background:var(--pf-ic)!important;color:var(--pf-tit)!important;font:600 12px Inter,sans-serif;cursor:pointer;box-shadow:none!important}
-#modalProfile .pf-editar svg{width:14px;height:14px;color:var(--pf-lar)}
-#modalProfile .pf-email{font-size:12.5px;color:var(--pf-txt2);margin-top:3px;overflow-wrap:anywhere;text-align:left!important;margin-bottom:0!important}
-#modalProfile .pf-stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-#modalProfile .pf-stats>div{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:8px;border-radius:13px;background:var(--pf-campo);border:1px solid var(--pf-linha);min-width:0}
-#modalProfile .pf-stats svg{width:18px;height:18px;color:var(--pf-lar)}
-#modalProfile .pf-stats small{display:block;font-size:10.5px;color:var(--pf-txt2)}
-#modalProfile .pf-stats b{display:block;font-size:13px;font-weight:700;color:var(--pf-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+html #modalProfile.modal-overlay .pf-eu{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+html #modalProfile.modal-overlay .pf-av{position:relative;width:76px;height:76px}
+html #modalProfile.modal-overlay .prof-avatar{width:76px!important;height:76px!important;border:3px solid var(--pf-ouro)!important;box-shadow:0 4px 12px rgba(217,137,24,.25)}
+html #modalProfile.modal-overlay .pf-cam{position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--pf-card)!important;background:linear-gradient(180deg,#F8B53A,#E07F0C)!important;color:#fff!important;padding:0;cursor:pointer}
+html #modalProfile.modal-overlay .pf-cam svg{width:15px;height:15px;stroke-width:2}
+html #modalProfile.modal-overlay .pf-eu-d{min-width:0}
+html #modalProfile.modal-overlay .pf-eu-l1{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+html #modalProfile.modal-overlay #pfNome{font:700 17px/1.2 Sora,Inter,sans-serif;color:var(--pf-tit);overflow-wrap:anywhere}
+html #modalProfile.modal-overlay .pf-editar{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;border-radius:999px;border:1px solid var(--pf-borda)!important;background:var(--pf-ic)!important;color:var(--pf-tit)!important;font:600 12px Inter,sans-serif;cursor:pointer;box-shadow:none!important}
+html #modalProfile.modal-overlay .pf-editar svg{width:14px;height:14px;color:var(--pf-lar)}
+html #modalProfile.modal-overlay .pf-email{font-size:12.5px;color:var(--pf-txt2);margin-top:3px;overflow-wrap:anywhere;text-align:left!important;margin-bottom:0!important}
+html #modalProfile.modal-overlay .pf-stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+html #modalProfile.modal-overlay .pf-stats>div{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:8px;border-radius:13px;background:var(--pf-campo);border:1px solid var(--pf-linha);min-width:0}
+html #modalProfile.modal-overlay .pf-stats svg{width:18px;height:18px;color:var(--pf-lar)}
+html #modalProfile.modal-overlay .pf-stats small{display:block;font-size:10.5px;color:var(--pf-txt2)}
+html #modalProfile.modal-overlay .pf-stats b{display:block;font-size:13px;font-weight:700;color:var(--pf-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 /* categorias */
-#modalProfile .pf-cats{padding:4px 12px}
-#modalProfile .pf-cat{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:9px 0;border:0!important;border-bottom:1px solid var(--pf-linha)!important;background:transparent!important;box-shadow:none!important;text-align:left;cursor:pointer;font-family:inherit;color:var(--pf-txt)!important;border-radius:0!important}
-#modalProfile .pf-cat:last-child{border-bottom:0!important}
-#modalProfile .pf-cic{flex:0 0 40px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pf-ic);color:var(--pf-lar)}
-#modalProfile .pf-cic svg{width:22px;height:22px}
-#modalProfile .pf-ctx{flex:1;min-width:0}
-#modalProfile .pf-ctx b{display:block;font:600 15px/1.25 Sora,Inter,sans-serif;color:var(--pf-tit)}
-#modalProfile .pf-ctx small{display:block;font-size:12px;line-height:1.35;color:var(--pf-txt2);margin-top:2px}
-#modalProfile .pf-seta{flex:0 0 18px;width:18px;height:18px;color:var(--pf-txt2);stroke-width:2.2}
-#modalProfile .pf-aviso{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:16px;border:1px solid var(--pf-borda);background:var(--pf-ic);font-size:12px;line-height:1.5;color:var(--pf-txt2);font-style:italic;margin-bottom:12px}
-#modalProfile .pf-aviso svg{flex:0 0 20px;width:20px;height:20px;color:var(--pf-lar);margin-top:1px}
-#modalProfile .pf-sair{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;border-radius:14px;border:1px solid var(--pf-borda)!important;background:var(--pf-card)!important;color:var(--pf-verm)!important;font:600 14.5px Inter,sans-serif;cursor:pointer;box-shadow:none!important;margin-bottom:6px}
-#modalProfile .pf-sair svg{width:19px;height:19px}
+html #modalProfile.modal-overlay .pf-cats{padding:4px 12px}
+html #modalProfile.modal-overlay .pf-cat{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:9px 0;border:0!important;border-bottom:1px solid var(--pf-linha)!important;background:transparent!important;box-shadow:none!important;text-align:left;cursor:pointer;font-family:inherit;color:var(--pf-txt)!important;border-radius:0!important}
+html #modalProfile.modal-overlay .pf-cat:last-child{border-bottom:0!important}
+html #modalProfile.modal-overlay .pf-cic{flex:0 0 40px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pf-ic);color:var(--pf-lar)}
+html #modalProfile.modal-overlay .pf-cic svg{width:22px;height:22px}
+html #modalProfile.modal-overlay .pf-ctx{flex:1;min-width:0}
+html #modalProfile.modal-overlay .pf-ctx b{display:block;font:600 15px/1.25 Sora,Inter,sans-serif;color:var(--pf-tit)}
+html #modalProfile.modal-overlay .pf-ctx small{display:block;font-size:12px;line-height:1.35;color:var(--pf-txt2);margin-top:2px}
+html #modalProfile.modal-overlay .pf-seta{flex:0 0 18px;width:18px;height:18px;color:var(--pf-txt2);stroke-width:2.2}
+html #modalProfile.modal-overlay .pf-aviso{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:16px;border:1px solid var(--pf-borda);background:var(--pf-ic);font-size:12px;line-height:1.5;color:var(--pf-txt2);font-style:italic;margin-bottom:12px}
+html #modalProfile.modal-overlay .pf-aviso svg{flex:0 0 20px;width:20px;height:20px;color:var(--pf-lar);margin-top:1px}
+html #modalProfile.modal-overlay .pf-sair{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;border-radius:14px;border:1px solid var(--pf-borda)!important;background:var(--pf-card)!important;color:var(--pf-verm)!important;font:600 14.5px Inter,sans-serif;cursor:pointer;box-shadow:none!important;margin-bottom:6px}
+html #modalProfile.modal-overlay .pf-sair svg{width:19px;height:19px}
 /* paginas internas */
-#modalProfile .pf-pcab{display:flex;align-items:center;gap:12px;margin:2px 2px 14px}
-#modalProfile .pf-pcab .pf-cic{flex-basis:46px;width:46px;height:46px;border-radius:14px}
-#modalProfile .pf-pcab .pf-cic svg{width:25px;height:25px}
-#modalProfile .pf-pcab h3{margin:0;font:700 21px/1.2 Sora,Inter,sans-serif;color:var(--pf-tit)}
-#modalProfile .pf-pcab p{margin:3px 0 0;font-size:13px;line-height:1.4;color:var(--pf-txt2)}
-#modalProfile .pf-campo{display:block;margin-bottom:10px}
-#modalProfile .pf-campo small,#modalProfile .pf-ld>small{display:block;font-size:12.5px;font-weight:600;color:var(--pf-txt);margin-bottom:6px}
-#modalProfile .input{height:48px;border-radius:13px!important;border:1px solid var(--pf-borda)!important;background:var(--pf-campo)!important;color:var(--pf-txt)!important;font:500 15px Inter,sans-serif!important;padding:0 12px!important;width:100%;box-sizing:border-box;box-shadow:none!important;margin:0!important}
-#modalProfile .input:focus{outline:none;border-color:var(--pf-ouro)!important;box-shadow:0 0 0 3px rgba(217,137,24,.16)!important}
-#modalProfile select.input{-webkit-appearance:none;appearance:none;padding-right:34px!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E97800' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:right 11px center!important;background-size:17px!important;text-overflow:ellipsis}
-#modalProfile .pf-grade2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-#modalProfile .pf-tile{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:14px;border:1px solid var(--pf-linha);background:var(--pf-campo);cursor:text;min-width:0}
-#modalProfile .pf-tic{flex:0 0 30px;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--pf-ic);color:var(--pf-lar)}
-#modalProfile .pf-tic svg{width:18px;height:18px}
-#modalProfile .pf-tt{flex:1;min-width:0}
-#modalProfile .pf-tt small{display:block;font-size:11px;color:var(--pf-txt2)}
-#modalProfile .pf-tile .input{height:28px;border:0!important;background:transparent!important;padding:0!important;font:700 15px Inter,sans-serif!important;box-shadow:none!important}
-#modalProfile .pf-tile select.input{padding-right:22px!important;background-position:right 0 center!important;background-size:15px!important}
-#modalProfile .pf-tile:focus-within{border-color:var(--pf-ouro);box-shadow:0 0 0 3px rgba(217,137,24,.14)}
-#modalProfile .pf-nota{margin:10px 2px 0;font-size:12px;line-height:1.45;color:var(--pf-txt2)}
-#modalProfile .pf-linha{display:flex;align-items:center;gap:12px;padding:6px 0 12px}
-#modalProfile .pf-lic{flex:0 0 26px;width:26px;height:26px;color:var(--pf-lar)}
-#modalProfile .pf-ld{flex:1;min-width:0}
-#modalProfile .pf-ld>b{display:block;font:600 15px Sora,Inter,sans-serif;color:var(--pf-tit)}
-#modalProfile .pf-ld>p{margin:4px 0 0;font-size:12.5px;line-height:1.45;color:var(--pf-txt2)}
-#modalProfile .pf-oculto{display:none!important}
-#modalProfile .pf-atleta{display:flex;align-items:center;gap:10px;margin-top:4px;padding:12px;border-radius:16px;background:rgba(201,35,35,.06);border:1px solid rgba(201,35,35,.18);cursor:pointer}
-#modalProfile .pf-aic{flex:0 0 40px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pf-card);color:var(--pf-verm);box-shadow:var(--pf-sombra)}
-#modalProfile .pf-aic svg{width:24px;height:24px}
-#modalProfile .pf-ad{flex:1;min-width:0}
-#modalProfile .pf-at{display:flex;align-items:center;gap:6px;font:700 14.5px Sora,Inter,sans-serif;color:var(--pf-verm)}
-#modalProfile .pf-i{display:inline-grid;place-items:center;width:20px;height:20px;cursor:pointer}
-#modalProfile .pf-i svg{width:17px;height:17px}
-#modalProfile .pf-ad small{display:block;font-size:11.5px;line-height:1.35;color:var(--pf-txt2);margin-top:2px}
-#modalProfile .pf-sw{-webkit-appearance:none;appearance:none;flex:0 0 46px;width:46px;height:28px;border-radius:999px;background:var(--pf-linha);border:1px solid var(--pf-borda);position:relative;cursor:pointer;transition:background .2s;margin:0}
-#modalProfile .pf-sw::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
-#modalProfile .pf-sw:checked{background:var(--pf-verm);border-color:transparent}
-#modalProfile .pf-sw:checked::after{transform:translateX(18px)}
+html #modalProfile.modal-overlay .pf-pcab{display:flex;align-items:center;gap:12px;margin:2px 2px 14px}
+html #modalProfile.modal-overlay .pf-pcab .pf-cic{flex-basis:46px;width:46px;height:46px;border-radius:14px}
+html #modalProfile.modal-overlay .pf-pcab .pf-cic svg{width:25px;height:25px}
+html #modalProfile.modal-overlay .pf-pcab h3{margin:0;font:700 21px/1.2 Sora,Inter,sans-serif;color:var(--pf-tit)}
+html #modalProfile.modal-overlay .pf-pcab p{margin:3px 0 0;font-size:13px;line-height:1.4;color:var(--pf-txt2)}
+html #modalProfile.modal-overlay .pf-campo{display:block;margin-bottom:10px}
+html #modalProfile.modal-overlay .pf-campo small,html #modalProfile.modal-overlay .pf-ld>small{display:block;font-size:12.5px;font-weight:600;color:var(--pf-txt);margin-bottom:6px}
+html #modalProfile.modal-overlay .input{height:48px;border-radius:13px!important;border:1px solid var(--pf-borda)!important;background:var(--pf-campo)!important;color:var(--pf-txt)!important;font:500 15px Inter,sans-serif!important;padding:0 12px!important;width:100%;box-sizing:border-box;box-shadow:none!important;margin:0!important}
+html #modalProfile.modal-overlay .input:focus{outline:none;border-color:var(--pf-ouro)!important;box-shadow:0 0 0 3px rgba(217,137,24,.16)!important}
+html #modalProfile.modal-overlay select.input{-webkit-appearance:none;appearance:none;padding-right:34px!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E97800' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:right 11px center!important;background-size:17px!important;text-overflow:ellipsis}
+html #modalProfile.modal-overlay .pf-grade2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+html #modalProfile.modal-overlay .pf-tile{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:14px;border:1px solid var(--pf-linha);background:var(--pf-campo);cursor:text;min-width:0}
+html #modalProfile.modal-overlay .pf-tic{flex:0 0 30px;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--pf-ic);color:var(--pf-lar)}
+html #modalProfile.modal-overlay .pf-tic svg{width:18px;height:18px}
+html #modalProfile.modal-overlay .pf-tt{flex:1;min-width:0}
+html #modalProfile.modal-overlay .pf-tt small{display:block;font-size:11px;color:var(--pf-txt2)}
+html #modalProfile.modal-overlay .pf-tile .input{height:28px;border:0!important;background:transparent!important;padding:0!important;font:700 15px Inter,sans-serif!important;box-shadow:none!important}
+html #modalProfile.modal-overlay .pf-tile select.input{padding-right:22px!important;background-position:right 0 center!important;background-size:15px!important}
+html #modalProfile.modal-overlay .pf-tile:focus-within{border-color:var(--pf-ouro);box-shadow:0 0 0 3px rgba(217,137,24,.14)}
+html #modalProfile.modal-overlay .pf-nota{margin:10px 2px 0;font-size:12px;line-height:1.45;color:var(--pf-txt2)}
+html #modalProfile.modal-overlay .pf-linha{display:flex;align-items:center;gap:12px;padding:6px 0 12px}
+html #modalProfile.modal-overlay .pf-lic{flex:0 0 26px;width:26px;height:26px;color:var(--pf-lar)}
+html #modalProfile.modal-overlay .pf-ld{flex:1;min-width:0}
+html #modalProfile.modal-overlay .pf-ld>b{display:block;font:600 15px Sora,Inter,sans-serif;color:var(--pf-tit)}
+html #modalProfile.modal-overlay .pf-ld>p{margin:4px 0 0;font-size:12.5px;line-height:1.45;color:var(--pf-txt2)}
+html #modalProfile.modal-overlay .pf-oculto{display:none!important}
+html #modalProfile.modal-overlay .pf-atleta{display:flex;align-items:center;gap:10px;margin-top:4px;padding:12px;border-radius:16px;background:rgba(201,35,35,.06);border:1px solid rgba(201,35,35,.18);cursor:pointer}
+html #modalProfile.modal-overlay .pf-aic{flex:0 0 40px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pf-card);color:var(--pf-verm);box-shadow:var(--pf-sombra)}
+html #modalProfile.modal-overlay .pf-aic svg{width:24px;height:24px}
+html #modalProfile.modal-overlay .pf-ad{flex:1;min-width:0}
+html #modalProfile.modal-overlay .pf-at{display:flex;align-items:center;gap:6px;font:700 14.5px Sora,Inter,sans-serif;color:var(--pf-verm)}
+html #modalProfile.modal-overlay .pf-i{display:inline-grid;place-items:center;width:20px;height:20px;cursor:pointer}
+html #modalProfile.modal-overlay .pf-i svg{width:17px;height:17px}
+html #modalProfile.modal-overlay .pf-ad small{display:block;font-size:11.5px;line-height:1.35;color:var(--pf-txt2);margin-top:2px}
+html #modalProfile.modal-overlay .pf-sw{-webkit-appearance:none;appearance:none;flex:0 0 46px;width:46px;height:28px;border-radius:999px;background:var(--pf-linha);border:1px solid var(--pf-borda);position:relative;cursor:pointer;transition:background .2s;margin:0}
+html #modalProfile.modal-overlay .pf-sw::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+html #modalProfile.modal-overlay .pf-sw:checked{background:var(--pf-verm);border-color:transparent}
+html #modalProfile.modal-overlay .pf-sw:checked::after{transform:translateX(18px)}
 /* metas */
-#modalProfile .pf-tdee{display:grid!important;grid-template-columns:1fr;gap:12px;background:none!important;border:0!important;padding:0!important;margin:0!important}
-#modalProfile .pf-tdee[style*="none"]{display:none!important}
-#modalProfile .pf-tdee[style*="none"]+.pf-metas-vazio{display:block}
-#modalProfile .pf-metas-vazio{display:none;padding:14px;border-radius:14px;background:var(--pf-ic);font-size:13px;color:var(--pf-txt2);text-align:center}
-#modalProfile .pf-tcol{display:flex;flex-direction:column}
-#modalProfile .pf-macros{padding-top:12px;border-top:1px solid var(--pf-linha)}
-#modalProfile .pf-mt{font:600 14px Sora,Inter,sans-serif;color:var(--pf-tit);margin-bottom:4px}
-#modalProfile .tdee-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--pf-linha);font-size:14px;color:var(--pf-txt)}
-#modalProfile .tdee-row:last-child{border-bottom:0}
-#modalProfile .tdee-row>span:first-of-type{flex:1;min-width:0}
-#modalProfile .tdee-row svg.pf-svg{flex:0 0 20px;width:20px;height:20px;color:var(--pf-lar)}
-#modalProfile .tdee-val{font:700 15.5px Sora,Inter,sans-serif;color:var(--pf-lar)!important;white-space:nowrap}
-#modalProfile .pf-v-verde{color:#2E9B3E!important}
-#modalProfile .pf-v-azul{color:#1765E8!important}
-#modalProfile .pf-v-verm{color:var(--pf-verm)!important}
-#modalProfile .pf-v-ouro{color:var(--pf-ouro)!important}
-#modalProfile .pf-v-roxo{color:#8B3FE0!important}
+html #modalProfile.modal-overlay .pf-tdee{display:grid!important;grid-template-columns:1fr;gap:12px;background:none!important;border:0!important;padding:0!important;margin:0!important}
+html #modalProfile.modal-overlay .pf-tdee[style*="none"]{display:none!important}
+html #modalProfile.modal-overlay .pf-tdee[style*="none"]+.pf-metas-vazio{display:block}
+html #modalProfile.modal-overlay .pf-metas-vazio{display:none;padding:14px;border-radius:14px;background:var(--pf-ic);font-size:13px;color:var(--pf-txt2);text-align:center}
+html #modalProfile.modal-overlay .pf-tcol{display:flex;flex-direction:column}
+html #modalProfile.modal-overlay .pf-macros{padding-top:12px;border-top:1px solid var(--pf-linha)}
+html #modalProfile.modal-overlay .pf-mt{font:600 14px Sora,Inter,sans-serif;color:var(--pf-tit);margin-bottom:4px}
+html #modalProfile.modal-overlay .tdee-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--pf-linha);font-size:14px;color:var(--pf-txt)}
+html #modalProfile.modal-overlay .tdee-row:last-child{border-bottom:0}
+html #modalProfile.modal-overlay .tdee-row>span:first-of-type{flex:1;min-width:0}
+html #modalProfile.modal-overlay .tdee-row svg.pf-svg{flex:0 0 20px;width:20px;height:20px;color:var(--pf-lar)}
+html #modalProfile.modal-overlay .tdee-val{font:700 15.5px Sora,Inter,sans-serif;color:var(--pf-lar)!important;white-space:nowrap}
+html #modalProfile.modal-overlay .pf-v-verde{color:#2E9B3E!important}
+html #modalProfile.modal-overlay .pf-v-azul{color:#1765E8!important}
+html #modalProfile.modal-overlay .pf-v-verm{color:var(--pf-verm)!important}
+html #modalProfile.modal-overlay .pf-v-ouro{color:var(--pf-ouro)!important}
+html #modalProfile.modal-overlay .pf-v-roxo{color:#8B3FE0!important}
 html:not([data-theme="light"]) #modalProfile .pf-v-verde{color:#4ade80!important}
 html:not([data-theme="light"]) #modalProfile .pf-v-azul{color:#60a5fa!important}
 html:not([data-theme="light"]) #modalProfile .pf-v-roxo{color:#c084fc!important}
 /* alergias: chips do algRender */
-#modalProfile #algBox>div:nth-child(2){gap:7px!important}
-#modalProfile #algBox span[onclick]{border-radius:999px!important;padding:9px 13px!important;font-size:13px!important;font-weight:600!important;min-height:38px;box-sizing:border-box;display:inline-flex;align-items:center}
-#modalProfile #algBox>div:first-child{font-size:13px!important;color:var(--pf-txt2)!important;margin-bottom:12px!important}
+html #modalProfile.modal-overlay #algBox>div:nth-child(2){gap:7px!important}
+html #modalProfile.modal-overlay #algBox span[onclick]{border-radius:999px!important;padding:9px 13px!important;font-size:13px!important;font-weight:600!important;min-height:38px;box-sizing:border-box;display:inline-flex;align-items:center}
+html #modalProfile.modal-overlay #algBox>div:first-child{font-size:13px!important;color:var(--pf-txt2)!important;margin-bottom:12px!important}
 html[data-theme="light"] #modalProfile #algBox span[onclick][style*="surface2"]{background:#FFF6EA!important;border-color:#EEDBC2!important;color:#5A2C12!important}
 /* preferencias */
-#modalProfile .pf-bloco{padding:4px 0 14px;border-bottom:1px solid var(--pf-linha);margin-bottom:12px}
-#modalProfile .pf-bloco:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
-#modalProfile .pf-bt{display:flex;align-items:center;gap:8px;font:600 14.5px Sora,Inter,sans-serif;color:var(--pf-tit);margin-bottom:10px}
-#modalProfile .pf-bt svg{width:21px;height:21px;color:var(--pf-lar)}
-#modalProfile .pf-pills{display:flex;flex-wrap:wrap;gap:7px}
-#modalProfile .lang-btn,#modalProfile .theme-btn{flex:1 1 0;min-width:44px;min-height:42px;margin:0!important;border-radius:999px!important;border:1px solid var(--pf-borda)!important;background:var(--pf-campo)!important;color:var(--pf-txt)!important;font:600 13.5px Inter,sans-serif!important;box-shadow:none!important;padding:0 10px!important}
-#modalProfile .lang-btn.active,#modalProfile .theme-btn.active,#modalProfile .theme-btn.on,#modalProfile .lang-btn.on{background:var(--pf-ic)!important;border-color:var(--pf-ouro)!important;color:var(--pf-tit)!important;box-shadow:0 0 0 2px rgba(217,137,24,.22)!important}
-#modalProfile .theme-row{display:flex;gap:7px}
+html #modalProfile.modal-overlay .pf-bloco{padding:4px 0 14px;border-bottom:1px solid var(--pf-linha);margin-bottom:12px}
+html #modalProfile.modal-overlay .pf-bloco:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+html #modalProfile.modal-overlay .pf-bt{display:flex;align-items:center;gap:8px;font:600 14.5px Sora,Inter,sans-serif;color:var(--pf-tit);margin-bottom:10px}
+html #modalProfile.modal-overlay .pf-bt svg{width:21px;height:21px;color:var(--pf-lar)}
+html #modalProfile.modal-overlay .pf-pills{display:flex;flex-wrap:wrap;gap:7px}
+html #modalProfile.modal-overlay .lang-btn,html #modalProfile.modal-overlay .theme-btn{flex:1 1 0;min-width:44px;min-height:42px;margin:0!important;border-radius:999px!important;border:1px solid var(--pf-borda)!important;background:var(--pf-campo)!important;color:var(--pf-txt)!important;font:600 13.5px Inter,sans-serif!important;box-shadow:none!important;padding:0 10px!important}
+html #modalProfile.modal-overlay .lang-btn.active,html #modalProfile.modal-overlay .theme-btn.active,html #modalProfile.modal-overlay .theme-btn.on,html #modalProfile.modal-overlay .lang-btn.on{background:var(--pf-ic)!important;border-color:var(--pf-ouro)!important;color:var(--pf-tit)!important;box-shadow:0 0 0 2px rgba(217,137,24,.22)!important}
+html #modalProfile.modal-overlay .theme-row{display:flex;gap:7px}
 /* bel */
-#modalProfile .pf-mem{align-items:flex-start}
-#modalProfile .pf-btn-perigo{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;margin-top:6px;border-radius:14px!important;border:1.5px solid var(--pf-verm)!important;background:rgba(201,35,35,.05)!important;color:var(--pf-verm)!important;font:600 14.5px Inter,sans-serif!important;box-shadow:none!important;cursor:pointer}
-#modalProfile .pf-btn-perigo svg{width:19px;height:19px}
+html #modalProfile.modal-overlay .pf-mem{align-items:flex-start}
+html #modalProfile.modal-overlay .pf-btn-perigo{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;margin-top:6px;border-radius:14px!important;border:1.5px solid var(--pf-verm)!important;background:rgba(201,35,35,.05)!important;color:var(--pf-verm)!important;font:600 14.5px Inter,sans-serif!important;box-shadow:none!important;cursor:pointer}
+html #modalProfile.modal-overlay .pf-btn-perigo svg{width:19px;height:19px}
 /* pro */
-#modalProfile .pf-pro-h{display:flex;align-items:center;gap:8px;font:700 16px Sora,Inter,sans-serif;color:var(--pf-tit)}
-#modalProfile .pf-selo{background:linear-gradient(180deg,#F8B53A,#E07F0C);color:#fff;font:800 10.5px Inter,sans-serif;padding:3px 7px;border-radius:6px;letter-spacing:.04em}
-#modalProfile .pf-pro-v{font-size:13.5px;color:var(--pf-txt2);margin:6px 0}
-#modalProfile .pf-pro-v b{color:var(--pf-txt)}
-#modalProfile #planoStatus{font-size:13px;font-weight:600;margin:4px 0 10px}
+html #modalProfile.modal-overlay .pf-pro-h{display:flex;align-items:center;gap:8px;font:700 16px Sora,Inter,sans-serif;color:var(--pf-tit)}
+html #modalProfile.modal-overlay .pf-selo{background:linear-gradient(180deg,#F8B53A,#E07F0C);color:#fff;font:800 10.5px Inter,sans-serif;padding:3px 7px;border-radius:6px;letter-spacing:.04em}
+html #modalProfile.modal-overlay .pf-pro-v{font-size:13.5px;color:var(--pf-txt2);margin:6px 0}
+html #modalProfile.modal-overlay .pf-pro-v b{color:var(--pf-txt)}
+html #modalProfile.modal-overlay #planoStatus{font-size:13px;font-weight:600;margin:4px 0 10px}
 /* privacidade */
-#modalProfile .pf-lnk{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:6px 0;border:0!important;border-bottom:1px solid var(--pf-linha)!important;background:transparent!important;color:var(--pf-txt)!important;text-decoration:none;font:600 14.5px Inter,sans-serif;cursor:pointer;box-shadow:none!important;border-radius:0!important;text-align:left}
-#modalProfile .pf-lnk>span{flex:1}
-#modalProfile .pf-lnk>svg.pf-svg{flex:0 0 22px;width:22px;height:22px;color:var(--pf-lar)}
-#modalProfile .pf-lnk-sair{color:var(--pf-verm)!important;border-bottom:0!important}
-#modalProfile .pf-lnk-sair>svg.pf-svg{color:var(--pf-verm)}
-#modalProfile #gdprBox>div:first-child{display:none}
-#modalProfile #gdprBox button{min-height:56px}
+html #modalProfile.modal-overlay .pf-lnk{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:6px 0;border:0!important;border-bottom:1px solid var(--pf-linha)!important;background:transparent!important;color:var(--pf-txt)!important;text-decoration:none;font:600 14.5px Inter,sans-serif;cursor:pointer;box-shadow:none!important;border-radius:0!important;text-align:left}
+html #modalProfile.modal-overlay .pf-lnk>span{flex:1}
+html #modalProfile.modal-overlay .pf-lnk>svg.pf-svg{flex:0 0 22px;width:22px;height:22px;color:var(--pf-lar)}
+html #modalProfile.modal-overlay .pf-lnk-sair{color:var(--pf-verm)!important;border-bottom:0!important}
+html #modalProfile.modal-overlay .pf-lnk-sair>svg.pf-svg{color:var(--pf-verm)}
+html #modalProfile.modal-overlay #gdprBox>div:first-child{display:none}
+html #modalProfile.modal-overlay #gdprBox button{min-height:56px}
 /* rodape salvar */
-#modalProfile .pf-rodape{display:none;position:sticky;bottom:0;z-index:3;padding:10px 16px calc(env(safe-area-inset-bottom,0px) + 12px);background:linear-gradient(transparent,var(--pf-bg) 30%)}
-#modalProfile.pf-com-salvar .pf-rodape{display:block}
-#modalProfile .pf-salvar{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;border:0!important;border-radius:16px!important;background:linear-gradient(180deg,#F8B53A 0%,#E8890F 60%,#D97706 100%)!important;color:#fff!important;font:600 16.5px Inter,sans-serif!important;box-shadow:0 8px 18px rgba(217,119,6,.3)!important;cursor:pointer;transition:opacity .15s}
-#modalProfile .pf-salvar svg{width:22px;height:22px;stroke-width:2.4}
-#modalProfile .pf-salvar:disabled{opacity:.45;box-shadow:none!important;cursor:default}
-#modalProfile .pf-salvar.pf-salvando svg{animation:ccGira .7s linear infinite}
+html #modalProfile.modal-overlay .pf-rodape{display:none;position:sticky;bottom:0;z-index:3;padding:10px 16px calc(env(safe-area-inset-bottom,0px) + 12px);background:linear-gradient(transparent,var(--pf-bg) 30%)}
+html #modalProfile.modal-overlay.pf-com-salvar .pf-rodape{display:block}
+html #modalProfile.modal-overlay .pf-salvar{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;border:0!important;border-radius:16px!important;background:linear-gradient(180deg,#F8B53A 0%,#E8890F 60%,#D97706 100%)!important;color:#fff!important;font:600 16.5px Inter,sans-serif!important;box-shadow:0 8px 18px rgba(217,119,6,.3)!important;cursor:pointer;transition:opacity .15s}
+html #modalProfile.modal-overlay .pf-salvar svg{width:22px;height:22px;stroke-width:2.4}
+html #modalProfile.modal-overlay .pf-salvar:disabled{opacity:.45;box-shadow:none!important;cursor:default}
+html #modalProfile.modal-overlay .pf-salvar.pf-salvando svg{animation:ccGira .7s linear infinite}
 @media (max-width:360px){#modalProfile .pf-stats{grid-template-columns:repeat(2,1fr)}#modalProfile .pf-grade2{grid-template-columns:1fr}}
+html #modalProfile.modal-overlay .pf-bloco:has(#conexoesBox:empty){display:none}
+html #modalProfile.modal-overlay .pf-bloco:has(+ .pf-bloco:has(#conexoesBox:empty)){border-bottom:0;margin-bottom:0;padding-bottom:0}
 </style>
 </head>
 <body>
