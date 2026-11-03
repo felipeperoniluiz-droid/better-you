@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261103_hoje5";
+var APP_VERSION="20261103_hoje6";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3981,6 +3981,19 @@ html[data-theme="light"] #tab-hoje::before{display:none}
 #hc2 .x-avisos p{margin:0 0 calc(var(--u)*8)}
 #hc2 .x-avisos p:last-child{margin:0}
 html[data-theme="light"] #tab-hoje #mealsContainer{margin-top:17px}
+/* v6: calorias na proporcao do recorte do Felipe (anel 43%, cartoes 25%, sem sobrepor) */
+#hc2 .x-cal{height:calc(var(--u)*360)!important;margin-top:calc(var(--u)*26)!important}
+#hc2 .x-anel{width:calc(var(--u)*355)!important;height:calc(var(--u)*355)!important;margin-left:calc(var(--u)*-177.5)!important;top:calc(var(--u)*2)!important}
+#hc2 .x-lado{top:calc(var(--u)*30)!important;width:calc(var(--u)*210)!important;height:calc(var(--u)*300)!important;border-radius:calc(var(--u)*34)!important}
+#hc2 .x-ic{width:calc(var(--u)*86)!important;height:calc(var(--u)*86)!important;margin-top:calc(var(--u)*22)!important;background:radial-gradient(circle at 50% 30%,#FFF6E6 0%,#FFE1AE 60%,#FFCF86 100%)!important;color:#EC7F06!important}
+#hc2 .x-ic svg{width:calc(var(--u)*50)!important;height:calc(var(--u)*50)!important}
+#hc2 .x-lr{margin-top:calc(var(--u)*18)!important;font-size:calc(var(--u)*26)!important}
+#hc2 .x-ln{font-size:calc(var(--u)*50)!important;margin-top:calc(var(--u)*4)!important}
+#hc2 .x-lu{font-size:calc(var(--u)*26)!important;margin-top:calc(var(--u)*2)!important}
+#hc2 .x-meio{padding-top:calc(var(--u)*4)!important}
+#hc2 .x-meio svg{width:calc(var(--u)*64)!important;height:calc(var(--u)*72)!important}
+#hc2 .x-num{font-size:calc(var(--u)*100)!important;font-weight:800!important;margin-top:0!important}
+#hc2 .x-kc{font-size:calc(var(--u)*27)!important;margin-top:calc(var(--u)*6)!important}
 </style>
 </head>
 <body>
@@ -9892,22 +9905,24 @@ function hc2Render(){
   var sh=+state.sleepH||0, lua=S('<path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.8 8.8 0 1 0 20.5 15.2Z"/>');
   h+='<button type="button" class="x-sono" onclick="navGo(\'sono\')">'+lua+(sh>0?'<span><b>'+(T0.sonoOk||'Sono ok')+'</b> · '+_snFmt(sh)+'</span>':'<span><b>'+(_sonoT().pergunta)+'</b></span>')+S('<path d="m9 6 6 6-6 6"/>').replace('<svg ','<svg class="x-chev" ')+'</button>';
   /* calorias */
-  var R=165, C=2*Math.PI*R, pct=meta?Math.max(0,Math.min(1,kc/meta)):0, ang=-Math.PI/2+pct*2*Math.PI, kx=192.5+R*Math.cos(ang), ky=192.5+R*Math.sin(ang);
-  var fogo='<svg viewBox="0 0 24 24"><defs><linearGradient id="x2f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB547"/><stop offset="1" stop-color="#E8500C"/></linearGradient></defs><path fill="url(#x2f)" d="M13.1 2.8c.5 3-1.3 4.6-2.9 6.1-1.7 1.6-3.2 3.2-3.2 5.8a5 5 0 0 0 10 0c0-2.3-1-4.1-2.2-5.7-.2 2-1.1 2.8-2.1 3.5.4-3.1 2-5.3.4-9.7Z"/><path fill="#FFE08A" d="M12 14.2c-.9 1-1.5 1.8-1.5 2.8a1.5 1.5 0 0 0 3 0c0-.8-.4-1.5-1-2.2-.1.7-.4 1.1-1.1 1.5.2-.8.3-1.3.6-2.1Z"/></svg>';
+  var R=150, C=2*Math.PI*R, pct=meta?Math.max(0,Math.min(1,kc/meta)):0, ang=-Math.PI/2+pct*2*Math.PI, kx=177.5+R*Math.cos(ang), ky=177.5+R*Math.sin(ang);
+  var fogo='<svg viewBox="0 0 24 24"><defs><linearGradient id="x2f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB547"/><stop offset="1" stop-color="#E8500C"/></linearGradient></defs><path fill="url(#x2f)" stroke="none" d="M13.1 2.8c.5 3-1.3 4.6-2.9 6.1-1.7 1.6-3.2 3.2-3.2 5.8a5 5 0 0 0 10 0c0-2.3-1-4.1-2.2-5.7-.2 2-1.1 2.8-2.1 3.5.4-3.1 2-5.3.4-9.7Z"/><path fill="#FFE08A" stroke="none" d="M12 14.2c-.9 1-1.5 1.8-1.5 2.8a1.5 1.5 0 0 0 3 0c0-.8-.4-1.5-1-2.2-.1.7-.4 1.1-1.1 1.5.2-.8.3-1.3.6-2.1Z"/></svg>';
+  var ALVO='<svg viewBox="0 0 24 24"><circle cx="10.5" cy="13.5" r="7.5" stroke-width="2.6"/><circle cx="10.5" cy="13.5" r="4" stroke-width="2.6"/><circle cx="10.5" cy="13.5" r="1.3" fill="currentColor" stroke="none"/><path d="m10.5 13.5 9-9" stroke-width="2.6"/><path d="M16.2 3.6h4.2v4.2" stroke-width="2.6"/></svg>';
+  var BARR='<svg viewBox="0 0 24 24"><path d="M5 20v-5M10 20V10M15 20V6M20 20V3" stroke-width="3.4"/></svg>';
   h+='<div class="x-cal">'+
-    '<div class="x-lado e"><div class="x-ic">'+S('<circle cx="10.5" cy="13.5" r="6.5"/><circle cx="10.5" cy="13.5" r="2.5"/><path d="m14.5 9.5 6-6m-5 0h5v5"/>')+'</div><div class="x-lr">'+(T0.metaDiaria||'Meta diária')+'</div><div class="x-ln">'+_hcNum(meta)+'</div><div class="x-lu">kcal</div></div>'+
-    '<div class="x-lado d"><div class="x-ic">'+S('<path d="M5 20v-6M10.5 20V9M16 20V4"/>').replace('<svg ','<svg style="stroke-width:3.4" ')+'</div><div class="x-lr">'+(rem>=0?(T0.faltam||'Faltam'):(T0.acimaCurta||'Acima'))+'</div><div class="x-ln">'+_hcNum(Math.abs(rem))+'</div><div class="x-lu">kcal</div></div>'+
-    '<div class="x-anel"><svg viewBox="0 0 385 385"><defs>'+
-      '<linearGradient id="x2t" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F9D497"/><stop offset=".55" stop-color="#F6AE45"/><stop offset="1" stop-color="#EE8E14"/></linearGradient>'+
+    '<div class="x-lado e"><div class="x-ic">'+ALVO+'</div><div class="x-lr">'+(T0.metaDiaria||'Meta diária')+'</div><div class="x-ln">'+_hcNum(meta)+'</div><div class="x-lu">kcal</div></div>'+
+    '<div class="x-lado d"><div class="x-ic">'+BARR+'</div><div class="x-lr">'+(rem>=0?(T0.faltam||'Faltam'):(T0.acimaCurta||'Acima'))+'</div><div class="x-ln">'+_hcNum(Math.abs(rem))+'</div><div class="x-lu">kcal</div></div>'+
+    '<div class="x-anel"><svg viewBox="0 0 355 355"><defs>'+
+      '<linearGradient id="x2t" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F7C66E"/><stop offset=".5" stop-color="#F5A633"/><stop offset="1" stop-color="#EE8A0E"/></linearGradient>'+
       '<linearGradient id="x2p" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F49A1F"/><stop offset="1" stop-color="#D96A00"/></linearGradient>'+
-      '<radialGradient id="x2g" cx=".5" cy=".5" r=".5"><stop offset=".78" stop-color="#FFE3B5" stop-opacity=".0"/><stop offset=".9" stop-color="#FFD28A" stop-opacity=".45"/><stop offset="1" stop-color="#FFE7C2" stop-opacity="0"/></radialGradient></defs>'+
-      '<circle cx="192.5" cy="192.5" r="192" fill="url(#x2g)" stroke="none"/>'+
-      '<circle cx="192.5" cy="192.5" r="182" fill="#FFF8EE" stroke="#FCE6C6" stroke-width="2"/>'+
-      '<circle cx="192.5" cy="192.5" r="'+R+'" stroke="url(#x2t)" stroke-width="26"/>'+
-      (pct>0?'<circle cx="192.5" cy="192.5" r="'+R+'" stroke="url(#x2p)" stroke-width="26" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-pct)).toFixed(1)+'" transform="rotate(-90 192.5 192.5)"/>':'')+
-      '<circle cx="192.5" cy="192.5" r="150" fill="#FFFFFF" stroke="#FBEBD3" stroke-width="3"/>'+
-      '<circle cx="'+kx.toFixed(1)+'" cy="'+ky.toFixed(1)+'" r="22" fill="#F5A12B" stroke="#FFF1D8" stroke-width="5"/>'+
-      '<path d="M'+(kx-3).toFixed(1)+' '+(ky+5).toFixed(1)+'c-1-4 2-6 3-10 2 4 4 6 3 10-1 3-5 3-6 0Z" fill="#FFF6E2" stroke="none"/>'+
+      '<radialGradient id="x2g" cx=".5" cy=".5" r=".5"><stop offset=".86" stop-color="#FFD28A" stop-opacity=".55"/><stop offset="1" stop-color="#FFE7C2" stop-opacity="0"/></radialGradient></defs>'+
+      '<circle cx="177.5" cy="177.5" r="177" fill="url(#x2g)" stroke="none"/>'+
+      '<circle cx="177.5" cy="177.5" r="171" fill="#FFF9F0" stroke="#FBE2BD" stroke-width="3"/>'+
+      '<circle cx="177.5" cy="177.5" r="'+R+'" fill="none" stroke="url(#x2t)" stroke-width="32"/>'+
+      (pct>0?'<circle cx="177.5" cy="177.5" r="'+R+'" fill="none" stroke="url(#x2p)" stroke-width="32" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-pct)).toFixed(1)+'" transform="rotate(-90 177.5 177.5)"/>':'')+
+      '<circle cx="177.5" cy="177.5" r="133" fill="#FFFFFF" stroke="#FBE9CF" stroke-width="4"/>'+
+      '<circle cx="'+kx.toFixed(1)+'" cy="'+ky.toFixed(1)+'" r="20" fill="#F6A42C" stroke="#FFF3DC" stroke-width="5"/>'+
+      '<path d="M'+(kx-2.5).toFixed(1)+' '+(ky+6).toFixed(1)+'c-2-3.5.8-6.5 2.5-10.5 1.7 4 4.5 7 2.5 10.5-1 2-4 2-5 0Z" fill="#FFFFFF" stroke="none"/>'+
     '</svg><div class="x-meio">'+fogo+'<div class="x-num'+(rem<0?' acima':'')+'">'+_hcNum(kc)+'</div><div class="x-kc">'+(T0.kcalConsumidas||'kcal consumidas')+'</div></div></div></div>';
   /* macros */
   var mt=(T0.metaCurta||'Meta');
