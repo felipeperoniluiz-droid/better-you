@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261103_hoje6";
+var APP_VERSION="20261103_hoje7";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3997,6 +3997,12 @@ html[data-theme="light"] #tab-hoje #mealsContainer{margin-top:17px}
 #hc2 .x-meio svg{width:calc(var(--u)*92)!important;height:calc(var(--u)*92)!important;margin-bottom:calc(var(--u)*-6)}
 #hc2 .x-ic svg{width:calc(var(--u)*60)!important;height:calc(var(--u)*60)!important}
 #hc2 .x-num{font-size:calc(var(--u)*96)!important}
+/* v7: alinhamento simetrico como no modelo (dias com 27u de cada lado; topo/titulo/sono na mesma margem) */
+#hc2 .x-dias{margin:calc(var(--u)*38) calc(var(--u)*27) 0 calc(var(--u)*27)!important;gap:0}
+#hc2 .x-top{padding:0 calc(var(--u)*10) 0 calc(var(--u)*19)!important}
+#hc2 .x-tit{margin-left:calc(var(--u)*19)!important}
+#hc2 .x-data{margin-left:calc(var(--u)*19)!important}
+#hc2 .x-sono{margin-left:calc(var(--u)*17)!important}
 </style>
 </head>
 <body>
