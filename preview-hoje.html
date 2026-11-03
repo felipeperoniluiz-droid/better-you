@@ -9901,13 +9901,13 @@ function hc2Render(){
       '<linearGradient id="x2t" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F9D497"/><stop offset=".55" stop-color="#F6AE45"/><stop offset="1" stop-color="#EE8E14"/></linearGradient>'+
       '<linearGradient id="x2p" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F49A1F"/><stop offset="1" stop-color="#D96A00"/></linearGradient>'+
       '<radialGradient id="x2g" cx=".5" cy=".5" r=".5"><stop offset=".78" stop-color="#FFE3B5" stop-opacity=".0"/><stop offset=".9" stop-color="#FFD28A" stop-opacity=".45"/><stop offset="1" stop-color="#FFE7C2" stop-opacity="0"/></radialGradient></defs>'+
-      '<circle cx="192.5" cy="192.5" r="192" fill="url(#x2g)"/>'+
+      '<circle cx="192.5" cy="192.5" r="192" fill="url(#x2g)" stroke="none"/>'+
       '<circle cx="192.5" cy="192.5" r="182" fill="#FFF8EE" stroke="#FCE6C6" stroke-width="2"/>'+
       '<circle cx="192.5" cy="192.5" r="'+R+'" stroke="url(#x2t)" stroke-width="26"/>'+
       (pct>0?'<circle cx="192.5" cy="192.5" r="'+R+'" stroke="url(#x2p)" stroke-width="26" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-pct)).toFixed(1)+'" transform="rotate(-90 192.5 192.5)"/>':'')+
       '<circle cx="192.5" cy="192.5" r="150" fill="#FFFFFF" stroke="#FBEBD3" stroke-width="3"/>'+
-      '<circle cx="'+kx.toFixed(1)+'" cy="'+ky.toFixed(1)+'" r="19" fill="#F5A12B" stroke="#FFF1D8" stroke-width="5"/>'+
-      '<path d="M'+(kx-3).toFixed(1)+' '+(ky+5).toFixed(1)+'c-1-4 2-6 3-10 2 4 4 6 3 10-1 3-5 3-6 0Z" fill="#FFF6E2"/>'+
+      '<circle cx="'+kx.toFixed(1)+'" cy="'+ky.toFixed(1)+'" r="22" fill="#F5A12B" stroke="#FFF1D8" stroke-width="5"/>'+
+      '<path d="M'+(kx-3).toFixed(1)+' '+(ky+5).toFixed(1)+'c-1-4 2-6 3-10 2 4 4 6 3 10-1 3-5 3-6 0Z" fill="#FFF6E2" stroke="none"/>'+
     '</svg><div class="x-meio">'+fogo+'<div class="x-num'+(rem<0?' acima':'')+'">'+_hcNum(kc)+'</div><div class="x-kc">'+(T0.kcalConsumidas||'kcal consumidas')+'</div></div></div></div>';
   /* macros */
   var mt=(T0.metaCurta||'Meta');
