@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261103_pro2";
+var APP_VERSION="20261103_hoje";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3748,6 +3748,98 @@ html #upgradeModal.pv-on .pv-trial,html #upgradeModal.pv-on .pv-trial span{color
 html #upgradeModal.pv-on .pv-cta,html #upgradeModal.pv-on .pv-cta span{color:#1E1408!important}
 html #upgradeModal.pv-on .pv-free{color:#FFF3E2!important}
 html #upgradeModal.pv-on .pv-legal,html #upgradeModal.pv-on .pv-legal a{color:#A8977F!important}
+
+/* ===== 03/11: HOJE no modo CLARO (modelo do Felipe). Escuro nao muda. ===== */
+#tab-hoje .hc-sino,#tab-hoje .hc-data,#tab-hoje .hc-fogo{display:none}
+html:not([data-theme="light"]) #tab-hoje .hc-avisos{display:none!important}
+html[data-theme="light"] #tab-hoje{position:relative;z-index:0;--hc-borda:#F1E2CF;--hc-txt:#2A1A10;--hc-txt2:#657184;--hc-lar:#E97800;--hc-ouro:#D88918;--hc-sombra:0 6px 18px rgba(120,70,20,.08)}
+html[data-theme="light"] #tab-hoje::before{content:"";position:absolute;top:-20px;right:-18px;width:80%;height:230px;z-index:-1;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 230' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='f' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5A623' stop-opacity='0'/%3E%3Cstop offset='.6' stop-color='%23F8B53A' stop-opacity='.35'/%3E%3Cstop offset='1' stop-color='%23F5A623' stop-opacity='.7'/%3E%3C/linearGradient%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23FFF3E0' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23FCE3BC' stop-opacity='.9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M120 0C220 30 300 20 400 0V160C330 120 250 150 150 175 110 185 60 190 0 188 120 160 230 110 400 70' fill='url(%23g)' opacity='.6'/%3E%3Cpath d='M30 190C160 175 270 130 400 60V120C300 160 190 200 30 190Z' fill='url(%23f)'/%3E%3C/svg%3E") no-repeat right top/100% 100%}
+html[data-theme="light"] #tab-hoje .hc-row{display:grid!important;grid-template-columns:auto 1fr auto;align-items:center;row-gap:16px;padding-top:8px!important}
+html[data-theme="light"] #tab-hoje .hc-sino{display:grid;grid-row:1;grid-column:1;place-items:center;position:relative;width:48px;height:48px;border-radius:16px;border:1px solid var(--hc-borda)!important;background:#FFFDF9!important;color:var(--hc-txt)!important;box-shadow:0 4px 12px rgba(120,70,20,.12)!important;padding:0;cursor:pointer}
+html[data-theme="light"] #tab-hoje .hc-sino svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+html[data-theme="light"] #tab-hoje .hc-sino i{display:none;position:absolute;top:7px;right:8px;width:10px;height:10px;border-radius:50%;background:#F05A1A;border:2px solid #FFFDF9}
+html[data-theme="light"] #tab-hoje #hojePro{grid-row:1;grid-column:3}
+html[data-theme="light"] #tab-hoje .hc-titulo{grid-row:2;grid-column:1/-1}
+html[data-theme="light"] #tab-hoje .hc-titulo span{font:700 clamp(30px,8.6vw,36px)/1.05 Sora,Inter,sans-serif!important;color:var(--hc-txt)!important;letter-spacing:-.02em}
+html[data-theme="light"] #tab-hoje .hc-titulo svg{width:24px!important;height:24px!important;stroke:var(--hc-lar)!important}
+html[data-theme="light"] #tab-hoje .hc-data{display:block;font-size:15px;color:#5A5450;margin:4px 0 2px}
+html[data-theme="light"] #tab-hoje .hc-avisos{margin:10px 0 4px;padding:12px 14px;border-radius:18px;background:#FFFDF9;border:1px solid var(--hc-borda);box-shadow:var(--hc-sombra);font-size:13.5px;line-height:1.5;color:var(--hc-txt)}
+html[data-theme="light"] #tab-hoje .hc-avisos p{margin:0 0 6px}
+html[data-theme="light"] #tab-hoje .hc-avisos p:last-child{margin:0}
+html[data-theme="light"] #tab-hoje .hc-av-vazio{color:var(--hc-txt2)}
+html[data-theme="light"] #tab-hoje .h-pro-pill{padding:9px 18px!important;font:700 15px Inter,sans-serif!important;color:#fff!important;background:linear-gradient(180deg,#F2A93B,#D97706)!important;box-shadow:0 6px 14px rgba(217,119,6,.32)!important;gap:7px}
+html[data-theme="light"] #tab-hoje .h-pro-pill svg{width:20px!important;height:20px!important}
+/* semana */
+html[data-theme="light"] #tab-hoje #semanaFaixa{padding:14px 0 10px!important}
+html[data-theme="light"] #tab-hoje .hc-semana{display:flex;justify-content:space-between;gap:6px}
+html[data-theme="light"] #tab-hoje .hc-dia{position:relative;flex:1 1 0;max-width:46px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;border:1px solid var(--hc-borda)!important;background:#FFFDF9!important;color:var(--hc-txt)!important;font:600 15px Inter,sans-serif!important;box-shadow:0 3px 8px rgba(120,70,20,.08)!important;padding:0;cursor:pointer}
+html[data-theme="light"] #tab-hoje .hc-dia.tem{border-color:#F2C27A!important}
+html[data-theme="light"] #tab-hoje .hc-dia.fut{cursor:default;opacity:.85}
+html[data-theme="light"] #tab-hoje .hc-dia.hoje{background:linear-gradient(180deg,#F2A93B,#D97706)!important;border-color:transparent!important;color:#fff!important;box-shadow:0 6px 14px rgba(217,119,6,.35)!important;transform:scale(1.08)}
+html[data-theme="light"] #tab-hoje .hc-dia i{position:absolute;bottom:17%;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#fff}
+html[data-theme="light"] #tab-hoje .hc-dia.hoje span{transform:translateY(-3px)}
+/* pilula Sono ok */
+html[data-theme="light"] #tab-hoje #sinaisDia{margin-bottom:6px}
+html[data-theme="light"] #tab-hoje #sinaisDia>span{padding:10px 16px!important;font-size:15px!important;font-weight:600!important;gap:10px!important;color:var(--hc-txt)!important;background:#FFF6EA!important;border:1.5px solid #F2C27A!important;box-shadow:0 3px 10px rgba(217,119,6,.1)}
+html[data-theme="light"] #tab-hoje #sinaisDia>span svg{width:22px!important;height:22px!important;color:var(--hc-lar)}
+html[data-theme="light"] #tab-hoje #sinaisDia>span span[style*="opacity"]{opacity:1!important;font-weight:400}
+html[data-theme="light"] #tab-hoje #sinaisDia>span::after{content:"";width:9px;height:9px;border-right:2px solid var(--hc-lar);border-top:2px solid var(--hc-lar);transform:rotate(45deg);margin-left:6px}
+/* anel e cartoes laterais */
+html[data-theme="light"] #tab-hoje .hc-fogo{display:block;width:34px;height:34px;color:var(--hc-lar);margin:0 auto 2px}
+html[data-theme="light"] #tab-hoje .calorie-num{font:700 clamp(46px,13vw,60px)/1 Sora,Inter,sans-serif!important;color:#1A120C!important}
+html[data-theme="light"] #tab-hoje .calorie-label{font-size:15px!important;color:var(--hc-txt)!important}
+html[data-theme="light"] #tab-hoje #calRingFill{stroke-width:14!important}
+html[data-theme="light"] #tab-hoje .h-track{stroke-width:14!important}
+html[data-theme="light"] #tab-hoje .h-lado{border-radius:24px!important;background:linear-gradient(180deg,#FFFFFF 0%,#FFF9F1 70%,#FFE9C7 100%)!important;border:1px solid var(--hc-borda)!important;box-shadow:var(--hc-sombra)!important;overflow:hidden}
+html[data-theme="light"] #tab-hoje .h-lado::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 30' preserveAspectRatio='none'%3E%3Cpath d='M0 12C30 30 60 4 100 18V30H0Z' fill='%23F7B04A' opacity='.55'/%3E%3Cpath d='M0 20C35 32 70 10 100 24V30H0Z' fill='%23F29A1E' opacity='.6'/%3E%3C/svg%3E") no-repeat bottom/100% 100%}
+html[data-theme="light"] #tab-hoje .h-lado .med{width:52px!important;height:52px!important;border-radius:50%!important;background:linear-gradient(180deg,#FFE7C2,#FFD79A)!important;color:var(--hc-lar)!important;box-shadow:0 4px 10px rgba(217,119,6,.2)!important}
+html[data-theme="light"] #tab-hoje .h-lado .med svg{width:28px!important;height:28px!important}
+html[data-theme="light"] #tab-hoje .h-lado-rot{font-size:15px!important;color:var(--hc-txt)!important}
+html[data-theme="light"] #tab-hoje .h-lado-num{font:700 clamp(24px,6.8vw,30px)/1.1 Sora,Inter,sans-serif!important;color:#1A120C!important}
+html[data-theme="light"] #tab-hoje .h-lado-un{font-size:15px!important;color:var(--hc-txt)!important}
+/* macros */
+html[data-theme="light"] #tab-hoje .macro-row{border-radius:24px!important;padding:16px 14px!important;box-shadow:var(--hc-sombra)!important;border:1px solid var(--hc-borda)!important}
+html[data-theme="light"] #tab-hoje .macro-label{font:700 15.5px Inter,sans-serif!important;color:var(--hc-txt)!important}
+html[data-theme="light"] #tab-hoje .macro-row .h-ico{width:28px!important;height:28px!important}
+html[data-theme="light"] #tab-hoje .macro-row>div:nth-child(1) .h-ico{color:#2878E8!important}
+html[data-theme="light"] #tab-hoje .macro-row>div:nth-child(2) .h-ico{color:#E88916!important}
+html[data-theme="light"] #tab-hoje .macro-row>div:nth-child(3) .h-ico{color:#22B66A!important}
+html[data-theme="light"] #tab-hoje .macro-val{font:700 clamp(24px,7vw,30px)/1.1 Sora,Inter,sans-serif!important;margin:8px 0!important}
+html[data-theme="light"] #tab-hoje #macroProtVal{color:#2878E8!important}
+html[data-theme="light"] #tab-hoje #macroCarbVal{color:#E88916!important}
+html[data-theme="light"] #tab-hoje #macroFatVal{color:#22B66A!important}
+html[data-theme="light"] #tab-hoje #macroProtBar{background:#2878E8!important}
+html[data-theme="light"] #tab-hoje #macroCarbBar{background:#E88916!important}
+html[data-theme="light"] #tab-hoje #macroFatBar{background:#22B66A!important}
+html[data-theme="light"] #tab-hoje .macro-bar-fill{min-width:9px}
+html[data-theme="light"] #tab-hoje .macro-meta{font-size:14px!important;color:#5A5450!important;margin-top:8px}
+/* cartoes Hidratacao e Proteina */
+html[data-theme="light"] #tab-hoje #alertsBox{margin-top:12px}
+html[data-theme="light"] #tab-hoje .hc-card{position:relative;display:flex;align-items:center;gap:14px;width:100%;margin:0 0 12px;padding:16px 14px 16px 16px;border-radius:24px!important;border:1px solid var(--hc-borda)!important;background:#FFFFFF!important;box-shadow:var(--hc-sombra)!important;text-align:left;cursor:pointer;overflow:hidden;font-family:Inter,sans-serif;color:var(--hc-txt)!important}
+html[data-theme="light"] #tab-hoje .hc-agua::before{content:"";position:absolute;top:0;right:0;width:65%;height:70%;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80' preserveAspectRatio='none'%3E%3Cpath d='M0 0H200V50C150 20 90 10 0 0Z' fill='%23BFE0FF' opacity='.55'/%3E%3Cpath d='M60 0C120 8 170 25 200 40' fill='none' stroke='%2390C8FF' stroke-width='1.2' opacity='.6'/%3E%3C/svg%3E") no-repeat right top/100% 100%}
+html[data-theme="light"] #tab-hoje .hc-prot::after{content:"";position:absolute;right:0;bottom:0;width:60%;height:40px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 40C70 30 130 18 200 8V40Z' fill='%23F8B54A' opacity='.45'/%3E%3C/svg%3E") no-repeat right bottom/100% 100%}
+html[data-theme="light"] #tab-hoje .hc-tile{position:relative;flex:0 0 72px;width:72px;height:72px;border-radius:20px;display:grid;place-items:center;margin-right:2px}
+html[data-theme="light"] #tab-hoje .hc-tile::after{content:"";position:absolute;right:-9px;top:6px;bottom:6px;width:1px;background:var(--hc-borda)}
+html[data-theme="light"] #tab-hoje .hc-tile svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+html[data-theme="light"] #tab-hoje .hc-tile-azul{background:linear-gradient(180deg,#E3F1FF,#CFE6FF);color:#168BEE;box-shadow:0 4px 10px rgba(22,139,238,.18)}
+html[data-theme="light"] #tab-hoje .hc-tile-ouro{background:linear-gradient(180deg,#FFF0DA,#FFE0B2);color:var(--hc-lar);box-shadow:0 4px 10px rgba(217,119,6,.18)}
+html[data-theme="light"] #tab-hoje .hc-cd{position:relative;flex:1;min-width:0;padding-left:6px}
+html[data-theme="light"] #tab-hoje .hc-ct{display:block;font:700 18.5px Sora,Inter,sans-serif;color:#1A120C}
+html[data-theme="light"] #tab-hoje .hc-cs{display:block;font-size:14.5px;line-height:1.4;color:var(--hc-txt);margin-top:3px}
+html[data-theme="light"] #tab-hoje .hc-agua .hc-cs em{font-style:normal;font-weight:700;color:#168BEE}
+html[data-theme="light"] #tab-hoje .hc-prot .hc-cs em{font-style:normal;font-weight:700;color:var(--hc-lar)}
+html[data-theme="light"] #tab-hoje .hc-cx{display:block;font-size:14px;line-height:1.4;color:var(--hc-txt);margin-top:2px}
+html[data-theme="light"] #tab-hoje .hc-bar{display:block;height:9px;border-radius:99px;background:#E6E3E0;margin-top:9px;overflow:hidden}
+html[data-theme="light"] #tab-hoje .hc-bar span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#5BAEFF,#168BEE);min-width:0}
+html[data-theme="light"] #tab-hoje .hc-anel{position:relative;flex:0 0 58px;width:58px;height:58px}
+html[data-theme="light"] #tab-hoje .hc-anel svg{width:58px;height:58px;transform:rotate(-90deg);fill:none}
+html[data-theme="light"] #tab-hoje .hc-anel circle{stroke:#ECEAE7;stroke-width:5}
+html[data-theme="light"] #tab-hoje .hc-anel .hc-anel-p{stroke:#168BEE;stroke-linecap:round}
+html[data-theme="light"] #tab-hoje .hc-anel b{position:absolute;inset:0;display:grid;place-items:center;font:700 14px Inter,sans-serif;color:var(--hc-txt)}
+html[data-theme="light"] #tab-hoje .hc-seta{position:relative;flex:0 0 18px;width:18px;height:18px;fill:none;stroke:#3A3A3A;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+/* o resumo de agua antigo saiu: o cartao Hidratacao acima faz esse papel */
+html[data-theme="light"] #tab-hoje .card:has(#waterSummaryVal){display:none}
+@media (max-width:360px){html[data-theme="light"] #tab-hoje .hc-tile{flex-basis:58px;width:58px;height:58px}html[data-theme="light"] #tab-hoje .hc-anel{flex-basis:48px;width:48px;height:48px}html[data-theme="light"] #tab-hoje .hc-anel svg{width:48px;height:48px}}
 </style>
 </head>
 <body>
@@ -3870,7 +3962,7 @@ if(_al){
     <span class="h-frase h-frase-dir" id="hojeFraseDir"></span>
 
     <!-- Saudação com foto do perfil -->
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 0 2px"><div onclick="calAbrir()" style="display:flex;align-items:center;gap:7px;cursor:pointer"><span data-i18n="calhojeBtn" style="font-size:26px;font-weight:800;color:var(--text)">Hoje</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--goldInk)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"/></svg></div><span id="hojePro"></span></div><div id="semanaFaixa" style="padding:12px 0 6px"></div>
+    <div class="hc-row" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 0 2px"><button type="button" class="hc-sino" onclick="hcSino()" aria-label="avisos"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><i id="hcSinoPonto"></i></button><div class="hc-titulo" onclick="calAbrir()" style="display:flex;align-items:center;gap:7px;cursor:pointer"><span data-i18n="calhojeBtn" style="font-size:26px;font-weight:800;color:var(--text)">Hoje</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--goldInk)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"/></svg></div><span id="hojePro"></span></div><div class="hc-data" id="hojeData"></div><div id="hcAvisos" class="hc-avisos" style="display:none"></div><div id="semanaFaixa" style="padding:12px 0 6px"></div>
 
     <!-- 23/10: aviso de fim do PRO + convite para continuar (so aparece para quem cancelou) -->
     <div id="avisoFim" style="display:none"></div>
@@ -3893,6 +3985,7 @@ if(_al){
             <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f0b429"/><stop offset="100%" stop-color="#e8834a"/></linearGradient></defs>
           </svg>
           <div class="h-gauge-centro">
+            <svg class="hc-fogo" viewBox="0 0 24 24"><use href="#i-flame"/></svg>
             <div class="calorie-num" id="calConsumed">0</div>
             <div class="calorie-label" data-i18n="kcalConsumidas">kcal consumidas</div>
           </div>
@@ -3904,7 +3997,7 @@ if(_al){
              preenchida: ela e a versao do tema escuro e o texto que o leitor
              de tela anuncia. No claro ela some e estes dois aparecem. -->
         <div class="h-lado h-lado-esq" aria-hidden="true">
-          <span class="med"><svg viewBox="0 0 24 24" width="20" height="20"><use href="#i-flame"/></svg></span>
+          <span class="med"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="13.5" r="6.5"/><circle cx="10.5" cy="13.5" r="2.5"/><path d="m14.5 9.5 6-6m-5 0h5v5"/></svg></span>
           <span class="h-lado-rot" id="hojeMetaRot">Meta diária</span>
           <span class="h-lado-num" id="hojeMetaNum">0</span>
           <span class="h-lado-un">kcal</span>
@@ -4950,6 +5043,7 @@ function setTheme(t){
   try{ if(typeof saveToFirestore==="function") saveToFirestore(); }catch(e){}
   aplicarTema();
   try{ var ts=document.getElementById("tab-sono"); if(ts&&ts.classList.contains("active")) sonoTelaRender(); }catch(e){}
+  try{ semanaFaixaRender(); renderAlerts(); }catch(e){}
 }
 /* ---------- CAPA DA TELA HOJE (11/09/2026) ----------
    state.capaHoje !== false  =>  mostra. O padrao e MOSTRAR, e o teste e
@@ -5661,9 +5755,9 @@ function renderToday(){
   if(rem>0)el.innerHTML=T[currentLang].faltam+" <b style='color:#f0b429'>"+rem+"</b> kcal";
   else if(rem<0)el.innerHTML="<b style='color:#f87171'>"+Math.abs(rem)+"</b> kcal "+T[currentLang].acimaMeta;
   else el.innerHTML="<b style='color:#34d399'>"+T[currentLang].metaAtingida+"</b>";
-  document.getElementById("macroProtVal").textContent=t.prot+"g";
-  document.getElementById("macroCarbVal").textContent=t.carb+"g";
-  document.getElementById("macroFatVal").textContent=t.fat+"g";
+  document.getElementById("macroProtVal").textContent=t.prot+" g";
+  document.getElementById("macroCarbVal").textContent=t.carb+" g";
+  document.getElementById("macroFatVal").textContent=t.fat+" g";
   document.getElementById("macroProtBar").style.width=Math.min(100,t.prot/g.prot*100)+"%";
   document.getElementById("macroCarbBar").style.width=Math.min(100,t.carb/g.carb*100)+"%";
   document.getElementById("macroFatBar").style.width=Math.min(100,t.fat/g.fat*100)+"%";
@@ -5673,15 +5767,16 @@ function renderToday(){
      depois daqui e refeicoes, agua e score, que sao o conteudo de verdade. */
   try{
     var _mt=(T[currentLang]&&T[currentLang].metaCurta)||"Meta";
-    var _pm=document.getElementById("macroProtMeta"); if(_pm) _pm.textContent=_mt+" "+g.prot+"g";
-    var _cm=document.getElementById("macroCarbMeta"); if(_cm) _cm.textContent=_mt+" "+g.carb+"g";
-    var _fm=document.getElementById("macroFatMeta");  if(_fm) _fm.textContent=_mt+" "+g.fat+"g";
+    var _pm=document.getElementById("macroProtMeta"); if(_pm) _pm.textContent=_mt+" "+g.prot+" g";
+    var _cm=document.getElementById("macroCarbMeta"); if(_cm) _cm.textContent=_mt+" "+g.carb+" g";
+    var _fm=document.getElementById("macroFatMeta");  if(_fm) _fm.textContent=_mt+" "+g.fat+" g";
 
-    var _mn=document.getElementById("hojeMetaNum");   if(_mn) _mn.textContent=state.calGoal;
+    var _mn=document.getElementById("hojeMetaNum");   if(_mn) _mn.textContent=_hcNum(state.calGoal);
     var _fn=document.getElementById("hojeFaltamNum");
     /* Passou da meta: o cartao passa a dizer "Acima" e mostra quanto, em vez
        de um numero negativo solto que nao se explica. */
-    if(_fn) _fn.textContent=(rem>0?rem:Math.abs(rem));
+    if(_fn) _fn.textContent=_hcNum(rem>0?rem:Math.abs(rem));
+    try{ hcData(); }catch(e){}
     var _fr=document.getElementById("hojeFaltamRot");
     if(_fr) _fr.textContent=(rem>=0
       ? ((T[currentLang]&&T[currentLang].faltam)||"Faltam")
@@ -6922,6 +7017,7 @@ function calRender(){
   el.innerHTML=h+'</div>';
 }
 function semanaFaixaHtml(){
+  if(document.documentElement.getAttribute("data-theme")==="light"){ try{ return _hcSemana(); }catch(e){} }
   var ini=(typeof _dias==="function")?_dias("ini"):["D","S","T","Q","Q","S","S"];
   var hoje=new Date(); hoje.setHours(0,0,0,0);
   var dom=new Date(hoje.getTime()-hoje.getDay()*86400000);
@@ -7086,6 +7182,18 @@ function depoEnviar(){
     if(el) el.innerHTML='<div style="border:1px solid rgba(16,185,129,.5);background:rgba(16,185,129,.08);border-radius:16px;padding:16px;margin:0 0 14px;font-size:13.5px;color:var(--text);">'+tx("depoObrigado")+'</div>';
     setTimeout(function(){ if(el){ el.style.display="none"; el.innerHTML=""; } },6000);
   }).catch(function(){ if(b) b.disabled=false; m(tx("depoErro"),false); });
+}
+function _hcSemana(){
+  var ini=(typeof _dias==="function")?_dias("ini"):["D","S","T","Q","Q","S","S"];
+  var hoje=new Date(); hoje.setHours(0,0,0,0);
+  var dom=new Date(hoje.getTime()-hoje.getDay()*86400000), h="";
+  function chave(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+  for(var i=0;i<7;i++){
+    var d=new Date(dom.getTime()+i*86400000), eH=d.getTime()===hoje.getTime(), fut=d.getTime()>hoje.getTime();
+    var tem=!!(state.history&&state.history[chave(d)]&&state.history[chave(d)].kcal>0);
+    h+='<button type="button" class="hc-dia'+(eH?' hoje':'')+(tem?' tem':'')+(fut?' fut':'')+'"'+(fut?' disabled':' onclick="navGo(\'hist\')"')+'><span>'+ini[d.getDay()]+'</span>'+(eH?'<i></i>':'')+'</button>';
+  }
+  return '<div class="hc-semana">'+h+'</div>';
 }
 function semanaFaixaRender(){ var el=document.getElementById("semanaFaixa"); if(el) el.innerHTML=semanaFaixaHtml(); }
 function maisRender(){
@@ -9283,6 +9391,7 @@ var TX={
  mxAtiva:{pt:'Assinatura ativa',en:'Active subscription',es:'Suscripción activa',it:'Abbonamento attivo',fr:'Abonnement actif',de:'Abo aktiv'},
  mxDesbloqueie:{pt:'Desbloqueie tudo',en:'Unlock everything',es:'Desbloquea todo',it:'Sblocca tutto',fr:'Tout débloquer',de:'Alles freischalten'},
  mxMes:{pt:'mês',en:'month',es:'mes',it:'mese',fr:'mois',de:'Monat'},
+ hcSemAvisos:{pt:'Nenhum aviso agora. A Bel avisa aqui quando algo merecer atenção.',en:'No alerts right now. Bel will let you know here when something needs attention.',es:'Ningún aviso ahora. Bel te avisará aquí cuando algo necesite atención.',it:'Nessun avviso ora. Bel ti avviserà qui quando qualcosa richiede attenzione.',fr:"Aucune alerte pour l'instant. Bel vous préviendra ici quand quelque chose demandera votre attention.",de:'Gerade keine Hinweise. Bel meldet sich hier, wenn etwas Aufmerksamkeit braucht.'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
  pgrF1D:{pt:'Compare suas fotos e veja mudanças reais.',en:'Compare your photos and see real changes.',es:'Compara tus fotos y ve cambios reales.',it:'Confronta le tue foto e vedi cambiamenti reali.',fr:'Comparez vos photos et voyez de vrais changements.',de:'Vergleichen Sie Ihre Fotos und sehen Sie echte Veränderungen.'},
@@ -9608,6 +9717,46 @@ function renderAlerts(){
 
   box.style.display=html?"block":"none";
   box.innerHTML=html;
+  try{ hcCartoes(); }catch(e){}
+}
+/* ===== 03/11: HOJE no modo claro (modelo do Felipe) ===== */
+function _hcNum(n){ n=Math.round(+n||0); try{ return n.toLocaleString(({pt:'pt-BR',en:'en-GB',es:'es-ES',it:'it-IT',fr:'fr-FR',de:'de-DE'})[currentLang]||'pt-BR'); }catch(e){ return String(n); } }
+function hcData(){
+  var el=document.getElementById("hojeData"); if(!el) return;
+  var loc={pt:"pt-BR",en:"en-GB",es:"es-ES",it:"it-IT",fr:"fr-FR",de:"de-DE"}[currentLang]||"pt-BR";
+  var s=new Date().toLocaleDateString(loc,{weekday:"long",day:"numeric",month:"long"});
+  el.textContent=s.charAt(0).toUpperCase()+s.slice(1);
+}
+/* Cartoes Hidratacao e Proteina no formato do modelo; os avisos de horario
+   (alertas preventivos) passam a morar no sino, com ponto quando ha algum. */
+function hcCartoes(){
+  var box=document.getElementById("alertsBox"); if(!box) return;
+  var claro=document.documentElement.getAttribute("data-theme")==="light";
+  var av=[]; try{ av=getPreventiveAlerts()||[]; }catch(e){}
+  var pt=document.getElementById("hcSinoPonto"); if(pt) pt.style.display=av.length?"block":"none";
+  var ax=document.getElementById("hcAvisos");
+  if(ax) ax.innerHTML=av.length?av.map(function(a){return '<p>'+a.text+'</p>';}).join(""):'<p class="hc-av-vazio">'+tx("hcSemAvisos")+'</p>';
+  if(!claro) return;
+  var t=calcTotals(), g=getMacroGoals()||{prot:0};
+  var wG=+state.waterGoal||2500, w=+state.waterMl||0, fA=Math.max(0,wG-w), pw=Math.min(100,Math.round(w/wG*100));
+  var pA=Math.round(t.prot||0), pM=Math.round(g.prot||0), fP=Math.max(0,pM-pA), fr=Math.round(fP/0.31/10)*10, pp=pM?Math.min(100,pA/pM*100):0;
+  var C=2*Math.PI*21, gota='<svg viewBox="0 0 24 24"><path d="M12 2.5S5 10 5 14.5a7 7 0 0 0 14 0C19 10 12 2.5 12 2.5Z"/></svg>';
+  var shaker='<svg viewBox="0 0 24 24"><path d="M8 3h8v3l1 2v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V8l1-2V3Z"/><path d="M8 6h8M7 10h10M10 3V2h4v1"/></svg>';
+  var seta='<svg class="hc-seta" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>';
+  box.innerHTML=
+   '<button type="button" class="hc-card hc-agua" onclick="navGo(\'agua\')"><span class="hc-tile hc-tile-azul">'+gota+'</span><span class="hc-cd">'+
+     '<b class="hc-ct">'+tx('hidratacao')+'</b><span class="hc-cs"><em>'+_hcNum(w)+' ml</em> '+tx('deAgua')+' &middot; '+tx('faltamN',_hcNum(fA)+' ml')+'</span>'+
+     '<span class="hc-bar"><span style="width:'+pw+'%"></span></span></span>'+
+     '<span class="hc-anel"><svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="21"/><circle class="hc-anel-p" cx="25" cy="25" r="21" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-pw/100)).toFixed(1)+'"/></svg><b>'+pw+'%</b></span>'+seta+'</button>'+
+   (pM>0?'<button type="button" class="hc-card hc-prot" onclick="openAddFood()"><span class="hc-tile hc-tile-ouro">'+shaker+'</span><span class="hc-cd">'+
+     '<b class="hc-ct">'+tx('proteinaLbl')+'</b><span class="hc-cs"><em>'+pA+' g</em> '+tx('deN',pM+' g')+'</span>'+
+     '<span class="hc-cx">'+(fP>0?tx('faltamFrango',fP,fr):tx('metaAtingidaLbl'))+'</span></span>'+seta+'</button>':'');
+  box.style.display="block";
+}
+function hcSino(){
+  var ax=document.getElementById("hcAvisos"); if(!ax) return;
+  try{ hcCartoes(); }catch(e){}
+  ax.style.display=(ax.style.display==="none")?"block":"none";
 }
 /* ===== D) PROJECAO ===== */
 function _linTrend(pts){
