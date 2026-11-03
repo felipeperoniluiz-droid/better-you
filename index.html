@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261102_fogo";
+var APP_VERSION="20261103_pro";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -3674,6 +3674,63 @@ html:not([data-theme="light"]) #tab-mais .m-item2.m-tom-azul .m-med{background:r
 #tab-mais .m-item2 .m-seta{color:var(--mx-txt2)!important;width:20px!important;height:20px!important}
 #tab-mais .m-faixa,#tab-mais .m-nome{display:none!important}
 @media (max-width:360px){#tab-mais .mx-av{flex-basis:76px;width:76px;height:76px}#tab-mais .mx-stats{grid-template-columns:1fr 1fr 1fr;gap:6px}#tab-mais .mx-st{flex-direction:column;align-items:flex-start;gap:4px}}
+
+/* ===== 03/11: TELA PRO (modelo do Felipe) — escura e dourada nos dois temas ===== */
+#upgradeModal.pv-on{align-items:stretch}
+html #upgradeModal.pv-on .modal{position:relative;max-width:480px;height:100svh;max-height:100svh;border-radius:0;padding:calc(env(safe-area-inset-top,0px) + 22px) 18px calc(env(safe-area-inset-bottom,0px) + 22px)!important;overflow-y:auto;overflow-x:hidden;background:radial-gradient(120% 60% at 50% 0%,#3A2410 0%,#1B120B 45%,#120C08 100%)!important;color:#F6EBDD;font-family:Inter,system-ui,sans-serif}
+#upgradeModal.pv-on .modal-handle{display:none}
+#upgradeModal svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#upgradeModal .pv-x{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:12px;z-index:3;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(232,170,72,.3)!important;background:rgba(255,255,255,.04)!important;color:#E8C48A!important;box-shadow:none!important;padding:0;cursor:pointer}
+#upgradeModal .pv-x svg{width:18px;height:18px}
+#upgradeModal .pv-onda{position:absolute;top:0;right:0;width:70%;height:150px;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F5B54A' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23F5B54A' stop-opacity='.9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M60 150C160 120 240 70 300 0' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Cpath d='M120 150C200 118 262 76 300 30' fill='none' stroke='url(%23g)' stroke-width='1' opacity='.5'/%3E%3C/svg%3E") no-repeat right top/100% 100%}
+#upgradeModal .pv-topo{position:relative;text-align:center;margin-bottom:16px}
+#upgradeModal .pv-logo{height:46px;width:auto;display:block;margin:0 auto 10px}
+#upgradeModal .pv-tit{font:700 clamp(23px,6.6vw,28px)/1.18 Sora,Inter,sans-serif;color:#FFF6EA;margin:0;letter-spacing:-.01em}
+#upgradeModal .pv-tit span{background:linear-gradient(180deg,#FFD27A,#E59A26);-webkit-background-clip:text;background-clip:text;color:transparent}
+#upgradeModal .pv-sub{margin:7px 0 0;font-size:14.5px;line-height:1.4;color:#D9C9B6}
+#upgradeModal .pv-usou{font-size:12.5px;color:#FFD27A;background:rgba(232,170,72,.12);border:1px solid rgba(232,170,72,.3);border-radius:12px;padding:9px 12px;text-align:center;margin-bottom:12px;line-height:1.45}
+#upgradeModal .pv-lista{border:1px solid rgba(232,170,72,.45);border-radius:22px;padding:4px 12px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));box-shadow:inset 0 1px 0 rgba(255,215,140,.08),0 10px 30px rgba(0,0,0,.35);margin-bottom:16px}
+#upgradeModal .pv-item{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid rgba(232,170,72,.14)}
+#upgradeModal .pv-item:last-child{border-bottom:0}
+#upgradeModal .pv-ic{flex:0 0 42px;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(180deg,#3A2712,#26190C);border:1px solid rgba(232,170,72,.25);color:#F2B04A;box-shadow:inset 0 1px 0 rgba(255,215,140,.1)}
+#upgradeModal .pv-ic svg{width:23px;height:23px}
+#upgradeModal .pv-tx{flex:1;min-width:0}
+#upgradeModal .pv-tx b{display:block;font:600 15.5px/1.25 Sora,Inter,sans-serif;color:#FFF3E2}
+#upgradeModal .pv-tx small{display:block;font-size:12px;line-height:1.35;color:#CDBCA8;margin-top:2px}
+#upgradeModal .pv-tag{flex:0 0 auto;max-width:42%;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:34px;padding:5px 11px;border-radius:999px;border:1px solid rgba(232,170,72,.55);background:linear-gradient(180deg,rgba(120,72,20,.55),rgba(70,40,12,.55));color:#FFD27A;font:600 12px/1.2 Inter,sans-serif;text-align:center}
+#upgradeModal .pv-tag svg{flex:0 0 15px;width:15px;height:15px;stroke-width:2.2}
+#upgradeModal .pv-trial{display:flex;align-items:center;justify-content:center;gap:12px;width:fit-content;max-width:100%;margin:0 auto 18px;padding:9px 18px;border-radius:999px;border:1px solid rgba(52,211,153,.55);background:rgba(16,70,48,.45);color:#E6FFF4;font:700 11.5px/1.2 Inter,sans-serif;letter-spacing:.07em;text-transform:uppercase}
+#upgradeModal .pv-trial span{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+#upgradeModal .pv-trial svg{width:17px;height:17px;color:#E6FFF4}
+#upgradeModal .pv-trial .pv-folha{color:#34D399}
+#upgradeModal .pv-trial i{width:1px;height:18px;background:rgba(52,211,153,.45)}
+#upgradeModal .pv-planos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+#upgradeModal .pv-plano{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:128px;padding:18px 8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.14)!important;background:linear-gradient(180deg,#1E1A17,#141110)!important;color:#F6EBDD!important;box-shadow:0 8px 20px rgba(0,0,0,.35)!important;cursor:pointer;font-family:inherit}
+#upgradeModal .pv-plano.on{border:2px solid #F2B04A!important;background:linear-gradient(180deg,#3A2410,#22160C)!important;box-shadow:0 0 0 1px rgba(242,176,74,.25),0 0 24px rgba(242,176,74,.25)!important}
+#upgradeModal .pv-selo{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#34D399;color:#05261A;font:700 12px Inter,sans-serif;padding:4px 12px;border-radius:999px;white-space:nowrap}
+#upgradeModal .pv-ck{position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#F2B04A;color:#2A1A08}
+#upgradeModal .pv-ck svg{width:14px;height:14px;stroke-width:3}
+#upgradeModal .pv-pt{font-size:15px;font-weight:500;color:#F3E6D6}
+#upgradeModal .pv-plano.on .pv-pt{color:#FFD27A}
+#upgradeModal .pv-pr{font:700 clamp(28px,8.4vw,36px)/1.1 Sora,Inter,sans-serif;color:#FFFFFF;letter-spacing:-.01em}
+#upgradeModal .pv-plano.on .pv-pr{background:linear-gradient(180deg,#FFD27A,#E59A26);-webkit-background-clip:text;background-clip:text;color:transparent}
+#upgradeModal .pv-pd{font-size:12.5px;line-height:1.35;color:#CDBCA8;text-align:center}
+#upgradeModal .pv-cta{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:58px;border:0!important;border-radius:18px!important;background:linear-gradient(180deg,#FFD47E 0%,#F2B04A 55%,#D98B1C 100%)!important;color:#1E1408!important;font:600 18px Sora,Inter,sans-serif!important;box-shadow:0 10px 26px rgba(242,176,74,.32),inset 0 1px 0 rgba(255,255,255,.5)!important;cursor:pointer}
+#upgradeModal .pv-cta svg{width:22px;height:22px;stroke-width:2.2}
+#upgradeModal .pv-bel{display:flex;align-items:center;gap:10px;margin:18px 0 8px}
+#upgradeModal .pv-bel img{flex:0 0 84px;width:84px;height:84px;border-radius:50%;object-fit:cover}
+#upgradeModal .pv-balao{position:relative;flex:1;padding:12px 14px;border-radius:18px;background:rgba(80,52,24,.55);border:1px solid rgba(232,170,72,.25);font-size:13.5px;line-height:1.45;color:#F3E6D6}
+#upgradeModal .pv-balao::before{content:"";position:absolute;left:-7px;top:50%;width:12px;height:12px;transform:translateY(-50%) rotate(45deg);background:rgba(80,52,24,.55);border-left:1px solid rgba(232,170,72,.25);border-bottom:1px solid rgba(232,170,72,.25)}
+#upgradeModal .pv-rod{text-align:center;font-size:13px;color:#BFAE9B;margin:6px 0 12px}
+#upgradeModal .pv-free{display:block;width:100%;min-height:54px;border-radius:16px!important;border:1.5px solid rgba(232,170,72,.6)!important;background:transparent!important;color:#FFF3E2!important;font:600 16px Inter,sans-serif!important;box-shadow:none!important;cursor:pointer}
+#upgradeModal .pv-legal{text-align:center;font-size:11px;margin-top:12px;color:#9C8C7A}
+#upgradeModal .pv-legal a{color:#9C8C7A;text-decoration:underline}
+#upgradeModal .pv-legal span{margin:0 8px}
+@media (max-width:360px){#upgradeModal .pv-tag{max-width:38%;font-size:11px;padding:4px 8px}#upgradeModal .pv-trial{gap:8px;padding:8px 12px;font-size:10.5px}#upgradeModal .pv-bel img{flex-basis:64px;width:64px;height:64px}}
+#upgradeModal .pv-logo{height:auto!important;width:140px!important}
+#upgradeModal .pv-cta{font:700 18px Inter,sans-serif!important}
+#upgradeModal .pv-cobra{margin:9px 4px 0;text-align:center;font-size:11.5px;line-height:1.45;color:#BFAE9B}
+@media (max-width:340px){#upgradeModal .pv-planos{grid-template-columns:1fr;gap:16px}}
 </style>
 </head>
 <body>
@@ -7832,77 +7889,92 @@ function planoSel(k){
   window._planoEscolhido=(k==="mensal")?"mensal":"anual";
   try{ planoRender(); }catch(e){}
 }
+/* ===== 03/11: tela PRO no modelo do Felipe (escura e dourada, sempre) ===== */
+var PRO2={
+ pt:{t1:"Desbloqueie a",t2:"experiência completa",sub:"Alcance seus objetivos mais rápido com a versão Premium.",
+  f:[["Bel no chat","Sua assistente pessoal, quando você quiser.","Quando quiser",""],["Sua semana analisada","Uma revisão personalizada do seu progresso.","Toda semana","cal"],["Relatórios e projeção","Insights, tendências e próximos passos.","Incluído","ok"],["Fotos de progresso","Acompanhe sua transformação ao longo do tempo.","Incluído","ok"],["No mercado","Alertas de alergia e ficha nutricional completa dos produtos.","Ficha completa","lista"],["Jejum","Jejum intermitente simples e fácil.","Incluído","ok"]],
+  bel:"Eu sou a Bel! Vou estar ao seu lado para te orientar, te manter motivado e te ajudar a alcançar seus objetivos. 💛"},
+ en:{t1:"Unlock the",t2:"full experience",sub:"Reach your goals faster with the Premium version.",
+  f:[["Bel in chat","Your personal assistant, whenever you like.","Whenever you like",""],["Your week analysed","A personalised review of your progress.","Every week","cal"],["Reports and projection","Insights, trends and next steps.","Included","ok"],["Progress photos","Track your transformation over time.","Included","ok"],["At the shop","Allergy warnings and full nutritional breakdown of products.","Full breakdown","lista"],["Fasting","Intermittent fasting made simple and easy.","Included","ok"]],
+  bel:"I'm Bel! I'll be by your side to guide you, keep you motivated and help you reach your goals. 💛"},
+ es:{t1:"Desbloquea la",t2:"experiencia completa",sub:"Alcanza tus objetivos más rápido con la versión Premium.",
+  f:[["Bel en el chat","Tu asistente personal, cuando quieras.","Cuando quieras",""],["Tu semana analizada","Una revisión personalizada de tu progreso.","Cada semana","cal"],["Informes y proyección","Ideas, tendencias y próximos pasos.","Incluido","ok"],["Fotos de progreso","Sigue tu transformación con el tiempo.","Incluido","ok"],["En la compra","Avisos de alergia y ficha nutricional completa de los productos.","Ficha completa","lista"],["Ayuno","Ayuno intermitente simple y fácil.","Incluido","ok"]],
+  bel:"¡Soy Bel! Estaré a tu lado para guiarte, mantenerte motivado y ayudarte a alcanzar tus objetivos. 💛"},
+ it:{t1:"Sblocca l'",t2:"esperienza completa",sub:"Raggiungi i tuoi obiettivi più velocemente con la versione Premium.",
+  f:[["Bel in chat","La tua assistente personale, quando vuoi.","Quando vuoi",""],["La tua settimana analizzata","Una revisione personalizzata dei tuoi progressi.","Ogni settimana","cal"],["Report e proiezione","Spunti, tendenze e prossimi passi.","Incluso","ok"],["Foto dei progressi","Segui la tua trasformazione nel tempo.","Incluso","ok"],["Alla spesa","Avvisi di allergia e scheda nutrizionale completa dei prodotti.","Scheda completa","lista"],["Digiuno","Digiuno intermittente semplice e facile.","Incluso","ok"]],
+  bel:"Sono Bel! Sarò al tuo fianco per guidarti, motivarti e aiutarti a raggiungere i tuoi obiettivi. 💛"},
+ fr:{t1:"Débloquez l'",t2:"expérience complète",sub:"Atteignez vos objectifs plus vite avec la version Premium.",
+  f:[["Bel dans le chat","Votre assistante personnelle, quand vous voulez.","Quand vous voulez",""],["Votre semaine analysée","Un bilan personnalisé de vos progrès.","Chaque semaine","cal"],["Rapports et projection","Analyses, tendances et prochaines étapes.","Inclus","ok"],["Photos de progression","Suivez votre transformation dans le temps.","Inclus","ok"],["En courses","Alertes allergie et fiche nutritionnelle complète des produits.","Fiche complète","lista"],["Jeûne","Le jeûne intermittent, simple et facile.","Inclus","ok"]],
+  bel:"Je suis Bel ! Je serai à vos côtés pour vous guider, vous motiver et vous aider à atteindre vos objectifs. 💛"},
+ de:{t1:"Schalten Sie das",t2:"volle Erlebnis frei",sub:"Erreichen Sie Ihre Ziele schneller mit der Premium-Version.",
+  f:[["Bel im Chat","Ihre persönliche Assistentin, wann immer Sie wollen.","Jederzeit",""],["Ihre Woche analysiert","Ein persönlicher Rückblick auf Ihren Fortschritt.","Jede Woche","cal"],["Berichte und Prognose","Einblicke, Trends und nächste Schritte.","Enthalten","ok"],["Fortschrittsfotos","Verfolgen Sie Ihre Veränderung über die Zeit.","Enthalten","ok"],["Beim Einkauf","Allergie-Hinweise und vollständige Nährwertübersicht der Produkte.","Volle Übersicht","lista"],["Fasten","Intervallfasten, einfach und leicht.","Enthalten","ok"]],
+  bel:"Ich bin Bel! Ich bin an Ihrer Seite, um Sie zu begleiten, zu motivieren und Ihnen zu helfen, Ihre Ziele zu erreichen. 💛"}
+};
+var PRO_IC={
+ f:['<path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H7l-3 2v-5.2A7.5 7.5 0 1 1 20 11.5Z"/>',
+    '<path d="M4 20V11h3v9M10.5 20V6h3v14M17 20V3h3v17"/>',
+    '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+    '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L6 20"/>',
+    '<path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/>',
+    '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.8 1.8M9 2h6M12 2v3"/>'],
+ cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/>',
+ ok:'<path d="m5 12 4 4L19 6"/>',
+ lista:'<path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/>',
+ folha:'<path d="M20 4C11 4 5 7 5 14a6 6 0 0 0 6 6c7 0 9-7 9-16Z"/><path d="M4 21c3-5 7-8 12-11"/>',
+ seta:'<path d="M4 12h15m-6-6 6 6-6 6"/>',
+ x:'<path d="m6 6 12 12M18 6 6 18"/>'
+};
+function _pv(d,c){ return '<svg viewBox="0 0 24 24"'+(c?' class="'+c+'"':'')+'>'+d+'</svg>'; }
 function planoRender(){
   var el=document.getElementById("planoEscolha"); if(!el) return;
-  var P=_proT(), t=(T[currentLang]||T.pt);
-  var sel=window._planoEscolhido||"anual";
+  var P=_proT(), t=(T[currentLang]||T.pt), sel=window._planoEscolhido||"anual";
+  var mes=String(t.proMes||"/mês").replace(/^\//,"/ ");
   function cartao(k,titulo,preco,rodape,selo){
     var on=(sel===k);
-    return '<div onclick="planoSel(\''+k+'\')" style="cursor:pointer;position:relative;border-radius:16px;padding:13px 11px 12px;text-align:center;'+
-      'background:'+(on?"var(--goldBg2)":"var(--surface2)")+';border:'+(on?"2px solid #f0b429":"1px solid var(--border)")+'">'+
-      (selo?'<div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#34d399;color:#04231a;font-size:9.5px;font-weight:800;padding:3px 9px;border-radius:20px;white-space:nowrap">'+selo+'</div>':'')+
-      '<div style="font-size:11.5px;font-weight:700;color:'+(on?"var(--goldInk)":"var(--text2)")+';margin-bottom:4px">'+titulo+'</div>'+
-      '<div style="font-family:\'Syne\',sans-serif;font-size:25px;font-weight:800;color:'+(on?"#f0b429":"var(--text)")+';line-height:1.1">'+preco+'</div>'+
-      '<div style="font-size:10.5px;color:var(--text3);margin-top:3px;line-height:1.35">'+rodape+'</div></div>';
+    return '<button type="button" class="pv-plano'+(on?' on':'')+'" onclick="planoSel(\''+k+'\')" aria-pressed="'+on+'">'+
+      (selo?'<span class="pv-selo">'+selo+'</span>':'')+(on?'<span class="pv-ck">'+_pv(PRO_IC.ok)+'</span>':'')+
+      '<span class="pv-pt">'+titulo+'</span><span class="pv-pr">'+preco+'</span><span class="pv-pd">'+rodape+'</span></button>';
   }
   el.innerHTML=
-    cartao("mensal", P.mensal, _eur(PLANO_MES), (t.proMes||"/mês"), "") +
-    cartao("anual",  P.anual,  _eur(PLANO_ANO),
-           _eur(planoPorMes())+" "+(t.proMes||"/mês")+"<br>"+P.cobradoAno,
-           P.economize.replace("{0}", planoDesconto()));
+    cartao("mensal",P.mensal,_eur(PLANO_MES),mes,"")+
+    cartao("anual",P.anual,_eur(PLANO_ANO),_eur(planoPorMes())+" "+mes+"<br>"+P.cobradoAno,P.economize.replace("{0}",planoDesconto()));
+  try{ var cb=document.getElementById("pvCobra"); if(cb){ var C=PRO_COBRA[currentLang]||PRO_COBRA.pt; cb.textContent=(sel==="mensal"?C.m:C.a).replace("{0}",sel==="mensal"?_eur(PLANO_MES):_eur(PLANO_ANO)); } }catch(e){}
 }
+var PRO_COBRA={
+ pt:{m:"7 dias grátis. Depois, {0} por mês, renovado automaticamente. Cancele quando quiser no app, sem custo antes do fim do teste.",a:"7 dias grátis. Depois, {0} cobrados uma vez por ano, renovado automaticamente. Cancele quando quiser no app, sem custo antes do fim do teste."},
+ en:{m:"7 days free. Then {0} per month, renewing automatically. Cancel anytime in the app, at no cost before the trial ends.",a:"7 days free. Then {0} billed once a year, renewing automatically. Cancel anytime in the app, at no cost before the trial ends."},
+ es:{m:"7 días gratis. Después, {0} al mes, con renovación automática. Cancela cuando quieras en la app, sin coste antes de que termine la prueba.",a:"7 días gratis. Después, {0} cobrados una vez al año, con renovación automática. Cancela cuando quieras en la app, sin coste antes de que termine la prueba."},
+ it:{m:"7 giorni gratis. Poi {0} al mese, con rinnovo automatico. Disdici quando vuoi nell'app, senza costi prima della fine della prova.",a:"7 giorni gratis. Poi {0} addebitati una volta all'anno, con rinnovo automatico. Disdici quando vuoi nell'app, senza costi prima della fine della prova."},
+ fr:{m:"7 jours gratuits. Ensuite {0} par mois, renouvelé automatiquement. Annulez quand vous voulez dans l'app, sans frais avant la fin de l'essai.",a:"7 jours gratuits. Ensuite {0} facturés une fois par an, renouvelé automatiquement. Annulez quand vous voulez dans l'app, sans frais avant la fin de l'essai."},
+ de:{m:"7 Tage gratis. Danach {0} pro Monat, automatische Verlängerung. Jederzeit in der App kündbar, kostenlos vor Ende des Tests.",a:"7 Tage gratis. Danach {0} einmal jährlich, automatische Verlängerung. Jederzeit in der App kündbar, kostenlos vor Ende des Tests."}
+};
 function renderUpgrade(){
   var el=document.getElementById("upgradeBody"); if(!el) return;
-  var P=_proT(), t=(T[currentLang]||T.pt);
-  var logo=_proImg("#app .header img"), bel=_proImg('img[alt="Nutricionista"]');
-  var nome=""; try{ nome=((state.profile&&state.profile.name)||"").trim().split(" ")[0]; }catch(e){}
-
-  var h='<div style="text-align:center;margin-bottom:18px">';
-  if(logo) h+='<img src="'+logo+'" alt="Bestward" style="height:34px;width:auto;object-fit:contain;display:block;margin:0 auto 10px">';
-  h+='<span style="background:#f0b429;color:#000;font-size:11px;font-weight:800;padding:4px 14px;border-radius:20px;letter-spacing:1.4px">PRO</span></div>';
-
-  /* A Bel apresenta o plano: e o que o app tem que ninguem mais tem. */
-  h+='<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:18px">';
-  if(bel) h+='<img src="'+bel+'" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:top center;background:var(--surface2);flex-shrink:0;border:1.5px solid rgba(240,180,41,.35)">';
-  h+='<div style="flex:1;min-width:0">'+
-     '<div style="background:var(--surface2);border-radius:15px;border-top-left-radius:4px;padding:12px 14px">'+
-     '<div style="font-size:13px;color:var(--text);line-height:1.62">'+(nome?('<span style="color:var(--goldInk);font-weight:700">'+nome+'</span>, '):'')+P.belFala+'</div></div>'+
-     '<div style="font-size:11px;color:var(--text3);margin:5px 0 0 4px">'+P.belNome+'</div></div></div>';
-
-  var gastou=false;
-  try{ gastou=(typeof freeRestam==="function") && freeRestam("foto")===0 && freeRestam("resumo")===0; }catch(e){}
-  if(gastou) h+='<div style="font-size:11.5px;color:var(--goldInk);background:var(--goldBg2);border-radius:11px;padding:9px 12px;text-align:center;margin-bottom:16px;line-height:1.5">'+P.usou+'</div>';
-
-  /* Comparacao lado a lado. Mostrar o que o gratuito entrega e proposital:
-     esconder isso faria a coluna da esquerda parecer vazia, e ela nao e. */
-  h+='<div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:9px">'+P.sub+'</div>';
-  h+='<div style="border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px">'+
-     '<div style="display:grid;grid-template-columns:1fr 74px 96px;background:var(--surface2);padding:9px 12px;gap:6px">'+
-     '<span></span>'+
-     '<span style="font-size:10.5px;color:var(--text3);font-weight:700;text-align:center;letter-spacing:.4px">'+P.colA+'</span>'+
-     '<span style="font-size:10.5px;color:#f0b429;font-weight:800;text-align:center;letter-spacing:.8px">'+P.colB+'</span></div>';
-  P.cmp.forEach(function(r,i){
-    var linha=(i<P.cmp.length-1)?'border-bottom:1px solid var(--border);':'';
-    var g=r[1]?('<span style="color:var(--text2)">'+r[1]+'</span>'):('<span style="color:var(--text3)">'+P.nao+'</span>');
-    h+='<div style="display:grid;grid-template-columns:1fr 74px 96px;align-items:center;padding:11px 12px;gap:6px;'+linha+'">'+
-       '<span style="font-size:12.5px;color:var(--text);font-weight:600;line-height:1.3">'+r[0]+'</span>'+
-       '<span style="font-size:11px;text-align:center;line-height:1.3">'+g+'</span>'+
-       '<span style="font-size:11.5px;text-align:center;color:var(--goldInk);font-weight:700;line-height:1.3;background:var(--goldBg2);border-radius:8px;padding:5px 4px">'+r[2]+'</span></div>';
+  var P=_proT(), Q=PRO2[currentLang]||PRO2.pt, t=(T[currentLang]||T.pt);
+  try{ document.getElementById("upgradeModal").classList.add("pv-on"); }catch(e){}
+  var h='<button type="button" class="pv-x" onclick="closeModal(\'upgradeModal\')" aria-label="close">'+_pv(PRO_IC.x)+'</button>';
+  h+='<div class="pv-onda" aria-hidden="true"></div>';
+  h+='<div class="pv-topo"><img src="logo-bestward-branca.png" alt="Bestward" class="pv-logo">'+
+     '<h2 class="pv-tit">'+Q.t1+' <span>'+Q.t2+'</span></h2><p class="pv-sub">'+Q.sub+'</p></div>';
+  var gastou=false; try{ gastou=(typeof freeRestam==="function")&&freeRestam("foto")===0&&freeRestam("resumo")===0; }catch(e){}
+  if(gastou) h+='<div class="pv-usou">'+P.usou+'</div>';
+  h+='<div class="pv-lista">';
+  Q.f.forEach(function(r,i){
+    var ic=r[3]?_pv(PRO_IC[r[3]]):'';
+    h+='<div class="pv-item"><span class="pv-ic">'+_pv(PRO_IC.f[i])+'</span>'+
+       '<span class="pv-tx"><b>'+r[0]+'</b><small>'+r[1]+'</small></span>'+
+       '<span class="pv-tag">'+ic+'<span>'+r[2]+'</span></span></div>';
   });
   h+='</div>';
-
-  h+='<div style="text-align:center;margin-bottom:13px">'+
-     '<div style="display:inline-block;font-size:10.5px;color:#34d399;font-weight:800;letter-spacing:.5px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:20px;padding:5px 14px">'+(t.proTrialBadge||"")+'</div></div>';
-  h+='<div id="planoEscolha" style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px"></div>';
-
-  h+='<button onclick="subscribePro(true)" id="subscribeBtn" class="btn btn-primary" style="font-size:15px;padding:16px" data-i18n="proCtaBtn">'+(t.proCtaBtn||"")+'</button>'+
-     '<div style="font-size:11px;color:var(--text3);text-align:center;margin-top:9px">'+P.rod+'</div>'+
-     '<div style="font-size:11px;text-align:center;margin-top:10px;line-height:1.9">'+
-     '<a href="privacidade.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline">'+(t.linkPriv||"")+'</a>'+
-     '<span style="color:var(--text2);margin:0 8px">&middot;</span>'+
-     '<a href="termos.html" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline">'+(t.linkTermos||"")+'</a></div>'+
-     '<button onclick="closeModal(\'upgradeModal\')" class="btn btn-ghost" style="width:100%;margin-top:12px;font-size:13px">'+(t.proCtaFree||"")+'</button>';
-
+  var tb=String(t.proTrialBadge||"").split(/\s*[•·]\s*/);
+  h+='<div class="pv-trial"><span>'+_pv(PRO_IC.folha,'pv-folha')+(tb[0]||'')+'</span>'+(tb[1]?'<i></i><span>'+_pv(PRO_IC.cal)+tb[1]+'</span>':'')+'</div>';
+  h+='<div id="planoEscolha" class="pv-planos"></div>';
+  h+='<button type="button" onclick="subscribePro(true)" id="subscribeBtn" class="pv-cta"><span data-i18n="proCtaBtn">'+(t.proCtaBtn||"")+'</span>'+_pv(PRO_IC.seta)+'</button>';
+  h+='<p class="pv-cobra" id="pvCobra"></p>';
+  h+='<div class="pv-bel"><img src="bel-avatar-escuro-felipe.png" alt="Bel"><div class="pv-balao">'+Q.bel+'</div></div>';
+  h+='<p class="pv-rod">'+P.rod+'</p>';
+  h+='<button type="button" onclick="closeModal(\'upgradeModal\')" class="pv-free">'+(t.proCtaFree||"")+'</button>';
+  h+='<div class="pv-legal"><a href="privacidade.html" target="_blank" rel="noopener">'+(t.linkPriv||"")+'</a><span>&middot;</span><a href="termos.html" target="_blank" rel="noopener">'+(t.linkTermos||"")+'</a></div>';
   el.innerHTML=h;
   try{ planoRender(); }catch(e){}
 }
