@@ -1,0 +1,158 @@
+<!doctype html><html data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<style>body{margin:0;background:#0B0B0B;font-family:Inter,sans-serif}#tab-hoje{width:390px;margin:0 auto;padding:16px 16px 40px;box-sizing:border-box;overflow:hidden}
+/* ===== 08/11: HOJE ESCURO (modelo do Felipe, unidade = largura/826) ===== */
+html:not([data-theme="light"]) #tab-hoje #hc2{display:block}
+html:not([data-theme="light"]) #tab-hoje .h-hero>*:not(#avisoFim):not(#pedidoDepo),
+html:not([data-theme="light"]) #tab-hoje .macro-row,
+html:not([data-theme="light"]) #tab-hoje #alertsBox,
+html:not([data-theme="light"]) #tab-hoje .card:has(#waterSummaryVal){display:none!important}
+html:not([data-theme="light"]) #tab-hoje .h-hero{padding:0!important;margin:0!important;min-height:0!important;background:none!important}
+html:not([data-theme="light"]) #tab-hoje::before{display:none!important}
+html:not([data-theme="light"]) #tab-hoje #mealsContainer{margin-top:20px}
+#hc2.dk{--u:0.47px;position:relative;font-family:Inter,system-ui,sans-serif;color:#F5F5F5;padding-top:calc(var(--u)*8)}
+#hc2.dk svg{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8}
+#hc2.dk>*{position:relative;z-index:1}
+#hc2.dk .y-bruma{position:absolute;z-index:0;top:calc(var(--u)*-150);left:calc(var(--u)*-60);right:calc(var(--u)*-60);height:calc(var(--u)*230);pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 220' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='l' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop stop-color='%23F57C00' stop-opacity='0'/%3E%3Cstop offset='.5' stop-color='%23FFC947'/%3E%3Cstop offset='1' stop-color='%23F57C00' stop-opacity='0'/%3E%3C/linearGradient%3E%3Cfilter id='b'%3E%3CfeGaussianBlur stdDeviation='10'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M0 145 C180 65 280 190 450 120 S720 30 900 105' fill='none' stroke='%23F57C00' stroke-width='18' opacity='.22' filter='url(%23b)'/%3E%3Cpath d='M0 145 C180 65 280 190 450 120 S720 30 900 105' fill='none' stroke='url(%23l)' stroke-width='3'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+/* topo */
+#hc2.dk .y-top{display:flex;justify-content:space-between;align-items:center;height:calc(var(--u)*90);padding:0 calc(var(--u)*6) 0 calc(var(--u)*30)}
+#hc2.dk .y-tit{display:inline-flex;align-items:center;gap:calc(var(--u)*20);cursor:pointer;font:700 calc(var(--u)*60)/1 Sora,Inter,sans-serif;color:#FFFFFF;letter-spacing:-.01em}
+#hc2.dk .y-tit svg{width:calc(var(--u)*34);height:calc(var(--u)*34);color:#F5A300;stroke-width:2.6}
+#hc2.dk .y-pro{display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--u)*16);height:calc(var(--u)*64);min-width:calc(var(--u)*180);padding:0 calc(var(--u)*26);border-radius:calc(var(--u)*32);border:calc(var(--u)*3) solid #F5A300;background:rgba(245,163,0,.06);box-shadow:0 0 calc(var(--u)*18) rgba(245,163,0,.45),inset 0 0 calc(var(--u)*10) rgba(245,163,0,.18);color:#FFC947;font:700 calc(var(--u)*30)/1 Sora,Inter,sans-serif;letter-spacing:.02em;cursor:pointer}
+#hc2.dk .y-pro svg{width:calc(var(--u)*36);height:calc(var(--u)*36);color:#F5A300;fill:#F5A300;stroke-width:1.4}
+/* dias */
+#hc2.dk .y-dias{display:grid;grid-template-columns:repeat(7,1fr);margin:calc(var(--u)*26) calc(var(--u)*27) 0 calc(var(--u)*33)}
+#hc2.dk .y-dia{display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*22);cursor:pointer;background:none;border:0;padding:0;color:#EDEDED;font:500 calc(var(--u)*26)/1 Inter,sans-serif}
+#hc2.dk .y-dia.fut{cursor:default}
+#hc2.dk .y-dia i{display:block;width:calc(var(--u)*48);height:calc(var(--u)*48);border-radius:50%;border:calc(var(--u)*2) dotted rgba(237,237,237,.35);box-sizing:border-box}
+#hc2.dk .y-dia.tem i{border-style:solid;border-color:rgba(245,163,0,.55)}
+#hc2.dk .y-dia.hoje{color:#F5A300;font-weight:700}
+#hc2.dk .y-dia.hoje i{width:calc(var(--u)*52);height:calc(var(--u)*52);border:calc(var(--u)*2) solid #3A3226;background:radial-gradient(circle,#F5A300 0 calc(var(--u)*7),#161411 calc(var(--u)*8));box-shadow:0 0 calc(var(--u)*10) rgba(245,163,0,.25)}
+/* calorias */
+#hc2.dk .y-cal{position:relative;height:calc(var(--u)*392);margin-top:calc(var(--u)*14)}
+#hc2.dk .y-fr{position:absolute;top:calc(var(--u)*40);font:500 calc(var(--u)*17)/calc(var(--u)*32) Sora,Inter,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:#D9A54A}
+#hc2.dk .y-fr.e{left:calc(var(--u)*16)}
+#hc2.dk .y-fr.d{right:calc(var(--u)*6);text-align:right;letter-spacing:.32em;margin-right:-.32em}
+#hc2.dk .y-fr span{display:block}
+#hc2.dk .y-fr::after{content:"";display:block;width:calc(var(--u)*65);height:calc(var(--u)*2);margin-top:calc(var(--u)*24);background:#F5A300;opacity:.75}
+#hc2.dk .y-fr.d::after{margin-left:auto;margin-right:.32em}
+#hc2.dk .y-anel{position:absolute;left:50%;top:0;width:calc(var(--u)*392);height:calc(var(--u)*392);margin-left:calc(var(--u)*-196)}
+#hc2.dk .y-anel>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;stroke:none}
+#hc2.dk .y-meio{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:calc(var(--u)*4)}
+#hc2.dk .y-meio svg{width:calc(var(--u)*50);height:calc(var(--u)*56);stroke:none;filter:drop-shadow(0 0 calc(var(--u)*8) rgba(245,124,0,.6))}
+#hc2.dk .y-num{margin-top:calc(var(--u)*10);font:700 calc(var(--u)*92)/1 Sora,Inter,sans-serif;color:#FFFFFF;letter-spacing:-.02em}
+#hc2.dk .y-num.acima{color:#FF7A00}
+#hc2.dk .y-kc{margin-top:calc(var(--u)*16);font:500 calc(var(--u)*24)/1.2 Inter,sans-serif;color:#F5F5F5;max-width:calc(var(--u)*240);text-align:center}
+#hc2.dk .y-falt{display:flex;align-items:center;gap:calc(var(--u)*36);margin:calc(var(--u)*8) 0 0;font:500 calc(var(--u)*34)/1 Inter,sans-serif;color:#F5F5F5;white-space:nowrap}
+#hc2.dk .y-falt b{font:700 calc(var(--u)*36)/1 Sora,Inter,sans-serif;color:#F5A300}
+#hc2.dk .y-falt i{flex:1;height:calc(var(--u)*2);margin-top:calc(var(--u)*12);background:linear-gradient(90deg,rgba(245,124,0,0),#F5A300 60%,rgba(245,163,0,.35))}
+#hc2.dk .y-falt i:last-child{transform:scaleX(-1)}
+/* macros */
+#hc2.dk .y-mac{display:grid;grid-template-columns:276fr 277fr 273fr;margin-top:calc(var(--u)*44)}
+#hc2.dk .y-m{position:relative;padding:0 calc(var(--u)*20) 0 calc(var(--u)*42)}
+#hc2.dk .y-m+.y-m::before{content:"";position:absolute;left:0;top:calc(var(--u)*-4);height:calc(var(--u)*170);width:calc(var(--u)*2);background:linear-gradient(180deg,rgba(245,163,0,0),#F5A300 45%,rgba(245,163,0,0))}
+#hc2.dk .y-mh{display:flex;align-items:center;gap:calc(var(--u)*20);font:500 calc(var(--u)*25)/1 Inter,sans-serif;color:#F5F5F5}
+#hc2.dk .y-mh svg{width:calc(var(--u)*36);height:calc(var(--u)*36);color:#F5A300;stroke-width:2}
+#hc2.dk .y-mv{margin-top:calc(var(--u)*24);font:700 calc(var(--u)*38)/1 Sora,Inter,sans-serif;color:#F5A300}
+#hc2.dk .y-mb{margin-top:calc(var(--u)*24);height:calc(var(--u)*8);max-width:calc(var(--u)*190);border-radius:calc(var(--u)*4);background:#3A3A3A;overflow:hidden}
+#hc2.dk .y-mb span{display:block;height:100%;border-radius:calc(var(--u)*4);background:linear-gradient(90deg,#F57C00,#FFC947)}
+#hc2.dk .y-mm{margin-top:calc(var(--u)*22);font:400 calc(var(--u)*24)/1 Inter,sans-serif;color:#A9A9A9}
+/* cartoes */
+#hc2.dk .y-card{position:relative;display:flex;align-items:center;margin-top:calc(var(--u)*26);padding:calc(var(--u)*28) calc(var(--u)*40) calc(var(--u)*34) calc(var(--u)*43);border-radius:calc(var(--u)*40);overflow:hidden;cursor:pointer;
+  background:linear-gradient(180deg,#1E1C19 0%,#131211 55%,#0F0E0D 100%);
+  border:calc(var(--u)*2) solid rgba(255,201,71,.38);
+  box-shadow:0 calc(var(--u)*8) calc(var(--u)*24) rgba(0,0,0,.6),0 0 calc(var(--u)*22) rgba(245,124,0,.22),inset 0 calc(var(--u)*2) 0 rgba(255,224,163,.12)}
+#hc2.dk .y-card.c1{margin-top:calc(var(--u)*44);min-height:calc(var(--u)*160)}
+#hc2.dk .y-card.c2{min-height:calc(var(--u)*212)}
+#hc2.dk .y-card::after{content:"";position:absolute;left:0;right:0;bottom:0;height:calc(var(--u)*62);pointer-events:none;z-index:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 120' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='w' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F57C00' stop-opacity='.05'/%3E%3Cstop offset='.55' stop-color='%23F57C00' stop-opacity='.35'/%3E%3Cstop offset='1' stop-color='%23FFC947' stop-opacity='.75'/%3E%3C/linearGradient%3E%3ClinearGradient id='s' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23FFB21A' stop-opacity='.15'/%3E%3Cstop offset='.6' stop-color='%23FFB21A' stop-opacity='.7'/%3E%3Cstop offset='1' stop-color='%23FFD66A'/%3E%3C/linearGradient%3E%3Cfilter id='g' x='-10%25' y='-50%25' width='120%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='6'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M0 95 C160 120 300 122 430 100 C560 78 650 40 800 60 L800 120 L0 120Z' fill='url(%23w)' filter='url(%23g)'/%3E%3Cpath d='M0 98 C160 122 300 124 430 102 C560 80 650 42 800 62' fill='none' stroke='url(%23s)' stroke-width='3'/%3E%3C/svg%3E") center bottom/100% 100% no-repeat}
+#hc2.dk .y-card.c2::after{height:calc(var(--u)*70)}
+#hc2.dk .y-card>*{position:relative;z-index:1}
+#hc2.dk .y-bol{flex:0 0 calc(var(--u)*100);width:calc(var(--u)*100);height:calc(var(--u)*100);border-radius:50%;display:grid;place-items:center;color:#FFC947;
+  background:radial-gradient(circle at 50% 35%,#3A2A12 0%,#1A140C 70%,#120E09 100%);border:calc(var(--u)*2) solid #F5A300;
+  box-shadow:0 0 calc(var(--u)*16) rgba(245,163,0,.45),inset 0 0 calc(var(--u)*14) rgba(245,124,0,.35)}
+#hc2.dk .y-bol svg{width:calc(var(--u)*48);height:calc(var(--u)*48);stroke-width:1.9}
+#hc2.dk .y-div{flex:0 0 calc(var(--u)*2);align-self:center;height:calc(var(--u)*56);margin:0 calc(var(--u)*31) 0 calc(var(--u)*27);background:linear-gradient(180deg,rgba(245,163,0,.2),#F5A300,rgba(245,163,0,.2))}
+#hc2.dk .y-tx{flex:1;min-width:0}
+#hc2.dk .y-tt{display:block;font:700 calc(var(--u)*32)/1.15 Sora,Inter,sans-serif;color:#FFFFFF}
+#hc2.dk .y-ts{display:block;margin-top:calc(var(--u)*14);font:400 calc(var(--u)*24)/1.4 Inter,sans-serif;color:#F5F5F5}
+#hc2.dk .y-ts em{font-style:normal;font-weight:700;color:#F5A300}
+#hc2.dk .y-ts .pt{margin:0 calc(var(--u)*14)}
+#hc2.dk .y-t2{display:block;margin-top:calc(var(--u)*6);font:400 calc(var(--u)*24)/1.5 Inter,sans-serif;color:#F5F5F5}
+#hc2.dk .y-card.c3 .y-ts{margin-top:0}
+#hc2.dk .y-seta{flex:0 0 calc(var(--u)*30);width:calc(var(--u)*30);height:calc(var(--u)*30);margin-left:calc(var(--u)*20);color:#EDEDED;stroke-width:2.2}
+</style></head><body><div id="tab-hoje"><div id="hc2" class="dk"></div></div>
+<script>
+var state={calGoal:3295,waterGoal:3255,waterMl:0,history:{}},currentLang='pt',isPro=true;
+var T={pt:{calhojeBtn:'Hoje',faltam:'Faltam',kcalConsumidas:'kcal consumidas',metaCurta:'Meta',proteinaPura:'Proteína',gorduraPura:'Gordura'}};
+var D={hojeFraseEsq:'Disciplina hoje, resultados sempre.',hojeFraseDir:'Saúde foco equilíbrio conquistas',hidratacao:'Hidratação',deAgua:'de água',faltamN:'Faltam {0}',proteinaLbl:'Proteína',deN:'de {0}',faltamFrango:'Faltam {0}g — cerca de {1}g de frango fecha a meta.',alertFaltaKcal:'Faltam {0} kcal para fechar sua meta de hoje.'};
+function tx(k){var s=D[k]||k,a=arguments;return s.replace(/\{(\d)\}/g,function(m,i){return a[+i+1];});}
+function calcTotals(){return {kcal:0,prot:0,carb:0,fat:0};} function getMacroGoals(){return {prot:186,carb:431,fat:92};}
+function _hcNum(n){return Math.round(n).toLocaleString('pt-BR');} function _dias(){return ["D","S","T","Q","Q","S","S"];} function getPreventiveAlerts(){return [];}
+/* ===== 08/11: HOJE ESCURO no modelo do Felipe (preto + dourado) ===== */
+function hd2Render(el){
+  var w=el.clientWidth||el.parentNode.clientWidth||390; el.style.setProperty("--u",(w/826)+"px");
+  var t=calcTotals(), g=getMacroGoals()||{prot:0,carb:0,fat:0}, meta=+state.calGoal||0, kc=Math.round(t.kcal||0), rem=meta-kc;
+  var T0=T[currentLang]||T.pt, pro=(typeof isPro!=="undefined"&&isPro);
+  var S=function(p){ return '<svg viewBox="0 0 24 24" aria-hidden="true">'+p+'</svg>'; };
+  var seta=S('<path d="m9 5 7 7-7 7"/>').replace('<svg ','<svg class="y-seta" ');
+  var h='<div class="y-bruma" aria-hidden="true"></div>';
+  /* topo */
+  h+='<div class="y-top"><div class="y-tit" role="button" onclick="calAbrir()"><span>'+(T0.calhojeBtn||'Hoje')+'</span>'+S('<path d="m6 9 6 6 6-6"/>')+'</div>'+
+     '<div class="y-pro" role="button" onclick="'+(pro?'openProfile();pfIr(\'pro\')':'subscribePro()')+'">'+S('<path d="m3 7 5 4 4-7 4 7 5-4-2 13H5L3 7Z"/>')+'<span>'+(pro?'PRO':(T0.calsejaPro||'Seja PRO'))+'</span></div></div>';
+  /* dias */
+  var ini=(typeof _dias==="function")?_dias("ini"):["D","S","T","Q","Q","S","S"], hoje=new Date(); hoje.setHours(0,0,0,0);
+  var dom=new Date(hoje.getTime()-hoje.getDay()*86400000), ds='';
+  for(var i=0;i<7;i++){ var d=new Date(dom.getTime()+i*86400000), k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    var eH=d.getTime()===hoje.getTime(), fut=d.getTime()>hoje.getTime(), tem=!eH&&!!(state.history&&state.history[k]&&state.history[k].kcal>0);
+    ds+='<div class="y-dia'+(eH?' hoje':'')+(tem?' tem':'')+(fut?' fut':'')+'"'+(fut?'':' role="button" onclick="navGo(\'hist\')"')+'><span>'+ini[d.getDay()]+'</span><i></i></div>'; }
+  h+='<div class="y-dias">'+ds+'</div>';
+  /* calorias */
+  var fe=String(tx('hojeFraseEsq')||'').trim().split(/\s+/), fd=String(tx('hojeFraseDir')||'').trim().split(/\s+/);
+  var sp=function(a){ return a.map(function(x){return '<span>'+x+'</span>';}).join(''); };
+  var R=156.5, C=2*Math.PI*R, pct=meta?Math.max(0,Math.min(1,kc/meta)):0, ang=-Math.PI/2+pct*2*Math.PI, kx=196+150*Math.cos(ang), ky=196+150*Math.sin(ang);
+  var anel='<svg viewBox="0 0 392 392" aria-hidden="true"><defs>'+
+    '<radialGradient id="y2h"><stop offset="0" stop-color="#FF9A00" stop-opacity=".30"/><stop offset=".72" stop-color="#F57C00" stop-opacity=".16"/><stop offset="1" stop-color="#F57C00" stop-opacity="0"/></radialGradient>'+
+    '<linearGradient id="y2b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2A2218"/><stop offset=".5" stop-color="#3A2A12"/><stop offset="1" stop-color="#8A4A00"/></linearGradient>'+
+    '<linearGradient id="y2r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE0A3"/><stop offset=".45" stop-color="#F5A300"/><stop offset=".75" stop-color="#FFC947"/><stop offset="1" stop-color="#F57C00"/></linearGradient>'+
+    '<linearGradient id="y2p" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC947"/><stop offset=".6" stop-color="#F5A300"/><stop offset="1" stop-color="#F57C00"/></linearGradient>'+
+    '<radialGradient id="y2d" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#1D1B18"/><stop offset=".8" stop-color="#0E0D0C"/><stop offset="1" stop-color="#080808"/></radialGradient>'+
+    '<filter id="y2g" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'+
+    '<circle cx="196" cy="196" r="196" fill="url(#y2h)"/>'+
+    '<circle cx="196" cy="196" r="'+R+'" fill="none" stroke="url(#y2b)" stroke-width="39"/>'+
+    (pct>0?'<circle cx="196" cy="196" r="'+R+'" fill="none" stroke="url(#y2p)" stroke-width="39" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-pct)).toFixed(1)+'" transform="rotate(-90 196 196)" opacity=".9"/>':'')+
+    '<circle cx="196" cy="196" r="176" fill="none" stroke="url(#y2r)" stroke-width="3.5" filter="url(#y2g)"/>'+
+    '<circle cx="196" cy="196" r="137" fill="url(#y2d)" stroke="url(#y2r)" stroke-width="2.5" filter="url(#y2g)"/>'+
+    '<circle cx="196" cy="196" r="128" fill="none" stroke="#000" stroke-opacity=".55" stroke-width="10"/>'+
+    '<circle cx="'+kx.toFixed(1)+'" cy="'+ky.toFixed(1)+'" r="11" fill="#FFB02E" filter="url(#y2g)"/>'+
+  '</svg>';
+  var fogo='<svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="y2f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC947"/><stop offset=".55" stop-color="#FF8A00"/><stop offset="1" stop-color="#F05A00"/></linearGradient></defs><path fill="url(#y2f)" d="M12 22c4.5 0 7-3.2 7-7.1 0-3.1-1.7-5.4-4.2-8.4-.2 2-1.2 3.2-2.2 4.1C12.2 7.1 10 4.5 8 2c.2 4.8-4 7.6-4 12.7C4 18.7 7 22 12 22Z"/><path fill="#FFE08A" d="M12 20.5c-1.6 0-2.7-1.1-2.7-2.6 0-1.6 1.2-2.7 2.3-4 .2 1 .7 1.6 1.4 2 .3-.7.4-1.3.4-2 1 1 1.6 2.3 1.6 3.6 0 1.7-1.3 3-3 3Z"/></svg>';
+  h+='<div class="y-cal"><div class="y-fr e">'+sp(fe)+'</div><div class="y-fr d">'+sp(fd)+'</div>'+
+     '<div class="y-anel">'+anel+'<div class="y-meio">'+fogo+'<div class="y-num'+(rem<0?' acima':'')+'">'+_hcNum(kc)+'</div><div class="y-kc">'+(T0.kcalConsumidas||'kcal consumidas')+'</div></div></div></div>';
+  h+='<div class="y-falt"><i></i><span>'+(rem>=0?(T0.faltam||'Faltam'):(T0.acimaCurta||'Acima'))+' <b>'+_hcNum(Math.abs(rem))+'</b> kcal</span><i></i></div>';
+  /* macros */
+  var mt=(T0.metaCurta||'Meta');
+  function mac(ic,rot,v,m){ var p=m?Math.min(100,v/m*100):0;
+    return '<div class="y-m"><div class="y-mh">'+ic+'<span>'+rot+'</span></div><div class="y-mv">'+Math.round(v)+' g</div><div class="y-mb"><span style="width:'+p+'%"></span></div><div class="y-mm">'+mt+' '+Math.round(m)+' g</div></div>'; }
+  var BIC=S('<path d="M7 20c-2.5 0-4-1.7-4-4.2 0-2.2 1.2-3.7 3-5.1l2-1.5c1.2-.9 1.8-2 2.1-3.4.3-1.4 1.4-2.3 2.8-2.3 1.6 0 2.7 1.2 2.7 2.8 0 1.3-.7 2.3-1.8 3.2l-2.2 1.7c-1 .8-1.4 1.6-1.4 2.7 0 1.1.6 1.9 1.6 2.5l1.8 1.1c1.2.8 1.8 1.7 1.8 2.9 0 1.6-1.2 2.7-2.8 2.7H7Z"/>');
+  var TRI=S('<path d="M12 21V4M12 9C8 9 6 7 5 4c4 0 6 2 7 5ZM12 14c4 0 6-2 7-5-4 0-6 2-7 5ZM12 18c-3 0-5-1-6-3 3 0 5 1 6 3ZM12 18c3 0 5-1 6-3-3 0-5 1-6 3Z"/>');
+  var GOT=S('<path d="M12 2.5S4 11 4 15.5a8 8 0 0 0 16 0C20 11 12 2.5 12 2.5Z"/>');
+  h+='<div class="y-mac">'+mac(BIC,(T0.proteinaPura||'Proteína'),t.prot||0,g.prot||0)+mac(TRI,'Carbo',t.carb||0,g.carb||0)+mac(GOT,(T0.gorduraPura||'Gordura'),t.fat||0,g.fat||0)+'</div>';
+  /* hidratacao */
+  var wG=+state.waterGoal||2500, wm=+state.waterMl||0;
+  h+='<div class="y-card c1" role="button" onclick="navGo(\'agua\')"><span class="y-bol">'+GOT+'</span><span class="y-div"></span>'+
+     '<span class="y-tx"><span class="y-tt">'+tx('hidratacao')+'</span><span class="y-ts"><em>'+_hcNum(wm)+' ml</em> '+tx('deAgua')+'<span class="pt">·</span>'+tx('faltamN',_hcNum(Math.max(0,wG-wm))+' ml')+'</span></span>'+seta+'</div>';
+  /* proteina */
+  var pA=Math.round(t.prot||0), pM=Math.round(g.prot||0), fP=Math.max(0,pM-pA), fr=Math.round(fP/0.31/10)*10;
+  var COXA=S('<path d="M15.5 3.2a5.3 5.3 0 0 0-5.2 6.4c.2 1-.1 2-.9 2.8l-1.6 1.6a3.4 3.4 0 1 0 2.2 2.2l1.6-1.6c.8-.8 1.8-1.1 2.8-.9A5.3 5.3 0 0 0 15.5 3.2Z"/><path d="m7.4 16.6-3 3"/><path d="m5.6 14.8-2.2 2.2"/>');
+  if(pM>0) h+='<div class="y-card c2" role="button" onclick="openAddFood()"><span class="y-bol">'+COXA+'</span><span class="y-div"></span>'+
+     '<span class="y-tx"><span class="y-tt">'+tx('proteinaLbl')+'</span><span class="y-ts"><em>'+pA+' g</em> '+tx('deN',pM+' g')+'</span><span class="y-t2">'+(fP>0?String(tx('faltamFrango',fP,fr)).replace(/(\d)g\b/g,'$1 g'):tx('metaAtingidaLbl'))+'</span></span>'+seta+'</div>';
+  /* calorias que faltam */
+  var dd=Math.round(meta-(t.kcal||0)), FOG=S('<path d="M12 22c4.5 0 7-3.2 7-7.1 0-3.1-1.7-5.4-4.2-8.4-.2 2-1.2 3.2-2.2 4.1C12.2 7.1 10 4.5 8 2c.2 4.8-4 7.6-4 12.7C4 18.7 7 22 12 22Z"/>');
+  h+='<div class="y-card c3" role="button" onclick="openAddFood()"><span class="y-bol">'+FOG+'</span><span class="y-div"></span>'+
+     '<span class="y-tx"><span class="y-ts">'+(dd>0?tx('alertFaltaKcal',_hcNum(dd)):dd<0?tx('alertAcimaKcal',_hcNum(Math.abs(dd))):tx('metaAtingidaLbl'))+'</span></span>'+seta+'</div>';
+  /* avisos de horario */
+  try{ var av=getPreventiveAlerts()||[], LUA=S('<path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"/>');
+    av.forEach(function(a){ h+='<div class="y-card c3" style="cursor:default"><span class="y-bol">'+LUA+'</span><span class="y-div"></span><span class="y-tx"><span class="y-ts">'+a.text+'</span></span></div>'; }); }catch(e){}
+  el.innerHTML=h;
+}
+hd2Render(document.getElementById('hc2'));
+</script></body></html>
