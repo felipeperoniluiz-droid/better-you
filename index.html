@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261108_escuro1";
+var APP_VERSION="20261108_escuro2";
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -4050,6 +4050,7 @@ html:not([data-theme="light"]) #tab-hoje #mealsContainer{margin-top:20px}
   background:radial-gradient(circle at 50% 35%,#3A2A12 0%,#1A140C 70%,#120E09 100%);border:calc(var(--u)*2) solid #F5A300;
   box-shadow:0 0 calc(var(--u)*16) rgba(245,163,0,.45),inset 0 0 calc(var(--u)*14) rgba(245,124,0,.35)}
 #hc2.dk .y-bol svg{width:calc(var(--u)*48);height:calc(var(--u)*48);stroke-width:1.9}
+#hc2.dk .y-bol.az{color:#60A5FA;border-color:#3B82F6;background:radial-gradient(circle at 50% 35%,#13284A 0%,#0C1628 70%,#090F1A 100%);box-shadow:0 0 calc(var(--u)*16) rgba(59,130,246,.5),inset 0 0 calc(var(--u)*14) rgba(59,130,246,.35)}
 #hc2.dk .y-div{flex:0 0 calc(var(--u)*2);align-self:center;height:calc(var(--u)*56);margin:0 calc(var(--u)*31) 0 calc(var(--u)*27);background:linear-gradient(180deg,rgba(245,163,0,.2),#F5A300,rgba(245,163,0,.2))}
 #hc2.dk .y-tx{flex:1;min-width:0}
 #hc2.dk .y-tt{display:block;font:700 calc(var(--u)*32)/1.15 Sora,Inter,sans-serif;color:#FFFFFF}
@@ -10094,7 +10095,7 @@ function hd2Render(el){
   h+='<div class="y-mac">'+mac(BIC,(T0.proteinaPura||'Proteína'),t.prot||0,g.prot||0)+mac(TRI,'Carbo',t.carb||0,g.carb||0)+mac(GOT,(T0.gorduraPura||'Gordura'),t.fat||0,g.fat||0)+'</div>';
   /* hidratacao */
   var wG=+state.waterGoal||2500, wm=+state.waterMl||0;
-  h+='<div class="y-card c1" role="button" onclick="navGo(\'agua\')"><span class="y-bol">'+GOT+'</span><span class="y-div"></span>'+
+  h+='<div class="y-card c1" role="button" onclick="navGo(\'agua\')"><span class="y-bol az">'+GOT+'</span><span class="y-div"></span>'+
      '<span class="y-tx"><span class="y-tt">'+tx('hidratacao')+'</span><span class="y-ts"><em>'+_hcNum(wm)+' ml</em> '+tx('deAgua')+'<span class="pt">·</span>'+tx('faltamN',_hcNum(Math.max(0,wG-wm))+' ml')+'</span></span>'+seta+'</div>';
   /* proteina */
   var pA=Math.round(t.prot||0), pM=Math.round(g.prot||0), fP=Math.max(0,pM-pA), fr=Math.round(fP/0.31/10)*10;
