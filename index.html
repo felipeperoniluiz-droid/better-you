@@ -10,7 +10,15 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261108_escuro4";
+var APP_VERSION="20261118_android1";
+</script>
+<script>
+/* 18/11: app aberto pelo pacote Android (TWA da Play Store). La a assinatura
+   tem de ser pelo Google Play Billing; ate integrar, a compra fica escondida.
+   sessionStorage (e nao localStorage) porque o TWA divide o armazenamento com
+   o Chrome do aparelho, e o site no navegador deve continuar vendendo. */
+try{ if(String(document.referrer).indexOf("android-app://app.bestward")===0) sessionStorage.setItem("bw_twa","1"); }catch(e){}
+function _isTWA(){ try{ return sessionStorage.getItem("bw_twa")==="1"; }catch(e){ return false; } }
 </script>
 <script>
 /* 23/10: tema escolhido NESTE aparelho, aplicado antes de pintar a tela. */
@@ -8351,10 +8359,13 @@ function renderUpgrade(){
   });
   h+='</div>';
   var tb=String(t.proTrialBadge||"").split(/\s*[•·]\s*/);
-  h+='<div class="pv-trial"><span>'+_pv(PRO_IC.folha,'pv-folha')+(tb[0]||'')+'</span>'+(tb[1]?'<i></i><span>'+_pv(PRO_IC.cal)+tb[1]+'</span>':'')+'</div>';
+  if(!_isTWA()) h+='<div class="pv-trial"><span>'+_pv(PRO_IC.folha,'pv-folha')+(tb[0]||'')+'</span>'+(tb[1]?'<i></i><span>'+_pv(PRO_IC.cal)+tb[1]+'</span>':'')+'</div>';
+  if(_isTWA()){ h+='<p class="pv-cobra" style="font-size:15px;line-height:1.5;margin:18px 0 6px">'+tx('proAndroidBreve')+'</p>'; }
+  else{
   h+='<div id="planoEscolha" class="pv-planos"></div>';
   h+='<button type="button" onclick="subscribePro(true)" id="subscribeBtn" class="pv-cta"><span data-i18n="proCtaBtn">'+(t.proCtaBtn||"")+'</span>'+_pv(PRO_IC.seta)+'</button>';
   h+='<p class="pv-cobra" id="pvCobra"></p>';
+  }
   h+='<div class="pv-bel"><img src="bel-avatar-escuro-felipe.png" alt="Bel"><div class="pv-balao">'+Q.bel+'</div></div>';
   h+='<p class="pv-rod">'+P.rod+'</p>';
   h+='<button type="button" onclick="closeModal(\'upgradeModal\')" class="pv-free">'+(t.proCtaFree||"")+'</button>';
@@ -9650,6 +9661,7 @@ var TX={
  mxAtiva:{pt:'Assinatura ativa',en:'Active subscription',es:'Suscripción activa',it:'Abbonamento attivo',fr:'Abonnement actif',de:'Abo aktiv'},
  mxDesbloqueie:{pt:'Desbloqueie tudo',en:'Unlock everything',es:'Desbloquea todo',it:'Sblocca tutto',fr:'Tout débloquer',de:'Alles freischalten'},
  mxMes:{pt:'mês',en:'month',es:'mes',it:'mese',fr:'mois',de:'Monat'},
+ proAndroidBreve:{pt:'A assinatura PRO pelo app Android chega em breve. Por enquanto, aproveite tudo o que a versão gratuita oferece.',en:'PRO subscriptions in the Android app are coming soon. For now, enjoy everything the free version offers.',es:'La suscripción PRO en la app de Android llegará pronto. Por ahora, disfruta de todo lo que ofrece la versión gratuita.',it:"L'abbonamento PRO nell'app Android arriverà presto. Per ora, goditi tutto ciò che offre la versione gratuita.",fr:"L'abonnement PRO dans l'application Android arrive bientôt. En attendant, profitez de tout ce que propose la version gratuite.",de:'Das PRO-Abo in der Android-App kommt bald. Nutzen Sie bis dahin alles, was die kostenlose Version bietet.'},
  hcSemAvisos:{pt:'Nenhum aviso agora. A Bel avisa aqui quando algo merecer atenção.',en:'No alerts right now. Bel will let you know here when something needs attention.',es:'Ningún aviso ahora. Bel te avisará aquí cuando algo necesite atención.',it:'Nessun avviso ora. Bel ti avviserà qui quando qualcosa richiede attenzione.',fr:"Aucune alerte pour l'instant. Bel vous préviendra ici quand quelque chose demandera votre attention.",de:'Gerade keine Hinweise. Bel meldet sich hier, wenn etwas Aufmerksamkeit braucht.'},
  pgrTit:{pt:'Seu progresso <span class="fia-ouro">importa!</span>',en:'Your progress <span class="fia-ouro">matters!</span>',es:'¡Tu progreso <span class="fia-ouro">importa!</span>',it:'I tuoi progressi <span class="fia-ouro">contano!</span>',fr:'Vos progrès <span class="fia-ouro">comptent !</span>',de:'Ihr Fortschritt <span class="fia-ouro">zählt!</span>'},
  pgrF1T:{pt:'Visualize sua evolução',en:'See your progress',es:'Visualiza tu evolución',it:'Visualizza la tua evoluzione',fr:'Visualisez votre évolution',de:'Sehen Sie Ihre Entwicklung'},
@@ -13156,6 +13168,7 @@ async function subscribePro(confirmado){
      direto e levavam ao checkout ANUAL sem a pessoa ver que existe o mensal.
      Visto pelo Felipe no teste do caminho do cliente. */
   if(confirmado!==true){ try{ openModal('upgradeModal'); }catch(e){} return; }
+  if(_isTWA()){ try{ openModal('upgradeModal'); }catch(e){} return; }
   var btn=document.getElementById('subscribeBtn');
   if(btn){btn.disabled=true;btn.textContent='...';}
   try{
