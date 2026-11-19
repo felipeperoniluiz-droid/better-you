@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261119_review1";
+var APP_VERSION="20261119_pais1";
 </script>
 <script>
 /* 18/11: app aberto pelo pacote Android (TWA da Play Store). La a assinatura
@@ -4071,6 +4071,9 @@ html:not([data-theme="light"]) #tab-hoje #mealsContainer{margin-top:20px}
 #hc2.dk .y-ts .pt{margin:0 calc(var(--u)*14)}
 #hc2.dk .y-t2{display:block;margin-top:calc(var(--u)*6);font:400 calc(var(--u)*24)/1.5 Inter,sans-serif;color:#F5F5F5}
 #hc2.dk .y-card.c3 .y-ts{margin-top:0}
+/* 19/11: opcoes de <select> legiveis (o Chrome no Windows pinta a lista branca) */
+select option,select optgroup{background:#1A1A1A;color:#F5F5F5}
+html[data-theme="light"] select option,html[data-theme="light"] select optgroup{background:#FFFFFF;color:#2A1A10}
 #hc2.dk .y-seta{flex:0 0 calc(var(--u)*30);width:calc(var(--u)*30);height:calc(var(--u)*30);margin-left:calc(var(--u)*20);color:#EDEDED;stroke-width:2.2}
 
 html[data-theme="light"] #tab-hoje #mealsContainer{margin-top:17px}
@@ -14117,7 +14120,7 @@ function _qHabMotivHtml(){
 var _qResp={plan:-1,cook:-1,plano:-1,ativ:-1,sexo:"",idade:"",pais:"",altura:"",peso:"",unA:"cm",unP:"kg",atleta:false,lembretes:false};
 /* paises com unidade imperial; o resto e metrico */
 var _IMPERIAL={GB:1,US:1,IE:0};
-var _PAISES=[["IE","Irlanda","Ireland","Irlanda","Irlanda","Irlande","Irland"],["PT","Portugal","Portugal","Portugal","Portogallo","Portugal","Portugal"],["BR","Brasil","Brazil","Brasil","Brasile","Bresil","Brasilien"],["GB","Reino Unido","United Kingdom","Reino Unido","Regno Unito","Royaume-Uni","Vereinigtes Konigreich"],["ES","Espanha","Spain","Espana","Spagna","Espagne","Spanien"],["FR","Franca","France","Francia","Francia","France","Frankreich"],["DE","Alemanha","Germany","Alemania","Germania","Allemagne","Deutschland"],["IT","Italia","Italy","Italia","Italia","Italie","Italien"],["NL","Holanda","Netherlands","Paises Bajos","Paesi Bassi","Pays-Bas","Niederlande"],["BE","Belgica","Belgium","Belgica","Belgio","Belgique","Belgien"],["CH","Suica","Switzerland","Suiza","Svizzera","Suisse","Schweiz"],["AT","Austria","Austria","Austria","Austria","Autriche","Osterreich"],["US","Estados Unidos","United States","Estados Unidos","Stati Uniti","Etats-Unis","Vereinigte Staaten"],["OT","Outro pais","Other country","Otro pais","Altro paese","Autre pays","Anderes Land"]];
+var _PAISES=[["IE","Irlanda","Ireland","Irlanda","Irlanda","Irlande","Irland"],["PT","Portugal","Portugal","Portugal","Portogallo","Portugal","Portugal"],["BR","Brasil","Brazil","Brasil","Brasile","Brésil","Brasilien"],["GB","Reino Unido","United Kingdom","Reino Unido","Regno Unito","Royaume-Uni","Vereinigtes Königreich"],["ES","Espanha","Spain","España","Spagna","Espagne","Spanien"],["FR","França","France","Francia","Francia","France","Frankreich"],["DE","Alemanha","Germany","Alemania","Germania","Allemagne","Deutschland"],["IT","Itália","Italy","Italia","Italia","Italie","Italien"],["NL","Holanda","Netherlands","Países Bajos","Paesi Bassi","Pays-Bas","Niederlande"],["BE","Bélgica","Belgium","Bélgica","Belgio","Belgique","Belgien"],["CH","Suíça","Switzerland","Suiza","Svizzera","Suisse","Schweiz"],["AT","Áustria","Austria","Austria","Austria","Autriche","Österreich"],["US","Estados Unidos","United States","Estados Unidos","Stati Uniti","États-Unis","Vereinigte Staaten"],["OT","Outro país","Other country","Otro país","Altro paese","Autre pays","Anderes Land"]];
 function _qRot(){ return ROT_TXT[currentLang]||ROT_TXT.pt; }
 function _qPerf(){ return PERF_TXT[currentLang]||PERF_TXT.pt; }
 function _qIdxPais(){ return {pt:1,en:2,es:3,it:4,fr:5,de:6}[currentLang]||2; }
@@ -14160,7 +14163,7 @@ function _qSobre(){
    '<input id="qIda" class="input" inputmode="numeric" value="'+(_qResp.idade||"")+'" oninput="_qResp.idade=this.value" style="width:100%;box-sizing:border-box;margin-bottom:18px">';
   h+='<div style="font-size:12px;color:var(--text3);font-weight:600;margin-bottom:8px">'+P.pais+'</div><select id="qPais" class="input" onchange="qSetPais(this.value)" style="width:100%;box-sizing:border-box"><option value="">'+P.paisSel+'</option>';
   var ip=_qIdxPais();
-  _PAISES.slice().sort(function(a,b){ return String(a[ip]).localeCompare(String(b[ip])); }).forEach(function(p){
+  _PAISES.slice().sort(function(a,b){ if(a[0]==='OT') return 1; if(b[0]==='OT') return -1; return String(a[ip]).localeCompare(String(b[ip])); }).forEach(function(p){
    h+='<option value="'+p[0]+'"'+(_qResp.pais===p[0]?" selected":"")+'>'+p[ip]+'</option>'; });
   return h+'</select>'; }
 function qSetPais(c){ _qResp.pais=c; if(_IMPERIAL[c]){ _qResp.unA="ft"; _qResp.unP="lb"; } else { _qResp.unA="cm"; _qResp.unP="kg"; } _qRender(); }
