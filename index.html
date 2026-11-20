@@ -10,7 +10,7 @@
    aviso que o cliente com o app aberto recebe de que existe versao nova.
    Fica AQUI, nos primeiros bytes do arquivo, porque a checagem de
    atualizacao so le os primeiros 4 KB. Nao mover para baixo. */
-var APP_VERSION="20261120_pro1";
+var APP_VERSION="20261120_pro2";
 </script>
 <script>
 /* 18/11: app aberto pelo pacote Android (TWA da Play Store). La a assinatura
@@ -13148,7 +13148,7 @@ function isCreatorAccount(){
   if(!(_fbUser && _fbUser.email)) return false;
   var e=_fbUser.email.toLowerCase();
   /* 20/11: testadores do Play com PRO liberado pelo Felipe */
-  var PRO_LIBERADO=['felipeperoniluiz+review@gmail.com','moisesalmeida250@gmail.com'];
+  var PRO_LIBERADO=['felipeperoniluiz+review@gmail.com','moisesalmeida250@gmail.com','iuriuoliveira@gmail.com'];
   return e === CREATOR_EMAIL.toLowerCase() || PRO_LIBERADO.indexOf(e)>=0;
 }
 
